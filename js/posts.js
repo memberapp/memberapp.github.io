@@ -1,10 +1,10 @@
 
-function getAndPopulate(start,limit,page,address){
+function getAndPopulate(start,limit,page,qaddress){
     show(page);
     var navbuttons=`<div class="navbuttons">`;
-        if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?start=`+(start-25)+`&limit=`+limit+`&address=`+address+`" onclick="javascript:getAndPopulate(`+(start-25)+`,`+limit+`,'`+page+`','`+address+`')">Back | </a> `;
-        navbuttons+=`<a class="back" href="#`+page+`?start=`+(start+25)+`&limit=`+limit+`&address=`+address+`" onclick="javascript:getAndPopulate(`+(start+25)+`,`+limit+`,'`+page+`','`+address+`')">Next</div>`;
-    getJSON(server+'?action='+page+'&address='+address+'&start='+start+'&limit='+limit).then(function(data) {
+        if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?start=`+(start-25)+`&limit=`+limit+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start-25)+`,`+limit+`,'`+page+`','`+qaddress+`')">Back | </a> `;
+        navbuttons+=`<a class="back" href="#`+page+`?start=`+(start+25)+`&limit=`+limit+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start+25)+`,`+limit+`,'`+page+`','`+qaddress+`')">Next</div>`;
+    getJSON(server+'?action='+page+'&address='+pubkey+'&qaddress='+qaddress+'&start='+start+'&limit='+limit).then(function(data) {
         var contents="";        
         contents=contents+`<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
         for(var i=0;i<data.length;i++){
@@ -40,48 +40,7 @@ function getAndPopulateTopic(start,limit,topicname){
 
 }
 
-/*
-function getAndPopulatePosts(start,limit){
-    show('posts');
 
-    var navbuttons=`<div class="navbuttons">`;
-        if(start!=0)navbuttons+=`<a class="next" href="#posts?start=`+(start-25)+`&limit=`+limit+`" onclick="javascript:getAndPopulatePosts(`+(start-25)+`,`+limit+`)">Back | </a> `;
-        navbuttons+=`<a class="back" href="#posts?start=`+(start+25)+`&limit=`+limit+`" onclick="javascript:getAndPopulatePosts(`+(start+25)+`,`+limit+`)">Next</div>`;
-    getJSON(server+'?action=posts&address='+pubkey+'&start='+start+'&limit='+limit).then(function(data) {
-        var contents="";
-        contents=contents+`<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
-        for(var i=0;i<data.length;i++){
-            contents=contents+getHTMLForPost(data[i],i+1);
-        }
-        contents=contents+"<tr><td/><td/><td>"+navbuttons+"</td></tr></tbody></table>";
-        document.getElementById('posts').innerHTML = contents; //display the result in an HTML element
-        
-    }, function(status) { //error detection....
-        alert('Something went wrong.');
-    });
-
-}
-
-function getAndPopulateComments(start,limit){
-    show('posts');
-
-    var navbuttons=`<div class="navbuttons">`;
-        if(start!=0)navbuttons+=`<a class="next" href="#comments?start=`+(start-25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateComments(`+(start-25)+`,`+limit+`)">Back | </a> `;
-        navbuttons+=`<a class="back" href="#comments?start=`+(start+25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateComments(`+(start+25)+`,`+limit+`)">Next</div>`;
-    getJSON(server+'?action=comments&address='+pubkey+'&start='+start+'&limit='+limit).then(function(data) {
-        var contents="";
-        contents=contents+`<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
-        for(var i=0;i<data.length;i++){
-            contents=contents+getHTMLForPost(data[i],i+1);
-        }
-        contents=contents+"<tr><td/><td/><td>"+navbuttons+"</td></tr></tbody></table>";
-        document.getElementById('comments').innerHTML = contents; //display the result in an HTML element
-        
-    }, function(status) { //error detection....
-        alert('Something went wrong.');
-    });
-
-}*/
 
 
 
@@ -90,12 +49,12 @@ function getHTMLForPost(data,rank){
                 <td class="title" valign="top" align="right"><span class="rank">`+rank+`.</span></td>
                 <td class="votelinks" valign="top"><center><a href="javascript:;" onclick="likePost('`+ds(data.txid)+`')"><div id="upvote`+ds(data.txid)+`" class="votearrow" title="upvote"></div></a></center></td>
                 <td class="title"><a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+anchorme(ds(data.message),{attributes:[{name:"target",value:"_blank"}]})+`</a> `+
-                (data.topic==''?"":`<a href="#topic?topicname=`+encodeURIComponent(data.topic)+`&start=0&limit=25" onclick="showTopic(0,25,'`+ds(data.topic)+`')">(`+data.topic+`)</a>`)+
+                (data.topic==''?"":`<a href="#topic?topicname=`+encodeURIComponent(data.topic)+`&start=0&limit=25" onclick="showTopic(0,25,'`+ds(data.topic)+`')">(`+ds(data.topic)+`)</a>`)+
             `</td>
             </tr>
             <tr>
                 <td colspan="2"></td>
-                <td class="subtext"><span class="score">`+ds(data.likes)+` likes and `+ds(data.tips)+` sats</span> by <a href="#member?address=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a> <span class="age"><a>`+timeSince(data.firstseen)+`</a></span> | <a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | <a id="replylink`+ds(data.txid)+`" onclick="showReplyBox('`+ds(data.txid)+`');" href="javascript:;">reply</a></td>
+                <td class="subtext"><span class="score">`+ds(data.likes)+` likes and `+ds(data.tips)+` sats</span> by <a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a> <span class="age"><a>`+timeSince(data.firstseen)+`</a></span> | <a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | <a id="replylink`+ds(data.txid)+`" onclick="showReplyBox('`+ds(data.txid)+`');" href="javascript:;">reply</a></td>
             </tr>
             <tr>
                 <td colspan="2"></td>

@@ -24,15 +24,15 @@ function showSettings(){
     
 }
 
-function showMember(address){
-    getAndPopulateMember(address);
-    getAndPopulate(0,25,'memberposts',address);
+function showMember(qaddress){
+    getAndPopulateMember(qaddress);
+    getAndPopulate(0,25,'memberposts',qaddress);
     document.getElementById('member').style.display="block";
     
 }
 
-function showMemberPosts(address){
-    getAndPopulate(start,limit,'memberposts',address);
+function showMemberPosts(qaddress){
+    getAndPopulate(start,limit,'memberposts',qaddress);
 }
 
 function showFeed(start,limit){
@@ -55,23 +55,23 @@ function showThread(txid){
     getAndPopulateThread(txid);
 }
 
-function showFollowers(address){
-    getAndPopulateFollowers(address);
+function showFollowers(qaddress){
+    getAndPopulateFollowers(qaddress);
 }
 
-function showFollowing(address){
-    getAndPopulateFollowing(address);
+function showFollowing(qaddress){
+    getAndPopulateFollowing(qaddress);
 }
 
 function displayContentBasedOnURLParameters(){
     var url = window.location.href;
     var action = url.substring(url.indexOf('#')+1).toLowerCase();
     if(action.startsWith("member")){
-        showMember(getParameterByName("address"));
+        showMember(getParameterByName("qaddress"));
     }else if(action.startsWith("followers")){
-        showFollowers(getParameterByName("address"));
+        showFollowers(getParameterByName("qaddress"));
     }else if(action.startsWith("following")){
-        showFollowing(getParameterByName("address"));
+        showFollowing(getParameterByName("qaddress"));
     }else if(action.startsWith("posts")){
         showPosts(Number(getParameterByName("start")),Number(getParameterByName("limit")));
     }else if(action.startsWith("feed")){
@@ -81,7 +81,7 @@ function displayContentBasedOnURLParameters(){
     }else if(action.startsWith("topic")){
         showTopic(Number(getParameterByName("start")),Number(getParameterByName("limit")),getParameterByName("topicname"));
     }else if(action.startsWith("memberposts")){
-        showMemberPosts(Number(getParameterByName("start")),Number(getParameterByName("limit")),getParameterByName("address"));
+        showMemberPosts(Number(getParameterByName("start")),Number(getParameterByName("limit")),getParameterByName("qaddress"));
     }
     else if(action.startsWith("thread")){
         showThread(getParameterByName("post"));
