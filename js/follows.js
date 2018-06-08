@@ -1,15 +1,15 @@
-function getAndPopulateFollowers(address){
+function getAndPopulateFollowers(qaddress){
     show('followers');
-    getJSON(server+'?action=followers&address='+address).then(function(data) {
+    getJSON(server+'?action=followers&qaddress='+qaddress+'&address='+pubkey).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
             contents=contents+
                 `<tr>
-                <td><a href="#member?address=`+ds(data[i].address)+`" onclick="showMember('`+ds(data[i].address)+`')">`+ds(data[i].name)+`</a></td>
-                <td><a href="#member?address=`+ds(data[i].address)+`" onclick="showMember('`+ds(data[i].address)+`')">`+ds(data[i].address)+`</a></td>
+                <td><a href="#member?qaddress=`+ds(data[i].address)+`" onclick="showMember('`+ds(data[i].address)+`')">`+ds(data[i].name)+`</a></td>
+                <td><a href="#member?qaddress=`+ds(data[i].address)+`" onclick="showMember('`+ds(data[i].address)+`')">`+ds(data[i].address)+`</a></td>
                 </tr>`;
         }
-        document.getElementById('follows').innerHTML = contents; //display the result in an HTML element
+        document.getElementById('follows').innerHTML = contents;
         
     }, function(status) { //error detection....
         alert('Something went wrong.');
@@ -17,18 +17,18 @@ function getAndPopulateFollowers(address){
 
 }
 
-function getAndPopulateFollowing(address){
+function getAndPopulateFollowing(qaddress){
     show('following');
-    getJSON(server+'?action=following&address='+address).then(function(data) {
+    getJSON(server+'?action=following&qaddress='+qaddress+'&address='+pubkey).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
             contents=contents+
                 `<tr>
-                <td><a href="#member?address=`+ds(data[i].address)+`" onclick="showMember('`+ds(data[i].address)+`')">`+ds(data[i].name)+`</a></td>
-                <td><a href="#member?address=`+ds(data[i].address)+`" onclick="showMember('`+ds(data[i].address)+`')">`+ds(data[i].address)+`</a></td>
+                <td><a href="#member?qaddress=`+ds(data[i].address)+`" onclick="showMember('`+ds(data[i].address)+`')">`+ds(data[i].name)+`</a></td>
+                <td><a href="#member?qaddress=`+ds(data[i].address)+`" onclick="showMember('`+ds(data[i].address)+`')">`+ds(data[i].address)+`</a></td>
                 </tr>`;
         }
-        document.getElementById('followingtable').innerHTML = contents; //display the result in an HTML element
+        document.getElementById('followingtable').innerHTML = contents;
         
     }, function(status) { //error detection....
         alert('Something went wrong.');

@@ -50,7 +50,7 @@ var build = function(options, callback) {
           tx.to(receiver.address, receiver.value)
         })
       }
-      if(tx.outputs[1]._satoshis<400){
+      if(tx.outputs[1]._satoshis<546){
         tx.outputs.splice(1,1);
       }
       
@@ -7244,7 +7244,7 @@ module.exports={
   "dependencies": {
     "big-integer": "^1.6.26",
     "bn.js": "=2.0.4",
-    "bs58": "=2.0.0",
+    "": "=2.0.0",
     "buffer-compare": "=1.0.0",
     "cashaddrjs": "^0.2.8",
     "elliptic": "=3.0.3",
