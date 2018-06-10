@@ -48,6 +48,9 @@ var getJSON = function(url) {
     input = input.replace(/&/g, '&amp;');
     input = input.replace(/</g, '&lt;');
     input = input.replace(/>/g, '&gt;');
+    input = input.replace(/"/g, '&quot;');
+    input = input.replace(/'/g, '&#x27;');
+    input = input.replace(/\//g, '&#x2F;');
     return input;
 }
 
@@ -59,4 +62,19 @@ function toHexString(byteArray) {
   return Array.from(byteArray, function(byte) {
     return ('0' + (byte & 0xFF).toString(16)).slice(-2);
   }).join('')
+}
+
+function sanitizeAlphanumeric(input){
+  return input.replace(/[^A-Za-z0-9]/g, '');
+}
+
+function unicodeEscape(str) {
+  var result = '', index = 0, charCode, escape;
+  while (!isNaN(charCode = str.charCodeAt(index++))) {
+    escape = charCode.toString(16);
+    result += charCode < 256
+      ? '\\x' + (charCode > 15 ? '' : '0') + escape
+      : '\\u' + ('0000' + escape).slice(-4);
+  }
+  return result;
 }
