@@ -10,6 +10,7 @@ function hideAll(){
     document.getElementById('member').style.display="none";
     document.getElementById('topic').style.display="none";
     document.getElementById('memberposts').style.display="none";
+    document.getElementById('newpost').style.display="none";
 }
 
 function show(theDiv){
@@ -21,14 +22,21 @@ function showSettings(){
     getAndPopulateSettings();
     getAndPopulate(0,25,'memberposts',pubkey);
     document.getElementById('settings').style.display="block";
+    document.getElementById('settingsfollow').style.display = "block";
     
 }
+
+function showNewPost(){
+    show("newpost");
+    document.getElementById('newpostbutton').style.display="block";
+}
+
 
 function showMember(qaddress){
     getAndPopulateMember(qaddress);
     getAndPopulate(0,25,'memberposts',qaddress);
     document.getElementById('member').style.display="block";
-    
+    document.getElementById('memberfollow').style.display = "block";
 }
 
 function showMemberPosts(qaddress){
@@ -87,6 +95,8 @@ function displayContentBasedOnURLParameters(){
         showThread(getParameterByName("post"));
     }else if(action.startsWith("settings")){
         showSettings();
+    }else if(action.startsWith("new")){
+        showNewPost();
     }
     else if(pubkey==""||pubkey==null||pubkey==undefined){
         showPosts(0,25);  
