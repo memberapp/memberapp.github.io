@@ -50,6 +50,7 @@ var getJSON = function(url) {
     input = input.replace(/>/g, '&gt;');
     input = input.replace(/"/g, '&quot;');
     input = input.replace(/'/g, '&#x27;');
+    
     return input;
 }
 
