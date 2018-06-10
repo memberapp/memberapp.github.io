@@ -20,11 +20,12 @@ function getAndPopulate(start,limit,page,qaddress){
 }
 
 function getAndPopulateTopic(start,limit,topicname){
+    //Note topicname may contain hostile code - treat with extreme caution
     var page="topic";
     show(page);
     var navbuttons=`<div class="navbuttons">`;
-        if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?topicname=`+ encodeURIComponent(topicname)+`&start=`+(start-25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateTopic(`+(start-25)+`,`+limit+`,'`+topicname+`')">Back | </a> `;
-        navbuttons+=`<a class="back" href="#`+page+`?topicname=`+ encodeURIComponent(topicname)+`&start=`+(start+25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateTopic(`+(start+25)+`,`+limit+`,'`+topicname+`')">Next</div>`;
+        if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?topicname=`+ encodeURIComponent(topicname)+`&start=`+(start-25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateTopic(`+(start-25)+`,`+limit+`,'`+unicodeEscape(topicname)+`')">Back | </a> `;
+        navbuttons+=`<a class="back" href="#`+page+`?topicname=`+ encodeURIComponent(topicname)+`&start=`+(start+25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateTopic(`+(start+25)+`,`+limit+`,'`+unicodeEscape(topicname)+`')">Next</div>`;
     getJSON(server+'?action='+page+'&topicname='+encodeURIComponent(topicname)+'&start='+start+'&limit='+limit).then(function(data) {
         var contents="";        
         contents=contents+`<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
@@ -49,7 +50,7 @@ function getHTMLForPost(data,rank){
                 <td class="title" valign="top" align="right"><span class="rank">`+rank+`.</span></td>
                 <td class="votelinks" valign="top"><center><a href="javascript:;" onclick="likePost('`+ds(data.txid)+`')"><div id="upvote`+ds(data.txid)+`" class="votearrow" title="upvote"></div></a></center></td>
                 <td class="title"><a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+anchorme(ds(data.message),{attributes:[{name:"target",value:"_blank"}]})+`</a> `+
-                (data.topic==''?"":`<a href="#topic?topicname=`+encodeURIComponent(data.topic)+`&start=0&limit=25" onclick="showTopic(0,25,'`+ds(data.topic)+`')">(`+ds(data.topic)+`)</a>`)+
+                (data.topic==''?"":`<a href="#topic?topicname=`+encodeURIComponent(data.topic)+`&start=0&limit=25" onclick="showTopic(0,25,'`+unicodeEscape(data.topic)+`')">(`+ds(data.topic)+`)</a>`)+
             `</td>
             </tr>
             <tr>
