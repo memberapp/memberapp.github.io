@@ -69,6 +69,7 @@ function sanitizeAlphanumeric(input){
 }
 
 function unicodeEscape(str) {
+  if(str==undefined)return "";
   var result = '', index = 0, charCode, escape;
   while (!isNaN(charCode = str.charCodeAt(index++))) {
     escape = charCode.toString(16);
