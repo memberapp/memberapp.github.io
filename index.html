@@ -20,11 +20,12 @@
     <script src="js/follows.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/member.js"></script>
+    <script src="js/transactions.js"></script>
     <script src="js/anchorme.min.js"></script>
     <script src='js/datacash.nonmin.js'></script>
 
-    
-    
+
+
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
@@ -49,6 +50,7 @@
                                             <a id="feedbutton" class="btn" href="#feed?start=0&amp;limit=25" onclick="showFeed(0,25);">my feed</a> |
                                             <a id="postsbutton" class="btn" href="#posts?start=0&amp;limit=25" onclick="showPosts(0,25);">posts</a> |
                                             <a id="commentsbutton" class="btn" href="#comments?start=0&amp;limit=25" onclick="showComments(0,25);">comments</a> |
+                                            <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new</a> |
                                             <a id="settingsbutton" class="btn" href="#settings" onclick="showSettings();">settings</a> |
                                             <a id="logoutbutton" class="btn" href="#logout" onclick="logout();">logout</a>
                                         </span>
@@ -68,6 +70,30 @@
                 <tr style="height:10px"></tr>
                 <tr>
                     <td>
+                        <div id="newpost" style="display: none;">
+                            <table class="table left">
+                                <tbody>
+                                    <tr>
+                                        <td>text</td>
+                                        <td>
+                                            <textarea id="newpostta" maxlength="217" name="text" rows="4" cols="60"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <input id="newpostbutton" value="post" type="submit" onclick="post();">
+                                        </td>
+                                    </tr>
+                                    <tr style="height:20px"></tr>
+                                </tbody>
+                            </table>
+
+                        </div>
 
                         <div id="topic" style="display: none;">
                         </div>
@@ -133,7 +159,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    
+
                                     <tr style="height:10px"></tr>
                                     <tr style="height:10px"></tr>
                                 </tbody>
@@ -191,6 +217,14 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                            <th>Follow</th>
+                                            <td>
+                                                <a id="settingsfollow">
+                                                    <i>loading</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <tr>
                                         <th>Server</th>
                                         <td>
                                             <select>
@@ -207,7 +241,7 @@
                             </table>
                         </div>
 
-                        <div id="memberposts" style="display: none;">                            
+                        <div id="memberposts" style="display: none;">
                         </div>
 
                         <div id="followers" style="display: none;">
@@ -242,7 +276,7 @@
 
                         <div id="posts" style="display: none;">
                         </div>
-                        
+
                         <div id="comments" style="display: none;">
                         </div>
 
@@ -264,12 +298,13 @@
                                             key never leaves the client side and any private key can be used.
                                             <br/>
                                             <br/>This proof of concept (
-                                            <a href="https://github.com/memberapp/memberapp.github.io">client source</a>) displays a user's feed and posts/replies in a hacker news style.
-                                            Member will shortly support
+                                            <a href="https://github.com/memberapp/memberapp.github.io">client source</a>) displays a user's feed and posts/replies in a hacker news
+                                            style. Member will shortly support
                                             <a href="https://steemit.com/memo/@freetrade/memo-s-reputation-system-proposal">reputation extensions to the memo protocol</a>.
                                             <br/>
                                             <br/>
-                                            <br/>You can login with a private (Compressed WIF format) or public Bitcoin Cash key (any format).
+                                            <br/>You can login with a private (Compressed WIF format) or public Bitcoin Cash key
+                                            (any format).
                                             <br/>
                                             <br/>
                                             <input size="64" id="loginkey"></input>
@@ -335,7 +370,7 @@
     </center>
 
     <script>
-        var bch=datacash.bch;
+        var bch = datacash.bch;
         init();
     </script>
     <div id="status"></div>

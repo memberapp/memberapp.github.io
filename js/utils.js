@@ -50,3 +50,13 @@ var getJSON = function(url) {
     input = input.replace(/>/g, '&gt;');
     return input;
 }
+
+function updateStatus(message){
+  document.getElementById("status").innerHTML = message;
+}
+
+function toHexString(byteArray) {
+  return Array.from(byteArray, function(byte) {
+    return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+  }).join('')
+}
