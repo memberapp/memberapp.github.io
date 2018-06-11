@@ -1,6 +1,6 @@
 function getAndPopulateThread(roottxid){
     show('thread');
-    getJSON(server+'?action=thread&txid='+roottxid).then(function(data) {
+    getJSON(server+'?action=thread&address='+pubkey+'&txid='+roottxid).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
             if(data[i].txid==roottxid){

@@ -53,7 +53,7 @@ var build = function(options, callback) {
       }
 
       tx.fee(400).change(address);
-      var estSize=Math.ceil(tx._estimateSize()*1.2);
+      var estSize=Math.ceil(tx._estimateSize()*1.4);
       tx.fee(estSize);
 
       //Check all the outputs for dust
@@ -63,8 +63,16 @@ var build = function(options, callback) {
           i--;
         }
       }
-      
       let transaction = tx.sign(privateKey);
+      
+      /*
+      //Check transaction fee is sufficient
+      var trxString=transaction..toString();
+      var trxLength=trxString.length;
+      if(trxLength/estSize<1){
+        tx.fee(trxLength);
+        transaction = tx.sign(privateKey);
+      }*/
       callback(null, transaction);
     })
   } else {

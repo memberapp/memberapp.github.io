@@ -26,7 +26,7 @@ function getAndPopulateTopic(start,limit,topicname){
     var navbuttons=`<div class="navbuttons">`;
         if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?topicname=`+ encodeURIComponent(topicname)+`&start=`+(start-25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateTopic(`+(start-25)+`,`+limit+`,'`+unicodeEscape(topicname)+`')">Back | </a> `;
         navbuttons+=`<a class="back" href="#`+page+`?topicname=`+ encodeURIComponent(topicname)+`&start=`+(start+25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateTopic(`+(start+25)+`,`+limit+`,'`+unicodeEscape(topicname)+`')">Next</div>`;
-    getJSON(server+'?action='+page+'&topicname='+encodeURIComponent(topicname)+'&start='+start+'&limit='+limit).then(function(data) {
+    getJSON(server+'?action='+page+'&address='+pubkey+'&topicname='+encodeURIComponent(topicname)+'&start='+start+'&limit='+limit).then(function(data) {
         var contents="";        
         contents=contents+`<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
         for(var i=0;i<data.length;i++){

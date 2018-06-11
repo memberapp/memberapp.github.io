@@ -64,6 +64,11 @@ function getAndPopulateMember(qaddress){
         }else{
             document.getElementById('memberfollow').innerHTML = "<a href='javascript:;' onclick='unfollow("+escaped+");'>unfollow</a>";
         }
+        if(ds(data[0].isblocked)=="0"){
+            document.getElementById('memberblock').innerHTML = "<a href='javascript:;' onclick='block("+escaped+");'>block</a>";
+        }else{
+            document.getElementById('memberblock').innerHTML = "<a href='javascript:;' onclick='unblock("+escaped+");'>unblock</a>";
+        }
     }, function(status) { //error detection....
         alert('Something went wrong.');
     });
