@@ -116,5 +116,34 @@ function unfollow(qaddress){
       datacash.send(tx, afterTransaction);
 }
 
+function block(qaddress){
+    if(!checkForPrivKey())return false;
+
+    document.getElementById('memberblock').style.display = "none";
+    var addressraw=toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
+    addressraw=addressraw.substring(0,addressraw.length-8);
+
+    const tx = {
+        data: ["0x6da6","0x"+addressraw],
+        cash: { key: privkey }
+      }
+      updateStatus("Sending Block");
+      datacash.send(tx, afterTransaction);
+}
+
+function unblock(qaddress){
+    if(!checkForPrivKey())return false;
+
+    document.getElementById('memberblock').style.display = "none";
+    var addressraw=toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
+    addressraw=addressraw.substring(0,addressraw.length-8);
+
+    const tx = {
+        data: ["0x6da7","0x"+addressraw],
+        cash: { key: privkey }
+      }
+      updateStatus("Sending unblock");
+      datacash.send(tx, afterTransaction);
+}
 
 

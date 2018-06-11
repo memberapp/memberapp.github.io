@@ -37,6 +37,7 @@ function showMember(qaddress){
     getAndPopulate(0,25,'memberposts',qaddress);
     document.getElementById('member').style.display="block";
     document.getElementById('memberfollow').style.display = "block";
+    document.getElementById('memberblock').style.display= "block";
 }
 
 function showMemberPosts(start,limit,qaddress){
