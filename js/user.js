@@ -13,7 +13,14 @@ function getAndPopulateSettings(){
         document.getElementById('followersnumber').onclick = function(){showFollowers(pubkey);}; 
         document.getElementById('followingnumber').innerText = ds(data[0].following); 
         document.getElementById('followingnumber').href = "#following?address="+pubkey; 
-        document.getElementById('followingnumber').onclick = function(){showFollowing(pubkey);}; 
+        document.getElementById('followingnumber').onclick = function(){showFollowing(pubkey);};
+        document.getElementById('blockersnumber').innerText = ds(data[0].blockers); 
+        document.getElementById('blockersnumber').href = "#blockers?address="+pubkey; 
+        document.getElementById('blockersnumber').onclick = function(){showBlockers(pubkey);}; 
+        document.getElementById('blockingnumber').innerText = ds(data[0].blocking); 
+        document.getElementById('blockingnumber').href = "#blocking?address="+pubkey; 
+        document.getElementById('blockingnumber').onclick = function(){showBlocking(pubkey);};
+         
         document.getElementById('nametext').innerText = ds(data[0].name); 
         document.getElementById('profiletext').innerText = ds(data[0].profile); 
         var escaped='"'+pubkey+'"'; 
@@ -55,7 +62,13 @@ function getAndPopulateMember(qaddress){
         document.getElementById('memberfollowingnumber').innerText = ds(data[0].following); 
         document.getElementById('memberfollowingnumber').href = "#following?qaddress="+qaddress; 
         document.getElementById('memberfollowingnumber').onclick = function(){showFollowing(qaddress);}; 
-        
+        document.getElementById('memberblockersnumber').innerText = ds(data[0].blockers); 
+        document.getElementById('memberblockersnumber').href = "#blockers?address="+pubkey; 
+        document.getElementById('memberblockersnumber').onclick = function(){showBlockers(pubkey);}; 
+        document.getElementById('memberblockingnumber').innerText = ds(data[0].blocking); 
+        document.getElementById('memberblockingnumber').href = "#blocking?address="+pubkey; 
+        document.getElementById('memberblockingnumber').onclick = function(){showBlocking(pubkey);};
+
         document.getElementById('membernametext').innerText = ds(data[0].name); 
         document.getElementById('memberprofiletext').innerText = ds(data[0].profile);
         var escaped='"'+qaddress+'"'; 
