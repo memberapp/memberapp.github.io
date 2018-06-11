@@ -18,6 +18,7 @@
     <script src="js/thread.js"></script>
     <script src="js/user.js"></script>
     <script src="js/follows.js"></script>
+    <script src="js/blocks.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/member.js"></script>
     <script src="js/transactions.js"></script>
@@ -158,6 +159,23 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>Blockers</th>
+                                        <td>
+                                            <a id="memberblockersnumber">
+                                                <i>loading</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Blocking</th>
+                                        <td>
+                                            <a id="memberblockingnumber">
+                                                <i>loading</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
                                         <th>Block</th>
                                         <td>
                                             <a id="memberblock">
@@ -222,14 +240,30 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                            <th>Follow</th>
+                                        <th>Follow</th>
+                                        <td>
+                                            <a id="settingsfollow">
+                                                <i>loading</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <tr>
+                                            <th>Blockers</th>
                                             <td>
-                                                <a id="settingsfollow">
+                                                <a id="blockersnumber">
                                                     <i>loading</i>
                                                 </a>
                                             </td>
                                         </tr>
-                                    <tr>
+                                        <tr>
+                                            <th>Blocking</th>
+                                            <td>
+                                                <a id="blockingnumber">
+                                                    <i>loading</i>
+                                                </a>
+                                            </td>
+                                        </tr>
                                         <th>Server</th>
                                         <td>
                                             <select>
@@ -275,6 +309,36 @@
                                     </tr>
                                 </thead>
                                 <tbody id="followingtable">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="blockers" style="display: none;">
+                            <h2>Blockers</h2>
+                            <br/>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="blocks">
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="blocking" style="display: none;">
+                            <h2>Blocking</h2>
+                            <br/>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="blockingtable">
                                 </tbody>
                             </table>
                         </div>

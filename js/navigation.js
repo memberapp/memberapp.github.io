@@ -5,7 +5,9 @@ function hideAll(){
     document.getElementById('settings').style.display="none";
     document.getElementById('loginbox').style.display="none";
     document.getElementById('followers').style.display="none";
-    document.getElementById('following').style.display="none"; 
+    document.getElementById('following').style.display="none";
+    document.getElementById('blockers').style.display="none";
+    document.getElementById('blocking').style.display="none";
     document.getElementById('thread').style.display="none";
     document.getElementById('member').style.display="none";
     document.getElementById('topic').style.display="none";
@@ -72,6 +74,14 @@ function showFollowing(qaddress){
     getAndPopulateFollowing(qaddress);
 }
 
+function showBlockers(qaddress){
+    getAndPopulateBlockers(qaddress);
+}
+
+function showBlocking(qaddress){
+    getAndPopulateBlocking(qaddress);
+}
+
 function displayContentBasedOnURLParameters(){
 
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
@@ -86,6 +96,10 @@ function displayContentBasedOnURLParameters(){
         showFollowers(sanitizeAlphanumeric(getParameterByName("qaddress")));
     }else if(action.startsWith("following")){
         showFollowing(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    }else if(action.startsWith("blockers")){
+        showBlockers(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    }else if(action.startsWith("blocking")){
+        showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
     }else if(action.startsWith("posts")){
         showPosts(Number(getParameterByName("start")),Number(getParameterByName("limit")));
     }else if(action.startsWith("feed")){
