@@ -48,14 +48,17 @@ function getAndPopulateTopic(start,limit,topicname){
 function getHTMLForPost(data,rank){
     return `<tr class="athing">
                 <td class="title" valign="top" align="right"><span class="rank">`+rank+`.</span></td>
-                <td class="votelinks" valign="top"><center><a href="javascript:;" onclick="likePost('`+ds(data.txid)+`')"><div id="upvote`+ds(data.txid)+`" class="votearrow" title="upvote"></div></a></center></td>
+                <td class="votelinks" valign="top" rowspan="2">
+                    <center><a href="javascript:;" onclick="likePost('`+ds(data.txid)+`')"><div id="upvote`+ds(data.txid)+`" class="votearrow" title="upvote"></div></a></center>
+                    <center><a href="javascript:;" onclick="dislikePost('`+ds(data.txid)+`')"><div id="downvote`+ds(data.txid)+`" class="votearrow rotate180" title="downvote"></div></a></center>
+                </td>
                 <td class="title"><a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+anchorme(ds(data.message),{attributes:[{name:"target",value:"_blank"}]})+`</a> `+
                 (data.topic==''?"":`<a href="#topic?topicname=`+encodeURIComponent(data.topic)+`&start=0&limit=25" onclick="showTopic(0,25,'`+unicodeEscape(data.topic)+`')">(`+ds(data.topic)+`)</a>`)+
             `</td>
             </tr>
             <tr>
-                <td colspan="2"></td>
-                <td class="subtext"><span class="score">`+ds(data.likes)+` likes and `+ds(data.tips)+` sats</span> by <a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a> <span class="age"><a>`+timeSince(data.firstseen)+`</a></span> | <a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a>
+                <td></td>
+                <td class="subtext"><span class="score">`+(ds(data.likes)-ds(data.dislikes))+` likes and `+ds(data.tips)+` sats</span> by <a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a> <span class="age"><a>`+timeSince(ds(data.firstseen))+`</a></span> | <a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a>
                 | <a id="replylink`+ds(data.txid)+`" onclick="showReplyBox('`+ds(data.txid)+`');" href="javascript:;">reply</a>
                 | <a id="tiplink`+ds(data.txid)+`" onclick="showTipBox('`+ds(data.txid)+`');" href="javascript:;">tip</a> <span id="tipbox`+ds(data.txid)+`" style="display:none"><input id="tipamount`+ds(data.txid)+`" type="number" value="0" min="0" style="width: 6em;" step="1000"><input value="tip"  type="submit" onclick="sendTip('`+ds(data.txid)+`','`+ds(data.address)+`');"></span>
                  </td>
@@ -75,8 +78,11 @@ function getHTMLForReply(data,depth){
     return `<tr class="athing comtr "><td>
             <table border="0"><tbody><tr>
                 <td class="ind"><img src="s.gif" width="`+depth+`" height="1"></td>
-                <td class="votelinks" valign="top"><center><a href="javascript:;" onclick="likePost('`+ds(data.txid)+`')"><div id="upvote`+ds(data.txid)+`" class="votearrow" title="upvote"></div></a></center></td>
-                <td class="default"><div style="margin-top:2px; margin-bottom:-10px;"><span class="comhead"><a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a> <span class="score">`+ds(data.likes)+` likes and `+ds(data.tips)+` sats</span> <span class="age"><a>`+timeSince(data.firstseen)+`</a></span> <span></span><span class="par"></span> <a class="togg" n="8" >[-]</a><span class="storyon"></span></span></div><br/><div class="comment"><span class="c00"><p>`+anchorme(ds(data.message),{attributes:[{name:"target",value:"_blank"}]})+`</p>
+                <td class="votelinks" valign="top">
+                    <center><a href="javascript:;" onclick="likePost('`+ds(data.txid)+`')"><div id="upvote`+ds(data.txid)+`" class="votearrow" title="upvote"></div></a></center>
+                    <center><a href="javascript:;" onclick="dislikePost('`+ds(data.txid)+`')"><div id="downvote`+ds(data.txid)+`" class="votearrow rotate180" title="downvote"></div></a></center>
+                </td>
+                <td class="default"><div style="margin-top:2px; margin-bottom:-10px;"><span class="comhead"><a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a> <span class="score">`+(ds(data.likes)-ds(data.dislikes))+` likes and `+ds(data.tips)+` sats</span> <span class="age"><a>`+timeSince(ds(data.firstseen))+`</a></span> <span></span><span class="par"></span> <a class="togg" n="8" >[-]</a><span class="storyon"></span></span></div><br/><div class="comment"><span class="c00">`+anchorme(ds(data.message),{attributes:[{name:"target",value:"_blank"}]})+`
                 <div class="reply">
                 <font size="1">  <u><a id="replylink`+ds(data.txid)+`" onclick="showReplyBox('`+ds(data.txid)+`');" href="javascript:;">reply</a></u></font>
                 <font size="1">| <u><a id="tiplink`+ds(data.txid)+`" onclick="showTipBox('`+ds(data.txid)+`');" href="javascript:;">tip</a></u></font> <span id="tipbox`+ds(data.txid)+`" style="display:none"><input id="tipamount`+ds(data.txid)+`" type="number" value="0" min="0" style="width: 6em;" step="1000"><input value="tip"  type="submit" onclick="sendTip('`+ds(data.txid)+`','`+ds(data.address)+`');"></span>
