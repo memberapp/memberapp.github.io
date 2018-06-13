@@ -159,3 +159,19 @@ function dislikePost(txid){
       datacash.send(tx, afterTransaction);
 }
 
+function rateUser(qaddress,rating){
+    if(!checkForPrivKey())return false;
+
+    var addressraw=toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
+    addressraw=addressraw.substring(0,addressraw.length-8);
+
+    var hexRating="0x"+toHexString([rating]);
+    const tx = {
+        data: ["0x6da5","0x"+addressraw,hexRating],
+        cash: { key: privkey }
+      }
+      updateStatus("Sending Rating");
+      datacash.send(tx, afterTransaction);
+    return true;
+}
+

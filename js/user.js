@@ -9,16 +9,16 @@ function getAndPopulateSettings(){
         var contents="";
         contents=contents+`<h2>New Posts</h2>`
         document.getElementById('followersnumber').innerText = ds(data[0].followers); 
-        document.getElementById('followersnumber').href = "#followers?address="+pubkey; 
+        document.getElementById('followersnumber').href = "#followers?qaddress="+pubkey; 
         document.getElementById('followersnumber').onclick = function(){showFollowers(pubkey);}; 
         document.getElementById('followingnumber').innerText = ds(data[0].following); 
-        document.getElementById('followingnumber').href = "#following?address="+pubkey; 
+        document.getElementById('followingnumber').href = "#following?qaddress="+pubkey; 
         document.getElementById('followingnumber').onclick = function(){showFollowing(pubkey);};
         document.getElementById('blockersnumber').innerText = ds(data[0].blockers); 
-        document.getElementById('blockersnumber').href = "#blockers?address="+pubkey; 
+        document.getElementById('blockersnumber').href = "#blockers?qaddress="+pubkey; 
         document.getElementById('blockersnumber').onclick = function(){showBlockers(pubkey);}; 
         document.getElementById('blockingnumber').innerText = ds(data[0].blocking); 
-        document.getElementById('blockingnumber').href = "#blocking?address="+pubkey; 
+        document.getElementById('blockingnumber').href = "#blocking?qaddress="+pubkey; 
         document.getElementById('blockingnumber').onclick = function(){showBlocking(pubkey);};
          
         document.getElementById('nametext').innerText = ds(data[0].name); 
@@ -63,10 +63,10 @@ function getAndPopulateMember(qaddress){
         document.getElementById('memberfollowingnumber').href = "#following?qaddress="+qaddress; 
         document.getElementById('memberfollowingnumber').onclick = function(){showFollowing(qaddress);}; 
         document.getElementById('memberblockersnumber').innerText = ds(data[0].blockers); 
-        document.getElementById('memberblockersnumber').href = "#blockers?address="+pubkey; 
+        document.getElementById('memberblockersnumber').href = "#blockers?qaddress="+pubkey; 
         document.getElementById('memberblockersnumber').onclick = function(){showBlockers(pubkey);}; 
         document.getElementById('memberblockingnumber').innerText = ds(data[0].blocking); 
-        document.getElementById('memberblockingnumber').href = "#blocking?address="+pubkey; 
+        document.getElementById('memberblockingnumber').href = "#blocking?qaddress="+pubkey; 
         document.getElementById('memberblockingnumber').onclick = function(){showBlocking(pubkey);};
 
         document.getElementById('membernametext').innerText = ds(data[0].name); 
@@ -82,10 +82,46 @@ function getAndPopulateMember(qaddress){
         }else{
             document.getElementById('memberblock').innerHTML = "<a href='javascript:;' onclick='unblock("+escaped+");'>unblock</a>";
         }
+
+        var theRating=0;if(data[0].rating!=null){theRating=(ds(data[0].rating)/64)+1;}
+        var starRating1 = raterJs( {
+            starSize:24,
+            rating:theRating,
+            element:document.querySelector("#memberrating"),
+            rateCallback:function rateCallback(rating, done) {
+                rateCallbackAction(rating, this);
+                done(); 
+            }
+        });
+        starRating1.theAddress=qaddress;
+        
+
     }, function(status) { //error detection....
         alert('Something went wrong.');
     });
 }
 
-
-
+function rateCallbackAction(rating, that) {
+    var qaddress=that.theAddress;
+    var transposed=0;
+    switch (rating) {
+        case 1:
+            transposed=1;
+            break;
+        case 2:
+            transposed=64;
+            break;
+        case 3:
+            transposed=128;
+            break;
+        case 4:
+            transposed=192; 
+            break;
+        case 5:
+            transposed=255;
+            break;
+    }
+    if(rateUser(qaddress,transposed)){ 
+        that.setRating(rating);
+    }
+}
