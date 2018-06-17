@@ -203,13 +203,13 @@
                                 <tbody>
                                     <tr>
                                         <th>Name</th>
-                                        <td id='nametext'>
+                                        <td id='settingsnametext'>
                                             <i>loading</i>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Profile</th>
-                                        <td id='profiletext'>
+                                        <td id='settingsprofiletext'>
                                             <i>loading</i>
                                         </td>
                                     </tr>
@@ -234,7 +234,7 @@
                                     <tr>
                                         <th>Followers</th>
                                         <td>
-                                            <a id="followersnumber">
+                                            <a id="settingsfollowersnumber">
                                                 <i>loading</i>
                                             </a>
                                         </td>
@@ -242,7 +242,7 @@
                                     <tr>
                                         <th>Following</th>
                                         <td>
-                                            <a id="followingnumber">
+                                            <a id="settingsfollowingnumber">
                                                 <i>loading</i>
                                             </a>
                                         </td>
@@ -259,7 +259,7 @@
                                         <tr>
                                             <th>Blockers</th>
                                             <td>
-                                                <a id="blockersnumber">
+                                                <a id="settingsblockersnumber">
                                                     <i>loading</i>
                                                 </a>
                                             </td>
@@ -267,37 +267,44 @@
                                         <tr>
                                             <th>Blocking</th>
                                             <td>
-                                                <a id="blockingnumber">
+                                                <a id="settingsblockingnumber">
                                                     <i>loading</i>
                                                 </a>
                                             </td>
                                         </tr>
-                                        <th>Server</th>
-                                        <td>
-                                            <select>
-                                                <option value="https://server1.com/memberserver">Server 1</option>
-                                                <option value="https://server2.com/memberserver">Server 2</option>
-                                                <option value="https://server3.com/memberserver">Server 3</option>
-                                                <option value="https://server4.com/memberserver">Server 4</option>
-                                            </select>
-                                        </td>
                                     </tr>
                                     <tr style="height:10px"></tr>
                                     <tr style="height:10px"></tr>
                                 </tbody>
                             </table>
                         </div>
+                        
+                        <div id="ratings" style="display: none;">
+                            <h2>Ratings</h2>
+                            <br/>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Rating</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ratingtable">
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div id="memberposts" style="display: none;">
                         </div>
-
+                        
                         <div id="followers" style="display: none;">
                             <h2>Followers</h2>
                             <br/>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Your Rating</th>
+                                        <th>Rating</th>
                                         <th>Name</th>
                                         <th>Address</th>
                                     </tr>
@@ -313,7 +320,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Your Rating</th>
+                                        <th>Rating</th>
                                         <th>Name</th>
                                         <th>Address</th>
                                     </tr>
