@@ -13,6 +13,7 @@ function hideAll(){
     document.getElementById('topic').style.display="none";
     document.getElementById('memberposts').style.display="none";
     document.getElementById('newpost').style.display="none";
+    document.getElementById('ratings').style.display="none";
 }
 
 function show(theDiv){
@@ -25,7 +26,7 @@ function showSettings(){
     getAndPopulate(0,25,'memberposts',pubkey);
     document.getElementById('settings').style.display="block";
     document.getElementById('settingsfollow').style.display = "block";
-    
+    document.getElementById('ratings').style.display = "block"; 
 }
 
 function showNewPost(){
@@ -40,6 +41,7 @@ function showMember(qaddress){
     document.getElementById('member').style.display="block";
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display= "block";
+    document.getElementById('ratings').style.display = "block";
 }
 
 function showMemberPosts(start,limit,qaddress){
