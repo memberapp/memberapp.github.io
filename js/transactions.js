@@ -35,27 +35,33 @@ function post(){
       datacash.send(tx, afterTransaction);      
 }
 
-function sendReply(txid){
+function sendReply(txid,page){
     if(!checkForPrivKey())return false;
 
-    document.getElementById('replybutton'+txid).style.display = "none";
+    document.getElementById("reply"+page+txid).style.display = "none";
+    document.getElementById("replylink"+page+txid).style.display = "block";
+    
     var reversetx=txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
-    var replytext=document.getElementById("replytext"+txid).value;
+    var replytext=document.getElementById("replytext"+page+txid).value;
     const tx = {
         data: ["0x6d03","0x"+reversetx,replytext],
         cash: { key: privkey }
       }
       updateStatus("Sending Reply");
       datacash.send(tx, afterTransaction);
+
 }
 
-function sendTip(txid,tipAddress){
+function sendTip(txid,tipAddress,page){
     if(!checkForPrivKey())return false;
 
-    document.getElementById('tipbox'+txid).style.display = "none";
+    document.getElementById("tipbox"+page+txid).style.display = "none";
+    document.getElementById("tiplink"+page+txid).style.display = "block";
+
+    document.getElementById('tipbox'+page+txid).style.display = "none";
     var reversetx=txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
 
-    var tipAmount=parseInt(document.getElementById("tipamount"+txid).value);
+    var tipAmount=parseInt(document.getElementById("tipamount"+page+txid).value);
     if(tipAmount<546){
         alert("546 (dust) is the minimum tip possible");
         return false;
