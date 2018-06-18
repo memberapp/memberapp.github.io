@@ -88,7 +88,7 @@ function getHTMLForPost(data,rank,page,starindex){
                     | <a id="tiplink`+page+ds(data.txid)+`" onclick="showTipBox('`+page+ds(data.txid)+`');" href="javascript:;">tip</a>
                     <span id="tipbox`+page+ds(data.txid)+`" style="display:none">
                         <input id="tipamount`+page+ds(data.txid)+`" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
-                        <input value="tip"  type="submit" onclick="sendTip('`+ds(data.txid)+`','`+ds(data.address)+`');"/>
+                        <input value="tip"  type="submit" onclick="sendTip('`+ds(data.txid)+`','`+ds(data.address)+`','`+ds(page)+`');"/>
                     </span>
                  </td>
             </tr>
@@ -97,9 +97,9 @@ function getHTMLForPost(data,rank,page,starindex){
                 <td>
                     <div id="reply`+page+ds(data.txid)+`" style="display:none">
                         <br/>
-                        <textarea maxlength="184" id="replytext`+ds(data.txid)+`" rows="3" cols="60"></textarea>
+                        <textarea maxlength="184" id="replytext`+page+ds(data.txid)+`" rows="3" cols="60"></textarea>
                         <br/><br/>
-                        <input id="replybutton`+ds(data.txid)+`" value="reply" type="submit" onclick="sendReply('`+ds(data.txid)+`');"/>
+                        <input id="replybutton`+page+ds(data.txid)+`" value="reply" type="submit" onclick="sendReply('`+ds(data.txid)+`','`+ds(page)+`');"/>
                     </div>
                 </td>
             </tr>
@@ -136,16 +136,16 @@ function getHTMLForReply(data,depth,page,starindex){
                                 <font size="1">| <u><a id="tiplink`+page+ds(data.txid)+`" onclick="showTipBox('`+page+ds(data.txid)+`');" href="javascript:;">tip</a></u></font>
                                 <span id="tipbox`+page+ds(data.txid)+`" style="display:none">
                                     <input id="tipamount`+page+ds(data.txid)+`" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
-                                    <input value="tip"  type="submit" onclick="sendTip('`+ds(data.txid)+`','`+ds(data.address)+`');"/>
+                                    <input value="tip"  type="submit" onclick="sendTip('`+ds(data.txid)+`','`+ds(data.address)+`','`+ds(page)+`');"/>
                                 </span>
                             </div>
                         </span>
                     </div>
                     <div id="reply`+page+ds(data.txid)+`" style="display:none">
                         <br/>
-                        <textarea maxlength="184" id="replytext`+ds(data.txid)+`" rows="3" cols="60"></textarea>
+                        <textarea maxlength="184" id="replytext`+page+ds(data.txid)+`" rows="3" cols="60"></textarea>
                         <br/><br/>
-                        <input id="replybutton`+ds(data.txid)+`" value="reply" type="submit" onclick="sendReply('`+ds(data.txid)+`');"/>
+                        <input id="replybutton`+page+ds(data.txid)+`" value="reply" type="submit" onclick="sendReply('`+ds(data.txid)+`','`+ds(page)+`');"/>
                     </div>
                 </td>
             </tr></tbody></table>
@@ -157,10 +157,8 @@ function showReplyBox(txid){
         alert("You must login with a private key to reply to posts.");
         return false;
     }
-    var replyElement=document.getElementById("reply"+txid);
-    replyElement.style.display = "block";
-    var replyLinkElement=document.getElementById("replylink"+txid);
-    replyLinkElement.style.display = "none";
+    document.getElementById("reply"+txid).style.display = "block";
+    document.getElementById("replylink"+txid).style.display = "none";
     return true;
 }
 
@@ -171,7 +169,9 @@ function showTipBox(txid){
         alert("You must login with a private key to tip.");
         return false;
     }
-    document.getElementById("tipamount"+txid).value = defaulttip;
+    if(document.getElementById("tipamount"+txid).value ==""){
+        document.getElementById("tipamount"+txid).value = defaulttip;
+    }
     
     document.getElementById("tipbox"+txid).style.display = "block";
     document.getElementById("tiplink"+txid).style.display = "none";
