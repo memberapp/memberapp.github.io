@@ -22,8 +22,10 @@ function getAndPopulate(start,limit,page,qaddress){
 
 function addStarRatings(data,page){
     for(var i=0;i<data.length;i++){
-        var theRating = 0; if (data[i].rating != null) { theRating = (ds(data[i].rating) / 64) + 1; }
         var theAddress=ds(data[i].address);
+        var theElement=document.querySelector("#rating"+i+page+theAddress);
+        if(theElement==undefined)continue;
+        var theRating = 0; if (data[i].rating != null) { theRating = (ds(data[i].rating) / 64) + 1; }
         var starRating1 = raterJs({
                 starSize: 8,
                 rating: theRating,
@@ -72,7 +74,7 @@ function getHTMLForPost(data,rank,page,starindex){
                     <center><a href="javascript:;" onclick="dislikePost('`+ds(data.txid)+`')"><div id="downvote`+ds(data.txid)+`" class="votearrow rotate180" title="downvote"></div></a></center>
                 </td>
                 <td class="title">
-                    <a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+anchorme(ds(data.message),{attributes:[{name:"target",value:"_blank"}]})+`</a> `+
+                    <a href="#thread?root=`+ds(data.roottxid)+`&post=`+ds(data.txid)+`" onclick="showThread('`+ds(data.roottxid)+`','`+ds(data.txid)+`')">`+anchorme(ds(data.message),{attributes:[{name:"target",value:"_blank"}]})+`</a> `+
                     (data.topic==''?"":`<a href="#topic?topicname=`+encodeURIComponent(data.topic)+`&start=0&limit=25" onclick="showTopic(0,25,'`+unicodeEscape(data.topic)+`')">(`+ds(data.topic)+`)</a>`)+
                 `</td>
             </tr>
@@ -83,7 +85,8 @@ function getHTMLForPost(data,rank,page,starindex){
                     by <a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a>
                     <div id="rating`+starindex+page+ ds(data.address) + `"></div>
                     <span class="age"><a>`+timeSince(ds(data.firstseen))+`</a></span> | `
-                    +(((ds(data.replies)-1)>-1)?`<a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | `:``)
+                    //+(((ds(data.replies)-1)>-1)?`<a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | `:``)
+                    +`<a href="#thread?root=`+ds(data.roottxid)+`&post=`+ds(data.txid)+`" onclick="showThread('`+ds(data.roottxid)+`','`+ds(data.txid)+`')">`+(ds(data.replies))+`&nbsp;comments</a> | `
                     +`<a id="replylink`+page+ds(data.txid)+`" onclick="showReplyBox('`+page+ds(data.txid)+`');" href="javascript:;">reply</a>
                     | <a id="tiplink`+page+ds(data.txid)+`" onclick="showTipBox('`+page+ds(data.txid)+`');" href="javascript:;">tip</a>
                     <span id="tipbox`+page+ds(data.txid)+`" style="display:none">

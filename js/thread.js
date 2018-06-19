@@ -1,10 +1,10 @@
-function getAndPopulateThread(roottxid){
+function getAndPopulateThread(roottxid,txid){
     show('thread');
     var pageName='thread';
     getJSON(server+'?action=thread&address='+pubkey+'&txid='+roottxid).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
-            if(data[i].txid==roottxid){
+            if(data[i].txid==txid){
                contents+=`<table class="fatitem" border="0"><tbody>`+getHTMLForPost(data[i],1,pageName,i)+`</tbody></table>`;
                //break;
             }
