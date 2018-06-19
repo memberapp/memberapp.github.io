@@ -64,8 +64,8 @@ function showTopic(start,limit,topicname){
     getAndPopulateTopic(start,limit,topicname);
 }
 
-function showThread(txid){
-    getAndPopulateThread(txid);
+function showThread(roottxid,txid){
+    getAndPopulateThread(roottxid,txid);
 }
 
 function showFollowers(qaddress){
@@ -112,7 +112,7 @@ function displayContentBasedOnURLParameters(){
         //Warning - topicname may contain special characters
         showTopic(Number(getParameterByName("start")),Number(getParameterByName("limit")),getParameterByName("topicname"));
     }else if(action.startsWith("thread")){
-        showThread(sanitizeAlphanumeric(getParameterByName("post")));
+        showThread(sanitizeAlphanumeric(getParameterByName("root")),sanitizeAlphanumeric(getParameterByName("post")));
     }else if(action.startsWith("settings")){
         showSettings();
     }else if(action.startsWith("new")){
