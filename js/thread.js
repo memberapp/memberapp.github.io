@@ -7,9 +7,9 @@ function getAndPopulateThread(roottxid,txid){
             if(data[i].txid==txid){
                contents+=`<table class="fatitem" border="0"><tbody>`+getHTMLForPost(data[i],1,pageName,i)+`</tbody></table>`;
                //break;
-            }
+               contents+=`<table class="comment-tree" border="0"><tbody>`+getNestedPostHTML(data,data[i].txid,0,pageName)+`</tbody></table>`;
+            }           
         }
-        contents+=`<table class="comment-tree" border="0"><tbody>`+getNestedPostHTML(data,roottxid,0,pageName)+`</tbody></table>`;
         document.getElementById('thread').innerHTML = contents; //display the result in an HTML element
         addStarRatings(data,pageName);
         window.scrollTo(0, 0);
