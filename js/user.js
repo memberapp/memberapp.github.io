@@ -50,8 +50,17 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         document.getElementById(pre + 'blockingnumber').href = "#blocking?qaddress=" + qaddress;
         document.getElementById(pre + 'blockingnumber').onclick = function () { showBlocking(qaddress); };
 
-        document.getElementById(pre + 'nametext').innerText = ds(data[0].name);
-        document.getElementById(pre + 'profiletext').innerText = ds(data[0].profile);
+        if(pre=="member"){
+            document.getElementById(pre + 'nametext').innerText = ds(data[0].name);
+            document.getElementById(pre + 'profiletext').innerText = ds(data[0].profile);
+        }else if(pre=="settings"){
+            document.getElementById(pre + 'nametext').value = ds(data[0].name);
+            document.getElementById(pre + 'nametextbutton').disabled=true;
+            document.getElementById(pre + 'profiletext').value = ds(data[0].profile);
+            document.getElementById(pre + 'profiletextbutton').disabled = true;
+        }
+    
+
         var escaped = '"' + pubkey + '"';
         if (ds(data[0].isfollowing) == "0") {
             document.getElementById(pre + 'follow').innerHTML = "<a href='javascript:;' onclick='follow(" + escaped + ");'>follow</a>";
@@ -85,6 +94,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 }
 
 function getAndPopulateMember(qaddress) {
+       
     document.getElementById('memberlegacyformat').innerHTML = qaddress;
     var publicaddress = new bch.Address(qaddress);
     var memberqpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
@@ -99,7 +109,7 @@ function getAndPopulateSettings() {
     document.getElementById('legacyformat').innerHTML = pubkey;
     document.getElementById('cashaddrformat').innerHTML = qpubkey;
     document.getElementById('qrformat').innerHTML = `<img src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + qpubkey + `&amp;choe=UTF-8">`;
-
+    
     getDataCommonToSettingsAndMember(pubkey, "settings");
     getAndPopulateRatings(pubkey);
 }

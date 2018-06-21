@@ -25,7 +25,7 @@
     <script src="js/anchorme.min.js"></script>
     <script src='js/datacash.nonmin.js'></script>
     <script src='js/rating.js'></script>
-    
+
 
     <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
@@ -203,14 +203,18 @@
                                 <tbody>
                                     <tr>
                                         <th>Name</th>
-                                        <td id='settingsnametext'>
-                                            <i>loading</i>
+                                        <td>
+                                            <input size="30" id="settingsnametext" value="loading..." onchange="document.getElementById('settingsnametextbutton').disabled=false;"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                                            <button id="settingsnametextbutton" type="button" onclick="setName();" disabled>update</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Profile</th>
-                                        <td id='settingsprofiletext'>
-                                            <i>loading</i>
+                                        <td>
+                                            <input size="30" id='settingsprofiletext' value="loading..." onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                                            <button id="settingsprofiletextbutton" type="button" onclick="setProfile();" disabled>update</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -278,7 +282,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div id="ratings" style="display: none;">
                             <h2>Ratings</h2>
                             <br/>
@@ -297,7 +301,7 @@
 
                         <div id="memberposts" style="display: none;">
                         </div>
-                        
+
                         <div id="followers" style="display: none;">
                             <h2>Followers</h2>
                             <br/>
