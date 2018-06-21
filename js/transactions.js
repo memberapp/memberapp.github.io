@@ -21,6 +21,21 @@ function afterTransaction(err, res) {
   }        
 }
 
+function setName(){
+    if(!checkForPrivKey())return false;
+
+
+    document.getElementById('settingsnametextbutton').disabled=true;
+    var newName=document.getElementById('settingsnametext').value;
+        
+    const tx = {
+        data: ["0x6d01",newName],
+        cash: { key: privkey }
+      }
+      updateStatus("Setting Name");
+      datacash.send(tx, afterTransaction);      
+}
+
 function post(){
     if(!checkForPrivKey())return false;
 
@@ -91,6 +106,20 @@ function likePost(txid){
       datacash.send(tx, afterTransaction);
 }
 
+function setProfile(){
+    if(!checkForPrivKey())return false;
+
+
+    document.getElementById('settingsprofiletextbutton').disabled=true;
+    var newProfile=document.getElementById('settingsprofiletext').value;
+        
+    const tx = {
+        data: ["0x6d05",newProfile],
+        cash: { key: privkey }
+      }
+      updateStatus("Setting Profile");
+      datacash.send(tx, afterTransaction);      
+}
 
 function follow(qaddress){
     if(!checkForPrivKey())return false;
