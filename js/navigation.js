@@ -48,16 +48,16 @@ function showMemberPosts(start,limit,qaddress){
     getAndPopulate(start,limit,'memberposts',qaddress);
 }
 
-function showFeed(start,limit){
-    getAndPopulate(start,limit,'feed',pubkey);
+function showFeed(start,limit,type){
+    getAndPopulate(start,limit,'feed',pubkey,type);
 }
 
-function showPosts(start,limit){
-    getAndPopulate(start,limit,'posts');
+function showPosts(start,limit,type){
+    getAndPopulate(start,limit,'posts',pubkey,type);
 }
 
-function showComments(start,limit){
-    getAndPopulate(start,limit,'comments');
+function showComments(start,limit,type){
+    getAndPopulate(start,limit,'comments',pubkey,type);
 }
 
 function showTopic(start,limit,topicname){
@@ -103,11 +103,11 @@ function displayContentBasedOnURLParameters(){
     }else if(action.startsWith("blocking")){
         showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
     }else if(action.startsWith("posts")){
-        showPosts(Number(getParameterByName("start")),Number(getParameterByName("limit")));
+        showPosts(Number(getParameterByName("start")),Number(getParameterByName("limit")),sanitizeAlphanumeric(getParameterByName("type")));
     }else if(action.startsWith("feed")){
-        showFeed(Number(getParameterByName("start")),Number(getParameterByName("limit")));
+        showFeed(Number(getParameterByName("start")),Number(getParameterByName("limit")),sanitizeAlphanumeric(getParameterByName("type")));
     }else if(action.startsWith("comments")){
-        showComments(Number(getParameterByName("start")),Number(getParameterByName("limit")));
+        showComments(Number(getParameterByName("start")),Number(getParameterByName("limit")),sanitizeAlphanumeric(getParameterByName("type")));
     }else if(action.startsWith("topic")){
         //Warning - topicname may contain special characters
         showTopic(Number(getParameterByName("start")),Number(getParameterByName("limit")),getParameterByName("topicname"));
