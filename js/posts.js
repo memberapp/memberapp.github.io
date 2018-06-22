@@ -1,10 +1,10 @@
 
-function getAndPopulate(start,limit,page,qaddress){
+function getAndPopulate(start,limit,page,qaddress,type){
     show(page);
     var navbuttons=`<div class="navbuttons">`;
-        if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?start=`+(start-25)+`&limit=`+limit+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start-25)+`,`+limit+`,'`+page+`','`+qaddress+`')">Back | </a> `;
-        navbuttons+=`<a class="back" href="#`+page+`?start=`+(start+25)+`&limit=`+limit+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start+25)+`,`+limit+`,'`+page+`','`+qaddress+`')">Next</div>`;
-    getJSON(server+'?action='+page+'&address='+pubkey+'&qaddress='+qaddress+'&start='+start+'&limit='+limit).then(function(data) {
+        if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?start=`+(start-25)+`&limit=`+limit+`&type=`+type+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start-25)+`,`+limit+`,'`+page+`','`+qaddress+`','`+type+`')">Back | </a> `;
+        navbuttons+=`<a class="back" href="#`+page+`?start=`+(start+25)+`&limit=`+limit+`&type=`+type+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start+25)+`,`+limit+`,'`+page+`','`+qaddress+`','`+type+`')">Next</div>`;
+    getJSON(server+'?action='+page+'&address='+pubkey+'&type='+type+'&qaddress='+qaddress+'&start='+start+'&limit='+limit).then(function(data) {
         var contents="";        
         contents=contents+`<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
         for(var i=0;i<data.length;i++){
