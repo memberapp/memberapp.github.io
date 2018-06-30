@@ -54,6 +54,12 @@ function login(loginkey){
     document.getElementById('loggedin').style.display="inline";
     document.getElementById('loggedout').style.display="none";
     getAndPopulateSettings();
+
+    //Set the saved style if available
+    var style=localStorage.getItem("style");
+    if(style!=undefined && style!=null){
+        changeStyle(style);
+    }
     return;
     
 }
@@ -68,4 +74,9 @@ function logout(){
     document.getElementById('loggedin').style.display="none";
     document.getElementById('loggedout').style.display="block";
     show('loginbox');
+}
+
+function changeStyle(newStyle){
+    localStorage.setItem("style",newStyle);
+    document.getElementById("pagestyle").setAttribute("href", "css/"+newStyle);
 }
