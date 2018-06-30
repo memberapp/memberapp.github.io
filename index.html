@@ -7,7 +7,7 @@
     <title>Member Client</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/functional.css">
+    <link id= "pagestyle" rel="stylesheet" href="css/functional.css">
 </head>
 
 <body>
@@ -235,6 +235,16 @@
                                             <span id="legacyformat">loading</span>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th>Theme</th>
+                                        <td>
+                                            <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value);'>
+                                                <option value="functional.css">Hacker News</option>
+                                                <option value="hnnightmode.css">Hacker News Night Mode</option>
+                                              </select> 
+                                        </td>
+                                    </tr>
+                                    
                                     <tr>
                                         <th>Followers</th>
                                         <td>
