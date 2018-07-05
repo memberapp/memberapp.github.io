@@ -274,3 +274,7 @@ a.morelink {
   input[type="submit"]:hover,
   a.morelink:hover {
     background-color: #282a2e; }
+
+    .highlight {
+      background-color: #030320;
+    }
