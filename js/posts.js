@@ -81,10 +81,9 @@ function getHTMLForPost(data,rank,page,starindex){
             <tr>
                 <td></td>
                 <td class="subtext">
-                    <span class="score">`+(ds(data.likes)-ds(data.dislikes))+` likes and `+ds(data.tips)+` sats</span>
-                    by <a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a>
-                    <div id="rating`+starindex+page+ ds(data.address) + `"></div>
-                    <span class="age"><a>`+timeSince(ds(data.firstseen))+`</a></span> | `
+                    <span class="score">`+(ds(data.likes)-ds(data.dislikes))+` likes and `+ds(data.tips)+` sats</span>`
+                    +(ds(data.name)==""?" ":`by <a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a><div id="rating`+starindex+page+ ds(data.address) + `"></div>`)  
+                    +`<span class="age"><a>`+timeSince(ds(data.firstseen))+`</a></span> | `
                     //+(((ds(data.replies)-1)>-1)?`<a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | `:``)
                     +`<a href="#thread?root=`+ds(data.roottxid)+`&post=`+ds(data.txid)+`" onclick="showThread('`+ds(data.roottxid)+`','`+ds(data.txid)+`')">`+(ds(data.replies))+`&nbsp;comments</a> | `
                     +`<a id="replylink`+page+ds(data.txid)+`" onclick="showReplyBox('`+page+ds(data.txid)+`');" href="javascript:;">reply</a>
@@ -109,9 +108,11 @@ function getHTMLForPost(data,rank,page,starindex){
             <tr class="spacer" style="height:5px"></tr>`;
 }
 
-function getHTMLForReply(data,depth,page,starindex){
+function getHTMLForReply(data,depth,page,starindex,highlighttxid){
     if (data.name==null){data.name=data.address.substring(0,10);}
-    return `<tr class="athing comtr "><td>
+    return `<tr class="athing comtr `
+    +(data.txid==highlighttxid?"highlight":"")+
+    `"><td>
             <table border="0"><tbody><tr>
                 <td class="ind"><img src="s.gif" width="`+depth+`" height="1"/></td>
                 <td class="votelinks" valign="top">
