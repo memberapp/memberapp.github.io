@@ -61,7 +61,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         }
     
 
-        var escaped = '"' + pubkey + '"';
+        var escaped = '"' + qaddress + '"';
         if (ds(data[0].isfollowing) == "0") {
             document.getElementById(pre + 'follow').innerHTML = "<a href='javascript:;' onclick='follow(" + escaped + ");'>follow</a>";
         } else {

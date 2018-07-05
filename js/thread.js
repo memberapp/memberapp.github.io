@@ -4,10 +4,10 @@ function getAndPopulateThread(roottxid,txid){
     getJSON(server+'?action=thread&address='+pubkey+'&txid='+roottxid).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
-            if(data[i].txid==txid){
+            if(data[i].txid==roottxid){
                contents+=`<table class="fatitem" border="0"><tbody>`+getHTMLForPost(data[i],1,pageName,i)+`</tbody></table>`;
                //break;
-               contents+=`<table class="comment-tree" border="0"><tbody>`+getNestedPostHTML(data,data[i].txid,0,pageName)+`</tbody></table>`;
+               contents+=`<table class="comment-tree" border="0"><tbody>`+getNestedPostHTML(data,data[i].txid,0,pageName,txid)+`</tbody></table>`;
             }           
         }
         document.getElementById('thread').innerHTML = contents; //display the result in an HTML element
@@ -18,11 +18,11 @@ function getAndPopulateThread(roottxid,txid){
     });
 }
 
-function getNestedPostHTML(data, targettxid,depth,pageName){
+function getNestedPostHTML(data, targettxid,depth,pageName,highlighttxid){
     var contents="";
     for(var i=0;i<data.length;i++){
         if(data[i].retxid==targettxid){
-            contents=contents+""+getHTMLForReply(data[i],depth,pageName,i)+getNestedPostHTML(data,data[i].txid,depth+20,pageName)+"";
+            contents=contents+""+getHTMLForReply(data[i],depth,pageName,i,highlighttxid)+getNestedPostHTML(data,data[i].txid,depth+20,pageName,highlighttxid)+"";
         }
     }
     contents=contents+"";
