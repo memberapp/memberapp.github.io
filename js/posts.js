@@ -188,9 +188,11 @@ function checkForMutedWords(data){
     for (var i = 0; i < mutedwords.length; i++) {
         if(mutedwords[i]=="")continue;
         var checkfor=mutedwords[i].toLowerCase();
-        if(data.message.toLowerCase().contains(checkfor))return true;
-        if(data.name.toLowerCase().contains(checkfor))return true;
-        if(data.address.toLowerCase().contains(checkfor))return true;
+        if(data.message!=undefined&&data.message.toLowerCase().contains(checkfor))return true;
+        if(data.name!=undefined&&data.name.toLowerCase().contains(checkfor))return true;
+        if(data.address!=undefined&&data.address.toLowerCase().contains(checkfor))return true;
+        if(data.topic!=undefined&&("("+data.topic.toLowerCase()+")").contains(checkfor))return true;
+        
     }
     return false;
 }
