@@ -67,6 +67,7 @@ function getAndPopulateTopic(start,limit,topicname){
 
 
 function getHTMLForPost(data,rank,page,starindex){
+    if(checkForMutedWords(data)) return "";
     return `<tr class="athing">
                 <td class="title" valign="top" align="right"><span class="rank">`+rank+`.</span></td>
                 <td class="votelinks" valign="top" rowspan="2">
@@ -109,6 +110,7 @@ function getHTMLForPost(data,rank,page,starindex){
 }
 
 function getHTMLForReply(data,depth,page,starindex,highlighttxid){
+    if(checkForMutedWords(data)) return "";
     if (data.name==null){data.name=data.address.substring(0,10);}
     return `<tr class="athing comtr `
     +(data.txid==highlighttxid?"highlight":"")+
@@ -182,5 +184,14 @@ function showTipBox(txid){
     return true;
 }
 
-
+function checkForMutedWords(data){
+    for (var i = 0; i < mutedwords.length; i++) {
+        if(mutedwords[i]=="")continue;
+        var checkfor=mutedwords[i].toLowerCase();
+        if(data.message.toLowerCase().contains(checkfor))return true;
+        if(data.name.toLowerCase().contains(checkfor))return true;
+        if(data.address.toLowerCase().contains(checkfor))return true;
+    }
+    return false;
+}
 

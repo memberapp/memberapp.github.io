@@ -7,7 +7,7 @@
     <title>Member Client</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link id= "pagestyle" rel="stylesheet" href="css/functional.css">
+    <link id="pagestyle" rel="stylesheet" href="css/functional.css">
 </head>
 
 <body>
@@ -48,8 +48,16 @@
                                             <a href="https://memberapp.github.io">Member Client</a>
                                         </b>
                                         <span id="loggedin" style="display: none;" class="pagetop">
-                                            <a id="feedbutton" class="btn" href="#feed?type=top&amp;start=0&amp;limit=25" onclick="showFeed(0,25,'top');">feed</a> <a id="feedbutton" class="btn" href="#feed?type=top&amp;start=0&amp;limit=25" onclick="showFeed(0,25,'top');"></a><a id="feedbutton" class="btn" href="#feed?type=new&amp;start=0&amp;limit=25" onclick="showFeed(0,25,'new');">(new)</a> |
-                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');">posts</a> <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');"></a><a id="postsbutton" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'new');">(new)</a> |
+                                            <a id="feedbutton" class="btn" href="#feed?type=top&amp;start=0&amp;limit=25" onclick="showFeed(0,25,'top');">feed</a>
+                                            <a id="feedbutton" class="btn" href="#feed?type=top&amp;start=0&amp;limit=25"
+                                                onclick="showFeed(0,25,'top');"></a>
+                                            <a id="feedbutton" class="btn" href="#feed?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showFeed(0,25,'new');">(new)</a> |
+                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');">posts</a>
+                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'top');"></a>
+                                            <a id="postsbutton" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'new');">(new)</a> |
                                             <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new post</a> |
                                             <a id="settingsbutton" class="btn" href="#settings" onclick="showSettings();">settings</a> |
                                             <a id="logoutbutton" class="btn" href="#logout" onclick="logout();">logout</a>
@@ -57,8 +65,12 @@
                                     </td>
                                     <td style="text-align:right;padding-right:4px;">
                                         <span id="loggedout" class="pagetop">
-                                                <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');">posts</a><a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');"></a> <a id="postsbutton" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'new');">(new)</a> |
-                                                <a id="loginbutton" class="btn" href="#login" onclick="show('loginbox');">login</a>
+                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');">posts</a>
+                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'top');"></a>
+                                            <a id="postsbutton" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'new');">(new)</a> |
+                                            <a id="loginbutton" class="btn" href="#login" onclick="show('loginbox');">login</a>
                                         </span>
                                     </td>
                                 </tr>
@@ -239,10 +251,10 @@
                                             <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value);'>
                                                 <option value="functional.css">Hacker News</option>
                                                 <option value="hnnightmode.css">Hacker News Night Mode</option>
-                                              </select> 
+                                            </select>
                                         </td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <th>Followers</th>
                                         <td>
@@ -268,22 +280,28 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <tr>
-                                            <th>Blockers</th>
-                                            <td>
-                                                <a id="settingsblockersnumber">
-                                                    <i>loading</i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>Blocking</th>
-                                            <td>
-                                                <a id="settingsblockingnumber">
-                                                    <i>loading</i>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        <th>Blockers</th>
+                                        <td>
+                                            <a id="settingsblockersnumber">
+                                                <i>loading</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Blocking</th>
+                                        <td>
+                                            <a id="settingsblockingnumber">
+                                                <i>loading</i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Muted Words<br/>(Comma Separate)</th>
+                                        <td>
+                                            <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60" onchange="document.getElementById('mutedwordsbutton').disabled=false;"
+                                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
+                                            <button id="mutedwordsbutton" type="button" onclick="updatemutedwords();" disabled>update</button>
+                                        </td>
                                     </tr>
                                     <tr style="height:10px"></tr>
                                     <tr style="height:10px"></tr>

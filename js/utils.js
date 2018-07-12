@@ -79,3 +79,5 @@ function unicodeEscape(str) {
   }
   return result;
 }
+
+String.prototype.contains = function (segment) { return this.indexOf(segment) !== -1; };

@@ -1,6 +1,7 @@
 var pubkey="";
 var privkey="";
 var qpubkey="";
+var mutedwords=new Array();
 
 
 function init(){

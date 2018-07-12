@@ -110,6 +110,15 @@ function getAndPopulateSettings() {
     document.getElementById('cashaddrformat').innerHTML = qpubkey;
     document.getElementById('qrformat').innerHTML = `<img src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + qpubkey + `&amp;choe=UTF-8">`;
     
+    if(typeof Storage !== void(0)){
+        mutedwords=localStorage.getItem("mutedwords");
+        if(mutedwords!=undefined&&mutedwords!=null){
+            document.getElementById('mutedwords').value=mutedwords;
+        }
+        mutedwords = mutedwords.split(',');
+    }
+    
+
     getDataCommonToSettingsAndMember(pubkey, "settings");
     getAndPopulateRatings(pubkey);
 }
@@ -137,4 +146,18 @@ function rateCallbackAction(rating, that) {
     if (rateUser(qaddress, transposed)) {
         that.setRating(rating);
     }
+}
+
+function updatemutedwords(){
+
+    document.getElementById('mutedwordsbutton').disabled=true;
+    var commasep=document.getElementById('mutedwords').value;
+    mutedwords = commasep.split(',');
+    for (var i = 0; i < mutedwords.length; i++) {
+        mutedwords[i] = mutedwords[i].trim()
+    }
+    if(typeof Storage !== void(0)){
+        localStorage.setItem("mutedwords",mutedwords);
+    }
+    
 }
