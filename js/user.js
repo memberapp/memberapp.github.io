@@ -111,11 +111,12 @@ function getAndPopulateSettings() {
     document.getElementById('qrformat').innerHTML = `<img src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + qpubkey + `&amp;choe=UTF-8">`;
     
     if(typeof Storage !== void(0)){
-        mutedwords=localStorage.getItem("mutedwords");
-        if(mutedwords!=undefined&&mutedwords!=null){
-            document.getElementById('mutedwords').value=mutedwords;
+        var storedmutedwords=localStorage.getItem("mutedwords");
+        if(storedmutedwords!=undefined&&storedmutedwords!=null){
+            document.getElementById('mutedwords').value=storedmutedwords;
+            mutedwords = storedmutedwords.split(',');
         }
-        mutedwords = mutedwords.split(',');
+        
     }
     
 
