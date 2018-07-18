@@ -38,7 +38,7 @@ function setName(){
 
 function post(){
     if(!checkForPrivKey())return false;
-
+   
     document.getElementById('newpostbutton').style.display = "none";
     var txtarea=document.getElementById('newpostta');
     var posttext=txtarea.value;
@@ -47,6 +47,22 @@ function post(){
         cash: { key: privkey }
       }
       updateStatus("Sending Post");
+      datacash.send(tx, afterTransaction);
+      popupOverlay.hide();
+}
+
+function geopost(lat,long){
+    if(!checkForPrivKey())return false;
+
+    document.getElementById('newgeopostbutton').style.display = "none";
+    var txtarea=document.getElementById('newgeopostta');
+    var posttext=txtarea.value;
+    var geohash=encodeGeoHash(document.getElementById("lat").value,document.getElementById("lon").value);
+    const tx = {
+        data: ["0x6da8",geohash,posttext],
+        cash: { key: privkey }
+      }
+      updateStatus("Sending Geotagged Post");
       datacash.send(tx, afterTransaction);      
 }
 

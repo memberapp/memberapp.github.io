@@ -1,5 +1,6 @@
 
 function getAndPopulate(start,limit,page,qaddress,type){
+    document.getElementById(page).innerHTML ="";
     show(page);
     var navbuttons=`<div class="navbuttons">`;
         if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?start=`+(start-25)+`&limit=`+limit+`&type=`+type+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start-25)+`,`+limit+`,'`+page+`','`+qaddress+`','`+type+`')">Back | </a> `;
@@ -43,6 +44,7 @@ function getAndPopulateTopic(start,limit,topicname){
     //Note topicname may contain hostile code - treat with extreme caution
     var page="topic";
     show(page);
+    document.getElementById(page).innerHTML ="";
     var navbuttons=`<div class="navbuttons">`;
         if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?topicname=`+ encodeURIComponent(topicname)+`&start=`+(start-25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateTopic(`+(start-25)+`,`+limit+`,'`+unicodeEscape(topicname)+`')">Back | </a> `;
         navbuttons+=`<a class="back" href="#`+page+`?topicname=`+ encodeURIComponent(topicname)+`&start=`+(start+25)+`&limit=`+limit+`" onclick="javascript:getAndPopulateTopic(`+(start+25)+`,`+limit+`,'`+unicodeEscape(topicname)+`')">Next</div>`;
@@ -82,7 +84,7 @@ function getHTMLForPost(data,rank,page,starindex){
             <tr>
                 <td></td>
                 <td class="subtext">
-                    <span class="score">`+(ds(data.likes)-ds(data.dislikes))+` likes and `+ds(data.tips)+` sats</span>`
+                    <span class="score">`+(ds(data.likes)-ds(data.dislikes))+` likes and `+ds(data.tips)+` sats </span>`
                     +(ds(data.name)==""?" ":`by <a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a> <div id="rating`+starindex+page+ ds(data.address) + `"></div> `)  
                     +`<span class="age"><a>`+timeSince(ds(data.firstseen))+`</a></span> | `
                     //+(((ds(data.replies)-1)>-1)?`<a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | `:``)
@@ -126,7 +128,7 @@ function getHTMLForReply(data,depth,page,starindex,highlighttxid){
                         <span class="comhead">
                             <a href="#member?qaddress=`+ds(data.address)+`" onclick="showMember('`+ds(data.address)+`')" class="hnuser">`+ds(data.name)+`</a>
                             <div id="rating`+starindex+page+ ds(data.address) + `"></div>
-                            <span class="score">`+(ds(data.likes)-ds(data.dislikes))+` likes and `+ds(data.tips)+` sats</span>
+                            <span class="score">`+(ds(data.likes)-ds(data.dislikes))+` likes and `+ds(data.tips)+` sats </span>
                             <span class="age"><a>`+timeSince(ds(data.firstseen))+`</a></span>
                             <span></span>
                             <span class="par"></span>

@@ -278,3 +278,11 @@ a.morelink {
     .highlight {
       background-color: #030320;
     }
+
+    #map{
+      position: absolute;
+    }
+
+    .bluelighting_content{
+      background: #000000;
+    }

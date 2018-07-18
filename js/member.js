@@ -23,26 +23,3 @@ function init(){
 
 
 
-
-
-
-function maintainListOfValidUTXOs(){
-    //request current UTXOs from server
-    //maintain FIFO list of UTXOs
-}
-
-function postMessage(){
-    //disable button
-    //Check have a UTXO
-    //Encode, sign, message
-    //https://github.com/bitcoincashjs/bitcoincashjs/blob/master/docs/examples.md#create-a-transaction
-    //Send to server
-    //https://blockexplorer.com/tx/send
-    //https://pool.viabtc.com/tools/BCH/broadcast/
-    //if success, clear box,
-    //post status
-    //re-enable button
-    //add UTXOs to list    
-}
-
-

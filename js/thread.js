@@ -1,6 +1,7 @@
-function getAndPopulateThread(roottxid,txid){
-    show('thread');
-    var pageName='thread';
+function getAndPopulateThread(roottxid,txid,pageName){
+    if(pageName!="mapthread")show(pageName);
+
+    document.getElementById(pageName).innerHTML ="";
     getJSON(server+'?action=thread&address='+pubkey+'&txid='+roottxid).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
@@ -10,7 +11,7 @@ function getAndPopulateThread(roottxid,txid){
                contents+=`<table class="comment-tree" border="0"><tbody>`+getNestedPostHTML(data,data[i].txid,0,pageName,txid)+`</tbody></table>`;
             }           
         }
-        document.getElementById('thread').innerHTML = contents; //display the result in an HTML element
+        document.getElementById(pageName).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data,pageName);
         window.scrollTo(0, 0);
     }, function(status) { //error detection....
