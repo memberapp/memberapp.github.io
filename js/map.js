@@ -1,6 +1,8 @@
 var map = null;
 var markersDict = {};
 function getAndPopulateMap() {
+
+    if (map!=null)return;
     var latlng = new google.maps.LatLng(37.8693891,-122.25931);
     //var latlng = new google.maps.LatLng(0, 0);
     var myOptions = {
@@ -101,6 +103,10 @@ var openOverlay = function (roottxid, txid) {
 
 var postMessageHere = function () {
     return function () {
+        var loginhtml="";
+        if(!checkForPrivKey()){
+            loginhtml=`<a id="loginbutton" class="btn" href="#login" onclick="showLogin();">login</a>`;
+        }
         popupOverlay.setHTMLContent(`<div id="newgeopost" class="bgcolor">
         <table class="table left">
             <tbody>
@@ -128,7 +134,7 @@ var postMessageHere = function () {
                         <input id="newgeopostbutton" value="post" type="submit" onclick="geopost();">
                     </td>
                     <td></td>
-                    <td></td>
+                    <td>`+loginhtml+`</td>
                 </tr>
                 <tr style="height:20px"></tr>
             </tbody>

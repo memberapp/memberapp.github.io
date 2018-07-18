@@ -22,6 +22,14 @@ function show(theDiv) {
     document.getElementById(theDiv).style.display = "block";
 }
 
+
+
+function showLogin() {
+    show("loginbox");
+    document.getElementById('loginbox').style.display = "block";
+}
+
+
 function showMap() {
     show("map");
     getAndPopulateMap();
