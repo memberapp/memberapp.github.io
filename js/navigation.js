@@ -36,6 +36,13 @@ function showMap() {
     document.getElementById('map').style.display = "block";
 }
 
+function hideMap() {
+    //show("map");
+    //getAndPopulateMap();
+    document.getElementById('map').style.display = "none";
+}
+
+
 function showSettings() {
     getAndPopulateSettings();
     getAndPopulate(0, 25, 'memberposts', pubkey);

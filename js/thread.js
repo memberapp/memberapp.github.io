@@ -1,7 +1,8 @@
 function getAndPopulateThread(roottxid,txid,pageName){
-    if(pageName!="mapthread")show(pageName);
-
-    document.getElementById(pageName).innerHTML ="";
+    if(pageName!="mapthread"){
+        show(pageName);
+        document.getElementById(pageName).innerHTML ="";
+    }
     getJSON(server+'?action=thread&address='+pubkey+'&txid='+roottxid).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
@@ -14,6 +15,7 @@ function getAndPopulateThread(roottxid,txid,pageName){
         document.getElementById(pageName).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data,pageName);
         window.scrollTo(0, 0);
+        popup.setContent("<div id='mapthread'>"+contents+"</div>");
     }, function(status) { //error detection....
         alert('Something went wrong.');
     });
