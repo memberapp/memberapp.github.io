@@ -197,6 +197,6 @@ pre { max-width: 900px; }
   position: absolute;
 }
 
-.bluelighting_content{
-  background:#f6f6ef;
+.leaflet-popup-content-wrapper {
+  background-color:#f6f6ef;
 }

@@ -283,6 +283,6 @@ a.morelink {
       position: absolute;
     }
 
-    .bluelighting_content{
-      background: #000000;
+    .leaflet-popup-content-wrapper {
+      background-color:#000000;
     }

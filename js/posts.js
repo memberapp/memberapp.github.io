@@ -102,7 +102,7 @@ function getHTMLForPost(data,rank,page,starindex){
                 <td>
                     <div id="reply`+page+ds(data.txid)+`" style="display:none">
                         <br/>
-                        <textarea maxlength="184" id="replytext`+page+ds(data.txid)+`" rows="3" cols="60"></textarea>
+                        <textarea maxlength="184" id="replytext`+page+ds(data.txid)+`" rows="3"  style="width:100%;"></textarea>
                         <br/><br/>
                         <input id="replybutton`+page+ds(data.txid)+`" value="reply" type="submit" onclick="sendReply('`+ds(data.txid)+`','`+ds(page)+`');"/>
                     </div>
@@ -151,7 +151,7 @@ function getHTMLForReply(data,depth,page,starindex,highlighttxid){
                     </div>
                     <div id="reply`+page+ds(data.txid)+`" style="display:none">
                         <br/>
-                        <textarea maxlength="184" id="replytext`+page+ds(data.txid)+`" rows="3" cols="60"></textarea>
+                        <textarea maxlength="184" id="replytext`+page+ds(data.txid)+`" rows="3" rows="3" style="width:100%;"></textarea>
                         <br/><br/>
                         <input id="replybutton`+page+ds(data.txid)+`" value="reply" type="submit" onclick="sendReply('`+ds(data.txid)+`','`+ds(page)+`');"/>
                     </div>

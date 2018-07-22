@@ -26,7 +26,8 @@ function getAndPopulateMap() {
     att2.addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.').setPosition('bottomright').addTo(map);
 
     //Popup for thread related to location
-    popup = L.popup({ autoPan: true, minWidth: 550, maxWidth: getWidth(), maxHeight: getHeight() });
+    //popup = L.popup({ autoPan: true, minWidth: 550, maxWidth: getWidth(), maxHeight: getHeight() });
+    popup = L.popup({ autoPan: true });
     postpopup = L.popup({ autoPan: true });
 
     //Try to zoom to current position
@@ -55,9 +56,6 @@ function openPreview(e) {
 function onMapClick(e) {
 
     var loginhtml = "";
-    //if(!checkForPrivKey()){
-    //    loginhtml=`<a id="loginbutton" class="btn" href="#login" onclick="showLogin();">login</a>`;
-    //}
     var htmlContent = `<div id="newgeopost" class="bgcolor">
     <table class="table left">
         <tbody>
