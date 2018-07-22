@@ -12,8 +12,7 @@ function getAndPopulateMap() {
     //Use attribution control as a close button
     var att = L.control.attribution();
     att.setPrefix("");
-    att.addAttribution('<font size="+3"><a href="#" onclick="hideMap();">X</a></font>').setPosition('topright').addTo(map);
-
+    att.addAttribution(`<font size="+3"><a href="#posts?type=top&amp;start=0&amp;limit=25" onclick="hideMap();showPosts(0,25,'top');">X</a></font>`).setPosition('topright').addTo(map);
     //Load locations onto map when bounds_changed event fires. Only want this to happen one time. 
     map.on('moveend', loadLocationListFromServerAndPlaceOnMap);
 

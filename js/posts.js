@@ -7,11 +7,11 @@ function getAndPopulate(start,limit,page,qaddress,type){
         navbuttons+=`<a class="back" href="#`+page+`?start=`+(start+25)+`&limit=`+limit+`&type=`+type+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start+25)+`,`+limit+`,'`+page+`','`+qaddress+`','`+type+`')">Next</div>`;
     getJSON(server+'?action='+page+'&address='+pubkey+'&type='+type+'&qaddress='+qaddress+'&start='+start+'&limit='+limit).then(function(data) {
         var contents="";        
-        contents=contents+`<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
         for(var i=0;i<data.length;i++){
             contents=contents+getHTMLForPost(data[i],i+1+start,page,i);
         }
-        contents=contents+"<tr><td/><td/><td>"+navbuttons+"</td></tr></tbody></table>";
+        if(contents==""){contents="Nothing in this feed yet";}
+        contents=`<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`+contents+"<tr><td/><td/><td>"+navbuttons+"</td></tr></tbody></table>";
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data,page);
         window.scrollTo(0, 0);

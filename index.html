@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!--  Leaflet (Map) --> 
+    <!--  Leaflet (Map) -->
     <link rel="stylesheet" href="js/leaflet/leaflet.css" />
     <script src="js/leaflet/leaflet.js"></script>
 
@@ -32,7 +32,7 @@
     <script src='js/rating.js'></script>
     <script src='js/geohash.js'></script>
     <script src='js/map.js'></script>
-    
+
     <div id="map" style="width:100%; height:100%;display:none;">
     </div>
     <!--[if lte IE 9]>
@@ -56,17 +56,11 @@
                                             <a href="https://memberapp.github.io">Member Client</a>
                                         </b>
                                         <span id="loggedin" style="display: none;" class="pagetop">
-                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">map</a> | 
+                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">map</a> |
                                             <a id="feedbutton" class="btn" href="#feed?type=top&amp;start=0&amp;limit=25" onclick="showFeed(0,25,'top');">feed</a>
-                                            <a id="feedbutton" class="btn" href="#feed?type=top&amp;start=0&amp;limit=25"
-                                                onclick="showFeed(0,25,'top');"></a>
-                                            <a id="feedbutton" class="btn" href="#feed?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showFeed(0,25,'new');">(new)</a> |
+                                            <a id="feedbuttonnew" class="btn" href="#feed?type=new&amp;start=0&amp;limit=25" onclick="showFeed(0,25,'new');">(new)</a> |
                                             <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');">posts</a>
-                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'top');"></a>
-                                            <a id="postsbutton" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'new');">(new)</a> |
+                                            <a id="postsbuttonnew" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'new');">(new)</a> |
                                             <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new post</a> |
                                             <a id="settingsbutton" class="btn" href="#settings" onclick="showSettings();">settings</a> |
                                             <a id="logoutbutton" class="btn" href="#logout" onclick="logout();">logout</a>
@@ -74,12 +68,9 @@
                                     </td>
                                     <td style="text-align:right;padding-right:4px;">
                                         <span id="loggedout" class="pagetop">
-                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">map</a> | 
+                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">map</a> |
                                             <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');">posts</a>
-                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'top');"></a>
-                                            <a id="postsbutton" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'new');">(new)</a> |
+                                            <a id="postsbutton" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'new');">(new)</a> |
                                             <a id="loginbutton" class="btn" href="#login" onclick="showLogin();">login</a>
                                         </span>
                                     </td>
@@ -114,7 +105,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        
+
 
                         <div id="topic" style="display: none;">
                         </div>
@@ -145,15 +136,15 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>QR Code</th>
-                                        <td>
-                                            <span id="memberqrformat">loading</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <th>Legacy Address</th>
                                         <td>
                                             <span id="memberlegacyformat">loading</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>QR Code</th>
+                                        <td>
+                                            <span id="memberqrformat">loading</span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -244,17 +235,24 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>Legacy Address</th>
+                                        <td>
+                                            <span id="legacyformat">loading</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>QR Code</th>
                                         <td>
                                             <span id="qrformat">loading</span>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Legacy Address</th>
+                                        <th>Private Key</th>
                                         <td>
-                                            <span id="legacyformat">loading</span>
+                                            <span id="privatekey">loading</span>
                                         </td>
                                     </tr>
+                                    
                                     <tr>
                                         <th>Theme</th>
                                         <td>
@@ -307,10 +305,11 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Muted Words<br/>(Comma Separate)</th>
+                                        <th>Muted Words
+                                            <br/>(Comma Separate)</th>
                                         <td>
                                             <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60" onchange="document.getElementById('mutedwordsbutton').disabled=false;"
-                                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
+                                                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
                                             <button id="mutedwordsbutton" type="button" onclick="updatemutedwords();" disabled>update</button>
                                         </td>
                                     </tr>
@@ -439,6 +438,10 @@
                                             <br/>
                                             <div id="loginerror">
                                             </div>
+                                            <br/>
+                                            <br/>
+                                            <button type="button" href="#settings" onclick="createNewAccount();">Create New Account</button>
+                                            <br/>
                                             <br/> You can also login with someone else's public key to see their feed. Try logging
                                             in as
 
@@ -452,11 +455,7 @@
                                             <br/>
                                             <a href="#feed" onclick="trylogin('13asW3EC1eEzqUF1vDwixjqL47x1uPTnx1');">Roger 13asW3EC1eEzqUF1vDwixjqL47x1uPTnx1</a>
                                             <br/>
-                                            <a href="#feed" onclick="trylogin('15VpdK8JTnTXBye25FugQiU2f3VYx1nZTG');">Falkvinge 15VpdK8JTnTXBye25FugQiU2f3VYx1nZTG</a>
-                                            <br/>
                                             <a href="#feed" onclick="trylogin('1F9atW71MzzBXrePBBWhsN5kRDAciRpi1o');">jonald_fyookball 1F9atW71MzzBXrePBBWhsN5kRDAciRpi1o</a>
-                                            <br/>
-                                            <a href="#feed" onclick="trylogin('18EuZ7uw5VNcm2sJAYjRsmfE4cEpK7co2V');">peterrizun 18EuZ7uw5VNcm2sJAYjRsmfE4cEpK7co2V</a>
                                             <br/>
 
                                         </td>
@@ -465,7 +464,7 @@
                             </table>
                         </div>
 
-                        
+
 
                     </td>
                 </tr>

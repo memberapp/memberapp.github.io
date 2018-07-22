@@ -10,7 +10,7 @@ function afterTransaction(err, res) {
     if(err){
         console.log(err);
         updateStatus("Error:"+err);
-        alert("Error:"+err);
+        alert("There was an error processing the transaction required for this action. Make sure you have sufficient funds in your account and try again. Error:"+err);
         return;
     }
   
