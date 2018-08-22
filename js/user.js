@@ -36,7 +36,7 @@ function getAndPopulateRatings(qaddress) {
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
-    document.getElementById('memberrating').innerHTML = "";
+    document.getElementById('memberrating').innerHTML = "<div id='memberrating"+qaddress+"'></div>";
     getJSON(server + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         //alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
         document.getElementById(pre + 'followersnumber').innerText = ds(data[0].followers);
@@ -78,28 +78,19 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             }
 
             var theRating = 0; if (data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
-            if (theRating > 0) {
-                var starRating1 = raterJs({
-                    starSize: 24,
-                    rating: theRating,
-                    element: document.querySelector("#memberrating"),
-                    rateCallback: function rateCallback(rating, done) {
-                        rateCallbackAction(rating, this);
-                        done();
-                    }
-                });
-            }else{
-                var starRating1 = raterJs({
-                    starSize: 24,
-                    element: document.querySelector("#memberrating"),
-                    rateCallback: function rateCallback(rating, done) {
-                        rateCallbackAction(rating, this);
-                        done();
-                    }
-                });
-            }
+            var starRating1 = raterJs({
+                starSize: 24,
+                rating: theRating,
+                element: document.querySelector("#memberrating"+qaddress),
+                rateCallback: function rateCallback(rating, done) {
+                    rateCallbackAction(rating, this);
+                    done();
+                }
+            });
+            //myRating.setRating(theRating);
+
             starRating1.theAddress = qaddress;
-            
+
             document.getElementById(pre + 'trustgraph').innerHTML = `<a href='#trustgraph?member=` + pubkey + `&amp;target=` + qaddress + `' onclick='showTrustGraph("` + pubkey + `","` + qaddress + `");'>Show Trust Graph</a>`;
         }
 
@@ -109,7 +100,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 }
 
 function getAndPopulateMember(qaddress) {
-    document.getElementById('ratingtable').innerHTML ="";
+    document.getElementById('ratingtable').innerHTML = "";
     document.getElementById('memberlegacyformat').innerHTML = qaddress;
     var publicaddress = new bch.Address(qaddress);
     var memberqpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
@@ -121,7 +112,7 @@ function getAndPopulateMember(qaddress) {
 }
 
 function getAndPopulateSettings() {
-    document.getElementById('ratingtable').innerHTML ="";
+    document.getElementById('ratingtable').innerHTML = "";
     document.getElementById('legacyformat').innerHTML = pubkey;
     document.getElementById('cashaddrformat').innerHTML = qpubkey;
     document.getElementById('qrformat').innerHTML = `<a id="qrclicktoshow" onclick="document.getElementById('qrchart').style.display='block';document.getElementById('qrclicktoshow').style.display='none';">Click To Show</a><img id="qrchart" style="display:none;" src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + qpubkey + `&amp;choe=UTF-8">`;
@@ -182,4 +173,8 @@ function updatemutedwords() {
 
 function getMemberLink(address, name) {
     return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(name) + `</a>`;
+}
+
+function getAddressLink(address, name) {
+    return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(address) + `</a>`;
 }

@@ -20,10 +20,10 @@ function getAndPopulateTrustGraph(member, target) {
                 
             if(i==0 && data[i][3]==''){
                 //Direct Rating
-                contents += "<td>" + getMemberLink(data[i][0],data[i][1]) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td align='center'> <div id='trust" + ds(data[i][0]) + ds(data[i][6]) + "'></div>  </td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data[i][6],data[i][7]) + "</td>";
+                contents += "<td>" + getMemberLink(data[i][0],data[i][1]) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='trust" + ds(data[i][0]) + ds(data[i][6]) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data[i][6],data[i][7]) + "</td>";
                 directrating=parseInt(data[i][2]);
             }else{
-                contents += "<td>" + getMemberLink(data[i][0],data[i][1]) + "</td>" + "<td> <img height='16' width='16' src='img/rightarrow.png'/> <div id='trust" + ds(data[i][0]) + ds(data[i][3]) + "'></div> <img height='16' width='16' src='img/rightarrow.png'/> </td>" + "<td align='center'>" + getMemberLink(data[i][3],data[i][4]) + "</td>" + `<td> <img height='16' width='16' src='img/rightarrow.png'/> <div id='trust` + ds(data[i][3]) + ds(data[i][6]) + "'> </div> <img height='16' width='16' src='img/rightarrow.png'/> </td>" + "<td>" + getMemberLink(data[i][6],data[i][7]) + "</td>";
+                contents += "<td>" + getMemberLink(data[i][0],data[i][1]) + "</td>" + "<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust" + ds(data[i][0]) + ds(data[i][3]) + "'></div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td align='center'>" + getMemberLink(data[i][3],data[i][4]) + "</td>" + `<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust` + ds(data[i][3]) + ds(data[i][6]) + "'> </div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data[i][6],data[i][7]) + "</td>";
                 if(i<6){
                     oneRemoveRating+=Math.min(parseInt(data[i][2]),parseInt(data[i][5]));
                     oneRemoveRatingCount++;

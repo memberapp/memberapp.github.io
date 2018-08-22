@@ -7,8 +7,8 @@ function getAndPopulateFollowers(qaddress) {
             contents = contents +
                 `<tr>
                 <td><div id="rating`+i+page+ ds(data[i].address) + `"</div></td>
-                <td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].name) + `</a></td>
-                <td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].address) + `</a></td>
+                <td>`+getMemberLink(data[i].address, ds(data[i].name))+`</td>
+                <td>`+getAddressLink(data[i].address, ds(data[i].name))+`</td>                
                 </tr>`;
         }
 
@@ -29,8 +29,8 @@ function getAndPopulateFollowing(qaddress) {
             contents = contents +
                 `<tr>
                 <td><div id="rating`+i+page+ ds(data[i].address) + `"</div></td>
-                <td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].name) + `</a></td>
-                <td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].address) + `</a></td>
+                <td>`+getMemberLink(data[i].address, ds(data[i].name))+`</td>
+                <td>`+getAddressLink(data[i].address, ds(data[i].name))+`</td>
                 </tr>`;
         }
         document.getElementById('followingtable').innerHTML = contents;
