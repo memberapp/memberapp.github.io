@@ -15,7 +15,7 @@ function getAndPopulateRatings(qaddress) {
 
         for (var i = 0; i < data.length; i++) {
 
-            var theRating = 0; if (data[i].rating != null) { theRating = (ds(data[i].rating) / 64) + 1; }
+            var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
             var theAddress = ds(data[i].address);
             var starRating1 = raterJs({
                 starSize: 24,
@@ -80,14 +80,16 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             var theRating = 0; if (data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
             var starRating1 = raterJs({
                 starSize: 24,
-                rating: theRating,
+                //rating: theRating,
                 element: document.querySelector("#memberrating"+qaddress),
                 rateCallback: function rateCallback(rating, done) {
                     rateCallbackAction(rating, this);
                     done();
                 }
             });
-            //myRating.setRating(theRating);
+            if(theRating!=0){
+                starRating1.setRating(theRating);
+            }
 
             starRating1.theAddress = qaddress;
 
