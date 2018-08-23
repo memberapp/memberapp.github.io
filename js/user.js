@@ -94,8 +94,11 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             }
 
             starRating1.theAddress = qaddress;
-
-            document.getElementById(pre + 'trustgraph').innerHTML = `<a href='#trustgraph?member=` + pubkey + `&amp;target=` + qaddress + `' onclick='showTrustGraph("` + pubkey + `","` + qaddress + `");'>Show Trust Graph</a>`;
+            var tgmember=pubkey;
+            if(tgmember==null || tgmember==''){
+                tgmember="19RyV6XQEww5td2LPWDpK8o5V8at7Vpwgv";
+            }
+            document.getElementById(pre + 'trustgraph').innerHTML = `<a href='#trustgraph?member=` + tgmember + `&amp;target=` + qaddress + `' onclick='showTrustGraph("` + pubkey + `","` + qaddress + `");'>Show Trust Graph</a>`;
         }
 
     }, function (status) { //error detection....
