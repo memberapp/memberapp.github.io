@@ -13,7 +13,11 @@ function getAndPopulateFollowers(qaddress) {
         }
 
         document.getElementById('follows').innerHTML = contents;
-        addStarRatings(data,page);
+        var disable=false;
+        if(qaddress!=pubkey){
+            disable=true;
+        }
+        addStarRatings(data,page,disable);
     }, function (status) { //error detection....
         alert('Something went wrong.');
     });
@@ -35,7 +39,11 @@ function getAndPopulateFollowing(qaddress) {
         }
         document.getElementById('followingtable').innerHTML = contents;
 
-        addStarRatings(data,page);
+        var disable=false;
+        if(qaddress!=pubkey){
+            disable=true;
+        }
+        addStarRatings(data,page,disable);
     }, function (status) { //error detection....
         alert('Something went wrong.');
     });

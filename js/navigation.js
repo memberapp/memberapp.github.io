@@ -43,13 +43,18 @@ function hideMap() {
     document.getElementById('map').style.display = "none";
 }
 
+function showRatings(qaddress) {
+    show("ratings");
+    getAndPopulateRatings(qaddress);
+    document.getElementById('ratings').style.display = "block";
+}
 
 function showSettings() {
     getAndPopulateSettings();
     getAndPopulate(0, 25, 'memberposts', pubkey);
     document.getElementById('settings').style.display = "block";
     document.getElementById('settingsfollow').style.display = "block";
-    document.getElementById('ratings').style.display = "block";
+    //document.getElementById('ratings').style.display = "block";
 }
 
 function showNewPost() {
@@ -64,7 +69,7 @@ function showMember(qaddress) {
     document.getElementById('member').style.display = "block";
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display = "block";
-    document.getElementById('ratings').style.display = "block";
+    //document.getElementById('ratings').style.display = "block";
 }
 
 function showTrustGraph(member,target) {
@@ -130,6 +135,8 @@ function displayContentBasedOnURLParameters() {
         showBlockers(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("blocking")) {
         showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("ratings")) {
+        showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("posts")) {
         showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("feed")) {

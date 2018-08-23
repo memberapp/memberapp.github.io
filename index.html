@@ -218,7 +218,12 @@
                                             <div id="membertrustgraph"></div>
                                         </td>
                                     </tr>
-
+                                    <tr>
+                                        <th>User's Ratings</th>
+                                        <td>
+                                            <div id="memberratings"></div>
+                                        </td>
+                                    </tr>
                                     <tr style="height:10px"></tr>
                                     <tr style="height:10px"></tr>
                                 </tbody>
@@ -319,6 +324,12 @@
                                             <a id="settingsblockingnumber">
                                                 <i>loading</i>
                                             </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Your Ratings</th>
+                                        <td>
+                                            <div id="settingsratings"></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -433,7 +444,7 @@
                                         <td>
                                             <br/>Member is memo transaction browsing software with a client/server architecture.
                                             This design allows the client to be featureful (fat) and the server to be simple
-                                            - just serving requests on the database. It allows users to choose their client
+                                            - just serving requests on the database. This architecture allows users to choose their client
                                             and server separately - maybe choosing a client with particular features, and
                                             a server that is geographically nearby.
                                             <br/>
@@ -442,12 +453,13 @@
                                             <br/>
                                             <br/>This proof of concept (
                                             <a href="https://github.com/memberapp/memberapp.github.io">client source</a>) displays a user's feed and posts/replies in a hacker news
-                                            style. Member will shortly support
-                                            <a href="https://steemit.com/memo/@freetrade/memo-s-reputation-system-proposal">reputation extensions to the memo protocol</a>.
+                                            style. Member also supports reputation extensions to the memo protocol.
                                             <br/>
                                             <br/>
                                             <br/>You can login with a private (Compressed WIF format) or public Bitcoin Cash key
                                             (any format).
+                                            <br/>
+                                            <br/>You can login with your Memo private key (Compressed WIF format) <a href="https://memo.cash/key/export">Click here to get that</a>.
                                             <br/>
                                             <br/>
                                             <input size="64" id="loginkey"></input>

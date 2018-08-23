@@ -21,7 +21,7 @@ function getAndPopulate(start,limit,page,qaddress,type){
 
 }
 
-function addStarRatings(data,page){
+function addStarRatings(data,page,disable){
     for(var i=0;i<data.length;i++){
         var theAddress=ds(data[i].address);
         var theElement=document.querySelector("#rating"+i+page+theAddress);
@@ -29,14 +29,18 @@ function addStarRatings(data,page){
         var theRating = 0; if (data[i].rating != null) { theRating = (ds(data[i].rating) / 64) + 1; }
         var starRating1 = raterJs({
                 starSize: 8,
-                rating: theRating,
+                rating: Math.round( theRating * 10) / 10,
                 element: document.querySelector("#rating"+i+page+theAddress),
+                disableText: 'This user rates '+ds(data[i].name)+' as {rating}/{maxRating}',
                 rateCallback: function rateCallback(rating, done) {
                     rateCallbackAction(rating, this);
                     done();
                 }
             });
         starRating1.theAddress=theAddress;
+        if(disable){
+            starRating1.disable();
+        }
     }
 }
 

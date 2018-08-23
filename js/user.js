@@ -70,6 +70,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'follow').innerHTML = "<a href='javascript:;' onclick='unfollow(" + escaped + ");'>unfollow</a>";
         }
 
+        document.getElementById(pre + 'ratings').innerHTML = `<a href='#ratings?qaddress=` + qaddress + `' onclick='showRatings(` + escaped + `);'>Show Ratings</a>`;
+
         if (qaddress != pubkey) {
             if (ds(data[0].isblocked) == "0") {
                 document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='block(" + escaped + ");'>block</a>";
@@ -110,7 +112,7 @@ function getAndPopulateMember(qaddress) {
     document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block';document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><img id="memberqrchart" style="display:none;" src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + memberqpubkey + `&amp;choe=UTF-8">`;
 
     getDataCommonToSettingsAndMember(qaddress, "member");
-    getAndPopulateRatings(qaddress);
+    //getAndPopulateRatings(qaddress);
 }
 
 function getAndPopulateSettings() {
@@ -131,7 +133,7 @@ function getAndPopulateSettings() {
 
 
     getDataCommonToSettingsAndMember(pubkey, "settings");
-    getAndPopulateRatings(pubkey);
+    //getAndPopulateRatings(pubkey);
 }
 
 function rateCallbackAction(rating, that) {

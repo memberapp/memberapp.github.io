@@ -6,7 +6,19 @@ function checkForPrivKey(){
     return true;
 }
 
+var waitForTransactionToComplete=false;
+
+function sendTransaction(tx, afterTransaction){
+    if(waitForTransactionToComplete){
+        updateStatus("Please wait for the last transaction first.");
+    }else{
+        waitForTransactionToComplete=true;
+        datacash.send(tx, afterTransaction);
+    }
+}
+
 function afterTransaction(err, res) {
+    waitForTransactionToComplete=false;
     if(err){
         console.log(err);
         updateStatus("Error:"+err);
@@ -33,7 +45,7 @@ function setName(){
         cash: { key: privkey }
       }
       updateStatus("Setting Name");
-      datacash.send(tx, afterTransaction);      
+      sendTransaction(tx, afterTransaction);     
 }
 
 function post(){
@@ -47,7 +59,7 @@ function post(){
         cash: { key: privkey }
       }
       updateStatus("Sending Post");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
       popupOverlay.hide();
 }
 
@@ -63,7 +75,7 @@ function geopost(lat,long){
         cash: { key: privkey }
       }
       updateStatus("Sending Geotagged Post");
-      datacash.send(tx, afterTransaction);      
+      sendTransaction(tx, afterTransaction);     
 }
 
 function sendReply(txid,page){
@@ -79,7 +91,7 @@ function sendReply(txid,page){
         cash: { key: privkey }
       }
       updateStatus("Sending Reply");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
 
 }
 
@@ -106,7 +118,7 @@ function sendTip(txid,tipAddress,page){
             }
       }
       updateStatus("Sending Tip");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
 }
 
 function likePost(txid){
@@ -119,7 +131,7 @@ function likePost(txid){
         cash: { key: privkey }
       }
       updateStatus("Sending Like");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
 }
 
 function setProfile(){
@@ -134,7 +146,7 @@ function setProfile(){
         cash: { key: privkey }
       }
       updateStatus("Setting Profile");
-      datacash.send(tx, afterTransaction);      
+      sendTransaction(tx, afterTransaction);      
 }
 
 function follow(qaddress){
@@ -149,7 +161,7 @@ function follow(qaddress){
         cash: { key: privkey }
       }
       updateStatus("Sending Follow");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
 }
 
 function unfollow(qaddress){
@@ -164,7 +176,7 @@ function unfollow(qaddress){
         cash: { key: privkey }
       }
       updateStatus("Sending unfollow");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
 }
 
 function block(qaddress){
@@ -179,7 +191,7 @@ function block(qaddress){
         cash: { key: privkey }
       }
       updateStatus("Sending Block");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
 }
 
 function unblock(qaddress){
@@ -194,7 +206,7 @@ function unblock(qaddress){
         cash: { key: privkey }
       }
       updateStatus("Sending unblock");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
 }
 
 function dislikePost(txid){
@@ -207,7 +219,7 @@ function dislikePost(txid){
         cash: { key: privkey }
       }
       updateStatus("Sending Dislike");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
 }
 
 function rateUser(qaddress,rating){
@@ -222,7 +234,7 @@ function rateUser(qaddress,rating){
         cash: { key: privkey }
       }
       updateStatus("Sending Rating");
-      datacash.send(tx, afterTransaction);
+      sendTransaction(tx, afterTransaction);
     return true;
 }
 
