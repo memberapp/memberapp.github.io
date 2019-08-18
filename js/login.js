@@ -43,6 +43,9 @@ function login(loginkey){
     }else if(loginkey.startsWith("1")||loginkey.startsWith("3")){
         const Address = bch.Address;
         publicaddress = new Address(loginkey);
+    }else{
+        alert("Key not recognized, please use a compressed WIF (starts with 'L' or 'K')");
+        return;
     }
 
     pubkey=publicaddress.toString();

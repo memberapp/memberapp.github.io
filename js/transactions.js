@@ -13,7 +13,7 @@ function sendTransaction(tx, afterTransaction){
         updateStatus("Please wait for the last transaction first.");
     }else{
         waitForTransactionToComplete=true;
-        datacash.send(tx, afterTransaction);
+        MemberBoxSend(tx, afterTransaction);
     }
 }
 
