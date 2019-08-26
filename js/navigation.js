@@ -186,8 +186,8 @@ var detectBackOrForward = function (onBack, onForward) {
 };
 
 window.addEventListener("hashchange", detectBackOrForward(
-    function () { console.log("bk"); displayContentBasedOnURLParameters(); },
-    function () { console.log("fw"); displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
+    function () { displayContentBasedOnURLParameters(); },
+    function () { displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
 ));
 
 function getParameterByName(name, url) {
