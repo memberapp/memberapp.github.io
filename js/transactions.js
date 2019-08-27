@@ -187,7 +187,7 @@ function block(qaddress){
     addressraw=addressraw.substring(0,addressraw.length-8);
 
     const tx = {
-        data: ["0x6da6","0x"+addressraw],
+        data: ["0x6d16","0x"+addressraw],
         cash: { key: privkey }
       }
       updateStatus("Sending Block");
@@ -202,7 +202,7 @@ function unblock(qaddress){
     addressraw=addressraw.substring(0,addressraw.length-8);
 
     const tx = {
-        data: ["0x6da7","0x"+addressraw],
+        data: ["0x6d17","0x"+addressraw],
         cash: { key: privkey }
       }
       updateStatus("Sending unblock");
