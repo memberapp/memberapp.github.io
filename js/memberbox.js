@@ -57,16 +57,22 @@ function MemberBoxSend(options, callback) {
         let outputInfo = await address.utxo(thePublicKey);
         console.log(outputInfo);
         utxos = outputInfo.utxos;
+        if(utxos.length==0){
+          throw Error("Insufficient Funds (No UTXOs)");
+        }
         
         let script = new Script();
-        let script2 = script.encode(_script(script.opcodes.OP_RETURN, options)); 
+        let scriptArray=_script(script.opcodes.OP_RETURN, options);
+        let script2 = script.encode(scriptArray); 
             //[script.opcodes.OP_RETURN, Buffer.from(options.data[0], 'hex'), Buffer.from(options.data[1])]);
 
         //ESTIMATE TRX FEE REQUIRED
         let changeAmount = 0;
         {
             let transactionBuilder = new TransactionBuilder();
-            transactionBuilder.addOutput(script2, 0);//TODO
+            if(scriptArray.length>0){
+              transactionBuilder.addOutput(script2, 0);
+            }
             
             //Calculate sum of tx outputs and add inputs
             for (let i = 0; i < utxos.length; i++) {
@@ -109,15 +115,35 @@ function MemberBoxSend(options, callback) {
             // output rawhex
             let hex = tx.toHex();
             console.log(tx.byteLength());
-            //Minus additional 1 satoshi for safety
-            changeAmount = totalAmount - tx.byteLength() - 1;
+            //Minus additional 5 satoshi for safety
+            changeAmount = totalAmount - tx.byteLength() - 5;
+            console.log(tx.byteLength());
+            console.log("Fees:"+(totalAmount-changeAmount));
+            
+            console.log(changeAmount);
+
+            if(changeAmount<0){
+              throw Error("Insufficient Funds (No UTXOs)");
+            }
         }
 
         //CONSTRUCT REAL TRANSACTION
         transactionBuilder = new TransactionBuilder();
-        transactionBuilder.addOutput(script2, 0);
+        if(scriptArray.length>0){
+          transactionBuilder.addOutput(script2, 0);
+        }
         if(changeAmount>=DUSTLIMIT){
             transactionBuilder.addOutput(thePublicKey, changeAmount);
+        }
+
+        //Add any transactions
+        if (options.cash.to && Array.isArray(options.cash.to)) {
+          options.cash.to.forEach(
+              function(receiver) {
+                  if(receiver.value>=DUSTLIMIT){
+                      transactionBuilder.addOutput(receiver.address, receiver.value);
+                  }
+          })
         }
 
         //Add inputs
@@ -141,6 +167,7 @@ function MemberBoxSend(options, callback) {
             transactionBuilder.sign(i, keyPair, redeemScript, transactionBuilder.hashTypes.SIGHASH_ALL, originalAmount);
         }
 
+        
 
         //BROADCAST THE TRANSACTION
         // build tx
@@ -148,6 +175,7 @@ function MemberBoxSend(options, callback) {
         // output rawhex
         let hex = tx.toHex();
         console.log(hex);
+        console.log(tx.byteLength());
 
         // sendRawTransaction to running BCH node
         let rawtransactions = new RawTransactions();
