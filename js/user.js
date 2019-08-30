@@ -1,32 +1,36 @@
 
+
 function getAndPopulateRatings(qaddress) {
     document.getElementById('ratingtable').innerHTML = "";
     getJSON(server + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents +
-                `<tr>
-                <td><div id="rating`+ ds(data[i].address) + `"</div></td>
-                <td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].name) + `</a></td>
-                <td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].address) + `</a></td>
-                </tr>`;
+                //`<tr>
+                //<td><div id="rating`+ ds(data[i].address) + `"</div></td>
+                //<td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].name) + `</a></td>
+                //<td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].address) + `</a></td>
+                //</tr>`;
+                "<tr><td>" + getMemberLink(ds(data[i].rateraddress),ds(data[i].ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates),ds(data[i].name)) + "</td></tr>";
         }
         document.getElementById('ratingtable').innerHTML = contents;
 
         for (var i = 0; i < data.length; i++) {
 
             var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
-            var theAddress = ds(data[i].address);
+            var theAddress = ds(data[i].rates);
             var starRating1 = raterJs({
                 starSize: 24,
-                rating: theRating,
+                rating: Math.round( theRating * 10) / 10,
                 element: document.querySelector("#rating" + theAddress),
-                rateCallback: function rateCallback(rating, done) {
-                    rateCallbackAction(rating, this);
-                    done();
-                }
+                disableText: ds(data[i].ratername)+' rates '+ds(data[i].name)+' as {rating}/{maxRating}',
+                //rateCallback: function rateCallback(rating, done) {
+                //    rateCallbackAction(rating, this);
+                //    done();
+                //}
             });
             starRating1.theAddress = theAddress;
+            starRating1.disable();
 
         }
     }, function (status) { //error detection....

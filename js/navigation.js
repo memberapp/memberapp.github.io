@@ -16,6 +16,7 @@ function hideAll() {
     document.getElementById('ratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('trustgraph').style.display = "none";
+    document.getElementById('bootstrap').style.display = "none";
 }
 
 function show(theDiv) {
@@ -47,6 +48,12 @@ function showRatings(qaddress) {
     show("ratings");
     getAndPopulateRatings(qaddress);
     document.getElementById('ratings').style.display = "block";
+}
+
+function showBootstrap(qaddress) {
+    show("bootstrap");
+    getAndPopulateBootstrap(qaddress);
+    document.getElementById('bootstrap').style.display = "block";
 }
 
 function showSettings() {
@@ -137,6 +144,8 @@ function displayContentBasedOnURLParameters() {
         showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("ratings")) {
         showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("bootstrap")) {
+        showBootstrap(sanitizeAlphanumeric(pubkey));
     } else if (action.startsWith("posts")) {
         showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("feed")) {

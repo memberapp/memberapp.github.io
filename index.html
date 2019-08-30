@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Member Client</title>
+    <title>Member</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -28,16 +28,15 @@
     <script src="js/member.js"></script>
     <script src="js/transactions.js"></script>
     <script src="js/anchorme.min.js"></script>   
-    <script src='js/bitcoincash-0.1.10.min.js'></script>
+    <script src='js/bitcoincash-0.1.10.min.js'></script><!--  Probably possible to remove this dependency and move functions to BitBox --> 
     <script src="js/bitboxsdk.js"></script>
     <script src="js/buffer.js"></script>
-    
     <script src="js/memberbox.js"></script>
     <script src='js/rating.js'></script>
     <script src='js/geohash.js'></script>
     <script src='js/map.js'></script>
     <script src='js/trustgraph.js'></script>
-
+    <script src='js/bootstrapratings.js'></script>
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
 
@@ -357,13 +356,39 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Rating</th>
-                                        <th>Name</th>
-                                        <th>Address</th>
+                                        <th>Member</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Rates</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Member</th>
                                     </tr>
                                 </thead>
                                 <tbody id="ratingtable">
                                 </tbody>
+                            </table>
+                        </div>
+
+                        <div id="bootstrap" style="display: none;">
+                            <h2>Bootstrap Ratings</h2>
+                            <br/>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Rates</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Member</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bootstraptable1"></tbody>
+                                <tbody id="bootstraptable2"></tbody>
+                                <tbody id="bootstraptable3"></tbody>
+
                             </table>
                         </div>
 
