@@ -53,7 +53,7 @@ function showRatings(qaddress) {
 function showBootstrap(qaddress) {
     show("bootstrap");
     getAndPopulateBootstrap(qaddress);
-    document.getElementById('bootstrap').style.display = "block";
+    
 }
 
 function showSettings() {
