@@ -1,6 +1,7 @@
 
 // compose script
 let DUSTLIMIT=546;
+const MAXPOSSNUMBEROFINPUTS=10;
 const Buffer = buffer.Buffer;
 const BITBOX = bitboxSdk;
 
@@ -66,6 +67,8 @@ function MemberBoxSend(options, callback) {
         let script2 = script.encode(scriptArray); 
             //[script.opcodes.OP_RETURN, Buffer.from(options.data[0], 'hex'), Buffer.from(options.data[1])]);
 
+        let maxNumberOfInputs=utxos.length<MAXPOSSNUMBEROFINPUTS?utxos.length:MAXPOSSNUMBEROFINPUTS;
+
         //ESTIMATE TRX FEE REQUIRED
         let changeAmount = 0;
         {
@@ -74,8 +77,9 @@ function MemberBoxSend(options, callback) {
               transactionBuilder.addOutput(script2, 0);
             }
             
+            
             //Calculate sum of tx outputs and add inputs
-            for (let i = 0; i < utxos.length; i++) {
+            for (let i = 0; i < maxNumberOfInputs; i++) {
                 let originalAmount = utxos[i].satoshis;
                 totalAmount = totalAmount + originalAmount;
                 // index of vout
@@ -103,7 +107,7 @@ function MemberBoxSend(options, callback) {
             }
             
             //Sign inputs
-            for (let i = 0; i < utxos.length; i++) {
+            for (let i = 0; i < maxNumberOfInputs; i++) {
                 let originalAmount = utxos[i].satoshis;
                 // sign w/ HDNode
                 let redeemScript;
@@ -116,7 +120,7 @@ function MemberBoxSend(options, callback) {
             let hex = tx.toHex();
             console.log(tx.byteLength());
             //Minus additional 5 satoshi for safety
-            changeAmount = totalAmount - Math.round(tx.byteLength()*1.1) - 5;
+            changeAmount = totalAmount - tx.byteLength() - 5;
             console.log(tx.byteLength());
             console.log("Fees:"+(totalAmount-changeAmount));
             
@@ -147,7 +151,7 @@ function MemberBoxSend(options, callback) {
         }
 
         //Add inputs
-        for (let i = 0; i < utxos.length; i++) {
+        for (let i = 0; i < maxNumberOfInputs; i++) {
             originalAmount = utxos[i].satoshis;
             // index of vout
             let vout = utxos[i].vout;
@@ -160,7 +164,7 @@ function MemberBoxSend(options, callback) {
 
         //sign inputs
         
-        for (let i = 0; i < utxos.length; i++) {
+        for (let i = 0; i < maxNumberOfInputs; i++) {
             originalAmount = utxos[i].satoshis;
             // sign w/ HDNode
             let redeemScript;
