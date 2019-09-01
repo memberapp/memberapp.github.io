@@ -15,7 +15,9 @@ function getAndPopulateThread(roottxid,txid,pageName){
         document.getElementById(pageName).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data,pageName);
         window.scrollTo(0, 0);
-        popup.setContent("<div id='mapthread'>"+contents+"</div>");
+        if(popup!=undefined){
+            popup.setContent("<div id='mapthread'>"+contents+"</div>");
+        }
     }, function(status) { //error detection....
         alert('Something went wrong.');
     });
