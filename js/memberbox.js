@@ -120,7 +120,7 @@ function MemberBoxSend(options, callback) {
             let hex = tx.toHex();
             console.log(tx.byteLength());
             //Minus additional 5 satoshi for safety
-            changeAmount = totalAmount - tx.byteLength() - 25;
+            changeAmount = totalAmount - tx.byteLength()*2;
             console.log(tx.byteLength());
             console.log("Fees:"+(totalAmount-changeAmount));
             
