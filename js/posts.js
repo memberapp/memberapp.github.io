@@ -174,14 +174,14 @@ function showReplyBox(txid){
     return true;
 }
 
-var defaulttip=10000;
+var defaulttip=1000;
 
 function showTipBox(txid){
     if(privkey==""){
         alert("You must login with a private key to tip.");
         return false;
     }
-    if(document.getElementById("tipamount"+txid).value ==""){
+    if(document.getElementById("tipamount"+txid).value ==0){
         document.getElementById("tipamount"+txid).value = defaulttip;
     }
     
