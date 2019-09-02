@@ -105,8 +105,8 @@ function sendTip(txid,tipAddress,page){
     var reversetx=txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
 
     var tipAmount=parseInt(document.getElementById("tipamount"+page+txid).value);
-    if(tipAmount<546){
-        alert("546 (dust) is the minimum tip possible");
+    if(tipAmount<547){
+        alert("547 (dust+1) is the minimum tip possible");
         return false;
     }
     defaulttip=tipAmount;
