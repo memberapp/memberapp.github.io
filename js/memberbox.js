@@ -58,6 +58,15 @@ function MemberBoxSend(options, callback) {
         let outputInfo = await address.utxo(thePublicKey);
         console.log(outputInfo);
         utxos = outputInfo.utxos;
+
+        //Remove any utxos with less or equal to dust limit, they may be SLP tokens
+        for(let i=0;i<utxos.length;i++){
+          if(utxos[i].satoshis<=DUSTLIMIT){
+            utxos.splice(i, 1);
+            i--;
+          }
+        }
+
         if(utxos.length==0){
           throw Error("Insufficient Funds (No UTXOs)");
         }
