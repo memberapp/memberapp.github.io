@@ -68,7 +68,7 @@ function MemberBoxSend(options, callback) {
         }
 
         if(utxos.length==0){
-          throw Error("Insufficient Funds (No UTXOs)");
+          throw Error("Insufficient Funds (No Suitable UTXOs)");
         }
         
         let script = new Script();
@@ -129,7 +129,7 @@ function MemberBoxSend(options, callback) {
             let hex = tx.toHex();
             console.log(tx.byteLength());
             //Minus additional 5 satoshi for safety
-            changeAmount = totalAmount - tx.byteLength()*2;
+            changeAmount = totalAmount - tx.byteLength() - 5;
             console.log(tx.byteLength());
             console.log("Fees:"+(totalAmount-changeAmount));
             
@@ -145,10 +145,7 @@ function MemberBoxSend(options, callback) {
         if(scriptArray.length>0){
           transactionBuilder.addOutput(script2, 0);
         }
-        if(changeAmount>=DUSTLIMIT){
-            transactionBuilder.addOutput(thePublicKey, changeAmount);
-        }
-
+        
         //Add any transactions
         if (options.cash.to && Array.isArray(options.cash.to)) {
           options.cash.to.forEach(
@@ -157,6 +154,11 @@ function MemberBoxSend(options, callback) {
                       transactionBuilder.addOutput(receiver.address, receiver.value);
                   }
           })
+        }
+
+        //Add change last
+        if(changeAmount>=DUSTLIMIT){
+          transactionBuilder.addOutput(thePublicKey, changeAmount);
         }
 
         //Add inputs
