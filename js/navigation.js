@@ -17,6 +17,8 @@ function hideAll() {
     document.getElementById('map').style.display = "none";
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
+    document.getElementById('community').style.display = "none";
+    
 }
 
 function show(theDiv) {
@@ -76,6 +78,7 @@ function showMember(qaddress) {
     document.getElementById('member').style.display = "block";
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display = "block";
+    document.getElementById('community').style.display = "block";
     //document.getElementById('ratings').style.display = "block";
 }
 

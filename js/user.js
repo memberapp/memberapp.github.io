@@ -1,16 +1,40 @@
 
 
+function getAndPopulateCommunityRatings(qaddress){
+    document.getElementById('communityratingtable').innerHTML = "";
+    getJSON(server + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+            contents = contents +
+                "<tr><td>" + getMemberLink(ds(data[i].address),ds(data[i].name)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates),ds(data[i].rateename)) + "</td></tr>";
+        }
+        document.getElementById('communityratingtable').innerHTML = contents;
+
+        for (var i = 0; i < data.length; i++) {
+
+            var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
+            var theAddress = ds(data[i].address);
+            var starRating1 = raterJs({
+                starSize: 24,
+                rating: Math.round( theRating * 10) / 10,
+                element: document.querySelector("#rating" + theAddress),
+                disableText: ds(data[i].name)+' rates '+ds(data[i].rateename)+' as {rating}/{maxRating}',
+            });
+            starRating1.theAddress = theAddress;
+            starRating1.disable();
+
+        }
+    }, function (status) { //error detection....
+        alert('Something went wrong.');
+    });
+}
+
 function getAndPopulateRatings(qaddress) {
     document.getElementById('ratingtable').innerHTML = "";
     getJSON(server + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents +
-                //`<tr>
-                //<td><div id="rating`+ ds(data[i].address) + `"</div></td>
-                //<td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].name) + `</a></td>
-                //<td><a href="#member?qaddress=`+ ds(data[i].address) + `" onclick="showMember('` + ds(data[i].address) + `')">` + ds(data[i].address) + `</a></td>
-                //</tr>`;
                 "<tr><td>" + getMemberLink(ds(data[i].rateraddress),ds(data[i].ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates),ds(data[i].name)) + "</td></tr>";
         }
         document.getElementById('ratingtable').innerHTML = contents;
@@ -24,10 +48,6 @@ function getAndPopulateRatings(qaddress) {
                 rating: Math.round( theRating * 10) / 10,
                 element: document.querySelector("#rating" + theAddress),
                 disableText: ds(data[i].ratername)+' rates '+ds(data[i].name)+' as {rating}/{maxRating}',
-                //rateCallback: function rateCallback(rating, done) {
-                //    rateCallbackAction(rating, this);
-                //    done();
-                //}
             });
             starRating1.theAddress = theAddress;
             starRating1.disable();
@@ -119,7 +139,7 @@ function getAndPopulateMember(qaddress) {
     document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block';document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><img id="memberqrchart" style="display:none;" src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + memberqpubkey + `&amp;choe=UTF-8">`;
 
     getDataCommonToSettingsAndMember(qaddress, "member");
-    //getAndPopulateRatings(qaddress);
+    getAndPopulateCommunityRatings(qaddress);
 }
 
 function getAndPopulateSettings() {
