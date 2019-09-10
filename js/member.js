@@ -2,6 +2,7 @@ var pubkey="";
 var privkey="";
 var qpubkey="";
 var mutedwords=new Array();
+let tq = new TransactionQueue(updateStatus);
 
 
 function init(){

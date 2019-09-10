@@ -17,9 +17,7 @@ async function getAndPopulateBootstrap(qaddress) {
 }
 var bstcount=0;
 var bootstrapnames={};
-function sleep (time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
+
 
 function processdataintoratings(data) {
     var lbstcount=++bstcount;

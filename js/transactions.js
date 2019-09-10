@@ -13,7 +13,7 @@ function sendTransaction(tx, afterTransaction){
         updateStatus("Please wait for the last transaction first.");
     }else{
         waitForTransactionToComplete=true;
-        MemberBoxSend(tx, afterTransaction);
+        tq.queueTransaction(tx);
     }
 }
 
@@ -38,6 +38,8 @@ function setName(){
 
 
     document.getElementById('settingsnametextbutton').disabled=true;
+    document.getElementById('settingsnametext').disabled = true;
+
     var newName=document.getElementById('settingsnametext').value;
         
     const tx = {
@@ -45,7 +47,10 @@ function setName(){
         cash: { key: privkey }
       }
       updateStatus("Setting Name");
-      sendTransaction(tx, afterTransaction);     
+
+      //TODO remove all 'afterTransaction stuff'
+      //TODO, on error, this should really enable the text field and text button again
+      tq.queueTransaction(tx, afterTransaction);     
 }
 
 function post(){
@@ -59,8 +64,10 @@ function post(){
         cash: { key: privkey }
       }
       updateStatus("Sending Post");
-      sendTransaction(tx, afterTransaction);
-      popupOverlay.hide();
+      tq.queueTransaction(tx, afterTransaction);
+      if(typeof popupOverlay !== "undefined"){
+        popupOverlay.hide();
+      }
 }
 
 function geopost(lat,long){
@@ -75,7 +82,7 @@ function geopost(lat,long){
         cash: { key: privkey }
       }
       updateStatus("Sending Geotagged Post");
-      sendTransaction(tx, afterTransaction);     
+      tq.queueTransaction(tx, afterTransaction);     
 }
 
 function sendReply(txid,page){
@@ -91,7 +98,7 @@ function sendReply(txid,page){
         cash: { key: privkey }
       }
       updateStatus("Sending Reply");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
 
 }
 
@@ -118,7 +125,7 @@ function sendTip(txid,tipAddress,page){
             }
       }
       updateStatus("Sending Tip");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
 }
 
 function likePost(txid){
@@ -131,7 +138,7 @@ function likePost(txid){
         cash: { key: privkey }
       }
       updateStatus("Sending Like");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
 }
 
 function setProfile(){
@@ -146,7 +153,7 @@ function setProfile(){
         cash: { key: privkey }
       }
       updateStatus("Setting Profile");
-      sendTransaction(tx, afterTransaction);      
+      tq.queueTransaction(tx, afterTransaction);      
 }
 
 function follow(qaddress){
@@ -161,7 +168,7 @@ function follow(qaddress){
         cash: { key: privkey }
       }
       updateStatus("Sending Follow");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
 }
 
 function unfollow(qaddress){
@@ -176,7 +183,7 @@ function unfollow(qaddress){
         cash: { key: privkey }
       }
       updateStatus("Sending unfollow");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
 }
 
 function block(qaddress){
@@ -191,7 +198,7 @@ function block(qaddress){
         cash: { key: privkey }
       }
       updateStatus("Sending Block");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
 }
 
 function unblock(qaddress){
@@ -206,7 +213,7 @@ function unblock(qaddress){
         cash: { key: privkey }
       }
       updateStatus("Sending unblock");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
 }
 
 function dislikePost(txid){
@@ -219,7 +226,7 @@ function dislikePost(txid){
         cash: { key: privkey }
       }
       updateStatus("Sending Dislike");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
 }
 
 function rateUser(qaddress,rating){
@@ -234,7 +241,7 @@ function rateUser(qaddress,rating){
         cash: { key: privkey }
       }
       updateStatus("Sending Rating");
-      sendTransaction(tx, afterTransaction);
+      tq.queueTransaction(tx, afterTransaction);
     return true;
 }
 
