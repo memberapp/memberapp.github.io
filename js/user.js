@@ -60,8 +60,6 @@ function getAndPopulateRatings(qaddress) {
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
-    getAndPopulateCommunityRatings(qaddress);
-    getAndPopulateRatings(qaddress);
     document.getElementById('memberrating').innerHTML = "<div id='memberrating" + qaddress + "'></div>";
     getJSON(server + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
 
@@ -162,7 +160,6 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 }
 
 function getAndPopulateMember(qaddress) {
-    document.getElementById('ratingtable').innerHTML = "";
     document.getElementById('memberlegacyformat').innerHTML = qaddress;
     var publicaddress = new bch.Address(qaddress);
     var memberqpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
@@ -170,11 +167,11 @@ function getAndPopulateMember(qaddress) {
     document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block';document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><img id="memberqrchart" style="display:none;" src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + memberqpubkey + `&amp;choe=UTF-8">`;
 
     getDataCommonToSettingsAndMember(qaddress, "member");
-
+    getAndPopulateCommunityRatings(qaddress);
+    getAndPopulateRatings(qaddress);
 }
 
 function getAndPopulateSettings() {
-    document.getElementById('ratingtable').innerHTML = "";
     document.getElementById('legacyformat').innerHTML = pubkey;
     document.getElementById('cashaddrformat').innerHTML = qpubkey;
     document.getElementById('qrformat').innerHTML = `<a id="qrclicktoshow" onclick="document.getElementById('qrchart').style.display='block';document.getElementById('qrclicktoshow').style.display='none';">Click To Show</a><img id="qrchart" style="display:none;" src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + qpubkey + `&amp;choe=UTF-8">`;
