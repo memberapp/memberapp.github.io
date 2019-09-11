@@ -6,7 +6,7 @@ function getAndPopulateCommunityRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents +
-                "<tr><td>" + getMemberLink(ds(data[i].address), ds(data[i].name)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].rateename)) + "</td></tr>";
+                "<tr><td>" + getMemberLink(ds(data[i].address), ds(data[i].name)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].rateename)) + "</td><td>|</td><td>"+ds(data[i].reason)+"</td></tr>";
         }
         document.getElementById('communityratingtable').innerHTML = contents;
 
@@ -35,7 +35,7 @@ function getAndPopulateRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents +
-                "<tr><td>" + getMemberLink(ds(data[i].rateraddress), ds(data[i].ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].name)) + "</td></tr>";
+                "<tr><td>" + getMemberLink(ds(data[i].rateraddress), ds(data[i].ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].name)) + "</td><td>|</td><td>"+ds(data[i].reason)+"</td></tr>";
         }
         document.getElementById('ratingtable').innerHTML = contents;
 
@@ -60,6 +60,8 @@ function getAndPopulateRatings(qaddress) {
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
+    getAndPopulateCommunityRatings(qaddress);
+    getAndPopulateRatings(qaddress);
     document.getElementById('memberrating').innerHTML = "<div id='memberrating" + qaddress + "'></div>";
     getJSON(server + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
 
@@ -116,8 +118,9 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'follow').innerHTML = "<a href='javascript:;' onclick='unfollow(" + escaped + ");'>unfollow</a>";
         }
 
-        document.getElementById(pre + 'ratings').innerHTML = `<a href='#ratings?qaddress=` + qaddress + `' onclick='showRatings(` + escaped + `);'>Show Ratings</a>`;
+        //document.getElementById(pre + 'ratings').innerHTML = `<a href='#ratings?qaddress=` + qaddress + `' onclick='showRatings(` + escaped + `);'>Show Ratings</a>`;
 
+        //This condition checks that the user being viewed is not the logged in user
         if (qaddress != pubkey) {
             if (data.length < 1 || ds(data[0].isblocked) == "0") {
                 document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='block(" + escaped + ");'>block</a>";
@@ -125,13 +128,17 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
                 document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='unblock(" + escaped + ");'>unblock</a>";
             }
 
+            document.getElementById(pre + 'ratingcomment').innerHTML = `<input size="30" maxlength="210" id="memberratingcommentinputbox`+qaddress+`" value="`+(data.length>0?ds(data[0].ratingreason):"")+`" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+            document.getElementById(pre + 'ratingcommentinputbox'+qaddress).onchange=function(){starRating1.setRating(0);};
+            
             var theRating = 0; if (data.length>0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
             var starRating1 = raterJs({
                 starSize: 24,
                 //rating: theRating,
                 element: document.querySelector("#memberrating" + qaddress),
                 rateCallback: function rateCallback(rating, done) {
-                    rateCallbackAction(rating, this);
+                    var ratingText=document.getElementById("memberratingcommentinputbox"+qaddress);
+                    rateCallbackAction(rating, this,ratingText.value);
                     done();
                 }
             });
@@ -144,6 +151,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             if (tgmember == null || tgmember == '') {
                 tgmember = "19RyV6XQEww5td2LPWDpK8o5V8at7Vpwgv";
             }
+
+            
             document.getElementById(pre + 'trustgraph').innerHTML = `<a href='#trustgraph?member=` + tgmember + `&amp;target=` + qaddress + `' onclick='showTrustGraph("` + pubkey + `","` + qaddress + `");'>Show Trust Graph</a>`;
         }
 
@@ -161,7 +170,7 @@ function getAndPopulateMember(qaddress) {
     document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block';document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><img id="memberqrchart" style="display:none;" src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + memberqpubkey + `&amp;choe=UTF-8">`;
 
     getDataCommonToSettingsAndMember(qaddress, "member");
-    getAndPopulateCommunityRatings(qaddress);
+
 }
 
 function getAndPopulateSettings() {
@@ -182,10 +191,11 @@ function getAndPopulateSettings() {
 
 
     getDataCommonToSettingsAndMember(pubkey, "settings");
-    //getAndPopulateRatings(pubkey);
+
+
 }
 
-function rateCallbackAction(rating, that) {
+function rateCallbackAction(rating, that, ratingtext) {
     var qaddress = that.theAddress;
     var transposed = 0;
     switch (rating) {
@@ -205,7 +215,7 @@ function rateCallbackAction(rating, that) {
             transposed = 255;
             break;
     }
-    if (rateUser(qaddress, transposed)) {
+    if (rateUser(qaddress, transposed, ratingtext)) {
         that.setRating(rating);
     }
 }

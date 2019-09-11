@@ -63,7 +63,8 @@ function showSettings() {
     getAndPopulate(0, 25, 'memberposts', pubkey);
     document.getElementById('settings').style.display = "block";
     document.getElementById('settingsfollow').style.display = "block";
-    //document.getElementById('ratings').style.display = "block";
+    document.getElementById('community').style.display = "block";
+    document.getElementById('ratings').style.display = "block";
 }
 
 function showNewPost() {
@@ -79,7 +80,7 @@ function showMember(qaddress) {
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
-    //document.getElementById('ratings').style.display = "block";
+    document.getElementById('ratings').style.display = "block";
 }
 
 function showTrustGraph(member,target) {

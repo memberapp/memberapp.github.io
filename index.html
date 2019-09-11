@@ -212,8 +212,12 @@
                                     <tr>
                                         <th>You Rate</th>
                                         <td>
-                                            <div id="memberrating"></div>
+                                            <table><tr>
+                                            <td><div id="memberrating"></div></td>
+                                            <td><div id="memberratingcomment"></div></td>
+                                            </tr></table>
                                         </td>
+                                        
                                     </tr>
                                     <tr>
                                         <th>Trust Graph</th>
@@ -221,39 +225,10 @@
                                             <div id="membertrustgraph"></div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <th>User's Ratings</th>
-                                        <td>
-                                            <div id="memberratings"></div>
-                                        </td>
-                                    </tr>
                                     <tr style="height:10px"></tr>
                                     <tr style="height:10px"></tr>
                                 </tbody>
                             </table>
-                        </div>
-
-                        <div id="community" style="display: none;">
-                            <h2>Community Ratings Of This Member</h2>
-                            <br/>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Member</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>Rates</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>Member</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="communityratingtable">
-                                </tbody>
-                            </table>
-                            <br/><br/>
                         </div>
 
                         <div id="settings" style="display: none;">
@@ -353,12 +328,6 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Your Ratings</th>
-                                        <td>
-                                            <div id="settingsratings"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <th>Muted Words
                                             <br/>(Comma Separate)</th>
                                         <td>
@@ -374,7 +343,31 @@
                         </div>
 
                         <div id="ratings" style="display: none;">
-                            <h2>Ratings</h2>
+                                <h2>Ratings By This Member</h2>
+                                <br/>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Member</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Rates</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Member</th>
+                                            <th></th>
+                                            <th>Note</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ratingtable">
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        <div id="community" style="display: none;">
+                            <h2>Ratings Of This Member</h2>
                             <br/>
                             <table class="table">
                                 <thead>
@@ -388,11 +381,14 @@
                                         <th></th>
                                         <th></th>
                                         <th>Member</th>
+                                        <th></th>
+                                        <th>Note</th>
                                     </tr>
                                 </thead>
-                                <tbody id="ratingtable">
+                                <tbody id="communityratingtable">
                                 </tbody>
                             </table>
+                            <br/><br/>
                         </div>
 
                         <div id="bootstrap" style="display: none;">

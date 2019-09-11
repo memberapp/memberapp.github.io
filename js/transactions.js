@@ -229,7 +229,7 @@ function dislikePost(txid){
       tq.queueTransaction(tx, afterTransaction);
 }
 
-function rateUser(qaddress,rating){
+function rateUser(qaddress,rating,ratingcomment){
     if(!checkForPrivKey())return false;
 
     var addressraw=toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
@@ -237,7 +237,7 @@ function rateUser(qaddress,rating){
 
     var hexRating="0x"+toHexString([rating]);
     const tx = {
-        data: ["0x6da5","0x"+addressraw,hexRating],
+        data: ["0x6da5","0x"+addressraw,hexRating,ratingcomment],
         cash: { key: privkey }
       }
       updateStatus("Sending Rating");
