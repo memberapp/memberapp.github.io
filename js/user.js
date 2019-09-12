@@ -169,6 +169,11 @@ function getAndPopulateMember(qaddress) {
     getDataCommonToSettingsAndMember(qaddress, "member");
     getAndPopulateCommunityRatings(qaddress);
     getAndPopulateRatings(qaddress);
+    if(pubkey){
+        getAndPopulateTrustGraph(pubkey, qaddress);
+    }else{
+        document.getElementById('trustgraph').style.display = "none";
+    }
 }
 
 function getAndPopulateSettings() {

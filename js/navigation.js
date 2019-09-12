@@ -80,6 +80,7 @@ function showMember(qaddress) {
     document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
     document.getElementById('ratings').style.display = "block";
+    document.getElementById('trustgraph').style.display = "block";
 }
 
 function showTrustGraph(member,target) {
