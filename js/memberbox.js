@@ -38,12 +38,14 @@ class TransactionQueue {
 
   constructor(statusMessageFunction) {
     this.queue = new Array();
+    this.onSuccessFunctionQueue = new Array();
     this.isSending = false;
     this.statusMessageFunction=statusMessageFunction;
   }
 
-  queueTransaction(transaction) {
+  queueTransaction(transaction,onSuccessFunction) {
     this.queue.push(transaction);
+    this.onSuccessFunctionQueue.push(onSuccessFunction);
     this.sendNextTransaction();
   }
 
@@ -90,7 +92,8 @@ class TransactionQueue {
       let errorMessage=err.message;
       returnObject.updateStatus("Error:" + errorMessage);
       
-      if (errorMessage.startsWith("Network Error")) { 
+      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("258:") || errorMessage.startsWith("64: too-long-mempool-chain")) {
+        //Error:258: txn-mempool-conflict 
         returnObject.updateStatus(errorMessage+" ("+returnObject.queue.length+" Transaction(s) Still Queued, Retry in 5 seconds)");
         await sleep(4000);
         returnObject.updateStatus("Sending Again . . .");
@@ -101,6 +104,7 @@ class TransactionQueue {
 
       if (errorMessage.startsWith("100")) { //Covers 1000, 1001, 1002
         returnObject.updateStatus(errorMessage+" Removing Transaction From Queue.");
+        returnObject.onSuccessFunctionQueue.shift();
         returnObject.queue.shift();
         returnObject.sendNextTransaction();
         return;
@@ -123,7 +127,13 @@ class TransactionQueue {
     if (res.length > 10) {
       returnObject.updateStatus("<a target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + res + "'>txid:" + res + "</a>");
       console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
+      let successCallback = returnObject.onSuccessFunctionQueue.shift();
       returnObject.queue.shift();
+      if(successCallback){
+        successCallback(res)
+      };
+      //5 second wait to avoid mem-pool confusion
+      await sleep(5000);
       returnObject.sendNextTransaction();
     } else {
       returnObject.updateStatus(res);

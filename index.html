@@ -26,8 +26,9 @@
     <script src="js/blocks.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/transactions.js"></script>
-    <script src="js/anchorme.min.js"></script>   
-    <script src='js/bitcoincash-0.1.10.min.js'></script><!--  Probably possible to remove this dependency and move functions to BitBox --> 
+    <script src="js/anchorme.min.js"></script>
+    <script src='js/bitcoincash-0.1.10.min.js'></script>
+    <!--  Probably possible to remove this dependency and move functions to BitBox -->
     <script src="js/bitboxsdk.js"></script>
     <script src="js/buffer.js"></script>
     <script src="js/memberbox.js"></script>
@@ -37,7 +38,7 @@
     <script src='js/trustgraph.js'></script>
     <script src='js/bootstrapratings.js'></script>
     <script src="js/member.js"></script>
-    
+
     <div id="map" style="width:100%; height:100%;display:none;"></div>
 
     <!--[if lte IE 9]>
@@ -62,21 +63,37 @@
                                         </b>
                                         <span id="loggedin" style="display: none;" class="pagetop">
                                             <a id="mapbutton" class="btn" href="#map" onclick="showMap();">map</a> |
-                                            <a id="feedbutton" class="btn" href="#feed?type=top&amp;start=0&amp;limit=25" onclick="showFeed(0,25,'top');">feed</a>
-                                            <a id="feedbuttonnew" class="btn" href="#feed?type=new&amp;start=0&amp;limit=25" onclick="showFeed(0,25,'new');">(new)</a> |
-                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');">posts</a>
-                                            <a id="postsbuttonnew" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'new');">(new)</a> |
-                                            <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new post</a> |
-                                            <a id="settingsbutton" class="btn" href="#settings" onclick="showSettings();">settings</a> |
-                                            <a id="logoutbutton" class="btn" href="#logout" onclick="logout();">logout</a>
+                                            <a id="feedbutton" class="btn"
+                                                href="#feed?type=top&amp;start=0&amp;limit=25"
+                                                onclick="showFeed(0,25,'top');">feed</a>
+                                            <a id="feedbuttonnew" class="btn"
+                                                href="#feed?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showFeed(0,25,'new');">(new)</a> |
+                                            <a id="postsbutton" class="btn"
+                                                href="#posts?type=top&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'top');">posts</a>
+                                            <a id="postsbuttonnew" class="btn"
+                                                href="#posts?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'new');">(new)</a> |
+                                            <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new
+                                                post</a> |
+                                            <a id="settingsbutton" class="btn" href="#settings"
+                                                onclick="showSettings();">settings</a> |
+                                            <a id="logoutbutton" class="btn" href="#logout"
+                                                onclick="logout();">logout</a>
                                         </span>
                                     </td>
                                     <td style="text-align:right;padding-right:4px;">
                                         <span id="loggedout" class="pagetop">
                                             <a id="mapbutton" class="btn" href="#map" onclick="showMap();">map</a> |
-                                            <a id="postsbutton" class="btn" href="#posts?type=top&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'top');">posts</a>
-                                            <a id="postsbutton" class="btn" href="#posts?type=new&amp;start=0&amp;limit=25" onclick="showPosts(0,25,'new');">(new)</a> |
-                                            <a id="loginbutton" class="btn" href="#login" onclick="showLogin();">login</a>
+                                            <a id="postsbutton" class="btn"
+                                                href="#posts?type=top&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'top');">posts</a>
+                                            <a id="postsbutton" class="btn"
+                                                href="#posts?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'new');">(new)</a> |
+                                            <a id="loginbutton" class="btn" href="#login"
+                                                onclick="showLogin();">login</a>
                                         </span>
                                     </td>
                                 </tr>
@@ -88,12 +105,46 @@
                 <tr>
                     <td>
                         <div id="newpost" style="display: none;">
+                                <h2>New Post</h2>
+                                <table class="table left">
+                                    <tbody>
+                                        <tr>
+                                            <td>title</td>
+                                            <td>
+                                                <input size="80" id="memorandumtitle" maxlength="217"></input>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>text</td>
+                                            <td>
+                                                <textarea id="newposttamemorandum" maxlength="2048" name="text" rows="20"
+                                                    cols="80"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <input id="newpostbuttonmemorandum" value="Post a Memorandum" type="submit"
+                                                    onclick="postmemorandum();">
+                                            </td>
+                                        </tr>
+                                        <tr style="height:20px"></tr>
+                                    </tbody>
+                                </table>
+                                <hr />
+                                or
+                                <hr />
                             <table class="table left">
                                 <tbody>
                                     <tr>
                                         <td>text</td>
                                         <td>
-                                            <textarea id="newpostta" maxlength="217" name="text" rows="4" cols="60"></textarea>
+                                            <textarea id="newpostta" maxlength="217" name="text" rows="4"
+                                                cols="60"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
@@ -103,14 +154,15 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <input id="newpostbutton" value="post" type="submit" onclick="post();">
+                                            <input id="newpostbutton" value="Post a Memo" type="submit"
+                                                onclick="post();">
                                         </td>
                                     </tr>
                                     <tr style="height:20px"></tr>
                                 </tbody>
                             </table>
                         </div>
-                        
+
                         <div id="topic" style="display: none;">
                         </div>
 
@@ -202,12 +254,18 @@
                                     <tr>
                                         <th>You Rate</th>
                                         <td>
-                                            <table><tr>
-                                            <td><div id="memberrating"></div></td>
-                                            <td><div id="memberratingcomment"></div></td>
-                                            </tr></table>
+                                            <table>
+                                                <tr>
+                                                    <td>
+                                                        <div id="memberrating"></div>
+                                                    </td>
+                                                    <td>
+                                                        <div id="memberratingcomment"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
-                                        
+
                                     </tr>
                                     <tr>
                                         <th>Trust Graph</th>
@@ -222,14 +280,15 @@
                         </div>
 
                         <div id="trustgraph" style="display:none;">
-                                <h2>Trust Graph</h2>
-                                <div id="trustgraphdetails"></div>
-                                <br/>
-                                <br/>
-                                <div id="trustgraphnotes">*Notes: A follow is interpreted a 4-star rating. This is an approximation of a trust rating -
-                                    the rating can be overridden by directly rating the user.</div>
+                            <h2>Trust Graph</h2>
+                            <div id="trustgraphdetails"></div>
+                            <br />
+                            <br />
+                            <div id="trustgraphnotes">*Notes: A follow is interpreted a 4-star rating. This is an
+                                approximation of a trust rating -
+                                the rating can be overridden by directly rating the user.</div>
                         </div>
-    
+
 
                         <div id="settings" style="display: none;">
                             <h2>Settings</h2>
@@ -238,17 +297,23 @@
                                     <tr>
                                         <th>Handle</th>
                                         <td>
-                                            <input size="30" id="settingsnametext" value="loading..." onchange="document.getElementById('settingsnametextbutton').disabled=false;"
-                                                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
-                                            <button id="settingsnametextbutton" type="button" onclick="setName();" disabled>update</button>
+                                            <input size="30" id="settingsnametext" value="loading..."
+                                                onchange="document.getElementById('settingsnametextbutton').disabled=false;"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();"
+                                                oninput="this.onchange();"></input>
+                                            <button id="settingsnametextbutton" type="button" onclick="setName();"
+                                                disabled>update</button>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Profile</th>
                                         <td>
-                                            <input size="30" id='settingsprofiletext' value="loading..." onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
-                                                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
-                                            <button id="settingsprofiletextbutton" type="button" onclick="setProfile();" disabled>update</button>
+                                            <input size="30" id='settingsprofiletext' value="loading..."
+                                                onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();"
+                                                oninput="this.onchange();"></input>
+                                            <button id="settingsprofiletextbutton" type="button" onclick="setProfile();"
+                                                disabled>update</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -279,7 +344,8 @@
                                     <tr>
                                         <th>Theme</th>
                                         <td>
-                                            <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value);'>
+                                            <select id="cssselector"
+                                                onchange='changeStyle(document.getElementById("cssselector").value);'>
                                                 <option value="functional.css">Choose Theme</option>
                                                 <option value="functional.css">Hacker News</option>
                                                 <option value="hnnightmode.css">Hacker News Night Mode</option>
@@ -329,11 +395,14 @@
                                     </tr>
                                     <tr>
                                         <th>Muted Words
-                                            <br/>(Comma Separate)</th>
+                                            <br />(Comma Separate)</th>
                                         <td>
-                                            <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60" onchange="document.getElementById('mutedwordsbutton').disabled=false;"
-                                                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
-                                            <button id="mutedwordsbutton" type="button" onclick="updatemutedwords();" disabled>update</button>
+                                            <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60"
+                                                onchange="document.getElementById('mutedwordsbutton').disabled=false;"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();"
+                                                oninput="this.onchange();"></textarea>
+                                            <button id="mutedwordsbutton" type="button" onclick="updatemutedwords();"
+                                                disabled>update</button>
                                         </td>
                                     </tr>
                                     <tr style="height:10px"></tr>
@@ -343,32 +412,32 @@
                         </div>
 
                         <div id="ratings" style="display: none;">
-                                <h2>Ratings By This Member</h2>
-                                <br/>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Member</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>Rates</th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th>Member</th>
-                                            <th></th>
-                                            <th>Note</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="ratingtable">
-                                    </tbody>
-                                </table>
-                            </div>
+                            <h2>Ratings By This Member</h2>
+                            <br />
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Member</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Rates</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Member</th>
+                                        <th></th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ratingtable">
+                                </tbody>
+                            </table>
+                        </div>
 
                         <div id="community" style="display: none;">
                             <h2>Ratings Of This Member</h2>
-                            <br/>
+                            <br />
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -388,12 +457,12 @@
                                 <tbody id="communityratingtable">
                                 </tbody>
                             </table>
-                            <br/><br/>
+                            <br /><br />
                         </div>
 
                         <div id="bootstrap" style="display: none;">
                             <h2>Bootstrap Ratings</h2>
-                            <br/>
+                            <br />
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -421,7 +490,7 @@
 
                         <div id="followers" style="display: none;">
                             <h2>Followers</h2>
-                            <br/>
+                            <br />
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -437,7 +506,7 @@
 
                         <div id="following" style="display: none;">
                             <h2>Following</h2>
-                            <br/>
+                            <br />
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -453,7 +522,7 @@
 
                         <div id="blockers" style="display: none;">
                             <h2>Blockers</h2>
-                            <br/>
+                            <br />
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -468,7 +537,7 @@
 
                         <div id="blocking" style="display: none;">
                             <h2>Blocking</h2>
-                            <br/>
+                            <br />
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -495,28 +564,33 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <br/>Member is peer to peer, web of trust reputation system on the BCH blockchain.
-                                            <br/>
-                                            <br/>It allows browsing and creating Memo posts and also rating Memo users.
-                                            <br/>
-                                            <br/>You can create a new account or login with a <a href="https://memo.cash/key/export">Memo private key. Click here to export</a>.
-                                            <br/>
-                                            <br/>
-                                            <hr/>
-                                            <br/>
-                                            <br/>Private Key (Compressed WIF format, starts with 'L' or 'K')
-                                            <br/>
+                                            <br />Member is peer to peer, web of trust reputation system on the BCH
+                                            blockchain.
+                                            <br />
+                                            <br />It allows browsing and creating Memo posts and also rating Memo users.
+                                            <br />
+                                            <br />You can create a new account or login with a <a
+                                                href="https://memo.cash/key/export">Memo private key. Click here to
+                                                export</a>.
+                                            <br />
+                                            <br />
+                                            <hr />
+                                            <br />
+                                            <br />Private Key (Compressed WIF format, starts with 'L' or 'K')
+                                            <br />
                                             <input size="64" id="loginkey"></input>
-                                            <button type="button" href="#feed" onclick="trylogin(document.getElementById('loginkey').value);">login</button>
-                                            <br/>
+                                            <button type="button" href="#feed"
+                                                onclick="trylogin(document.getElementById('loginkey').value);">login</button>
+                                            <br />
                                             <div id="loginerror">
                                             </div>
-                                            <br/>
+                                            <br />
                                             Or
-                                            <br/>
-                                            <br/>
-                                            <button type="button" href="#settings" onclick="createNewAccount();">Create New Account</button>
-                                            <br/>
+                                            <br />
+                                            <br />
+                                            <button type="button" href="#settings" onclick="createNewAccount();">Create
+                                                New Account</button>
+                                            <br />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -539,7 +613,9 @@
                         <br>
                         <center>
                             <span class="yclinks">
-                                <a href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">Top Supporters</a>
+                                <a
+                                    href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">Top
+                                    Supporters</a>
                                 |
                                 <a href="https://github.com/memberapp/memberapp.github.io">Github</a>
                                 |
@@ -550,8 +626,8 @@
                                 <a href="mailto:memorycoincc@gmail.com">Contact</a>
 
                             </span>
-                            <br/>
-                            <br/>
+                            <br />
+                            <br />
                         </center>
                     </td>
                 </tr>
@@ -564,7 +640,7 @@
         //var bch = datacash.bch;
         //var bch = require('bitcoincashjs');
         init();
-        
+
     </script>
     <div id="status"></div>
 </body>
