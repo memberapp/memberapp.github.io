@@ -34,7 +34,7 @@ function mergeRepliesToRepliesBySameAuthor(data){
         authors[data[i].txid]=data[i].address;
     }
 
-    console.log(data);
+    //console.log(data);
     for(var i=0;i<data.length;i++){
         //console.log("PASS");
         //for(var k=0;k<data.length;k++){
