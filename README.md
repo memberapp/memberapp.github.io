@@ -1,15 +1,11 @@
 Member
 ------
 
-Member is a Bitcoin Cash blockchain browser. It parses for actions in the Member protocol and some actions in the Memo protocol.
-Notably it displays posts, likes, profiles, reputational ratings and geolocated posts.
-It is designed to be a 'fat' client app with a minimal server. 
+Member is a Bitcoin Cash blockchain browser. It reads and allows users to create actions in the Memo/Member protocol.
+Notably it displays and creates posts, likes, tips, profiles, reputational ratings and geolocated posts.
+It is designed to be a 'fat' javascript client app that runs against a relatively dumb server. 
 You can see it online here - https://memberapp.github.io
 
-
-
-
-Client, Server, Testing, Desktop App, Mobile App, Hosting and Financial
 
 Client
 ------
