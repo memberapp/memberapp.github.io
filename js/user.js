@@ -164,7 +164,7 @@ function getAndPopulateMember(qaddress) {
     var publicaddress = new bch.Address(qaddress);
     var memberqpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
     document.getElementById('membercashaddrformat').innerHTML = memberqpubkey;
-    document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block';document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><img id="memberqrchart" style="display:none;" src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + memberqpubkey + `&amp;choe=UTF-8">`;
+    document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
 
     getDataCommonToSettingsAndMember(qaddress, "member");
     getAndPopulateCommunityRatings(qaddress);
@@ -179,7 +179,7 @@ function getAndPopulateMember(qaddress) {
 function getAndPopulateSettings() {
     document.getElementById('legacyformat').innerHTML = pubkey;
     document.getElementById('cashaddrformat').innerHTML = qpubkey;
-    document.getElementById('qrformat').innerHTML = `<a id="qrclicktoshow" onclick="document.getElementById('qrchart').style.display='block';document.getElementById('qrclicktoshow').style.display='none';">Click To Show</a><img id="qrchart" style="display:none;" src="https://chart.googleapis.com/chart?chs=100x100&amp;cht=qr&amp;chl=` + qpubkey + `&amp;choe=UTF-8">`;
+    document.getElementById('qrformat').innerHTML = `<a id="qrclicktoshow" onclick="document.getElementById('qrchart').style.display='block'; new QRCode(document.getElementById('qrchart'), '`+qpubkey+`'); document.getElementById('qrclicktoshow').style.display='none';">Click To Show</a><div id="qrchart"></div>`;
     document.getElementById('privatekey').innerHTML = `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a><div style="display:none;"  id="privatekeydisplay"></div>`;
     document.getElementById('privatekeydisplay').innerHTML = privkey;
     if (typeof Storage !== void (0)) {

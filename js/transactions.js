@@ -1,6 +1,6 @@
 function checkForPrivKey() {
     if (privkey == "") {
-        alert("This requires a transaction. You must login with a private key to do this.");
+        alert("This requires a transaction. You must login to do this.");
         return false;
     }
     return true;
