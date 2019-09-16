@@ -6,6 +6,7 @@ function getAndPopulate(start,limit,page,qaddress,type){
         if(start!=0)navbuttons+=`<a class="next" href="#`+page+`?start=`+(start-25)+`&limit=`+limit+`&type=`+type+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start-25)+`,`+limit+`,'`+page+`','`+qaddress+`','`+type+`')">Back | </a> `;
         navbuttons+=`<a class="back" href="#`+page+`?start=`+(start+25)+`&limit=`+limit+`&type=`+type+`&qaddress=`+qaddress+`" onclick="javascript:getAndPopulate(`+(start+25)+`,`+limit+`,'`+page+`','`+qaddress+`','`+type+`')">Next</div>`;
     getJSON(server+'?action='+page+'&address='+pubkey+'&type='+type+'&qaddress='+qaddress+'&start='+start+'&limit='+limit).then(function(data) {
+        data=mergeRepliesToRepliesBySameAuthor(data);
         var contents="";        
         for(var i=0;i<data.length;i++){
             contents=contents+getHTMLForPost(data[i],i+1+start,page,i);
