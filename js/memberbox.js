@@ -176,6 +176,7 @@ class TransactionQueue {
       
       //console.log(outputInfo);
       let utxos = outputInfo.utxos;
+      let utxosOriginalNumber = outputInfo.utxos.length;
 
       //Remove any utxos with less or equal to dust limit, they may be SLP tokens
       for (let i = 0; i < utxos.length; i++) {
@@ -189,7 +190,7 @@ class TransactionQueue {
         callback(new Error("1001:Insufficient Funds (No Suitable UTXOs)"), null, this);
         return;
       }else{
-        this.updateStatus("Received "+outputInfo.utxos.length+" utxo(s) of which "+utxos.length+" are usable.");
+        this.updateStatus("Received "+utxosOriginalNumber+" utxo(s) of which "+utxos.length+" are usable.");
       }
 
 
