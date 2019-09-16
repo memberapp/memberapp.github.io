@@ -284,6 +284,9 @@ function dislikePost(txid) {
 
 function rateUser(qaddress, rating, ratingcomment) {
     if (!checkForPrivKey()) return false;
+    if(ratingcomment===undefined){
+        ratingcomment="";
+    }
 
     var addressraw = toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
     addressraw = addressraw.substring(0, addressraw.length - 8);

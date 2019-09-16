@@ -198,6 +198,9 @@ function getAndPopulateSettings() {
 }
 
 function rateCallbackAction(rating, that, ratingtext) {
+    if(ratingtext===undefined){
+        ratingtext="";
+    }
     var qaddress = that.theAddress;
     var transposed = 0;
     switch (rating) {
