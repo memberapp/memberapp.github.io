@@ -189,7 +189,7 @@ class TransactionQueue {
         callback(new Error("1001:Insufficient Funds (No Suitable UTXOs)"), null, this);
         return;
       }else{
-        this.updateStatus("Received "+utxos.length+" utxo(s) of which "+utxos.length+" are usable.");
+        this.updateStatus("Received "+outputInfo.utxos.length+" utxo(s) of which "+utxos.length+" are usable.");
       }
 
 
