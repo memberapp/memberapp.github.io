@@ -2,8 +2,9 @@ var map = null;
 var popup;
 var postpopup;
 var markersDict = {};
+var firstload=true;
 
-function getAndPopulateMap() {
+function getAndPopulateMap(geohash,posttrxid) {
 
     if (map != null) return;
 
@@ -29,11 +30,51 @@ function getAndPopulateMap() {
     popup = L.popup({ autoPan: true });
     postpopup = L.popup({ autoPan: true });
 
-    //Try to zoom to current position
-    setTimeout(function () { navigator.geolocation.getCurrentPosition(function (location) { map.setView([location.coords.latitude, location.coords.longitude], 13); }); }, 1000);
+    if(geohash==null || geohash==""){
+        //Try to zoom to current position
+        setTimeout(function () { navigator.geolocation.getCurrentPosition(function (location) { map.setView([location.coords.latitude, location.coords.longitude], 13); }); }, 1000);
+    }else{
+        var zoomLocation=decodeGeoHash(geohash);
+        zoomLocation=[zoomLocation.latitude[0], zoomLocation.longitude[0]];
+        setTimeout(function () {
+            if(posttrxid!=null && posttrxid!=""){
+                popup.txid=posttrxid;                
+            }
+
+            map.setView(zoomLocation, 13); 
+
+            if(posttrxid!=null && posttrxid!=""){
+                popup.setLatLng(zoomLocation).setContent("<div id='mapthread'>Loading...</div>").openOn(map);
+                getAndPopulateThread(posttrxid, posttrxid, 'mapthread');
+            }
+            
+        }, 1000);
+    }
 
     //post to map by clicking on it
     map.on('click', onMapClick);
+
+    //map.on('moveend', onMapMove);
+    map.on('moveend', function () {
+        if(firstload && popup.txid!=null){
+            location.href="#map?geohash="+encodeGeoHash(map.getCenter().lat,map.getCenter().lng)+"&post="+popup.txid;
+            firstload=false;
+        }
+        else if(popup.isOpen() && popup.txid!=null){
+            location.href="#map?geohash="+encodeGeoHash(popup._latlng.lat,popup._latlng.lng)+"&post="+popup.txid;
+        }else{
+            location.href="#map?geohash="+encodeGeoHash(map.getCenter().lat,map.getCenter().lng);
+        }
+    });
+
+    popup.on('close',function (e) {
+        //This doesn't seem to fire.
+        //Its purpose is to change the anchor link when the popup is closed
+        popup.txid=null;
+        map.moveend();
+    });
+
+
 }
 
 
@@ -42,6 +83,9 @@ function openOverlay(e) {
     var marker = e.sourceTarget;
     popup.setLatLng(e.latlng).setContent("<div id='mapthread'>Loading..." + ds(marker.preview) + "</div>").openOn(map);
     getAndPopulateThread(marker.roottxid, marker.txid, 'mapthread');
+    popup.txid=marker.roottxid;
+    popup.txidloc=e.latlng;
+    location.href="#map?geohash="+encodeGeoHash(e.latlng.lat,e.latlng.lng)+"&post="+popup.txid;
     return;
 }
 

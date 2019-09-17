@@ -34,9 +34,9 @@ function showLogin() {
 }
 
 
-function showMap() {
+function showMap(geohash,posttrxid) {
     show("map");
-    getAndPopulateMap();
+    getAndPopulateMap(geohash,posttrxid);
     document.getElementById('map').style.display = "block";
 }
 
@@ -168,7 +168,7 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("new")) {
         showNewPost();
     } else if (action.startsWith("map")) {
-        showMap();
+        showMap(sanitizeAlphanumeric(getParameterByName("geohash")),sanitizeAlphanumeric(getParameterByName("post")));
     } else if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPosts(0, 25);
     } else {
