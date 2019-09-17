@@ -107,39 +107,39 @@
                 <tr>
                     <td>
                         <div id="newpost" style="display: none;">
-                                <h2>New Post</h2>
-                                <table class="table left">
-                                    <tbody>
-                                        <tr>
-                                            <td>title</td>
-                                            <td>
-                                                <input size="80" id="memorandumtitle" maxlength="217"></input>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>text</td>
-                                            <td>
-                                                <textarea id="newposttamemorandum" maxlength="2048" name="text" rows="20"
-                                                    cols="80"></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>
-                                                <input id="newpostbuttonmemorandum" value="Post a Memorandum" type="submit"
-                                                    onclick="postmemorandum();">
-                                            </td>
-                                        </tr>
-                                        <tr style="height:20px"></tr>
-                                    </tbody>
-                                </table>
-                                <hr />
-                                or
-                                <hr />
+                            <h2>New Post</h2>
+                            <table class="table left">
+                                <tbody>
+                                    <tr>
+                                        <td>title</td>
+                                        <td>
+                                            <input size="80" id="memorandumtitle" maxlength="217"></input>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>text</td>
+                                        <td>
+                                            <textarea id="newposttamemorandum" maxlength="2048" name="text" rows="20"
+                                                cols="80"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <input id="newpostbuttonmemorandum" value="Post a Memorandum" type="submit"
+                                                onclick="postmemorandum();">
+                                        </td>
+                                    </tr>
+                                    <tr style="height:20px"></tr>
+                                </tbody>
+                            </table>
+                            <hr />
+                            or
+                            <hr />
                             <table class="table left">
                                 <tbody>
                                     <tr>
@@ -184,6 +184,20 @@
                                         <th>Profile</th>
                                         <td id='memberprofiletext'>
                                             <i>loading</i>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Profile Links</th>
+                                        <td>
+                                            <table>
+                                                <td>
+                                                    <a href="" id='memberprofilelink'>Member</a>
+                                                </td>
+                                                <td> | </td>
+                                                <td>
+                                                    <a target="memo" href="" id='membermemoprofilelink'>Memo</a>
+                                                </td>
+                                            </table>
                                         </td>
                                     </tr>
                                     <tr>
@@ -259,10 +273,10 @@
                                             <table>
                                                 <tr>
                                                     <td>
-                                                        <div id="memberrating"></div>
+                                                        <div id="memberratingcomment"></div>
                                                     </td>
                                                     <td>
-                                                        <div id="memberratingcomment"></div>
+                                                        <div id="memberrating"></div>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -316,6 +330,20 @@
                                                 oninput="this.onchange();"></input>
                                             <button id="settingsprofiletextbutton" type="button" onclick="setProfile();"
                                                 disabled>update</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Profile Links</th>
+                                        <td>
+                                            <table>
+                                                <td>
+                                                    <a href="" id='settingsprofilelink'>Member</a>
+                                                </td>
+                                                <td> | </td>
+                                                <td>
+                                                    <a target="memo" href="" id='settingsmemoprofilelink'>Memo</a>
+                                                </td>
+                                            </table>
                                         </td>
                                     </tr>
                                     <tr>

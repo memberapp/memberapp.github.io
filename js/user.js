@@ -86,6 +86,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametext').innerText = ds(data[0].name);
             document.getElementById(pre + 'profiletext').innerText = ds(data[0].profile);
             
+            document.getElementById(pre + 'profilelink').href = "#member?qaddress="+qaddress;
+            document.getElementById(pre + 'profilelink').onclick =  function () { showMember(qaddress); }; 
+            document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/"+ds(qaddress);
+
             if (pre == "settings") {
                 document.getElementById(pre + 'nametextbutton').disabled = true;
                 document.getElementById(pre + 'profiletextbutton').disabled = true;
