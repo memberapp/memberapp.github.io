@@ -130,8 +130,9 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <input id="newpostbuttonmemorandum" value="Post a Memorandum" type="submit"
-                                                onclick="postmemorandum();">
+                                            <input id="newpostmemorandumbutton" value="Post a Memorandum" type="submit" onclick="postmemorandum();">
+                                            <input id="newpostmemorandumstatus" style="display: none;" value="Sending . . ." type="submit" disabled>
+                                            <input id="newpostmemorandumclear" style="display: none;" value="clear" type="submit" onclick="clearmemorandumpost();">
                                         </td>
                                     </tr>
                                     <tr style="height:20px"></tr>
@@ -156,8 +157,9 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <input id="newpostbutton" value="Post a Memo" type="submit"
-                                                onclick="post();">
+                                            <input id="newpostbutton" value="Post a Memo" type="submit" onclick="post();">
+                                            <input id="newpoststatus" style="display: none;" value="Sending . . ." type="submit" disabled>
+                                            <input id="newpostclear" style="display: none;" value="clear" type="submit" onclick="clearpost();">
                                         </td>
                                     </tr>
                                     <tr style="height:20px"></tr>
@@ -300,7 +302,7 @@
                             <div id="trustgraphdetails"></div>
                             <br />
                             <br />
-                            <div id="trustgraphnotes">*Notes: A follow is interpreted a 4-star rating. This is an
+                            <div id="trustgraphnotes">*Notes: A follow is interpreted a 4-star rating, a block as a 2-star rating. This is an
                                 approximation of a trust rating -
                                 the rating can be overridden by directly rating the user.</div>
                         </div>

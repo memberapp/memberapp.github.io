@@ -8,30 +8,10 @@ function checkForPrivKey() {
 
 //var waitForTransactionToComplete = false;
 
+//is this used anywhere? TODO check
 function sendTransaction(tx) {
-    //if (waitForTransactionToComplete) {
-    //    updateStatus("Please wait for the last transaction first.");
-    //} else {
-    //    waitForTransactionToComplete = true;
-        tq.queueTransaction(tx);
-    //}
+    tq.queueTransaction(tx);
 }
-
-/*function afterTransaction(err, res) {
-    waitForTransactionToComplete = false;
-    if (err) {
-        console.log(err);
-        updateStatus("Error:" + err);
-        alert("There was an error processing the transaction required for this action. Make sure you have sufficient funds in your account and try again. Error:" + err);
-        return;
-    }
-
-    if (res.length > 10) {
-        updateStatus("<a target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + res + "'>txid:" + res + "</a>");
-    } else {
-        updateStatus(res);
-    }
-}*/
 
 function setName() {
     if (!checkForPrivKey()) return false;
@@ -53,43 +33,27 @@ function setName() {
 }
 
 
-function postmemorandum() {
-    if (!checkForPrivKey()) return false;
-    document.getElementById('newpostbuttonmemorandum').style.display = "none";
-    var posttext = document.getElementById('memorandumtitle').value;
+function postmemorandumRaw(posttext, postbody, privkey, newpostmemorandumstatus, memorandumpostcompleted) {
+
     const tx = {
         data: ["0x6d02", posttext],
         cash: { key: privkey }
     }
-    updateStatus("Sending Title");
 
-    var postbody = document.getElementById('newposttamemorandum').value;
     const replyHex = new Buffer(postbody).toString('hex');
 
-    tq.queueTransaction(tx,function(newtxid){sendReplyRaw(privkey, newtxid, replyHex,5000);},null);
-
-    
-
-    if (typeof popupOverlay !== "undefined") {
-        popupOverlay.hide();
-    }
+    tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); }, null);
 }
 
-function post() {
-    if (!checkForPrivKey()) return false;
 
-    document.getElementById('newpostbutton').style.display = "none";
-    var txtarea = document.getElementById('newpostta');
-    var posttext = txtarea.value;
+function postRaw(posttext, privkey, newpoststatus, memocompleted) {
+
     const tx = {
         data: ["0x6d02", posttext],
         cash: { key: privkey }
     }
-    updateStatus("Sending Post");
-    tq.queueTransaction(tx);
-    if (typeof popupOverlay !== "undefined") {
-        popupOverlay.hide();
-    }
+
+    tq.queueTransaction(tx, memocompleted, null);
 }
 
 function geopost(lat, long) {
@@ -107,69 +71,48 @@ function geopost(lat, long) {
     tq.queueTransaction(tx);
 }
 
-function sendReply(txid, page) {
-    if (!checkForPrivKey()) return false;
 
-    document.getElementById("reply" + page + txid).style.display = "none";
-    document.getElementById("replylink" + page + txid).style.display = "block";
-    var replytext = document.getElementById("replytext" + page + txid).value;
-    const replyhex = new Buffer(replytext).toString('hex'); 
-    //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
-    //no wait for the first reply
-    sendReplyRaw(privkey, txid, replyhex,0);
-}
 
-async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds) {
-    
-    var sendHex="";
-    if(replyHex.length>368){
-        sendHex=replyHex.substring(0,368);
-        replyHex=replyHex.substring(368);
-    }else{
-        sendHex=replyHex;
-        replyHex="";
+async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {
+
+    document.getElementById(divForStatus).value = "Sending Reply . . . " + replyHex.length + "B remaining.";
+
+    var sendHex = "";
+    if (replyHex.length > 368) {
+        sendHex = replyHex.substring(0, 368);
+        replyHex = replyHex.substring(368);
+    } else {
+        sendHex = replyHex;
+        replyHex = "";
     }
-
-    updateStatus("Sending Reply. "+sendHex.length+"B/"+(sendHex.length+replyHex.length)+"B");
-    
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
-        data: ["0x6d03", "0x" + reversetx, "0x"+sendHex],
+        data: ["0x6d03", "0x" + reversetx, "0x" + sendHex],
         cash: { key: privatekey }
     }
-    
-    await sleep(500); // Wait a little to show message
-    updateStatus("Waiting 5 Seconds (BIG OPS not enabled yet)");  
-    await sleep(waitTimeMilliseconds);
+
+    //await sleep(500); // Wait a little to show message
+    if (waitTimeMilliseconds > 0) {
+        updateStatus("Waiting " + (waitTimeMilliseconds / 1000) + " Seconds (BIG OPS not enabled yet)");
+        await sleep(waitTimeMilliseconds);
+    }
+
     //If there is still more to send
-    if(replyHex.length>0){
-        tq.queueTransaction(tx,function(newtxid){sendReplyRaw(privatekey,newtxid,replyHex,5000);},null);
-    }else{
+    if (replyHex.length > 0) {
+        tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privatekey, newtxid, replyHex, 5000, divForStatus, completionFunction); }, null);
+    } else {
         //last one
-        tq.queueTransaction(tx,null,null);
+        tq.queueTransaction(tx, completionFunction, null);
     }
 
 }
 
 
 
-function sendTip(txid, tipAddress, page) {
-    if (!checkForPrivKey()) return false;
+function sendTipRaw(txid, tipAddress, page, tipAmount, privkey, successFunction) {
 
-    document.getElementById("tipbox" + page + txid).style.display = "none";
-    document.getElementById("tiplink" + page + txid).style.display = "block";
-
-    document.getElementById('tipbox' + page + txid).style.display = "none";
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
-
-    var tipAmount = parseInt(document.getElementById("tipamount" + page + txid).value);
-    if (tipAmount < 547) {
-        alert("547 (dust+1) is the minimum tip possible");
-        return false;
-    }
-    defaulttip = tipAmount;
-
     const tx = {
         data: ["0x6d04", "0x" + reversetx],
         cash: {
@@ -178,7 +121,7 @@ function sendTip(txid, tipAddress, page) {
         }
     }
     updateStatus("Sending Tip");
-    tq.queueTransaction(tx);
+    tq.queueTransaction(tx, successFunction, null);
 }
 
 function likePost(txid) {
@@ -284,8 +227,8 @@ function dislikePost(txid) {
 
 function rateUser(qaddress, rating, ratingcomment) {
     if (!checkForPrivKey()) return false;
-    if(ratingcomment===undefined){
-        ratingcomment="";
+    if (ratingcomment === undefined) {
+        ratingcomment = "";
     }
 
     var addressraw = toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
