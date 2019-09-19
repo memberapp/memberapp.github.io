@@ -83,7 +83,6 @@ function getHTMLForPost(data, rank, page, starindex) {
                 </td>
                 <td class="title">
                     <a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> ` +
-        (data.topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(data.topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(data.topic) + `')">(` + ds(data.topic) + `)</a>`) +
         `</td>
             </tr>
             <tr>
@@ -91,6 +90,9 @@ function getHTMLForPost(data, rank, page, starindex) {
                 <td class="subtext">
                     <span class="score">`+ (ds(data.likes) - ds(data.dislikes)) + ` likes and ` + ds(data.tips) + ` sats </span>`
         + (ds(data.name) == "" ? " " : `by <a href="#member?qaddress=` + ds(data.address) + `" onclick="showMember('` + ds(data.address) + `')" class="hnuser">` + ds(data.name) + `</a> <div id="rating` + starindex + page + ds(data.address) + `"></div> `)
+        + '<span class="topic">'
+        + (data.topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(data.topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(data.topic) + `')">to topic ` + ds(data.topic) + `</a> | `)
+        + "</span>"
         + `<span class="age"><a>` + timeSince(ds(data.firstseen)) + `</a></span> | `
         //+(((ds(data.replies)-1)>-1)?`<a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | `:``)
         + `<a href="#thread?root=` + ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + (ds(data.replies)) + `&nbsp;comments</a> | `
