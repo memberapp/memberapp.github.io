@@ -2,7 +2,7 @@ const DUSTLIMIT = 546;
 const MAXPOSSNUMBEROFINPUTS = 10;
 const Buffer = buffer.Buffer;
 const BITBOX = bitboxSdk;
-let extraSatoshis=5;
+let extraSatoshis = 5;
 let miningFeeMultiplier = 1;
 
 
@@ -38,12 +38,13 @@ class TransactionQueue {
 
   constructor(statusMessageFunction) {
     this.queue = new Array();
+    this.spentUTXO = {};
     this.onSuccessFunctionQueue = new Array();
     this.isSending = false;
-    this.statusMessageFunction=statusMessageFunction;
+    this.statusMessageFunction = statusMessageFunction;
   }
 
-  queueTransaction(transaction,onSuccessFunction) {
+  queueTransaction(transaction, onSuccessFunction) {
     this.queue.push(transaction);
     this.onSuccessFunctionQueue.push(onSuccessFunction);
     this.sendNextTransaction();
@@ -67,11 +68,11 @@ class TransactionQueue {
 
   }
 
-  updateStatus(message){
+  updateStatus(message) {
     console.log(message);
-    if(this.statusMessageFunction == null){
+    if (this.statusMessageFunction == null) {
       alert(message);
-    }else{
+    } else {
       this.statusMessageFunction(message);
     }
   }
@@ -89,15 +90,15 @@ class TransactionQueue {
     returnObject.isSending = false;
     if (err) {
       console.log(err);
-      let errorMessage=err.message;
+      let errorMessage = err.message;
       returnObject.updateStatus("Error:" + errorMessage);
-      if (errorMessage===undefined){
-        errorMessage="Network Error";
+      if (errorMessage === undefined) {
+        errorMessage = "Network Error";
       }
-      
+
       if (errorMessage.startsWith("64: too-long-mempool-chain")) {
         //Error:258: txn-mempool-conflict 
-        returnObject.updateStatus(errorMessage+" ("+returnObject.queue.length+" .Transaction(s) Still Queued. Waiting for new block, Retry in 60 seconds)");
+        returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " .Transaction(s) Still Queued. Waiting for new block, Retry in 60 seconds)");
         await sleep(60000);
         returnObject.updateStatus("Sending Again . . .");
         await sleep(1000);
@@ -105,9 +106,22 @@ class TransactionQueue {
         return;
       }
 
-      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("258:") ) {
+      if (errorMessage.startsWith("1001")) {
+        //1001 No UTXOs 
+        returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " .Transaction(s) Still Queued. Retry in 60 seconds)");
+        await sleep(60000);
+        returnObject.updateStatus("Sending Again . . .");
+        await sleep(1000);
+        returnObject.sendNextTransaction();
+        return;
+      }
+
+
+      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("258:") || errorMessage.startsWith("200")) { //covers 2000, 2001
         //Error:258: txn-mempool-conflict 
-        returnObject.updateStatus(errorMessage+" ("+returnObject.queue.length+" Transaction(s) Still Queued, Retry in 5 seconds)");
+        //2000, all fetched UTXOs already spend
+        //2001, insuffiencent funds from unspent UTXOs. Add funds
+        returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " Transaction(s) Still Queued, Retry in 5 seconds)");
         await sleep(4000);
         returnObject.updateStatus("Sending Again . . .");
         await sleep(1000);
@@ -115,8 +129,9 @@ class TransactionQueue {
         return;
       }
 
-      if (errorMessage.startsWith("100")) { //Covers 1000, 1001, 1002
-        returnObject.updateStatus(errorMessage+" Removing Transaction From Queue.");
+      if (errorMessage.startsWith("1000")) { //Covers 1000
+        //1000 No Private Key
+        returnObject.updateStatus(errorMessage + " Removing Transaction From Queue.");
         returnObject.onSuccessFunctionQueue.shift();
         returnObject.queue.shift();
         returnObject.sendNextTransaction();
@@ -124,14 +139,14 @@ class TransactionQueue {
       }
 
       if (errorMessage.startsWith("66:")) {
-        if(miningFeeMultiplier<5){
+        if (miningFeeMultiplier < 5) {
           //Insufficient Priority - not enough transaction fee provided. Let's try increasing fee.
-          miningFeeMultiplier = miningFeeMultiplier*1.1;
-          returnObject.updateStatus("Error: Transaction rejected because fee too low. Increasing and retrying. Surge Pricing now "+Math.round(miningFeeMultiplier*10)/10);
+          miningFeeMultiplier = miningFeeMultiplier * 1.1;
+          returnObject.updateStatus("Error: Transaction rejected because fee too low. Increasing and retrying. Surge Pricing now " + Math.round(miningFeeMultiplier * 10) / 10);
           await sleep(1000);
           returnObject.sendNextTransaction();
           return;
-        } 
+        }
       }
       alert("There was an error processing the transaction required for this action. Make sure you have sufficient funds in your account and try again. Error:" + errorMessage);
       return;
@@ -142,7 +157,7 @@ class TransactionQueue {
       console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
       let successCallback = returnObject.onSuccessFunctionQueue.shift();
       returnObject.queue.shift();
-      if(successCallback){
+      if (successCallback) {
         successCallback(res)
       };
       //1 second wait to avoid mem-pool confusion
@@ -176,17 +191,17 @@ class TransactionQueue {
     let fundsRemaining = 0;
     //Get Unspent Transactions
     (async () => {
-      
+
       let address = new Address();
 
-      let outputInfo=new Array();
+      let outputInfo = new Array();
       try {
         outputInfo = await address.utxo(thePublicKey);
-      } catch(error) {
+      } catch (error) {
         callback(error, null, this);
         return;
-      }      
-      
+      }
+
       //console.log(outputInfo);
       let utxos = outputInfo.utxos;
       let utxosOriginalNumber = outputInfo.utxos.length;
@@ -204,44 +219,55 @@ class TransactionQueue {
         return;
       }
 
-      let usableUTXOScount=utxos.length;
-        
+      let usableUTXOScount = utxos.length;
+
 
       //Max size of a standard transaction is expected to be around 424 bytes - 1 input, 1 OP 220 bytes, 1 change output
       //So in most cases, one single input should be enough to cover it
       //Choose one at random
-      let useUtxos=new Array();
-      var ballparkAmountRequired=450*miningFeeMultiplier;
+      let useUtxos = new Array();
+      var ballparkAmountRequired = 450 * miningFeeMultiplier;
 
       //Add any larger outputs
-      
+
       if (options.cash.to && Array.isArray(options.cash.to)) {
         options.cash.to.forEach(
           function (receiver) {
             if (receiver.value >= DUSTLIMIT) {
-              ballparkAmountRequired= ballparkAmountRequired + receiver.value;
+              ballparkAmountRequired = ballparkAmountRequired + receiver.value;
             }
           })
       }
 
-      let totalUseUtxos=0;
-      while(totalUseUtxos<ballparkAmountRequired && utxos.length>0){
-        let randomUTXOindex=Math.floor(Math.random() * utxos.length);
-        totalUseUtxos=totalUseUtxos+utxos[randomUTXOindex].satoshis;
-        useUtxos[0]=utxos[randomUTXOindex];
+      //Choose UTXOs at random until we have more than our ballpark figure
+      let totalUseUtxos = 0;
+      while (totalUseUtxos < ballparkAmountRequired && utxos.length > 0) {
+        let randomUTXOindex = Math.floor(Math.random() * utxos.length);
+        //Check we haven't already spent this utxo
+        if (!this.spentUTXO[utxos[randomUTXOindex].txid + utxos[randomUTXOindex].vout] == 1) {
+          totalUseUtxos = totalUseUtxos + utxos[randomUTXOindex].satoshis;
+          useUtxos[0] = utxos[randomUTXOindex];
+        }
         utxos.splice(randomUTXOindex, 1);
       }
       //If we exit here because utxo.length is 0, we're trying sending with all the utxos even though our ballpark figure hasn't been reached
-      utxos=useUtxos;
-      this.updateStatus("Received "+utxosOriginalNumber+" utxo(s) of which "+usableUTXOScount+" are usable. Using "+utxos.length);
-      
+      utxos = useUtxos;
+      this.updateStatus("Received " + utxosOriginalNumber + " utxo(s) of which " + usableUTXOScount + " are usable. Using " + utxos.length);
+
+      if (utxos.length == 0) {
+        callback(new Error("2000:All UTXOs are already spent"), null, this);
+        return;
+      }
+
+      let maxNumberOfInputs = utxos.length < MAXPOSSNUMBEROFINPUTS ? utxos.length : MAXPOSSNUMBEROFINPUTS;
+
 
       let script = new Script();
       let scriptArray = this._script(script.opcodes.OP_RETURN, options);
       let script2 = script.encode(scriptArray);
       //[script.opcodes.OP_RETURN, Buffer.from(options.data[0], 'hex'), Buffer.from(options.data[1])]);
 
-      let maxNumberOfInputs = utxos.length < MAXPOSSNUMBEROFINPUTS ? utxos.length : MAXPOSSNUMBEROFINPUTS;
+
 
       //ESTIMATE TRX FEE REQUIRED
       let changeAmount = 0;
@@ -264,7 +290,7 @@ class TransactionQueue {
           transactionBuilder.addInput(txid, vout);
         }
 
-        let utxoFunds=fundsRemaining;
+        let utxoFunds = fundsRemaining;
 
         //Add any transactions
         if (options.cash.to && Array.isArray(options.cash.to)) {
@@ -294,16 +320,16 @@ class TransactionQueue {
         let tx = transactionBuilder.build();
         // output rawhex
         let hex = tx.toHex();
-        let transactionSize=tx.byteLength();
+        let transactionSize = tx.byteLength();
         //Add extra satoshis for safety
-        let fees=Math.round(transactionSize*miningFeeMultiplier) + extraSatoshis;
+        let fees = Math.round(transactionSize * miningFeeMultiplier) + extraSatoshis;
         changeAmount = fundsRemaining - fees;
         console.log("TRX size:" + transactionSize);
         console.log("Fees:" + fees);
         //console.log(changeAmount);
 
         if (changeAmount < 0) {
-          callback(new Error("1002: Insufficient Funds. Amount available "+utxoFunds+" in "+maxNumberOfInputs+" UTXOs but " + (fundsRemaining+changeAmount) +" required."), null, this);
+          callback(new Error("2001: Insufficient Funds. Amount available " + utxoFunds + " in " + maxNumberOfInputs + " UTXOs but " + (fundsRemaining + changeAmount) + " required. Add Funds."), null, this);
           return;
         }
       }
@@ -364,12 +390,19 @@ class TransactionQueue {
       let rawtransactions = new RawTransactions();
       rawtransactions.sendRawTransaction(hex).then((result) => {
         //console.log(result);
+
+        //Mark the utxos as spent, to ensure we don't accidentally try to double spend them
+        for (let i = 0; i < maxNumberOfInputs; i++) {
+          this.spentUTXO[utxos[i].txid + utxos[i].vout] = 1;
+        }
+
+
         callback(null, result, this);
       }, (err) => {
         //console.log(err);
-        err.message=err.error;
-        if(err.message===undefined){
-          err.message="Network Error";
+        err.message = err.error;
+        if (err.message === undefined) {
+          err.message = "Network Error";
         }
         callback(err, null, this);
       });
