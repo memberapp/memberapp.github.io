@@ -91,6 +91,9 @@ class TransactionQueue {
       console.log(err);
       let errorMessage=err.message;
       returnObject.updateStatus("Error:" + errorMessage);
+      if (errorMessage===undefined){
+        errorMessage="Network Error";
+      }
       
       if (errorMessage.startsWith("64: too-long-mempool-chain")) {
         //Error:258: txn-mempool-conflict 
