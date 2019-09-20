@@ -92,7 +92,17 @@ class TransactionQueue {
       let errorMessage=err.message;
       returnObject.updateStatus("Error:" + errorMessage);
       
-      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("258:") || errorMessage.startsWith("64: too-long-mempool-chain")) {
+      if (errorMessage.startsWith("64: too-long-mempool-chain")) {
+        //Error:258: txn-mempool-conflict 
+        returnObject.updateStatus(errorMessage+" ("+returnObject.queue.length+" .Transaction(s) Still Queued. Waiting for new block, Retry in 60 seconds)");
+        await sleep(60000);
+        returnObject.updateStatus("Sending Again . . .");
+        await sleep(1000);
+        returnObject.sendNextTransaction();
+        return;
+      }
+
+      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("258:") ) {
         //Error:258: txn-mempool-conflict 
         returnObject.updateStatus(errorMessage+" ("+returnObject.queue.length+" Transaction(s) Still Queued, Retry in 5 seconds)");
         await sleep(4000);
@@ -132,8 +142,8 @@ class TransactionQueue {
       if(successCallback){
         successCallback(res)
       };
-      //5 second wait to avoid mem-pool confusion
-      await sleep(5000);
+      //1 second wait to avoid mem-pool confusion
+      await sleep(1000);
       returnObject.sendNextTransaction();
     } else {
       returnObject.updateStatus(res);
@@ -189,10 +199,39 @@ class TransactionQueue {
       if (utxos.length == 0) {
         callback(new Error("1001:Insufficient Funds (No Suitable UTXOs)"), null, this);
         return;
-      }else{
-        this.updateStatus("Received "+utxosOriginalNumber+" utxo(s) of which "+utxos.length+" are usable.");
       }
 
+      let usableUTXOScount=utxos.length;
+        
+
+      //Max size of a standard transaction is expected to be around 424 bytes - 1 input, 1 OP 220 bytes, 1 change output
+      //So in most cases, one single input should be enough to cover it
+      //Choose one at random
+      let useUtxos=new Array();
+      var ballparkAmountRequired=450*miningFeeMultiplier;
+
+      //Add any larger outputs
+      
+      if (options.cash.to && Array.isArray(options.cash.to)) {
+        options.cash.to.forEach(
+          function (receiver) {
+            if (receiver.value >= DUSTLIMIT) {
+              ballparkAmountRequired= ballparkAmountRequired + receiver.value;
+            }
+          })
+      }
+
+      let totalUseUtxos=0;
+      while(totalUseUtxos<ballparkAmountRequired && utxos.length>0){
+        let randomUTXOindex=Math.floor(Math.random() * utxos.length);
+        totalUseUtxos=totalUseUtxos+utxos[randomUTXOindex].satoshis;
+        useUtxos[0]=utxos[randomUTXOindex];
+        utxos.splice(randomUTXOindex, 1);
+      }
+      //If we exit here because utxo.length is 0, we're trying sending with all the utxos even though our ballpark figure hasn't been reached
+      utxos=useUtxos;
+      this.updateStatus("Received "+utxosOriginalNumber+" utxo(s) of which "+usableUTXOScount+" are usable. Using "+utxos.length);
+      
 
       let script = new Script();
       let scriptArray = this._script(script.opcodes.OP_RETURN, options);
@@ -326,6 +365,9 @@ class TransactionQueue {
       }, (err) => {
         //console.log(err);
         err.message=err.error;
+        if(err.message===undefined){
+          err.message="Network Error";
+        }
         callback(err, null, this);
       });
 

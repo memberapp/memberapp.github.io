@@ -75,7 +75,7 @@ function geopost(lat, long) {
 
 async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {
 
-    document.getElementById(divForStatus).value = "Sending Reply . . . " + replyHex.length + "B remaining.";
+    document.getElementById(divForStatus).value = "Sending Reply . . . " + replyHex.length/2 + "B remaining.";
 
     var sendHex = "";
     if (replyHex.length > 368) {
@@ -94,13 +94,13 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
 
     //await sleep(500); // Wait a little to show message
     if (waitTimeMilliseconds > 0) {
-        updateStatus("Waiting " + (waitTimeMilliseconds / 1000) + " Seconds (BIG OPS not enabled yet)");
+        updateStatus("Waiting " + (waitTimeMilliseconds / 1000) + " Seconds");
         await sleep(waitTimeMilliseconds);
     }
 
     //If there is still more to send
     if (replyHex.length > 0) {
-        tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privatekey, newtxid, replyHex, 5000, divForStatus, completionFunction); }, null);
+        tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privatekey, newtxid, replyHex, 1000, divForStatus, completionFunction); }, null);
     } else {
         //last one
         tq.queueTransaction(tx, completionFunction, null);

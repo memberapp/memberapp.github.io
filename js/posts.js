@@ -110,7 +110,7 @@ function getHTMLForPost(data, rank, page, starindex) {
                 <td>
                     <div id="reply`+ page + ds(data.txid) + `" style="display:none">
                         <br/>
-                        <textarea maxlength="2024" id="replytext`+ page + ds(data.txid) + `" rows="3"  style="width:100%;"></textarea>
+                        <textarea id="replytext`+ page + ds(data.txid) + `" rows="3"  style="width:100%;"></textarea>
                         <br/>
                         <input id="replybutton`+ page + ds(data.txid) + `" value="reply" type="submit" onclick="sendReply('` + ds(data.txid) + `','` + ds(page) + `','replystatus` + page + ds(data.txid) + `');"/>
                         <input id="replystatus`+ page + ds(data.txid) + `" value="sending..." type="submit"  style="display:none" disabled/>
@@ -162,7 +162,7 @@ function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
                     </div>
                     <div id="reply`+ page + ds(data.txid) + `" style="display:none">
                         <br/>
-                        <textarea maxlength="2024" id="replytext`+ page + ds(data.txid) + `" rows="3" rows="3" style="width:100%;"></textarea>
+                        <textarea id="replytext`+ page + ds(data.txid) + `" rows="3" rows="3" style="width:100%;"></textarea>
                         <br/>
                         <input id="replybutton`+ page + ds(data.txid) + `" value="reply" type="submit" onclick="sendReply('` + ds(data.txid) + `','` + ds(page) + `','replystatus` + page + ds(data.txid) + `');"/>
                         <input id="replystatus`+ page + ds(data.txid) + `" value="sending..." type="submit"  style="display:none" disabled/>
