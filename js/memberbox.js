@@ -224,12 +224,10 @@ class TransactionQueue {
 
       //Max size of a standard transaction is expected to be around 424 bytes - 1 input, 1 OP 220 bytes, 1 change output
       //So in most cases, one single input should be enough to cover it
-      //Choose one at random
-      let useUtxos = new Array();
-      var ballparkAmountRequired = 450 * miningFeeMultiplier;
+      //Add 546 to try to ensure change, so none is lost due to dust limit
+      var ballparkAmountRequired = 450 * miningFeeMultiplier +546;
 
-      //Add any larger outputs
-
+      //Add any larger outputs like tips etc
       if (options.cash.to && Array.isArray(options.cash.to)) {
         options.cash.to.forEach(
           function (receiver) {
@@ -241,6 +239,7 @@ class TransactionQueue {
 
       //Choose UTXOs at random until we have more than our ballpark figure
       let totalUseUtxos = 0;
+      let useUtxos = new Array();
       while (totalUseUtxos < ballparkAmountRequired && utxos.length > 0) {
         let randomUTXOindex = Math.floor(Math.random() * utxos.length);
         //Check we haven't already spent this utxo
