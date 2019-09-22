@@ -95,7 +95,7 @@ function getHTMLForPost(data, rank, page, starindex) {
         + "</span>"
         + `<span class="age"><a>` + timeSince(ds(data.firstseen)) + `</a></span> | `
         //+(((ds(data.replies)-1)>-1)?`<a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | `:``)
-        + `<a href="#thread?root=` + ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + (ds(data.replies)) + `&nbsp;comments</a> | `
+        + `<a href="#thread?root=` + ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + (Number(ds(data.replies))-1) + `&nbsp;comments</a> | `
         + `<a id="replylink` + page + ds(data.txid) + `" onclick="showReplyBox('` + page + ds(data.txid) + `');" href="javascript:;">reply</a>
                     | <a id="tiplink`+ page + ds(data.txid) + `" onclick="showTipBox('` + page + ds(data.txid) + `');" href="javascript:;">tip</a>
                     <span id="tipbox`+ page + ds(data.txid) + `" style="display:none">
