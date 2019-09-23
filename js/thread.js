@@ -1,7 +1,7 @@
 function getAndPopulateThread(roottxid,txid,pageName){
     if(pageName!="mapthread"){
         show(pageName);
-        document.getElementById(pageName).innerHTML ="";
+        document.getElementById(pageName).innerHTML = document.getElementById("loading").innerHTML;
     }
     getJSON(server+'?action=thread&address='+pubkey+'&txid='+roottxid).then(function(data) {
         data=mergeRepliesToRepliesBySameAuthor(data);

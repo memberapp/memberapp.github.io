@@ -5,9 +5,9 @@ function somethingwentwrong(status) {
 async function getAndPopulateBootstrap(qaddress) {
     bootstrapnames={};
     bstcount=0;
-    document.getElementById('bootstraptable1').innerHTML = "";
-    document.getElementById('bootstraptable2').innerHTML = "";
-    document.getElementById('bootstraptable3').innerHTML = "";
+    document.getElementById('bootstraptable1').innerHTML = document.getElementById("loading").innerHTML;
+    document.getElementById('bootstraptable2').innerHTML = document.getElementById("loading").innerHTML;
+    document.getElementById('bootstraptable3').innerHTML = document.getElementById("loading").innerHTML;
     
     getJSON(server + '?action=bootstrap1&qaddress=' + qaddress + '&address=' + pubkey).then(processdataintoratings, somethingwentwrong);
     await sleep(2000);

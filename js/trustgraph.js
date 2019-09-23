@@ -2,8 +2,8 @@
 
 function getAndPopulateTrustGraph(member, target) {
 
-    //First clear old graphy
-    document.getElementById('trustgraphdetails').innerHTML = "";
+    //First clear old graph
+    document.getElementById('trustgraphdetails').innerHTML = document.getElementById("loading").innerHTML;
 
     getJSON(graphserver + '?action=trustgraph&member=' + member + '&target=' + target).then(function (data) {
 

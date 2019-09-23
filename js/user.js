@@ -1,7 +1,8 @@
 
 
 function getAndPopulateCommunityRatings(qaddress) {
-    document.getElementById('communityratingtable').innerHTML = "";
+    document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
+
     getJSON(server + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
