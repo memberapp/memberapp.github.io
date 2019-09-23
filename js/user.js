@@ -31,7 +31,8 @@ function getAndPopulateCommunityRatings(qaddress) {
 }
 
 function getAndPopulateRatings(qaddress) {
-    document.getElementById('ratingtable').innerHTML = "";
+    document.getElementById('ratingtable').innerHTML = document.getElementById("loading").innerHTML;
+
     getJSON(server + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
