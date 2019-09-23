@@ -18,7 +18,7 @@ function hideAll() {
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
-    
+
 }
 
 function show(theDiv) {
@@ -71,13 +71,13 @@ function showNewPost() {
     if (currentTopic != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
         document.getElementById('memotopicarea').style.display = "block";
-        document.getElementById('memotopic').value=currentTopic;
-        document.getElementById('memorandumtopic').value=currentTopic;    
+        document.getElementById('memotopic').value = currentTopic;
+        document.getElementById('memorandumtopic').value = currentTopic;
     } else {
         document.getElementById('memorandumtopicarea').style.display = "none";
         document.getElementById('memotopicarea').style.display = "none";
-        document.getElementById('memotopic').value="";
-        document.getElementById('memorandumtopic').value="";    
+        document.getElementById('memotopic').value = "";
+        document.getElementById('memorandumtopic').value = "";
     }
     //Do calculations on maxlengths for topics and titles
     topictitleChanged("memorandum");
@@ -121,9 +121,9 @@ function showComments(start, limit, type) {
 
 function showTopic(start, limit, topicname, type) {
     currentTopic = topicname;
-    document.getElementById('memotopic').value=topicname;
-    document.getElementById('memorandumtopic').value=topicname;
-    
+    document.getElementById('memotopic').value = topicname;
+    document.getElementById('memorandumtopic').value = topicname;
+
     getAndPopulateTopic(start, limit, topicname, pubkey, type);
 }
 
