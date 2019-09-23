@@ -79,14 +79,6 @@ class TransactionQueue {
 
   async serverResponseFunction(err, res, returnObject) {
 
-    //nb this = returnObject;
-
-    //This should check for an error, if there is an error, it should resend, possibly with a delay. 
-    //maybe change trx fee if it is a low trx fee error. 
-
-    //Maybe should cease sending if insufficient funds.
-
-
     returnObject.isSending = false;
     if (err) {
       console.log(err);

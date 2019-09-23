@@ -16,6 +16,18 @@
 </head>
 
 <body>
+    <!--  Extenal Libraries -->
+    <script src="js/lib/buffer.js"></script>
+    <script src="js/lib/anchorme.min.js"></script>
+    <script src='js/lib/bitcoincash-0.1.10.min.js'></script>
+    <!--  Probably possible to remove this dependency and call functions from BitBox -->
+    <script src="js/lib/bitboxsdk.js"></script>
+    <script src='js/lib/rater/rating.js'></script>
+    <script src='js/lib/geohash.js'></script>
+    <!-- https://github.com/davidshimjs/qrcodejs -->
+    <script src="js/lib/qrcode.min.js"></script>
+
+    <!--  Member Code. In separate files for development convenience -->
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/posts.js"></script>
@@ -26,19 +38,10 @@
     <script src="js/blocks.js"></script>
     <script src="js/navigation.js"></script>
     <script src="js/transactions.js"></script>
-    <script src="js/anchorme.min.js"></script>
-    <script src='js/bitcoincash-0.1.10.min.js'></script>
-    <!--  Probably possible to remove this dependency and move functions to BitBox -->
-    <script src="js/bitboxsdk.js"></script>
-    <script src="js/buffer.js"></script>
     <script src="js/memberbox.js"></script>
-    <script src='js/rating.js'></script>
-    <script src='js/geohash.js'></script>
     <script src='js/map.js'></script>
     <script src='js/trustgraph.js'></script>
     <script src='js/bootstrapratings.js'></script>
-    <!-- https://github.com/davidshimjs/qrcodejs -->
-    <script src="js/qrcode.min.js"></script>
     <script src="js/member.js"></script>
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
@@ -64,7 +67,9 @@
                                             <a href="https://memberapp.github.io">Member</a>
                                         </b>
                                         <span id="loggedin" style="display: none;" class="pagetop">
-                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">map</a> |
+                                            <span id='topicdiv'></span>
+                                            <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new
+                                                post</a> |
                                             <a id="feedbutton" class="btn"
                                                 href="#feed?type=top&amp;start=0&amp;limit=25"
                                                 onclick="showFeed(0,25,'top');">feed</a>
@@ -77,8 +82,7 @@
                                             <a id="postsbuttonnew" class="btn"
                                                 href="#posts?type=new&amp;start=0&amp;limit=25"
                                                 onclick="showPosts(0,25,'new');">(new)</a> |
-                                            <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new
-                                                post</a> |
+                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">map</a> |
                                             <a id="settingsbutton" class="btn" href="#settings"
                                                 onclick="showSettings();">settings</a> |
                                             <a id="logoutbutton" class="btn" href="#logout"
@@ -110,25 +114,35 @@
                             <h2>New Post</h2>
                             <table class="table left">
                                 <tbody>
-                                    <tr>
-                                        <td>title</td>
+                                    <tr id="memorandumtopicarea">
                                         <td>
-                                            <input size="80" id="memorandumtitle" maxlength="217"></input>
+                                            topic <span id="memorandumtopiclengthadvice">(0/214)</span><br />
+                                            <input size="80" id="memorandumtopic" maxlength="217"
+                                                onchange="topictitleChanged('memorandum');"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();"
+                                                oninput="this.onchange();"></input>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>text</td>
                                         <td>
+                                            title <span id="memorandumtitlelengthadvice">(0/217)</span><br />
+                                            <input size="80" id="memorandumtitle" maxlength="217"
+                                                onchange="topictitleChanged('memorandum');"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();"
+                                                oninput="this.onchange();"></input>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            text</br>
                                             <textarea id="newposttamemorandum" name="text" rows="20"
                                                 cols="80"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td></td>
                                         <td>
                                             <input id="newpostmemorandumbutton" value="Post a Memorandum" type="submit"
                                                 onclick="postmemorandum();">
@@ -147,18 +161,25 @@
                             <table class="table left">
                                 <tbody>
                                     <tr>
-                                        <td>text</td>
+                                        <td id="memotopicarea">
+                                            topic <span id="memotopiclengthadvice">(0/217)</span><br />
+                                            <input size="60" id="memotopic" maxlength="217"
+                                                onchange="topictitleChanged('memo');" onkeypress="this.onchange();"
+                                                onpaste="this.onchange();" oninput="this.onchange();"></input>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td>
-                                            <textarea id="newpostta" maxlength="217" name="text" rows="4"
-                                                cols="60"></textarea>
+                                            text <span id="memotitlelengthadvice">(0/217)</span><br />
+                                            <textarea id="memotitle" maxlength="217" name="text" rows="4" cols="60"
+                                                onchange="topictitleChanged('memo');" onkeypress="this.onchange();"
+                                                onpaste="this.onchange();" oninput="this.onchange();"></textarea>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td></td>
                                         <td>
                                             <input id="newpostbutton" value="Post a Memo" type="submit"
                                                 onclick="post();">
@@ -643,6 +664,35 @@
                 <tr>
                     <td>
                         <br />
+                        <center>
+                            <span class="yclinks">
+
+                                <a onclick="showTopic(0,25,'Member')" href="#topic?topicname=Member">Member</a> |
+                                <a onclick="showTopic(0,25,'Bitcoin Cash')"
+                                    href="#topic?topicname=Bitcoin%20Cash">Bitcoin Cash</a>
+                                |
+                                <a onclick="showTopic(0,25,'Bitcoin SV')" href="#topic?topicname=Bitcoin%20SV">Bitcoin
+                                    SV</a> |
+                                <a onclick="showTopic(0,25,'Memo')" href="#topic?topicname=Memo">Memo</a> |
+                                <a onclick="showTopic(0,25,'Airdrops')" href="#topic?topicname=Airdrops">Airdrops</a> |
+                                <a onclick="showTopic(0,25,'Tokens')" href="#topic?topicname=Tokens">Tokens</a> |
+                                <a onclick="showTopic(0,25,'OpenBazaar')"
+                                    href="#topic?topicname=OpenBazaar">OpenBazaar</a> |
+                                <a onclick="showTopic(0,25,'Capitalism')"
+                                    href="#topic?topicname=Capitalism">Capitalism</a> |
+                                <a onclick="showTopic(0,25,'US Politics/Trump')"
+                                    href="#topic?topicname=US%20Politics%2FTrump">US
+                                    Politics</a> |
+                                <a onclick="showTopic(0,25,'Favorite Quotes')"
+                                    href="#topic?topicname=Favorite%20Quotes">Quotes</a> |
+                                <a onclick="showTopic(0,25,'Ideas to improve our lives')"
+                                    href="#topic?topicname=Ideas%20to%20improve%20our%20lives">Self
+                                    Improvement</a> |
+                                <a onclick="showTopic(0,25,'#911Truth')"
+                                    href="#topic?topicname=%23911Truth">#911Truth</a>
+                            </span>
+                            <br />
+                        </center>
                         <table width="100%" cellspacing="0" cellpadding="1">
                             <tbody>
                                 <tr>
@@ -650,28 +700,6 @@
                                 </tr>
                             </tbody>
                         </table>
-
-                        <center>
-                            <span class="yclinks">
-                                    
-                                <a onclick="showTopic(0,25,'Member')" href="https://memberapp.github.io/#topic?topicname=Member">Member</a> |
-                                <a onclick="showTopic(0,25,'Bitcoin Cash')" href="https://memberapp.github.io/#topic?topicname=Bitcoin%20Cash">Bitcoin Cash</a> |
-                                <a onclick="showTopic(0,25,'Bitcoin SV')" href="https://memberapp.github.io/#topic?topicname=Bitcoin%20SV">Bitcoin SV</a> |
-                                <a onclick="showTopic(0,25,'Memo')" href="https://memberapp.github.io/#topic?topicname=Memo">Memo</a> |
-                                <a onclick="showTopic(0,25,'Airdrops')" href="https://memberapp.github.io/#topic?topicname=Airdrops">Airdrops</a> |
-                                <a onclick="showTopic(0,25,'Tokens')" href="https://memberapp.github.io/#topic?topicname=Tokens">Tokens</a> |
-                                <a onclick="showTopic(0,25,'OpenBazaar')" href="https://memberapp.github.io/#topic?topicname=OpenBazaar">OpenBazaar</a> |
-                                <a onclick="showTopic(0,25,'Capitalism')" href="https://memberapp.github.io/#topic?topicname=Capitalism">Capitalism</a> |
-                                <a onclick="showTopic(0,25,'US Politics/Trump')" href="https://memberapp.github.io/#topic?topicname=US%20Politics%2FTrump">US
-                                    Politics</a> |
-                                <a onclick="showTopic(0,25,'Favorite Quotes')" href="https://memberapp.github.io/#topic?topicname=Favorite%20Quotes">Quotes</a> |
-                                <a onclick="showTopic(0,25,'Ideas to improve our lives')"
-                                    href="https://memberapp.github.io/#topic?topicname=Ideas%20to%20improve%20our%20lives">Self
-                                    Improvement</a> |
-                                <a onclick="showTopic(0,25,'#911Truth')" href="https://memberapp.github.io/#topic?topicname=%23911Truth">#911Truth</a>
-                            </span>
-                            <br />
-                        </center>
                         <center>
                             <span class="yclinks">
                                 <a

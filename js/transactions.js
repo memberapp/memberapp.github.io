@@ -33,11 +33,18 @@ function setName() {
 }
 
 
-function postmemorandumRaw(posttext, postbody, privkey, newpostmemorandumstatus, memorandumpostcompleted) {
+function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandumstatus, memorandumpostcompleted) {
 
-    const tx = {
+    var tx = {
         data: ["0x6d02", posttext],
         cash: { key: privkey }
+    }
+
+    if(topic!=""){
+        tx = {
+            data: ["0x6d0c", topic, posttext],
+            cash: { key: privkey }
+        }   
     }
 
     const replyHex = new Buffer(postbody).toString('hex');
@@ -46,11 +53,18 @@ function postmemorandumRaw(posttext, postbody, privkey, newpostmemorandumstatus,
 }
 
 
-function postRaw(posttext, privkey, newpoststatus, memocompleted) {
-
-    const tx = {
+function postRaw(posttext, privkey, topic, newpoststatus, memocompleted) {
+    
+    var tx = {
         data: ["0x6d02", posttext],
         cash: { key: privkey }
+    }
+
+    if(topic!=""){
+        tx = {
+            data: ["0x6d0c", topic, posttext],
+            cash: { key: privkey }
+        }   
     }
 
     tq.queueTransaction(tx, memocompleted, null);

@@ -136,6 +136,7 @@ function getWidth() {
   return myWidth;
 }
 
+//TODO is this used? no longer using googlemaps
 // hack Google Maps to bypass API v3 key (needed since 22 June 2016 http://googlegeodevelopers.blogspot.com.es/2016/06/building-for-scale-updates-to-google.html)
 var target = document.head;
 var observer = new MutationObserver(function (mutations) {

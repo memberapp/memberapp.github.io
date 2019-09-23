@@ -34,9 +34,9 @@ function showLogin() {
 }
 
 
-function showMap(geohash,posttrxid) {
+function showMap(geohash, posttrxid) {
     show("map");
-    getAndPopulateMap(geohash,posttrxid);
+    getAndPopulateMap(geohash, posttrxid);
     document.getElementById('map').style.display = "block";
 }
 
@@ -55,7 +55,7 @@ function showRatings(qaddress) {
 function showBootstrap(qaddress) {
     show("bootstrap");
     getAndPopulateBootstrap(qaddress);
-    
+
 }
 
 function showSettings() {
@@ -68,6 +68,20 @@ function showSettings() {
 
 function showNewPost() {
     show("newpost");
+    if (currentTopic != "") {
+        document.getElementById('memorandumtopicarea').style.display = "block";
+        document.getElementById('memotopicarea').style.display = "block";
+        document.getElementById('memotopic').value=currentTopic;
+        document.getElementById('memorandumtopic').value=currentTopic;    
+    } else {
+        document.getElementById('memorandumtopicarea').style.display = "none";
+        document.getElementById('memotopicarea').style.display = "none";
+        document.getElementById('memotopic').value="";
+        document.getElementById('memorandumtopic').value="";    
+    }
+    //Do calculations on maxlengths for topics and titles
+    topictitleChanged("memorandum");
+    topictitleChanged("memo");
     document.getElementById('newpostbutton').style.display = "block";
 }
 
@@ -83,9 +97,10 @@ function showMember(qaddress) {
     document.getElementById('trustgraph').style.display = "block";
 }
 
-function showTrustGraph(member,target) {
+//deprecated - now on member page
+function showTrustGraph(member, target) {
     show("trustgraph");
-    getAndPopulateTrustGraph(member,target);
+    getAndPopulateTrustGraph(member, target);
 }
 
 function showMemberPosts(start, limit, qaddress) {
@@ -104,8 +119,12 @@ function showComments(start, limit, type) {
     getAndPopulate(start, limit, 'comments', pubkey, type);
 }
 
-function showTopic(start, limit, topicname) {
-    getAndPopulateTopic(start, limit, topicname);
+function showTopic(start, limit, topicname, type) {
+    currentTopic = topicname;
+    document.getElementById('memotopic').value=topicname;
+    document.getElementById('memorandumtopic').value=topicname;
+    
+    getAndPopulateTopic(start, limit, topicname, pubkey, type);
 }
 
 function showThread(roottxid, txid) {
@@ -157,10 +176,10 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("comments")) {
         showComments(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("trustgraph")) {
-        showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")),sanitizeAlphanumeric(getParameterByName("target")));
+        showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
     } else if (action.startsWith("topic")) {
         //Warning - topicname may contain special characters
-        showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"));
+        showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("thread")) {
         showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")));
     } else if (action.startsWith("settings")) {
@@ -168,7 +187,7 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("new")) {
         showNewPost();
     } else if (action.startsWith("map")) {
-        showMap(sanitizeAlphanumeric(getParameterByName("geohash")),sanitizeAlphanumeric(getParameterByName("post")));
+        showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
     } else if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPosts(0, 25);
     } else {

@@ -1,10 +1,21 @@
 
 function getAndPopulate(start, limit, page, qaddress, type) {
+    //Clear Topic
+    currentTopic=="";
+    document.getElementById('topicdiv').innerHTML="";
+    
+    //Clear existing content
     document.getElementById(page).innerHTML = "";
+    
+    //Show the relevant html element
     show(page);
+    
+    //Show navigation next/back buttons
     var navbuttons = `<div class="navbuttons">`;
     if (start != 0) navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulate(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `')">Back | </a> `;
     navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulate(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `')">Next</div>`;
+    
+    //Request content from the server and display it when received
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
         data = mergeRepliesToRepliesBySameAuthor(data);
         var contents = "";
@@ -45,15 +56,17 @@ function addStarRatings(data, page, disable) {
     }
 }
 
-function getAndPopulateTopic(start, limit, topicname) {
+function getAndPopulateTopic(start, limit, topicname, qaddress, type) {
     //Note topicname may contain hostile code - treat with extreme caution
     var page = "topic";
     show(page);
+    document.getElementById('topicdiv').innerHTML= `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"><b>- ` + ds(topicname) + `</b></a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')"><b>(new)</b></a> |`;
     document.getElementById(page).innerHTML = "";
     var navbuttons = `<div class="navbuttons">`;
-    if (start != 0) navbuttons += `<a class="next" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + `&start=` + (start - 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start - 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Back | </a> `;
-    navbuttons += `<a class="back" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + `&start=` + (start + 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start + 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Next</div>`;
-    getJSON(server + '?action=' + page + '&address=' + pubkey + '&topicname=' + encodeURIComponent(topicname) + '&start=' + start + '&limit=' + limit).then(function (data) {
+    if (start != 0)
+    navbuttons += `<a class="next" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + '&type=' + type + '&qaddress=' + qaddress + `&start=` + (start - 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start - 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Back | </a> `;
+    navbuttons += `<a class="back" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + '&type=' + type + '&qaddress=' + qaddress + `&start=` + (start + 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start + 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Next</div>`;
+    getJSON(server + '?action=' + page + '&address=' + pubkey + '&topicname=' + encodeURIComponent(topicname) + '&type=' + type + '&start=' + start + '&limit=' + limit).then(function (data) {
         var contents = "";
         contents = contents + `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
         for (var i = 0; i < data.length; i++) {
@@ -95,7 +108,7 @@ function getHTMLForPost(data, rank, page, starindex) {
         + "</span>"
         + `<span class="age"><a>` + timeSince(ds(data.firstseen)) + `</a></span> | `
         //+(((ds(data.replies)-1)>-1)?`<a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | `:``)
-        + `<a href="#thread?root=` + ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + (Number(ds(data.replies))-1) + `&nbsp;comments</a> | `
+        + `<a href="#thread?root=` + ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + (Math.max(0,Number(ds(data.replies))-1)) + `&nbsp;comments</a> | `
         + `<a id="replylink` + page + ds(data.txid) + `" onclick="showReplyBox('` + page + ds(data.txid) + `');" href="javascript:;">reply</a>
                     | <a id="tiplink`+ page + ds(data.txid) + `" onclick="showTipBox('` + page + ds(data.txid) + `');" href="javascript:;">tip</a>
                     <span id="tipbox`+ page + ds(data.txid) + `" style="display:none">
@@ -257,20 +270,35 @@ function showTipBox(txid) {
     return true;
 }
 
+
+function topictitleChanged(elementName){
+        if(document.getElementById(elementName+'topic').value.length==0){
+            document.getElementById(elementName+'title').maxLength=217;
+            document.getElementById(elementName+'topic').maxLength=Math.max(0,214-document.getElementById(elementName+'title').value.length);
+        }else{
+            document.getElementById(elementName+'title').maxLength=Math.max(0,214-document.getElementById(elementName+'topic').value.length);
+            document.getElementById(elementName+'topic').maxLength=Math.max(0,214-document.getElementById(elementName+'title').value.length);
+        }
+        document.getElementById(elementName+'titlelengthadvice').innerHTML="("+document.getElementById(elementName+'title').value.length+"/"+document.getElementById(elementName+'title').maxLength+")";
+        document.getElementById(elementName+'topiclengthadvice').innerHTML="("+document.getElementById(elementName+'topic').value.length+"/"+document.getElementById(elementName+'topic').maxLength+")";       
+}
+
 function post() {
     if (!checkForPrivKey()) return false;
-    var txtarea = document.getElementById('newpostta');
+    var txtarea = document.getElementById('memotitle');
     var posttext = txtarea.value;
     if (posttext.length == 0) {
         alert("No Message Body");
         return false;
     }
 
+    var topic=document.getElementById('memotopic').value;
+
     document.getElementById('newpostbutton').style.display = "none";
     document.getElementById('newpoststatus').style.display = "block";
     document.getElementById('newpoststatus').value = "Sending Title...";
 
-    postRaw(posttext, privkey, "newpoststatus", memocompleted);
+    postRaw(posttext, privkey, topic, "newpoststatus", memocompleted);
 
     //if (typeof popupOverlay !== "undefined") {
     //    popupOverlay.hide();
@@ -290,16 +318,16 @@ function postmemorandum() {
         return false;
     }
 
+    var topic=document.getElementById('memorandumtopic').value;
+    //topic may be empty string
+
     document.getElementById('newpostmemorandumbutton').style.display = "none";
     document.getElementById('newpostmemorandumstatus').style.display = "block";
     document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
 
-    const tx = {
-        data: ["0x6d02", posttext],
-        cash: { key: privkey }
-    }
+    
 
-    postmemorandumRaw(posttext, postbody, privkey, "newpostmemorandumstatus", memorandumpostcompleted);
+    postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
 
     //if (typeof popupOverlay !== "undefined") {
     //    popupOverlay.hide();
@@ -324,7 +352,7 @@ function clearmemorandumpost() {
 }
 
 function clearpost() {
-    document.getElementById('newpostta').value = "";
+    document.getElementById('memotitle').value = "";
     document.getElementById('newpostbutton').style.display = "block";
     document.getElementById('newpostclear').style.display = "none";
 }
