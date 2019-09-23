@@ -245,7 +245,7 @@ class TransactionQueue {
         //Check we haven't already spent this utxo
         if (!this.spentUTXO[utxos[randomUTXOindex].txid + utxos[randomUTXOindex].vout] == 1) {
           totalUseUtxos = totalUseUtxos + utxos[randomUTXOindex].satoshis;
-          useUtxos[0] = utxos[randomUTXOindex];
+          useUtxos.push(utxos[randomUTXOindex]);
         }
         utxos.splice(randomUTXOindex, 1);
       }
