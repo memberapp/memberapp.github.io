@@ -5,7 +5,7 @@ const BITBOX = bitboxSdk;
 let extraSatoshis = 5;
 let miningFeeMultiplier = 1;
 
-
+//Note this lib relies on buffer.js, bitbox.js being present
 
 class TransactionQueue {
 

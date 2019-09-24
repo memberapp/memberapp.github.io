@@ -131,53 +131,6 @@ function getAndPopulateTrustGraph(member, target) {
 
         }
 
-        /* var node={ data: { id:data[i][3],name:data[i][4], weight: 100, faveColor: '#6FB1FC', faveShape: 'triangle' } };
-         nodes.push(node);
-         var edge={ data: { source: data[i][0], target: data[i][3], faveColor: '#6FB1FC', strength: data[i][2]/2.5 } };
-         edges.push(edge);
-         var edge2={ data: { source: data[i][3], target: data[i][6], faveColor: '#6FB1FC', strength: data[i][5]/2.5 } };
-         edges.push(edge2);
-         contents+="<tr>";
-            
-     */
-
-        /*var nodes=[];
-        var edges=[];
-        var member= { data: { id:data[0][0],name:data[0][1], weight: 300, faveColor: '#6FB1FC', faveShape: 'triangle' } };
-        
-        nodes.push(member);
-        for (var i = 0; i < data.length; i++) {
-            var node={ data: { id:data[i][3],name:data[i][4], weight: 100, faveColor: '#6FB1FC', faveShape: 'triangle' } };
-            nodes.push(node);
-            var edge={ data: { source: data[i][0], target: data[i][3], faveColor: '#6FB1FC', strength: data[i][2]/2.5 } };
-            edges.push(edge);
-            var edge2={ data: { source: data[i][3], target: data[i][6], faveColor: '#6FB1FC', strength: data[i][5]/2.5 } };
-            edges.push(edge2);
-            
-        }
-        var target= {data: { id:data[0][6],name:data[0][7], weight: 100, faveColor: '#6FB1FC', faveShape: 'triangle' } };
-        nodes.push(target);
-        */
-        /*
-        for (var i = 0; i < data.length; i++) {
-        
-        var theRating = 0; if (data[i].rating != null) { theRating = (ds(data[i].rating) / 64) + 1; }
-        var theAddress=ds(data[i].address);
-        var starRating1 = raterJs({
-                starSize: 24,
-                rating: theRating,
-                element: document.querySelector("#rating" + theAddress),
-                rateCallback: function rateCallback(rating, done) {
-                    rateCallbackAction(rating, this);
-                    done();
-                }
-            });
-        starRating1.theAddress=theAddress;
-                
-        }*/
-
-
-
     }, function (status) { //error detection....
         alert('Something went wrong.');
     });

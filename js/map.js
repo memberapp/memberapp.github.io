@@ -109,7 +109,7 @@ function onMapClick(e) {
             </tr>
             <tr>
                 <td colspan="3">
-                    <textarea id="newgeopostta" maxlength="200" name="text" rows="4" cols="30"></textarea>
+                    <textarea id="newgeopostta" maxlength="217" name="text" rows="4" cols="30"></textarea>
                 </td>
             </tr>
             <tr>
