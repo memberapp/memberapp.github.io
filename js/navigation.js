@@ -1,3 +1,51 @@
+function displayContentBasedOnURLParameters() {
+
+    //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
+
+    var url = window.location.href;
+    var action = url.substring(url.indexOf('#') + 1).toLowerCase();
+    if (action.startsWith("memberposts")) {
+        showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("member")) {
+        showMember(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("followers")) {
+        showFollowers(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("following")) {
+        showFollowing(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("blockers")) {
+        showBlockers(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("blocking")) {
+        showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("ratings")) {
+        showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("bootstrap")) {
+        showBootstrap(sanitizeAlphanumeric(pubkey));
+    } else if (action.startsWith("posts")) {
+        showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+    } else if (action.startsWith("feed")) {
+        showFeed(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+    } else if (action.startsWith("comments")) {
+        showComments(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+    } else if (action.startsWith("trustgraph")) {
+        showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
+    } else if (action.startsWith("topic")) {
+        //Warning - topicname may contain special characters
+        showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
+    } else if (action.startsWith("thread")) {
+        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")));
+    } else if (action.startsWith("settings")) {
+        showSettings();
+    } else if (action.startsWith("new")) {
+        showNewPost();
+    } else if (action.startsWith("map")) {
+        showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
+    } else if (pubkey == "" || pubkey == null || pubkey == undefined) {
+        showPosts(0, 25);
+    } else {
+        showFeed(0, 25);
+    }
+}
+
 function hideAll() {
     document.getElementById('feed').style.display = "none";
     document.getElementById('posts').style.display = "none";
@@ -26,13 +74,10 @@ function show(theDiv) {
     document.getElementById(theDiv).style.display = "block";
 }
 
-
-
 function showLogin() {
     show("loginbox");
     document.getElementById('loginbox').style.display = "block";
 }
-
 
 function showMap(geohash, posttrxid) {
     show("map");
@@ -55,7 +100,6 @@ function showRatings(qaddress) {
 function showBootstrap(qaddress) {
     show("bootstrap");
     getAndPopulateBootstrap(qaddress);
-
 }
 
 function showSettings() {
@@ -63,7 +107,6 @@ function showSettings() {
     getAndPopulate(0, 25, 'memberposts', pubkey);
     document.getElementById('settings').style.display = "block";
     document.getElementById('settingsfollow').style.display = "block";
-
 }
 
 function showNewPost() {
@@ -123,7 +166,6 @@ function showTopic(start, limit, topicname, type) {
     currentTopic = topicname;
     document.getElementById('memotopic').value = topicname;
     document.getElementById('memorandumtopic').value = topicname;
-
     getAndPopulateTopic(start, limit, topicname, pubkey, type);
 }
 
@@ -147,53 +189,7 @@ function showBlocking(qaddress) {
     getAndPopulateBlocking(qaddress);
 }
 
-function displayContentBasedOnURLParameters() {
 
-    //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
-
-    var url = window.location.href;
-    var action = url.substring(url.indexOf('#') + 1).toLowerCase();
-    if (action.startsWith("memberposts")) {
-        showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("member")) {
-        showMember(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("followers")) {
-        showFollowers(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("following")) {
-        showFollowing(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("blockers")) {
-        showBlockers(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("blocking")) {
-        showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("ratings")) {
-        showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("bootstrap")) {
-        showBootstrap(sanitizeAlphanumeric(pubkey));
-    } else if (action.startsWith("posts")) {
-        showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
-    } else if (action.startsWith("feed")) {
-        showFeed(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
-    } else if (action.startsWith("comments")) {
-        showComments(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
-    } else if (action.startsWith("trustgraph")) {
-        showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
-    } else if (action.startsWith("topic")) {
-        //Warning - topicname may contain special characters
-        showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
-    } else if (action.startsWith("thread")) {
-        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")));
-    } else if (action.startsWith("settings")) {
-        showSettings();
-    } else if (action.startsWith("new")) {
-        showNewPost();
-    } else if (action.startsWith("map")) {
-        showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
-    } else if (pubkey == "" || pubkey == null || pubkey == undefined) {
-        showPosts(0, 25);
-    } else {
-        showFeed(0, 25);
-    }
-}
 
 var detectBackOrForward = function (onBack, onForward) {
     //Note, sometimes onForward is being called even though it a regular navigation click event
@@ -221,16 +217,4 @@ window.addEventListener("hashchange", detectBackOrForward(
     function () { displayContentBasedOnURLParameters(); },
     function () { displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
 ));
-
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-
 
