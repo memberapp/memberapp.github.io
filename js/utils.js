@@ -63,13 +63,18 @@ function handleEvent(e) {
 }
 
 function ds(input) {
-  if (input == undefined) { return ""; };
-  input = input.replace(/&/g, '&amp;');
-  input = input.replace(/</g, '&lt;');
-  input = input.replace(/>/g, '&gt;');
-  input = input.replace(/"/g, '&quot;');
-  input = input.replace(/'/g, '&#x27;');
-
+  //if (input === undefined) { return ""; };
+  try {
+    //If this error out 'input.replace not a number' probably input is not a string type
+    input = input.replace(/&/g, '&amp;');
+    input = input.replace(/</g, '&lt;');
+    input = input.replace(/>/g, '&gt;');
+    input = input.replace(/"/g, '&quot;');
+    input = input.replace(/'/g, '&#x27;');
+  } catch (e) {
+    //Anything funky goes on, we'll return safe empty string
+    return "";
+  }
   return input;
 }
 
@@ -142,7 +147,7 @@ function getParameterByName(name, url) {
   if (!url) url = window.location.href;
   name = name.replace(/[\[\]]/g, "\\$&");
   var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-      results = regex.exec(url);
+    results = regex.exec(url);
   if (!results) return null;
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, " "));

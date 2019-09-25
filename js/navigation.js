@@ -6,6 +6,8 @@ function displayContentBasedOnURLParameters() {
     var action = url.substring(url.indexOf('#') + 1).toLowerCase();
     if (action.startsWith("memberposts")) {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("notifications")) {
+        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("member")) {
         showMember(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("followers")) {
@@ -66,7 +68,7 @@ function hideAll() {
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
-
+    document.getElementById('notifications').style.display = "none";
 }
 
 function show(theDiv) {
@@ -128,6 +130,10 @@ function showNewPost() {
     document.getElementById('newpostbutton').style.display = "block";
 }
 
+
+function showNotifications(start, limit) {
+    getAndPopulateNotifications(start, limit, "notifications", pubkey);
+}
 
 function showMember(qaddress) {
     getAndPopulateMember(qaddress);

@@ -1,20 +1,21 @@
+//A lot of refactoring is possible in these functions
 
 function getAndPopulate(start, limit, page, qaddress, type) {
     //Clear Topic
-    currentTopic=="";
-    document.getElementById('topicdiv').innerHTML="";
-    
+    currentTopic == "";
+    document.getElementById('topicdiv').innerHTML = "";
+
     //Clear existing content
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    
+
     //Show the relevant html element
     show(page);
-    
+
     //Show navigation next/back buttons
     var navbuttons = `<div class="navbuttons">`;
     if (start != 0) navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulate(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `')">Back | </a> `;
     navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulate(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `')">Next</div>`;
-    
+
     //Request content from the server and display it when received
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
         data = mergeRepliesToRepliesBySameAuthor(data);
@@ -35,24 +36,57 @@ function getAndPopulate(start, limit, page, qaddress, type) {
 
 function addStarRatings(data, page, disable) {
     for (var i = 0; i < data.length; i++) {
+
+        //Standard message display
+        var name = data[i].name;
         var theAddress = ds(data[i].address);
-        var theElement = document.querySelector("#rating" + i + page + theAddress);
-        if (theElement == undefined) continue;
-        var theRating = 0; if (data[i].rating != null) { theRating = (ds(data[i].rating) / 64) + 1; }
-        var starRating1 = raterJs({
-            starSize: 8,
-            rating: Math.round(theRating * 10) / 10,
-            element: document.querySelector("#rating" + i + page + theAddress),
-            disableText: 'This user rates ' + ds(data[i].name) + ' as {rating}/{maxRating}',
-            rateCallback: function rateCallback(rating, done) {
-                rateCallbackAction(rating, this);
-                done();
-            }
-        });
-        starRating1.theAddress = theAddress;
-        if (disable) {
-            starRating1.disable();
+        var rawRating = data[i].rating;
+        
+        if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
+            //Notifications, or like, or follow reply
+            theAddress = ds(data[i].origin);
+            name = ds(data[i].originname);
         }
+
+        var rawRating = data[i].rating;
+        var querySelector = "#rating" + i + page + theAddress;
+        addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+    
+        //Add second one for reply
+        if (data[i].type == "reply") {
+            var querySelector = "#rating" + i + page + theAddress + data[i].type;
+            addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+        }
+
+        //Add second one for like
+        if (data[i].type == "like") {
+            var rawRating = data[i].selfrating;
+            var theAddress = ds(data[i].address);
+            var querySelector = "#rating" + i + page + theAddress + data[i].type;
+            addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+        }
+
+    }
+}
+
+function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector) {
+    console.log(querySelector);
+    var theElement = document.querySelector(querySelector);
+    if (theElement == undefined) return;
+    var theRating = 0; if (rawRating != null) { theRating = (ds(rawRating) / 64) + 1; }
+    var starRating1 = raterJs({
+        starSize: 8,
+        rating: Math.round(theRating * 10) / 10,
+        element: document.querySelector(querySelector),
+        disableText: 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
+        rateCallback: function rateCallback(rating, done) {
+            rateCallbackAction(rating, this);
+            done();
+        }
+    });
+    starRating1.theAddress = theAddress;
+    if (disable) {
+        starRating1.disable();
     }
 }
 
@@ -60,11 +94,11 @@ function getAndPopulateTopic(start, limit, topicname, qaddress, type) {
     //Note topicname may contain hostile code - treat with extreme caution
     var page = "topic";
     show(page);
-    document.getElementById('topicdiv').innerHTML= `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"> - ` + ds(topicname) + `</a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')">(new)</a> |`;
+    document.getElementById('topicdiv').innerHTML = `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"> - ` + ds(topicname) + `</a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')">(new)</a> |`;
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
     var navbuttons = `<div class="navbuttons">`;
     if (start != 0)
-    navbuttons += `<a class="next" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + '&type=' + type + '&qaddress=' + qaddress + `&start=` + (start - 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start - 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Back | </a> `;
+        navbuttons += `<a class="next" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + '&type=' + type + '&qaddress=' + qaddress + `&start=` + (start - 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start - 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Back | </a> `;
     navbuttons += `<a class="back" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + '&type=' + type + '&qaddress=' + qaddress + `&start=` + (start + 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start + 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Next</div>`;
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&topicname=' + encodeURIComponent(topicname) + '&type=' + type + '&start=' + start + '&limit=' + limit).then(function (data) {
         var contents = "";
@@ -83,108 +117,22 @@ function getAndPopulateTopic(start, limit, topicname, qaddress, type) {
 }
 
 
-
-
-
 function getHTMLForPost(data, rank, page, starindex) {
     if (checkForMutedWords(data)) return "";
-    return `<tr class="athing">
-                <td class="title" valign="top" align="right"><span class="rank">`+ rank + `.</span></td>
-                <td class="votelinks" valign="top" rowspan="2">
-                    <center><a href="javascript:;" onclick="likePost('`+ ds(data.txid) + `')"><div id="upvote` + ds(data.txid) + `" class="votearrow" title="upvote"></div></a></center>
-                    <center><a href="javascript:;" onclick="dislikePost('`+ ds(data.txid) + `')"><div id="downvote` + ds(data.txid) + `" class="votearrow rotate180" title="downvote"></div></a></center>
-                </td>
-                <td class="title">
-                    <a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> ` +
-        `</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td class="subtext">
-                    <span class="score">`+ (ds(data.likes) - ds(data.dislikes)) + ` likes and ` + ds(data.tips) + ` sats </span>`
-        + (ds(data.name) == "" ? " " : `by <a href="#member?qaddress=` + ds(data.address) + `" onclick="showMember('` + ds(data.address) + `')" class="hnuser">` + ds(data.name) + `</a> <div id="rating` + starindex + page + ds(data.address) + `"></div> `)
-        + '<span class="topic">'
-        + (data.topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(data.topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(data.topic) + `')">to topic/` + ds(data.topic) + `</a> | `)
-        + "</span>"
-        + `<span class="age"><a>` + timeSince(ds(data.firstseen)) + `</a></span> | `
-        //+(((ds(data.replies)-1)>-1)?`<a href="#thread?post=`+ds(data.roottxid)+`" onclick="showThread('`+ds(data.roottxid)+`')">`+(ds(data.replies)-1)+`&nbsp;comments</a> | `:``)
-        + `<a href="#thread?root=` + ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + (Math.max(0,Number(ds(data.replies))-1)) + `&nbsp;comments</a> | `
-        + `<a id="replylink` + page + ds(data.txid) + `" onclick="showReplyBox('` + page + ds(data.txid) + `');" href="javascript:;">reply</a>
-                    | <a id="tiplink`+ page + ds(data.txid) + `" onclick="showTipBox('` + page + ds(data.txid) + `');" href="javascript:;">tip</a>
-                    <span id="tipbox`+ page + ds(data.txid) + `" style="display:none">
-                        <input id="tipamount`+ page + ds(data.txid) + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
-                        <input id="tipbutton`+ page + ds(data.txid) + `" value="tip" type="submit" onclick="sendTip('` + ds(data.txid) + `','` + ds(data.address) + `','` + ds(page) + `');"/>
-                        <input id="tipstatus`+ page + ds(data.txid) + `"value="sending" type="submit" style="display:none" disabled/>
-                    </span>
-                 </td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td>
-                    <div id="reply`+ page + ds(data.txid) + `" style="display:none">
-                        <br/>
-                        <textarea id="replytext`+ page + ds(data.txid) + `" rows="3"  style="width:100%;"></textarea>
-                        <br/>
-                        <input id="replybutton`+ page + ds(data.txid) + `" value="reply" type="submit" onclick="sendReply('` + ds(data.txid) + `','` + ds(page) + `','replystatus` + page + ds(data.txid) + `');"/>
-                        <input id="replystatus`+ page + ds(data.txid) + `" value="sending..." type="submit"  style="display:none" disabled/>
-                        <input id="replyclear`+ page + ds(data.txid) + `" value="clear" type="submit"  style="display:none" onclick="showReplyButton('` + ds(data.txid) + `','` + ds(page) + `','replystatus` + page + ds(data.txid) + `');"/>
-                    </div>
-                </td>
-            </tr>
-            <tr class="spacer" style="height:5px"></tr>`;
+    let mainRatingID=starindex + page + ds(data.address);
+    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID);
 }
+
+
 
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
-    if (data.name == null) { data.name = data.address.substring(0, 10); }
-    return `<tr class="athing comtr `
-        + (data.txid == highlighttxid ? "highlight" : "") +
-        `"><td>
-            <table border="0"><tbody><tr>
-                <td class="ind"><img src="s.gif" width="`+ depth + `" height="1"/></td>
-                <td class="votelinks" valign="top">
-                    <center><a href="javascript:;" onclick="likePost('`+ ds(data.txid) + `')"><div id="upvote` + ds(data.txid) + `" class="votearrow" title="upvote"></div></a></center>
-                    <center><a href="javascript:;" onclick="dislikePost('`+ ds(data.txid) + `')"><div id="downvote` + ds(data.txid) + `" class="votearrow rotate180" title="downvote"></div></a></center>
-                </td>
-                <td class="default">
-                    <div style="margin-top:2px; margin-bottom:-10px;">
-                        <span class="comhead">
-                            <a href="#member?qaddress=`+ ds(data.address) + `" onclick="showMember('` + ds(data.address) + `')" class="hnuser">` + ds(data.name) + `</a>
-                            <div id="rating`+ starindex + page + ds(data.address) + `"></div>
-                            <span class="score">`+ (ds(data.likes) - ds(data.dislikes)) + ` likes and ` + ds(data.tips) + ` sats </span>
-                            <span class="age"><a>`+ timeSince(ds(data.firstseen)) + `</a></span>
-                            <span></span>
-                            <span class="par"></span>
-                            <a class="togg" n="8" >[-]</a>
-                            <span class="storyon"></span>
-                        </span>
-                    </div>
-                    <br/>
-                    <div class="comment">
-                        <span class="c00">`+ anchorme(ds(data.message).replace(/(?:\r\n|\r|\n)/g, '<br>'), { attributes: [{ name: "target", value: "_blank" }] }) + `
-                            <div class="reply">
-                                <font size="1">  <u><a id="replylink`+ page + ds(data.txid) + `" onclick="showReplyBox('` + page + ds(data.txid) + `');" href="javascript:;">reply</a></u></font>
-                                <font size="1">| <u><a id="tiplink`+ page + ds(data.txid) + `" onclick="showTipBox('` + page + ds(data.txid) + `');" href="javascript:;">tip</a></u></font>
-                                <span id="tipbox`+ page + ds(data.txid) + `" style="display:none">
-                                    <input id="tipamount`+ page + ds(data.txid) + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
-                                    <input id="tipbutton`+ page + ds(data.txid) + `" value="tip" type="submit" onclick="sendTip('` + ds(data.txid) + `','` + ds(data.address) + `','` + ds(page) + `');"/>
-                                    <input id="tipstatus`+ page + ds(data.txid) + `"value="sending" type="submit" style="display:none" disabled/>
-                                </span>
-                            </div>
-                        </span>
-                    </div>
-                    <div id="reply`+ page + ds(data.txid) + `" style="display:none">
-                        <br/>
-                        <textarea id="replytext`+ page + ds(data.txid) + `" rows="3" rows="3" style="width:100%;"></textarea>
-                        <br/>
-                        <input id="replybutton`+ page + ds(data.txid) + `" value="reply" type="submit" onclick="sendReply('` + ds(data.txid) + `','` + ds(page) + `','replystatus` + page + ds(data.txid) + `');"/>
-                        <input id="replystatus`+ page + ds(data.txid) + `" value="sending..." type="submit"  style="display:none" disabled/>
-                        <input id="replyclear`+ page + ds(data.txid) + `" value="clear" type="submit"  style="display:none" onclick="showReplyButton('` + ds(data.txid) + `','` + ds(page) + `','replystatus` + page + ds(data.txid) + `');"/>                       
-                    </div>
-                </td>
-            </tr></tbody></table>
-            </td></tr>`;
+    let mainRatingID=starindex + page + ds(data.address);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid);
 }
+
+
+
 
 function showReplyButton(txid, page, divForStatus) {
     document.getElementById("replyclear" + page + txid).style.display = "none";
@@ -271,16 +219,16 @@ function showTipBox(txid) {
 }
 
 
-function topictitleChanged(elementName){
-        if(document.getElementById(elementName+'topic').value.length==0){
-            document.getElementById(elementName+'title').maxLength=217;
-            document.getElementById(elementName+'topic').maxLength=Math.max(0,214-document.getElementById(elementName+'title').value.length);
-        }else{
-            document.getElementById(elementName+'title').maxLength=Math.max(0,214-document.getElementById(elementName+'topic').value.length);
-            document.getElementById(elementName+'topic').maxLength=Math.max(0,214-document.getElementById(elementName+'title').value.length);
-        }
-        document.getElementById(elementName+'titlelengthadvice').innerHTML="("+document.getElementById(elementName+'title').value.length+"/"+document.getElementById(elementName+'title').maxLength+")";
-        document.getElementById(elementName+'topiclengthadvice').innerHTML="("+document.getElementById(elementName+'topic').value.length+"/"+document.getElementById(elementName+'topic').maxLength+")";       
+function topictitleChanged(elementName) {
+    if (document.getElementById(elementName + 'topic').value.length == 0) {
+        document.getElementById(elementName + 'title').maxLength = 217;
+        document.getElementById(elementName + 'topic').maxLength = Math.max(0, 214 - document.getElementById(elementName + 'title').value.length);
+    } else {
+        document.getElementById(elementName + 'title').maxLength = Math.max(0, 214 - document.getElementById(elementName + 'topic').value.length);
+        document.getElementById(elementName + 'topic').maxLength = Math.max(0, 214 - document.getElementById(elementName + 'title').value.length);
+    }
+    document.getElementById(elementName + 'titlelengthadvice').innerHTML = "(" + document.getElementById(elementName + 'title').value.length + "/" + document.getElementById(elementName + 'title').maxLength + ")";
+    document.getElementById(elementName + 'topiclengthadvice').innerHTML = "(" + document.getElementById(elementName + 'topic').value.length + "/" + document.getElementById(elementName + 'topic').maxLength + ")";
 }
 
 function post() {
@@ -292,7 +240,7 @@ function post() {
         return false;
     }
 
-    var topic=document.getElementById('memotopic').value;
+    var topic = document.getElementById('memotopic').value;
 
     document.getElementById('newpostbutton').style.display = "none";
     document.getElementById('newpoststatus').style.display = "block";
@@ -318,14 +266,14 @@ function postmemorandum() {
         return false;
     }
 
-    var topic=document.getElementById('memorandumtopic').value;
+    var topic = document.getElementById('memorandumtopic').value;
     //topic may be empty string
 
     document.getElementById('newpostmemorandumbutton').style.display = "none";
     document.getElementById('newpostmemorandumstatus').style.display = "block";
     document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
 
-    
+
 
     postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
 
@@ -373,64 +321,74 @@ function checkForMutedWords(data) {
 
 //Threads
 
-function getAndPopulateThread(roottxid,txid,pageName){
-    if(pageName!="mapthread"){
+function getAndPopulateThread(roottxid, txid, pageName) {
+    if (pageName != "mapthread") {
         show(pageName);
         document.getElementById(pageName).innerHTML = document.getElementById("loading").innerHTML;
     }
-    getJSON(server+'?action=thread&address='+pubkey+'&txid='+roottxid).then(function(data) {
-        data=mergeRepliesToRepliesBySameAuthor(data);
-        var contents="";
-        for(var i=0;i<data.length;i++){
-            if(data[i].txid==roottxid){
-               contents+=`<table class="fatitem" border="0"><tbody>`+getHTMLForPost(data[i],1,pageName,i)+`</tbody></table>`;
-               //break;
-               contents+=`<table class="comment-tree" border="0"><tbody>`+getNestedPostHTML(data,data[i].txid,0,pageName,txid)+`</tbody></table>`;
-            }           
+
+    //Roottxid is used to get all the posts, txid is used to highligh the required post
+
+    //If no post is specified, we'll use it as a top level
+    if (txid === undefined || txid == "") { txid = roottxid; }
+
+    getJSON(server + '?action=thread&address=' + pubkey + '&txid=' + txid).then(function (data) {
+        data = mergeRepliesToRepliesBySameAuthor(data);
+        var contents = "";
+
+        //Make sure we have id of the top level post
+        if (data.length > 0 && roottxid == "") { roottxid = data[0].roottxid; }
+
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].txid == roottxid) {
+                contents += `<table class="fatitem" border="0"><tbody>` + getHTMLForPost(data[i], 1, pageName, i) + `</tbody></table>`;
+                //break;
+                contents += `<table class="comment-tree" border="0"><tbody>` + getNestedPostHTML(data, data[i].txid, 0, pageName, txid) + `</tbody></table>`;
+            }
         }
         document.getElementById(pageName).innerHTML = contents; //display the result in an HTML element
-        addStarRatings(data,pageName);
+        addStarRatings(data, pageName);
         window.scrollTo(0, 0);
-        if(popup!=undefined){
-            popup.setContent("<div id='mapthread'>"+contents+"</div>");
+        if (popup != undefined) {
+            popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
-    }, function(status) { //error detection....
+    }, function (status) { //error detection....
         alert('Something went wrong.');
     });
 }
 
-function mergeRepliesToRepliesBySameAuthor(data){
-    
+function mergeRepliesToRepliesBySameAuthor(data) {
+
     var replies = [];
     var authors = [];
     //First build associative array
-    for(var i=0;i<data.length;i++){
-        replies[data[i].txid]=data[i].retxid;
-        authors[data[i].txid]=data[i].address;
+    for (var i = 0; i < data.length; i++) {
+        replies[data[i].txid] = data[i].retxid;
+        authors[data[i].txid] = data[i].address;
     }
 
     //console.log(data);
-    for(var i=0;i<data.length;i++){
-        
+    for (var i = 0; i < data.length; i++) {
+
         //Do not merge root, or first reply
-        if(data[i].retxid!="" && data[i].retxid!=data[i].roottxid){
+        if (data[i].retxid != "" && data[i].retxid != data[i].roottxid) {
             //if the author of the post is the same as the parent post
-            if(data[i].address==authors[data[i].retxid]){
-                
+            if (data[i].address == authors[data[i].retxid]) {
+
                 //Merge child post i into parent post
                 //Find parent post
-                for(var j=0;j<data.length;j++){
-                    if(data[i].retxid==data[j].txid){
-                        data[j].likes=(Number(data[j].likes)+Number(data[i].likes)).toString();
-                        data[j].dislikes=(Number(data[j].dislikes)+Number(data[i].dislikes)).toString();
-                        data[j].tips=(Number(data[j].tips)+Number(data[i].tips)).toString();
-                        
-                        data[j].message=data[j].message+data[i].message;
-                        
+                for (var j = 0; j < data.length; j++) {
+                    if (data[i].retxid == data[j].txid) {
+                        data[j].likes = (Number(data[j].likes) + Number(data[i].likes)).toString();
+                        data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();
+                        data[j].tips = (Number(data[j].tips) + Number(data[i].tips)).toString();
+
+                        data[j].message = data[j].message + data[i].message;
+
                         //if any other posts reference the child post, have them refence the parent post instead
-                        for(var k=0;k<data.length;k++){
-                            if(data[k].retxid==data[i].txid){
-                                data[k].retxid=data[j].txid;
+                        for (var k = 0; k < data.length; k++) {
+                            if (data[k].retxid == data[i].txid) {
+                                data[k].retxid = data[j].txid;
                             }
                         }
 
@@ -446,13 +404,13 @@ function mergeRepliesToRepliesBySameAuthor(data){
     return data;
 }
 
-function getNestedPostHTML(data, targettxid,depth,pageName,highlighttxid){
-    var contents="";
-    for(var i=0;i<data.length;i++){
-        if(data[i].retxid==targettxid){
-            contents=contents+""+getHTMLForReply(data[i],depth,pageName,i,highlighttxid)+getNestedPostHTML(data,data[i].txid,depth+20,pageName,highlighttxid)+"";
+function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid) {
+    var contents = "";
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].retxid == targettxid) {
+            contents = contents + "" + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 20, pageName, highlighttxid) + "";
         }
     }
-    contents=contents+"";
+    contents = contents + "";
     return contents;
 }
