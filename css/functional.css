@@ -193,10 +193,19 @@ pre { max-width: 900px; }
   background-color: #ececdf;
 }
 
-#map{
+#map {
   position: absolute;
+}
+
+#memberposts {
+    margin-left: 15px;
+}
+
+#settings {
+    margin-left: 15px; 
 }
 
 .leaflet-popup-content-wrapper {
   background-color:#f6f6ef;
 }
+
