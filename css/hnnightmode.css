@@ -275,14 +275,22 @@ a.morelink {
   a.morelink:hover {
     background-color: #282a2e; }
 
-    .highlight {
-      background-color: #030320;
-    }
+.highlight {
+  background-color: #030320;
+}
 
-    #map{
-      position: absolute;
-    }
+#map{
+  position: absolute;
+}
 
-    .leaflet-popup-content-wrapper {
-      background-color:#000000;
-    }
+#memberposts {
+  margin-left: 15px;
+}
+
+#settings {
+  margin-left: 15px; 
+}
+
+.leaflet-popup-content-wrapper {
+  background-color:#000000;
+}
