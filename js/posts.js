@@ -168,7 +168,7 @@ function sendReply(txid, page, divForStatus) {
 
 function showReplyBox(txid) {
     if (privkey == "") {
-        alert("You must login with a private key to reply to posts.");
+        alert("You must login to reply to posts.");
         return false;
     }
     document.getElementById("reply" + txid).style.display = "block";
@@ -206,7 +206,7 @@ function sendTip(txid, tipAddress, page) {
 
 function showTipBox(txid) {
     if (privkey == "") {
-        alert("You must login with a private key to tip.");
+        alert("You must login to tip.");
         return false;
     }
     if (document.getElementById("tipamount" + txid).value == 0) {

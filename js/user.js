@@ -7,7 +7,7 @@ function getAndPopulateCommunityRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents +
-                "<tr><td>" + getMemberLink(ds(data[i].address), ds(data[i].name)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].rateename)) + "</td><td>|</td><td>"+ds(data[i].reason)+"</td></tr>";
+                "<tr><td>" + getMemberLink(ds(data[i].address), ds(data[i].name)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].rateename)) + "</td><td>|</td><td>" + ds(data[i].reason) + "</td></tr>";
         }
         document.getElementById('communityratingtable').innerHTML = contents;
 
@@ -37,7 +37,7 @@ function getAndPopulateRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents +
-                "<tr><td>" + getMemberLink(ds(data[i].rateraddress), ds(data[i].ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].name)) + "</td><td>|</td><td>"+ds(data[i].reason)+"</td></tr>";
+                "<tr><td>" + getMemberLink(ds(data[i].rateraddress), ds(data[i].ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].name)) + "</td><td>|</td><td>" + ds(data[i].reason) + "</td></tr>";
         }
         document.getElementById('ratingtable').innerHTML = contents;
 
@@ -87,10 +87,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'profiletext').value = ds(data[0].profile);
             document.getElementById(pre + 'nametext').innerText = ds(data[0].name);
             document.getElementById(pre + 'profiletext').innerText = ds(data[0].profile);
-            
-            document.getElementById(pre + 'profilelink').href = "#member?qaddress="+qaddress;
-            document.getElementById(pre + 'profilelink').onclick =  function () { showMember(qaddress); }; 
-            document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/"+ds(qaddress);
+
+            document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + qaddress;
+            document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
+            document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + ds(qaddress);
 
             if (pre == "settings") {
                 document.getElementById(pre + 'nametextbutton').disabled = true;
@@ -127,22 +127,22 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         //This condition checks that the user being viewed is not the logged in user
         if (qaddress != pubkey) {
             if (data.length < 1 || ds(data[0].isblocked) == "0") {
-                document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='block(" + escaped + ");'>block</a>";
+                document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='block(" + escaped + ");'>mute</a>";
             } else {
-                document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='unblock(" + escaped + ");'>unblock</a>";
+                document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='unblock(" + escaped + ");'>unmute</a>";
             }
 
-            document.getElementById(pre + 'ratingcomment').innerHTML = `<input size="30" maxlength="210" id="memberratingcommentinputbox`+qaddress+`" value="`+(data.length>0?ds(data[0].ratingreason):"")+`" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
-            document.getElementById(pre + 'ratingcommentinputbox'+qaddress).onchange=function(){starRating1.setRating(0);};
-            
-            var theRating = 0; if (data.length>0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
+            document.getElementById(pre + 'ratingcomment').innerHTML = `<input size="30" maxlength="210" id="memberratingcommentinputbox` + qaddress + `" value="` + (data.length > 0 ? ds(data[0].ratingreason) : "") + `" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+            document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
+
+            var theRating = 0; if (data.length > 0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
             var starRating1 = raterJs({
                 starSize: 24,
                 //rating: theRating,
                 element: document.querySelector("#memberrating" + qaddress),
                 rateCallback: function rateCallback(rating, done) {
-                    var ratingText=document.getElementById("memberratingcommentinputbox"+qaddress);
-                    rateCallbackAction(rating, this,ratingText.value);
+                    var ratingText = document.getElementById("memberratingcommentinputbox" + qaddress);
+                    rateCallbackAction(rating, this, ratingText.value);
                     done();
                 }
             });
@@ -156,7 +156,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
                 tgmember = "19RyV6XQEww5td2LPWDpK8o5V8at7Vpwgv";
             }
 
-            
+
             document.getElementById(pre + 'trustgraph').innerHTML = `<a href='#trustgraph?member=` + tgmember + `&amp;target=` + qaddress + `' onclick='showTrustGraph("` + pubkey + `","` + qaddress + `");'>Show Trust Graph</a>`;
         }
 
@@ -170,14 +170,14 @@ function getAndPopulateMember(qaddress) {
     var publicaddress = new bch.Address(qaddress);
     var memberqpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
     document.getElementById('membercashaddrformat').innerHTML = memberqpubkey;
-    document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
+    //document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
 
     getDataCommonToSettingsAndMember(qaddress, "member");
     getAndPopulateCommunityRatings(qaddress);
     getAndPopulateRatings(qaddress);
-    if(pubkey){
+    if (pubkey) {
         getAndPopulateTrustGraph(pubkey, qaddress);
-    }else{
+    } else {
         document.getElementById('trustgraph').style.display = "none";
     }
 }
@@ -185,7 +185,7 @@ function getAndPopulateMember(qaddress) {
 function getAndPopulateSettings() {
     document.getElementById('legacyformat').innerHTML = pubkey;
     document.getElementById('cashaddrformat').innerHTML = qpubkey;
-    document.getElementById('qrformat').innerHTML = `<a id="qrclicktoshow" onclick="document.getElementById('qrchart').style.display='block'; new QRCode(document.getElementById('qrchart'), '`+qpubkey+`'); document.getElementById('qrclicktoshow').style.display='none';">Click To Show</a><div id="qrchart"></div>`;
+    //document.getElementById('qrformat').innerHTML = `<a id="qrclicktoshow" onclick="document.getElementById('qrchart').style.display='block'; new QRCode(document.getElementById('qrchart'), '`+qpubkey+`'); document.getElementById('qrclicktoshow').style.display='none';">Click To Show</a><div id="qrchart"></div>`;
     document.getElementById('privatekey').innerHTML = `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a><div style="display:none;"  id="privatekeydisplay"></div>`;
     document.getElementById('privatekeydisplay').innerHTML = privkey;
     if (typeof Storage !== void (0)) {
@@ -203,9 +203,16 @@ function getAndPopulateSettings() {
 
 }
 
+function showQRCode(spanid) {
+    var addressToQR = document.getElementById(spanid).innerHTML;
+    document.getElementById(spanid + "div").innerHTML="";
+    new QRCode(document.getElementById(spanid + "div"), addressToQR);
+    //document.getElementById('qrclicktoshow').style.display='none';
+}
+
 function rateCallbackAction(rating, that, ratingtext) {
-    if(ratingtext===undefined){
-        ratingtext="";
+    if (ratingtext === undefined) {
+        ratingtext = "";
     }
     var qaddress = that.theAddress;
     var transposed = 0;

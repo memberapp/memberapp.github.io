@@ -157,7 +157,7 @@ function showMemberPosts(start, limit, qaddress) {
 }
 
 function showFeed(start, limit, type) {
-    getAndPopulate(start, limit, 'feed', pubkey, type);
+    getAndPopulate(start, limit, 'posts', pubkey, type);
 }
 
 function showPosts(start, limit, type) {

@@ -29,7 +29,7 @@
 
     <!--  Member Code. In separate files for development convenience -->
     <!--  Can be mininfied and amalgamated for releases -->
-    
+
     <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/posts.js"></script>
@@ -44,7 +44,7 @@
     <script src="js/login.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/htmlquarantine.js"></script>
-    
+
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
 
@@ -72,22 +72,24 @@
                                         <span id="loggedin" style="display: none;" class="pagetop">
                                             <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new
                                                 post</a> |
-                                            <a id="feedbutton" class="btn"
-                                                href="#feed?type=top&amp;start=0&amp;limit=25"
-                                                onclick="showFeed(0,25,'top');">feed</a>
-                                            <a id="feedbuttonnew" class="btn"
-                                                href="#feed?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showFeed(0,25,'new');">(new)</a> |
-                                            <a id="postsbutton" class="btn"
-                                                href="#posts?type=top&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'top');">posts</a>
-                                            <a id="postsbuttonnew" class="btn"
+                                            <a id="postsbutton" class="btn" href="#posts?type=feed&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'feed');">posts</a><a id="postsbuttonall" class="btn"
+                                                href="#posts?type=all&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'all');">(all</a><a id="postsbuttonnew" class="btn"
                                                 href="#posts?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'new');">(new)</a> |
-                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a> 
+                                                onclick="showPosts(0,25,'new');">|new)</a> |   
+                                            <a id="commentsbutton" class="btn"
+                                                href="#comments?type=feed&amp;start=0&amp;limit=25"
+                                                onclick="showComments(0,25,'feed');">comments</a><a id="commentsbuttonall" class="btn"
+                                                href="#comments?type=all&amp;start=0&amp;limit=25"
+                                                onclick="showComments(0,25,'all');">(all</a><a id="commentsbuttonnew" class="btn"
+                                                href="#comments?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showComments(0,25,'new');">|new)</a> |    
+                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a>
                                             <a id="settingsbutton" class="btn" href="#settings"
-                                                onclick="showSettings();">⚙️</a> 
-                                            <a id="notificationsbutton" class="btn" href="#notifications?start=0&amp;limit=25"
+                                                onclick="showSettings();">⚙️</a>
+                                            <a id="notificationsbutton" class="btn"
+                                                href="#notifications?start=0&amp;limit=25"
                                                 onclick="showNotifications(0,25,'notifications');">🔔</a> |
                                             <a id="logoutbutton" class="btn" href="#logout"
                                                 onclick="logout();">logout</a>
@@ -98,7 +100,7 @@
                                             <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a> |
                                             <a id="postsbutton" class="btn"
                                                 href="#posts?type=top&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'top');">posts</a>
+                                                onclick="showPosts(0,25,'all');">posts</a>
                                             <a id="postsbutton" class="btn"
                                                 href="#posts?type=new&amp;start=0&amp;limit=25"
                                                 onclick="showPosts(0,25,'new');">(new)</a> |
@@ -197,7 +199,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div id="loading" style="display: none;"><br/><br/><center><img src="img/loading.gif"/></center></div>
+                        <div id="loading" style="display: none;"><br /><br />
+                            <center><img src="img/loading.gif" /></center>
+                        </div>
                         <div id="topic" style="display: none;"></div>
                         <div id="feed" style="display: none;"></div>
                         <div id="notifications" style="display: none;"></div>
@@ -234,19 +238,18 @@
                                     <tr>
                                         <th>Address</th>
                                         <td>
-                                            <span id="membercashaddrformat">loading</span>
+                                            <div id="membercashaddrformatdiv"><span
+                                                    id="membercashaddrformat">loading</span> <span
+                                                    onclick="showQRCode('membercashaddrformat');">(Click to Show QR
+                                                    Code)</span></div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Legacy Address</th>
                                         <td>
-                                            <span id="memberlegacyformat">loading</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>QR Code</th>
-                                        <td>
-                                            <span id="memberqrformat">loading</span>
+                                            <div id="memberlegacyformatdiv"><span id="memberlegacyformat">loading</span>
+                                                <span onclick="showQRCode('memberlegacyformat');">(Click to Show QR
+                                                    Code)</span></div>
                                         </td>
                                     </tr>
                                     <tr>
@@ -274,7 +277,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Blockers</th>
+                                        <th>Muters</th>
                                         <td>
                                             <a id="memberblockersnumber">
                                                 <i>loading</i>
@@ -282,7 +285,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Blocking</th>
+                                        <th>Muting</th>
                                         <td>
                                             <a id="memberblockingnumber">
                                                 <i>loading</i>
@@ -291,7 +294,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th>Block</th>
+                                        <th>Mute</th>
                                         <td>
                                             <a id="memberblock">
                                                 <i>loading</i>
@@ -331,7 +334,7 @@
                             <div id="trustgraphdetails"></div>
                             <br />
                             <br />
-                            <div id="trustgraphnotes">*Notes: A follow is interpreted a 4-star rating, a block as a
+                            <div id="trustgraphnotes">*Notes: A follow is interpreted a 4-star rating, a mute as a
                                 2-star rating. This is an
                                 approximation of a trust rating -
                                 the rating can be overridden by directly rating the user.</div>
@@ -381,25 +384,25 @@
                                     <tr>
                                         <th>Address</th>
                                         <td>
-                                            <span id="cashaddrformat">loading</span>
+                                            <div id="cashaddrformatdiv"><span id="cashaddrformat">loading</span> <span
+                                                    onclick="showQRCode('cashaddrformat');">(Click to Show QR
+                                                    Code)</span></div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Legacy Address</th>
                                         <td>
-                                            <span id="legacyformat">loading</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>QR Code</th>
-                                        <td>
-                                            <span id="qrformat">loading</span>
+                                            <div id="legacyformatdiv"><span id="legacyformat">loading</span> <span
+                                                    onclick="showQRCode('legacyformat');">(Click to Show QR Code)</span>
+                                            </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Private Key</th>
                                         <td>
-                                            <span id="privatekey">loading</span>
+                                            <div id="privatekeydiv"><span id="privatekey">loading</span> <span
+                                                    onclick="showQRCode('privatekey');">(Click to Show QR Code)</span>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -440,7 +443,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Blockers</th>
+                                        <th>Muters</th>
                                         <td>
                                             <a id="settingsblockersnumber">
                                                 <i>loading</i>
@@ -448,7 +451,7 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th>Blocking</th>
+                                        <th>Muting</th>
                                         <td>
                                             <a id="settingsblockingnumber">
                                                 <i>loading</i>
@@ -583,7 +586,7 @@
                         </div>
 
                         <div id="blockers" style="display: none;">
-                            <h2>Blockers</h2>
+                            <h2>Muters</h2>
                             <br />
                             <table class="table">
                                 <thead>
@@ -598,7 +601,7 @@
                         </div>
 
                         <div id="blocking" style="display: none;">
-                            <h2>Blocking</h2>
+                            <h2>Muting</h2>
                             <br />
                             <table class="table">
                                 <thead>
@@ -612,11 +615,9 @@
                             </table>
                         </div>
 
-                        <div id="posts" style="display: none;">
-                        </div>
+                        <div id="posts" style="display: none;"></div>
 
-                        <div id="comments" style="display: none;">
-                        </div>
+                        <div id="comments" style="display: none;"></div>
 
                         <div id="thread" style="display: none;">
                         </div>
