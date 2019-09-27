@@ -69,13 +69,17 @@ function getHTMLForNotification(data, rank, page, starindex) {
             return notificationItemHTML(
                 `⭐&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID) + ` rated you as ` + theRating + ` stars, commenting ... ` + ds(data.reason),
-                timeSince(ds(data.time)));
+                timeSince(ds(data.time)),
+                ""
+                );
             break;
         case "follow":
             return notificationItemHTML(
                 `👩&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID) + ` followed you `,
-                timeSince(ds(data.time)));
+                timeSince(ds(data.time)),
+                ""                
+                );
             break;
         case "like":
             postRatingID=starindex + page + ds(data.address) + type;    
