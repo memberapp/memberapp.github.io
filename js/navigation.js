@@ -104,13 +104,6 @@ function showBootstrap(qaddress) {
     getAndPopulateBootstrap(qaddress);
 }
 
-function showSettings() {
-    getAndPopulateSettings();
-    getAndPopulate(0, 25, 'memberposts', pubkey);
-    document.getElementById('settings').style.display = "block";
-    document.getElementById('settingsfollow').style.display = "block";
-}
-
 function showNewPost() {
     show("newpost");
     if (currentTopic != "") {
@@ -133,6 +126,13 @@ function showNewPost() {
 
 function showNotifications(start, limit) {
     getAndPopulateNotifications(start, limit, "notifications", pubkey);
+}
+
+function showSettings() {
+    getAndPopulateSettings();
+    getAndPopulate(0, 25, 'memberposts', pubkey);
+    document.getElementById('settings').style.display = "block";
+    document.getElementById('settingsfollow').style.display = "block";
 }
 
 function showMember(qaddress) {

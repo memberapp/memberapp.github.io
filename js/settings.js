@@ -70,25 +70,25 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         //Note, data may not contain any rows, for new or unknown users.
 
         if (data.length < 1) {
-            document.getElementById(pre + 'followersnumber').innerText = "0";
-            document.getElementById(pre + 'followingnumber').innerText = "0";
-            document.getElementById(pre + 'blockersnumber').innerText = "0";
-            document.getElementById(pre + 'blockingnumber').innerText = "0";
+            document.getElementById(pre + 'followersnumber').innerHTML = "0";
+            document.getElementById(pre + 'followingnumber').innerHTML = "0";
+            document.getElementById(pre + 'blockersnumber').innerHTML = "0";
+            document.getElementById(pre + 'blockingnumber').innerHTML = "0";
             document.getElementById(pre + 'nametext').value = "";
             document.getElementById(pre + 'profiletext').value = "";
-            document.getElementById(pre + 'nametext').innerText = "";
-            document.getElementById(pre + 'profiletext').innerText = "";
+            document.getElementById(pre + 'nametext').innerHTML = "";
+            document.getElementById(pre + 'profiletext').innerHTML = "";
         } else {
-            document.getElementById(pre + 'followersnumber').innerText = ds(data[0].followers);
-            document.getElementById(pre + 'followingnumber').innerText = ds(data[0].following);
-            document.getElementById(pre + 'blockersnumber').innerText = ds(data[0].blockers);
-            document.getElementById(pre + 'blockingnumber').innerText = ds(data[0].blocking);
-            document.getElementById(pre + 'nametext').value = ds(data[0].name);
-            document.getElementById(pre + 'profiletext').value = ds(data[0].profile);
-            document.getElementById(pre + 'nametext').innerText = ds(data[0].name);
-            document.getElementById(pre + 'profiletext').innerText = ds(data[0].profile);
+            document.getElementById(pre + 'followersnumber').innerHTML = ds(data[0].followers);
+            document.getElementById(pre + 'followingnumber').innerHTML = ds(data[0].following);
+            document.getElementById(pre + 'blockersnumber').innerHTML = ds(data[0].blockers);
+            document.getElementById(pre + 'blockingnumber').innerHTML = ds(data[0].blocking);
+            document.getElementById(pre + 'nametext').value = data[0].name;
+            document.getElementById(pre + 'profiletext').value = data[0].profile;
+            document.getElementById(pre + 'nametext').innerHTML = ds(data[0].name);
+            document.getElementById(pre + 'profiletext').innerHTML = ds(data[0].profile);
 
-            document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + qaddress;
+            document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + ds(qaddress);
             document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
             document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + ds(qaddress);
 
@@ -185,7 +185,6 @@ function getAndPopulateMember(qaddress) {
 function getAndPopulateSettings() {
     document.getElementById('legacyformat').innerHTML = pubkey;
     document.getElementById('cashaddrformat').innerHTML = qpubkey;
-    //document.getElementById('qrformat').innerHTML = `<a id="qrclicktoshow" onclick="document.getElementById('qrchart').style.display='block'; new QRCode(document.getElementById('qrchart'), '`+qpubkey+`'); document.getElementById('qrclicktoshow').style.display='none';">Click To Show</a><div id="qrchart"></div>`;
     document.getElementById('privatekey').innerHTML = `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a><div style="display:none;"  id="privatekeydisplay"></div>`;
     document.getElementById('privatekeydisplay').innerHTML = privkey;
     if (typeof Storage !== void (0)) {

@@ -6,7 +6,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
     //Show navigation next/back buttons
     var navbuttons = `<div class="navbuttons">`;
     if (start != 0)
-        navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulateNotifications(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `)">Back | </a> `;
+    navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulateNotifications(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Back | </a> `;
     navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulateNotifications(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Next</div>`;
 
     //Request content from the server and display it when received

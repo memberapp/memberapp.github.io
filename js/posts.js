@@ -48,7 +48,11 @@ function addStarRatings(data, page, disable) {
             name = ds(data[i].originname);
         }
 
-        var rawRating = data[i].rating;
+        //For ratings, we're looking for members view of the rater
+        if (data[i].type == "rating") {
+            rawRating = data[i].raterrating;
+        }
+
         var querySelector = "#rating" + i + page + theAddress;
         addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
     
