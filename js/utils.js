@@ -1,9 +1,11 @@
+"use strict";
+
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 function timeSince(timestamp) {
-  date = new Date(timestamp * 1000);
+  let date = new Date(timestamp * 1000);
   var seconds = Math.floor((new Date() - date) / 1000);
 
   var interval = Math.floor(seconds / 31536000);

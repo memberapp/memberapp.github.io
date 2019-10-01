@@ -1,3 +1,5 @@
+"use strict";
+
 const DUSTLIMIT = 546;
 const MAXPOSSNUMBEROFINPUTS = 10;
 const Buffer = buffer.Buffer;

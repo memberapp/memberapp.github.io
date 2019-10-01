@@ -1,3 +1,5 @@
+"use strict";
+
 function checkForPrivKey() {
     if (privkey == "") {
         alert("This requires a transaction. You must login to do this.");
@@ -5,6 +7,7 @@ function checkForPrivKey() {
     }
     return true;
 }
+
 
 //var waitForTransactionToComplete = false;
 

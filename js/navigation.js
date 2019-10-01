@@ -1,3 +1,5 @@
+"use strict";
+
 function displayContentBasedOnURLParameters() {
 
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
@@ -169,10 +171,11 @@ function showComments(start, limit, type) {
 }
 
 function showTopic(start, limit, topicname, type) {
+    //Warning, topicname may contain hostile characters
     currentTopic = topicname;
     document.getElementById('memotopic').value = topicname;
     document.getElementById('memorandumtopic').value = topicname;
-    getAndPopulateTopic(start, limit, topicname, pubkey, type);
+    getAndPopulateTopic(start, limit, 'topic', pubkey, type, topicname);
 }
 
 function showThread(roottxid, txid) {
@@ -199,8 +202,8 @@ function showBlocking(qaddress) {
 
 var detectBackOrForward = function (onBack, onForward) {
     //Note, sometimes onForward is being called even though it a regular navigation click event
-    hashHistory = [window.location.hash];
-    historyLength = window.history.length;
+    let hashHistory = [window.location.hash];
+    let historyLength = window.history.length;
 
     return function () {
         var hash = window.location.hash, length = window.history.length;

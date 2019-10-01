@@ -1,3 +1,5 @@
+"use strict";
+
 function getAndPopulateFollowers(qaddress) {
     show('followers');
     var page="followers";

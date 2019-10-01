@@ -1,3 +1,5 @@
+"use strict";
+
 function somethingwentwrong(status) {
     alert('Something went wrong.');
 }

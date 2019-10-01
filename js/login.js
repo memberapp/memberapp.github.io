@@ -1,9 +1,12 @@
+"use strict";
+
 var pubkey=""; //Public Key (Legacy)
 var privkey=""; //Private Key
 var qpubkey=""; //Public Key (q style address)
 var mutedwords=new Array(); 
 let tq = new TransactionQueue(updateStatus);
 let currentTopic=""; //Be careful, current Topic can contain anything, including code.
+var defaulttip = 1000;
 
 
 function init(){

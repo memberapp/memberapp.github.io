@@ -1,10 +1,10 @@
 //All functions that generate HTML should be quarantined here. 
 //This is a work in progress, HTML is fairly spread out at the moment
 
+"use strict";
 //Get html for a user, given their address and name
 function userHTML(address, name, ratingID) {
     //TODO sanitize this data
-    console.log(ratingID);
     return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')" class="hnuser">` + ds(name) + `</a>
     <div id="rating` + ratingID + `"></div>`;
 }
@@ -14,6 +14,29 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + ds(txid) + `" onclick="showThread('` + ds(txid) + `')">` + ds(linktext) + `</a>`;
 }
 
+function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName){
+
+    //Caution topicname may contain hostile characters/code
+    
+    var navbuttons = `<div class="navbuttons">`;
+
+    if (start != 0) //Don't show back buttons if we're at the start
+    {navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:`+functionName+`(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back | </a> `;}
+    {navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:`+functionName+`(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`;}
+    return navbuttons;
+    
+}
+
+function getItemListandNavButtonsHTML(contents,navbuttons){
+    return `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`
+    + contents 
+    + "<tr><td/><td/><td>" 
+    + navbuttons + "</td></tr></tbody></table>";
+}
+ 
+function getTableClassHTML(className,contents){
+    return `<table class="`+className+`" border="0"><tbody>` + contents + `</tbody></table>`;
+}
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID) {
     if (name == null) { name = address.substring(0, 10); }
@@ -113,4 +136,22 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                 </td>
             </tr></tbody></table>
             </td></tr>`;
+}
+
+
+function notificationItemHTML(iconHTML, mainbodyHTML, subtextHTML, addendumHTML) {
+    //icon, mainbody and subtext should already be escaped and HTML formatted
+    return `
+    <tr class="spacer" style="height:15px"></tr>
+    <tr class="athing">
+    <td class="title" valign="top" align="right"><span class="rank">`+ iconHTML + `</span></td>
+    <td class="title" colspan="2">`+ mainbodyHTML + `</span></td>
+    </tr>
+    <tr>
+    <td></td>
+    <td colspan="2" class="subtext"><span class="age">`+ subtextHTML + `</td>
+    </tr>
+    <tr class="spacer" style="height:5px"></tr>`
+        + addendumHTML +
+        `<tr><td></td><td colspan="2" style="border-bottom: 1px solid #4cca47"></td></tr>`;
 }

@@ -1,4 +1,4 @@
-
+"use strict";
 
 function getAndPopulateCommunityRatings(qaddress) {
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;

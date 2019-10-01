@@ -1,3 +1,5 @@
+"use strict";
+
 var map = null;
 var popup;
 var postpopup;
