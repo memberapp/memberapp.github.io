@@ -55,7 +55,8 @@ function getAndPopulateThread(roottxid, txid, pageName) {
                 contents += getTableClassHTML("comment-tree",getNestedPostHTML(data, data[i].txid, 0, pageName, txid));
             }
         }
-        displayItemListandNavButtonsHTML(contents,navbuttons,page,data);
+        //Threads have no navbuttons
+        displayItemListandNavButtonsHTML(contents,"","thread",data);
 
         if (popup != undefined) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
