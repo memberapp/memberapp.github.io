@@ -29,9 +29,8 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
 
 function getItemListandNavButtonsHTML(contents,navbuttons){
     return `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`
-    + contents 
-    + "<tr><td/><td/><td>" 
-    + navbuttons + "</td></tr></tbody></table>";
+    + contents + "</tbody></table>"
+    + `<div style="text-align:right">` + navbuttons + `</div>`;
 }
  
 function getTableClassHTML(className,contents){
@@ -80,7 +79,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                         <br/>
                         <input id="replybutton`+ page + ds(txid) + `" value="reply" type="submit" onclick="sendReply('` + ds(txid) + `','` + ds(page) + `','replystatus` + page + ds(txid) + `');"/>
                         <input id="replystatus`+ page + ds(txid) + `" value="sending..." type="submit"  style="display:none" disabled/>
-                        <input id="replyclear`+ page + ds(txid) + `" value="clear" type="submit"  style="display:none" onclick="showReplyButton('` + ds(txid) + `','` + ds(page) + `','replystatus` + page + ds(txid) + `');"/>
+                        <div id="replycompleted`+ page + ds(txid) + `" value=""/>
                     </div>
                 </td>
             </tr>
@@ -131,7 +130,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                         <br/>
                         <input id="replybutton`+ page + ds(txid) + `" value="reply" type="submit" onclick="sendReply('` + ds(txid) + `','` + ds(page) + `','replystatus` + page + ds(txid) + `');"/>
                         <input id="replystatus`+ page + ds(txid) + `" value="sending..." type="submit"  style="display:none" disabled/>
-                        <input id="replyclear`+ page + ds(txid) + `" value="clear" type="submit"  style="display:none" onclick="showReplyButton('` + ds(txid) + `','` + ds(page) + `','replystatus` + page + ds(txid) + `');"/>                       
+                        <div id="replycompleted`+ page + ds(txid) + `" value=""/>                       
                     </div>
                 </td>
             </tr></tbody></table>

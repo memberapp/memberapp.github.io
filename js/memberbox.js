@@ -4,6 +4,8 @@ const DUSTLIMIT = 546;
 const MAXPOSSNUMBEROFINPUTS = 10;
 const Buffer = buffer.Buffer;
 const BITBOX = bitboxSdk;
+//const memberRESTserver ="http://127.0.0.1:3000/v2/";
+const memberRESTserver ="https://rest.bitcoin.com/v2/";
 let extraSatoshis = 5;
 let miningFeeMultiplier = 1;
 //let trxserver = "bchdgrpc";
@@ -200,11 +202,15 @@ class TransactionQueue {
       //Create Keypair
       let keyPair = new ECPair().fromWIF(options.cash.key);
       let thePublicKey = keyPair.getAddress();// BITBOX.ECPair.toLegacyAddress(keyPair);
+      const Address2 = bch.Address;
+      let thePublicKeyQFormat = new Address2(thePublicKey).toString(bch.Address.CashAddrFormat);
+
       let outputInfo = new Array();
       let address = new Address();
 
       (async () => {
-        outputInfo = await address.utxo(thePublicKey);
+        address.restURL=memberRESTserver;
+        outputInfo = await address.utxo(thePublicKeyQFormat);
 
 
         //console.log(outputInfo);
@@ -359,6 +365,7 @@ class TransactionQueue {
 
     const RawTransactions = BITBOX.RawTransactions;
     let rawtransactions = new RawTransactions();
+    rawtransactions.restURL=memberRESTserver;
     rawtransactions.sendRawTransaction(hex).then((result) => {
       //Mark the utxos as spent, to ensure we don't accidentally try to double spend them
       for (let i = 0; i < utxos.length; i++) {

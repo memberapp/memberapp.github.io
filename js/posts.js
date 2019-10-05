@@ -1,4 +1,4 @@
-//A lot of refactoring is possible in these functions
+//Some refactoring is possible in these functions
 
 "use strict";
 
@@ -22,7 +22,11 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
         
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
+            if(page=="posts"){
+                contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
+            }else{
+                contents = contents + getHTMLForReply(data[i], i + 1 + start, page, i, null);
+            }
         }
         displayItemListandNavButtonsHTML(contents,navbuttons,page,data);
     }, function (status) { //error detection....
@@ -168,8 +172,6 @@ function getHTMLForPost(data, rank, page, starindex) {
     return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID);
 }
 
-
-
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID=starindex + page + ds(data.address);
@@ -177,7 +179,6 @@ function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
 }
 
 function showReplyButton(txid, page, divForStatus) {
-    document.getElementById("replyclear" + page + txid).style.display = "none";
     document.getElementById("replybutton" + page + txid).style.display = "block";
     document.getElementById("replytext" + page + txid).value = "";
 }
@@ -193,19 +194,21 @@ function sendReply(txid, page, divForStatus) {
     //Hide the reply button, show the reply status button
     document.getElementById("replybutton" + page + txid).style.display = "none";
     document.getElementById("replystatus" + page + txid).style.display = "block";
+    document.getElementById("replycompleted" + page + txid).innerText = "";
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     const replyhex = new Buffer(replytext).toString('hex');
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
-    sendReplyRaw(privkey, txid, replyhex, 0, divForStatus,
-        function () {
-            document.getElementById(divForStatus).innerHTML = "";
-            document.getElementById("replystatus" + page + txid).style.display = "none";
-            document.getElementById("replyclear" + page + txid).style.display = "block";
-        }
-    );
+    sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, replySuccessFunction);
     return true;
+}
+
+function replySuccessFunction() {
+    //document.getElementById(divForStatus).innerHTML = "";
+    document.getElementById("replystatus" + page + txid).style.display = "none";
+    document.getElementById("replybutton" + page + txid).style.display = "block";
+    document.getElementById("replycompleted" + page + txid).innerText = "Message Sent.";
 }
 
 function showReplyBox(txid) {
@@ -284,6 +287,7 @@ function post() {
 
     var topic = document.getElementById('memotopic').value;
 
+    document.getElementById('newpostcompleted').innerText = "";
     document.getElementById('newpostbutton').style.display = "none";
     document.getElementById('newpoststatus').style.display = "block";
     document.getElementById('newpoststatus').value = "Sending Title...";
@@ -311,6 +315,7 @@ function postmemorandum() {
     var topic = document.getElementById('memorandumtopic').value;
     //topic may be empty string
 
+    document.getElementById('newpostmemorandumcompleted').innerText = "";
     document.getElementById('newpostmemorandumbutton').style.display = "none";
     document.getElementById('newpostmemorandumstatus').style.display = "block";
     document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
@@ -325,26 +330,18 @@ function postmemorandum() {
 }
 
 function memorandumpostcompleted() {
+    document.getElementById('memorandumtitle').value = "";
+    document.getElementById('newposttamemorandum').value = "";
     document.getElementById('newpostmemorandumstatus').style.display = "none";
-    document.getElementById('newpostmemorandumclear').style.display = "block";
+    document.getElementById('newpostmemorandumbutton').style.display = "block";
+    document.getElementById('newpostmemorandumcompleted').innerText = "Message Sent.";
 }
 
 function memocompleted() {
-    document.getElementById('newpoststatus').style.display = "none";
-    document.getElementById('newpostclear').style.display = "block";
-}
-
-function clearmemorandumpost() {
-    document.getElementById('memorandumtitle').value = "";
-    document.getElementById('newposttamemorandum').value = "";
-    document.getElementById('newpostmemorandumbutton').style.display = "block";
-    document.getElementById('newpostmemorandumclear').style.display = "none";
-}
-
-function clearpost() {
     document.getElementById('memotitle').value = "";
+    document.getElementById('newpoststatus').style.display = "none";
     document.getElementById('newpostbutton').style.display = "block";
-    document.getElementById('newpostclear').style.display = "none";
+    document.getElementById('newpostcompleted').innerText = "Message Sent.";
 }
 
 

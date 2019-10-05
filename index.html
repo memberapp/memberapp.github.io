@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Member</title>
+
+    <!--  Only scripts from this website, inline script needed for operation -->
+    <!--  Call Memberjs for content -->
+    <!--  Allow BitBox for UTXOs, Sending Transactions -->
+    <!--  IMG SRC for inline images, rating star image -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src https://memberjs.org https://rest.bitcoin.com/v2/; img-src 'self' data:;">
+    
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -154,8 +161,7 @@
                                                 onclick="postmemorandum();">
                                             <input id="newpostmemorandumstatus" style="display: none;"
                                                 value="Sending . . ." type="submit" disabled>
-                                            <input id="newpostmemorandumclear" style="display: none;" value="clear"
-                                                type="submit" onclick="clearmemorandumpost();">
+                                            <div id="newpostmemorandumcompleted"></div>
                                         </td>
                                     </tr>
                                     <tr style="height:20px"></tr>
@@ -191,8 +197,7 @@
                                                 onclick="post();">
                                             <input id="newpoststatus" style="display: none;" value="Sending . . ."
                                                 type="submit" disabled>
-                                            <input id="newpostclear" style="display: none;" value="clear" type="submit"
-                                                onclick="clearpost();">
+                                            <div id="newpostcompleted"></div>
                                         </td>
                                     </tr>
                                     <tr style="height:20px"></tr>

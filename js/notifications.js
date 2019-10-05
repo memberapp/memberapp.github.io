@@ -18,7 +18,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         }
         //console.log(contents);
         if (contents == "") { contents = "Nothing in this feed yet"; }
-        contents = `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>` + contents + "<tr><td/><td/><td>" + navbuttons + "</td></tr></tbody></table>";
+        contents = `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>` + contents + "<tr><td/><td/><td><br/>" + navbuttons + "</td></tr></tbody></table>";
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data, page);
         window.scrollTo(0, 0);
