@@ -73,19 +73,14 @@ function postRaw(posttext, privkey, topic, newpoststatus, memocompleted) {
     tq.queueTransaction(tx, memocompleted, null);
 }
 
-function geopost(lat, long) {
-    if (!checkForPrivKey()) return false;
-
-    document.getElementById('newgeopostbutton').style.display = "none";
-    var txtarea = document.getElementById('newgeopostta');
-    var posttext = txtarea.value;
-    var geohash = encodeGeoHash(document.getElementById("lat").value, document.getElementById("lon").value);
+function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted){
+    
     const tx = {
         data: ["0x6da8", geohash, posttext],
         cash: { key: privkey }
     }
     updateStatus("Sending Geotagged Post");
-    tq.queueTransaction(tx);
+    tq.queueTransaction(tx,geocompleted,null);
 }
 
 

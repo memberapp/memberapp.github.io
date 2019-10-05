@@ -14,34 +14,34 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + ds(txid) + `" onclick="showThread('` + ds(txid) + `')">` + ds(linktext) + `</a>`;
 }
 
-function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName){
+function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName) {
 
     //Caution topicname may contain hostile characters/code
-    
+
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    {navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:`+functionName+`(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back | </a> `;}
-    {navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:`+functionName+`(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`;}
+    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back | </a> `; }
+    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`; }
     return navbuttons;
-    
+
 }
 
-function getItemListandNavButtonsHTML(contents,navbuttons){
+function getItemListandNavButtonsHTML(contents, navbuttons) {
     return `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`
-    + contents + "</tbody></table>"
-    + `<div style="text-align:right">` + navbuttons + `</div>`;
+        + contents + "</tbody></table>"
+        + `<div style="text-align:right">` + navbuttons + `</div>`;
 }
- 
-function getTableClassHTML(className,contents){
-    return `<table class="`+className+`" border="0"><tbody>` + contents + `</tbody></table>`;
+
+function getTableClassHTML(className, contents) {
+    return `<table class="` + className + `" border="0"><tbody>` + contents + `</tbody></table>`;
 }
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID) {
     if (name == null) { name = address.substring(0, 10); }
-    
+
     return `<tr class="athing">
-                <td class="title" valign="top" align="right"><span class="rank">`+ (rank==""?rank:rank + `.`)+`</span></td>
+                <td class="title" valign="top" align="right"><span class="rank">`+ (rank == "" ? rank : rank + `.`) + `</span></td>
                 <td class="votelinks" valign="top" rowspan="2">
                     <center><a href="javascript:;" onclick="likePost('`+ ds(txid) + `')"><div id="upvote` + ds(txid) + `" class="votearrow" title="upvote"></div></a></center>
                     <center><a href="javascript:;" onclick="dislikePost('`+ ds(txid) + `')"><div id="downvote` + ds(txid) + `" class="votearrow rotate180" title="downvote"></div></a></center>
@@ -54,13 +54,13 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                 <td></td>
                 <td class="subtext">
                     <span class="score">`+ (ds(likes) - ds(dislikes)) + ` likes and ` + ds(tips) + ` sats </span>`
-        + (ds(name) == "" ? " " : `by `+userHTML(address, name, ratingID)+`</div> `)
+        + (ds(name) == "" ? " " : `by ` + userHTML(address, name, ratingID) + `</div> `)
         + '<span class="topic">'
         + (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">to topic/` + ds(topic) + `</a> | `)
         + "</span>"
         + `<span class="age"><a>` + timeSince(ds(firstseen)) + `</a></span> | `
         //+(((ds(replies)-1)>-1)?`<a href="#thread?post=`+ds(roottxid)+`" onclick="showThread('`+ds(roottxid)+`')">`+(ds(replies)-1)+`&nbsp;comments</a> | `:``)
-        + `<a href="#thread?root=` + ds(roottxid) + `&post=` + ds(txid) + `" onclick="showThread('` + ds(roottxid) + `','` + ds(txid) + `')">` + (Math.max(0,Number(ds(replies))-1)) + `&nbsp;comments</a> | `
+        + `<a href="#thread?root=` + ds(roottxid) + `&post=` + ds(txid) + `" onclick="showThread('` + ds(roottxid) + `','` + ds(txid) + `')">` + (Math.max(0, Number(ds(replies)) - 1)) + `&nbsp;comments</a> | `
         + `<a id="replylink` + page + ds(txid) + `" onclick="showReplyBox('` + page + ds(txid) + `');" href="javascript:;">reply</a>
                     | <a id="tiplink`+ page + ds(txid) + `" onclick="showTipBox('` + page + ds(txid) + `');" href="javascript:;">tip</a>
                     <span id="tipbox`+ page + ds(txid) + `" style="display:none">
@@ -101,7 +101,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                 <td class="default">
                     <div style="margin-top:2px; margin-bottom:-10px;">
                         <span class="comhead">`
-                            +userHTML(address, name,ratingID)+`
+        + userHTML(address, name, ratingID) + `
                             <span class="score">`+ (ds(likes) - ds(dislikes)) + ` likes and ` + ds(tips) + ` sats </span>
                             <span class="age"><a>`+ timeSince(ds(firstseen)) + `</a></span>
                             <span></span>
@@ -153,4 +153,40 @@ function notificationItemHTML(iconHTML, mainbodyHTML, subtextHTML, addendumHTML)
     <tr class="spacer" style="height:5px"></tr>`
         + addendumHTML +
         `<tr><td></td><td colspan="2" style="border-bottom: 1px solid #4cca47"></td></tr>`;
+}
+
+function getMapPostHTML(lat, lng) {
+
+    return `
+    <div id="newgeopost" class="bgcolor">
+    <table class="table left">
+        <tbody>
+            <tr>
+                <td><input id="lat" size="10" type="hidden" value="`+ lat + `"></td>
+                <td><input id="lon" size="10" type="hidden" value="`+ lng + `"></td>
+                <td><input id="geohash" size="15" type="hidden"></td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <textarea id="newgeopostta" maxlength="217" name="text" rows="4" cols="30"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <input id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
+                    <input id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit" disabled>
+                    <div id="newpostgeocompleted"></div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr style="height:20px"></tr>
+        </tbody>
+    </table>
+    </div>`;
 }

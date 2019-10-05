@@ -100,36 +100,8 @@ function openPreview(e) {
 
 function onMapClick(e) {
 
-    var loginhtml = "";
-    var htmlContent = `<div id="newgeopost" class="bgcolor">
-    <table class="table left">
-        <tbody>
-            <tr>
-                <td><input id="lat" size="10" type="hidden" value="`+ e.latlng.lat + `"></td>
-                <td><input id="lon" size="10" type="hidden" value="`+ e.latlng.lng + `"></td>
-                <td><input id="geohash" size="15" type="hidden"></td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <textarea id="newgeopostta" maxlength="217" name="text" rows="4" cols="30"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    <input id="newgeopostbutton" value="post" type="submit" onclick="geopost();">
-                </td>
-                <td></td>
-                <td>`+ loginhtml + `</td>
-            </tr>
-            <tr style="height:20px"></tr>
-        </tbody>
-    </table>
-</div>`;
+    var htmlContent = getMapPostHTML(e.latlng.lat,e.latlng.lng);
+    
     postpopup.setLatLng(e.latlng).setContent(htmlContent).openOn(map);
 }
 
