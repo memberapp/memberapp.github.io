@@ -2,7 +2,7 @@
 
 function checkForPrivKey() {
     if (privkey == "") {
-        alert("This requires a transaction. You must login to do this.");
+        alert("You must login to do this.");
         return false;
     }
     return true;

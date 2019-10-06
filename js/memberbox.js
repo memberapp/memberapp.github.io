@@ -150,7 +150,7 @@ class TransactionQueue {
 
     if (res.length > 10) {
       returnObject.updateStatus("<a target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + res + "'>txid:" + res + "</a>");
-      console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
+      //console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
       let successCallback = returnObject.onSuccessFunctionQueue.shift();
       returnObject.queue.shift();
       if (successCallback) {
