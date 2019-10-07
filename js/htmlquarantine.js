@@ -60,7 +60,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + "</span>"
         + `<span class="age"><a>` + timeSince(ds(firstseen)) + `</a></span> | `
         //+(((ds(replies)-1)>-1)?`<a href="#thread?post=`+ds(roottxid)+`" onclick="showThread('`+ds(roottxid)+`')">`+(ds(replies)-1)+`&nbsp;comments</a> | `:``)
-        + `<a href="#thread?root=` + ds(roottxid) + `&post=` + ds(txid) + `" onclick="showThread('` + ds(roottxid) + `','` + ds(txid) + `')">` + (Math.max(0, Number(ds(replies)) - 1)) + `&nbsp;comments</a> | `
+        + `<a href="#thread?root=` + ds(roottxid) + `&post=` + ds(txid) + `" onclick="showThread('` + ds(roottxid) + `','` + ds(txid) + `')">` + (Math.max(0, Number(ds(replies)))) + `&nbsp;comments</a> | `
         + `<a id="replylink` + page + ds(txid) + `" onclick="showReplyBox('` + page + ds(txid) + `');" href="javascript:;">reply</a>
                     | <a id="tiplink`+ page + ds(txid) + `" onclick="showTipBox('` + page + ds(txid) + `');" href="javascript:;">tip</a>
                     <span id="tipbox`+ page + ds(txid) + `" style="display:none">
