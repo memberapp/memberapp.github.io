@@ -43,7 +43,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     return `<tr class="athing">
                 <td class="title" valign="top" align="right"><span class="rank">`+ (rank == "" ? rank : rank + `.`) + `</span></td>
                 <td class="votelinks" valign="top" rowspan="2">
-                    <center><a href="javascript:;" onclick="likePost('`+ ds(txid) + `')"><div id="upvote` + ds(txid) + `" class="votearrow" title="upvote"></div></a></center>
+                    <center><a href="javascript:;" onclick="likePost('`+ ds(txid) + `','` + ds(address) + `')"><div id="upvote` + ds(txid) + `" class="votearrow" title="upvote"></div></a></center>
                     <center><a href="javascript:;" onclick="dislikePost('`+ ds(txid) + `')"><div id="downvote` + ds(txid) + `" class="votearrow rotate180" title="downvote"></div></a></center>
                 </td>
                 <td class="title">
@@ -95,7 +95,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
             <table border="0"><tbody><tr>
                 <td class="ind"><img src="s.gif" width="`+ depth + `" height="1"/></td>
                 <td class="votelinks" valign="top">
-                    <center><a href="javascript:;" onclick="likePost('`+ ds(txid) + `')"><div id="upvote` + ds(txid) + `" class="votearrow" title="upvote"></div></a></center>
+                    <center><a href="javascript:;" onclick="likePost('`+ ds(txid) + `','` + ds(address) + `')"><div id="upvote` + ds(txid) + `" class="votearrow" title="upvote"></div></a></center>
                     <center><a href="javascript:;" onclick="dislikePost('`+ ds(txid) + `')"><div id="downvote` + ds(txid) + `" class="votearrow rotate180" title="downvote"></div></a></center>
                 </td>
                 <td class="default">

@@ -25,7 +25,8 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
             if (page == "posts") {
                 contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
             } else {
-                contents = contents + getHTMLForReply(data[i], i + 1 + start, page, i, null);
+                //contents = contents + getHTMLForReply(data[i], i + 1 + start, page, i, null);
+                contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
             }
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data);
@@ -222,7 +223,13 @@ function showReplyBox(txid) {
     return true;
 }
 
-
+function likePost(txid, tipAddress) {
+    if(oneclicktip>=547){
+        sendTipRaw(txid, tipAddress, oneclicktip, privkey, null);
+    }else{
+        sendLike(txid);
+    }
+}
 
 function sendTip(txid, tipAddress, page) {
     if (!checkForPrivKey()) return false;
@@ -242,7 +249,7 @@ function sendTip(txid, tipAddress, page) {
 
     document.getElementById('tipstatus' + page + txid).value = "Sending Tip . . " + tipAmount;
 
-    sendTipRaw(txid, tipAddress, page, tipAmount, privkey,
+    sendTipRaw(txid, tipAddress, tipAmount, privkey,
         function () {
             document.getElementById('tipstatus' + page + txid).value = "sent";
         }

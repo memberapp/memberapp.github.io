@@ -122,7 +122,7 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
 
 
 
-function sendTipRaw(txid, tipAddress, page, tipAmount, privkey, successFunction) {
+function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
@@ -136,7 +136,7 @@ function sendTipRaw(txid, tipAddress, page, tipAmount, privkey, successFunction)
     tq.queueTransaction(tx, successFunction, null);
 }
 
-function likePost(txid) {
+function sendLike(txid) {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('upvote' + txid).style.display = "none";

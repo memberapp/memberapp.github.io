@@ -135,7 +135,7 @@ class TransactionQueue {
       }
 
       if (errorMessage.startsWith("66:")) {
-        if (miningFeeMultiplier < 5) {
+        if (miningFeeMultiplier < maxfee) {
           //Insufficient Priority - not enough transaction fee provided. Let's try increasing fee.
           miningFeeMultiplier = miningFeeMultiplier * 1.1;
           returnObject.updateStatus("Error: Transaction rejected because fee too low. Increasing and retrying. Surge Pricing now " + Math.round(miningFeeMultiplier * 10) / 10);

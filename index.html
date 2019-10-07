@@ -466,15 +466,31 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>One-Click Tip Amount</th>
+                                        <td>
+                                            <input id="oneclicktip" value="0" size="8" type="number" step="1000"
+                                                onchange="updateOneClickTip();"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();"
+                                                oninput="this.onchange();"></input> (Amount to tip when clicking up arrow, minimum 547) 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Max Fee</th>
+                                        <td>
+                                            <input id="maxfee" value="5" size="3" type="number" step="1"
+                                                onchange="updateMaxFee();"
+                                                onkeypress="this.onchange();" onpaste="this.onchange();"
+                                                oninput="this.onchange();"></input> (Max satoshis per byte to pay during network congestion. Min 2) 
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>Muted Words
                                             <br />(Comma Separate)</th>
                                         <td>
                                             <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60"
-                                                onchange="document.getElementById('mutedwordsbutton').disabled=false;"
+                                                onchange="updatemutedwords();"
                                                 onkeypress="this.onchange();" onpaste="this.onchange();"
                                                 oninput="this.onchange();"></textarea>
-                                            <button id="mutedwordsbutton" type="button" onclick="updatemutedwords();"
-                                                disabled>update</button>
                                         </td>
                                     </tr>
                                     <tr style="height:10px"></tr>

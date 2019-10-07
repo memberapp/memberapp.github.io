@@ -193,7 +193,26 @@ function getAndPopulateSettings() {
             document.getElementById('mutedwords').value = storedmutedwords;
             mutedwords = storedmutedwords.split(',');
         }
+        
+        var storedoneclicktip = localStorage.getItem("oneclicktip");
+        if (storedoneclicktip != undefined && storedoneclicktip != null) {
+            storedoneclicktip=Number(storedoneclicktip);
+            if(storedoneclicktip<547){
+                storedoneclicktip=0;
+            } 
+            document.getElementById('oneclicktip').value = storedoneclicktip;
+            oneclicktip= storedoneclicktip;
+        }
 
+        var storedmaxfee = localStorage.getItem("maxfee");
+        if (storedmaxfee != undefined && storedmaxfee != null) {
+            storedmaxfee=Number(storedmaxfee);
+            if(storedmaxfee<1){
+                storedmaxfee=2;
+            } 
+            document.getElementById('maxfee').value = storedmaxfee;
+            maxfee= storedmaxfee;
+        }
     }
 
 
@@ -239,7 +258,6 @@ function rateCallbackAction(rating, that, ratingtext) {
 
 function updatemutedwords() {
 
-    document.getElementById('mutedwordsbutton').disabled = true;
     var commasep = document.getElementById('mutedwords').value;
     mutedwords = commasep.split(',');
     for (var i = 0; i < mutedwords.length; i++) {
@@ -250,6 +268,24 @@ function updatemutedwords() {
     }
 
 }
+
+function updateOneClickTip(){
+    oneclicktip = Number(document.getElementById('oneclicktip').value);
+    if (typeof Storage !== void (0)) {
+        localStorage.setItem("oneclicktip", oneclicktip);
+    }
+}
+
+function updateMaxFee(){
+    maxfee = Number(document.getElementById('maxfee').value);
+    if(maxfee<2){
+        maxfee = 2;
+    }
+    if (typeof Storage !== void (0)) {
+        localStorage.setItem("maxfee", maxfee);
+    }
+}
+
 
 function getMemberLink(address, name) {
     return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(name) + `</a>`;
