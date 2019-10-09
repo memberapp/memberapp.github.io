@@ -86,7 +86,7 @@ function getAgeHTML(firstseen){
 }
 
 function getTopicHTML(topic){
-    return `<span class="topic">` + 
+    return ` <span class="topic">` + 
     (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">to topic/` + ds(topic) + `</a> | `) 
     + `</span>`;
 }
