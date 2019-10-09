@@ -209,3 +209,14 @@ pre { max-width: 900px; }
   background-color:#f6f6ef;
 }
 
+.votearrowactivated {
+  width:      10px;
+  height:     10px;
+  border:     0px;
+  margin:     3px 2px 2px;
+  background: url("../img/greenarrow.gif")
+  no-repeat;
+}
+
+.notificationrank{ font-size: 18pt; }
+

@@ -11,6 +11,12 @@ var oneclicktip = 0;
 var maxfee = 5;
 
 
+//Create warning if user tries to reload or exit while transactions are in progress or queued.
+window.onbeforeunload=function() {
+    if(tq.isTransactionInProgress())
+        return "Are you sure? There are still transaction(s) in progress. They will be lost if you close the page or reload via the browser.";
+};
+
 function init() {
     //check local app storage for key
 

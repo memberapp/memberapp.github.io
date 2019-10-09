@@ -66,6 +66,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         if (popup != undefined) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
+        scrollTo("highlightedcomment");
     }, function (status) { //error detection....
         alert('Something went wrong.');
     });
@@ -170,13 +171,13 @@ function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, 
 function getHTMLForPost(data, rank, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID);
+    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likedtipamount,data.dislikedtxid);
 }
 
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likedtipamount,data.dislikedtxid);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -224,12 +225,36 @@ function showReplyBox(txid) {
 }
 
 function likePost(txid, tipAddress) {
+    //todo increase number of likes,
+    var uparrow=document.getElementById('upvote' + txid);
+    uparrow.className = "votearrowactivated";
+    var uparrowAction=document.getElementById('upvoteaction' + txid);
+    uparrowAction.onclick=null;
+    var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
+    document.getElementById('likescount' + txid).innerHTML=likescount+1;
+
     if(oneclicktip>=547){
         sendTipRaw(txid, tipAddress, oneclicktip, privkey, null);
+        var tipscount=Number(document.getElementById('tipscount' + txid).innerHTML);
+        document.getElementById('tipscount' + txid).innerHTML=tipscount+oneclicktip;
     }else{
         sendLike(txid);
     }
 }
+
+function dislikePost(txid, tipAddress) {
+    //todo decrease number of likes,
+    var downarrow=document.getElementById('downvote' + txid);
+    downarrow.className = "votearrowactivated rotate180";
+    var downarrowAction=document.getElementById('downvoteaction' + txid);
+    downarrowAction.onclick=null;
+
+    var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
+    document.getElementById('likescount' + txid).innerHTML=likescount-1;
+
+    sendDislike(txid);
+}
+
 
 function sendTip(txid, tipAddress, page) {
     if (!checkForPrivKey()) return false;
@@ -248,6 +273,9 @@ function sendTip(txid, tipAddress, page) {
     defaulttip = tipAmount;
 
     document.getElementById('tipstatus' + page + txid).value = "Sending Tip . . " + tipAmount;
+
+    var tipscount=Number(document.getElementById('tipscount' + txid).innerHTML);
+    document.getElementById('tipscount' + txid).innerHTML=tipscount+oneclicktip;
 
     sendTipRaw(txid, tipAddress, tipAmount, privkey,
         function () {

@@ -139,7 +139,6 @@ function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
 function sendLike(txid) {
     if (!checkForPrivKey()) return false;
 
-    document.getElementById('upvote' + txid).style.display = "none";
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6d04", "0x" + reversetx],
@@ -224,10 +223,9 @@ function unblock(qaddress) {
     tq.queueTransaction(tx);
 }
 
-function dislikePost(txid) {
+function sendDislike(txid) {
     if (!checkForPrivKey()) return false;
 
-    document.getElementById('downvote' + txid).style.display = "none";
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6db4", "0x" + reversetx],

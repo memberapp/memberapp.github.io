@@ -11,6 +11,7 @@ let miningFeeMultiplier = 1;
 //let trxserver = "bchdgrpc";
 //let bchrpcClient = window.bchrpcClient;
 
+
 class TransactionQueue {
 
   // compose script
@@ -44,8 +45,17 @@ class TransactionQueue {
     this.queue = new Array();
     this.spentUTXO = {};
     this.onSuccessFunctionQueue = new Array();
-    this.isSending = false;
+    this.isSending = false; //Sending from the queue
     this.statusMessageFunction = statusMessageFunction;
+    this.transactionInProgress=false; //Transaction sending, not necessarily from queue
+  }
+
+  isTransactionInProgress(){
+    if(this.transactionInProgress || this.queue.length>0){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   queueTransaction(transaction, onSuccessFunction) {
@@ -172,6 +182,7 @@ class TransactionQueue {
     }
 
     try {
+      this.transactionInProgress=true;
 
       //Choose the UTXOs to use
       let utxos = await this.selectUTXOs(options);
@@ -187,8 +198,9 @@ class TransactionQueue {
 
       //Send to node
       this.broadcastTransaction(tx, utxos, callback);
-
+      
     } catch (err) {
+      this.transactionInProgress=false;
       callback(err, null, this);
       return;
     }
@@ -371,9 +383,11 @@ class TransactionQueue {
       for (let i = 0; i < utxos.length; i++) {
         this.spentUTXO[utxos[i].txid + utxos[i].vout] = 1;
       }
+      this.transactionInProgress=false;
       callback(null, result, this);
     }, (err) => {
       //console.log(err);
+      this.transactionInProgress=false;
       err.message = err.error;
       if (err.message === undefined) {
         err.message = "Network Error";

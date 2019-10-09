@@ -43,7 +43,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `💬&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + ` to your ` + postlinkHTML(data.rretxid, "post"),
                 timeSince(ds(data.time)),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID)
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID,data.rlikedtxid,data.rlikedtipamount,data.rdislikedtxid)
             );
             //<a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> `;
             break;
@@ -72,7 +72,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `💗&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + ds(data.amount) + ` sats `,
                 timeSince(ds(data.time)),
-                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, "", page, postRatingID)
+                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, "", page, postRatingID,data.llikedtxid,data.llikedtipamount,data.ldislikedtxid)
             );
             break;
         // Maybe shelve these 'negative' ones

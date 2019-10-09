@@ -5,7 +5,7 @@ function displayContentBasedOnURLParameters() {
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
 
     var url = window.location.href;
-    var action = url.substring(url.indexOf('#') + 1).toLowerCase();
+    var action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
     if (action.startsWith("memberposts")) {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
@@ -127,10 +127,22 @@ function showNewPost() {
 
 
 function showNotifications(start, limit) {
+    
+    if (pubkey == "" || pubkey == null || pubkey == undefined) {
+        showPosts(0, 25);
+        return;
+    }
+    
     getAndPopulateNotifications(start, limit, "notifications", pubkey);
+     
 }
 
 function showSettings() {
+    //Need to be logged in
+    if (pubkey == "" || pubkey == null || pubkey == undefined) {
+        showPosts(0, 25);
+        return;
+    }
     getAndPopulateSettings();
     getAndPopulate(0, 25, 'memberposts', pubkey);
     document.getElementById('settings').style.display = "block";
