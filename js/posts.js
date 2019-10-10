@@ -121,7 +121,7 @@ function addStarRatings(data, page, disable) {
         }
 
         //For ratings, we're looking for members view of the rater
-        if (data[i].type == "rating") {
+        if (data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
             rawRating = data[i].raterrating;
         }
 
