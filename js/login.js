@@ -41,6 +41,7 @@ function trylogin(loginkey) {
         document.getElementById('loginerror').innerHTML = error.message;
         return;
     }
+    document.location.href="#posts?type=feed&amp;start=0&amp;limit=25";
     displayContentBasedOnURLParameters();
 }
 

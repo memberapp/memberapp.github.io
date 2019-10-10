@@ -12,8 +12,9 @@
     <!--  IMG SRC for inline images, rating star image -->
     <!--  Openstreetmap for map tiles -->
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; connect-src https://memberjs.org https://rest.bitcoin.com/v2/ https://memberjs.org:8123/v2/; img-src 'self' data: https://tile.openstreetmap.org/;">
-    
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-inline'; connect-src https://memberjs.org https://rest.bitcoin.com/v2/ https://memberjs.org:8123/v2/; img-src 'self' data: https://tile.openstreetmap.org/;">
+
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -76,24 +77,25 @@
                                     <td style="line-height:12pt; height:10px;" class="pagetop">
                                         <b class="hnname">
                                             <a href="https://memberapp.github.io">Member</a>
-                                            <span id='topicdiv'></span>
                                         </b>
                                         <span id="loggedin" style="display: none;" class="pagetop">
                                             <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new
                                                 post</a> |
-                                            <a id="postsbutton" class="btn" href="#posts?type=feed&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'feed');">posts</a><a id="postsbuttonall" class="btn"
-                                                href="#posts?type=all&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'all');">(all</a><a id="postsbuttonnew" class="btn"
-                                                href="#posts?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'new');">|new)</a> |   
+                                            <a id="postsbutton" class="btn"
+                                                href="#posts?type=feed&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'feed');">posts</a><a id="postsbuttonall"
+                                                class="btn" href="#posts?type=all&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'all');">(all</a><a id="postsbuttonnew"
+                                                class="btn" href="#posts?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'new');">|new)</a> |
                                             <a id="commentsbutton" class="btn"
                                                 href="#comments?type=feed&amp;start=0&amp;limit=25"
-                                                onclick="showComments(0,25,'feed');">comments</a><a id="commentsbuttonall" class="btn"
+                                                onclick="showComments(0,25,'feed');">comments</a><a
+                                                id="commentsbuttonall" class="btn"
                                                 href="#comments?type=all&amp;start=0&amp;limit=25"
-                                                onclick="showComments(0,25,'all');">(all</a><a id="commentsbuttonnew" class="btn"
-                                                href="#comments?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showComments(0,25,'new');">|new)</a> |    
+                                                onclick="showComments(0,25,'all');">(all</a><a id="commentsbuttonnew"
+                                                class="btn" href="#comments?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showComments(0,25,'new');">|new)</a> |
                                             <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a>
                                             <a id="settingsbutton" class="btn" href="#settings"
                                                 onclick="showSettings();">⚙️</a>
@@ -103,19 +105,38 @@
                                             <a id="logoutbutton" class="btn" href="#logout"
                                                 onclick="logout();">logout</a>
                                         </span>
+                                        <span id="loggedout" class="pagetop">
+                                                <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a> |
+                                                <a id="postsbutton" class="btn"
+                                                    href="#posts?type=top&amp;start=0&amp;limit=25"
+                                                    onclick="showPosts(0,25,'all');">posts</a> |
+                                                <a id="commentsbutton" class="btn"
+                                                    href="#comments?type=all&amp;start=0&amp;limit=25"
+                                                    onclick="showComments(0,25,'all');">comments</a> |
+                                                <a id="loginbutton" class="btn" href="#login"
+                                                    onclick="showLogin();">login</a>
+                                            </span>
                                     </td>
                                     <td style="text-align:right;padding-right:4px;">
-                                        <span id="loggedout" class="pagetop">
-                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a> |
-                                            <a id="postsbutton" class="btn"
-                                                href="#posts?type=top&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'all');">posts</a> |
-                                            <a id="commentsbutton" class="btn"
-                                                href="#comments?type=all&amp;start=0&amp;limit=25"
-                                                onclick="showComments(0,25,'all');">comments</a> |
-                                            <a id="loginbutton" class="btn" href="#login"
-                                                onclick="showLogin();">login</a>
-                                        </span>
+                                        <select id="topicselector" onchange="topicChanged();">
+                                            <option value="">All Topics</option>
+                                            <option value=""></option>
+                                            <option value="Member">Member</option>
+                                            <option value="Bitcoin Cash">Bitcoin Cash</option>
+                                            <option value="Bitcoin SV">Bitcoin SV</option>
+                                            <option value="Memo">Memo</option>
+                                            <option value="Airdrops">Airdrops</option>
+                                            <option value="Tokens">Tokens</option>
+                                            <option value="OpenBazaar">OpenBazaar</option>
+                                            <option value="Capitalism">Capitalism</option>
+                                            <option value="Airdrops">Airdrops</option>
+                                            <option value="Tokens">Tokens</option>
+                                            <option value="OpenBazaar">OpenBazaar</option>
+                                            <option value="US Politics/Trump">US Politics</option>
+                                            <option value="Favorite Quotes">Favorite Quotes</option>
+                                            <option value="Ideas to improve our lives">Self Improvement</option>
+                                            <option value="#911Truth">#911Truth</option>
+                                        </select>
                                     </td>
                                 </tr>
                             </tbody>
@@ -206,7 +227,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div id="loading" style="display: none;"><br /><br />
+                        <div id="loading" style="display: none;">
+                            <br /><br />
                             <center><img src="img/loading.gif" /></center>
                         </div>
                         <div id="topic" style="display: none;"></div>
@@ -469,18 +491,18 @@
                                         <th>One-Click Tip Amount</th>
                                         <td>
                                             <input id="oneclicktip" value="0" size="8" type="number" step="1000"
-                                                onchange="updateOneClickTip();"
-                                                onkeypress="this.onchange();" onpaste="this.onchange();"
-                                                oninput="this.onchange();"></input> (Amount to tip when clicking up arrow, minimum 547) 
+                                                onchange="updateOneClickTip();" onkeypress="this.onchange();"
+                                                onpaste="this.onchange();" oninput="this.onchange();"></input> (Amount
+                                            to tip when clicking up arrow, minimum 547)
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>Max Fee</th>
                                         <td>
                                             <input id="maxfee" value="5" size="3" type="number" step="1"
-                                                onchange="updateMaxFee();"
-                                                onkeypress="this.onchange();" onpaste="this.onchange();"
-                                                oninput="this.onchange();"></input> (Max satoshis per byte to pay during network congestion. Min 2) 
+                                                onchange="updateMaxFee();" onkeypress="this.onchange();"
+                                                onpaste="this.onchange();" oninput="this.onchange();"></input> (Max
+                                            satoshis per byte to pay during network congestion. Min 2)
                                         </td>
                                     </tr>
                                     <tr>
@@ -488,9 +510,8 @@
                                             <br />(Comma Separate)</th>
                                         <td>
                                             <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60"
-                                                onchange="updatemutedwords();"
-                                                onkeypress="this.onchange();" onpaste="this.onchange();"
-                                                oninput="this.onchange();"></textarea>
+                                                onchange="updatemutedwords();" onkeypress="this.onchange();"
+                                                onpaste="this.onchange();" oninput="this.onchange();"></textarea>
                                         </td>
                                     </tr>
                                     <tr style="height:10px"></tr>

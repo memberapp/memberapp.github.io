@@ -5,7 +5,7 @@
 function getAndPopulate(start, limit, page, qaddress, type, topicname) {
     //Clear Topic
     currentTopic == "";
-    document.getElementById('topicdiv').innerHTML = "";
+    //document.getElementById('topicdiv').innerHTML = "";
 
     //Clear existing content
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
@@ -78,7 +78,7 @@ function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
     //Note topicname may contain hostile code - treat with extreme caution
     var page = "topic";
     show(page);
-    document.getElementById('topicdiv').innerHTML = `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"> - ` + ds(topicname) + `</a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')">(new)</a> |`;
+    //document.getElementById('topicdiv').innerHTML = `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"> - ` + ds(topicname) + `</a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')">(new)</a> |`;
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
     var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicname, "getAndPopulateTopic");

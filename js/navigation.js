@@ -43,6 +43,8 @@ function displayContentBasedOnURLParameters() {
         showNewPost();
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
+    } else if (action.startsWith("login")) {
+        showLogin();
     } else if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPosts(0, 25);
     } else {
@@ -80,7 +82,6 @@ function show(theDiv) {
 
 function showLogin() {
     show("loginbox");
-    document.getElementById('loginbox').style.display = "block";
 }
 
 function showMap(geohash, posttrxid) {
@@ -182,13 +183,48 @@ function showComments(start, limit, type) {
     getAndPopulate(start, limit, 'comments', pubkey, type);
 }
 
-function showTopic(start, limit, topicname, type) {
+//Topics
+function showTopic(start, limit, topicNameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
-    currentTopic = topicname;
-    document.getElementById('memotopic').value = topicname;
-    document.getElementById('memorandumtopic').value = topicname;
-    getAndPopulateTopic(start, limit, 'topic', pubkey, type, topicname);
+    enterTopic(topicNameHOSTILE);
+    getAndPopulateTopic(start, limit, 'topic', pubkey, type, topicNameHOSTILE);
 }
+
+function topicChanged(){
+    var selector=document.getElementById('topicselector');
+    
+    //special case, no topic selected
+    if(selector.selectedIndex==0){
+        exitTopic();
+        showPosts(0, 25);
+        document.location.href="#posts?type=feed&start=0&limit=25";
+        return;
+    }
+
+    //Warning, topicname may contain hostile characters
+    var topicnameHOSTILE=selector.options[selector.selectedIndex].value;
+    showTopic(0,25,topicnameHOSTILE,'new');
+}
+
+function exitTopic(){
+    currentTopic = "";
+    document.getElementById('memotopic').value = "";
+    document.getElementById('memorandumtopic').value = "";    
+}
+
+function enterTopic(topicNameHOSTILE){
+    //Warning, topicname may contain hostile characters
+    currentTopic = topicNameHOSTILE;
+    document.getElementById('memotopic').value = topicNameHOSTILE;
+    document.getElementById('memorandumtopic').value = topicNameHOSTILE;
+    document.location.href="#topic?topicname="+encodeURIComponent(topicNameHOSTILE);
+    var selector=document.getElementById('topicselector');
+    selector.selectedIndex=1;
+    selector.options[selector.selectedIndex].value=topicNameHOSTILE;
+    selector.options[selector.selectedIndex].text=topicNameHOSTILE.substring(0,15);
+
+}
+
 
 function showThread(roottxid, txid) {
     getAndPopulateThread(roottxid, txid, 'thread');
