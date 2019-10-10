@@ -5,8 +5,10 @@ const MAXPOSSNUMBEROFINPUTS = 10;
 const Buffer = buffer.Buffer;
 const BITBOX = bitboxSdk;
 //const memberRESTserver ="http://127.0.0.1:3000/v2/";
-//const memberRESTserver ="https://rest.bitcoin.com/v2/";
-const memberRESTserver ="https://memberjs.org:8123/v2/";
+
+const utxoServer ="https://rest.bitcoin.com/v2/";
+const txbroadcastServer ="https://memberjs.org:8123/v2/";
+
 let extraSatoshis = 5;
 let miningFeeMultiplier = 1;
 //let trxserver = "bchdgrpc";
@@ -222,7 +224,7 @@ class TransactionQueue {
       let address = new Address();
 
       (async () => {
-        address.restURL=memberRESTserver;
+        address.restURL=utxoServer;
         outputInfo = await address.utxo(thePublicKeyQFormat);
 
 
@@ -378,7 +380,7 @@ class TransactionQueue {
 
     const RawTransactions = BITBOX.RawTransactions;
     let rawtransactions = new RawTransactions();
-    rawtransactions.restURL=memberRESTserver;
+    rawtransactions.restURL=txbroadcastServer;
     rawtransactions.sendRawTransaction(hex).then((result) => {
       //Mark the utxos as spent, to ensure we don't accidentally try to double spend them
       for (let i = 0; i < utxos.length; i++) {
