@@ -105,7 +105,7 @@ class TransactionQueue {
         errorMessage = "Network Error";
       }
 
-      if (errorMessage.startsWith("64: too-long-mempool-chain")) {
+      if (errorMessage.startsWith("64")) {
         //Error:258: txn-mempool-conflict 
         returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " .Transaction(s) Still Queued. Waiting for new block, Retry in 60 seconds)");
         await sleep(60000);
@@ -126,7 +126,7 @@ class TransactionQueue {
       }
 
 
-      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("258:") || errorMessage.startsWith("200")) { //covers 2000, 2001
+      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
         //Error:258: txn-mempool-conflict 
         //2000, all fetched UTXOs already spend
         //2001, insuffiencent funds from unspent UTXOs. Add funds
@@ -147,7 +147,7 @@ class TransactionQueue {
         return;
       }
 
-      if (errorMessage.startsWith("66:")) {
+      if (errorMessage.startsWith("66")) {
         if (miningFeeMultiplier < maxfee) {
           //Insufficient Priority - not enough transaction fee provided. Let's try increasing fee.
           miningFeeMultiplier = miningFeeMultiplier * 1.1;
@@ -231,6 +231,13 @@ class TransactionQueue {
         //console.log(outputInfo);
         let utxos = outputInfo.utxos;
         let utxosOriginalNumber = outputInfo.utxos.length;
+
+        //Check no unexpected data in the fields we care about
+        for (let i = 0; i < utxos.length; i++) {
+          utxos[i].satoshis=Number(utxos[i].satoshis);
+          utxos[i].vout=Number(utxos[i].vout);
+          utxos[i].txid=sanitizeAlphanumeric(utxos[i].txid);
+        }
 
         //Remove any utxos with less or equal to dust limit, they may be SLP tokens
         for (let i = 0; i < utxos.length; i++) {
@@ -387,11 +394,14 @@ class TransactionQueue {
         this.spentUTXO[utxos[i].txid + utxos[i].vout] = 1;
       }
       this.transactionInProgress=false;
+      //Remove unexpected input in result
+      result=sanitizeAlphanumeric(result);
       callback(null, result, this);
     }, (err) => {
       //console.log(err);
       this.transactionInProgress=false;
-      err.message = err.error;
+      //Remove unexpected input in error message
+      err.message = sanitizeAlphanumeric(err.error);
       if (err.message === undefined) {
         err.message = "Network Error";
       }

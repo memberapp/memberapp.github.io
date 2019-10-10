@@ -41,7 +41,7 @@ function trylogin(loginkey) {
         document.getElementById('loginerror').innerHTML = error.message;
         return;
     }
-    document.location.href="#posts?type=all&amp;start=0&amp;limit=25";
+    //document.location.href="#posts?type=all&amp;start=0&amp;limit=25";
     displayContentBasedOnURLParameters();
 }
 

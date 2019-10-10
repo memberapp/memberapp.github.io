@@ -54,16 +54,25 @@ function hideAll() {
     document.getElementById('feed').style.display = "none";
     document.getElementById('posts').style.display = "none";
     document.getElementById('comments').style.display = "none";
+    document.getElementById('thread').style.display = "none";
+    document.getElementById('topic').style.display = "none";
+    document.getElementById('memberposts').style.display = "none";
+    //remove the content too, so that we don't get conflicting ids
+    document.getElementById('feed').innerHTML = "";
+    document.getElementById('posts').innerHTML = "";
+    document.getElementById('comments').innerHTML = "";
+    document.getElementById('thread').innerHTML = "";
+    document.getElementById('topic').innerHTML = "";
+    document.getElementById('memberposts').innerHTML = "";
+    
+    
     document.getElementById('settings').style.display = "none";
     document.getElementById('loginbox').style.display = "none";
     document.getElementById('followers').style.display = "none";
     document.getElementById('following').style.display = "none";
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
-    document.getElementById('thread').style.display = "none";
     document.getElementById('member').style.display = "none";
-    document.getElementById('topic').style.display = "none";
-    document.getElementById('memberposts').style.display = "none";
     document.getElementById('newpost').style.display = "none";
     document.getElementById('ratings').style.display = "none";
     document.getElementById('map').style.display = "none";
