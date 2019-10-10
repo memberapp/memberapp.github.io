@@ -45,10 +45,8 @@ function displayContentBasedOnURLParameters() {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
     } else if (action.startsWith("login")) {
         showLogin();
-    } else if (pubkey == "" || pubkey == null || pubkey == undefined) {
-        showPosts(0, 25);
     } else {
-        showFeed(0, 25);
+        showPosts(0, 25);
     }
 }
 
@@ -171,17 +169,27 @@ function showMemberPosts(start, limit, qaddress) {
     getAndPopulate(start, limit, 'memberposts', qaddress);
 }
 
+//These three should be refactored away
 function showFeed(start, limit, type) {
-    getAndPopulate(start, limit, 'posts', pubkey, type);
+    showPFC(start, limit, 'posts', pubkey, type);
 }
-
 function showPosts(start, limit, type) {
-    getAndPopulate(start, limit, 'posts', pubkey, type);
+    showPFC(start, limit, 'posts', pubkey, type);
+}
+function showComments(start, limit, type) {
+    showPFC(start, limit, 'comments', pubkey, type);
 }
 
-function showComments(start, limit, type) {
-    getAndPopulate(start, limit, 'comments', pubkey, type);
+function showPFC(start, limit, page, pubkey, type){
+    var topicNameHOSTILE=currentTopic;
+    if(topicNameHOSTILE!=""){
+        getAndPopulateTopic(start, limit, 'topic', pubkey, type, topicNameHOSTILE);
+        //document.location.href=document.location.href+"&topic="+encodeURIComponent(topicNameHOSTILE);
+    }else{
+        getAndPopulate(start, limit, page, pubkey, type);
+    }
 }
+
 
 //Topics
 function showTopic(start, limit, topicNameHOSTILE, type) {
@@ -197,7 +205,7 @@ function topicChanged(){
     if(selector.selectedIndex==0){
         exitTopic();
         showPosts(0, 25);
-        document.location.href="#posts?type=feed&start=0&limit=25";
+        document.location.href="#posts?type=all&start=0&limit=25";
         return;
     }
 
