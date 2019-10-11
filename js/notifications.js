@@ -2,9 +2,10 @@
 
 function getAndPopulateNotifications(start, limit, page, qaddress) {
     //Clear existing content
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
     show(page);
 
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+    
     //Show navigation next/back buttons
 
     var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress,"","getAndPopulateNotifications");

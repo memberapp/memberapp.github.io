@@ -44,7 +44,11 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
     } else if (action.startsWith("login")) {
-        showLogin();
+        if (pubkey == "" || pubkey == null || pubkey == undefined) {
+            showLogin();
+        }else{
+            showPosts(0, 25);    
+        }
     } else {
         showPosts(0, 25);
     }
