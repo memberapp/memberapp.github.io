@@ -14,11 +14,11 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + '<tr><td class="title">' + getHTMLForNotification(data[i], i + 1 + start, page, i) + '</td></tr>';
+            contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i);
         }
         //console.log(contents);
         if (contents == "") { contents = "Nothing in this feed yet"; }
-        contents = `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>` + contents + "<tr><td/><td/><td><br/>" + navbuttons + "</td></tr></tbody></table>";
+        contents = getNotificationsTableHTML(contents,navbuttons);
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data, page);
         window.scrollTo(0, 0);
@@ -53,7 +53,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             theRating=Math.round(theRating * 10) / 10;
             return notificationItemHTML(
                 `⭐&nbsp;`,
-                userHTML(data.origin, data.originname, mainRatingID) + ` rated you as ` + theRating + ` stars, commenting ... ` + ds(data.reason),
+                userHTML(data.origin, data.originname, mainRatingID) + ` rated you as ` + theRating + ` stars, commenting ... ` + escapeHTML(data.reason),
                 timeSince(ds(data.time)),
                 ""
                 );
@@ -70,7 +70,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             postRatingID=starindex + page + ds(data.address) + type;    
             return notificationItemHTML(
                 `💗&nbsp;`,
-                userHTML(data.origin, data.originname, mainRatingID) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + ds(data.amount) + ` sats `,
+                userHTML(data.origin, data.originname, mainRatingID) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + escapeHTML(data.amount) + ` sats `,
                 timeSince(ds(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, "", page, postRatingID,data.llikedtxid,data.llikedtipamount,data.ldislikedtxid)
             );

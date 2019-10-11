@@ -80,6 +80,8 @@ function ds(input) {
   return input;
 }
 
+
+
 function updateStatus(message) {
   document.getElementById("status").innerHTML = message;
 }
@@ -88,6 +90,10 @@ function toHexString(byteArray) {
   return Array.from(byteArray, function (byte) {
     return ('0' + (byte & 0xFF).toString(16)).slice(-2);
   }).join('')
+}
+
+function san(input){
+  return sanitizeAlphanumeric(input);
 }
 
 function sanitizeAlphanumeric(input) {

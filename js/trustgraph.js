@@ -13,26 +13,23 @@ function getAndPopulateTrustGraph(member, target) {
         var oneRemoveRatingCount = 0.0;
         var overallRating = 0.0;
 
-        var contents = "<div id='overall'></div><br/><br/>";
-        contents += "<table>";
-        for (var i = 0; i < data.length; i++) {
-            contents += "<tr>";
 
+        var contentsHTML="";
+        for (var i = 0; i < data.length; i++) {
             if (i == 0 && data[i][3] == '') {
                 //Direct Rating
-                contents += "<td>" + getMemberLink(data[i][0], data[i][1]) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='trust" + ds(data[i][0]) + ds(data[i][6]) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data[i][6], data[i][7]) + "</td>";
+                contentsHTML += getDirectRatingHTML(data[i]);
                 directrating = parseInt(data[i][2]);
             } else {
-                contents += "<td>" + getMemberLink(data[i][0], data[i][1]) + "</td>" + "<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust" + ds(data[i][0]) + ds(data[i][3]) + "'></div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td align='center'>" + getMemberLink(data[i][3], data[i][4]) + "</td>" + `<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust` + ds(data[i][3]) + ds(data[i][6]) + "'> </div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data[i][6], data[i][7]) + "</td>";
+                contentsHTML += getIndirectRatingHTML(data[i]); 
                 if (i < 6) {
                     oneRemoveRating += Math.min(parseInt(data[i][2]), parseInt(data[i][5]));
                     oneRemoveRatingCount++;
                 }
             }
-            contents += "</tr>";
-
         }
-        contents += "</table>";
+        
+
         //alert(contents);
 
         var oneRemove = 0.0;
@@ -49,8 +46,10 @@ function getAndPopulateTrustGraph(member, target) {
         }
 
         overallRating = (overallRating / 64) + 1;
-        contents = "<span style='font-size:2em'>Overall Rating:" + overallRating.toFixed(1) + "/5.0</span> " + contents;
-        document.getElementById('trustgraphdetails').innerHTML = contents;
+
+        contentsHTML=getTrustRatingTableHTML(contentsHTML,overallRating.toFixed(1));
+        
+        document.getElementById('trustgraphdetails').innerHTML = contentsHTML;
 
 
         var overallStarRating = raterJs({
@@ -77,8 +76,8 @@ function getAndPopulateTrustGraph(member, target) {
                 var starRating1 = raterJs({
                     starSize: 24,
                     rating: Math.round( theRating * 10) / 10,
-                    element: document.querySelector("#trust" + ds(data[i][0]) + ds(data[i][6])),
-                    disableText: ds(data[i][1])+' rates '+ds(data[i][7])+' as {rating}/{maxRating}'+textNote,
+                    element: document.querySelector("#trust" + san(data[i][0]) + san(data[i][6])),
+                    disableText: rts(data[i][1])+' rates '+rts(data[i][7])+' as {rating}/{maxRating}'+textNote,
                     //rateCallback: function rateCallback(rating, done) {
                     //rateCallbackAction(rating, this);
                     //    done();
@@ -99,8 +98,8 @@ function getAndPopulateTrustGraph(member, target) {
                 var starRating1 = raterJs({
                     starSize: 18,
                     rating: Math.round( theRating * 10) / 10,
-                    element: document.querySelector("#trust" + ds(data[i][0]) + ds(data[i][3])),
-                    disableText: ds(data[i][1])+' rates '+ds(data[i][4])+' as {rating}/{maxRating}'+textNote,
+                    element: document.querySelector("#trust" + san(data[i][0]) + san(data[i][3])),
+                    disableText: rts(data[i][1])+' rates '+rts(data[i][4])+' as {rating}/{maxRating}'+textNote,
                     //rateCallback: function rateCallback(rating, done) {
                     //rateCallbackAction(rating, this);
                     //    done();
@@ -119,8 +118,8 @@ function getAndPopulateTrustGraph(member, target) {
                 var starRating2 = raterJs({
                     starSize: 18,
                     rating: Math.round( theRating2 * 10) / 10,
-                    element: document.querySelector("#trust" + ds(data[i][3]) + ds(data[i][6])),
-                    disableText: ds(data[i][4])+' rates '+ds(data[i][7])+' as {rating}/{maxRating}'+textNote2,
+                    element: document.querySelector("#trust" + san(data[i][3]) + san(data[i][6])),
+                    disableText: rts(data[i][4])+' rates '+rts(data[i][7])+' as {rating}/{maxRating}'+textNote2,
                     //rateCallback: function rateCallback(rating, done) {
                     //rateCallbackAction(rating, this);
                     //    done();
