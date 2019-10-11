@@ -287,10 +287,3 @@ function updateMaxFee(){
 }
 
 
-function getMemberLink(address, name) {
-    return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(name) + `</a>`;
-}
-
-function getAddressLink(address, name) {
-    return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(address) + `</a>`;
-}

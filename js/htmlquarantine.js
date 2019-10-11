@@ -197,3 +197,29 @@ function getMapPostHTML(lat, lng) {
     </table>
     </div>`;
 }
+
+function getRefreshButtonHTML(){
+    return `<a id="refreshbutton" class="btn" href="" onclick="displayContentBasedOnURLParameters();return false;">🔄</a>`;
+}
+
+function getMembersWithRatingHTML(i,page,data){
+    return `<tr>
+                <td><div id="rating`+i+page+ ds(data.address) + `"</div></td>
+                <td>`+getMemberLink(data.address, ds(data.name))+`</td>
+                <td>`+getAddressLink(data.address, ds(data.name))+`</td>                
+                </tr>`;
+}
+
+
+function getMemberLink(address, name) {
+    return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(name) + `</a>`;
+}
+
+function getAddressLink(address, name) {
+    return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(address) + `</a>`;
+}
+
+//Temporary function to bootstrap selection of members to rate
+function getBootStrapHTML(pubkey,data,lbstcount){
+    return "<tr><td>" + getMemberLink(ds(pubkey),ds(data.ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + lbstcount+ds(data.testaddress) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data.testaddress),ds(data.name)) + "</td><td>"+`<a href='#trustgraph?member=` + ds(pubkey) + `&amp;target=` + ds(data.testaddress) + `' onclick='showTrustGraph("` + ds(pubkey) + `","` + ds(data.testaddress) + `");'>Full Trust Graph</a>`+"</td></tr>";
+}

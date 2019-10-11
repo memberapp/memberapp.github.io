@@ -195,7 +195,6 @@ class TransactionQueue {
       let transactionSize = tx.byteLength();
       //Add extra satoshis for safety
       let fees = Math.round(transactionSize * miningFeeMultiplier) + extraSatoshis;
-
       //Make the trx again, with fees included
       tx = this.constructTransaction(utxos, fees, options);
 

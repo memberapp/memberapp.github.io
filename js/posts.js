@@ -7,12 +7,13 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
     currentTopic == "";
     //document.getElementById('topicdiv').innerHTML = "";
 
-    //Clear existing content
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-
     //Show the relevant html element
     show(page);
 
+    //Show loading animation
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+    
     //Show navigation next/back buttons
     var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, "", "getAndPopulate");
 
@@ -211,7 +212,7 @@ function replySuccessFunction(page, txid) {
     document.getElementById("replytext" + page + txid).value="";
     document.getElementById("replystatus" + page + txid).style.display = "none";
     document.getElementById("replybutton" + page + txid).style.display = "block";
-    document.getElementById("replycompleted" + page + txid).innerText = "Message Sent.";
+    document.getElementById("replycompleted" + page + txid).innerHTML = "Message Sent. "+getRefreshButtonHTML();
 }
 
 function showReplyBox(txid) {
@@ -219,7 +220,8 @@ function showReplyBox(txid) {
         alert("You must login to reply to posts.");
         return false;
     }
-    document.getElementById("reply" + txid).style.display = "block";
+    var replybox=document.getElementById("reply" + txid);
+    replybox.style.display = "block";
     //document.getElementById("replylink"+txid).style.display = "none";
     return true;
 }
@@ -390,21 +392,22 @@ function memorandumpostcompleted() {
     document.getElementById('newposttamemorandum').value = "";
     document.getElementById('newpostmemorandumstatus').style.display = "none";
     document.getElementById('newpostmemorandumbutton').style.display = "block";
-    document.getElementById('newpostmemorandumcompleted').innerText = "Message Sent.";
+    document.getElementById('newpostmemorandumcompleted').innerHTML = "Message Sent. ";
+    
 }
 
 function memocompleted() {
     document.getElementById('memotitle').value = "";
     document.getElementById('newpoststatus').style.display = "none";
     document.getElementById('newpostbutton').style.display = "block";
-    document.getElementById('newpostcompleted').innerText = "Message Sent.";
+    document.getElementById('newpostcompleted').innerHTML = "Message Sent. ";
 }
 
 function geocompleted() {
     document.getElementById('newgeopostta').value = "";
     document.getElementById('newpostgeostatus').style.display = "none";
     document.getElementById('newpostgeobutton').style.display = "block";
-    document.getElementById('newpostgeocompleted').innerText = "Message Sent.";
+    document.getElementById('newpostgeocompleted').innerHTML = "Message Sent. ";
 }
 
 

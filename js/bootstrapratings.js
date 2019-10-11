@@ -28,8 +28,8 @@ function processdataintoratings(data) {
         if(bootstrapnames[data[i].testaddress]>0){continue;}
         bootstrapnames[data[i].testaddress]=1;
 
-        contents = contents +
-            "<tr><td>" + getMemberLink(ds(pubkey),ds(data[i].ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + lbstcount+ds(data[i].testaddress) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].testaddress),ds(data[i].name)) + "</td><td>"+`<a href='#trustgraph?member=` + ds(pubkey) + `&amp;target=` + ds(data[i].testaddress) + `' onclick='showTrustGraph("` + ds(pubkey) + `","` + ds(data[i].testaddress) + `");'>Full Trust Graph</a>`+"</td></tr>";
+        contents = contents + getBootStrapHTML(pubkey,data[i],lbstcount);
+            
     }
     document.getElementById('bootstraptable'+lbstcount).innerHTML = contents;
 
