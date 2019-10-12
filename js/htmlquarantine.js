@@ -106,10 +106,17 @@ function getTopicHTML(topic){
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID, likedtxid, likedtipamount, dislikedtxid) {
     if (name == null) { name = address.substring(0, 10); }
 
+    //Replies respect newlines, but root posts do not
+    var isReply=(roottxid!=txid);
+    var messageHTML=ds(message);
+    if(isReply){
+        messageHTML=messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>')
+    }
+    
     return `<tr class="athing">
                 <td class="title" valign="top" align="right"><span class="rank">`+ (rank == "" ? rank : rank + `.`) + `</span></td>
                 <td class="votelinks" valign="top" rowspan="2">` + getVoteButtons(txid, address, likedtxid, dislikedtxid) + `</td>
-                <td class="title"><a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(ds(message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> </td>
+                <td class="title"><a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a> </td>
             </tr>
             <tr>
                 <td></td>

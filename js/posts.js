@@ -227,7 +227,11 @@ function showReplyBox(txid) {
 }
 
 function likePost(txid, tipAddress) {
-    //todo increase number of likes,
+    if (privkey == "") {
+        alert("You must login to like posts.");
+        return false;
+    }
+    //increase number of likes,
     var uparrow=document.getElementById('upvote' + txid);
     uparrow.className = "votearrowactivated";
     var uparrowAction=document.getElementById('upvoteaction' + txid);
@@ -245,7 +249,10 @@ function likePost(txid, tipAddress) {
 }
 
 function dislikePost(txid, tipAddress) {
-    //todo decrease number of likes,
+    if (privkey == "") {
+        alert("You must login to dislike posts.");
+        return false;
+    }
     var downarrow=document.getElementById('downvote' + txid);
     downarrow.className = "votearrowactivated rotate180";
     var downarrowAction=document.getElementById('downvoteaction' + txid);
