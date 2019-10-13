@@ -1,10 +1,16 @@
+"use strict";
+
 var map = null;
 var popup;
 var postpopup;
 var markersDict = {};
 var firstload=true;
+var mapTileProvider='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 function getAndPopulateMap(geohash,posttrxid) {
+
+    geohash=san(geohash);
+    posttrxid=san(posttrxid);
 
     if (map != null) return;
 
@@ -13,17 +19,17 @@ function getAndPopulateMap(geohash,posttrxid) {
     //Use attribution control as a close button
     var att = L.control.attribution();
     att.setPrefix("");
-    att.addAttribution(`<font size="+3"><a href="#posts?type=top&amp;start=0&amp;limit=25" onclick="hideMap();showPosts(0,25,'top');">X</a></font>`).setPosition('topright').addTo(map);
+    att.addAttribution(getMapCloseButtonHTML()).setPosition('topright').addTo(map);
     //Load locations onto map when bounds_changed event fires. Only want this to happen one time. 
     map.on('moveend', loadLocationListFromServerAndPlaceOnMap);
 
     //Set London location and open street map tiles
     map.setView([51.505, -0.09], 13);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {}).addTo(map);
+    L.tileLayer(mapTileProvider, {}).addTo(map);
 
     //Attribution
     var att2 = L.control.attribution();
-    att2.addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.').setPosition('bottomright').addTo(map);
+    att2.addAttribution(getOSMattributionHTML()).setPosition('bottomright').addTo(map);
 
     //Popup for thread related to location
     //popup = L.popup({ autoPan: true, minWidth: 550, maxWidth: getWidth(), maxHeight: getHeight() });
@@ -44,7 +50,7 @@ function getAndPopulateMap(geohash,posttrxid) {
             map.setView(zoomLocation, 13); 
 
             if(posttrxid!=null && posttrxid!=""){
-                popup.setLatLng(zoomLocation).setContent("<div id='mapthread'>Loading...</div>").openOn(map);
+                popup.setLatLng(zoomLocation).setContent(mapThreadLoadingHTML("")).openOn(map);
                 getAndPopulateThread(posttrxid, posttrxid, 'mapthread');
             }
             
@@ -81,7 +87,7 @@ function getAndPopulateMap(geohash,posttrxid) {
 
 function openOverlay(e) {
     var marker = e.sourceTarget;
-    popup.setLatLng(e.latlng).setContent("<div id='mapthread'>Loading..." + ds(marker.preview) + "</div>").openOn(map);
+    popup.setLatLng(e.latlng).setContent(mapThreadLoadingHTML(marker.previewHTML)).openOn(map);
     getAndPopulateThread(marker.roottxid, marker.txid, 'mapthread');
     popup.txid=marker.roottxid;
     popup.txidloc=e.latlng;
@@ -91,43 +97,15 @@ function openOverlay(e) {
 
 function openPreview(e) {
     var marker = e.sourceTarget;
-    marker.bindTooltip(ds(marker.preview)).openTooltip();
+    marker.bindTooltip(marker.previewHTML).openTooltip();
     return;
 }
 
 
 function onMapClick(e) {
 
-    var loginhtml = "";
-    var htmlContent = `<div id="newgeopost" class="bgcolor">
-    <table class="table left">
-        <tbody>
-            <tr>
-                <td><input id="lat" size="10" type="hidden" value="`+ e.latlng.lat + `"></td>
-                <td><input id="lon" size="10" type="hidden" value="`+ e.latlng.lng + `"></td>
-                <td><input id="geohash" size="15" type="hidden"></td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <textarea id="newgeopostta" maxlength="217" name="text" rows="4" cols="30"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    <input id="newgeopostbutton" value="post" type="submit" onclick="geopost();">
-                </td>
-                <td></td>
-                <td>`+ loginhtml + `</td>
-            </tr>
-            <tr style="height:20px"></tr>
-        </tbody>
-    </table>
-</div>`;
+    var htmlContent = getMapPostHTML(e.latlng.lat,e.latlng.lng);
+    
     postpopup.setLatLng(e.latlng).setContent(htmlContent).openOn(map);
 }
 
@@ -139,13 +117,13 @@ function loadLocationListFromServerAndPlaceOnMap(event) {
     getJSON(url).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            var pageName = data[i].txid;
+            var pageName = san(data[i].txid);
             var marker = markersDict[pageName];
             if (marker == null) {
-                var marker = L.marker([data[i].lat, data[i].lon]).addTo(map);
-                marker.txid = data[i].txid;
-                marker.roottxid = data[i].roottxid;
-                marker.preview = data[i].message;
+                var marker = L.marker([Number(data[i].lat), Number(data[i].lon)]).addTo(map);
+                marker.txid = san(data[i].txid);
+                marker.roottxid = san(data[i].roottxid);
+                marker.previewHTML = ds(data[i].message);
                 markersDict[pageName] = marker;
                 marker.on('click', openOverlay);
                 marker.on('mouseover', openPreview);

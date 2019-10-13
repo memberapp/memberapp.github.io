@@ -1,38 +1,111 @@
-//A lot of refactoring is possible in these functions
+//Some refactoring is possible in these functions
 
-function getAndPopulate(start, limit, page, qaddress, type) {
+"use strict";
+
+function getAndPopulate(start, limit, page, qaddress, type, topicname) {
     //Clear Topic
     currentTopic == "";
-    document.getElementById('topicdiv').innerHTML = "";
-
-    //Clear existing content
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+    //document.getElementById('topicdiv').innerHTML = "";
 
     //Show the relevant html element
     show(page);
 
+    //Show loading animation
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+    
     //Show navigation next/back buttons
-    var navbuttons = `<div class="navbuttons">`;
-    if (start != 0) navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulate(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `')">Back | </a> `;
-    navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `" onclick="javascript:getAndPopulate(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `')">Next</div>`;
+    var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, "", "getAndPopulate");
 
     //Request content from the server and display it when received
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
         data = mergeRepliesToRepliesBySameAuthor(data);
+
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
+            if (page == "posts") {
+                contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
+            } else {
+                //contents = contents + getHTMLForReply(data[i], i + 1 + start, page, i, null);
+                contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
+            }
         }
-        if (contents == "") { contents = "Nothing in this feed yet"; }
-        contents = `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>` + contents + "<tr><td/><td/><td>" + navbuttons + "</td></tr></tbody></table>";
-        document.getElementById(page).innerHTML = contents; //display the result in an HTML element
-        addStarRatings(data, page);
-        window.scrollTo(0, 0);
+        displayItemListandNavButtonsHTML(contents, navbuttons, page, data);
     }, function (status) { //error detection....
         alert('Something went wrong.');
     });
 
 }
+
+function getAndPopulateThread(roottxid, txid, pageName) {
+    if (pageName != "mapthread") {
+        show(pageName);
+        document.getElementById(pageName).innerHTML = document.getElementById("loading").innerHTML;
+    }
+
+    //Roottxid is used to get all the posts, txid is used to highligh the required post
+
+    //If no post is specified, we'll use it as a top level
+    if (txid === undefined || txid == "") { txid = roottxid; }
+
+    getJSON(server + '?action=thread&address=' + pubkey + '&txid=' + txid).then(function (data) {
+        data = mergeRepliesToRepliesBySameAuthor(data);
+
+        //Make sure we have id of the top level post
+        if (data.length > 0 && roottxid == "") { roottxid = data[0].roottxid; }
+
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].txid == roottxid) {
+                contents += getTableClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i));
+                contents += getTableClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid));
+            }
+        }
+        //Threads have no navbuttons
+        displayItemListandNavButtonsHTML(contents, "", "thread", data);
+
+        if (popup != undefined) {
+            popup.setContent("<div id='mapthread'>" + contents + "</div>");
+        }
+        scrollTo("highlightedcomment");
+    }, function (status) { //error detection....
+        alert('Something went wrong.');
+    });
+}
+
+
+
+function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
+    //Note topicname may contain hostile code - treat with extreme caution
+    var page = "topic";
+    show(page);
+    //document.getElementById('topicdiv').innerHTML = `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"> - ` + ds(topicname) + `</a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')">(new)</a> |`;
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+    var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicname, "getAndPopulateTopic");
+
+    getJSON(server + '?action=' + page + '&address=' + pubkey + '&topicname=' + encodeURIComponent(topicname) + '&type=' + type + '&start=' + start + '&limit=' + limit).then(function (data) {
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+            contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
+        }
+        displayItemListandNavButtonsHTML(contents, navbuttons, page, data);
+
+    }, function (status) { //error detection....
+        alert('Something went wrong.');
+    });
+
+}
+
+function displayItemListandNavButtonsHTML(contents, navbuttons, page, data) {
+    contents = getItemListandNavButtonsHTML(contents, navbuttons);
+    document.getElementById(page).innerHTML = contents; //display the result in the HTML element
+    addStarRatings(data, page);
+    window.scrollTo(0, 0);
+    return;
+}
+
+
 
 function addStarRatings(data, page, disable) {
     for (var i = 0; i < data.length; i++) {
@@ -41,7 +114,7 @@ function addStarRatings(data, page, disable) {
         var name = data[i].name;
         var theAddress = ds(data[i].address);
         var rawRating = data[i].rating;
-        
+
         if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
             //Notifications, or like, or follow reply
             theAddress = ds(data[i].origin);
@@ -49,13 +122,13 @@ function addStarRatings(data, page, disable) {
         }
 
         //For ratings, we're looking for members view of the rater
-        if (data[i].type == "rating") {
+        if (data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
             rawRating = data[i].raterrating;
         }
 
         var querySelector = "#rating" + i + page + theAddress;
         addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
-    
+
         //Add second one for reply
         if (data[i].type == "reply") {
             var querySelector = "#rating" + i + page + theAddress + data[i].type;
@@ -74,7 +147,6 @@ function addStarRatings(data, page, disable) {
 }
 
 function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector) {
-    console.log(querySelector);
     var theElement = document.querySelector(querySelector);
     if (theElement == undefined) return;
     var theRating = 0; if (rawRating != null) { theRating = (ds(rawRating) / 64) + 1; }
@@ -94,52 +166,22 @@ function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, 
     }
 }
 
-function getAndPopulateTopic(start, limit, topicname, qaddress, type) {
-    //Note topicname may contain hostile code - treat with extreme caution
-    var page = "topic";
-    show(page);
-    document.getElementById('topicdiv').innerHTML = `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"> - ` + ds(topicname) + `</a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')">(new)</a> |`;
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var navbuttons = `<div class="navbuttons">`;
-    if (start != 0)
-        navbuttons += `<a class="next" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + '&type=' + type + '&qaddress=' + qaddress + `&start=` + (start - 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start - 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Back | </a> `;
-    navbuttons += `<a class="back" href="#` + page + `?topicname=` + encodeURIComponent(topicname) + '&type=' + type + '&qaddress=' + qaddress + `&start=` + (start + 25) + `&limit=` + limit + `" onclick="javascript:getAndPopulateTopic(` + (start + 25) + `,` + limit + `,'` + unicodeEscape(topicname) + `')">Next</div>`;
-    getJSON(server + '?action=' + page + '&address=' + pubkey + '&topicname=' + encodeURIComponent(topicname) + '&type=' + type + '&start=' + start + '&limit=' + limit).then(function (data) {
-        var contents = "";
-        contents = contents + `<table class="itemlist" cellspacing="0" cellpadding="0" border="0"><tbody>`;
-        for (var i = 0; i < data.length; i++) {
-            contents = contents + getHTMLForPost(data[i], i + 1 + start, page, i);
-        }
-        contents = contents + "<tr><td/><td/><td>" + navbuttons + "</td></tr></tbody></table>";
-        document.getElementById(page).innerHTML = contents; //display the result in an HTML element
-        addStarRatings(data, page);
-        window.scrollTo(0, 0);
-    }, function (status) { //error detection....
-        alert('Something went wrong.');
-    });
 
-}
 
 
 function getHTMLForPost(data, rank, page, starindex) {
     if (checkForMutedWords(data)) return "";
-    let mainRatingID=starindex + page + ds(data.address);
-    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID);
+    let mainRatingID = starindex + page + ds(data.address);
+    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likedtipamount,data.dislikedtxid);
 }
-
-
 
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
-    let mainRatingID=starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid);
+    let mainRatingID = starindex + page + ds(data.address);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likedtipamount,data.dislikedtxid);
 }
 
-
-
-
 function showReplyButton(txid, page, divForStatus) {
-    document.getElementById("replyclear" + page + txid).style.display = "none";
     document.getElementById("replybutton" + page + txid).style.display = "block";
     document.getElementById("replytext" + page + txid).value = "";
 }
@@ -155,19 +197,22 @@ function sendReply(txid, page, divForStatus) {
     //Hide the reply button, show the reply status button
     document.getElementById("replybutton" + page + txid).style.display = "none";
     document.getElementById("replystatus" + page + txid).style.display = "block";
+    document.getElementById("replycompleted" + page + txid).innerText = "";
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     const replyhex = new Buffer(replytext).toString('hex');
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
-    sendReplyRaw(privkey, txid, replyhex, 0, divForStatus,
-        function () {
-            document.getElementById(divForStatus).innerHTML = "";
-            document.getElementById("replystatus" + page + txid).style.display = "none";
-            document.getElementById("replyclear" + page + txid).style.display = "block";
-        }
-    );
+    sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, function () { replySuccessFunction(page, txid); });
     return true;
+}
+
+function replySuccessFunction(page, txid) {
+    //document.getElementById(divForStatus).innerHTML = "";
+    document.getElementById("replytext" + page + txid).value="";
+    document.getElementById("replystatus" + page + txid).style.display = "none";
+    document.getElementById("replybutton" + page + txid).style.display = "block";
+    document.getElementById("replycompleted" + page + txid).innerHTML = "Message Sent. "+getRefreshButtonHTML();
 }
 
 function showReplyBox(txid) {
@@ -175,12 +220,50 @@ function showReplyBox(txid) {
         alert("You must login to reply to posts.");
         return false;
     }
-    document.getElementById("reply" + txid).style.display = "block";
+    var replybox=document.getElementById("reply" + txid);
+    replybox.style.display = "block";
     //document.getElementById("replylink"+txid).style.display = "none";
     return true;
 }
 
-var defaulttip = 1000;
+function likePost(txid, tipAddress) {
+    if (privkey == "") {
+        alert("You must login to like posts.");
+        return false;
+    }
+    //increase number of likes,
+    var uparrow=document.getElementById('upvote' + txid);
+    uparrow.className = "votearrowactivated";
+    var uparrowAction=document.getElementById('upvoteaction' + txid);
+    uparrowAction.onclick=null;
+    var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
+    document.getElementById('likescount' + txid).innerHTML=likescount+1;
+
+    if(oneclicktip>=547){
+        sendTipRaw(txid, tipAddress, oneclicktip, privkey, null);
+        var tipscount=Number(document.getElementById('tipscount' + txid).innerHTML);
+        document.getElementById('tipscount' + txid).innerHTML=tipscount+oneclicktip;
+    }else{
+        sendLike(txid);
+    }
+}
+
+function dislikePost(txid, tipAddress) {
+    if (privkey == "") {
+        alert("You must login to dislike posts.");
+        return false;
+    }
+    var downarrow=document.getElementById('downvote' + txid);
+    downarrow.className = "votearrowactivated rotate180";
+    var downarrowAction=document.getElementById('downvoteaction' + txid);
+    downarrowAction.onclick=null;
+
+    var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
+    document.getElementById('likescount' + txid).innerHTML=likescount-1;
+
+    sendDislike(txid);
+}
+
 
 function sendTip(txid, tipAddress, page) {
     if (!checkForPrivKey()) return false;
@@ -200,7 +283,10 @@ function sendTip(txid, tipAddress, page) {
 
     document.getElementById('tipstatus' + page + txid).value = "Sending Tip . . " + tipAmount;
 
-    sendTipRaw(txid, tipAddress, page, tipAmount, privkey,
+    var tipscount=Number(document.getElementById('tipscount' + txid).innerHTML);
+    document.getElementById('tipscount' + txid).innerHTML=tipscount+oneclicktip;
+
+    sendTipRaw(txid, tipAddress, tipAmount, privkey,
         function () {
             document.getElementById('tipstatus' + page + txid).value = "sent";
         }
@@ -235,6 +321,26 @@ function topictitleChanged(elementName) {
     document.getElementById(elementName + 'topiclengthadvice').innerHTML = "(" + document.getElementById(elementName + 'topic').value.length + "/" + document.getElementById(elementName + 'topic').maxLength + ")";
 }
 
+function geopost(lat, long) {
+    if (!checkForPrivKey()) return false;
+
+    var txtarea = document.getElementById('newgeopostta');
+    var posttext = txtarea.value;
+    if (posttext.length == 0) {
+        alert("No Message Body");
+        return false;
+    }
+    var geohash = encodeGeoHash(document.getElementById("lat").value, document.getElementById("lon").value);
+    
+    document.getElementById('newpostgeocompleted').innerText = "";
+    document.getElementById('newpostgeobutton').style.display = "none";
+    document.getElementById('newpostgeostatus').style.display = "block";
+    document.getElementById('newpostgeostatus').value = "Posting...";
+
+    postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", geocompleted);
+
+}
+
 function post() {
     if (!checkForPrivKey()) return false;
     var txtarea = document.getElementById('memotitle');
@@ -246,9 +352,10 @@ function post() {
 
     var topic = document.getElementById('memotopic').value;
 
+    document.getElementById('newpostcompleted').innerText = "";
     document.getElementById('newpostbutton').style.display = "none";
     document.getElementById('newpoststatus').style.display = "block";
-    document.getElementById('newpoststatus').value = "Sending Title...";
+    document.getElementById('newpoststatus').value = "Sending Memo...";
 
     postRaw(posttext, privkey, topic, "newpoststatus", memocompleted);
 
@@ -273,6 +380,7 @@ function postmemorandum() {
     var topic = document.getElementById('memorandumtopic').value;
     //topic may be empty string
 
+    document.getElementById('newpostmemorandumcompleted').innerText = "";
     document.getElementById('newpostmemorandumbutton').style.display = "none";
     document.getElementById('newpostmemorandumstatus').style.display = "block";
     document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
@@ -287,27 +395,28 @@ function postmemorandum() {
 }
 
 function memorandumpostcompleted() {
+    document.getElementById('memorandumtitle').value = "";
+    document.getElementById('newposttamemorandum').value = "";
     document.getElementById('newpostmemorandumstatus').style.display = "none";
-    document.getElementById('newpostmemorandumclear').style.display = "block";
+    document.getElementById('newpostmemorandumbutton').style.display = "block";
+    document.getElementById('newpostmemorandumcompleted').innerHTML = "Message Sent. ";
+    
 }
 
 function memocompleted() {
-    document.getElementById('newpoststatus').style.display = "none";
-    document.getElementById('newpostclear').style.display = "block";
-}
-
-function clearmemorandumpost() {
-    document.getElementById('memorandumtitle').value = "";
-    document.getElementById('newposttamemorandum').value = "";
-    document.getElementById('newpostmemorandumbutton').style.display = "block";
-    document.getElementById('newpostmemorandumclear').style.display = "none";
-}
-
-function clearpost() {
     document.getElementById('memotitle').value = "";
+    document.getElementById('newpoststatus').style.display = "none";
     document.getElementById('newpostbutton').style.display = "block";
-    document.getElementById('newpostclear').style.display = "none";
+    document.getElementById('newpostcompleted').innerHTML = "Message Sent. ";
 }
+
+function geocompleted() {
+    document.getElementById('newgeopostta').value = "";
+    document.getElementById('newpostgeostatus').style.display = "none";
+    document.getElementById('newpostgeobutton').style.display = "block";
+    document.getElementById('newpostgeocompleted').innerHTML = "Message Sent. ";
+}
+
 
 
 function checkForMutedWords(data) {
@@ -325,41 +434,7 @@ function checkForMutedWords(data) {
 
 //Threads
 
-function getAndPopulateThread(roottxid, txid, pageName) {
-    if (pageName != "mapthread") {
-        show(pageName);
-        document.getElementById(pageName).innerHTML = document.getElementById("loading").innerHTML;
-    }
 
-    //Roottxid is used to get all the posts, txid is used to highligh the required post
-
-    //If no post is specified, we'll use it as a top level
-    if (txid === undefined || txid == "") { txid = roottxid; }
-
-    getJSON(server + '?action=thread&address=' + pubkey + '&txid=' + txid).then(function (data) {
-        data = mergeRepliesToRepliesBySameAuthor(data);
-        var contents = "";
-
-        //Make sure we have id of the top level post
-        if (data.length > 0 && roottxid == "") { roottxid = data[0].roottxid; }
-
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].txid == roottxid) {
-                contents += `<table class="fatitem" border="0"><tbody>` + getHTMLForPost(data[i], 1, pageName, i) + `</tbody></table>`;
-                //break;
-                contents += `<table class="comment-tree" border="0"><tbody>` + getNestedPostHTML(data, data[i].txid, 0, pageName, txid) + `</tbody></table>`;
-            }
-        }
-        document.getElementById(pageName).innerHTML = contents; //display the result in an HTML element
-        addStarRatings(data, pageName);
-        window.scrollTo(0, 0);
-        if (popup != undefined) {
-            popup.setContent("<div id='mapthread'>" + contents + "</div>");
-        }
-    }, function (status) { //error detection....
-        alert('Something went wrong.');
-    });
-}
 
 function mergeRepliesToRepliesBySameAuthor(data) {
 

@@ -6,6 +6,10 @@ Notably it displays and creates posts, likes, tips, profiles, reputational ratin
 It is designed to be a 'fat' javascript client app that runs against a relatively dumb server. 
 You can see it online here - https://memberapp.github.io
 
+Branches
+--------
+Github requires only master branch can be used for webpages, so development branch is main branch.
+
 
 Client
 ------

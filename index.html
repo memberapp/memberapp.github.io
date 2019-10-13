@@ -5,6 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Member</title>
+
+    <!--  Only scripts from this website, inline script needed for operation -->
+    <!--  Call Memberjs for content -->
+    <!--  Allow BitBox for UTXOs, Sending Transactions -->
+    <!--  IMG SRC for inline images, rating star image -->
+    <!--  Openstreetmap for map tiles -->
+
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' 'unsafe-inline'; connect-src https://memberjs.org https://rest.bitcoin.com/v2/ https://memberjs.org:8123/v2/; img-src 'self' data: https://tile.openstreetmap.org/;">
+
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -67,24 +77,26 @@
                                     <td style="line-height:12pt; height:10px;" class="pagetop">
                                         <b class="hnname">
                                             <a href="https://memberapp.github.io">Member</a>
-                                            <span id='topicdiv'></span>
                                         </b>
                                         <span id="loggedin" style="display: none;" class="pagetop">
-                                            <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">new
-                                                post</a> |
-                                            <a id="postsbutton" class="btn" href="#posts?type=feed&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'feed');">posts</a><a id="postsbuttonall" class="btn"
+                                            <a id="postsbutton" class="btn"
                                                 href="#posts?type=all&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'all');">(all</a><a id="postsbuttonnew" class="btn"
-                                                href="#posts?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'new');">|new)</a> |   
+                                                onclick="showPosts(0,25,'all');">posts</a><a id="postsbuttonfeed"
+                                                class="btn" href="#posts?type=feed&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'feed');">(feed</a><a id="postsbuttonnew"
+                                                class="btn" href="#posts?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showPosts(0,25,'new');">|new)</a> |
                                             <a id="commentsbutton" class="btn"
-                                                href="#comments?type=feed&amp;start=0&amp;limit=25"
-                                                onclick="showComments(0,25,'feed');">comments</a><a id="commentsbuttonall" class="btn"
                                                 href="#comments?type=all&amp;start=0&amp;limit=25"
-                                                onclick="showComments(0,25,'all');">(all</a><a id="commentsbuttonnew" class="btn"
-                                                href="#comments?type=new&amp;start=0&amp;limit=25"
-                                                onclick="showComments(0,25,'new');">|new)</a> |    
+                                                onclick="showComments(0,25,'all');">comments</a><a
+                                                id="commentsbuttonfeed" class="btn"
+                                                href="#comments?type=feed&amp;start=0&amp;limit=25"
+                                                onclick="showComments(0,25,'feed');">(feed</a><a id="commentsbuttonnew"
+                                                class="btn" href="#comments?type=new&amp;start=0&amp;limit=25"
+                                                onclick="showComments(0,25,'new');">|new)</a> |
+                                                
+                                            <a id="refreshbutton" class="btn" href="" onclick="displayContentBasedOnURLParameters();return false;">🔄</a>
+                                            <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">📝</a>
                                             <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a>
                                             <a id="settingsbutton" class="btn" href="#settings"
                                                 onclick="showSettings();">⚙️</a>
@@ -94,19 +106,38 @@
                                             <a id="logoutbutton" class="btn" href="#logout"
                                                 onclick="logout();">logout</a>
                                         </span>
+                                        <span id="loggedout" class="pagetop">
+                                                <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a> |
+                                                <a id="postsbutton" class="btn"
+                                                    href="#posts?type=top&amp;start=0&amp;limit=25"
+                                                    onclick="showPosts(0,25,'all');">posts</a> |
+                                                <a id="commentsbutton" class="btn"
+                                                    href="#comments?type=all&amp;start=0&amp;limit=25"
+                                                    onclick="showComments(0,25,'all');">comments</a> |
+                                                <a id="loginbutton" class="btn" href="#login"
+                                                    onclick="showLogin();">login</a>
+                                            </span>
                                     </td>
                                     <td style="text-align:right;padding-right:4px;">
-                                        <span id="loggedout" class="pagetop">
-                                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a> |
-                                            <a id="postsbutton" class="btn"
-                                                href="#posts?type=top&amp;start=0&amp;limit=25"
-                                                onclick="showPosts(0,25,'all');">posts</a> |
-                                            <a id="commentsbutton" class="btn"
-                                                href="#comments?type=all&amp;start=0&amp;limit=25"
-                                                onclick="showComments(0,25,'all');">comments</a> |
-                                            <a id="loginbutton" class="btn" href="#login"
-                                                onclick="showLogin();">login</a>
-                                        </span>
+                                        <select id="topicselector" onchange="topicChanged();">
+                                            <option value="" selected="selected">All Topics</option>
+                                            <option value=""></option>
+                                            <option value="Member">Member</option>
+                                            <option value="Bitcoin Cash">Bitcoin Cash</option>
+                                            <option value="Bitcoin SV">Bitcoin SV</option>
+                                            <option value="Memo">Memo</option>
+                                            <option value="Airdrops">Airdrops</option>
+                                            <option value="Tokens">Tokens</option>
+                                            <option value="OpenBazaar">OpenBazaar</option>
+                                            <option value="Capitalism">Capitalism</option>
+                                            <option value="Airdrops">Airdrops</option>
+                                            <option value="Tokens">Tokens</option>
+                                            <option value="OpenBazaar">OpenBazaar</option>
+                                            <option value="US Politics/Trump">US Politics</option>
+                                            <option value="Favorite Quotes">Favorite Quotes</option>
+                                            <option value="Ideas to improve our lives">Self Improvement</option>
+                                            <option value="#911Truth">#911Truth</option>
+                                        </select>
                                     </td>
                                 </tr>
                             </tbody>
@@ -154,8 +185,7 @@
                                                 onclick="postmemorandum();">
                                             <input id="newpostmemorandumstatus" style="display: none;"
                                                 value="Sending . . ." type="submit" disabled>
-                                            <input id="newpostmemorandumclear" style="display: none;" value="clear"
-                                                type="submit" onclick="clearmemorandumpost();">
+                                            <div id="newpostmemorandumcompleted"></div>
                                         </td>
                                     </tr>
                                     <tr style="height:20px"></tr>
@@ -191,15 +221,15 @@
                                                 onclick="post();">
                                             <input id="newpoststatus" style="display: none;" value="Sending . . ."
                                                 type="submit" disabled>
-                                            <input id="newpostclear" style="display: none;" value="clear" type="submit"
-                                                onclick="clearpost();">
+                                            <div id="newpostcompleted"></div>
                                         </td>
                                     </tr>
                                     <tr style="height:20px"></tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div id="loading" style="display: none;"><br /><br />
+                        <div id="loading" style="display: none;">
+                            <br /><br />
                             <center><img src="img/loading.gif" /></center>
                         </div>
                         <div id="topic" style="display: none;"></div>
@@ -414,6 +444,7 @@
                                                 <option value="functional.css">Choose Theme</option>
                                                 <option value="functional.css">Hacker News</option>
                                                 <option value="hnnightmode.css">Hacker News Night Mode</option>
+                                                <option value="mobtwo.css">MobTwo</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -459,15 +490,30 @@
                                         </td>
                                     </tr>
                                     <tr>
+                                        <th>One-Click Tip Amount</th>
+                                        <td>
+                                            <input id="oneclicktip" value="0" size="8" type="number" step="1000"
+                                                onchange="updateOneClickTip();" onkeypress="this.onchange();"
+                                                onpaste="this.onchange();" oninput="this.onchange();"></input> (Amount
+                                            to tip when clicking up arrow, minimum 547)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Max Fee</th>
+                                        <td>
+                                            <input id="maxfee" value="5" size="3" type="number" step="1"
+                                                onchange="updateMaxFee();" onkeypress="this.onchange();"
+                                                onpaste="this.onchange();" oninput="this.onchange();"></input> (Max
+                                            satoshis per byte to pay during network congestion. Min 2)
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <th>Muted Words
                                             <br />(Comma Separate)</th>
                                         <td>
                                             <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60"
-                                                onchange="document.getElementById('mutedwordsbutton').disabled=false;"
-                                                onkeypress="this.onchange();" onpaste="this.onchange();"
-                                                oninput="this.onchange();"></textarea>
-                                            <button id="mutedwordsbutton" type="button" onclick="updatemutedwords();"
-                                                disabled>update</button>
+                                                onchange="updatemutedwords();" onkeypress="this.onchange();"
+                                                onpaste="this.onchange();" oninput="this.onchange();"></textarea>
                                         </td>
                                     </tr>
                                     <tr style="height:10px"></tr>
@@ -665,37 +711,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <br />
-                        <center>
-                            <span class="yclinks">
-
-                                <a onclick="showTopic(0,25,'Member')" href="#topic?topicname=Member">Member</a> |
-                                <a onclick="showTopic(0,25,'Bitcoin Cash')"
-                                    href="#topic?topicname=Bitcoin%20Cash">Bitcoin Cash</a>
-                                |
-                                <a onclick="showTopic(0,25,'Bitcoin SV')" href="#topic?topicname=Bitcoin%20SV">Bitcoin
-                                    SV</a> |
-                                <a onclick="showTopic(0,25,'Memo')" href="#topic?topicname=Memo">Memo</a> |
-                                <a onclick="showTopic(0,25,'Airdrops')" href="#topic?topicname=Airdrops">Airdrops</a> |
-                                <a onclick="showTopic(0,25,'Tokens')" href="#topic?topicname=Tokens">Tokens</a> |
-                                <a onclick="showTopic(0,25,'OpenBazaar')"
-                                    href="#topic?topicname=OpenBazaar">OpenBazaar</a> |
-                                <a onclick="showTopic(0,25,'Capitalism')"
-                                    href="#topic?topicname=Capitalism">Capitalism</a> |
-                                <a onclick="showTopic(0,25,'US Politics/Trump')"
-                                    href="#topic?topicname=US%20Politics%2FTrump">US
-                                    Politics</a> |
-                                <a onclick="showTopic(0,25,'Favorite Quotes')"
-                                    href="#topic?topicname=Favorite%20Quotes">Quotes</a> |
-                                <a onclick="showTopic(0,25,'Ideas to improve our lives')"
-                                    href="#topic?topicname=Ideas%20to%20improve%20our%20lives">Self
-                                    Improvement</a> |
-                                <a onclick="showTopic(0,25,'#911Truth')"
-                                    href="#topic?topicname=%23911Truth">#911Truth</a>
-                            </span>
-                            <br />
-                        </center>
+                    <td><br/>
                         <table width="100%" cellspacing="0" cellpadding="1">
                             <tbody>
                                 <tr>
@@ -716,7 +732,8 @@
                                 <a href="https://github.com/memberapp/protocol">Protocol</a>
                                 |
                                 <a href="mailto:memorycoincc@gmail.com">Contact</a>
-
+                                |
+                                version 2.0.<u>9</u>
                             </span>
                             <br />
                             <br />

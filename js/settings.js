@@ -1,4 +1,4 @@
-
+"use strict";
 
 function getAndPopulateCommunityRatings(qaddress) {
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
@@ -6,20 +6,19 @@ function getAndPopulateCommunityRatings(qaddress) {
     getJSON(server + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents +
-                "<tr><td>" + getMemberLink(ds(data[i].address), ds(data[i].name)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].rateename)) + "</td><td>|</td><td>" + ds(data[i].reason) + "</td></tr>";
+            contents = contents + ratingAndReasonHTML(data[i]);
         }
         document.getElementById('communityratingtable').innerHTML = contents;
 
         for (var i = 0; i < data.length; i++) {
 
             var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
-            var theAddress = ds(data[i].address);
+            var theAddress = san(data[i].address);
             var starRating1 = raterJs({
                 starSize: 24,
                 rating: Math.round(theRating * 10) / 10,
                 element: document.querySelector("#rating" + theAddress),
-                disableText: ds(data[i].name) + ' rates ' + ds(data[i].rateename) + ' as {rating}/{maxRating}',
+                disableText: rts(data[i].name) + ' rates ' + rts(data[i].rateename) + ' as {rating}/{maxRating}',
             });
             starRating1.theAddress = theAddress;
             starRating1.disable();
@@ -36,20 +35,19 @@ function getAndPopulateRatings(qaddress) {
     getJSON(server + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents +
-                "<tr><td>" + getMemberLink(ds(data[i].rateraddress), ds(data[i].ratername)) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + ds(data[i].rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(ds(data[i].rates), ds(data[i].name)) + "</td><td>|</td><td>" + ds(data[i].reason) + "</td></tr>";
+            contents = contents + ratingAndReason2HTML(data[i]);                
         }
         document.getElementById('ratingtable').innerHTML = contents;
 
         for (var i = 0; i < data.length; i++) {
 
             var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
-            var theAddress = ds(data[i].rates);
+            var theAddress = san(data[i].rates);
             var starRating1 = raterJs({
                 starSize: 24,
                 rating: Math.round(theRating * 10) / 10,
                 element: document.querySelector("#rating" + theAddress),
-                disableText: ds(data[i].ratername) + ' rates ' + ds(data[i].name) + ' as {rating}/{maxRating}',
+                disableText: rts(data[i].ratername) + ' rates ' + rts(data[i].name) + ' as {rating}/{maxRating}',
             });
             starRating1.theAddress = theAddress;
             starRating1.disable();
@@ -79,18 +77,18 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametext').innerHTML = "";
             document.getElementById(pre + 'profiletext').innerHTML = "";
         } else {
-            document.getElementById(pre + 'followersnumber').innerHTML = ds(data[0].followers);
-            document.getElementById(pre + 'followingnumber').innerHTML = ds(data[0].following);
-            document.getElementById(pre + 'blockersnumber').innerHTML = ds(data[0].blockers);
-            document.getElementById(pre + 'blockingnumber').innerHTML = ds(data[0].blocking);
+            document.getElementById(pre + 'followersnumber').innerHTML = Number(data[0].followers);
+            document.getElementById(pre + 'followingnumber').innerHTML = Number(data[0].following);
+            document.getElementById(pre + 'blockersnumber').innerHTML = Number(data[0].blockers);
+            document.getElementById(pre + 'blockingnumber').innerHTML = Number(data[0].blocking);
             document.getElementById(pre + 'nametext').value = data[0].name;
             document.getElementById(pre + 'profiletext').value = data[0].profile;
-            document.getElementById(pre + 'nametext').innerHTML = ds(data[0].name);
-            document.getElementById(pre + 'profiletext').innerHTML = ds(data[0].profile);
+            document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name);
+            document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
 
-            document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + ds(qaddress);
+            document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
             document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
-            document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + ds(qaddress);
+            document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
 
             if (pre == "settings") {
                 document.getElementById(pre + 'nametextbutton').disabled = true;
@@ -115,11 +113,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
 
 
-        var escaped = '"' + qaddress + '"';
         if (data.length < 1 || ds(data[0].isfollowing) == "0") {
-            document.getElementById(pre + 'follow').innerHTML = "<a href='javascript:;' onclick='follow(" + escaped + ");'>follow</a>";
+            document.getElementById(pre + 'follow').innerHTML = clickActionHTML("follow",qaddress); 
         } else {
-            document.getElementById(pre + 'follow').innerHTML = "<a href='javascript:;' onclick='unfollow(" + escaped + ");'>unfollow</a>";
+            document.getElementById(pre + 'follow').innerHTML = clickActionHTML("unfollow",qaddress);
         }
 
         //document.getElementById(pre + 'ratings').innerHTML = `<a href='#ratings?qaddress=` + qaddress + `' onclick='showRatings(` + escaped + `);'>Show Ratings</a>`;
@@ -127,12 +124,12 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         //This condition checks that the user being viewed is not the logged in user
         if (qaddress != pubkey) {
             if (data.length < 1 || ds(data[0].isblocked) == "0") {
-                document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='block(" + escaped + ");'>mute</a>";
+                document.getElementById(pre + 'block').innerHTML = clickActionHTML("block",qaddress);
             } else {
-                document.getElementById(pre + 'block').innerHTML = "<a href='javascript:;' onclick='unblock(" + escaped + ");'>unmute</a>";
+                document.getElementById(pre + 'block').innerHTML = clickActionHTML("unblock",qaddress);
             }
 
-            document.getElementById(pre + 'ratingcomment').innerHTML = `<input size="30" maxlength="210" id="memberratingcommentinputbox` + qaddress + `" value="` + (data.length > 0 ? ds(data[0].ratingreason) : "") + `" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+            document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress,data);
             document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
 
             var theRating = 0; if (data.length > 0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
@@ -151,13 +148,12 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             }
 
             starRating1.theAddress = qaddress;
-            var tgmember = pubkey;
-            if (tgmember == null || tgmember == '') {
-                tgmember = "19RyV6XQEww5td2LPWDpK8o5V8at7Vpwgv";
-            }
-
-
-            document.getElementById(pre + 'trustgraph').innerHTML = `<a href='#trustgraph?member=` + tgmember + `&amp;target=` + qaddress + `' onclick='showTrustGraph("` + pubkey + `","` + qaddress + `");'>Show Trust Graph</a>`;
+            
+            //var tgmember = pubkey;
+            //if (tgmember == null || tgmember == '') {
+            //    tgmember = "19RyV6XQEww5td2LPWDpK8o5V8at7Vpwgv";
+            //}
+            //document.getElementById(pre + 'trustgraph').innerHTML = `<a href='#trustgraph?member=` + tgmember + `&amp;target=` + qaddress + `' onclick='showTrustGraph("` + pubkey + `","` + qaddress + `");'>Show Trust Graph</a>`;
         }
 
     }, function (status) { //error detection....
@@ -183,17 +179,38 @@ function getAndPopulateMember(qaddress) {
 }
 
 function getAndPopulateSettings() {
-    document.getElementById('legacyformat').innerHTML = pubkey;
-    document.getElementById('cashaddrformat').innerHTML = qpubkey;
-    document.getElementById('privatekey').innerHTML = `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a><div style="display:none;"  id="privatekeydisplay"></div>`;
-    document.getElementById('privatekeydisplay').innerHTML = privkey;
+    //These may already be switched to qrcodes, so try/catch necessary
+    try{document.getElementById('legacyformat').innerHTML = pubkey;}catch(err){}
+    try{document.getElementById('cashaddrformat').innerHTML = qpubkey;}catch(err){}
+    try{document.getElementById('privatekeydisplay').innerHTML = privkey;}catch(err){}
+    try{document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML();}catch(err){}
+    
     if (typeof Storage !== void (0)) {
         var storedmutedwords = localStorage.getItem("mutedwords");
         if (storedmutedwords != undefined && storedmutedwords != null) {
             document.getElementById('mutedwords').value = storedmutedwords;
             mutedwords = storedmutedwords.split(',');
         }
+        
+        var storedoneclicktip = localStorage.getItem("oneclicktip");
+        if (storedoneclicktip != undefined && storedoneclicktip != null) {
+            storedoneclicktip=Number(storedoneclicktip);
+            if(storedoneclicktip<547){
+                storedoneclicktip=0;
+            } 
+            document.getElementById('oneclicktip').value = storedoneclicktip;
+            oneclicktip= storedoneclicktip;
+        }
 
+        var storedmaxfee = localStorage.getItem("maxfee");
+        if (storedmaxfee != undefined && storedmaxfee != null) {
+            storedmaxfee=Number(storedmaxfee);
+            if(storedmaxfee<1){
+                storedmaxfee=2;
+            } 
+            document.getElementById('maxfee').value = storedmaxfee;
+            maxfee= storedmaxfee;
+        }
     }
 
 
@@ -239,7 +256,6 @@ function rateCallbackAction(rating, that, ratingtext) {
 
 function updatemutedwords() {
 
-    document.getElementById('mutedwordsbutton').disabled = true;
     var commasep = document.getElementById('mutedwords').value;
     mutedwords = commasep.split(',');
     for (var i = 0; i < mutedwords.length; i++) {
@@ -251,10 +267,21 @@ function updatemutedwords() {
 
 }
 
-function getMemberLink(address, name) {
-    return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(name) + `</a>`;
+function updateOneClickTip(){
+    oneclicktip = Number(document.getElementById('oneclicktip').value);
+    if (typeof Storage !== void (0)) {
+        localStorage.setItem("oneclicktip", oneclicktip);
+    }
 }
 
-function getAddressLink(address, name) {
-    return `<a href="#member?qaddress=` + ds(address) + `" onclick="showMember('` + ds(address) + `')">` + ds(address) + `</a>`;
+function updateMaxFee(){
+    maxfee = Number(document.getElementById('maxfee').value);
+    if(maxfee<2){
+        maxfee = 2;
+    }
+    if (typeof Storage !== void (0)) {
+        localStorage.setItem("maxfee", maxfee);
+    }
 }
+
+
