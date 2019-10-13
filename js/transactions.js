@@ -1,10 +1,13 @@
+"use strict";
+
 function checkForPrivKey() {
     if (privkey == "") {
-        alert("This requires a transaction. You must login to do this.");
+        alert("You must login to do this.");
         return false;
     }
     return true;
 }
+
 
 //var waitForTransactionToComplete = false;
 
@@ -70,19 +73,14 @@ function postRaw(posttext, privkey, topic, newpoststatus, memocompleted) {
     tq.queueTransaction(tx, memocompleted, null);
 }
 
-function geopost(lat, long) {
-    if (!checkForPrivKey()) return false;
-
-    document.getElementById('newgeopostbutton').style.display = "none";
-    var txtarea = document.getElementById('newgeopostta');
-    var posttext = txtarea.value;
-    var geohash = encodeGeoHash(document.getElementById("lat").value, document.getElementById("lon").value);
+function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted){
+    
     const tx = {
         data: ["0x6da8", geohash, posttext],
         cash: { key: privkey }
     }
     updateStatus("Sending Geotagged Post");
-    tq.queueTransaction(tx);
+    tq.queueTransaction(tx,geocompleted,null);
 }
 
 
@@ -124,7 +122,7 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
 
 
 
-function sendTipRaw(txid, tipAddress, page, tipAmount, privkey, successFunction) {
+function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
@@ -138,10 +136,9 @@ function sendTipRaw(txid, tipAddress, page, tipAmount, privkey, successFunction)
     tq.queueTransaction(tx, successFunction, null);
 }
 
-function likePost(txid) {
+function sendLike(txid) {
     if (!checkForPrivKey()) return false;
 
-    document.getElementById('upvote' + txid).style.display = "none";
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6d04", "0x" + reversetx],
@@ -226,10 +223,9 @@ function unblock(qaddress) {
     tq.queueTransaction(tx);
 }
 
-function dislikePost(txid) {
+function sendDislike(txid) {
     if (!checkForPrivKey()) return false;
 
-    document.getElementById('downvote' + txid).style.display = "none";
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6db4", "0x" + reversetx],

@@ -1,9 +1,11 @@
+"use strict";
+
 function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
 function timeSince(timestamp) {
-  date = new Date(timestamp * 1000);
+  let date = new Date(timestamp * 1000);
   var seconds = Math.floor((new Date() - date) / 1000);
 
   var interval = Math.floor(seconds / 31536000);
@@ -78,6 +80,8 @@ function ds(input) {
   return input;
 }
 
+
+
 function updateStatus(message) {
   document.getElementById("status").innerHTML = message;
 }
@@ -86,6 +90,10 @@ function toHexString(byteArray) {
   return Array.from(byteArray, function (byte) {
     return ('0' + (byte & 0xFF).toString(16)).slice(-2);
   }).join('')
+}
+
+function san(input){
+  return sanitizeAlphanumeric(input);
 }
 
 function sanitizeAlphanumeric(input) {
@@ -151,4 +159,23 @@ function getParameterByName(name, url) {
   if (!results) return null;
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function scrollTo(name) {
+  var element=document.getElementById(name);
+  if(element!=undefined){
+    ScrollToResolver(element);
+  }
+}
+
+function ScrollToResolver(elem) {
+  var jump = parseInt(elem.getBoundingClientRect().top * .2);
+  document.body.scrollTop += jump;
+  document.documentElement.scrollTop += jump;
+  if (!elem.lastjump || elem.lastjump > Math.abs(jump)) {
+    elem.lastjump = Math.abs(jump);
+    setTimeout(function() { ScrollToResolver(elem);}, "100");
+  } else {
+    elem.lastjump = null;
+  }
 }
