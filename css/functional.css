@@ -238,7 +238,7 @@ li li li li li li li li{
     max-width: 60em;
 }
 
-.reply .betweenvotesscore, .betweenvotesscoreup,.betweenvotesscoredown {
+.reply .betweenvotesscore, .reply .betweenvotesscoreup, .reply .betweenvotesscoredown {
     display:none;
 }
 
