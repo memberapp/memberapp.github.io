@@ -121,20 +121,25 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
         //document.getElementById(pre + 'ratings').innerHTML = `<a href='#ratings?qaddress=` + qaddress + `' onclick='showRatings(` + escaped + `);'>Show Ratings</a>`;
 
+        if (data.length < 1 || ds(data[0].isblocked) == "0") {
+            document.getElementById(pre + 'block').innerHTML = clickActionHTML("mute",qaddress);
+        } else {
+            document.getElementById(pre + 'block').innerHTML = clickActionHTML("unmute",qaddress);
+        }
+
         //This condition checks that the user being viewed is not the logged in user
-        if (qaddress != pubkey) {
-            if (data.length < 1 || ds(data[0].isblocked) == "0") {
-                document.getElementById(pre + 'block').innerHTML = clickActionHTML("block",qaddress);
-            } else {
-                document.getElementById(pre + 'block').innerHTML = clickActionHTML("unblock",qaddress);
-            }
+        if (pre=="member" && qaddress == pubkey) {
+            document.getElementById(pre + 'ratinggroup').style.display="none";
+        } else if (pre=="member"){
+        
+            document.getElementById(pre + 'ratinggroup').style.display="block";
 
             document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress,data);
             document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
 
             var theRating = 0; if (data.length > 0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
             var starRating1 = raterJs({
-                starSize: 24,
+                starSize: 20,
                 //rating: theRating,
                 element: document.querySelector("#memberrating" + qaddress),
                 rateCallback: function rateCallback(rating, done) {

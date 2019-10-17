@@ -18,14 +18,14 @@ a:visited { color:#828282; text-decoration:none; }
 .yclinks { font-family:Verdana, Geneva, sans-serif; font-size:  8pt; color:#828282; }
 .pagetop { font-family:Verdana, Geneva, sans-serif; font-size: 10pt; color:#222222; }
 .comhead { font-family:Verdana, Geneva, sans-serif; font-size:  8pt; color:#828282; }
-.comment { font-family:Verdana, Geneva, sans-serif; font-size:  9pt; }
+.comment { font-family:Verdana, Geneva, sans-serif; font-size:  9pt; color:#828282; }
 .hnname  { margin-right: 5px; }
 
 .comment a:link, .comment a:visited { text-decoration: underline; }
 .noshow { display: none; }
 .nosee { visibility: hidden; pointer-events: none; cursor: default }
 
-.c00, .c00 a:link { color:#000000; }
+.c00, .c00 a:link { color:#ffffff; }
 .c5a, .c5a a:link, .c5a a:visited { color:#5a5a5a; }
 .c73, .c73 a:link, .c73 a:visited { color:#737373; }
 .c82, .c82 a:link, .c82 a:visited { color:#828282; }
@@ -57,8 +57,9 @@ pre:hover { overflow:auto }
   height:     10px;
   border:     0px;
   margin:     3px 2px 2px;
-  background: url("../img/grayarrow.gif")
-  no-repeat;
+  background: url("../img/grayuparrow.svg");
+  background-size: 10px 10px;
+  display: block;
 }
 
 .votelinks.nosee div.votearrow.rotate180 {
@@ -173,22 +174,6 @@ pre { max-width: 900px; }
   pre { max-width: 840px; }
 }
 
-#status {
-  background:#cccccc;
-  color:#000000;
-  bottom:0;
-  right:0;
-  margin:0;
-  padding:0;
-  position:fixed;
-}
-
-#status div {
-  margin:0;
-  padding:3px;
-  text-align:center;
-}
-
 body {
   background-color: #222;
   color: #F2F2F2; }
@@ -275,22 +260,260 @@ a.morelink {
   a.morelink:hover {
     background-color: #282a2e; }
 
-.highlight {
-  background-color: #030320;
-}
-
-#map{
-  position: absolute;
-}
-
-#memberposts {
-  margin-left: 15px;
-}
-
-#settings {
-  margin-left: 15px; 
-}
-
-.leaflet-popup-content-wrapper {
-  background-color:#000000;
-}
+    .highlight {
+      background-color: #030320;
+    }
+    #status {
+      background:#cccccc;
+      color:#000000;
+      bottom:0;
+      right:0;
+      margin:0;
+      padding:0;
+      position:fixed;
+    }
+    
+    #status div {
+      margin:0;
+      padding:3px;
+      text-align:center;
+    }
+    
+    
+    
+    #map {
+      position: absolute;
+    }
+    
+    #memberposts {
+        margin-left: 15px;
+    }
+    
+    #settings {
+        margin-left: 15px; 
+    }
+    
+    .leaflet-popup-content-wrapper {
+      background-color:#f6f6ef;
+    }
+    
+    .votearrowactivated {
+      width:      10px;
+      height:     10px;
+      border:     0px;
+      margin:     3px 2px 2px;
+      background: url("../img/greenuparrow.svg");
+      background-size: 10px 10px;
+      display: block;
+    }
+    
+    
+    
+    
+    /* Move away from tables*/
+    /* put rank, links, posts side by side */
+    .rank{ 
+      float:left;
+      min-width:20px;
+      text-align:right;
+    }
+    .votelinks{ float:left;}
+    .spacer{ float:left;}
+    
+    .postdetails{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .reply{
+      padding-bottom: 5px;
+    }
+    .post{
+      padding-bottom: 5px;
+    }
+    
+    .notificationitem{ 
+      padding-bottom: 5px;
+      padding-left: 5px;
+    }
+    
+    .notificationicon{ 
+      font-size: 18pt;
+      float:left;
+    }
+    
+    .notificationdetails{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 32px;
+      padding-left: 5px;
+    }
+    
+    .titleline{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .notificationslist {
+      position: relative;
+      padding-left: 0px;
+      margin-bottom: 0px;
+      list-style: none;
+    }
+    
+    li::before{
+      float: left;
+      font-size: 18pt;
+    }
+    
+    
+    
+      li.notificationlike::before {
+        content: "💗";
+      }
+      li.notificationrating::before {
+        content: "⭐";
+      }
+      li.notificationfollow::before {
+        content: "👨";
+      }
+      li.notificationreply::before {
+        content: "💬";
+      }
+    
+      .notificationitem .age{
+        display:block;
+        padding-bottom: 5px;
+      }
+    
+      .post .age{
+        display:inline;
+      }
+    
+      
+      hr{
+        border: none;
+        height: 1px;
+        /* Set the hr color */
+        color: #4cca47; /* old IE */
+        background-color:  #4cca47; /* Modern Browsers */
+        margin-bottom:5px;
+        margin-top:0px;
+        width: 100%;
+      }
+    
+      footer{
+        text-align: center;
+      }
+    
+      label {
+        display: block;
+        padding-top: 10px;
+        font-weight: bold;
+      }
+    
+      .followers, .following, .follow, .muting, .muters, .mute {
+        display: inline-block;
+        padding-right:10px;
+      }
+    
+      .memberratingcomment, .memberrating {
+        display: inline-block;
+      }
+      .memberratinggroup{
+        display: inline-flex;
+      }
+    
+    
+      .applicationpage{
+        margin-left:5px;
+        margin-top:5px;
+        margin-right:5px;
+        margin-bottom:5px;
+      }
+    .blocked {
+      opacity: 0.2;
+    }
+    .loading {
+      background-image:url("../img/loading.gif");
+      width:100%; /*width of your image*/
+      height:72px; /*height of your image*/
+      background-position: center; /* Center the image */
+      background-repeat: no-repeat; /* Do not repeat the image */
+    }
+    header {
+      background-color: #4cca47;
+      padding-bottom: 2px;
+      min-height: 22px;
+      margin-bottom: 10px;
+    }
+    
+    .mainbodywrapper{
+      text-align: center;
+    }
+    
+    .mainbody {
+      width:85%;
+      display:inline-block;
+      text-align: left;
+    }
+    
+    .topiccontainer {
+      float: right;
+      padding-top: 2px;
+      padding-right: 2px;
+    }
+    
+    .headerlinks {
+      float: left;
+      padding-left: 4px;
+    }
+    
+    .memberlogo {
+      float: left;  
+    }
+    
+    .membertext{
+      float: left;  
+      padding-left: 4px;
+      padding-right: 6px;
+      padding-top: 1px;
+    }
+    
+    .loggedin, .loggedout, .balance{
+      margin-top: 2px;
+      float: left;
+      background-color: #4cca47;
+      padding-bottom:4px;
+    }
+    
+    .memberlogoimage{
+      vertical-align:middle;
+      padding-left: 2px;
+    }
+    
+    ul {
+      padding-left: 20px;
+      list-style-type:none;
+    }
+    
+    ol {
+    
+      padding-left: 20px;
+    
+    }
+    
+    .betweenvotesscore{
+      display:none;
+    }
+    
+    .votetext{
+      display:none;
+    }
+    
+    .betweenvotesscore, .betweenvotesscoreup, .betweenvotesscoredown {
+      display:none;
+    }

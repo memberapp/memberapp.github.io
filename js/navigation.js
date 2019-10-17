@@ -47,10 +47,10 @@ function displayContentBasedOnURLParameters() {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
         }else{
-            showPosts(0, 25);    
+            showPosts(0, 25, 'all');    
         }
     } else {
-        showPosts(0, 25);
+        showPosts(0, 25, 'all');
     }
 }
 
@@ -142,7 +142,7 @@ function showNewPost() {
 function showNotifications(start, limit) {
     
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
-        showPosts(0, 25);
+        showPosts(0, 25, 'all');
         return;
     }
     
@@ -153,7 +153,7 @@ function showNotifications(start, limit) {
 function showSettings() {
     //Need to be logged in
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
-        showPosts(0, 25);
+        showPosts(0, 25, 'all');
         return;
     }
     getAndPopulateSettings();
@@ -218,7 +218,7 @@ function topicChanged(){
     //special case, no topic selected
     if(selector.selectedIndex==0){
         exitTopic();
-        showPosts(0, 25);
+        showPosts(0, 25,'all');
         document.location.href="#posts?type=all&start=0&limit=25";
         return;
     }
