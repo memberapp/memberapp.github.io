@@ -434,3 +434,7 @@ hr{
     #map {
         position: absolute;
       }
+
+      textarea {
+        width: 80%;
+      }
