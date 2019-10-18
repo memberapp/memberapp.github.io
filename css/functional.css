@@ -23,6 +23,7 @@ body {
         margin-top:0px;
         margin-left:0px;
         margin-right:0px;
+        word-wrap: break-word;
 }
 
 li{
@@ -94,40 +95,48 @@ header {
 
 
 
+/*Vote buttons*/
 
 .likescounttext{
     display:none;
 }
 
-.votearrow {
+.votearrow{
+  background: url("../img/uparrowgrey.svg");
+}
+.votearrowactivated {
+  background: url("../img/uparrowgreen.svg");
+}
+.votearrowactivateddown {
+  background: url("../img/uparrowblue.svg");
+}
+
+/*Different sizes for large and small screens*/
+@media only screen and (min-width: 600px) {
+.votearrow, .votearrowactivated, .votearrowactivateddown {
     width:      18px;
     height:     14px;
     border:     0px;
     margin:     1px 2px 0px;
-    background: url("../img/uparrowgrey.svg");
     background-size: 18px 14px;
     display: block;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .votearrow, .votearrowactivated, .votearrowactivateddown {
+      width:      9px;
+      height:     7px;
+      border:     0px;
+      margin:     1px 1px 0px;
+      background-size: 9px 7px;
+      display: block;
+    }
   }
 
-  .votearrowactivated {
-    width:      18px;
-    height:     14px;
-    border:     0px;
-    margin:     1px 2px 0px;
-    background: url("../img/uparrowgreen.svg");
-    background-size: 18px 14px;
-    display: block;
-  }
+  
 
-  .votearrowactivateddown {
-    width:      18px;
-    height:     14px;
-    border:     0px;
-    margin:     1px 2px 0px;
-    background: url("../img/uparrowblue.svg");
-    background-size: 18px 14px;
-    display: block;
-  }
+
 
 
   .votearrow.rotate180, .votearrowactivated.rotate180, .votearrowactivateddown.rotate180 {
@@ -185,9 +194,13 @@ header {
 
 }
 
+/* Lists, used for displaying posts and threads */
+
+/* Desktop Screen */
+@media only screen and (min-width: 600px) {
 .comment-tree li {
 
-    margin: 0 8px 8px 10px !important;
+    margin: 0px 0px 8px 10px !important;
     border: 1px solid #e6e6e6 !important;
     border-radius: 3px !important;
     padding: 5px 8px 5px 5px !important;
@@ -199,6 +212,10 @@ header {
 }
 
 ul {
+  padding-left: 10px;
+}
+
+ul {
     padding-left: 0px;
 }
 
@@ -207,36 +224,67 @@ ul ul {
 }
 
 li{
-    background-color: white;
+  background-color: white;
 }
 
 li li{
-    background-color: #f7f7f8;
+  background-color: #f7f7f8;
 }
 
 li li li{
-    background-color: white;
+  background-color: white;
 }
 
 li li li li{
-    background-color: #f7f7f8;
+  background-color: #f7f7f8;
 }
 
 li li li li li{
-    background-color: white;
+  background-color: white;
 }
 
 li li li li li li{
-    background-color: #f7f7f8;
+  background-color: #f7f7f8;
 }
 
 li li li li li li li{
-    background-color: white;
+  background-color: white;
 }
 
 li li li li li li li li{
-    background-color: #f7f7f8;
+  background-color: #f7f7f8;
 }
+
+}
+
+/* Smaller Screen */
+
+@media only screen and (max-width: 600px) {
+  .comment-tree li {
+    margin: 0px 0px 2px 3px !important;
+    border: none;
+    border-left: 1px solid #e6e6e6 !important;
+    padding: 2px 4px 2px 2px !important;
+    overflow: hidden;
+    color: #222222;
+    font-size: 14px;
+    line-height: 1.4285714285714286em;
+    font: normal verdana,arial,helvetica,sans-serif;
+}
+
+ul {
+  padding-left: 4px;
+}
+
+ul {
+    padding-left: 0px;
+}
+
+ul ul {
+    padding-left: 5px;
+}
+}
+
 
 .reply{
     max-width: 60em;
