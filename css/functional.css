@@ -211,8 +211,8 @@ header {
     font: normal verdana,arial,helvetica,sans-serif;
 }
 
-ul {
-  padding-left: 10px;
+ol {
+  padding-left: 20px;
 }
 
 ul {
@@ -272,8 +272,8 @@ li li li li li li li li{
     font: normal verdana,arial,helvetica,sans-serif;
 }
 
-ul {
-  padding-left: 4px;
+ol {
+  padding-left: 14px;
 }
 
 ul {
