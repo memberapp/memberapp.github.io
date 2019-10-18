@@ -122,7 +122,7 @@ function logout() {
     privkey = "";
     pubkey = "";
     document.getElementById('loggedin').style.display = "none";
-    document.getElementById('loggedout').style.display = "block";
+    document.getElementById('loggedout').style.display = "inline";
     show('loginbox');
 }
 

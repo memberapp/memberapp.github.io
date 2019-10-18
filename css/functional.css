@@ -43,6 +43,10 @@ header {
     margin-bottom:5px;
 }
 
+.loggedout {
+  display:inline;
+}
+
 .memberlogoimage {
 
     vertical-align: middle;
