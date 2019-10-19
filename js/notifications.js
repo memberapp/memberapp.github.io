@@ -41,6 +41,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
         case "reply":
             postRatingID=starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
+                "reply",
                 `💬&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + ` to your ` + postlinkHTML(data.rretxid, "post"),
                 timeSince(ds(data.time)),
@@ -53,6 +54,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             if (data.rating != null && data.rating != "") { theRating = (ds(data.rating) / 64) + 1; }
             theRating=Math.round(theRating * 10) / 10;
             return notificationItemHTML(
+                "rating",
                 `⭐&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID) + ` rated you as ` + theRating + ` stars, commenting ... ` + escapeHTML(data.reason),
                 timeSince(ds(data.time)),
@@ -61,6 +63,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             break;
         case "follow":
             return notificationItemHTML(
+                "follow",
                 `👩&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID) + ` followed you `,
                 timeSince(ds(data.time)),
@@ -70,6 +73,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
         case "like":
             postRatingID=starindex + page + ds(data.address) + type;    
             return notificationItemHTML(
+                "like",
                 `💗&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + escapeHTML(data.amount) + ` sats `,
                 timeSince(ds(data.time)),

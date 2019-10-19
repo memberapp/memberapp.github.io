@@ -39,6 +39,8 @@ function trylogin(loginkey) {
         login(loginkey);
     } catch (error) {
         document.getElementById('loginerror').innerHTML = error.message;
+        console.log(error);
+        updateStatus(error.message);
         return;
     }
     //document.location.href="#posts?type=all&amp;start=0&amp;limit=25";
@@ -91,6 +93,7 @@ function login(loginkey) {
     if (typeof Storage !== void (0)) {
         localStorage.setItem("pubkey", pubkey);
     }
+    tq.addUTXOPool(pubkey);
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
     getAndPopulateSettings();
@@ -119,11 +122,15 @@ function logout() {
     privkey = "";
     pubkey = "";
     document.getElementById('loggedin').style.display = "none";
-    document.getElementById('loggedout').style.display = "block";
+    document.getElementById('loggedout').style.display = "inline";
     show('loginbox');
 }
 
 function changeStyle(newStyle) {
     localStorage.setItem("style", newStyle);
     document.getElementById("pagestyle").setAttribute("href", "css/" + newStyle);
+}
+
+function updateBalance(){
+    tq.utxopools[pubkey].refreshPool();
 }

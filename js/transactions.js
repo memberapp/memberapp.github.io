@@ -193,7 +193,7 @@ function unfollow(qaddress) {
     tq.queueTransaction(tx);
 }
 
-function block(qaddress) {
+function mute(qaddress) {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('memberblock').style.display = "none";
@@ -204,11 +204,11 @@ function block(qaddress) {
         data: ["0x6d16", "0x" + addressraw],
         cash: { key: privkey }
     }
-    updateStatus("Sending Block");
+    updateStatus("Sending mute");
     tq.queueTransaction(tx);
 }
 
-function unblock(qaddress) {
+function unmute(qaddress) {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('memberblock').style.display = "none";
@@ -219,7 +219,7 @@ function unblock(qaddress) {
         data: ["0x6d17", "0x" + addressraw],
         cash: { key: privkey }
     }
-    updateStatus("Sending unblock");
+    updateStatus("Sending unmute");
     tq.queueTransaction(tx);
 }
 
