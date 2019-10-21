@@ -35,7 +35,7 @@ function getAndPopulateRatings(qaddress) {
     getJSON(server + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + ratingAndReason2HTML(data[i]);                
+            contents = contents + ratingAndReason2HTML(data[i]);
         }
         document.getElementById('ratingtable').innerHTML = contents;
 
@@ -114,27 +114,27 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
 
         if (data.length < 1 || ds(data[0].isfollowing) == "0") {
-            document.getElementById(pre + 'follow').innerHTML = clickActionHTML("follow",qaddress); 
+            document.getElementById(pre + 'follow').innerHTML = clickActionHTML("follow", qaddress);
         } else {
-            document.getElementById(pre + 'follow').innerHTML = clickActionHTML("unfollow",qaddress);
+            document.getElementById(pre + 'follow').innerHTML = clickActionHTML("unfollow", qaddress);
         }
 
         //document.getElementById(pre + 'ratings').innerHTML = `<a href='#ratings?qaddress=` + qaddress + `' onclick='showRatings(` + escaped + `);'>Show Ratings</a>`;
 
         if (data.length < 1 || ds(data[0].isblocked) == "0") {
-            document.getElementById(pre + 'block').innerHTML = clickActionHTML("mute",qaddress);
+            document.getElementById(pre + 'block').innerHTML = clickActionHTML("mute", qaddress);
         } else {
-            document.getElementById(pre + 'block').innerHTML = clickActionHTML("unmute",qaddress);
+            document.getElementById(pre + 'block').innerHTML = clickActionHTML("unmute", qaddress);
         }
 
         //This condition checks that the user being viewed is not the logged in user
-        if (pre=="member" && qaddress == pubkey) {
-            document.getElementById(pre + 'ratinggroup').style.display="none";
-        } else if (pre=="member"){
-        
-            document.getElementById(pre + 'ratinggroup').style.display="block";
+        if (pre == "member" && qaddress == pubkey) {
+            document.getElementById(pre + 'ratinggroup').style.display = "none";
+        } else if (pre == "member") {
 
-            document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress,data);
+            document.getElementById(pre + 'ratinggroup').style.display = "block";
+
+            document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress, data);
             document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
 
             var theRating = 0; if (data.length > 0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
@@ -153,7 +153,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             }
 
             starRating1.theAddress = qaddress;
-            
+
             //var tgmember = pubkey;
             //if (tgmember == null || tgmember == '') {
             //    tgmember = "19RyV6XQEww5td2LPWDpK8o5V8at7Vpwgv";
@@ -185,38 +185,37 @@ function getAndPopulateMember(qaddress) {
 
 function getAndPopulateSettings() {
     //These may already be switched to qrcodes, so try/catch necessary
-    try{document.getElementById('legacyformat').innerHTML = pubkey;}catch(err){}
-    try{document.getElementById('cashaddrformat').innerHTML = qpubkey;}catch(err){}
-    try{document.getElementById('privatekeydisplay').innerHTML = privkey;}catch(err){}
-    try{document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML();}catch(err){}
-    
-    if (typeof Storage !== void (0)) {
-        var storedmutedwords = localStorage.getItem("mutedwords");
-        if (storedmutedwords != undefined && storedmutedwords != null) {
-            document.getElementById('mutedwords').value = storedmutedwords;
-            mutedwords = storedmutedwords.split(',');
-        }
-        
-        var storedoneclicktip = localStorage.getItem("oneclicktip");
-        if (storedoneclicktip != undefined && storedoneclicktip != null) {
-            storedoneclicktip=Number(storedoneclicktip);
-            if(storedoneclicktip<547){
-                storedoneclicktip=0;
-            } 
-            document.getElementById('oneclicktip').value = storedoneclicktip;
-            oneclicktip= storedoneclicktip;
-        }
+    try { document.getElementById('legacyformat').innerHTML = pubkey; } catch (err) { }
+    try { document.getElementById('cashaddrformat').innerHTML = qpubkey; } catch (err) { }
+    try { document.getElementById('privatekeydisplay').innerHTML = privkey; } catch (err) { }
+    try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
 
-        var storedmaxfee = localStorage.getItem("maxfee");
-        if (storedmaxfee != undefined && storedmaxfee != null) {
-            storedmaxfee=Number(storedmaxfee);
-            if(storedmaxfee<1){
-                storedmaxfee=2;
-            } 
-            document.getElementById('maxfee').value = storedmaxfee;
-            maxfee= storedmaxfee;
-        }
+    var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");
+    if (storedmutedwords != undefined && storedmutedwords != null) {
+        document.getElementById('mutedwords').value = storedmutedwords;
+        mutedwords = storedmutedwords.split(',');
     }
+
+    var storedoneclicktip = localStorageGet(localStorageSafe, "oneclicktip");
+    if (storedoneclicktip != undefined && storedoneclicktip != null) {
+        storedoneclicktip = Number(storedoneclicktip);
+        if (storedoneclicktip < 547) {
+            storedoneclicktip = 0;
+        }
+        document.getElementById('oneclicktip').value = storedoneclicktip;
+        oneclicktip = storedoneclicktip;
+    }
+
+    var storedmaxfee = localStorageGet(localStorageSafe, "maxfee");
+    if (storedmaxfee != undefined && storedmaxfee != null) {
+        storedmaxfee = Number(storedmaxfee);
+        if (storedmaxfee < 1) {
+            storedmaxfee = 2;
+        }
+        document.getElementById('maxfee').value = storedmaxfee;
+        maxfee = storedmaxfee;
+    }
+
 
 
     getDataCommonToSettingsAndMember(pubkey, "settings");
@@ -226,7 +225,7 @@ function getAndPopulateSettings() {
 
 function showQRCode(spanid) {
     var addressToQR = document.getElementById(spanid).innerHTML;
-    document.getElementById(spanid + "div").innerHTML="";
+    document.getElementById(spanid + "div").innerHTML = "";
     new QRCode(document.getElementById(spanid + "div"), addressToQR);
     //document.getElementById('qrclicktoshow').style.display='none';
 }
@@ -266,27 +265,24 @@ function updatemutedwords() {
     for (var i = 0; i < mutedwords.length; i++) {
         mutedwords[i] = mutedwords[i].trim()
     }
-    if (typeof Storage !== void (0)) {
-        localStorage.setItem("mutedwords", mutedwords);
-    }
+    localStorageSet(localStorageSafe, "mutedwords", mutedwords);
+
 
 }
 
-function updateOneClickTip(){
+function updateOneClickTip() {
     oneclicktip = Number(document.getElementById('oneclicktip').value);
-    if (typeof Storage !== void (0)) {
-        localStorage.setItem("oneclicktip", oneclicktip);
-    }
+    localStorageSet(localStorageSafe, "oneclicktip", oneclicktip);
+
 }
 
-function updateMaxFee(){
+function updateMaxFee() {
     maxfee = Number(document.getElementById('maxfee').value);
-    if(maxfee<2){
+    if (maxfee < 2) {
         maxfee = 2;
     }
-    if (typeof Storage !== void (0)) {
-        localStorage.setItem("maxfee", maxfee);
-    }
+    localStorageSet(localStorageSafe, "maxfee", maxfee);
+
 }
 
 

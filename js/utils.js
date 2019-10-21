@@ -179,3 +179,21 @@ function ScrollToResolver(elem) {
     elem.lastjump = null;
   }
 }
+
+function localStorageGet(theSO,itemName){
+  try{
+    let theString=theSO.getItem(itemName);
+    return theString;
+  }catch(err){
+    return null;
+  }
+}
+
+function localStorageSet(theSO, itemName, theString){
+  try{
+    theSO.setItem(itemName, theString);
+    return true;
+  }catch(err){
+    return false;
+  }
+}
