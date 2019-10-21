@@ -73,20 +73,19 @@ class UTXOPool {
   }
 
   updateBalance() {
+
+    try {
+      if (this.storageObject != undefined && this.storageObject != null) {
+        localStorageSet(this.storageObject, "utxopool", JSON.stringify(this.utxoPool));
+      }
+    } catch (err) {
+    }
+
     var total = 0;
     for (let i = 0; i < this.utxoPool.length; i++) {
       total = total + this.utxoPool[i].satoshis;
     }
     document.getElementById("balance").innerHTML = total.toLocaleString();
-
-    try {
-      if (this.storageObject != undefined && this.storageObject != null) {
-        localStorageGet(this.storageObject, "utxopool", JSON.stringify(this.utxoPool));
-      }
-    } catch (err) {
-    }
-
-
   }
 
   refreshPool() {
@@ -182,7 +181,11 @@ class TransactionQueue {
 
   addUTXOPool(address, storageObject) {
     this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject);
-    this.utxopools[address].refreshPool();
+    try{
+      this.utxopools[address].refreshPool();
+    }catch(err){
+      this.statusMessageFunction(err);
+    }
   }
 
   isTransactionInProgress() {
