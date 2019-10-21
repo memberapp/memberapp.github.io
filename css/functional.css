@@ -355,6 +355,7 @@ hr{
     margin-top:5px;
     margin-right:5px;
     margin-bottom:5px;
+    font-size:small;
   }
 .blocked {
   opacity: 0.2;

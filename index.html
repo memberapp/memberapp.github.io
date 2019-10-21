@@ -101,7 +101,8 @@
                         <a id="notificationsbutton" class="btn" href="#notifications?start=0&amp;limit=25"
                             onclick="showNotifications(0,25,'notifications');">🔔</a> |
                     </span>
-                    <span onclick="updateBalance();" id="balance"></span>
+                    <span onclick="updateBalance();return false;" id="balancedetails">₿<span onclick="updateBalance();" id="balance"></span><a id="refreshbutton" class="btn" href=""
+                    >🔄</a> | </span>
                     <a id="logoutbutton" class="btn" href="#logout" onclick="logout();">logout</a>
                 </nav>
                 <nav id="loggedout" class="loggedout">
@@ -148,16 +149,16 @@
                 <div id="memorandumtopicarea">
                     topic <span id="memorandumtopiclengthadvice">(0/214)</span><br />
                     <input size="80" id="memorandumtopic" maxlength="217" onchange="topictitleChanged('memorandum');"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 </div>
                 <div>
                     title <span id="memorandumtitlelengthadvice">(0/217)</span><br />
                     <input size="80" id="memorandumtitle" maxlength="217" onchange="topictitleChanged('memorandum');"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
 
                 </div>
                 <div>
-                    text</br>
+                    text<br/>
                     <textarea id="newposttamemorandum" name="text" rows="20" cols="80"></textarea>
 
                 </div>
@@ -174,7 +175,7 @@
                 <div id="memotopicarea">
                     topic <span id="memotopiclengthadvice">(0/217)</span><br />
                     <input size="60" id="memotopic" maxlength="217" onchange="topictitleChanged('memo');"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 </div>
                 <div>
                     text <span id="memotitlelengthadvice">(0/217)</span><br />
@@ -288,14 +289,14 @@
                     <label for="settingsnametext">Handle</label>
                     <input size="30" id="settingsnametext" value="loading..."
                         onchange="document.getElementById('settingsnametextbutton').disabled=false;"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     <button id="settingsnametextbutton" type="button" onclick="setName();">update</button>
                 </div>
                 <div>
                     <label for="settingsprofiletext">Profile</label>
                     <input size="30" id='settingsprofiletext' value="loading..."
                         onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     <button id="settingsprofiletextbutton" type="button" onclick="setProfile();"
                         disabled>update</button>
                 </div>
@@ -377,14 +378,14 @@
                 <div>
                     <label for="oneclicktip">One-Click Tip Amount</label>
                     <input id="oneclicktip" value="0" size="8" type="number" step="1000" onchange="updateOneClickTip();"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     (Amount
                     to tip when clicking up arrow, minimum 547)
                 </div>
                 <div>
                     <label for="maxfee">Max Fee</label>
                     <input id="maxfee" value="5" size="3" type="number" step="1" onchange="updateMaxFee();"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     (Max
                     satoshis per byte to pay during network congestion. Min 2)
                 </div>
@@ -561,7 +562,7 @@
                 <br />
                 <br />Private Key (Compressed WIF format, starts with 'L' or 'K')
                 <br />
-                <input size="64" id="loginkey"></input>
+                <input size="64" id="loginkey">
                 <button type="button" href="#feed"
                     onclick="trylogin(document.getElementById('loginkey').value);">login</button>
                 <br />
@@ -589,7 +590,7 @@
                     |
                     <a href="mailto:memorycoincc@gmail.com">Contact</a>
                     |
-                    version 2.1.0.<u>9</u>
+                    version 2.1.1.<u>9</u>
                 </span>
                 <br />
                 <br />
