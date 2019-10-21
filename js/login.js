@@ -127,6 +127,6 @@ function changeStyle(newStyle) {
     document.getElementById("pagestyle").setAttribute("href", "css/" + newStyle);
 }
 
-function updateBalance() {
+function refreshPool() {
     tq.utxopools[pubkey].refreshPool();
 }
