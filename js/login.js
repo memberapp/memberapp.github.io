@@ -10,28 +10,30 @@ var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
 
+var localStorageSafe = null;
+try { var localStorageSafe = localStorage; } catch (err) { }
+
 
 //Create warning if user tries to reload or exit while transactions are in progress or queued.
-window.onbeforeunload=function() {
-    if(tq.isTransactionInProgress())
+window.onbeforeunload = function () {
+    if (tq.isTransactionInProgress())
         return "Are you sure? There are still transaction(s) in progress. They will be lost if you close the page or reload via the browser.";
 };
 
 function init() {
     //check local app storage for key
 
-    if (typeof Storage !== void (0)) {
-        var loginprivkey = localStorage.getItem("privkey");
-        var loginpubkey = localStorage.getItem("pubkey");
+    var loginprivkey = localStorageGet(localStorageSafe, "privkey");
+    var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
-        if (loginprivkey != "null" && loginprivkey != null && loginprivkey != "") {
-            trylogin(loginprivkey);
-        } else if (loginpubkey != "null" && loginpubkey != null && loginpubkey != "") {
-            trylogin(loginpubkey);
-        } else {
-            displayContentBasedOnURLParameters();
-        }
+    if (loginprivkey != "null" && loginprivkey != null && loginprivkey != "") {
+        trylogin(loginprivkey);
+        return;
+    } else if (loginpubkey != "null" && loginpubkey != null && loginpubkey != "") {
+        trylogin(loginpubkey);
+        return;
     }
+    displayContentBasedOnURLParameters();
 }
 
 function trylogin(loginkey) {
@@ -57,9 +59,7 @@ function login(loginkey) {
 
         privkey = loginkey;
         document.getElementById('loginkey').value = "";
-        if (typeof Storage !== void (0)) {
-            localStorage.setItem("privkey", privkey);
-        }
+        localStorageSet(localStorageSafe, "privkey", privkey);
     } else if (loginkey.startsWith("5")) {
         /*
         var privaddress=new bch.PrivateKey(loginkey);
@@ -67,9 +67,7 @@ function login(loginkey) {
 
         privkey=loginkey;
         document.getElementById('loginkey').value="";
-        if(typeof Storage !== void(0)){
-            localStorage.setItem("privkey",privkey);
-        }*/
+        */
         document.getElementById('loginkey').value = "";
         alert("Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')");
         return;
@@ -90,16 +88,15 @@ function login(loginkey) {
     pubkey = publicaddress.toString();
     qpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
 
-    if (typeof Storage !== void (0)) {
-        localStorage.setItem("pubkey", pubkey);
-    }
-    tq.addUTXOPool(pubkey);
+
+    localStorageSet(localStorageSafe, "pubkey", pubkey);
+    tq.addUTXOPool(pubkey, localStorageSafe);
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
     getAndPopulateSettings();
 
     //Set the saved style if available
-    var style = localStorage.getItem("style");
+    let style = localStorageGet(localStorageSafe, "style");
     if (style != undefined && style != null) {
         changeStyle(style);
     }
@@ -115,9 +112,8 @@ function createNewAccount() {
 }
 
 function logout() {
-    if (typeof Storage !== void (0)) {
-        localStorage.setItem("privkey", null);
-        localStorage.setItem("pubkey", null);
+    if(localStorageSafe!=null){
+        localStorageSafe.clear();
     }
     privkey = "";
     pubkey = "";
@@ -127,10 +123,10 @@ function logout() {
 }
 
 function changeStyle(newStyle) {
-    localStorage.setItem("style", newStyle);
+    localStorageSet(localStorageSafe, "style", newStyle);
     document.getElementById("pagestyle").setAttribute("href", "css/" + newStyle);
 }
 
-function updateBalance(){
+function updateBalance() {
     tq.utxopools[pubkey].refreshPool();
 }

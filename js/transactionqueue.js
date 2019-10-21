@@ -15,11 +15,26 @@ let miningFeeMultiplier = 1;
 
 class UTXOPool {
 
-  constructor(address, statusMessageFunction) {
+  constructor(address, statusMessageFunction, storageObject) {
     //This takes legacy address format
     this.theAddress = address;
     this.utxoPool = {};
     this.statusMessageFunction = statusMessageFunction;
+    this.storageObject = storageObject;
+
+    //Try to retrieve utxopool from localstorage and set balance
+    try {
+      if (this.storageObject != null) {
+        let loadup = JSON.parse(localStorageGet(this.storageObject, "utxopool"));
+        if (loadup != "null" && loadup != null && loadup != "") {
+          this.utxoPool = loadup;
+          this.updateBalance();
+        }
+      }
+    }
+    catch (err) {
+      this.statusMessageFunction(err);
+    }
   }
 
   updateStatus(message) {
@@ -36,33 +51,42 @@ class UTXOPool {
     return Array.from(this.utxoPool);
   }
 
-  removeUTXO(txid,vout){
+  removeUTXO(txid, vout) {
     for (let i = 0; i < this.utxoPool.length; i++) {
-      if( this.utxoPool[i].txid == txid && this.utxoPool[i].vout == vout){
-        this.utxoPool.splice(i,1);
+      if (this.utxoPool[i].txid == txid && this.utxoPool[i].vout == vout) {
+        this.utxoPool.splice(i, 1);
         return true;
       }
     }
     return false;
   }
 
-  addUTXO(txid,vout,satoshis){
+  addUTXO(txid, vout, satoshis) {
     //Ensure it is not already in the pool
     for (let i = 0; i < this.utxoPool.length; i++) {
-      if( this.utxoPool[i].txid == txid && this.utxoPool[i].vout == vout){
+      if (this.utxoPool[i].txid == txid && this.utxoPool[i].vout == vout) {
         return false;
       }
     }
-    this.utxoPool.push({satoshis:satoshis, vout:vout, txid:txid});
+    this.utxoPool.push({ satoshis: satoshis, vout: vout, txid: txid });
     return true;
   }
 
-  updateBalance(){
-    var total=0;
+  updateBalance() {
+    var total = 0;
     for (let i = 0; i < this.utxoPool.length; i++) {
-      total=total+this.utxoPool[i].satoshis;
+      total = total + this.utxoPool[i].satoshis;
     }
-    document.getElementById("balance").innerHTML="₿"+total.toLocaleString()+" | ";
+    document.getElementById("balance").innerHTML = total.toLocaleString();
+
+    try {
+      if (this.storageObject != undefined && this.storageObject != null) {
+        localStorageGet(this.storageObject, "utxopool", JSON.stringify(this.utxoPool));
+      }
+    } catch (err) {
+    }
+
+
   }
 
   refreshPool() {
@@ -156,8 +180,8 @@ class TransactionQueue {
     this.utxopools = {};
   }
 
-  addUTXOPool(address) {
-    this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction);
+  addUTXOPool(address, storageObject) {
+    this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject);
     this.utxopools[address].refreshPool();
   }
 
@@ -481,11 +505,11 @@ class TransactionQueue {
       throw new Error("2001: Insufficient Funds. Amount available " + utxoFunds + " in " + utxos.length + " UTXOs but " + (transactionOutputTotal + fees) + " required. Add Funds.");
     }
 
-    var hasChange=false;
+    var hasChange = false;
     //Add funds remaining as change if larger than dust
     if (changeAmount >= DUSTLIMIT) {
       transactionBuilder.addOutput(changeAddress, changeAmount);
-      hasChange=true;
+      hasChange = true;
     }
 
     //Sign inputs
@@ -498,7 +522,7 @@ class TransactionQueue {
 
     // build tx
     let tx = transactionBuilder.build();
-    tx.outs[tx.outs.length-1].isChange=true;
+    tx.outs[tx.outs.length - 1].isChange = true;
     return tx;
 
   }
@@ -513,7 +537,7 @@ class TransactionQueue {
     let rawtransactions = new RawTransactions();
     rawtransactions.restURL = txbroadcastServer;
     rawtransactions.sendRawTransaction(hex).then((result) => {
-      this.updateTransactionPool(utxos,options,tx);
+      this.updateTransactionPool(utxos, options, tx);
       this.transactionInProgress = false;
       //Remove unexpected input in result
       result = sanitizeAlphanumeric(result);
@@ -530,29 +554,29 @@ class TransactionQueue {
     });
   }
 
-  updateTransactionPool(utxos,options,tx){
+  updateTransactionPool(utxos, options, tx) {
     const ECPair = BITBOX.ECPair;
     let keyPair = new ECPair().fromWIF(options.cash.key);
     let changeAddress = keyPair.getAddress();
 
-    let theUTXOPool=this.utxopools[changeAddress];
+    let theUTXOPool = this.utxopools[changeAddress];
     for (let i = 0; i < utxos.length; i++) {
       //Mark the utxos as spent, to ensure we don't accidentally try to double spend them
       this.spentUTXO[utxos[i].txid + utxos[i].vout] = 1;
       //Remove the utxos from the utxo pool
-      theUTXOPool.removeUTXO(utxos[i].txid,utxos[i].vout);
+      theUTXOPool.removeUTXO(utxos[i].txid, utxos[i].vout);
     }
 
     //Add new utxos.
     //Note, this only deals with the change amount. If the member has send a different utxo to himself, it won't be added. 
     for (let i = 0; i < tx.outs.length; i++) {
-      if(tx.outs[i].isChange==true){
-        theUTXOPool.addUTXO(tx.getId(),i,tx.outs[i].value);
+      if (tx.outs[i].isChange == true) {
+        theUTXOPool.addUTXO(tx.getId(), i, tx.outs[i].value);
       }
     }
     theUTXOPool.updateBalance();
 
-    
+
   }
 
 }
