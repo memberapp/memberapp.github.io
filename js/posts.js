@@ -19,6 +19,10 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
 
     //Request content from the server and display it when received
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+        //Server bug will sometimes return duplicates if a post is liked twice for example,
+        // this is a workaround, better if fixed server side.
+        data = removeDuplicates(data);
+        
         data = mergeRepliesToRepliesBySameAuthor(data);
 
         var contents = "";
@@ -44,6 +48,10 @@ function getAndPopulateThread(roottxid, txid, pageName) {
     if (txid === undefined || txid == "") { txid = roottxid; }
 
     getJSON(server + '?action=thread&address=' + pubkey + '&txid=' + txid).then(function (data) {
+        //Server bug will sometimes return duplicates if a post is liked twice for example,
+        // this is a workaround, better if fixed server side.
+        data = removeDuplicates(data);
+
         data = mergeRepliesToRepliesBySameAuthor(data);
 
         //Make sure we have id of the top level post
@@ -81,6 +89,10 @@ function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
     var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicname, "getAndPopulateTopic");
 
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&topicname=' + encodeURIComponent(topicname) + '&type=' + type + '&start=' + start + '&limit=' + limit).then(function (data) {
+        //Server bug will sometimes return duplicates if a post is liked twice for example,
+        // this is a workaround, better if fixed server side.
+        data = removeDuplicates(data);
+        
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i));
@@ -440,7 +452,18 @@ function checkForMutedWords(data) {
 
 //Threads
 
-
+function removeDuplicates(data){
+    var replies = [];
+    for (var i = 0; i < data.length; i++) {
+        if(replies[data[i].txid] == null){
+            replies[data[i].txid] = 1;
+        }else{
+            data.splice(i,1);
+            i--;
+        }
+    }
+    return data;
+}
 
 function mergeRepliesToRepliesBySameAuthor(data) {
 

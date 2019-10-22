@@ -432,3 +432,7 @@ ol {
 .betweenvotesscore, .betweenvotesscoreup, .betweenvotesscoredown {
   display:none;
 }
+
+textarea, .memorandumtitle {
+  width: 80%;
+}

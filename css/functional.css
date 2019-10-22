@@ -488,6 +488,8 @@ hr{
         position: absolute;
       }
 
-      textarea {
+      textarea, .memorandumtitle {
         width: 80%;
       }
+
+      
