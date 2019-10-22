@@ -146,32 +146,6 @@
         <div class="mainbody">
             <div id="newpost" class="applicationpage newpost" style="display: none;">
                 <h2>New Post</h2>
-                <div id="memorandumtopicarea">
-                    topic <span id="memorandumtopiclengthadvice">(0/214)</span><br />
-                    <input size="80" id="memorandumtopic" maxlength="217" onchange="topictitleChanged('memorandum');"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                </div>
-                <div>
-                    title <span id="memorandumtitlelengthadvice">(0/217)</span><br />
-                    <input size="80" id="memorandumtitle" maxlength="217" onchange="topictitleChanged('memorandum');"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-
-                </div>
-                <div>
-                    text<br/>
-                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80"></textarea>
-
-                </div>
-                <div>
-                    <input id="newpostmemorandumbutton" value="Post a Memorandum" type="submit"
-                        onclick="postmemorandum();">
-                    <input id="newpostmemorandumstatus" style="display: none;" value="Sending . . ." type="submit"
-                        disabled>
-                    <div id="newpostmemorandumcompleted"></div>
-                </div>
-                <br />
-                or
-                <br /><br />
                 <div id="memotopicarea">
                     topic <span id="memotopiclengthadvice">(0/217)</span><br />
                     <input size="60" id="memotopic" maxlength="217" onchange="topictitleChanged('memo');"
@@ -189,6 +163,34 @@
                     <div id="newpostcompleted"></div>
                 </div>
 
+                <br />
+                or
+                <br /><br />
+                <div id="memorandumtopicarea">
+                    topic <span id="memorandumtopiclengthadvice">(0/214)</span><br />
+                    <input size="80" id="memorandumtopic" maxlength="217" onchange="topictitleChanged('memorandum');"
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                </div>
+                <div>
+                    title <span id="memorandumtitlelengthadvice">(0/217)</span><br />
+                    <input class="memorandumtitle" id="memorandumtitle" maxlength="217" onchange="topictitleChanged('memorandum');"
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+
+                </div>
+                <div>
+                    text<br/>
+                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80"></textarea>
+
+                </div>
+                <div>
+                    <input id="newpostmemorandumbutton" value="Post a Memorandum" type="submit"
+                        onclick="postmemorandum();">
+                    <input id="newpostmemorandumstatus" style="display: none;" value="Sending . . ." type="submit"
+                        disabled>
+                    <div id="newpostmemorandumcompleted"></div>
+                </div>
+                
+                
 
             </div>
             <div id="loading" class="applicationpage loading" style="display: none;">
