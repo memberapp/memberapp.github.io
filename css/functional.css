@@ -488,8 +488,16 @@ hr{
         position: absolute;
       }
 
-      textarea, .memorandumtitle {
+      textarea, .memorandumtitle, .memotopic, .memorandumtopic {
         width: 80%;
       }
+
+      .separatorwide::before {
+        content: " | ";
+    }
+
+    .separatornarrow::before {
+      content: "|";
+  }
 
       
