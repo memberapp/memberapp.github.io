@@ -14,11 +14,13 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
     
-    //Show navigation next/back buttons
-    var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, "", "getAndPopulate");
-
+    
     //Request content from the server and display it when received
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+
+        //Show navigation next/back buttons
+        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, "", "getAndPopulate", data.length);
+
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
@@ -86,9 +88,11 @@ function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
     //document.getElementById('topicdiv').innerHTML = `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"> - ` + ds(topicname) + `</a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')">(new)</a> |`;
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicname, "getAndPopulateTopic");
-
+    
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&topicname=' + encodeURIComponent(topicname) + '&type=' + type + '&start=' + start + '&limit=' + limit).then(function (data) {
+
+        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicname, "getAndPopulateTopic", data.length);
+
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);

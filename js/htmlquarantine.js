@@ -26,7 +26,7 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + san(txid) + `" onclick="showThread('` + san(txid) + `')">` + ds(linktext) + `</a>`;
 }
 
-function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName) {
+function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName, numberOfResults) {
 
     //Caution topicname may contain hostile characters/code
 
@@ -34,6 +34,7 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
 
     if (start != 0) //Don't show back buttons if we're at the start
     { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back </a> `; }
+    if (numberOfResults>=25) //Don't show next button if there is not a full set of results
     { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`; }
     return navbuttons;
 

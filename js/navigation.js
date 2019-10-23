@@ -239,7 +239,8 @@ function enterTopic(topicNameHOSTILE){
     currentTopic = topicNameHOSTILE;
     document.getElementById('memotopic').value = topicNameHOSTILE;
     document.getElementById('memorandumtopic').value = topicNameHOSTILE;
-    document.location.href="#topic?topicname="+encodeURIComponent(topicNameHOSTILE);
+    //Changing the href must be handled elsewhere, as it can have more info attached.
+    //document.location.href="#topic?topicname="+encodeURIComponent(topicNameHOSTILE);
     var selector=document.getElementById('topicselector');
     selector.selectedIndex=1;
     selector.options[selector.selectedIndex].value=topicNameHOSTILE;
