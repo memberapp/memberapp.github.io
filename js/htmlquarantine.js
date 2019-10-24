@@ -310,5 +310,5 @@ function getRatingComment(qaddress,data){
 }
 
 function privatekeyClickToShowHTML(){
-    return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a><div style="display:none;"  id="privatekeydisplay"></div>`;
+    return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a>`;
 }

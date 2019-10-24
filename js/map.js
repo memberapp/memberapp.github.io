@@ -130,7 +130,8 @@ function loadLocationListFromServerAndPlaceOnMap(event) {
             }
         }
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 
 }

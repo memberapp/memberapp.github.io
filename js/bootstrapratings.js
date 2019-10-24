@@ -1,7 +1,8 @@
 "use strict";
 
 function somethingwentwrong(status) {
-    alert('Something went wrong.');
+    console.log('Something is wrong:'+status);
+    updateStatus(status);
 }
 
 async function getAndPopulateBootstrap(qaddress) {

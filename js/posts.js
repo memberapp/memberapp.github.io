@@ -33,7 +33,8 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts");
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 
 }
@@ -74,7 +75,8 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         }
         scrollTo("highlightedcomment");
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 }
 
@@ -104,7 +106,8 @@ function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "topic");
 
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 
 }
