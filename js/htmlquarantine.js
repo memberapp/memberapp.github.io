@@ -16,13 +16,14 @@
 "use strict";
 //Get html for a user, given their address and name
 function userHTML(address, name, ratingID) {
-    //TODO sanitize this data
+    if(name==""){
+        name=address.substring(0,10);
+    }
     return `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">` + ds(name) + `</a>
     <div id="rating` + ratingID + `"></div>`;
 }
 
 function postlinkHTML(txid, linktext) {
-    //TODO sanitize this data
     return `<a href="#thread?post=` + san(txid) + `" onclick="showThread('` + san(txid) + `')">` + ds(linktext) + `</a>`;
 }
 
