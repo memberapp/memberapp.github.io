@@ -444,3 +444,7 @@ textarea, .memorandumtitle {
 .separatornarrow::before {
 content: "|";
 }
+
+.separatorwidebreakpoint::before {
+  content: " | ";
+}

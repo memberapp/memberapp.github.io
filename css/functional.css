@@ -500,4 +500,19 @@ hr{
       content: "|";
   }
 
+  /* Breakline in header for small screen, 650 is about the point where it splits onto a second line
+  probably a better way to handle this as topic container is still free floating and unwanted break appears*/
+@media only screen and (max-width: 650px) {
+  .separatorwidebreakpoint::before {
+    content: ' '; display: block;
+}
+
+}
+
+@media only screen and (min-width: 650px) {
+  .separatorwidebreakpoint::before {
+    content: " | ";
+}
+}
+
       

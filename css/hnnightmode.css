@@ -525,3 +525,7 @@ a.morelink {
   .separatornarrow::before {
     content: "|";
 }
+
+.separatorwidebreakpoint::before {
+  content: " | ";
+}
