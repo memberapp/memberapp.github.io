@@ -25,7 +25,8 @@ function getAndPopulateCommunityRatings(qaddress) {
 
         }
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 }
 
@@ -54,7 +55,8 @@ function getAndPopulateRatings(qaddress) {
 
         }
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 }
 
@@ -162,7 +164,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         }
 
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 }
 

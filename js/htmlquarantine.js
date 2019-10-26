@@ -16,17 +16,18 @@
 "use strict";
 //Get html for a user, given their address and name
 function userHTML(address, name, ratingID) {
-    //TODO sanitize this data
+    if(name==""){
+        name=address.substring(0,10);
+    }
     return `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">` + ds(name) + `</a>
     <div id="rating` + ratingID + `"></div>`;
 }
 
 function postlinkHTML(txid, linktext) {
-    //TODO sanitize this data
     return `<a href="#thread?post=` + san(txid) + `" onclick="showThread('` + san(txid) + `')">` + ds(linktext) + `</a>`;
 }
 
-function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName) {
+function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName, numberOfResults) {
 
     //Caution topicname may contain hostile characters/code
 
@@ -34,6 +35,7 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
 
     if (start != 0) //Don't show back buttons if we're at the start
     { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back </a> `; }
+    if (numberOfResults>=25) //Don't show next button if there is not a full set of results
     { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`; }
     return navbuttons;
 
@@ -293,11 +295,11 @@ function rts(thetext){
 //Settings
 //These two functions could be combined
 function ratingAndReasonHTML(data){
-    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + san(data.address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td><td>|</td><td>" + ds(data.reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + san(data.address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td><td><span class='separatornarrow'></span></td><td>" + ds(data.reason) + "</td></tr>";
 }
 
 function ratingAndReason2HTML(data){
-    return "<tr><td>" + getMemberLink(data.rateraddress, data.ratername) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + san(data.rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.name) + "</td><td>|</td><td>" + ds(data.reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.rateraddress, data.ratername) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + san(data.rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.name) + "</td><td><span class='separatornarrow'></span></td><td>" + ds(data.reason) + "</td></tr>";
 }
 
 function clickActionHTML(action, qaddress){
@@ -309,5 +311,5 @@ function getRatingComment(qaddress,data){
 }
 
 function privatekeyClickToShowHTML(){
-    return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a><div style="display:none;"  id="privatekeydisplay"></div>`;
+    return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a>`;
 }

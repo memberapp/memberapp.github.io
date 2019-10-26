@@ -436,3 +436,15 @@ ol {
 textarea, .memorandumtitle {
   width: 80%;
 }
+
+.separatorwide::before {
+  content: " | ";
+}
+
+.separatornarrow::before {
+content: "|";
+}
+
+.separatorwidebreakpoint::before {
+  content: " | ";
+}

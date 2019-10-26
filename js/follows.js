@@ -17,7 +17,8 @@ function getAndPopulateFollowers(qaddress) {
         }
         addStarRatings(data,page,disable);
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 
 }
@@ -38,7 +39,8 @@ function getAndPopulateFollowing(qaddress) {
         }
         addStarRatings(data,page,disable);
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 }
 
@@ -59,7 +61,8 @@ function getAndPopulateBlockers(qaddress){
         addStarRatings(data,page,disable);
 
     }, function(status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 
 }
@@ -81,6 +84,7 @@ function getAndPopulateBlocking(qaddress){
         addStarRatings(data,page,disable);
 
     }, function(status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 }
