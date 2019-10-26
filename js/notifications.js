@@ -24,7 +24,8 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         addStarRatings(data, page);
         window.scrollTo(0, 0);
     }, function (status) { //error detection....
-        alert('Something went wrong.');
+        console.log('Something is wrong:'+status);
+        updateStatus(status);
     });
 
 }

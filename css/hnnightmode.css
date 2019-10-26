@@ -517,3 +517,15 @@ a.morelink {
     .betweenvotesscore, .betweenvotesscoreup, .betweenvotesscoredown {
       display:none;
     }
+
+    .separatorwide::before {
+      content: " | ";
+  }
+
+  .separatornarrow::before {
+    content: "|";
+}
+
+.separatorwidebreakpoint::before {
+  content: " | ";
+}
