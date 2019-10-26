@@ -255,6 +255,30 @@ li li li li li li li li{
   background-color: #f7f7f8;
 }
 
+li li li li li li li li li{
+  background-color: white;
+}
+
+li li li li li li li li li li{
+  background-color: #f7f7f8;
+}
+
+li li li li li li li li li li li{
+  background-color: white;
+}
+
+li li li li li li li li li li li li{
+  background-color: #f7f7f8;
+}
+
+li li li li li li li li li li li li li{
+  background-color: white;
+}
+
+li li li li li li li li li li li li li li{
+  background-color: #f7f7f8;
+}
+
 }
 
 /* Smaller Screen */
@@ -513,6 +537,11 @@ hr{
   .separatorwidebreakpoint::before {
     content: " | ";
 }
+}
+
+#highlightli {
+  background-color: 
+  #ffd;
 }
 
       

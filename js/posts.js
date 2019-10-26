@@ -523,7 +523,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid) {
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
         if (data[i].retxid == targettxid) {
-            contents = contents + "<li>" + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 20, pageName, highlighttxid) + "</li>";
+            contents = contents + `<li ` + (data[i].txid == highlighttxid ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 20, pageName, highlighttxid) + "</li>";
         }
     }
     contents = contents + "</ul>";
