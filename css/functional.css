@@ -44,12 +44,11 @@ header {
     margin-bottom:5px;
     padding-left:5px;
     padding-top:1px;
+    font-size: small;
 }
 
-.headerbuttons {
-
-  font-size: small;
-
+#balancedetails {
+  font-weight: bold;
 }
 
 .loggedout {
@@ -534,14 +533,14 @@ hr{
 
   /* Breakline in header for small screen, 720 is about the point where it splits onto a second line
   probably a better way to handle this as topic container is still free floating and unwanted break appears*/
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 810px) {
   .separatorwidebreakpoint::before {
     content: ' '; display: block;
 }
 
 }
 
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 810px) {
   .separatorwidebreakpoint::before {
     content: " | ";
 }
