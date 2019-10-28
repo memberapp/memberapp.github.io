@@ -2,9 +2,9 @@
 
 "use strict";
 
-function getAndPopulate(start, limit, page, qaddress, type, topicname) {
+function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
     //Clear Topic
-    currentTopic == "";
+    //currentTopic == "";
     //document.getElementById('topicdiv').innerHTML = "";
 
     //Show the relevant html element
@@ -16,7 +16,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
     
     
     //Request content from the server and display it when received
-    getJSON(server + '?action=' + page + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+    getJSON(server + '?action=' + page + '&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, "", "getAndPopulate", data.length);

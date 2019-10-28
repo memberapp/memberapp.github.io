@@ -196,12 +196,7 @@ function showComments(start, limit, type) {
 
 function showPFC(start, limit, page, pubkey, type){
     var topicNameHOSTILE=currentTopic;
-    if(topicNameHOSTILE!=""){
-        getAndPopulateTopic(start, limit, 'topic', pubkey, type, topicNameHOSTILE);
-        //document.location.href=document.location.href+"&topic="+encodeURIComponent(topicNameHOSTILE);
-    }else{
-        getAndPopulate(start, limit, page, pubkey, type);
-    }
+    getAndPopulate(start, limit, page, pubkey, type, topicNameHOSTILE);
 }
 
 
@@ -209,7 +204,7 @@ function showPFC(start, limit, page, pubkey, type){
 function showTopic(start, limit, topicNameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
     enterTopic(topicNameHOSTILE);
-    getAndPopulateTopic(start, limit, 'topic', pubkey, type, topicNameHOSTILE);
+    getAndPopulateTopic(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }
 
 function topicChanged(){
