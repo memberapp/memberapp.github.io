@@ -59,7 +59,6 @@ function hideAll() {
     document.getElementById('posts').style.display = "none";
     document.getElementById('comments').style.display = "none";
     document.getElementById('thread').style.display = "none";
-    document.getElementById('topic').style.display = "none";
     document.getElementById('memberposts').style.display = "none";
     document.getElementById('notifications').style.display = "none";
     //remove the content too, so that we don't get conflicting ids
@@ -67,7 +66,6 @@ function hideAll() {
     document.getElementById('posts').innerHTML = "";
     document.getElementById('comments').innerHTML = "";
     document.getElementById('thread').innerHTML = "";
-    document.getElementById('topic').innerHTML = "";
     document.getElementById('memberposts').innerHTML = "";
     document.getElementById('notifications').innerHTML = "";
     
@@ -204,7 +202,7 @@ function showPFC(start, limit, page, pubkey, type){
 function showTopic(start, limit, topicNameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
     enterTopic(topicNameHOSTILE);
-    getAndPopulateTopic(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
+    getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }
 
 function topicChanged(){
