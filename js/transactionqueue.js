@@ -4,12 +4,16 @@ const DUSTLIMIT = 546;
 const MAXPOSSNUMBEROFINPUTS = 10;
 const Buffer = buffer.Buffer;
 const BITBOX = bitboxSdk;
-const utxoServer = "https://rest.bitcoin.com/v2/";
-const txbroadcastServer = "https://memberjs.org:8123/v2/";
-//const txbroadcastServer ="http://127.0.0.1:3000/v2/";
 
+//Note, these can be overwritten in config.js
+let utxoServer = "https://rest.bitcoin.com/v2/";
+let txbroadcastServer = "https://rest.bitcoin.com/v2/";
+
+//These are variable
 let extraSatoshis = 5;
 let miningFeeMultiplier = 1;
+
+//For BCHDRPC
 //let trxserver = "bchdgrpc";
 //let bchrpcClient = window.bchrpcClient;
 
