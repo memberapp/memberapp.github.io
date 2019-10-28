@@ -8,11 +8,12 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
     
     //Show navigation next/back buttons
 
-    var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress,"","getAndPopulateNotifications");
-
+    
     //Request content from the server and display it when received
     getJSON(server + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
+        var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress,"","getAndPopulateNotifications", data.length);
+    
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i);

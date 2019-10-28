@@ -41,7 +41,6 @@
     <!--  Member Code. In separate files for development convenience -->
     <!--  Can be mininfied and amalgamated for releases -->
 
-    <script src="js/config.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/posts.js"></script>
     <script src="js/settings.js"></script>
@@ -55,7 +54,8 @@
     <script src="js/login.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/htmlquarantine.js"></script>
-
+    <script src="js/config.js"></script>
+    
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
 
@@ -90,21 +90,25 @@
                             href="#comments?type=feed&amp;start=0&amp;limit=25"
                             onclick="showComments(0,25,'feed');">feed</a><span class="separatornarrow"></span><a
                             id="commentsbuttonnew" class="btn" href="#comments?type=new&amp;start=0&amp;limit=25"
-                            onclick="showComments(0,25,'new');">new</a>)</span><span class="separatorwidebreakpoint"></span>
+                            onclick="showComments(0,25,'new');">new</a>)</span><span
+                        class="separatorwidebreakpoint"></span>
+                    
                     <span class="loggedinpart2">
-                    <span class="headerbuttons">
-                        <a id="refreshbutton" class="btn" href=""
-                            onclick="displayContentBasedOnURLParameters();return false;">🔄</a>
-                        <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">📝</a>
-                        <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a>
-                        <a id="settingsbutton" class="btn" href="#settings" onclick="showSettings();">⚙️</a>
-                        <a id="notificationsbutton" class="btn" href="#notifications?start=0&amp;limit=25"
-                            onclick="showNotifications(0,25,'notifications');">🔔</a><span
-                            class="separatorwide"></span></span>
-                    <span onclick="refreshPool();return false;" id="balancedetails" class="balancedetails">₿<span id="balance">0</span><a
-                            id="refreshbutton" class="btn" href="">🔄</a><span class="separatorwide"></span></span>
-                    <a class="logoutbutton" id="logoutbutton" class="btn" href="#logout" onclick="logout();">logout</a>
-                </span>
+                        <span class="headerbuttons">
+                            <a id="refreshbutton" class="btn" href=""
+                                onclick="displayContentBasedOnURLParameters();return false;">🔄</a>
+                            <a id="newbutton" class="btn" href="#new" onclick="showNewPost();">📝</a>
+                            <a id="mapbutton" class="btn" href="#map" onclick="showMap();">🌍</a>
+                            <a id="settingsbutton" class="btn" href="#settings" onclick="showSettings();">⚙️</a>
+                            <a class="logoutbutton" id="logoutbutton" class="btn" href="#logout" onclick="logout();">⏻</a>
+                            <a id="notificationsbutton" class="btn" href="#notifications?start=0&amp;limit=25"
+                                onclick="showNotifications(0,25,'notifications');">🔔</a><span
+                                class="separatorwide"></span></span>
+                        <span onclick="refreshPool();return false;" id="balancedetails" class="balancedetails">₿<span
+                                id="balance">0</span><a id="refreshbutton" class="btn" href=""> 🔄</a><span
+                                class="separatorwide"></span></span>
+
+                    </span>
                 </nav>
                 <nav id="loggedout" class="loggedout">
                     <span class="memberlogo">
