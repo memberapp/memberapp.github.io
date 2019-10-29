@@ -533,14 +533,14 @@ hr{
 
   /* Breakline in header for small screen, 720 is about the point where it splits onto a second line
   probably a better way to handle this as topic container is still free floating and unwanted break appears*/
-@media only screen and (max-width: 810px) {
+@media only screen and (max-width: 860px) {
   .separatorwidebreakpoint::before {
     content: ' '; display: block;
 }
 
 }
 
-@media only screen and (min-width: 810px) {
+@media only screen and (min-width: 860px) {
   .separatorwidebreakpoint::before {
     content: " | ";
 }
@@ -551,7 +551,7 @@ hr{
   #ffd;
 }
 
-.headerbuttons {
+.headerbuttons, .refreshbalance, .newpostbutton {
   font-size: medium;
 }
 

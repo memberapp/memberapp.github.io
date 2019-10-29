@@ -117,14 +117,21 @@ function getPostListItemHTML(postHTML){
     return `<li>`+postHTML+`</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID, likedtxid, likedtipamount, dislikedtxid) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID, likedtxid, likedtipamount, dislikedtxid,repliesroot) {
     if (name == null) { name = address.substring(0, 10); }
 
+    repliesroot=Number(repliesroot);
+    replies=Number(replies);
     //Replies respect newlines, but root posts do not
     var isReply=(roottxid!=txid);
     var messageHTML=ds(message);
     if(isReply){
-        messageHTML=messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>')
+        messageHTML=messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    }else{
+        //only if main post
+        if(repliesroot>replies){
+            replies=repliesroot;
+        }
     }
     
     return `<div class="post">

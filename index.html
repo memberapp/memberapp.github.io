@@ -91,14 +91,13 @@
                             onclick="showComments(0,25,'feed');">feed</a><span class="separatornarrow"></span><a
                             id="commentsbuttonnew" class="btn" href="#comments?type=new&amp;start=0&amp;limit=25"
                             onclick="showComments(0,25,'new');">new</a>)</span><span class="separatorwide"></span><a
-                        id="newbuttontext" class="btn" href="#new" onclick="showNewPost();">new</a><span
+                        id="newbutton" title="New Post" class="btn newpostbutton" href="#new" onclick="showNewPost();">📝</a><span
                         class="separatorwidebreakpoint"></span>
 
                     <span class="loggedinpart2">
                         <span class="headerbuttons">
                             <a id="refreshbutton" title="Refresh Content" class="btn" href=""
                                 onclick="displayContentBasedOnURLParameters();return false;">🔄</a>
-                            <a id="newbutton" title="New Post" class="btn" href="#new" onclick="showNewPost();">📝</a>
                             <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
                             <a id="settingsbutton" title="Settings" class="btn" href="#settings"
                                 onclick="showSettings();">⚙️</a>
@@ -109,8 +108,8 @@
                                 onclick="showNotifications(0,25,'notifications');">🔔</a><span
                                 class="separatorwide"></span></span>
                         <span onclick="refreshPool();return false;" title="Refresh Balance UTXOs" id="balancedetails"
-                            class="balancedetails">₿<span id="balance">0</span><a id="refreshbutton" class="btn refreshbalance"
-                                href="">🔄</a><span class="separatorwide"></span></span>
+                            class="balancedetails">₿<span id="balance">0</span><a id="refreshbutton"
+                                class="btn refreshbalance" href=""> 🔄</a><span class="separatorwide"></span></span>
 
                     </span>
                 </nav>

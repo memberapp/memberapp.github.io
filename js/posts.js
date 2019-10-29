@@ -187,7 +187,7 @@ function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, 
 function getHTMLForPost(data, rank, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likedtipamount,data.dislikedtxid);
+    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likedtipamount,data.dislikedtxid,data.repliesroot);
 }
 
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
@@ -241,11 +241,7 @@ function showReplyBox(txid) {
     return true;
 }
 
-function likePost(txid, tipAddress) {
-    if (privkey == "") {
-        alert("You must login to like posts.");
-        return false;
-    }
+function increaseGUILikes(txid){
     //increase number of likes,
     var uparrow=document.getElementById('upvote' + txid);
     uparrow.className = "votearrowactivated";
@@ -256,6 +252,15 @@ function likePost(txid, tipAddress) {
     var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
     document.getElementById('likescount' + txid).innerHTML=likescount+1;
     document.getElementById('score' + txid).innerHTML=likescount+1;
+}
+
+function likePost(txid, tipAddress) {
+    if (privkey == "") {
+        alert("You must login to like posts.");
+        return false;
+    }
+    
+    increaseGUILikes(txid);
 
     //Change class
     document.getElementById('score' + txid).className="betweenvotesscoreup";
@@ -295,6 +300,7 @@ function sendTip(txid, tipAddress, page) {
 
     //document.getElementById("tipbox" + page + txid).style.display = "none";
     //document.getElementById("tiplink" + page + txid).style.display = "block";
+    increaseGUILikes(txid);
 
     document.getElementById('tipbutton' + page + txid).style.display = "none";
     document.getElementById('tipstatus' + page + txid).style.display = "block";
