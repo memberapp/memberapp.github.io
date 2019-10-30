@@ -35,15 +35,15 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
 
     if (start != 0) //Don't show back buttons if we're at the start
     { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back </a> `; }
-    if (numberOfResults >= 25) //Don't show next button if there is not a full set of results
+    if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
     { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`; }
     return navbuttons;
 
 }
 
-function getItemListandNavButtonsHTML(contentsHTML, navbuttonsHTML, styletype) {
+function getItemListandNavButtonsHTML(contentsHTML, navbuttonsHTML, styletype, start) {
     if (styletype != "") {
-        return `<div class="itemlist"><ol class="` + styletype + `">` + contentsHTML + `</ol></div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
+        return `<div class="itemlist"><ol start="`+(Number(start)+1)+`" class="` + styletype + `">` + contentsHTML + `</ol></div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
     } else {
         return `<div class="itemlist">` + contentsHTML + `</div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
     }

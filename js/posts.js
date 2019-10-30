@@ -3,6 +3,7 @@
 "use strict";
 
 function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
+    if(type=="")type="all";
     //Clear Topic
     //currentTopic == "";
     //document.getElementById('topicdiv').innerHTML = "";
@@ -19,7 +20,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
     getJSON(server + '?action=' + page + '&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, "", "getAndPopulate", data.length);
+        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicNameHOSTILE, "getAndPopulate", data.length);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -31,7 +32,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
         for (var i = 0; i < data.length; i++) {
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i));
         }
-        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts");
+        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         updateStatus(status);
@@ -68,7 +69,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             }
         }
         //Threads have no navbuttons
-        displayItemListandNavButtonsHTML(contents, "", "thread", data, "");
+        displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
 
         if (popup != undefined) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
@@ -81,7 +82,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 }
 
 
-
+/*
 function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
     //Note topicname may contain hostile code - treat with extreme caution
     var page = "topic";
@@ -110,10 +111,10 @@ function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
         updateStatus(status);
     });
 
-}
+}*/
 
-function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype) {
-    contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype);
+function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start) {
+    contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype, start);
     document.getElementById(page).innerHTML = contents; //display the result in the HTML element
     addStarRatings(data, page);
     window.scrollTo(0, 0);

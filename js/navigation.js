@@ -202,6 +202,7 @@ function showPFC(start, limit, page, pubkey, type){
 function showTopic(start, limit, topicNameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
     enterTopic(topicNameHOSTILE);
+    if(type=="")type="all";
     getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }
 
@@ -218,8 +219,8 @@ function topicChanged(){
 
     //Warning, topicname may contain hostile characters
     var topicNameHOSTILE=selector.options[selector.selectedIndex].value;
-    document.location.href="#topic?topicname="+encodeURIComponent(topicNameHOSTILE);
-    showTopic(0,25,topicNameHOSTILE,'new');
+    document.location.href="#topic?type=all&start=0&limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
+    showTopic(0,25,topicNameHOSTILE,'all');
 }
 
 function exitTopic(){
