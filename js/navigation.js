@@ -217,8 +217,9 @@ function topicChanged(){
     }
 
     //Warning, topicname may contain hostile characters
-    var topicnameHOSTILE=selector.options[selector.selectedIndex].value;
-    showTopic(0,25,topicnameHOSTILE,'new');
+    var topicNameHOSTILE=selector.options[selector.selectedIndex].value;
+    document.location.href="#topic?topicname="+encodeURIComponent(topicNameHOSTILE);
+    showTopic(0,25,topicNameHOSTILE,'new');
 }
 
 function exitTopic(){

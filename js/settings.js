@@ -62,7 +62,6 @@ function getAndPopulateRatings(qaddress) {
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
-    document.getElementById('memberrating').innerHTML = "<div id='memberrating" + qaddress + "'></div>";
     getJSON(server + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
 
 
@@ -135,11 +134,14 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         } else if (pre == "member") {
 
             document.getElementById(pre + 'ratinggroup').style.display = "block";
-
             document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress, data);
             document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
 
-            var theRating = 0; if (data.length > 0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
+            document.getElementById('memberrating').innerHTML = `<div data-ratingsize="20" data-ratingaddress="`+ san(qaddress) + `" data-ratingraw="` + Number(data[0].rating) + `" id="memberrating` + qaddress + `"></div>`;
+            var theElement=document.getElementById(`memberrating` + qaddress);
+            var starRating1 = addSingleStarsRating(false, theElement);
+
+            /*var theRating = 0; if (data.length > 0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
             var starRating1 = raterJs({
                 starSize: 20,
                 //rating: theRating,
@@ -155,7 +157,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             }
 
             starRating1.theAddress = qaddress;
-
+            */
             //var tgmember = pubkey;
             //if (tgmember == null || tgmember == '') {
             //    tgmember = "19RyV6XQEww5td2LPWDpK8o5V8at7Vpwgv";

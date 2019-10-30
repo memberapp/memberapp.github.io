@@ -126,52 +126,66 @@ function addStarRatings(data, page, disable) {
     for (var i = 0; i < data.length; i++) {
 
         //Standard message display
-        var name = data[i].name;
+        //var name = data[i].name;
         var theAddress = ds(data[i].address);
-        var rawRating = data[i].rating;
+        //var rawRating = data[i].rating;
 
         if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
             //Notifications, or like, or follow reply
             theAddress = ds(data[i].origin);
-            name = ds(data[i].originname);
+            //name = ds(data[i].originname);
         }
 
         //For ratings, we're looking for members view of the rater
-        if (data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
+        /*if (data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
             rawRating = data[i].raterrating;
-        }
+        }*/
 
         var querySelector = "#rating" + i + page + theAddress;
-        addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+        var theElement = document.querySelector(querySelector);
+        addSingleStarsRating(disable, theElement);
+        
 
         //Add second one for reply
         if (data[i].type == "reply") {
             var querySelector = "#rating" + i + page + theAddress + data[i].type;
-            addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+            var theElement = document.querySelector(querySelector);
+            addSingleStarsRating(disable, theElement);
         }
 
         //Add second one for like
         if (data[i].type == "like") {
-            var rawRating = data[i].selfrating;
+            //var rawRating = data[i].selfrating;
             var theAddress = ds(data[i].address);
             var querySelector = "#rating" + i + page + theAddress + data[i].type;
-            addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+            var theElement = document.querySelector(querySelector);
+            addSingleStarsRating(disable, theElement);
         }
 
     }
 }
 
-function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector) {
-    var theElement = document.querySelector(querySelector);
+function addSingleStarsRating(disable, theElement) {
+    //var theElement = document.querySelector(querySelector);
     if (theElement == undefined) return;
-    var theRating = 0; if (rawRating != null) { theRating = (ds(rawRating) / 64) + 1; }
+    let name=theElement.dataset.ratingname;
+    let theAddress=theElement.dataset.ratingaddress;
+    let rawRating=theElement.dataset.ratingraw;
+    let starSize=theElement.dataset.ratingsize;
+
+    var theRating = 0; if (rawRating != null && rawRating!=0) { theRating = (ds(rawRating) / 64) + 1; }
     var starRating1 = raterJs({
-        starSize: 8,
+        starSize: starSize,
         rating: Math.round(theRating * 10) / 10,
-        element: document.querySelector(querySelector),
+        element: theElement,
         disableText: 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
-            rateCallbackAction(rating, this);
+            var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
+            if(ratingText!==undefined){
+                rateCallbackAction(rating, this, ratingText.value);
+            }else{
+                rateCallbackAction(rating, this);
+            }
             done();
         }
     });
@@ -179,6 +193,7 @@ function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, 
     if (disable) {
         starRating1.disable();
     }
+    return starRating1;
 }
 
 
@@ -187,13 +202,13 @@ function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, 
 function getHTMLForPost(data, rank, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likedtipamount,data.dislikedtxid,data.repliesroot);
+    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likedtipamount,data.dislikedtxid,data.repliesroot,data.rating);
 }
 
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likedtipamount,data.dislikedtxid,data.blockstxid);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likedtipamount,data.dislikedtxid,data.blockstxid,data.rating);
 }
 
 function showReplyButton(txid, page, divForStatus) {
