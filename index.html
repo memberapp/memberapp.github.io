@@ -300,14 +300,14 @@
                 <h2>Settings</h2>
                 <div>
                     <label for="settingsnametext">Handle</label>
-                    <input size="30" id="settingsnametext" value="loading..."
+                    <input maxlength="217" size="30" id="settingsnametext" value="loading..."
                         onchange="document.getElementById('settingsnametextbutton').disabled=false;"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     <button id="settingsnametextbutton" type="button" onclick="setName();">update</button>
                 </div>
                 <div>
                     <label for="settingsprofiletext">Profile</label>
-                    <input size="30" id='settingsprofiletext' value="loading..."
+                    <input maxlength="217" size="30" id='settingsprofiletext' value="loading..."
                         onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     <button id="settingsprofiletextbutton" type="button" onclick="setProfile();"

@@ -506,6 +506,12 @@ hr{
     
     }
 
+    .notificationminheight {
+
+      min-height: 40px;
+  
+  }
+
     .newpost{
         font-size: small;
         font-weight: bold;

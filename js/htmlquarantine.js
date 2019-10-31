@@ -53,26 +53,26 @@ function getDivClassHTML(className, contentsHTML) {
     return `<div class="` + className + `">` + contentsHTML + `</div>`;
 }
 
-function getVoteButtons(txid, address, likedtxid, dislikedtxid, score) {
+function getVoteButtons(txid, address, likedtxid, likeordislike, score) {
 
     var upvoteHTML;
     let scoreHTML = `<span class="betweenvotesscore" id="score` + san(txid) + `">` + Number(score) + `</span>`;
-
-    if (likedtxid == null) {
-        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;" onclick="likePost('` + san(txid) + `','` + san(address) + `')"><span id="upvote` + san(txid) + `" class="votearrow" title="upvote"></span><span class="votetext">up</span></a>`;
-    } else {
+    var downvoteHTML;
+    
+    if (likeordislike=="1"){
         upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="upvote"></span><span class="votetext">up</span></a>`;
         scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
+    }else{
+        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;" onclick="likePost('` + san(txid) + `','` + san(address) + `')"><span id="upvote` + san(txid) + `" class="votearrow" title="upvote"></span><span class="votetext">up</span></a>`;
     }
-
-
-    var downvoteHTML;
-    if (dislikedtxid == null) {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="downvote"><span class="votetext">down</span></span></a>`;
-    } else {
+    
+    if (likeordislike=="-1") {
         downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;"><span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="downvote"><span class="votetext">down</span></span></a>`;
         scoreHTML = `<span class="betweenvotesscoredown" id="score` + san(txid) + `">` + Number(score) + `</span>`;
+    }else{
+        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="downvote"><span class="votetext">down</span></span></a>`;
     }
+
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
 }
 
@@ -117,7 +117,7 @@ function getPostListItemHTML(postHTML) {
     return `<li>` + postHTML + `</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID, likedtxid, likedtipamount, dislikedtxid, repliesroot, rating) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID, likedtxid, likeordislike, repliesroot, rating) {
     if (name == null) { name = address.substring(0, 10); }
 
     repliesroot = Number(repliesroot);
@@ -135,7 +135,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     }
 
     return `<div class="post">
-                <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, dislikedtxid, (Number(likes) - Number(dislikes))) + `</div>
+                <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
                     <div class="title"><a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a> </div>
                     <div class="subtext">
@@ -157,11 +157,11 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
             </div>`;
 }
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likedtipamount, dislikedtxid, blockstxid, rating) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating) {
     if (name == null) { name = address.substring(0, 10); }
     return `<div ` + (txid == highlighttxid ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
                 <div`+ (blockstxid != null ? ` class="blocked"` : ``) + `>
-                    <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, dislikedtxid) + `</div>
+                    <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike) + `</div>
                     <div class="commentdetails">
                         <div class="comhead">`
         + userHTML(address, name, ratingID, rating, 8)
@@ -185,12 +185,13 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
     return `
     <li class="notificationitem notification`+ notificationtype + `">
         <div class="notificationdetails">
+        <div class="notificationminheight">
             <div class="notificationtitle">`+
         mainbodyHTML + `
                 <span class="age">` + subtextHTML + `</span>
             </div>`+
         addendumHTML +
-        `<hr class="notificationhr"/>
+        `</div><hr class="notificationhr"/>
         </div>       
     </li>`;
 }

@@ -203,13 +203,13 @@ function addSingleStarsRating(disable, theElement) {
 function getHTMLForPost(data, rank, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likedtipamount,data.dislikedtxid,data.repliesroot,data.rating);
+    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likeordislike,data.repliesroot,data.rating);
 }
 
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likedtipamount,data.dislikedtxid,data.blockstxid,data.rating);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likeordislike,data.blockstxid,data.rating);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -257,12 +257,30 @@ function showReplyBox(txid) {
     return true;
 }
 
+function decreaseGUILikes(txid){
+    var downarrow=document.getElementById('downvote' + txid);
+    downarrow.className = "votearrowactivateddown rotate180";
+    var downarrowAction=document.getElementById('downvoteaction' + txid);
+    downarrowAction.onclick=null;
+
+    var uparrow=document.getElementById('upvote' + txid);
+    uparrow.className = "votearrow";
+    
+    var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
+    document.getElementById('likescount' + txid).innerHTML=likescount-1;
+    document.getElementById('score' + txid).innerHTML=likescount-1;
+
+}
+
 function increaseGUILikes(txid){
     //increase number of likes,
     var uparrow=document.getElementById('upvote' + txid);
     uparrow.className = "votearrowactivated";
     var uparrowAction=document.getElementById('upvoteaction' + txid);
     uparrowAction.onclick=null;
+
+    var downarrow=document.getElementById('downvote' + txid);
+    downarrow.className = "votearrow rotate180";
 
     //Change counts
     var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
@@ -295,15 +313,10 @@ function dislikePost(txid, tipAddress) {
         alert("You must login to dislike posts.");
         return false;
     }
-    var downarrow=document.getElementById('downvote' + txid);
-    downarrow.className = "votearrowactivateddown rotate180";
-    var downarrowAction=document.getElementById('downvoteaction' + txid);
-    downarrowAction.onclick=null;
 
-    var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
-    document.getElementById('likescount' + txid).innerHTML=likescount-1;
-    document.getElementById('score' + txid).innerHTML=likescount-1;
+    decreaseGUILikes(txid);
 
+    
     //Change class
     document.getElementById('score' + txid).className="betweenvotesscoredown";
 

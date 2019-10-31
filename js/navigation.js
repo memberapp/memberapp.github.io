@@ -224,9 +224,10 @@ function topicChanged(){
 }
 
 function exitTopic(){
-    currentTopic = "";
-    document.getElementById('memotopic').value = "";
-    document.getElementById('memorandumtopic').value = "";    
+    //currentTopic = "";
+    //document.getElementById('memotopic').value = "";
+    //document.getElementById('memorandumtopic').value = "";
+    enterTopic("");    
 }
 
 function enterTopic(topicNameHOSTILE){
@@ -240,6 +241,13 @@ function enterTopic(topicNameHOSTILE){
     selector.selectedIndex=1;
     selector.options[selector.selectedIndex].value=topicNameHOSTILE;
     selector.options[selector.selectedIndex].text=topicNameHOSTILE.substring(0,15);
+
+    document.getElementById('postsbutton').href="#posts?type=all&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
+    document.getElementById('postsbuttonfeed').href="#posts?type=feed&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
+    document.getElementById('postsbuttonnew').href="#posts?type=new&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
+    document.getElementById('commentsbutton').href="#comments?type=all&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
+    document.getElementById('commentsbuttonfeed').href="#comments?type=feed&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
+    document.getElementById('commentsbuttonnew').href="#comments?type=new&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
 
 }
 

@@ -91,15 +91,18 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
             document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
 
-            if (pre == "settings") {
-                document.getElementById(pre + 'nametextbutton').disabled = true;
-                document.getElementById(pre + 'profiletextbutton').disabled = true;
-                if (document.getElementById(pre + 'nametext').value != "") {
-                    document.getElementById(pre + 'nametext').disabled = true;
-                }
-            }
+            
         }
 
+        if (pre == "settings") {
+            document.getElementById(pre + 'nametextbutton').disabled = true;
+            document.getElementById(pre + 'profiletextbutton').disabled = true;
+            if (document.getElementById(pre + 'nametext').value == "") {
+                document.getElementById(pre + 'nametext').disabled = false;
+            }else{
+                document.getElementById(pre + 'nametext').disabled = true;
+            }
+        }
 
 
         document.getElementById(pre + 'followersnumber').href = "#followers?qaddress=" + qaddress;
