@@ -168,9 +168,9 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         + getScoresHTML(txid, likes, dislikes, tips)
         + getAgeHTML(firstseen) +
         `</div>
-                        <div class="comment">
+                        <div class="comment"><div class="commentbody">
                             `+ anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>'), { attributes: [{ name: "target", value: "_blank" }] }) + `
-                                <div class="reply">`+ getReplyAndTipLinksHTML(page, txid, address) + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address) + `</div>
                         </div>
                         `+ getReplyDiv(txid, page) + `
                     </div>
