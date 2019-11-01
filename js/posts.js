@@ -131,7 +131,7 @@ function addStarRatings(data, page, disable) {
         var theAddress = ds(data[i].address);
         //var rawRating = data[i].rating;
 
-        if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
+        if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating" || data[i].type == "page") {
             //Notifications, or like, or follow reply
             theAddress = ds(data[i].origin);
             //name = ds(data[i].originname);
@@ -148,7 +148,7 @@ function addStarRatings(data, page, disable) {
         
 
         //Add second one for reply
-        if (data[i].type == "reply") {
+        if (data[i].type == "reply" || data[i].type == "page") {
             var querySelector = "#rating" + i + page + theAddress + data[i].type;
             var theElement = document.querySelector(querySelector);
             addSingleStarsRating(disable, theElement);

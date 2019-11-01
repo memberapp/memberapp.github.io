@@ -525,7 +525,9 @@ hr{
     li.notificationreply::before {
       content: "💬";
     }
-
+    li.notificationpage::before {
+      content: "📣";
+    }
     .notificationtitle {
 
         font-size: medium;

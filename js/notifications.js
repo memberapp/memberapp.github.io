@@ -40,6 +40,17 @@ function getHTMLForNotification(data, rank, page, starindex) {
     let postRatingID = "";
 
     switch (type) {
+        case "page":
+            postRatingID = starindex + page + ds(data.raddress) + type;
+            return notificationItemHTML(
+                "page",
+                `📣&nbsp;`,
+                userHTML(data.origin, data.originname, mainRatingID, data.rating, 16) + ` ` + postlinkHTML(data.txid, "mentioned you "),
+                timeSince(ds(data.time)),
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID, data.rlikedtxid, data.rlikedtipamount, data.rdislikedtxid, data.repliesroot, data.rating)
+            );
+            //<a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> `;
+            break;
         case "reply":
             postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
@@ -82,6 +93,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, "", page, postRatingID, data.llikedtxid, data.llikedtipamount, data.ldislikedtxid, data.repliesroot, data.selfrating)
             );
             break;
+
         // Maybe shelve these 'negative' ones
         case "unfollow":
             //return `Unfollow: User x unfollowed you time`;
