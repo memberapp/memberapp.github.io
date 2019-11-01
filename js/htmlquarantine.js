@@ -133,11 +133,16 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
             replies = repliesroot;
         }
     }
+    //var messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a>`;
+    var messageLinksHTML=anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
 
+    if(messageLinksHTML.indexOf("<a ")==-1){//if no links
+        messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a>`;
+    }
     return `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
-                    <div class="title"><a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a> </div>
+                    <div class="title">`+messageLinksHTML+` </div>
                     <div class="subtext">
                         <span class="submitter"> 
                         submitted `
