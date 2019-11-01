@@ -65,7 +65,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
                 contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i));
-                contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 20, pageName, txid));
+                contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid));
             }
         }
         //Threads have no navbuttons
@@ -554,13 +554,3 @@ function mergeRepliesToRepliesBySameAuthor(data) {
     return data;
 }
 
-function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid) {
-    var contents = "<ul>";
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].retxid == targettxid) {
-            contents = contents + `<li ` + (data[i].txid == highlighttxid ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 20, pageName, highlighttxid) + "</li>";
-        }
-    }
-    contents = contents + "</ul>";
-    return contents;
-}

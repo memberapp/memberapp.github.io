@@ -207,15 +207,22 @@ header {
 @media only screen and (min-width: 600px) {
 .comment-tree li {
 
-    margin: 0px 0px 8px 10px !important;
+    margin: 0px 0px 8px 10px;
     border: 1px solid #e6e6e6 !important;
     border-radius: 3px !important;
-    padding: 5px 8px 5px 5px !important;
+    padding: 5px 8px 5px 5px;
     overflow: hidden;
     color: #222222;
     font-size: 14px;
     line-height: 1.4285714285714286em;
     font: normal verdana,arial,helvetica,sans-serif;
+}
+
+.comment-tree li li li li li li li li li li{
+  margin-left: 1px;
+  margin-right: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
 ol {
@@ -228,6 +235,13 @@ ul {
 
 ul ul {
     padding-left: 15px;
+}
+
+.comment-tree ul ul ul ul ul ul ul ul{
+  margin-left: 1px;
+  margin-right: 1px;
+  padding-left: 1px;
+  padding-right: 1px;
 }
 
 li{
@@ -292,15 +306,22 @@ li li li li li li li li li li li li li li{
 
 @media only screen and (max-width: 600px) {
   .comment-tree li {
-    margin: 0px 0px 2px 3px !important;
+    margin: 0px 0px 2px 3px;
     border: none;
     border-left: 1px solid #e6e6e6 !important;
-    padding: 2px 4px 2px 2px !important;
+    padding: 2px 4px 2px 2px;
     overflow: hidden;
     color: #222222;
     font-size: 14px;
     line-height: 1.4285714285714286em;
     font: normal verdana,arial,helvetica,sans-serif;
+}
+
+.comment-tree li li li li li li li li li li{
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 ol {
@@ -314,6 +335,14 @@ ul {
 ul ul {
     padding-left: 5px;
 }
+
+.comment-tree ul ul ul ul ul ul ul ul{
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 }
 
 

@@ -321,3 +321,14 @@ function getRatingComment(qaddress, data) {
 function privatekeyClickToShowHTML() {
     return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a>`;
 }
+
+function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid) {
+    var contents = "<ul>";
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].retxid == targettxid) {
+            contents = contents + `<li ` + (data[i].txid == highlighttxid ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid) + "</li>";
+        }
+    }
+    contents = contents + "</ul>";
+    return contents;
+}
