@@ -87,12 +87,32 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted){
 
 async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {
 
-    document.getElementById(divForStatus).value = "Sending Reply . . . " + replyHex.length/2 + "B remaining.";
+    document.getElementById(divForStatus).value = "Sending Reply . . . " + replyHex.length/2 + " bytes remaining.";
 
     var sendHex = "";
     if (replyHex.length > 368) {
-        sendHex = replyHex.substring(0, 368);
-        replyHex = replyHex.substring(368);
+        //Search for whitespace - try to break at a whitespace
+        var whitespaceIndex=348;
+        var spaceIndex=replyHex.lastIndexOf("20",368);
+        if(spaceIndex%2==0 && spaceIndex>whitespaceIndex){
+            whitespaceIndex=spaceIndex;
+        }
+        var nlIndex=replyHex.lastIndexOf("0A",368);
+        if(nlIndex%2==0 && nlIndex>whitespaceIndex){
+            whitespaceIndex=nlIndex;
+        }
+        var crIndex=replyHex.lastIndexOf("0D",368);
+        if(crIndex%2==0 && crIndex>whitespaceIndex){
+            whitespaceIndex=crIndex;
+        }
+
+        if(whitespaceIndex>348){
+            sendHex = replyHex.substring(0, whitespaceIndex);
+            replyHex = replyHex.substring(whitespaceIndex);
+        }else{
+            sendHex = replyHex.substring(0, 368);
+            replyHex = replyHex.substring(368);
+        }
     } else {
         sendHex = replyHex;
         replyHex = "";
