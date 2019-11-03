@@ -592,5 +592,10 @@ hr{
   font-size: medium;
 }
 
+.sats {
+  font-size: 0.6em;
+  position: relative;
+  bottom: 0.4em;
+}
 
       
