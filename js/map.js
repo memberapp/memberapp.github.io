@@ -4,56 +4,56 @@ var map = null;
 var popup;
 var postpopup;
 var markersDict = {};
-var firstload=true;
-var mapTileProvider='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+var firstload = true;
+var mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
-function getAndPopulateMap(geohash,posttrxid) {
+function getAndPopulateMap(geohash, posttrxid) {
 
-    geohash=san(geohash);
-    posttrxid=san(posttrxid);
+    geohash = san(geohash);
+    posttrxid = san(posttrxid);
 
-    if (map != null) return;
+    if (map == null) {
 
-    map = L.map('map', { attributionControl: false });
+        map = L.map('map', { attributionControl: false });
 
-    //Use attribution control as a close button
-    var att = L.control.attribution();
-    att.setPrefix("");
-    att.addAttribution(getMapCloseButtonHTML()).setPosition('topright').addTo(map);
-    //Load locations onto map when bounds_changed event fires. Only want this to happen one time. 
-    map.on('moveend', loadLocationListFromServerAndPlaceOnMap);
+        //Use attribution control as a close button
+        var att = L.control.attribution();
+        att.setPrefix("");
+        att.addAttribution(getMapCloseButtonHTML()).setPosition('topright').addTo(map);
+        //Load locations onto map when bounds_changed event fires. Only want this to happen one time. 
+        map.on('moveend', loadLocationListFromServerAndPlaceOnMap);
 
-    //Set London location and open street map tiles
-    map.setView([51.505, -0.09], 13);
-    L.tileLayer(mapTileProvider, {}).addTo(map);
+        //Set London location and open street map tiles
+        map.setView([51.505, -0.09], 13);
+        L.tileLayer(mapTileProvider, {}).addTo(map);
 
-    //Attribution
-    var att2 = L.control.attribution();
-    att2.addAttribution(getOSMattributionHTML()).setPosition('bottomright').addTo(map);
+        //Attribution
+        var att2 = L.control.attribution();
+        att2.addAttribution(getOSMattributionHTML()).setPosition('bottomright').addTo(map);
 
-    //Popup for thread related to location
-    //popup = L.popup({ autoPan: true, minWidth: 550, maxWidth: getWidth(), maxHeight: getHeight() });
-    popup = L.popup({ autoPan: true });
-    postpopup = L.popup({ autoPan: true });
-
-    if(geohash==null || geohash==""){
+        //Popup for thread related to location
+        //popup = L.popup({ autoPan: true, minWidth: 550, maxWidth: getWidth(), maxHeight: getHeight() });
+        popup = L.popup({ autoPan: true });
+        postpopup = L.popup({ autoPan: true });
+    }
+    if (geohash == null || geohash == "") {
         //Try to zoom to current position
         setTimeout(function () { navigator.geolocation.getCurrentPosition(function (location) { map.setView([location.coords.latitude, location.coords.longitude], 13); }); }, 1000);
-    }else{
-        var zoomLocation=decodeGeoHash(geohash);
-        zoomLocation=[zoomLocation.latitude[0], zoomLocation.longitude[0]];
+    } else {
+        var zoomLocation = decodeGeoHash(geohash);
+        zoomLocation = [zoomLocation.latitude[0], zoomLocation.longitude[0]];
         setTimeout(function () {
-            if(posttrxid!=null && posttrxid!=""){
-                popup.txid=posttrxid;                
+            if (posttrxid != null && posttrxid != "") {
+                popup.txid = posttrxid;
             }
 
-            map.setView(zoomLocation, 13); 
+            map.setView(zoomLocation, 13);
 
-            if(posttrxid!=null && posttrxid!=""){
+            if (posttrxid != null && posttrxid != "") {
                 popup.setLatLng(zoomLocation).setContent(mapThreadLoadingHTML("")).openOn(map);
                 getAndPopulateThread(posttrxid, posttrxid, 'mapthread');
             }
-            
+
         }, 1000);
     }
 
@@ -62,21 +62,21 @@ function getAndPopulateMap(geohash,posttrxid) {
 
     //map.on('moveend', onMapMove);
     map.on('moveend', function () {
-        if(firstload && popup.txid!=null){
-            location.href="#map?geohash="+encodeGeoHash(map.getCenter().lat,map.getCenter().lng)+"&post="+popup.txid;
-            firstload=false;
+        if (firstload && popup.txid != null) {
+            location.href = "#map?geohash=" + encodeGeoHash(map.getCenter().lat, map.getCenter().lng) + "&post=" + popup.txid;
+            firstload = false;
         }
-        else if(popup.isOpen() && popup.txid!=null){
-            location.href="#map?geohash="+encodeGeoHash(popup._latlng.lat,popup._latlng.lng)+"&post="+popup.txid;
-        }else{
-            location.href="#map?geohash="+encodeGeoHash(map.getCenter().lat,map.getCenter().lng);
+        else if (popup.isOpen() && popup.txid != null) {
+            location.href = "#map?geohash=" + encodeGeoHash(popup._latlng.lat, popup._latlng.lng) + "&post=" + popup.txid;
+        } else {
+            location.href = "#map?geohash=" + encodeGeoHash(map.getCenter().lat, map.getCenter().lng);
         }
     });
 
-    popup.on('close',function (e) {
+    popup.on('close', function (e) {
         //This doesn't seem to fire.
         //Its purpose is to change the anchor link when the popup is closed
-        popup.txid=null;
+        popup.txid = null;
         map.moveend();
     });
 
@@ -89,9 +89,9 @@ function openOverlay(e) {
     var marker = e.sourceTarget;
     popup.setLatLng(e.latlng).setContent(mapThreadLoadingHTML(marker.previewHTML)).openOn(map);
     getAndPopulateThread(marker.roottxid, marker.txid, 'mapthread');
-    popup.txid=marker.roottxid;
-    popup.txidloc=e.latlng;
-    location.href="#map?geohash="+encodeGeoHash(e.latlng.lat,e.latlng.lng)+"&post="+popup.txid;
+    popup.txid = marker.roottxid;
+    popup.txidloc = e.latlng;
+    location.href = "#map?geohash=" + encodeGeoHash(e.latlng.lat, e.latlng.lng) + "&post=" + popup.txid;
     return;
 }
 
@@ -104,8 +104,8 @@ function openPreview(e) {
 
 function onMapClick(e) {
 
-    var htmlContent = getMapPostHTML(e.latlng.lat,e.latlng.lng);
-    
+    var htmlContent = getMapPostHTML(e.latlng.lat, e.latlng.lng);
+
     postpopup.setLatLng(e.latlng).setContent(htmlContent).openOn(map);
 }
 
@@ -130,7 +130,7 @@ function loadLocationListFromServerAndPlaceOnMap(event) {
             }
         }
     }, function (status) { //error detection....
-        console.log('Something is wrong:'+status);
+        console.log('Something is wrong:' + status);
         updateStatus(status);
     });
 
