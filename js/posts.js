@@ -2,9 +2,10 @@
 
 "use strict";
 
-function getAndPopulate(start, limit, page, qaddress, type, topicname) {
+function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
+    if(type=="")type="all";
     //Clear Topic
-    currentTopic == "";
+    //currentTopic == "";
     //document.getElementById('topicdiv').innerHTML = "";
 
     //Show the relevant html element
@@ -16,10 +17,10 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
     
     
     //Request content from the server and display it when received
-    getJSON(server + '?action=' + page + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+    getJSON(server + '?action=' + page + '&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, "", "getAndPopulate", data.length);
+        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicNameHOSTILE, "getAndPopulate", data.length);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -31,7 +32,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicname) {
         for (var i = 0; i < data.length; i++) {
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i));
         }
-        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts");
+        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         updateStatus(status);
@@ -64,11 +65,11 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
                 contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i));
-                contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 20, pageName, txid));
+                contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid));
             }
         }
         //Threads have no navbuttons
-        displayItemListandNavButtonsHTML(contents, "", "thread", data, "");
+        displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
 
         if (popup != undefined) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
@@ -81,7 +82,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 }
 
 
-
+/*
 function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
     //Note topicname may contain hostile code - treat with extreme caution
     var page = "topic";
@@ -110,10 +111,10 @@ function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
         updateStatus(status);
     });
 
-}
+}*/
 
-function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype) {
-    contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype);
+function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start) {
+    contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype, start);
     document.getElementById(page).innerHTML = contents; //display the result in the HTML element
     addStarRatings(data, page);
     window.scrollTo(0, 0);
@@ -126,52 +127,66 @@ function addStarRatings(data, page, disable) {
     for (var i = 0; i < data.length; i++) {
 
         //Standard message display
-        var name = data[i].name;
+        //var name = data[i].name;
         var theAddress = ds(data[i].address);
-        var rawRating = data[i].rating;
+        //var rawRating = data[i].rating;
 
-        if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
+        if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating" || data[i].type == "page") {
             //Notifications, or like, or follow reply
             theAddress = ds(data[i].origin);
-            name = ds(data[i].originname);
+            //name = ds(data[i].originname);
         }
 
         //For ratings, we're looking for members view of the rater
-        if (data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
+        /*if (data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
             rawRating = data[i].raterrating;
-        }
+        }*/
 
         var querySelector = "#rating" + i + page + theAddress;
-        addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+        var theElement = document.querySelector(querySelector);
+        addSingleStarsRating(disable, theElement);
+        
 
         //Add second one for reply
-        if (data[i].type == "reply") {
+        if (data[i].type == "reply" || data[i].type == "page") {
             var querySelector = "#rating" + i + page + theAddress + data[i].type;
-            addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+            var theElement = document.querySelector(querySelector);
+            addSingleStarsRating(disable, theElement);
         }
 
         //Add second one for like
         if (data[i].type == "like") {
-            var rawRating = data[i].selfrating;
+            //var rawRating = data[i].selfrating;
             var theAddress = ds(data[i].address);
             var querySelector = "#rating" + i + page + theAddress + data[i].type;
-            addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector);
+            var theElement = document.querySelector(querySelector);
+            addSingleStarsRating(disable, theElement);
         }
 
     }
 }
 
-function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, querySelector) {
-    var theElement = document.querySelector(querySelector);
+function addSingleStarsRating(disable, theElement) {
+    //var theElement = document.querySelector(querySelector);
     if (theElement == undefined) return;
-    var theRating = 0; if (rawRating != null) { theRating = (ds(rawRating) / 64) + 1; }
+    let name=theElement.dataset.ratingname;
+    let theAddress=theElement.dataset.ratingaddress;
+    let rawRating=theElement.dataset.ratingraw;
+    let starSize=theElement.dataset.ratingsize;
+
+    var theRating = 0; if (rawRating != null && rawRating!=0) { theRating = (ds(rawRating) / 64) + 1; }
     var starRating1 = raterJs({
-        starSize: 8,
+        starSize: starSize,
         rating: Math.round(theRating * 10) / 10,
-        element: document.querySelector(querySelector),
+        element: theElement,
         disableText: 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
-            rateCallbackAction(rating, this);
+            var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
+            if(ratingText!==undefined){
+                rateCallbackAction(rating, this, ratingText.value);
+            }else{
+                rateCallbackAction(rating, this);
+            }
             done();
         }
     });
@@ -179,6 +194,7 @@ function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, 
     if (disable) {
         starRating1.disable();
     }
+    return starRating1;
 }
 
 
@@ -187,13 +203,13 @@ function addSingleStarsRating(data, page, disable, name, theAddress, rawRating, 
 function getHTMLForPost(data, rank, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likedtipamount,data.dislikedtxid);
+    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likeordislike,data.repliesroot,data.rating);
 }
 
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likedtipamount,data.dislikedtxid,data.blockstxid);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likeordislike,data.blockstxid,data.rating);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -241,21 +257,44 @@ function showReplyBox(txid) {
     return true;
 }
 
-function likePost(txid, tipAddress) {
-    if (privkey == "") {
-        alert("You must login to like posts.");
-        return false;
-    }
+function decreaseGUILikes(txid){
+    var downarrow=document.getElementById('downvote' + txid);
+    downarrow.className = "votearrowactivateddown rotate180";
+    var downarrowAction=document.getElementById('downvoteaction' + txid);
+    downarrowAction.onclick=null;
+
+    var uparrow=document.getElementById('upvote' + txid);
+    uparrow.className = "votearrow";
+    
+    var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
+    document.getElementById('likescount' + txid).innerHTML=likescount-1;
+    document.getElementById('score' + txid).innerHTML=likescount-1;
+
+}
+
+function increaseGUILikes(txid){
     //increase number of likes,
     var uparrow=document.getElementById('upvote' + txid);
     uparrow.className = "votearrowactivated";
     var uparrowAction=document.getElementById('upvoteaction' + txid);
     uparrowAction.onclick=null;
 
+    var downarrow=document.getElementById('downvote' + txid);
+    downarrow.className = "votearrow rotate180";
+
     //Change counts
     var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
     document.getElementById('likescount' + txid).innerHTML=likescount+1;
     document.getElementById('score' + txid).innerHTML=likescount+1;
+}
+
+function likePost(txid, tipAddress) {
+    if (privkey == "") {
+        alert("You must login to like posts.");
+        return false;
+    }
+    
+    increaseGUILikes(txid);
 
     //Change class
     document.getElementById('score' + txid).className="betweenvotesscoreup";
@@ -274,15 +313,10 @@ function dislikePost(txid, tipAddress) {
         alert("You must login to dislike posts.");
         return false;
     }
-    var downarrow=document.getElementById('downvote' + txid);
-    downarrow.className = "votearrowactivateddown rotate180";
-    var downarrowAction=document.getElementById('downvoteaction' + txid);
-    downarrowAction.onclick=null;
 
-    var likescount=Number(document.getElementById('likescount' + txid).innerHTML);
-    document.getElementById('likescount' + txid).innerHTML=likescount-1;
-    document.getElementById('score' + txid).innerHTML=likescount-1;
+    decreaseGUILikes(txid);
 
+    
     //Change class
     document.getElementById('score' + txid).className="betweenvotesscoredown";
 
@@ -295,6 +329,7 @@ function sendTip(txid, tipAddress, page) {
 
     //document.getElementById("tipbox" + page + txid).style.display = "none";
     //document.getElementById("tiplink" + page + txid).style.display = "block";
+    increaseGUILikes(txid);
 
     document.getElementById('tipbutton' + page + txid).style.display = "none";
     document.getElementById('tipstatus' + page + txid).style.display = "block";
@@ -519,13 +554,3 @@ function mergeRepliesToRepliesBySameAuthor(data) {
     return data;
 }
 
-function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid) {
-    var contents = "<ul>";
-    for (var i = 0; i < data.length; i++) {
-        if (data[i].retxid == targettxid) {
-            contents = contents + `<li ` + (data[i].txid == highlighttxid ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 20, pageName, highlighttxid) + "</li>";
-        }
-    }
-    contents = contents + "</ul>";
-    return contents;
-}
