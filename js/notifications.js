@@ -45,9 +45,9 @@ function getHTMLForNotification(data, rank, page, starindex) {
             return notificationItemHTML(
                 "page",
                 `📣&nbsp;`,
-                userHTML(data.origin, data.originname, mainRatingID, data.rating, 16) + ` ` + postlinkHTML(data.txid, "mentioned you "),
+                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` ` + postlinkHTML(data.txid, "mentioned you "),
                 timeSince(ds(data.time)),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID,  data.likedtxid, data.likeordislike, data.repliesroot, data.rating)
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID,  data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating)
             );
             //<a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> `;
             break;
@@ -56,9 +56,9 @@ function getHTMLForNotification(data, rank, page, starindex) {
             return notificationItemHTML(
                 "reply",
                 `💬&nbsp;`,
-                userHTML(data.origin, data.originname, mainRatingID, data.rating, 16) + ` ` + postlinkHTML(data.txid, "replied") + ` to your ` + postlinkHTML(data.rretxid, "post"),
+                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` ` + postlinkHTML(data.txid, "replied") + ` to your ` + postlinkHTML(data.rretxid, "post"),
                 timeSince(ds(data.time)),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating)
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating)
             );
             //<a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> `;
             break;
