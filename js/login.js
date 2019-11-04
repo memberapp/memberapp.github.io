@@ -14,7 +14,7 @@ var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }
 
 var ShowdownConverter = new showdown.Converter();
-ShowdownConverter.setFlavor('original');
+ShowdownConverter.setFlavor('github');
 ShowdownConverter.setOption('simpleLineBreaks', true);
 ShowdownConverter.setOption('simplifiedAutoLink', true);
 ShowdownConverter.setOption('openLinksInNewWindow', true);

@@ -168,6 +168,8 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     message=ds(message);
     //add markdown
     message=ShowdownConverter.makeHtml(message);
+    //message=SnuOwnd.getParser().render(message);
+
     //add links
     //message=anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
     //check for XSS vulnerabilities again
