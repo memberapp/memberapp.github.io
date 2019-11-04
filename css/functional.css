@@ -35,6 +35,13 @@ a {
     text-decoration: none;
 }
 
+p {
+  margin-top:0px;
+  margin-left:0px;
+  margin-right:0px;
+  margin-bottom:0px;
+}
+
 
 header {
     border-bottom: 1px solid #4cca47;

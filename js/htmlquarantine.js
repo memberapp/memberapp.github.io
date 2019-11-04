@@ -164,6 +164,19 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
 
 function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating) {
     if (name == null) { name = address.substring(0, 10); }
+    //Remove html
+    message=ds(message);
+    //add markdown
+    message=ShowdownConverter.makeHtml(message);
+    //add links
+    //message=anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
+    //check for XSS vulnerabilities again
+    message=DOMPurify.sanitize(message);
+    
+    //old newline
+    //anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>')
+    
+
     return `<div ` + (txid == highlighttxid ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
                 <div`+ (blockstxid != null ? ` class="blocked"` : ``) + `>
                     <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike) + `</div>
@@ -174,7 +187,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         + getAgeHTML(firstseen) +
         `</div>
                         <div class="comment"><div class="commentbody">
-                            `+ anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>'), { attributes: [{ name: "target", value: "_blank" }] }) + `
+                            `+ message + `
                             </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address) + `</div>
                         </div>
                         `+ getReplyDiv(txid, page) + `
