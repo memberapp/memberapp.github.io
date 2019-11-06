@@ -162,10 +162,27 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
             </div>`;
 }
 
+
+function dslite(input) {
+    //if (input === undefined) { return ""; };
+    try {
+      //If this error out 'input.replace not a number' probably input is not a string type
+      input = input.replace(/&/g, '&amp;');
+      //input = input.replace(/</g, '&lt;');
+      //input = input.replace(/>/g, '&gt;');
+      input = input.replace(/"/g, '&quot;');
+      input = input.replace(/'/g, '&#x27;');
+    } catch (e) {
+      //Anything funky goes on, we'll return safe empty string
+      return "";
+    }
+    return input;
+  }
+
 function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html
-    message=ds(message);
+    message=dslite(message);
     //add markdown
     message=ShowdownConverter.makeHtml(message);
     //message=SnuOwnd.getParser().render(message);

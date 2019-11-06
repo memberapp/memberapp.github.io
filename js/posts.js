@@ -82,37 +82,6 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 }
 
 
-/*
-function getAndPopulateTopic(start, limit, page, qaddress, type, topicname) {
-    //Note topicname may contain hostile code - treat with extreme caution
-    var page = "topic";
-    show(page);
-    if(type==""){type="all"};
-    //document.getElementById('topicdiv').innerHTML = `<a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=top" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','top')"> - ` + ds(topicname) + `</a> <a href="#topic?topicname=` + encodeURIComponent(topicname) + `&start=0&limit=25&type=new" onclick="showTopic(0,25,'` + unicodeEscape(topicname) + `','new')">(new)</a> |`;
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-
-    
-    getJSON(server + '?action=' + page + '&address=' + pubkey + '&topicname=' + encodeURIComponent(topicname) + '&type=' + type + '&start=' + start + '&limit=' + limit).then(function (data) {
-
-        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicname, "getAndPopulateTopic", data.length);
-
-        //Server bug will sometimes return duplicates if a post is liked twice for example,
-        // this is a workaround, better if fixed server side.
-        data = removeDuplicates(data);
-        
-        var contents = "";
-        for (var i = 0; i < data.length; i++) {
-            contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i));
-        }
-        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "topic");
-
-    }, function (status) { //error detection....
-        console.log('Something is wrong:'+status);
-        updateStatus(status);
-    });
-
-}*/
-
 function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start) {
     contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype, start);
     document.getElementById(page).innerHTML = contents; //display the result in the HTML element
