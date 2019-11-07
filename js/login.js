@@ -13,6 +13,12 @@ var maxfee = 5;
 var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }
 
+var ShowdownConverter = new showdown.Converter();
+ShowdownConverter.setFlavor('github');
+ShowdownConverter.setOption('simpleLineBreaks', true);
+ShowdownConverter.setOption('simplifiedAutoLink', true);
+ShowdownConverter.setOption('openLinksInNewWindow', true);
+//literalMidWordUnderscores
 
 //Create warning if user tries to reload or exit while transactions are in progress or queued.
 window.onbeforeunload = function () {

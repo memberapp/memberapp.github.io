@@ -135,10 +135,15 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     }
     //var messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a>`;
     var messageLinksHTML=anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
+    messageLinksHTML=DOMPurify.sanitize(messageLinksHTML);
 
     if(messageLinksHTML.indexOf("<a ")==-1){//if no links
-        messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a>`;
+        messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + messageLinksHTML + `</a>`;
     }
+    
+    //Scan for XSS vulnerabilities
+    
+
     return `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
@@ -162,8 +167,41 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
             </div>`;
 }
 
+
+function dslite(input) {
+    //if (input === undefined) { return ""; };
+    try {
+      //If this error out 'input.replace not a number' probably input is not a string type
+      input = input.replace(/&/g, '&amp;');
+      //input = input.replace(/</g, '&lt;');
+      //input = input.replace(/>/g, '&gt;');
+      input = input.replace(/"/g, '&quot;');
+      input = input.replace(/'/g, '&#x27;');
+    } catch (e) {
+      //Anything funky goes on, we'll return safe empty string
+      return "";
+    }
+    return input;
+  }
+
 function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating) {
     if (name == null) { name = address.substring(0, 10); }
+    //Remove html - use dslite here to allow for markdown including some characters
+    message=dslite(message);
+    //add markdown
+    message=ShowdownConverter.makeHtml(message);
+    //message=SnuOwnd.getParser().render(message);
+
+    //add links
+    //message=anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
+    //old newline
+    //anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>')
+    
+    //check for XSS vulnerabilities
+    message=DOMPurify.sanitize(message);
+    
+    
+
     return `<div ` + (txid == highlighttxid ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
                 <div`+ (blockstxid != null ? ` class="blocked"` : ``) + `>
                     <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike) + `</div>
@@ -174,7 +212,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         + getAgeHTML(firstseen) +
         `</div>
                         <div class="comment"><div class="commentbody">
-                            `+ anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>'), { attributes: [{ name: "target", value: "_blank" }] }) + `
+                            `+ message + `
                             </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address) + `</div>
                         </div>
                         `+ getReplyDiv(txid, page) + `
@@ -327,11 +365,11 @@ function privatekeyClickToShowHTML() {
     return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">Click To Show</a>`;
 }
 
-function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid) {
+function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, firstreplytxid) {
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
-        if (data[i].retxid == targettxid) {
-            contents = contents + `<li ` + (data[i].txid == highlighttxid ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid) + "</li>";
+        if ((data[i].retxid == targettxid || data[i].retxid==firstreplytxid) && data[i].txid!=firstreplytxid) {
+            contents = contents + `<li ` + (data[i].txid == highlighttxid ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid,"dontmatch") + "</li>";
         }
     }
     contents = contents + "</ul>";
