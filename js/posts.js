@@ -30,7 +30,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i));
+                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
     }, function (status) { //error detection....
@@ -61,11 +61,33 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Make sure we have id of the top level post
         if (data.length > 0 && roottxid == "") { roottxid = data[0].roottxid; }
 
+        //Find who started the thread
+        var threadstarter=null;
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].txid == roottxid) {
+                threadstarter=data[i].address;
+            }
+        }
+
+        //Find the first reply by the thread starter
+        var earliestReply="none";
+        var earliestReplyTXID="none";
+        var earliestReplyTime=9999999999;       
+        for (var i = 0; i < data.length; i++) {
+            if (data[i].retxid == roottxid && data[i].address==threadstarter) {
+                if(data[i].firstseen<earliestReplyTime){
+                    earliestReply=i;
+                    earliestReplyTime=data[i].firstseen;
+                    earliestReplyTXID=data[i].txid
+                }
+            }
+        }
+
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
-                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i));
-                contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid));
+                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply]));
+                contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID));
             }
         }
         //Threads have no navbuttons
@@ -169,10 +191,14 @@ function addSingleStarsRating(disable, theElement) {
 
 
 
-function getHTMLForPost(data, rank, page, starindex) {
+function getHTMLForPost(data, rank, page, starindex, dataReply) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likeordislike,data.repliesroot,data.rating);
+    var retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likeordislike,data.repliesroot,data.rating);
+    if(dataReply!=null){
+        retHTML+=getHTMLForReply(dataReply,0,page,starindex,null);
+    }
+    return retHTML;
 }
 
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
