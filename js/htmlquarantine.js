@@ -114,6 +114,9 @@ function getTopicHTML(topic) {
 }
 
 function getPostListItemHTML(postHTML) {
+    if(postHTML==""){
+        return "";
+    }
     return `<li>` + postHTML + `</li>`;
 }
 
