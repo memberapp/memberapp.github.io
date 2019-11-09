@@ -132,6 +132,7 @@ function getAndPopulateTrustGraph(member, target) {
 
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById('trustgraphdetails').innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }

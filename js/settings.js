@@ -26,6 +26,7 @@ function getAndPopulateCommunityRatings(qaddress) {
         }
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById('communityratingtable').innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }
@@ -51,11 +52,13 @@ function getAndPopulateRatings(qaddress) {
                 disableText: rts(data[i].ratername) + ' rates ' + rts(data[i].name) + ' as {rating}/{maxRating}',
             });
             starRating1.theAddress = theAddress;
+            
             starRating1.disable();
 
         }
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById('ratingtable').innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }

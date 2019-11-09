@@ -562,7 +562,7 @@ class TransactionQueue {
       this.transactionInProgress = false;
       //Remove unexpected input in error message
       err.message = sanitizeAlphanumeric(err.error);
-      if (err.message === undefined) {
+      if (err.message === undefined || err.message=="") {
         err.message = "Network Error";
       }
       callback(err, null, this);

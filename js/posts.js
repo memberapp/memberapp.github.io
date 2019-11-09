@@ -35,6 +35,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 
@@ -99,6 +100,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         scrollTo("highlightedcomment");
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById(pageName).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }

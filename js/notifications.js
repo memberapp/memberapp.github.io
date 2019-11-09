@@ -26,6 +26,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         window.scrollTo(0, 0);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 
