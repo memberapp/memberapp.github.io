@@ -525,7 +525,8 @@ function mergeRepliesToRepliesBySameAuthor(data) {
                 //Merge child post i into parent post
                 //Find parent post
                 for (var j = 0; j < data.length; j++) {
-                    if (data[i].retxid == data[j].txid) {
+                    //replies must be within 6 hours of each other
+                    if (data[i].retxid == data[j].txid && Math.abs(data[i].firstseen-data[j].firstseen)<6*60*60) {
                         data[j].likes = (Number(data[j].likes) + Number(data[i].likes)).toString();
                         data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();
                         data[j].tips = (Number(data[j].tips) + Number(data[i].tips)).toString();
