@@ -94,9 +94,9 @@ class UTXOPool {
     var balString=total.toLocaleString();
     
     //Make last three digits superscript
-    //if(balString.length>4){
-    //  balString=balString.substr(0,balString.length-4)+"<span class='sats'>"+balString.substr(balString.length-3,3)+"</span>";
-    //}
+    if(balString.length>4){
+      balString=balString.substr(0,balString.length-4)+"<span class='sats'>"+balString.substr(balString.length-3,3)+"</span>";
+    }
     document.getElementById("balance").innerHTML = balString;
   }
 
@@ -562,7 +562,7 @@ class TransactionQueue {
       this.transactionInProgress = false;
       //Remove unexpected input in error message
       err.message = sanitizeAlphanumeric(err.error);
-      if (err.message === undefined) {
+      if (err.message === undefined || err.message=="") {
         err.message = "Network Error";
       }
       callback(err, null, this);

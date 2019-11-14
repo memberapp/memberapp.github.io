@@ -108,6 +108,7 @@ hr {
     font-size: 0.6em;
     position: relative;
     bottom: 0.4em;
+    text-decoration: underline;
   }
   .topiccontainer {
     padding-top: 2px;

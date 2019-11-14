@@ -26,6 +26,7 @@ function getAndPopulateCommunityRatings(qaddress) {
         }
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById('communityratingtable').innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }
@@ -51,11 +52,13 @@ function getAndPopulateRatings(qaddress) {
                 disableText: rts(data[i].ratername) + ' rates ' + rts(data[i].name) + ' as {rating}/{maxRating}',
             });
             starRating1.theAddress = theAddress;
+            
             starRating1.disable();
 
         }
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById('ratingtable').innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }
@@ -84,9 +87,11 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'blockingnumber').innerHTML = Number(data[0].blocking);
             document.getElementById(pre + 'nametext').value = data[0].name;
             document.getElementById(pre + 'profiletext').value = data[0].profile;
+            
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
-
+            document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@"+data[0].pagingid);
+            
             document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
             document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
             document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);

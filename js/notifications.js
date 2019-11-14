@@ -26,6 +26,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         window.scrollTo(0, 0);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 
@@ -46,7 +47,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 "page",
                 `📣&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` ` + postlinkHTML(data.txid, "mentioned you "),
-                timeSince(ds(data.time)),
+                timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID,  data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating)
             );
             //<a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> `;
@@ -57,7 +58,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 "reply",
                 `💬&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` ` + postlinkHTML(data.txid, "replied") + ` to your ` + postlinkHTML(data.rretxid, "post"),
-                timeSince(ds(data.time)),
+                timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, "", page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating)
             );
             //<a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> `;
@@ -70,7 +71,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 "rating",
                 `⭐&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` rated you as ` + theRating + ` stars, commenting ... ` + escapeHTML(data.reason),
-                timeSince(ds(data.time)),
+                timeSince(Number(data.time)),
                 ""
             );
             break;
@@ -79,7 +80,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 "follow",
                 `👩&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` followed you `,
-                timeSince(ds(data.time)),
+                timeSince(Number(data.time)),
                 ""
             );
             break;
@@ -89,7 +90,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 "like",
                 `💗&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + escapeHTML(data.amount) + ` sats `,
-                timeSince(ds(data.time)),
+                timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, "", page, postRatingID,  data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating)
             );
             break;
