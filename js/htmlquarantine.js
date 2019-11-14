@@ -330,11 +330,11 @@ function getNotificationsTableHTML(contents, navbuttons) {
 
 //Trust graph
 function getDirectRatingHTML(data) {
-    return "<tr><td>" + getMemberLink(data[0], data[1]) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='trust" + san(data[0]) + san(data[6]) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data[6], data[7]) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='trust" + san(data.member) + san(data.target) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
 }
 
 function getIndirectRatingHTML(data) {
-    return "<tr><td>" + getMemberLink(data[0], data[1]) + "</td>" + "<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust" + san(data[0]) + san(data[3]) + "'></div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td align='center'>" + getMemberLink(data[3], data[4]) + "</td>" + `<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust` + san(data[3]) + san(data[6]) + "'> </div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data[6], data[7]) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust" + san(data.member) + san(data.inter) + "'></div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td align='center'>" + getMemberLink(data.inter, data.intername) + "</td>" + `<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust` + san(data.inter) + san(data.target) + "'> </div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {

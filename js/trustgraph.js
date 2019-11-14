@@ -5,7 +5,7 @@ function getAndPopulateTrustGraph(member, target) {
     //First clear old graph
     document.getElementById('trustgraphdetails').innerHTML = document.getElementById("loading").innerHTML;
 
-    getJSON(graphserver + '?action=trustgraph&member=' + member + '&target=' + target).then(function (data) {
+    getJSON(server + '?action=trustgraph&address=' + member + '&qaddress=' + target).then(function (data) {
 
 
         var directrating = 0.0;
@@ -16,14 +16,14 @@ function getAndPopulateTrustGraph(member, target) {
 
         var contentsHTML="";
         for (var i = 0; i < data.length; i++) {
-            if (i == 0 && data[i][3] == '') {
+            if (i == 0 && data[i].inter == '') {
                 //Direct Rating
                 contentsHTML += getDirectRatingHTML(data[i]);
-                directrating = parseInt(data[i][2]);
+                directrating = Number(data[i].memberrating);
             } else {
                 contentsHTML += getIndirectRatingHTML(data[i]); 
                 if (i < 6) {
-                    oneRemoveRating += Math.min(parseInt(data[i][2]), parseInt(data[i][5]));
+                    oneRemoveRating += Math.min(Number(data[i].memberrating), Number(data[i].interrating));
                     oneRemoveRatingCount++;
                 }
             }
@@ -64,8 +64,8 @@ function getAndPopulateTrustGraph(member, target) {
         overallStarRating.disable();
 
         for (var i = 0; i < data.length; i++) {
-            if (i == 0 && data[i][3] == '') {
-                var rawRating=parseInt(data[i][2]);
+            if (i == 0 && data[i].inter == '') {
+                var rawRating=Number(data[i].memberrating);
                 var textNote="";
                 if (rawRating==193){
                     textNote=" (Follows)";
@@ -76,8 +76,8 @@ function getAndPopulateTrustGraph(member, target) {
                 var starRating1 = raterJs({
                     starSize: 24,
                     rating: Math.round( theRating * 10) / 10,
-                    element: document.querySelector("#trust" + san(data[i][0]) + san(data[i][6])),
-                    disableText: rts(data[i][1])+' rates '+rts(data[i][7])+' as {rating}/{maxRating}'+textNote,
+                    element: document.querySelector("#trust" + san(data[i].member) + san(data[i].target)),
+                    disableText: rts(data[i].membername)+' rates '+rts(data[i].targetname)+' as {rating}/{maxRating}'+textNote,
                     //rateCallback: function rateCallback(rating, done) {
                     //rateCallbackAction(rating, this);
                     //    done();
@@ -87,8 +87,8 @@ function getAndPopulateTrustGraph(member, target) {
 
             } else {
 
-                var theRating = (parseInt(data[i][2]) / 64) + 1;
-                var rawRating=parseInt(data[i][2]);
+                var theRating = (Number(data[i].memberrating) / 64) + 1;
+                var rawRating=Number(data[i].memberrating);
                 var textNote="";
                 if (rawRating==193){
                     textNote=" (Follows)";
@@ -98,8 +98,8 @@ function getAndPopulateTrustGraph(member, target) {
                 var starRating1 = raterJs({
                     starSize: 18,
                     rating: Math.round( theRating * 10) / 10,
-                    element: document.querySelector("#trust" + san(data[i][0]) + san(data[i][3])),
-                    disableText: rts(data[i][1])+' rates '+rts(data[i][4])+' as {rating}/{maxRating}'+textNote,
+                    element: document.querySelector("#trust" + san(data[i].member) + san(data[i].inter)),
+                    disableText: rts(data[i].membername)+' rates '+rts(data[i].intername)+' as {rating}/{maxRating}'+textNote,
                     //rateCallback: function rateCallback(rating, done) {
                     //rateCallbackAction(rating, this);
                     //    done();
@@ -107,8 +107,8 @@ function getAndPopulateTrustGraph(member, target) {
                 });
                 starRating1.disable();
 
-                var theRating2 = (parseInt(data[i][5]) / 64) + 1;
-                var rawRating=parseInt(data[i][5]);
+                var theRating2 = (Number(data[i].interrating) / 64) + 1;
+                var rawRating=Number(data[i].interrating);
                 var textNote2="";
                 if (rawRating==193){
                     textNote2=" (Follows)";
@@ -118,8 +118,8 @@ function getAndPopulateTrustGraph(member, target) {
                 var starRating2 = raterJs({
                     starSize: 18,
                     rating: Math.round( theRating2 * 10) / 10,
-                    element: document.querySelector("#trust" + san(data[i][3]) + san(data[i][6])),
-                    disableText: rts(data[i][4])+' rates '+rts(data[i][7])+' as {rating}/{maxRating}'+textNote2,
+                    element: document.querySelector("#trust" + san(data[i].inter) + san(data[i].target)),
+                    disableText: rts(data[i].intername)+' rates '+rts(data[i].targetname)+' as {rating}/{maxRating}'+textNote2,
                     //rateCallback: function rateCallback(rating, done) {
                     //rateCallbackAction(rating, this);
                     //    done();
