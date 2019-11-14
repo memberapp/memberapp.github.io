@@ -18,6 +18,7 @@ function getAndPopulateFollowers(qaddress) {
         addStarRatings(data,page,disable);
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 
@@ -40,6 +41,7 @@ function getAndPopulateFollowing(qaddress) {
         addStarRatings(data,page,disable);
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }
@@ -62,6 +64,7 @@ function getAndPopulateBlockers(qaddress){
 
     }, function(status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 
@@ -85,6 +88,7 @@ function getAndPopulateBlocking(qaddress){
 
     }, function(status) { //error detection....
         console.log('Something is wrong:'+status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }

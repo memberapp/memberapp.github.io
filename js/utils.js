@@ -39,6 +39,21 @@ var getJSON = function (url) {
     addListeners(xhr);
     xhr.open('get', url, true);
     xhr.responseType = 'json';
+
+    xhr.onerror = function (e) {
+      if (XMLHttpRequest.readyState == 4) {
+        // HTTP error (can be checked by XMLHttpRequest.status and XMLHttpRequest.statusText)
+        reject('Error HTTP: ' + XMLHttpRequest.statusText);
+      }
+      else if (XMLHttpRequest.readyState == 0) {
+        // Network error (i.e. connection refused, access denied due to CORS, etc.)
+        reject('Error:' + XMLHttpRequest.statusText);
+      }
+      else {
+        reject('Error.');
+      }
+    };
+
     xhr.onload = function () {
       var status = xhr.status;
       if (status == 200) {
@@ -54,9 +69,9 @@ var getJSON = function (url) {
 function addListeners(xhr) {
   xhr.addEventListener('loadstart', handleEvent);
   xhr.addEventListener('load', handleEvent);
-  xhr.addEventListener('loadend', handleEvent);
+  //xhr.addEventListener('loadend', handleEvent);
   xhr.addEventListener('progress', handleEvent);
-  xhr.addEventListener('error', handleEvent);
+  //xhr.addEventListener('error', handleEvent);
   xhr.addEventListener('abort', handleEvent);
 }
 
@@ -92,7 +107,7 @@ function toHexString(byteArray) {
   }).join('')
 }
 
-function san(input){
+function san(input) {
   return sanitizeAlphanumeric(input);
 }
 
@@ -162,8 +177,8 @@ function getParameterByName(name, url) {
 }
 
 function scrollTo(name) {
-  var element=document.getElementById(name);
-  if(element!=undefined){
+  var element = document.getElementById(name);
+  if (element != undefined) {
     ScrollToResolver(element);
   }
 }
@@ -174,43 +189,43 @@ function ScrollToResolver(elem) {
   document.documentElement.scrollTop += jump;
   if (!elem.lastjump || elem.lastjump > Math.abs(jump)) {
     elem.lastjump = Math.abs(jump);
-    setTimeout(function() { ScrollToResolver(elem);}, "100");
+    setTimeout(function () { ScrollToResolver(elem); }, "100");
   } else {
     elem.lastjump = null;
   }
 }
 
-function localStorageGet(theSO,itemName){
-  try{
-    let theString=theSO.getItem(itemName);
+function localStorageGet(theSO, itemName) {
+  try {
+    let theString = theSO.getItem(itemName);
     return theString;
-  }catch(err){
+  } catch (err) {
     return null;
   }
 }
 
-function localStorageSet(theSO, itemName, theString){
-  try{
+function localStorageSet(theSO, itemName, theString) {
+  try {
     theSO.setItem(itemName, theString);
     return true;
-  }catch(err){
+  } catch (err) {
     return false;
   }
 }
 
 
 // Add a hook to make all links open a new window
-DOMPurify.addHook('afterSanitizeAttributes', function(node) {
+DOMPurify.addHook('afterSanitizeAttributes', function (node) {
   // set all elements owning target to target=_blank
   if ('target' in node) {
-      node.setAttribute('target','_blank');
-      // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
-      node.setAttribute('rel', 'noopener noreferrer');
+    node.setAttribute('target', '_blank');
+    // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
+    node.setAttribute('rel', 'noopener noreferrer');
   }
   // set non-HTML/MathML links to xlink:show=new
   if (!node.hasAttribute('target')
-      && (node.hasAttribute('xlink:href')
-          || node.hasAttribute('href'))) {
-      node.setAttribute('xlink:show', 'new');
+    && (node.hasAttribute('xlink:href')
+      || node.hasAttribute('href'))) {
+    node.setAttribute('xlink:show', 'new');
   }
 });
