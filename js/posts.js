@@ -2,6 +2,45 @@
 
 "use strict";
 
+function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress){
+    if(order=="")order="best";
+    if(content=="")content="posts";
+    if(filter=="")filter="everyone";
+    if(start=="")start=0;
+    if(limit=="")limit=25;
+    if(page=="")page="posts";
+    
+    //Show the relevant html element
+    show(page);
+
+    //Show loading animation
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+    //Request content from the server and display it when received
+    getJSON(server + '?action=show&order='+order+'&content='+content+'&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter='+filter+ '&address=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+
+        //Show navigation next/back buttons
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length);
+
+        //Server bug will sometimes return duplicates if a post is liked twice for example,
+        // this is a workaround, better if fixed server side.
+        data = removeDuplicates(data);
+        
+        data = mergeRepliesToRepliesBySameAuthor(data);
+
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
+        }
+        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
+    }, function (status) { //error detection....
+        console.log('Something is wrong:'+status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
+        updateStatus(status);
+    });
+
+}
+
 function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
     if(type=="")type="all";
     //Clear Topic

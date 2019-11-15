@@ -6,7 +6,17 @@ function displayContentBasedOnURLParameters() {
 
     var url = window.location.href;
     var action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
-    if (action.startsWith("memberposts")) {
+
+    if (action.startsWith("show")) {
+        showPostsNew(
+            sanitizeAlphanumeric(getParameterByName("order")),
+            sanitizeAlphanumeric(getParameterByName("content")),
+            getParameterByName("topicname"), //HOSTILE
+            sanitizeAlphanumeric(getParameterByName("filter")),
+            Number(getParameterByName("start")), 
+            Number(getParameterByName("limit")), 
+        );
+    } else if (action.startsWith("memberposts")) {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
         showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
@@ -197,6 +207,10 @@ function showPFC(start, limit, page, pubkey, type){
     getAndPopulate(start, limit, page, pubkey, type, topicNameHOSTILE);
 }
 
+function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
+    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', pubkey); 
+}
+
 
 //Topics
 function showTopic(start, limit, topicNameHOSTILE, type) {
@@ -206,6 +220,7 @@ function showTopic(start, limit, topicNameHOSTILE, type) {
     getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }
 
+/*
 function topicChanged(){
     var selector=document.getElementById('topicselector');
     
@@ -221,6 +236,36 @@ function topicChanged(){
     var topicNameHOSTILE=selector.options[selector.selectedIndex].value;
     document.location.href="#topic?type=all&start=0&limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
     showTopic(0,25,topicNameHOSTILE,'all');
+}*/
+
+function postsSelectorChanged(){
+    
+    //get value from the 4 drop downs
+    var selector;
+
+    //orderselector
+    selector=document.getElementById('orderselector');
+    var order=selector.options[selector.selectedIndex].value;
+    
+    //contentselector
+    selector=document.getElementById('contentselector');
+    var content=selector.options[selector.selectedIndex].value;
+    
+    //topicselector
+    selector=document.getElementById('topicselector');
+    var topicNameHOSTILE=selector.options[selector.selectedIndex].value;
+    
+    //filterselector
+    selector=document.getElementById('filterselector');
+    var filter=selector.options[selector.selectedIndex].value;
+    
+    //set the document location
+    document.location.href="#show?order="+order+"&content="+content+"&topicname="+encodeURIComponent(topicNameHOSTILE)+"&filter="+filter+"&start=0&limit=25";
+    
+    //topicChanged();
+
+    //show the posts
+    displayContentBasedOnURLParameters();
 }
 
 function exitTopic(){
@@ -242,13 +287,14 @@ function enterTopic(topicNameHOSTILE){
     selector.options[selector.selectedIndex].value=topicNameHOSTILE;
     selector.options[selector.selectedIndex].text=topicNameHOSTILE.substring(0,15);
 
+    /*
     document.getElementById('postsbutton').href="#posts?type=all&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
     document.getElementById('postsbuttonfeed').href="#posts?type=feed&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
     document.getElementById('postsbuttonnew').href="#posts?type=new&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
     document.getElementById('commentsbutton').href="#comments?type=all&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
     document.getElementById('commentsbuttonfeed').href="#comments?type=feed&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
     document.getElementById('commentsbuttonnew').href="#comments?type=new&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
-
+    */
 }
 
 

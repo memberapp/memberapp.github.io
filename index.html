@@ -41,7 +41,7 @@
     <script src="js/lib/showdown.1.9.1.min.js"></script>
     <!-- https://github.com/cure53/DOMPurify -->
     <script src="js/lib/purify.min.js"></script>
-    
+
 
     <!--  Member Code. In separate files for development convenience -->
     <!--  Can be mininfied and amalgamated for releases -->
@@ -82,6 +82,8 @@
                         </a>
                     </span>
 
+                    
+                    <!--
                     <span>
                         <a id="postsbutton" class="btn" href="#posts?type=all&amp;start=0&amp;limit=25"
                             onclick="showPosts(0,25,'all');">posts</a>(<a id="postsbuttonfeed" class="btn"
@@ -95,12 +97,13 @@
                             href="#comments?type=feed&amp;start=0&amp;limit=25"
                             onclick="showComments(0,25,'feed');">feed</a><span class="separatornarrow"></span><a
                             id="commentsbuttonnew" class="btn" href="#comments?type=new&amp;start=0&amp;limit=25"
-                            onclick="showComments(0,25,'new');">new</a>)</span><span class="separatorwide"></span><a
-                        id="newbutton" title="New Post" class="btn newpostbutton" href="#new" onclick="showNewPost();">📝</a><span
-                        class="separatorwidebreakpoint"></span>
+                            onclick="showComments(0,25,'new');">new</a>)</span><span class="separatorwide"></span>-->
+                    
 
                     <span class="loggedinpart2">
                         <span class="headerbuttons">
+                            <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
+                                onclick="showNewPost();">📝</a><span class="separatorwide"></span>
                             <a id="refreshbutton" title="Refresh Content" class="btn" href=""
                                 onclick="displayContentBasedOnURLParameters();return false;">🔄</a>
                             <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
@@ -112,9 +115,45 @@
                                 class="separatorwide"></span></span>
                         <span onclick="refreshPool();return false;" title="Refresh Balance" id="balancedetails"
                             class="balancedetails">₿<span id="balance">0</span><a id="refreshbutton"
-                                class="btn refreshbalance" href=""> 🔄</a><span class="separatorwide"></span></span>
-
+                                class="btn refreshbalance" href=""> 🔄</a></span>
                     </span>
+                    <span class="separatorwidebreakpoint"></span>
+                    <span id="topiccontainer" class="topiccontainer">
+                            <select id="orderselector" onchange="postsSelectorChanged();">
+                                <option value="best" selected="selected">Best</option>
+                                <option value="hot">Hot</option>
+                                <option value="new">New</option>
+                            </select>
+    
+                            <select id="contentselector" onchange="postsSelectorChanged();">
+                                <option value="posts" selected="selected">Posts</option>
+                                <option value="replies">Replies</option>
+                                <option value="both">In Both</option>
+                            </select>
+                            in
+                            <select id="topicselector" onchange="postsSelectorChanged();">
+                                <option value="" selected="selected">All Topics</option>
+                                <option value=""></option>
+                                <option value="">---------------</option>
+                                <option value="Member">Member</option>
+                                <option value="Bitcoin Cash">Bitcoin Cash</option>
+                                <option value="Bitcoin SV">Bitcoin SV</option>
+                                <option value="Memo">Memo</option>
+                                <option value="Airdrops">Airdrops</option>
+                                <option value="Tokens">Tokens</option>
+                                <option value="OpenBazaar">OpenBazaar</option>
+                                <option value="Capitalism">Capitalism</option>
+                                <option value="US Politics/Trump">US Politics</option>
+                                <option value="Favorite Quotes">Quotes</option>
+                                <option value="Ideas to improve our lives">Improvement</option>
+                                <option value="#911Truth">#911Truth</option>
+                            </select>
+                            from
+                            <select id="filterselector" onchange="postsSelectorChanged();">
+                                <option value="everyone" selected="selected">Everyone</option>
+                                <option value="myfeed">My Feed</option>
+                            </select>
+                        </span>
                 </nav>
                 <nav id="loggedout" class="loggedout">
                     <span class="memberlogo">
@@ -135,25 +174,7 @@
                         onclick="showComments(0,25,'all');">comments</a><span class="separatorwide"></span><a
                         id="loginbutton" class="btn" href="#login" onclick="showLogin();">login</a>
                 </nav>
-                <span id="topiccontainer" class="topiccontainer">
-                    <select id="topicselector" onchange="topicChanged();">
-                        <option value="" selected="selected">All Topics</option>
-                        <option value=""></option>
-                        <option value="">---------------</option>
-                        <option value="Member">Member</option>
-                        <option value="Bitcoin Cash">Bitcoin Cash</option>
-                        <option value="Bitcoin SV">Bitcoin SV</option>
-                        <option value="Memo">Memo</option>
-                        <option value="Airdrops">Airdrops</option>
-                        <option value="Tokens">Tokens</option>
-                        <option value="OpenBazaar">OpenBazaar</option>
-                        <option value="Capitalism">Capitalism</option>
-                        <option value="US Politics/Trump">US Politics</option>
-                        <option value="Favorite Quotes">Favorite Quotes</option>
-                        <option value="Ideas to improve our lives">Self Improvement</option>
-                        <option value="#911Truth">#911Truth</option>
-                    </select>
-                </span>
+
             </div>
         </header>
         <div class="mainbody">
@@ -229,8 +250,8 @@
                 </div>
                 <label>Profile Links</label>
                 <div>
-                    <a href="" id='memberprofilelink'>Member</a><span class="separatorwide"></span><a rel='noopener noreferrer' target="memo"
-                        href="" id='membermemoprofilelink'>Memo</a>
+                    <a href="" id='memberprofilelink'>Member</a><span class="separatorwide"></span><a
+                        rel='noopener noreferrer' target="memo" href="" id='membermemoprofilelink'>Memo</a>
                 </div>
                 <label>Address</label>
                 <div>
@@ -326,14 +347,15 @@
                 </div>
                 <div>
                     <label for="settingsprofilelogout">Logout</label>
-                    <a title="Logout" id="settingsprofilelogout" class="btn" href="#logout" onclick="logout();">Logout</a>
+                    <a title="Logout" id="settingsprofilelogout" class="btn" href="#logout"
+                        onclick="logout();">Logout</a>
                 </div>
-                
+
                 <div>
                     <label>Profile Links</label>
                     <div>
                         <a href="" id='settingsprofilelink'>Member</a><span class="separatorwide"></span><a
-                        rel='noopener noreferrer' target="memo" href="" id='settingsmemoprofilelink'>Memo</a>
+                            rel='noopener noreferrer' target="memo" href="" id='settingsmemoprofilelink'>Memo</a>
                     </div>
                 </div>
                 <div>

@@ -27,6 +27,19 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + san(txid) + `" onclick="showThread('` + san(txid) + `')">` + ds(linktext) + `</a>`;
 }
 
+function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, functionName, numberOfResults) {
+    //Caution topicname may contain hostile characters/code
+
+    var navbuttons = `<div class="navbuttons">`;
+
+    if (start != 0) //Don't show back buttons if we're at the start
+    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Back </a> `; }
+    if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
+    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Next</div>`; }
+    return navbuttons;
+
+}
+
 function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName, numberOfResults) {
 
     //Caution topicname may contain hostile characters/code
@@ -34,9 +47,9 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back </a> `; }
+    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back </a> `; }
     if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`; }
+    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`; }
     return navbuttons;
 
 }
