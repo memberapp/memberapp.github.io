@@ -122,7 +122,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
 
 
-        if (data.length < 1 || ds(data[0].isfollowing) == "0") {
+        if (data.length < 1 || Number(data[0].isfollowing) == 0) {
             document.getElementById(pre + 'follow').innerHTML = clickActionHTML("follow", qaddress);
         } else {
             document.getElementById(pre + 'follow').innerHTML = clickActionHTML("unfollow", qaddress);
@@ -130,7 +130,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
         //document.getElementById(pre + 'ratings').innerHTML = `<a href='#ratings?qaddress=` + qaddress + `' onclick='showRatings(` + escaped + `);'>Show Ratings</a>`;
 
-        if (data.length < 1 || ds(data[0].isblocked) == "0") {
+        if (data.length < 1 || Number(data[0].isblocked) == 0) {
             document.getElementById(pre + 'block').innerHTML = clickActionHTML("mute", qaddress);
         } else {
             document.getElementById(pre + 'block').innerHTML = clickActionHTML("unmute", qaddress);
