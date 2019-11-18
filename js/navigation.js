@@ -8,6 +8,11 @@ function displayContentBasedOnURLParameters() {
     var action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
 
     if (action.startsWith("show")) {
+        setOrder('orderselector',getParameterByName("order"));
+        setOrder('contentselector',getParameterByName("content"));
+        setTopic(getParameterByName("topicname"));
+        setOrder('filterselector',getParameterByName("filter"));
+        
         showPostsNew(
             sanitizeAlphanumeric(getParameterByName("order")),
             sanitizeAlphanumeric(getParameterByName("content")),
@@ -129,7 +134,10 @@ function showBootstrap(qaddress) {
 
 function showNewPost() {
     show("newpost");
-    if (currentTopic != "") {
+    let topicNameHOSTILE=getCurrentTopicHOSTILE();
+    document.getElementById('memotopic').value = topicNameHOSTILE;
+    document.getElementById('memorandumtopic').value = topicNameHOSTILE;
+    if (topicNameHOSTILE != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
         document.getElementById('memotopicarea').style.display = "block";
         document.getElementById('memotopic').value = currentTopic;
@@ -203,8 +211,7 @@ function showComments(start, limit, type) {
 }
 
 function showPFC(start, limit, page, pubkey, type){
-    var topicNameHOSTILE=currentTopic;
-    getAndPopulate(start, limit, page, pubkey, type, topicNameHOSTILE);
+    getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
@@ -215,9 +222,15 @@ function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
 //Topics
 function showTopic(start, limit, topicNameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
-    enterTopic(topicNameHOSTILE);
+    //enterTopic(topicNameHOSTILE);
     if(type=="")type="all";
     getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
+}
+
+function getCurrentTopicHOSTILE(){
+    var selector=document.getElementById('topicselector');
+    var topicNameHOSTILE=selector.options[selector.selectedIndex].value;
+    return topicNameHOSTILE;
 }
 
 /*
@@ -268,33 +281,29 @@ function postsSelectorChanged(){
     displayContentBasedOnURLParameters();
 }
 
-function exitTopic(){
+/*function exitTopic(){
     //currentTopic = "";
     //document.getElementById('memotopic').value = "";
     //document.getElementById('memorandumtopic').value = "";
     enterTopic("");    
+}*/
+function setOrder(selectorvalue,order){
+    var selector=document.getElementById(selectorvalue);
+    for(var i=0;i<selector.length;i++){
+        if(selector.options[i].value==order){
+            selector.selectedIndex=i;
+        }
+    }
 }
 
-function enterTopic(topicNameHOSTILE){
+
+function setTopic(topicNameHOSTILE){
     //Warning, topicname may contain hostile characters
-    currentTopic = topicNameHOSTILE;
-    document.getElementById('memotopic').value = topicNameHOSTILE;
-    document.getElementById('memorandumtopic').value = topicNameHOSTILE;
-    //Changing the href must be handled elsewhere, as it can have more info attached.
-    //document.location.href="#topic?topicname="+encodeURIComponent(topicNameHOSTILE);
+
     var selector=document.getElementById('topicselector');
     selector.selectedIndex=1;
     selector.options[selector.selectedIndex].value=topicNameHOSTILE;
     selector.options[selector.selectedIndex].text=topicNameHOSTILE.substring(0,15);
-
-    /*
-    document.getElementById('postsbutton').href="#posts?type=all&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
-    document.getElementById('postsbuttonfeed').href="#posts?type=feed&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
-    document.getElementById('postsbuttonnew').href="#posts?type=new&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
-    document.getElementById('commentsbutton').href="#comments?type=all&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
-    document.getElementById('commentsbuttonfeed').href="#comments?type=feed&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
-    document.getElementById('commentsbuttonnew').href="#comments?type=new&amp;start=0&amp;limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
-    */
 }
 
 
