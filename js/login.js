@@ -13,6 +13,7 @@ var maxfee = 5;
 var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }
 
+//var ShowdownConverter = new showdown.Converter({extensions: ['youtube']});
 var ShowdownConverter = new showdown.Converter();
 ShowdownConverter.setFlavor('github');
 ShowdownConverter.setOption('simpleLineBreaks', true);

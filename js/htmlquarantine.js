@@ -153,7 +153,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var messageLinksHTML=anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
     messageLinksHTML=DOMPurify.sanitize(messageLinksHTML);
 
-    if(messageLinksHTML.indexOf("<a ")==-1){//if no links
+    //Add youtube etc
+    messageLinksHTML=addImageAndYoutubeMarkdown(messageLinksHTML);
+
+    if(messageLinksHTML.indexOf("<a ")==-1 && messageLinksHTML.indexOf("<iframe ")==-1){//if no links
         messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + messageLinksHTML + `</a>`;
     }
     
@@ -204,6 +207,9 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message=dslite(message);
+
+    //add images and youtube markdown
+    //message=addImageAndYoutubeMarkdown(message);
     //add markdown
     message=ShowdownConverter.makeHtml(message);
     //message=SnuOwnd.getParser().render(message);
@@ -216,6 +222,8 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     //check for XSS vulnerabilities
     message=DOMPurify.sanitize(message);
     
+    //Add youtube links
+    message=addImageAndYoutubeMarkdown(message);
     
 
     return `<div ` + (txid == highlighttxid ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
@@ -237,7 +245,21 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
             </div>
             `;
 }
+function addImageAndYoutubeMarkdown(message){
+    
+    //Youtube
+    message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
+    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0" width="420px" height="315px" frameborder="0" allowfullscreen></iframe>'
+    );
+    
+    //Imgur
+    message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com\/([\w\-_]{7,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
+    '<br/><a class="imgurimage" href="https://i.imgur.com/$2" rel="noopener noreferrer" target="_blank"><img src="https://i.imgur.com/$2.jpg"></a>'
+    );
 
+    //message=message.replace(/(?:https:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g,'![youtube video](http://www.youtube.com/watch?v=dQw4w9WgXcQ)');
+    return message;
+}
 
 function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML) {
     //icon, mainbody and subtext should already be escaped and HTML formatted
