@@ -249,12 +249,12 @@ function addImageAndYoutubeMarkdown(message){
     
     //Youtube
     message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0" width="420px" height="315px" frameborder="0" allowfullscreen></iframe>'
+    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0" frameborder="0" allowfullscreen></iframe>'
     );
     
     //Imgur
     message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com\/([\w\-_]{7,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
-    '<br/><a class="imgurimage" href="https://i.imgur.com/$2" rel="noopener noreferrer" target="_blank"><img src="https://i.imgur.com/$2.jpg"></a>'
+    '<br/><a href="https://i.imgur.com/$2" rel="noopener noreferrer" target="_blank"><img class="imgurimage"  src="https://i.imgur.com/$2.jpg"></a>'
     );
 
     //message=message.replace(/(?:https:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g,'![youtube video](http://www.youtube.com/watch?v=dQw4w9WgXcQ)');

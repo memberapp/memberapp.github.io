@@ -455,17 +455,37 @@ footer {
     display: block;
   }
 
+  @media only screen and (max-width: 860px) {
   .youtubeiframe {
     display: block;
     margin-top: 5px;
     margin-bottom: 5px;
+    width:100%;
   }
 
   .imgurimage {
     display: block;
     margin-top: 5px;
     margin-bottom: 5px;
+    width:100%;
   }
+}
+
+@media only screen and (min-width: 860px) {
+  .youtubeiframe {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height:300px;
+  }
+
+  .imgurimage {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height:300px;
+  }
+}
 
 }
 
