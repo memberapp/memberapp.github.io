@@ -253,9 +253,11 @@ function addImageAndYoutubeMarkdown(message){
     );
     
     //Imgur
-    message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com\/([\w\-_]{7,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
-    '<br/><a href="https://i.imgur.com/$2" rel="noopener noreferrer" target="_blank"><img class="imgurimage"  src="https://i.imgur.com/$2.jpg"></a>'
+    message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
+    '<br/><a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_blank"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></a>'
     );
+
+    //Add a single pixel if there is a media element in first position - helps to align the list number correctly at the top
 
     //message=message.replace(/(?:https:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g,'![youtube video](http://www.youtube.com/watch?v=dQw4w9WgXcQ)');
     return message;
@@ -384,7 +386,7 @@ function rts(thetext) {
 //Settings
 //These two functions could be combined
 function ratingAndReasonHTML(data) {
-    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + san(data.address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td><td><span class='separatornarrow'></span></td><td>" + ds(data.reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='crating" + san(data.address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td><td><span class='separatornarrow'></span></td><td>" + ds(data.reason) + "</td></tr>";
 }
 
 function ratingAndReason2HTML(data) {
