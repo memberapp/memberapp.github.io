@@ -463,6 +463,14 @@ footer {
     width:100%;
   }
 
+  .twitteriframe {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height:250px;
+    width:100%;
+  }
+
   .imgurimage {
     display: block;
     margin-top: 5px;
@@ -477,6 +485,14 @@ footer {
     margin-top: 5px;
     margin-bottom: 5px;
     height:300px;
+  }
+
+  .twitteriframe {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height:250px;
+    width:550px;
   }
 
   .imgurimage {

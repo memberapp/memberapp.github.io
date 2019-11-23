@@ -263,7 +263,7 @@ function addImageAndYoutubeMarkdown(message){
     //This works but is ugly
     
     message=message.replace(tweetRegex,
-        '<iframe id="tweet_$3" border=0 frameborder=0 height=250 width="550" src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe>'
+        '<iframe  class="twitteriframe" id="tweet_$3" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe>'
     );
 
     
