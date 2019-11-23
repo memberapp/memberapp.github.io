@@ -229,3 +229,20 @@ DOMPurify.addHook('afterSanitizeAttributes', function (node) {
     node.setAttribute('xlink:show', 'new');
   }
 });
+
+//Twitter stuff, doesn't seem to be working
+/*
+window.$ = document.querySelectorAll.bind(document);
+
+window.onmessage = (event) => {
+  console.log(`Received message: ${event.data}`);
+  var oe = e.originalEvent;
+  if (oe.origin != "https://twitframe.com")
+      return;
+
+  if (oe.data.height && oe.data.element.match(/^tweet_/))
+      $("#" + oe.data.element).css("height", parseInt(oe.data.height) + "px");
+
+};*/
+
+/* listen for the return message once the tweet has been loaded */

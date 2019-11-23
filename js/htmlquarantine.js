@@ -33,9 +33,9 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Back </a> `; }
+    { navbuttons += `<a class="next" href="#show?start=` + (start - 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Back </a> `; }
     if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Next</div>`; }
+    { navbuttons += `<a class="back" href="#show?start=` + (start + 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Next</div>`; }
     return navbuttons;
 
 }
@@ -248,7 +248,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
 function addImageAndYoutubeMarkdown(message){
     
     //Youtube
-    message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
+    message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
     '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0" frameborder="0" allowfullscreen></iframe>'
     );
     
@@ -257,9 +257,29 @@ function addImageAndYoutubeMarkdown(message){
     '<br/><a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_blank"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></a>'
     );
 
-    //Add a single pixel if there is a media element in first position - helps to align the list number correctly at the top
+    //Twitter
+    var tweetRegex=/<a.*https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/;
+    
+    //This works but is ugly
+    
+    message=message.replace(tweetRegex,
+        '<iframe id="tweet_$3" border=0 frameborder=0 height=250 width="550" src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe>'
+    );
 
-    //message=message.replace(/(?:https:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g,'![youtube video](http://www.youtube.com/watch?v=dQw4w9WgXcQ)');
+    
+    //Twitter's preferred way to do this doesn't work well with Member's html construction
+    /*
+    let arr=message.match(tweetRegex);
+    let id='';
+    if(arr!=null){
+        id = arr[3];
+    }
+    
+    if(id!=''){
+        message=message.replace(tweetRegex,`<div id='`+id+`'>test</div>`);
+        twitterEmbeds.push(id);
+    }*/
+
     return message;
 }
 

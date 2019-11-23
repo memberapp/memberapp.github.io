@@ -9,6 +9,7 @@ let tq = new TransactionQueue(updateStatus);
 var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
+//var twitterEmbeds=new Array();
 
 var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }

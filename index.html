@@ -15,7 +15,7 @@
     <!--  Youtube/Imgur for content -->
 
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; connect-src https://memberjs.org https://rest.bitcoin.com/v2/ https://memberjs.org:8123/ https://memberjs.org:8124/ http://127.0.0.1:3123/ http://127.0.0.1:3124/ https://www.imgur.com/ *.youtube.com; img-src 'self' https://i.imgur.com/ data: https://tile.openstreetmap.org/; frame-src 'self'  https://www.youtube.com/;">
+        content="default-src 'self' 'unsafe-inline'; connect-src https://memberjs.org https://rest.bitcoin.com/v2/ https://memberjs.org:8123/ https://memberjs.org:8124/ http://127.0.0.1:3123/ http://127.0.0.1:3124/; img-src 'self' https://imgur.com https://i.imgur.com/ data: https://tile.openstreetmap.org/; frame-src 'self'  https://www.youtube.com/  https://twitframe.com/;">
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,7 +42,8 @@
     <script src="js/lib/showdown.1.9.1.min.js"></script>
     <!-- https://github.com/cure53/DOMPurify -->
     <script src="js/lib/purify.min.js"></script>
-
+    <!-- https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites -->
+    <!-- <script src="js/lib/twitterwidgets.js"></script> -->
 
     <!--  Member Code. In separate files for development convenience -->
     <!--  Can be mininfied and amalgamated for releases -->
@@ -649,6 +650,7 @@
         </div>
     </div>
     <div id="status"></div>
+    <div id="tweet-container"></div>
     <script>
         init();
     </script>

@@ -299,8 +299,13 @@ function setOrder(selectorvalue,order){
 
 function setTopic(topicNameHOSTILE){
     //Warning, topicname may contain hostile characters
-
     var selector=document.getElementById('topicselector');
+
+    if(topicNameHOSTILE==""){
+        selector.selectedIndex=0;
+        return;
+    }
+    
     selector.selectedIndex=1;
     selector.options[selector.selectedIndex].value=topicNameHOSTILE;
     selector.options[selector.selectedIndex].text=topicNameHOSTILE.substring(0,15);
