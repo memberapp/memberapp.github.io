@@ -467,7 +467,6 @@ footer {
     display: block;
     margin-top: 5px;
     margin-bottom: 5px;
-    height:250px;
     width:100%;
   }
 
@@ -484,7 +483,8 @@ footer {
     display: block;
     margin-top: 5px;
     margin-bottom: 5px;
-    height:300px;
+    height:270px;
+    width:480px;
   }
 
   .twitteriframe {

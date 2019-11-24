@@ -249,7 +249,7 @@ function addImageAndYoutubeMarkdown(message){
     
     //Youtube
     message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0" frameborder="0" allowfullscreen></iframe>'
+    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
     );
     
     //Imgur
