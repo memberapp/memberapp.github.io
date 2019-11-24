@@ -2,6 +2,46 @@
 
 "use strict";
 
+function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress){
+    if(order=="")order="best";
+    if(content=="")content="posts";
+    if(filter=="")filter="everyone";
+    if(start=="")start=0;
+    if(limit=="")limit=25;
+    if(page=="")page="posts";
+    
+    //Show the relevant html element
+    show(page);
+
+    //Show loading animation
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+    //Request content from the server and display it when received
+    getJSON(server + '?action=show&order='+order+'&content='+content+'&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter='+filter+ '&address=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+
+        //Show navigation next/back buttons
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length);
+
+        //Server bug will sometimes return duplicates if a post is liked twice for example,
+        // this is a workaround, better if fixed server side.
+        data = removeDuplicates(data);
+        
+        data = mergeRepliesToRepliesBySameAuthor(data);
+
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
+        }
+        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
+
+    }, function (status) { //error detection....
+        console.log('Something is wrong:'+status);
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
+        updateStatus(status);
+    });
+
+}
+
 function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
     if(type=="")type="all";
     //Clear Topic
@@ -33,6 +73,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
+
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -108,7 +149,21 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
 function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start) {
     contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype, start);
-    document.getElementById(page).innerHTML = contents; //display the result in the HTML element
+    var pageElement=document.getElementById(page);
+    pageElement.innerHTML = contents; //display the result in the HTML element
+    //Add twitter posts
+    //twttr.widgets.load(pageElement);
+    /*for(var i=0;i<twitterEmbeds.length;i++){
+        twttr.widgets.createTweet(twitterEmbeds[0], document.getElementById(twitterEmbeds[0]), {});
+    }
+    twitterEmbeds=new Array();*/
+
+    /*var listofelements=document.querySelectorAll('*[id^="tweet_"]');
+    listofelements[0].onload = function() {
+        this.contentWindow.postMessage({ element: this.id, query: "height" },"https://twitframe.com");
+    };*/
+  
+
     addStarRatings(data, page);
     window.scrollTo(0, 0);
     return;

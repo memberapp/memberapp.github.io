@@ -27,6 +27,19 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + san(txid) + `" onclick="showThread('` + san(txid) + `')">` + ds(linktext) + `</a>`;
 }
 
+function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, functionName, numberOfResults) {
+    //Caution topicname may contain hostile characters/code
+
+    var navbuttons = `<div class="navbuttons">`;
+
+    if (start != 0) //Don't show back buttons if we're at the start
+    { navbuttons += `<a class="next" href="#show?start=` + (start - 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Back </a> `; }
+    if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
+    { navbuttons += `<a class="back" href="#show?start=` + (start + 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Next</div>`; }
+    return navbuttons;
+
+}
+
 function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functionName, numberOfResults) {
 
     //Caution topicname may contain hostile characters/code
@@ -34,9 +47,9 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back </a> `; }
+    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Back </a> `; }
     if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + encodeURIComponent(topicName) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`; }
+    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">Next</div>`; }
     return navbuttons;
 
 }
@@ -140,7 +153,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var messageLinksHTML=anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
     messageLinksHTML=DOMPurify.sanitize(messageLinksHTML);
 
-    if(messageLinksHTML.indexOf("<a ")==-1){//if no links
+    //Add youtube etc
+    messageLinksHTML=addImageAndYoutubeMarkdown(messageLinksHTML);
+
+    if(messageLinksHTML.indexOf("<a ")==-1 && messageLinksHTML.indexOf("<iframe ")==-1){//if no links
         messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + messageLinksHTML + `</a>`;
     }
     
@@ -191,6 +207,9 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message=dslite(message);
+
+    //add images and youtube markdown
+    //message=addImageAndYoutubeMarkdown(message);
     //add markdown
     message=ShowdownConverter.makeHtml(message);
     //message=SnuOwnd.getParser().render(message);
@@ -203,6 +222,8 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     //check for XSS vulnerabilities
     message=DOMPurify.sanitize(message);
     
+    //Add youtube links
+    message=addImageAndYoutubeMarkdown(message);
     
 
     return `<div ` + (txid == highlighttxid ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
@@ -224,7 +245,43 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
             </div>
             `;
 }
+function addImageAndYoutubeMarkdown(message){
+    
+    //Youtube
+    message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
+    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
+    );
+    
+    //Imgur
+    message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
+    '<br/><a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_blank"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></a>'
+    );
 
+    //Twitter
+    var tweetRegex=/<a.*https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/;
+    
+    //This works but is ugly
+    
+    message=message.replace(tweetRegex,
+        '<iframe  class="twitteriframe" id="tweet_$3" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe>'
+    );
+
+    
+    //Twitter's preferred way to do this doesn't work well with Member's html construction
+    /*
+    let arr=message.match(tweetRegex);
+    let id='';
+    if(arr!=null){
+        id = arr[3];
+    }
+    
+    if(id!=''){
+        message=message.replace(tweetRegex,`<div id='`+id+`'>test</div>`);
+        twitterEmbeds.push(id);
+    }*/
+
+    return message;
+}
 
 function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML) {
     //icon, mainbody and subtext should already be escaped and HTML formatted
@@ -349,7 +406,7 @@ function rts(thetext) {
 //Settings
 //These two functions could be combined
 function ratingAndReasonHTML(data) {
-    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + san(data.address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td><td><span class='separatornarrow'></span></td><td>" + ds(data.reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='crating" + san(data.address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td><td><span class='separatornarrow'></span></td><td>" + ds(data.reason) + "</td></tr>";
 }
 
 function ratingAndReason2HTML(data) {

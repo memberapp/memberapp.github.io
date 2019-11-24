@@ -17,7 +17,7 @@ function getAndPopulateCommunityRatings(qaddress) {
             var starRating1 = raterJs({
                 starSize: 24,
                 rating: Math.round(theRating * 10) / 10,
-                element: document.querySelector("#rating" + theAddress),
+                element: document.querySelector("#crating" + theAddress),
                 disableText: rts(data[i].name) + ' rates ' + rts(data[i].rateename) + ' as {rating}/{maxRating}',
             });
             starRating1.theAddress = theAddress;

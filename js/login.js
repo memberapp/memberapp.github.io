@@ -5,14 +5,16 @@ var privkey = ""; //Private Key
 var qpubkey = ""; //Public Key (q style address)
 var mutedwords = new Array();
 let tq = new TransactionQueue(updateStatus);
-let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
+//let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
+//var twitterEmbeds=new Array();
 
 var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }
 
+//var ShowdownConverter = new showdown.Converter({extensions: ['youtube']});
 var ShowdownConverter = new showdown.Converter();
 ShowdownConverter.setFlavor('github');
 ShowdownConverter.setOption('simpleLineBreaks', true);

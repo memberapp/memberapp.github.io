@@ -37,7 +37,6 @@ p {
   margin-bottom: 5px;
 }
 
-
 p:last-child {
   margin-bottom: 0px;
 }
@@ -79,6 +78,7 @@ hr {
 }
 
 /* Header Stuff */
+
 @media only screen {
   header {
     border-bottom: 1px solid #4cca47;
@@ -130,6 +130,7 @@ hr {
 }
 
 /* Footer Stuff */
+
 footer {
   font-size: small;
   text-align: center;
@@ -137,10 +138,11 @@ footer {
 }
 
 /* Posts */
+
 @media only screen {
   /*For numbering color*/
-  .posts{
-    color:#c6c6c6;
+  .posts {
+    color: #c6c6c6;
   }
   .comhead {
     color: #888;
@@ -187,6 +189,7 @@ footer {
 }
 
 /*Vote buttons*/
+
 @media only screen {
   .likescounttext {
     display: none;
@@ -260,19 +263,19 @@ footer {
 }
 
 /* replies */
-@media only screen {
 
+@media only screen {
   .reply {
     max-width: 60em;
   }
   .postdetails, .commentdetails {
-    font: normal medium verdana,arial,helvetica,sans-serif;
+    font: normal medium verdana, arial, helvetica, sans-serif;
     flex: 1;
     display: flex;
     flex-direction: column;
     min-height: 50px;
     color: #222222;
-    padding-bottom: 8px;    
+    padding-bottom: 8px;
   }
   .fatitem {
     border-bottom-style: dotted;
@@ -287,7 +290,6 @@ footer {
   #highlightli {
     background-color: #ffd;
   }
-
   /* Desktop Screen */
   @media only screen and (min-width: 600px) {
     .comment-tree li {
@@ -408,7 +410,7 @@ footer {
   .commentbody ul {
     display: block;
     list-style: disc outside none;
-    padding-left:20px;
+    padding-left: 20px;
   }
   .commentbody ol {
     list-style-type: decimal;
@@ -427,6 +429,7 @@ footer {
 }
 
 /* Main Reply */
+
 @media only screen {
   .fatitem .comhead {
     display: none;
@@ -446,15 +449,64 @@ footer {
   .fatitem .subtextbuttons {
     display: block;
   }
-
-  .comment{
+  .comment {
     font-size: 14px;
     line-height: 1.4285714285714286em;
-    display:block;
+    display: block;
+  }
+
+  @media only screen and (max-width: 860px) {
+  .youtubeiframe {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width:100%;
+  }
+
+  .twitteriframe {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width:100%;
+  }
+
+  .imgurimage {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width:100%;
   }
 }
 
+@media only screen and (min-width: 860px) {
+  .youtubeiframe {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height:270px;
+    width:480px;
+  }
+
+  .twitteriframe {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height:250px;
+    width:550px;
+  }
+
+  .imgurimage {
+    display: block;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height:300px;
+  }
+}
+
+}
+
 /*Status bar*/
+
 #status {
   background: #cccccc;
   color: #000000;
@@ -467,6 +519,7 @@ footer {
 }
 
 /*Loading image*/
+
 .loading {
   background-image: url("../img/loading.gif");
   width: 100%;
@@ -480,6 +533,7 @@ footer {
 }
 
 /*Navigation Buttons*/
+
 .navbuttons a {
   padding: 1px 4px;
   background: #eee;
@@ -565,6 +619,19 @@ li.notificationpage::before {
 
 .notificationminheight {
   min-height: 40px;
+}
+
+.notificationdetails .post {
+  margin: 0px 0px 8px 4px;
+  border: 1px solid #e6e6e6 !important;
+  border-radius: 10px !important;
+  padding: 5px 8px 0px 5px;
+  overflow: hidden;
+  background-color: #f7f7f8;
+}
+
+.notificationhr {
+  height: 0px;
 }
 
 /*settings page*/
