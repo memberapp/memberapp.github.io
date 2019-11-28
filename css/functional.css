@@ -491,7 +491,7 @@ footer {
     display: block;
     margin-top: 5px;
     margin-bottom: 5px;
-    height:250px;
+    height:400px;
     width:550px;
   }
 
@@ -500,6 +500,7 @@ footer {
     margin-top: 5px;
     margin-bottom: 5px;
     height:300px;
+    max-width: 100%;
   }
 }
 
