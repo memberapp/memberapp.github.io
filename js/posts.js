@@ -246,7 +246,14 @@ function addSingleStarsRating(disable, theElement) {
 }
 
 
-
+function memorandumPreview(){
+    var name=document.getElementById('settingsnametext').value;
+    var time=new Date().getTime()/1000;
+    document.getElementById('memorandumpreview').innerHTML=
+    "<br/>Memorandum Preview<br/><br/>"
+    + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '000', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID",'000',1,0,null)
+    + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('newposttamemorandum').value, '000', 'page', "MAINRATINGID", null,'000',1,null,null);
+}
 
 function getHTMLForPost(data, rank, page, starindex, dataReply) {
     if (checkForMutedWords(data)) return "";

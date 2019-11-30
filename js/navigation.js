@@ -134,19 +134,16 @@ function showBootstrap(qaddress) {
 
 function showNewPost() {
     show("newpost");
+    document.getElementById('memorandumpreview').innerHTML="";
     let topicNameHOSTILE=getCurrentTopicHOSTILE();
     document.getElementById('memotopic').value = topicNameHOSTILE;
     document.getElementById('memorandumtopic').value = topicNameHOSTILE;
     if (topicNameHOSTILE != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
         document.getElementById('memotopicarea').style.display = "block";
-        document.getElementById('memotopic').value = currentTopic;
-        document.getElementById('memorandumtopic').value = currentTopic;
     } else {
         document.getElementById('memorandumtopicarea').style.display = "none";
         document.getElementById('memotopicarea').style.display = "none";
-        document.getElementById('memotopic').value = "";
-        document.getElementById('memorandumtopic').value = "";
     }
     //Do calculations on maxlengths for topics and titles
     topictitleChanged("memorandum");

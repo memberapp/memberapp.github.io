@@ -211,14 +211,14 @@
                 <div>
                     title <span id="memorandumtitlelengthadvice">(0/217)</span><br />
                     <input class="memorandumtitle" id="memorandumtitle" maxlength="217"
-                        onchange="topictitleChanged('memorandum');" onkeypress="this.onchange();"
+                        onchange="topictitleChanged('memorandum'); memorandumPreview();" onkeypress="this.onchange();"
                         onpaste="this.onchange();" oninput="this.onchange();">
 
                 </div>
                 <div>
                     text<br />
-                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80"></textarea>
-
+                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();" onkeypress="this.onchange();"
+                    onpaste="this.onchange();" oninput="this.onchange();"></textarea>
                 </div>
                 <div>
                     <input id="newpostmemorandumbutton" value="Post a Memorandum" type="submit"
@@ -227,7 +227,9 @@
                         disabled>
                     <div id="newpostmemorandumcompleted"></div>
                 </div>
+                <div id="memorandumpreview" class="fatitem">
 
+                </div>
 
 
             </div>
