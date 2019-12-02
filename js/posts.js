@@ -103,6 +103,8 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Make sure we have id of the top level post
         if (data.length > 0) { roottxid = data[0].roottxid; }
 
+        setTopic(data[0].topic);
+
         //Find who started the thread
         var threadstarter=null;
         for (var i = 0; i < data.length; i++) {
