@@ -312,39 +312,22 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
     </li>`;
 }
 
-function getMapPostHTML(lat, lng) {
+function getMapPostHTML(lat, lng, requireLogin) {
 
+    var loginRequired="";
+    if(requireLogin){
+        loginRequired=` <a href="#login" onclick="showLogin();">(Login Required)</a>`;
+    }
     return `
     <div id="newgeopost" class="bgcolor">
-    <table class="table left">
-        <tbody>
-            <tr>
-                <td><input id="lat" size="10" type="hidden" value="`+ Number(lat) + `"></td>
-                <td><input id="lon" size="10" type="hidden" value="`+ Number(lng) + `"></td>
-                <td><input id="geohash" size="15" type="hidden"></td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <textarea id="newgeopostta" maxlength="217" name="text" rows="4" cols="30"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>
-                    <input id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
-                    <input id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit" disabled>
-                    <div id="newpostgeocompleted"></div>
-                </td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr style="height:20px"></tr>
-        </tbody>
-    </table>
+        <input id="lat" size="10" type="hidden" value="`+ Number(lat) + `">
+        <input id="lon" size="10" type="hidden" value="`+ Number(lng) + `">
+        <input id="geohash" size="15" type="hidden">
+        <textarea class="geoposttextarea" id="newgeopostta" maxlength="217" name="text" rows="4"></textarea><br/>
+        <input id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">`
+        +loginRequired
+        +`<input id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit" disabled>
+        <div id="newpostgeocompleted"></div>    
     </div>`;
 }
 
@@ -378,7 +361,7 @@ function getBootStrapHTML(pubkey, data, lbstcount) {
 //Map
 
 function getMapCloseButtonHTML() {
-    return `<font size="+3"><a href="#posts?type=top&amp;start=0&amp;limit=25" onclick="hideMap();showPosts(0,25,'all');">X</a></font>`;
+    return `<font size="+3"><a href="#posts?type=all&amp;start=0&amp;limit=25" onclick="hideMap();showPosts(0,25,'all');">X</a></font>`;
 }
 
 function getOSMattributionHTML() {

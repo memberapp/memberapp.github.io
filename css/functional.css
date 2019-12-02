@@ -676,3 +676,7 @@ label {
 textarea, .memorandumtitle, .memotopic, .memorandumtopic {
   width: 80%;
 }
+
+.geoposttextarea {
+  width: 90%;
+}
