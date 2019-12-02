@@ -102,13 +102,15 @@ function getReplyDiv(txid, page) {
 }
 
 function getReplyAndTipLinksHTML(page, txid, address) {
+    var santxid=san(txid);
     return `
-        <a id="replylink`+ page + san(txid) + `" onclick="showReplyBox('` + page + san(txid) + `');" href="javascript:;">reply</a>
-        <a id="tiplink`+ page + san(txid) + `" onclick="showTipBox('` + page + san(txid) + `');" href="javascript:;">tip</a>
-        <span id="tipbox`+ page + san(txid) + `" style="display:none">
-            <input id="tipamount`+ page + san(txid) + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
-            <input id="tipbutton`+ page + san(txid) + `" value="tip" type="submit" onclick="sendTip('` + san(txid) + `','` + san(address) + `','` + page + `');"/>
-            <input id="tipstatus`+ page + san(txid) + `"value="sending" type="submit" style="display:none" disabled/>
+        <a id="permalink`+ page + santxid + `" href="https://memberapp.github.io/?`+santxid.substring(0,4)+`#thread?post=`+santxid.substring(0,10)+`">permalink</a>
+        <a id="replylink`+ page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;">reply</a>
+        <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
+        <span id="tipbox`+ page + santxid + `" style="display:none">
+            <input id="tipamount`+ page + santxid + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
+            <input id="tipbutton`+ page + santxid + `" value="tip" type="submit" onclick="sendTip('` + santxid + `','` + san(address) + `','` + page + `');"/>
+            <input id="tipstatus`+ page + santxid + `"value="sending" type="submit" style="display:none" disabled/>
         </span>`;
 }
 
