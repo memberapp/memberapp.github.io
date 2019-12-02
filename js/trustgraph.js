@@ -15,14 +15,16 @@ function getAndPopulateTrustGraph(member, target) {
 
 
         var contentsHTML="";
+
         for (var i = 0; i < data.length; i++) {
             if (i == 0 && data[i].inter == '') {
                 //Direct Rating
                 contentsHTML += getDirectRatingHTML(data[i]);
                 directrating = Number(data[i].memberrating);
             } else {
-                contentsHTML += getIndirectRatingHTML(data[i]); 
-                if (i < 6) {
+                contentsHTML += getIndirectRatingHTML(data[i]);
+                //Try to get at least 6 ratings, or all the ratings if they are not follow based ratings 
+                if (i<6 || Number(data[i].memberrating) > 191) {
                     oneRemoveRating += Math.min(Number(data[i].memberrating), Number(data[i].interrating));
                     oneRemoveRatingCount++;
                 }
@@ -67,7 +69,7 @@ function getAndPopulateTrustGraph(member, target) {
             if (i == 0 && data[i].inter == '') {
                 var rawRating=Number(data[i].memberrating);
                 var textNote="";
-                if (rawRating==193){
+                if (rawRating==191){
                     textNote=" (Follows)";
                 }else if (rawRating==63){
                     textNote=" (Blocks)";
@@ -90,7 +92,7 @@ function getAndPopulateTrustGraph(member, target) {
                 var theRating = (Number(data[i].memberrating) / 64) + 1;
                 var rawRating=Number(data[i].memberrating);
                 var textNote="";
-                if (rawRating==193){
+                if (rawRating==191){
                     textNote=" (Follows)";
                 }else if (rawRating==63){
                     textNote=" (Blocks)";
@@ -110,7 +112,7 @@ function getAndPopulateTrustGraph(member, target) {
                 var theRating2 = (Number(data[i].interrating) / 64) + 1;
                 var rawRating=Number(data[i].interrating);
                 var textNote2="";
-                if (rawRating==193){
+                if (rawRating==191){
                     textNote2=" (Follows)";
                 }else if (rawRating==63){
                     textNote2=" (Blocks)";
