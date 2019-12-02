@@ -208,11 +208,12 @@ function showPosts(start, limit, type) {
     showPFC(start, limit, 'posts', pubkey, type);
 }
 function showComments(start, limit, type) {
-    showPFC(start, limit, 'comments', pubkey, type);
+    showPFC(start, limit, 'replies', pubkey, type);
 }
 
 function showPFC(start, limit, page, pubkey, type){
-    getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
+    //getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
+    showPostsNew('best', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
@@ -337,6 +338,8 @@ function showBlocking(qaddress) {
 }
 
 
+//suspend back/forward detection for map panning
+var suspendPageReload=false;
 
 var detectBackOrForward = function (onBack, onForward) {
     //Note, sometimes onForward is being called even though it a regular navigation click event
@@ -344,20 +347,15 @@ var detectBackOrForward = function (onBack, onForward) {
     let historyLength = window.history.length;
 
     return function () {
-        //map seems to be triggering this incorrectly, let's check it's not a map change
-        ignoremaphashchange=false;
-        if(window.location.hash.startsWith('#map')){
-            ignoremaphashchange=true;
-        }
 
         var hash = window.location.hash, length = window.history.length;
         if (hashHistory.length && historyLength == length) {
             if (hashHistory[hashHistory.length - 2] == hash) {
                 hashHistory = hashHistory.slice(0, -1);
-                if(!ignoremaphashchange)onBack();
+                if(!suspendPageReload)onBack();
             } else {
                 hashHistory.push(hash);
-                if(!ignoremaphashchange)onForward();
+                if(!suspendPageReload)onForward();
             }
         } else {
             hashHistory.push(hash);

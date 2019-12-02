@@ -47,7 +47,7 @@ function getAndPopulateMap(geohash, posttrxid) {
                 popup.txid = posttrxid;
             }
 
-            map.setView(zoomLocation, 17);
+            map.setView(zoomLocation, 15);
 
             if (posttrxid != null && posttrxid != "") {
                 popup.setLatLng(zoomLocation).setContent(mapThreadLoadingHTML("")).openOn(map);
@@ -62,6 +62,7 @@ function getAndPopulateMap(geohash, posttrxid) {
 
     //map.on('moveend', onMapMove);
     map.on('moveend', function () {
+        suspendPageReload=true;
         if (firstload && popup.txid != null) {
             location.href = "#map?geohash=" + encodeGeoHash(map.getCenter().lat, map.getCenter().lng) + "&post=" + popup.txid;
             firstload = false;
@@ -71,11 +72,13 @@ function getAndPopulateMap(geohash, posttrxid) {
         } else {
             location.href = "#map?geohash=" + encodeGeoHash(map.getCenter().lat, map.getCenter().lng);
         }
+        setTimeout(function () {suspendPageReload=false;},1000);
     });
 
     popup.on('close', function (e) {
         //This doesn't seem to fire.
         //Its purpose is to change the anchor link when the popup is closed
+        console.log('map popup closed');
         popup.txid = null;
         map.moveend();
     });
@@ -91,7 +94,9 @@ function openOverlay(e) {
     getAndPopulateThread(marker.roottxid, marker.txid, 'mapthread');
     popup.txid = marker.roottxid;
     popup.txidloc = e.latlng;
+    suspendPageReload=true;
     location.href = "#map?geohash=" + encodeGeoHash(e.latlng.lat, e.latlng.lng) + "&post=" + popup.txid;
+    setTimeout(function () {suspendPageReload=false;},1000);
     return;
 }
 
@@ -104,7 +109,7 @@ function openPreview(e) {
 
 function onMapClick(e) {
 
-    var htmlContent = getMapPostHTML(e.latlng.lat, e.latlng.lng);
+    var htmlContent = getMapPostHTML(e.latlng.lat, e.latlng.lng, (pubkey==''));
 
     postpopup.setLatLng(e.latlng).setContent(htmlContent).openOn(map);
 }
