@@ -101,11 +101,22 @@ function getReplyDiv(txid, page) {
         </div>`;
 }
 
-function getReplyAndTipLinksHTML(page, txid, address) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash) {
     var santxid=san(txid);
+    var articleLink="";
+    var mapLink="";
+
+    if(article){
+        articleLink=`<a id="articlelink`+ page + santxid + `" href="/?`+santxid.substring(0,4)+`#article?post=`+santxid.substring(0,10)+`">article</a> `;
+    }
+    if(geohash!=""){
+       mapLink=` <a id="maplink`+ page + santxid + `" onclick="showMap('` + san(geohash)  + `','` + santxid  + `');" href="javascript:;">🌍map</a> `;
+    }
     return `
-        <a id="permalink`+ page + santxid + `" href="https://memberapp.github.io/?`+santxid.substring(0,4)+`#thread?post=`+santxid.substring(0,10)+`">permalink</a>
-        <a id="replylink`+ page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;">reply</a>
+        <a id="permalink`+ page + santxid + `" href="/?`+santxid.substring(0,4)+`#thread?post=`+santxid.substring(0,10)+`">permalink</a> `
+        +articleLink
+        +mapLink
+        +`<a id="replylink`+ page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;">reply</a>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <span id="tipbox`+ page + santxid + `" style="display:none">
             <input id="tipamount`+ page + santxid + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
@@ -135,7 +146,7 @@ function getPostListItemHTML(postHTML) {
     return `<li>` + postHTML + `</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID, likedtxid, likeordislike, repliesroot, rating) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating) {
     if (name == null) { name = address.substring(0, 10); }
 
     repliesroot = Number(repliesroot);
@@ -180,7 +191,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + (Math.max(0, Number(replies))) + `&nbsp;comments</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
         + ` `
-        + getReplyAndTipLinksHTML(page, txid, address) +
+        + getReplyAndTipLinksHTML(page, txid, address, true, geohash) +
         `</span>
                         </div>`
         + getReplyDiv(txid, page) + `
@@ -239,7 +250,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address) + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address,false,"") + `</div>
                         </div>
                         `+ getReplyDiv(txid, page) + `
                     </div>

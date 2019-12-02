@@ -251,14 +251,14 @@ function memorandumPreview(){
     var time=new Date().getTime()/1000;
     document.getElementById('memorandumpreview').innerHTML=
     "<br/>Memorandum Preview<br/><br/>"
-    + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '000', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID",'000',1,0,null)
-    + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('newposttamemorandum').value, '000', 'page', "MAINRATINGID", null,'000',1,null,null);
+    + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID",'000',1,0,null)
+    + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('newposttamemorandum').value, '', 'page', "MAINRATINGID", null,'000',1,null,null);
 }
 
 function getHTMLForPost(data, rank, page, starindex, dataReply) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    var retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, rank, page, mainRatingID,data.likedtxid,data.likeordislike,data.repliesroot,data.rating);
+    var retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID,data.likedtxid,data.likeordislike,data.repliesroot,data.rating);
     if(dataReply!=null){
         retHTML+=getHTMLForReply(dataReply,0,page,starindex,null);
     }

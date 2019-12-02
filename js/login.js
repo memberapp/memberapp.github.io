@@ -136,6 +136,11 @@ function changeStyle(newStyle) {
     document.getElementById("pagestyle").setAttribute("href", "css/" + newStyle);
 }
 
+function setAddonStyle(newStyle) {
+    document.getElementById("addonstyle").setAttribute("href", "css/" + newStyle);
+}
+
+
 function refreshPool() {
     tq.utxopools[pubkey].refreshPool();
 }

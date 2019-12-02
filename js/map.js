@@ -34,7 +34,7 @@ function getAndPopulateMap(geohash, posttrxid) {
         //Popup for thread related to location
         //popup = L.popup({ autoPan: true, minWidth: 550, maxWidth: getWidth(), maxHeight: getHeight() });
         popup = L.popup({ autoPan: true });
-        postpopup = L.popup({ autoPan: true });
+        postpopup = L.popup({ autoPan: true, minWidth: 300 });
     }
     if (geohash == null || geohash == "") {
         //Try to zoom to current position
@@ -47,7 +47,7 @@ function getAndPopulateMap(geohash, posttrxid) {
                 popup.txid = posttrxid;
             }
 
-            map.setView(zoomLocation, 13);
+            map.setView(zoomLocation, 17);
 
             if (posttrxid != null && posttrxid != "") {
                 popup.setLatLng(zoomLocation).setContent(mapThreadLoadingHTML("")).openOn(map);
