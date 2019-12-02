@@ -107,13 +107,13 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash) {
     var mapLink="";
 
     if(article){
-        articleLink=`<a id="articlelink`+ page + santxid + `" href="/?`+santxid.substring(0,4)+`#article?post=`+santxid.substring(0,10)+`">article</a> `;
+        articleLink=`<a id="articlelink`+ page + santxid + `" href="?`+santxid.substring(0,4)+`#article?post=`+santxid.substring(0,10)+`">article</a> `;
     }
     if(geohash!=""){
        mapLink=` <a id="maplink`+ page + santxid + `" onclick="showMap('` + san(geohash)  + `','` + santxid  + `');" href="javascript:;">🌍map</a> `;
     }
     return `
-        <a id="permalink`+ page + santxid + `" href="/?`+santxid.substring(0,4)+`#thread?post=`+santxid.substring(0,10)+`">permalink</a> `
+        <a id="permalink`+ page + santxid + `" href="?`+santxid.substring(0,4)+`#thread?post=`+santxid.substring(0,10)+`">permalink</a> `
         +articleLink
         +mapLink
         +`<a id="replylink`+ page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;">reply</a>
