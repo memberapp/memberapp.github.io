@@ -218,7 +218,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     
     
 
-    return `<div ` + (txid == highlighttxid ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
+    return `<div ` + (txid.startsWith(highlighttxid) ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
                 <div`+ (blockstxid != null ? ` class="blocked"` : ``) + `>
                     <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike) + `</div>
                     <div class="commentdetails">
@@ -385,7 +385,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
         if ((data[i].retxid == targettxid || data[i].retxid==firstreplytxid) && data[i].txid!=firstreplytxid) {
-            contents = contents + `<li ` + (data[i].txid == highlighttxid ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid,"dontmatch") + "</li>";
+            contents = contents + `<li ` + (data[i].txid.startsWith(highlighttxid) ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid,"dontmatch") + "</li>";
         }
     }
     contents = contents + "</ul>";

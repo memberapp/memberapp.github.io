@@ -99,7 +99,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         data = mergeRepliesToRepliesBySameAuthor(data);
 
         //Make sure we have id of the top level post
-        if (data.length > 0 && roottxid == "") { roottxid = data[0].roottxid; }
+        if (data.length > 0) { roottxid = data[0].roottxid; }
 
         //Find who started the thread
         var threadstarter=null;
