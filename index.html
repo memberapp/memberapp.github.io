@@ -25,6 +25,7 @@
     <script src="js/leaflet/leaflet.js"></script>
 
     <link id="pagestyle" rel="stylesheet" href="css/functional.css">
+    <link id="addonstyle" rel="stylesheet" href="">
 </head>
 
 <body>
@@ -211,14 +212,14 @@
                 <div>
                     title <span id="memorandumtitlelengthadvice">(0/217)</span><br />
                     <input class="memorandumtitle" id="memorandumtitle" maxlength="217"
-                        onchange="topictitleChanged('memorandum');" onkeypress="this.onchange();"
+                        onchange="topictitleChanged('memorandum'); memorandumPreview();" onkeypress="this.onchange();"
                         onpaste="this.onchange();" oninput="this.onchange();">
 
                 </div>
                 <div>
                     text<br />
-                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80"></textarea>
-
+                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();" onkeypress="this.onchange();"
+                    onpaste="this.onchange();" oninput="this.onchange();"></textarea>
                 </div>
                 <div>
                     <input id="newpostmemorandumbutton" value="Post a Memorandum" type="submit"
@@ -227,7 +228,9 @@
                         disabled>
                     <div id="newpostmemorandumcompleted"></div>
                 </div>
+                <div id="memorandumpreview" class="fatitem">
 
+                </div>
 
 
             </div>
@@ -642,7 +645,7 @@
                         class="separatorwide"></span><a href="https://www.bitcoin.com">Bitcoin</a><span
                         class="separatorwide"></span><a href="https://github.com/memberapp/protocol">Protocol</a><span
                         class="separatorwide"></span><a href="mailto:memorycoincc@gmail.com">Contact</a><span
-                        class="separatorwide"></span>version 2.6.0.<u>9</u>
+                        class="separatorwide"></span>version 2.7.0.<u>9</u>
                 </span>
                 <br />
                 <br />

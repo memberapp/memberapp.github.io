@@ -5,6 +5,7 @@ function displayContentBasedOnURLParameters() {
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
 
     var url = window.location.href;
+
     var action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
 
     if (action.startsWith("show")) {
@@ -50,8 +51,10 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("topic")) {
         //Warning - topicname may contain special characters
         showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
+    } else if (action.startsWith("article")) {
+        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")),true);
     } else if (action.startsWith("thread")) {
-        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")));
+        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")),false);
     } else if (action.startsWith("settings")) {
         showSettings();
     } else if (action.startsWith("new")) {
@@ -70,6 +73,7 @@ function displayContentBasedOnURLParameters() {
 }
 
 function hideAll() {
+    setAddonStyle("");
     document.getElementById('feed').style.display = "none";
     document.getElementById('posts').style.display = "none";
     document.getElementById('comments').style.display = "none";
@@ -134,19 +138,16 @@ function showBootstrap(qaddress) {
 
 function showNewPost() {
     show("newpost");
+    document.getElementById('memorandumpreview').innerHTML="";
     let topicNameHOSTILE=getCurrentTopicHOSTILE();
     document.getElementById('memotopic').value = topicNameHOSTILE;
     document.getElementById('memorandumtopic').value = topicNameHOSTILE;
     if (topicNameHOSTILE != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
         document.getElementById('memotopicarea').style.display = "block";
-        document.getElementById('memotopic').value = currentTopic;
-        document.getElementById('memorandumtopic').value = currentTopic;
     } else {
         document.getElementById('memorandumtopicarea').style.display = "none";
         document.getElementById('memotopicarea').style.display = "none";
-        document.getElementById('memotopic').value = "";
-        document.getElementById('memorandumtopic').value = "";
     }
     //Do calculations on maxlengths for topics and titles
     topictitleChanged("memorandum");
@@ -312,8 +313,11 @@ function setTopic(topicNameHOSTILE){
 }
 
 
-function showThread(roottxid, txid) {
+function showThread(roottxid, txid, articleStyle) {
     getAndPopulateThread(roottxid, txid, 'thread');
+    if(articleStyle){
+        setAddonStyle("article.css");
+    }
 }
 
 function showFollowers(qaddress) {
@@ -340,14 +344,20 @@ var detectBackOrForward = function (onBack, onForward) {
     let historyLength = window.history.length;
 
     return function () {
+        //map seems to be triggering this incorrectly, let's check it's not a map change
+        ignoremaphashchange=false;
+        if(window.location.hash.startsWith('#map')){
+            ignoremaphashchange=true;
+        }
+
         var hash = window.location.hash, length = window.history.length;
         if (hashHistory.length && historyLength == length) {
             if (hashHistory[hashHistory.length - 2] == hash) {
                 hashHistory = hashHistory.slice(0, -1);
-                onBack();
+                if(!ignoremaphashchange)onBack();
             } else {
                 hashHistory.push(hash);
-                onForward();
+                if(!ignoremaphashchange)onForward();
             }
         } else {
             hashHistory.push(hash);

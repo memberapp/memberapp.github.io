@@ -101,14 +101,27 @@ function getReplyDiv(txid, page) {
         </div>`;
 }
 
-function getReplyAndTipLinksHTML(page, txid, address) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash) {
+    var santxid=san(txid);
+    var articleLink="";
+    var mapLink="";
+
+    if(article){
+        articleLink=`<a id="articlelink`+ page + santxid + `" href="?`+santxid.substring(0,4)+`#article?post=`+santxid.substring(0,10)+`">article</a> `;
+    }
+    if(geohash!=""){
+       mapLink=` <a id="maplink`+ page + santxid + `" onclick="showMap('` + san(geohash)  + `','` + santxid  + `');" href="javascript:;">🌍map</a> `;
+    }
     return `
-        <a id="replylink`+ page + san(txid) + `" onclick="showReplyBox('` + page + san(txid) + `');" href="javascript:;">reply</a>
-        <a id="tiplink`+ page + san(txid) + `" onclick="showTipBox('` + page + san(txid) + `');" href="javascript:;">tip</a>
-        <span id="tipbox`+ page + san(txid) + `" style="display:none">
-            <input id="tipamount`+ page + san(txid) + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
-            <input id="tipbutton`+ page + san(txid) + `" value="tip" type="submit" onclick="sendTip('` + san(txid) + `','` + san(address) + `','` + page + `');"/>
-            <input id="tipstatus`+ page + san(txid) + `"value="sending" type="submit" style="display:none" disabled/>
+        <a id="permalink`+ page + santxid + `" href="?`+santxid.substring(0,4)+`#thread?post=`+santxid.substring(0,10)+`">permalink</a> `
+        +articleLink
+        +mapLink
+        +`<a id="replylink`+ page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;">reply</a>
+        <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
+        <span id="tipbox`+ page + santxid + `" style="display:none">
+            <input id="tipamount`+ page + santxid + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
+            <input id="tipbutton`+ page + santxid + `" value="tip" type="submit" onclick="sendTip('` + santxid + `','` + san(address) + `','` + page + `');"/>
+            <input id="tipstatus`+ page + santxid + `"value="sending" type="submit" style="display:none" disabled/>
         </span>`;
 }
 
@@ -133,7 +146,7 @@ function getPostListItemHTML(postHTML) {
     return `<li>` + postHTML + `</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, rank, page, ratingID, likedtxid, likeordislike, repliesroot, rating) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating) {
     if (name == null) { name = address.substring(0, 10); }
 
     repliesroot = Number(repliesroot);
@@ -178,7 +191,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + (Math.max(0, Number(replies))) + `&nbsp;comments</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
         + ` `
-        + getReplyAndTipLinksHTML(page, txid, address) +
+        + getReplyAndTipLinksHTML(page, txid, address, true, geohash) +
         `</span>
                         </div>`
         + getReplyDiv(txid, page) + `
@@ -226,7 +239,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     message=addImageAndYoutubeMarkdown(message);
     
 
-    return `<div ` + (txid == highlighttxid ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
+    return `<div ` + (txid.startsWith(highlighttxid) ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
                 <div`+ (blockstxid != null ? ` class="blocked"` : ``) + `>
                     <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike) + `</div>
                     <div class="commentdetails">
@@ -237,7 +250,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address) + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address,false,"") + `</div>
                         </div>
                         `+ getReplyDiv(txid, page) + `
                     </div>
@@ -429,7 +442,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
         if ((data[i].retxid == targettxid || data[i].retxid==firstreplytxid) && data[i].txid!=firstreplytxid) {
-            contents = contents + `<li ` + (data[i].txid == highlighttxid ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid,"dontmatch") + "</li>";
+            contents = contents + `<li ` + (data[i].txid.startsWith(highlighttxid) ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid,"dontmatch") + "</li>";
         }
     }
     contents = contents + "</ul>";
