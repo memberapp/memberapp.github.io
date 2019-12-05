@@ -149,6 +149,30 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 }
 
 
+function getAndPopulateTopicList(){
+    show("topiclist");
+    document.getElementById("topiclist").innerHTML = document.getElementById("loading").innerHTML;
+    getJSON(server + '?action=topiclist&qaddress=' + pubkey ).then(function (data) {
+        
+        var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlagecount'>Last Post</td><td class='tlaction'>Action</td></tr>";
+        for (var i = 0; i < data.length; i++) {
+                contents += getHTMLForTopic(data[i]);
+            
+        }
+        contents+="</table>";
+        //Threads have no navbuttons
+        //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
+        document.getElementById("topiclist").innerHTML = contents;
+
+    }, function (status) { //error detection....
+        console.log('Something is wrong:'+status);
+        document.getElementById("topiclist").innerHTML = 'Something is wrong:'+status;
+        updateStatus(status);
+    });
+}
+
+
+
 function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start) {
     contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype, start);
     var pageElement=document.getElementById(page);

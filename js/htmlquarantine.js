@@ -133,9 +133,9 @@ function getAgeHTML(firstseen) {
     return `<span class="age"><a>` + timeSince(Number(firstseen)) + `</a></span>`;
 }
 
-function getTopicHTML(topic) {
+function getTopicHTML(topic, append) {
     return ` <span class="topic">` +
-        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">to topic/` + ds(topic) + `</a> `)
+        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">`+ append + capitalizeFirstLetter(ds(topic).substr(0,40)) + `</a> `)
         + `</span>`;
 }
 
@@ -185,7 +185,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                         submitted `
         + getAgeHTML(firstseen)
         + ` by ` + userHTML(address, name, ratingID, rating, 8)
-        + getTopicHTML(topic)
+        + getTopicHTML(topic, 'to topic/')
         + `</span>`
         + `<span class="subtextbuttons">`
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + (Math.max(0, Number(replies))) + `&nbsp;comments</a> `
@@ -410,7 +410,7 @@ function ratingAndReason2HTML(data) {
 }
 
 function clickActionHTML(action, qaddress) {
-    return `<a href='javascript:;' onclick='` + action + `("` + san(qaddress) + `");'>` + ds(action) + `</a>`;
+    return `<a href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `");'>` + ds(action) + `</a>`;
 }
 
 function getRatingComment(qaddress, data) {
@@ -430,4 +430,15 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     }
     contents = contents + "</ul>";
     return contents;
+}
+
+function getHTMLForTopic(data){
+    var ret="";
+    var subscribe = clickActionHTML("subscribe", data.topicname);
+    if(data.address!=null && data.address!=""){
+        subscribe=clickActionHTML("unsubscribe", data.topicname);;
+    }
+    ret+="<tr><td class='tltopicname'>"+getTopicHTML(data.topicname,'')+"</td><td class='tlmessagecount'>"+Number(data.messagescount)+"</td><td class='tlsubscount'>"+Number(data.subscount)+"</td><td class='tlagecount'>"+getAgeHTML(Number(data.mostrecent))+"</td><td class='tlaction'>"+subscribe+"</td></tr>";
+    return ret;
+    	
 }

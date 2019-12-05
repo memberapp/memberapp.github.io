@@ -48,6 +48,8 @@ function displayContentBasedOnURLParameters() {
         showComments(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("trustgraph")) {
         showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
+    } else if (action.startsWith("topiclist")) {
+        showTopicList();
     } else if (action.startsWith("topic")) {
         //Warning - topicname may contain special characters
         showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
@@ -101,7 +103,8 @@ function hideAll() {
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
-    
+    document.getElementById('topiclist').style.display = "none";
+
 }
 
 function show(theDiv) {
@@ -235,6 +238,10 @@ function getCurrentTopicHOSTILE(){
     return topicNameHOSTILE;
 }
 
+function showTopicList(){
+    getAndPopulateTopicList(); 
+}
+
 /*
 function topicChanged(){
     var selector=document.getElementById('topicselector');
@@ -303,7 +310,7 @@ function setTopic(topicNameHOSTILE){
     //Warning, topicname may contain hostile characters
     var selector=document.getElementById('topicselector');
 
-    if(topicNameHOSTILE==""){
+    if(topicNameHOSTILE==null || topicNameHOSTILE==""){
         selector.selectedIndex=0;
         return;
     }

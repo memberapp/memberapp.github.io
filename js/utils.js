@@ -128,6 +128,10 @@ function unicodeEscape(str) {
   return result;
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function getHeight() {
   var myWidth = 0, myHeight = 0;
   if (typeof (window.innerWidth) == 'number') {
