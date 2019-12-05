@@ -81,11 +81,11 @@ th {
   vertical-align: bottom;
   border-bottom: 2px solid #ddd;
   text-align: left;
-  padding: 8px;
+  padding: 4px;
 }
 
 td {
-  padding: 8px;
+  padding: 4px;
   line-height: 1.42857143;
   vertical-align: top;
   border-top: 1px solid #ddd;
@@ -722,4 +722,8 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
 /*Topic List*/
 .tlmessagecount, .tlsubscount,.tlagecount,.tlaction{
   text-align: right;
+}
+
+.tltopicname {
+  word-wrap: anywhere;
 }
