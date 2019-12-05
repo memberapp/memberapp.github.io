@@ -136,6 +136,7 @@ hr {
   }
   #balancedetails {
     font-weight: normal;
+    cursor: pointer;
   }
   .loggedout {
     display: inline;

@@ -4,32 +4,32 @@ function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-function timeSince(timestamp) {
+function timeSince(timestamp, compress) {
   let date = new Date(timestamp * 1000);
   var seconds = Math.floor((new Date() - date) / 1000);
 
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return interval + " years ago";
+    return interval + (compress?" year":" years ago");
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return interval + " months ago";
+    return interval + (compress?" mons":" months ago");
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return interval + " days ago";
+    return interval + (compress?" days":" days ago");
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return interval + " hours ago";
+    return interval + (compress?" hrs":" hours ago");
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return interval + " minutes ago";
+    return interval + (compress?" mins":" minutes ago");
   }
-  return Math.floor(seconds) + " seconds ago";
+  return Math.floor(seconds) + (compress?" secs":" seconds ago");
 }
 
 var getJSON = function (url) {

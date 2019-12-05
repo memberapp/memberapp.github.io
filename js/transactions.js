@@ -184,7 +184,7 @@ function setProfile() {
 }
 
 
-function subscribe(topicHOSTILE) {
+function sub(topicHOSTILE) {
     
     if (!checkForPrivKey()) return false;
 
@@ -199,7 +199,7 @@ function subscribe(topicHOSTILE) {
     tq.queueTransaction(tx);
 }
 
-function unsubscribe(topicHOSTILE) {
+function unsub(topicHOSTILE) {
     if (!checkForPrivKey()) return false;
 
     //Remove the clicked element so it can't be clicked again

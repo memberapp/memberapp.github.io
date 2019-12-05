@@ -129,8 +129,8 @@ function getScoresHTML(txid, likes, dislikes, tips) {
     return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `">` + Number(tips) + `</span> sats </span></span>`;
 }
 
-function getAgeHTML(firstseen) {
-    return `<span class="age"><a>` + timeSince(Number(firstseen)) + `</a></span>`;
+function getAgeHTML(firstseen,compress) {
+    return `<span class="age"><a>` + timeSince(Number(firstseen),compress) + `</a></span>`;
 }
 
 function getTopicHTML(topic, append) {
@@ -434,11 +434,11 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
 
 function getHTMLForTopic(data){
     var ret="";
-    var subscribe = clickActionHTML("subscribe", data.topicname);
+    var subscribe = clickActionHTML("sub", data.topicname);
     if(data.address!=null && data.address!=""){
-        subscribe=clickActionHTML("unsubscribe", data.topicname);;
+        subscribe=clickActionHTML("unsub", data.topicname);;
     }
-    ret+="<tr><td class='tltopicname'>"+getTopicHTML(data.topicname,'')+"</td><td class='tlmessagecount'>"+Number(data.messagescount)+"</td><td class='tlsubscount'>"+Number(data.subscount)+"</td><td class='tlagecount'>"+getAgeHTML(Number(data.mostrecent))+"</td><td class='tlaction'>"+subscribe+"</td></tr>";
+    ret+="<tr><td class='tltopicname'>"+getTopicHTML(data.topicname,'')+"</td><td class='tlmessagecount'>"+Number(data.messagescount)+"</td><td class='tlsubscount'>"+Number(data.subscount)+"</td><td class='tlagecount'>"+getAgeHTML(Number(data.mostrecent),true)+"</td><td class='tlaction'>"+subscribe+"</td></tr>";
     return ret;
     	
 }
