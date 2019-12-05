@@ -154,7 +154,7 @@ function getAndPopulateTopicList(){
     document.getElementById("topiclist").innerHTML = document.getElementById("loading").innerHTML;
     getJSON(server + '?action=topiclist&qaddress=' + pubkey ).then(function (data) {
         
-        var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlagecount'>Last</td><td class='tlaction'>Action</td></tr>";
+        var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr>";
         for (var i = 0; i < data.length; i++) {
                 contents += getHTMLForTopic(data[i]);
             

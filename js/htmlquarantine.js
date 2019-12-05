@@ -438,7 +438,7 @@ function getHTMLForTopic(data){
     if(data.address!=null && data.address!=""){
         subscribe=clickActionHTML("unsub", data.topicname);;
     }
-    ret+="<tr><td class='tltopicname'>"+getTopicHTML(data.topicname,'')+"</td><td class='tlmessagecount'>"+Number(data.messagescount)+"</td><td class='tlsubscount'>"+Number(data.subscount)+"</td><td class='tlagecount'>"+getAgeHTML(Number(data.mostrecent),true)+"</td><td class='tlaction'>"+subscribe+"</td></tr>";
+    ret+="<tr><td class='tltopicname'>"+getTopicHTML(data.topicname,'')+"</td><td class='tlmessagecount'>"+Number(data.messagescount)+"</td><td class='tlsubscount'>"+Number(data.subscount)+"</td><td class='tlaction'>"+subscribe+"</td></tr>";
     return ret;
     	
 }
