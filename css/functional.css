@@ -123,6 +123,10 @@ hr {
 
 /* Header Stuff */
 
+nav {
+  line-height: 25px;
+}
+
 @media only screen {
   header {
     border-bottom: 1px solid #4cca47;
