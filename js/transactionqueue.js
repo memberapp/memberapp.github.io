@@ -91,13 +91,7 @@ class UTXOPool {
     }
 
     //var balString=(Math.floor(total/1000)).toLocaleString()+"<span class='sats'>"+(total%1000)+"</span>";
-    var balString=total.toLocaleString();
-    
-    //Make last three digits superscript
-    if(balString.length>4){
-      balString=balString.substr(0,balString.length-4)+"<span class='sats'>"+balString.substr(balString.length-3,3)+"</span>";
-    }
-    document.getElementById("balance").innerHTML = balString;
+    document.getElementById("balance").innerHTML = balanceString(total,'');
   }
 
   refreshPool() {

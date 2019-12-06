@@ -89,7 +89,8 @@ function getVoteButtons(txid, address, likedtxid, likeordislike, score) {
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
 }
 
-function getReplyDiv(txid, page) {
+function getReplyDiv(txid, page, differentiator) {
+    page=page+differentiator;
     return `
         <div id="reply`+ page + san(txid) + `" style="display:none">
             <br/>
@@ -101,7 +102,9 @@ function getReplyDiv(txid, page) {
         </div>`;
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator) {
+
+    var page=page+differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid=san(txid);
     var articleLink="";
     var mapLink="";
@@ -126,7 +129,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash) {
 }
 
 function getScoresHTML(txid, likes, dislikes, tips) {
-    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `">` + Number(tips) + `</span> sats </span></span>`;
+    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `">` + balanceString(Number(tips)," sats ") + `</span></span></span>`;
 }
 
 function getAgeHTML(firstseen,compress) {
@@ -146,7 +149,7 @@ function getPostListItemHTML(postHTML) {
     return `<li>` + postHTML + `</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator) {
     if (name == null) { name = address.substring(0, 10); }
 
     repliesroot = Number(repliesroot);
@@ -191,10 +194,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + (Math.max(0, Number(replies))) + `&nbsp;comments</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
         + ` `
-        + getReplyAndTipLinksHTML(page, txid, address, true, geohash) +
+        + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator) +
         `</span>
                         </div>`
-        + getReplyDiv(txid, page) + `
+        + getReplyDiv(txid, page, differentiator) + `
                 </div>
             </div>`;
 }
@@ -216,7 +219,7 @@ function dslite(input) {
     return input;
   }
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message=dslite(message);
@@ -250,7 +253,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address,false,"") + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address,false,"", differentiator) + `</div>
                         </div>
                         `+ getReplyDiv(txid, page) + `
                     </div>

@@ -217,6 +217,34 @@ function localStorageSet(theSO, itemName, theString) {
   }
 }
 
+function balanceString(total,append){
+  var balString=(Number(total)/1000).toFixed(3);
+  //total.toLocaleString();
+  
+  //Make last three digits superscript
+  //if(balString.length>4){
+    balString=Number(balString.substr(0,balString.length-4)).toLocaleString()+"<span class='sats'>"+balString.substr(balString.length-3,3)+"</span>"+append;
+  //}
+  return balString;
+}
+
+function detectMultipleIDS() {
+  console.log("Run Multiple ID check");
+  var elms = document.getElementsByTagName("*"), i, len, ids = {}, id;
+  for (i = 0, len = elms.length; i < len; i += 1) {
+      id = elms[i].id || null;
+      if (id) {
+          ids[id] =  ids.hasOwnProperty(id) ? ids[id] +=1 : 0;
+      }
+  }
+  for (id in ids) {
+      if (ids.hasOwnProperty(id)) {
+          if (ids[id]) {
+              console.warn("Multiple IDs #" + id);
+          }
+      }
+  }
+}
 
 // Add a hook to make all links open a new window
 DOMPurify.addHook('afterSanitizeAttributes', function (node) {
