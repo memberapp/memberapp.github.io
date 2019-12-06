@@ -103,9 +103,13 @@
                     <span class="separatorwidebreakpoint"></span>
                     <span id="topiccontainer" class="topiccontainer">
                             <select id="orderselector" onchange="postsSelectorChanged();">
-                                <option value="best" selected="selected">Best</option>
-                                <option value="hot">Hot</option>
-                                <option value="new">New</option>
+                                <option value="hot" title="Hottest posts" selected="selected">Hot</option>
+                                <option value="new" title="Latest posts" >New</option>
+                                <option value="topd" title="Top posts from the past Day">Top-D</option>
+                                <option value="topw" title="Top posts from the past Week">Top-W</option>
+                                <option value="topm" title="Top posts from the past Month">Top-M</option>
+                                <option value="topy" title="Top posts from the past Year">Top-Y</option>
+                                <option value="topa" title="Top posts from all time">Top-A</option>        
                             </select>
     
                             <select id="contentselector" onchange="postsSelectorChanged();">
@@ -113,11 +117,11 @@
                                 <option value="replies">Replies</option>
                                 <option value="both">In Both</option>
                             </select>
-                            in
                             <select id="topicselector" onchange="postsSelectorChanged();">
                                 <option value="" selected="selected">All Topics</option>
                                 <option value=""></option>
                                 <option value="">---------------</option>
+                                <option value="MyTopics">My Topics</option>
                                 <option value="Member">Member</option>
                                 <option value="Bitcoin Cash">Bitcoin Cash</option>
                                 <option value="Bitcoin SV">Bitcoin SV</option>
@@ -131,10 +135,9 @@
                                 <option value="Ideas to improve our lives">Improvement</option>
                                 <option value="#911Truth">#911Truth</option>
                             </select>
-                            from
                             <select id="filterselector" onchange="postsSelectorChanged();">
                                 <option value="everyone" selected="selected">Everyone</option>
-                                <option value="myfeed">My Feed</option>
+                                <option value="mypeeps">My Peeps</option>
                             </select>
                         </span>
                 </nav>

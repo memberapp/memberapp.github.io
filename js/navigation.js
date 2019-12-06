@@ -216,7 +216,7 @@ function showComments(start, limit, type) {
 
 function showPFC(start, limit, page, pubkey, type){
     //getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
-    showPostsNew('best', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
+    showPostsNew('hot', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){

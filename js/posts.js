@@ -3,7 +3,7 @@
 "use strict";
 
 function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress){
-    if(order=="")order="best";
+    if(order=="")order="hot";
     if(content=="")content="posts";
     if(filter=="")filter="everyone";
     if(start=="")start=0;
@@ -19,6 +19,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Request content from the server and display it when received
     getJSON(server + '?action=show&order='+order+'&content='+content+'&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter='+filter+ '&address=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
+        //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length);
 
