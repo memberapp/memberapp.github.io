@@ -261,12 +261,30 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
             </div>
             `;
 }
+
+function makeYoutubeIframe(youtubeid){
+    var src=event.srcElement.parentElement.parentElement;
+    //setTimeout(function(){src.innerHTML='<div><br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+san(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe></div>';},100);
+    src.innerHTML='<div><br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+san(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe></div>';
+}
+
 function addImageAndYoutubeMarkdown(message){
     
     //Youtube
     message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
+    `<div><br/><a onclick="makeYoutubeIframe('$1');"><img class="youtubeiframe" src="https://img.youtube.com/vi/$1/0.jpg"></a></div>`
     );
+
+    /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
+    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
+    );*/
+
+    /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
+    '<br/><iframe class="youtubeiframe" src="https://img.youtube.com/vi/$1/0.jpg" frameborder="0" allowfullscreen></iframe>'
+    );*/
+
+    //'<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
+    
     
     //Imgur
     message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
