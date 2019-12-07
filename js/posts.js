@@ -388,9 +388,10 @@ function likePost(txid, tipAddress) {
     document.getElementById('score' + txid).className="betweenvotesscoreup";
 
     if(oneclicktip>=547){
+        var tipscount=Number(document.getElementById('tipscount' + txid).dataset.amount);
+        document.getElementById('tipscount' + txid).innerHTML=balanceString(tipscount+oneclicktip," sats ");
+        document.getElementById('tipscount' + txid).dataset.amount=tipscount+oneclicktip;
         sendTipRaw(txid, tipAddress, oneclicktip, privkey, null);
-        var tipscount=Number(document.getElementById('tipscount' + txid).innerHTML);
-        document.getElementById('tipscount' + txid).innerHTML=tipscount+oneclicktip;
     }else{
         sendLike(txid);
     }
@@ -430,9 +431,9 @@ function sendTip(txid, tipAddress, page) {
     defaulttip = tipAmount;
 
     document.getElementById('tipstatus' + page + txid).value = "Sending Tip . . " + tipAmount;
-
-    var tipscount=Number(document.getElementById('tipscount' + txid).innerHTML);
-    document.getElementById('tipscount' + txid).innerHTML=tipscount+oneclicktip;
+    var tipscount=Number(document.getElementById('tipscount' + txid).dataset.amount);
+    document.getElementById('tipscount' + txid).dataset.amount=tipscount+tipAmount;
+    document.getElementById('tipscount' + txid).innerHTML=balanceString(tipscount+tipAmount," sats ");
 
     sendTipRaw(txid, tipAddress, tipAmount, privkey,
         function () {
