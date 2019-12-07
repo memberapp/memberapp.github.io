@@ -116,6 +116,11 @@ function sanitizeAlphanumeric(input) {
   return input.replace(/[^A-Za-z0-9]/g, '');
 }
 
+function sanyoutubeid(input) {
+  if (input == null) { return ""; }
+  return input.replace(/[^A-Za-z0-9\-_]/g, '');
+}
+
 function unicodeEscape(str) {
   if (str == undefined) return "";
   var result = '', index = 0, charCode, escape;

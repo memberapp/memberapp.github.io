@@ -263,16 +263,16 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
 }
 
 function makeYoutubeIframe(youtubeid){
-    var src=event.srcElement.parentElement.parentElement;
+    var src=event.srcElement.parentElement.parentElement.parentElement;
     //setTimeout(function(){src.innerHTML='<div><br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+san(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe></div>';},100);
-    src.innerHTML='<div><br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+san(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe></div>';
+    src.innerHTML='<iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+sanyoutubeid(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe>';
 }
 
 function addImageAndYoutubeMarkdown(message){
     
     //Youtube
     message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    `<div><br/><a onclick="makeYoutubeIframe('$1');"><img class="youtubeiframe" src="https://img.youtube.com/vi/$1/0.jpg"></a></div>`
+    `<br/><div><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img src="https://img.youtube.com/vi/$1/0.jpg" width="480" height="270"><img class="play-icon" src="img/youtubeplaybutton.svg"></div></a></div>`
     );
 
     /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,

@@ -526,12 +526,36 @@ footer {
     line-height: 1.4285714285714286em;
     display: block;
   }
+
+  /* Youtube, Imgur, Twitter */
+
+
+
+/* No idea why 400% works here  */
+.youtubepreview .play-icon {
+
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  transform: translate(-50%, -50%);
+
+}
+
   @media only screen and (max-width: 860px) {
-    .youtubeiframe {
-      display: block;
+    .youtubepreview{
+      position: relative;
+      width: 100%;
       margin-top: 5px;
       margin-bottom: 5px;
+    }
+    .youtubeiframe {
+      display: block;
       width: 100%;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      
     }
     .twitteriframe {
       display: block;
@@ -547,6 +571,13 @@ footer {
     }
   }
   @media only screen and (min-width: 860px) {
+    .youtubepreview{
+      position: relative;
+      width: 480px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      height: 270px;
+    }
     .youtubeiframe {
       display: block;
       margin-top: 5px;
