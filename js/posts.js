@@ -3,7 +3,7 @@
 "use strict";
 
 function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress){
-    if(order=="")order="best";
+    if(order=="")order="hot";
     if(content=="")content="posts";
     if(filter=="")filter="everyone";
     if(start=="")start=0;
@@ -19,6 +19,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Request content from the server and display it when received
     getJSON(server + '?action=show&order='+order+'&content='+content+'&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter='+filter+ '&address=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
+        //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length);
 
@@ -33,7 +34,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-
+        detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -73,7 +74,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-
+        detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -141,12 +142,37 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
         scrollTo("highlightedcomment");
+        detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(pageName).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }
+
+
+function getAndPopulateTopicList(){
+    show("topiclist");
+    document.getElementById("topiclist").innerHTML = document.getElementById("loading").innerHTML;
+    getJSON(server + '?action=topiclist&qaddress=' + pubkey ).then(function (data) {
+        
+        var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr>";
+        for (var i = 0; i < data.length; i++) {
+                contents += getHTMLForTopic(data[i]);
+            
+        }
+        contents+="</table>";
+        //Threads have no navbuttons
+        //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
+        document.getElementById("topiclist").innerHTML = contents;
+        detectMultipleIDS();
+    }, function (status) { //error detection....
+        console.log('Something is wrong:'+status);
+        document.getElementById("topiclist").innerHTML = 'Something is wrong:'+status;
+        updateStatus(status);
+    });
+}
+
 
 
 function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start) {
@@ -168,6 +194,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 
     addStarRatings(data, page);
     window.scrollTo(0, 0);
+    detectMultipleIDS();
     return;
 }
 
@@ -253,14 +280,14 @@ function memorandumPreview(){
     var time=new Date().getTime()/1000;
     document.getElementById('memorandumpreview').innerHTML=
     "<br/>Memorandum Preview<br/><br/>"
-    + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID",'000',1,0,null)
-    + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('newposttamemorandum').value, '', 'page', "MAINRATINGID", null,'000',1,null,null);
+    + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID",'000',1,0,null,'preview')
+    + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('newposttamemorandum').value, '', 'page', "MAINRATINGID", null,'000',1,null,null,'preview');
 }
 
 function getHTMLForPost(data, rank, page, starindex, dataReply) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    var retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID,data.likedtxid,data.likeordislike,data.repliesroot,data.rating);
+    var retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID,data.likedtxid,data.likeordislike,data.repliesroot,data.rating,starindex);
     if(dataReply!=null){
         retHTML+=getHTMLForReply(dataReply,0,page,starindex,null);
     }
@@ -270,7 +297,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply) {
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likeordislike,data.blockstxid,data.rating);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid,data.likedtxid,data.likeordislike,data.blockstxid,data.rating,starindex);
 }
 
 function showReplyButton(txid, page, divForStatus) {

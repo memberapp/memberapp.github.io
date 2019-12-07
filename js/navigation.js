@@ -48,6 +48,8 @@ function displayContentBasedOnURLParameters() {
         showComments(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("trustgraph")) {
         showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
+    } else if (action.startsWith("topiclist")) {
+        showTopicList();
     } else if (action.startsWith("topic")) {
         //Warning - topicname may contain special characters
         showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
@@ -101,7 +103,8 @@ function hideAll() {
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
-    
+    document.getElementById('topiclist').style.display = "none";
+
 }
 
 function show(theDiv) {
@@ -213,7 +216,7 @@ function showComments(start, limit, type) {
 
 function showPFC(start, limit, page, pubkey, type){
     //getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
-    showPostsNew('best', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
+    showPostsNew('hot', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
@@ -233,6 +236,10 @@ function getCurrentTopicHOSTILE(){
     var selector=document.getElementById('topicselector');
     var topicNameHOSTILE=selector.options[selector.selectedIndex].value;
     return topicNameHOSTILE;
+}
+
+function showTopicList(){
+    getAndPopulateTopicList(); 
 }
 
 /*
@@ -303,7 +310,7 @@ function setTopic(topicNameHOSTILE){
     //Warning, topicname may contain hostile characters
     var selector=document.getElementById('topicselector');
 
-    if(topicNameHOSTILE==""){
+    if(topicNameHOSTILE==null || topicNameHOSTILE==""){
         selector.selectedIndex=0;
         return;
     }

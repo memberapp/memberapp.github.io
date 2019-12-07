@@ -89,7 +89,8 @@ function getVoteButtons(txid, address, likedtxid, likeordislike, score) {
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
 }
 
-function getReplyDiv(txid, page) {
+function getReplyDiv(txid, page, differentiator) {
+    page=page+differentiator;
     return `
         <div id="reply`+ page + san(txid) + `" style="display:none">
             <br/>
@@ -101,7 +102,9 @@ function getReplyDiv(txid, page) {
         </div>`;
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator) {
+
+    var page=page+differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid=san(txid);
     var articleLink="";
     var mapLink="";
@@ -126,16 +129,16 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash) {
 }
 
 function getScoresHTML(txid, likes, dislikes, tips) {
-    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `">` + Number(tips) + `</span> sats </span></span>`;
+    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `">` + balanceString(Number(tips)," sats ") + `</span></span></span>`;
 }
 
-function getAgeHTML(firstseen) {
-    return `<span class="age"><a>` + timeSince(Number(firstseen)) + `</a></span>`;
+function getAgeHTML(firstseen,compress) {
+    return `<span class="age"><a>` + timeSince(Number(firstseen),compress) + `</a></span>`;
 }
 
-function getTopicHTML(topic) {
+function getTopicHTML(topic, append) {
     return ` <span class="topic">` +
-        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">to topic/` + ds(topic) + `</a> `)
+        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">`+ append + capitalizeFirstLetter(ds(topic).substr(0,40)) + `</a> `)
         + `</span>`;
 }
 
@@ -146,7 +149,7 @@ function getPostListItemHTML(postHTML) {
     return `<li>` + postHTML + `</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator) {
     if (name == null) { name = address.substring(0, 10); }
 
     repliesroot = Number(repliesroot);
@@ -185,16 +188,16 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                         submitted `
         + getAgeHTML(firstseen)
         + ` by ` + userHTML(address, name, ratingID, rating, 8)
-        + getTopicHTML(topic)
+        + getTopicHTML(topic, 'to topic/')
         + `</span>`
         + `<span class="subtextbuttons">`
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + (Math.max(0, Number(replies))) + `&nbsp;comments</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
         + ` `
-        + getReplyAndTipLinksHTML(page, txid, address, true, geohash) +
+        + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator) +
         `</span>
                         </div>`
-        + getReplyDiv(txid, page) + `
+        + getReplyDiv(txid, page, differentiator) + `
                 </div>
             </div>`;
 }
@@ -216,7 +219,7 @@ function dslite(input) {
     return input;
   }
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message=dslite(message);
@@ -250,7 +253,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address,false,"") + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address,false,"", differentiator) + `</div>
                         </div>
                         `+ getReplyDiv(txid, page) + `
                     </div>
@@ -410,7 +413,7 @@ function ratingAndReason2HTML(data) {
 }
 
 function clickActionHTML(action, qaddress) {
-    return `<a href='javascript:;' onclick='` + action + `("` + san(qaddress) + `");'>` + ds(action) + `</a>`;
+    return `<a href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `");'>` + ds(action) + `</a>`;
 }
 
 function getRatingComment(qaddress, data) {
@@ -430,4 +433,15 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     }
     contents = contents + "</ul>";
     return contents;
+}
+
+function getHTMLForTopic(data){
+    var ret="";
+    var subscribe = clickActionHTML("sub", data.topicname);
+    if(data.address!=null && data.address!=""){
+        subscribe=clickActionHTML("unsub", data.topicname);;
+    }
+    ret+="<tr><td class='tltopicname'>"+getTopicHTML(data.topicname,'')+"</td><td class='tlmessagecount'>"+Number(data.messagescount)+"</td><td class='tlsubscount'>"+Number(data.subscount)+"</td><td class='tlaction'>"+subscribe+"</td></tr>";
+    return ret;
+    	
 }

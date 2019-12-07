@@ -32,6 +32,10 @@ window.onbeforeunload = function () {
 function init() {
     //check local app storage for key
 
+    //Show message if dev version in use
+    if(document.location.href.indexOf('freetrade.github.io/memberdev')!=-1){
+        document.getElementById('developmentversion').style.display='block';
+    }
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 

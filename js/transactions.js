@@ -183,6 +183,39 @@ function setProfile() {
     tq.queueTransaction(tx);
 }
 
+
+function sub(topicHOSTILE) {
+    
+    if (!checkForPrivKey()) return false;
+
+    //Remove the clicked element so it can't be clicked again
+    event.srcElement.style.display="none";
+    
+    const tx = {
+        data: ["0x6d0d", topicHOSTILE],
+        cash: { key: privkey }
+    }
+    updateStatus("Sending Subscribe");
+    tq.queueTransaction(tx);
+}
+
+function unsub(topicHOSTILE) {
+    if (!checkForPrivKey()) return false;
+
+    //Remove the clicked element so it can't be clicked again
+    event.srcElement.style.display="none";
+    
+    const tx = {
+        data: ["0x6d0e", topicHOSTILE],
+        cash: { key: privkey }
+    }
+    updateStatus("Sending Unsubscribe");
+    tq.queueTransaction(tx);
+}
+
+
+//Possible to merge following 4 functions?
+
 function follow(qaddress) {
     if (!checkForPrivKey()) return false;
 

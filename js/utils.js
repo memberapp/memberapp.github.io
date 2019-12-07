@@ -4,32 +4,32 @@ function sleep(time) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-function timeSince(timestamp) {
+function timeSince(timestamp, compress) {
   let date = new Date(timestamp * 1000);
   var seconds = Math.floor((new Date() - date) / 1000);
 
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return interval + " years ago";
+    return interval + (compress?" year":" years ago");
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return interval + " months ago";
+    return interval + (compress?" mons":" months ago");
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return interval + " days ago";
+    return interval + (compress?" days":" days ago");
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return interval + " hours ago";
+    return interval + (compress?" hrs":" hours ago");
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return interval + " minutes ago";
+    return interval + (compress?" mins":" minutes ago");
   }
-  return Math.floor(seconds) + " seconds ago";
+  return Math.floor(seconds) + (compress?" secs":" seconds ago");
 }
 
 var getJSON = function (url) {
@@ -128,6 +128,10 @@ function unicodeEscape(str) {
   return result;
 }
 
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 function getHeight() {
   var myWidth = 0, myHeight = 0;
   if (typeof (window.innerWidth) == 'number') {
@@ -213,6 +217,34 @@ function localStorageSet(theSO, itemName, theString) {
   }
 }
 
+function balanceString(total,append){
+  var balString=(Number(total)/1000).toFixed(3);
+  //total.toLocaleString();
+  
+  //Make last three digits superscript
+  //if(balString.length>4){
+    balString=Number(balString.substr(0,balString.length-4)).toLocaleString()+"<span class='sats'>"+balString.substr(balString.length-3,3)+"</span>"+append;
+  //}
+  return balString;
+}
+
+function detectMultipleIDS() {
+  console.log("Run Multiple ID check");
+  var elms = document.getElementsByTagName("*"), i, len, ids = {}, id;
+  for (i = 0, len = elms.length; i < len; i += 1) {
+      id = elms[i].id || null;
+      if (id) {
+          ids[id] =  ids.hasOwnProperty(id) ? ids[id] +=1 : 0;
+      }
+  }
+  for (id in ids) {
+      if (ids.hasOwnProperty(id)) {
+          if (ids[id]) {
+              console.warn("Multiple IDs #" + id);
+          }
+      }
+  }
+}
 
 // Add a hook to make all links open a new window
 DOMPurify.addHook('afterSanitizeAttributes', function (node) {
