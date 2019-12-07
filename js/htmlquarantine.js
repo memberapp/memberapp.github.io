@@ -272,7 +272,7 @@ function addImageAndYoutubeMarkdown(message){
     
     //Youtube
     message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    `<br/><div><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img src="https://img.youtube.com/vi/$1/0.jpg" width="480" height="270"><img class="play-icon" src="img/youtubeplaybutton.svg"></div></a></div>`
+    `<br/><div><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" src="img/youtubeplaybutton.svg"></div></a></div>`
     );
 
     /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,

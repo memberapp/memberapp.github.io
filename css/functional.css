@@ -543,7 +543,12 @@ footer {
 
 }
 
+
   @media only screen and (max-width: 860px) {
+    .youtubepreviewimage{
+      width: 100%;
+    }
+
     .youtubepreview{
       position: relative;
       width: 100%;
@@ -571,6 +576,11 @@ footer {
     }
   }
   @media only screen and (min-width: 860px) {
+    .youtubepreviewimage{
+      width: 480px;
+      height: 270px;  
+    }
+
     .youtubepreview{
       position: relative;
       width: 480px;
