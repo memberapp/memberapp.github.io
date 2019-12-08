@@ -255,7 +255,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                             `+ message + `
                             </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address,false,"", differentiator) + `</div>
                         </div>
-                        `+ getReplyDiv(txid, page) + `
+                        `+ getReplyDiv(txid, page, differentiator) + `
                     </div>
                 </div>
             </div>
