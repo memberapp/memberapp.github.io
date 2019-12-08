@@ -263,7 +263,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
 }
 
 function makeYoutubeIframe(youtubeid){
-    var src=event.srcElement.parentElement.parentElement.parentElement;
+    var src=event.srcElement.parentElement.parentElement.parentElement.parentElement;
     //setTimeout(function(){src.innerHTML='<div><br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+san(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe></div>';},100);
     src.innerHTML='<iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+sanyoutubeid(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe>';
 }
@@ -272,7 +272,7 @@ function addImageAndYoutubeMarkdown(message){
     
     //Youtube
     message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    `<div><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" src="img/youtubeplaybutton.svg"></div></a></div>`
+    `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" src="img/youtubeplaybutton.svg"></div></a></div></div>`
     );
 
     /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
@@ -288,7 +288,7 @@ function addImageAndYoutubeMarkdown(message){
     
     //Imgur
     message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
-    '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_blank"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></a>'
+    '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></div></a>'
     );
 
     //Twitter
@@ -297,7 +297,7 @@ function addImageAndYoutubeMarkdown(message){
     //This works but is ugly
     
     message=message.replace(tweetRegex,
-        '<iframe  class="twitteriframe" id="tweet_$3" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe>'
+        '<div class="twittercontainer"><iframe  class="twitteriframe" id="tweet_$3" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe></div>'
     );
 
     

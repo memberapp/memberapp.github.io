@@ -548,6 +548,14 @@ footer {
 
 }
 
+.imgurcontainer{
+
+}
+
+.twittercontainer{
+
+}
+
 
   @media only screen and (max-width: 860px) {
     .youtubepreviewimage{
@@ -560,24 +568,24 @@ footer {
       width: 100%;
       margin-top: 5px;
       margin-bottom: 5px;
-      vertical-align: top;
+
     }
     .youtubeiframe {
-      display: block;
+      display: inline;
       width: 100%;
       margin-top: 5px;
       margin-bottom: 5px;
       vertical-align: top;
     }
     .twitteriframe {
-      display: block;
+      display: inline;
       margin-top: 5px;
       margin-bottom: 5px;
       width: 100%;
       vertical-align: top;
     }
     .imgurimage {
-      display: block;
+      display: inline;
       margin-top: 5px;
       margin-bottom: 5px;
       width: 100%;
@@ -597,10 +605,10 @@ footer {
       margin-top: 5px;
       margin-bottom: 5px;
       height: 270px;
-      vertical-align: top;
+
     }
     .youtubeiframe {
-      display: block;
+      display: inline;
       margin-top: 5px;
       margin-bottom: 5px;
       height: 270px;
@@ -608,7 +616,7 @@ footer {
       vertical-align: top;
     }
     .twitteriframe {
-      display: block;
+      display: inline;
       margin-top: 5px;
       margin-bottom: 5px;
       height: 400px;
@@ -616,7 +624,7 @@ footer {
       vertical-align: top;
     }
     .imgurimage {
-      display: block;
+      display: inline;
       margin-top: 5px;
       margin-bottom: 5px;
       height: 300px;
