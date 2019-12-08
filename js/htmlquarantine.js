@@ -196,7 +196,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + ` `
         + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator) +
         `</span>
-                        </div>`
+                    </div>`
         + getReplyDiv(txid, page, differentiator) + `
                 </div>
             </div>`;
@@ -272,23 +272,23 @@ function addImageAndYoutubeMarkdown(message){
     
     //Youtube
     message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    `<br/><div><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" src="img/youtubeplaybutton.svg"></div></a></div>`
+    `<div><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" src="img/youtubeplaybutton.svg"></div></a></div>`
     );
 
     /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    '<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
+    '<iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
     );*/
 
     /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    '<br/><iframe class="youtubeiframe" src="https://img.youtube.com/vi/$1/0.jpg" frameborder="0" allowfullscreen></iframe>'
+    '<iframe class="youtubeiframe" src="https://img.youtube.com/vi/$1/0.jpg" frameborder="0" allowfullscreen></iframe>'
     );*/
 
-    //'<br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
+    //'<iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
     
     
     //Imgur
     message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
-    '<br/><a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_blank"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></a>'
+    '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_blank"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></a>'
     );
 
     //Twitter

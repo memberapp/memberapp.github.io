@@ -258,7 +258,12 @@ footer {
   .subtextbuttons a:hover {
     text-decoration: underline;
   }
-}
+
+  /*To keep number on the same line*/  
+  .numberlineone{
+    float: left;
+    font-size:1px;
+  }
 
 /*Vote buttons*/
 
@@ -547,6 +552,7 @@ footer {
   @media only screen and (max-width: 860px) {
     .youtubepreviewimage{
       width: 100%;
+      vertical-align: top;
     }
 
     .youtubepreview{
@@ -554,31 +560,35 @@ footer {
       width: 100%;
       margin-top: 5px;
       margin-bottom: 5px;
+      vertical-align: top;
     }
     .youtubeiframe {
       display: block;
       width: 100%;
       margin-top: 5px;
       margin-bottom: 5px;
-      
+      vertical-align: top;
     }
     .twitteriframe {
       display: block;
       margin-top: 5px;
       margin-bottom: 5px;
       width: 100%;
+      vertical-align: top;
     }
     .imgurimage {
       display: block;
       margin-top: 5px;
       margin-bottom: 5px;
       width: 100%;
+      vertical-align: top;
     }
   }
   @media only screen and (min-width: 860px) {
     .youtubepreviewimage{
       width: 480px;
-      height: 270px;  
+      height: 270px;
+      vertical-align: top;  
     }
 
     .youtubepreview{
@@ -587,6 +597,7 @@ footer {
       margin-top: 5px;
       margin-bottom: 5px;
       height: 270px;
+      vertical-align: top;
     }
     .youtubeiframe {
       display: block;
@@ -594,6 +605,7 @@ footer {
       margin-bottom: 5px;
       height: 270px;
       width: 480px;
+      vertical-align: top;
     }
     .twitteriframe {
       display: block;
@@ -601,6 +613,7 @@ footer {
       margin-bottom: 5px;
       height: 400px;
       width: 550px;
+      vertical-align: top;
     }
     .imgurimage {
       display: block;
@@ -608,6 +621,7 @@ footer {
       margin-bottom: 5px;
       height: 300px;
       max-width: 100%;
+      vertical-align: top;
     }
   }
 }
