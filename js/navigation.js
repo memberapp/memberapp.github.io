@@ -92,7 +92,7 @@ function hideAll() {
     document.getElementById('memberposts').innerHTML = "";
     document.getElementById('notifications').innerHTML = "";
     
-    document.getElementById('settings').style.display = "none";
+    document.getElementById('settingsanchor').style.display = "none";
     document.getElementById('loginbox').style.display = "none";
     document.getElementById('followers').style.display = "none";
     document.getElementById('following').style.display = "none";
@@ -105,7 +105,7 @@ function hideAll() {
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
-    document.getElementById('topiclist').style.display = "none";
+    document.getElementById('topiclistanchor').style.display = "none";
 
 }
 
@@ -180,7 +180,7 @@ function showSettings() {
     }
     getAndPopulateSettings();
     getAndPopulate(0, 25, 'memberposts', pubkey);
-    document.getElementById('settings').style.display = "block";
+    document.getElementById('settingsanchor').style.display = "block";
     document.getElementById('settingsfollow').style.display = "block";
 }
 
@@ -234,7 +234,7 @@ function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
 function showTopic(start, limit, topicnameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
     setTopic(topicnameHOSTILE);
-    if(type=="")type="hot";
+    if(type=="")type="new";
     getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', pubkey); 
     //getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }

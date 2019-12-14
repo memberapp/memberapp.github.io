@@ -138,7 +138,7 @@ function getAgeHTML(firstseen, compress) {
 
 function getTopicHTML(topic, append) {
     return ` <span class="topic">` +
-        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">` + append + capitalizeFirstLetter(ds(topic).substr(0, 40)) + `</a> `)
+        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25&order=new" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `','new')">` + append + capitalizeFirstLetter(ds(topic).substr(0, 40)) + `</a> `)
         + `</span>`;
 }
 

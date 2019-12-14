@@ -120,7 +120,7 @@ function login(loginkey) {
 function createNewAccount() {
     const privateKey = new bch.PrivateKey();
     login(privateKey.toWIF());
-    show('settings');
+    show('settingsanchor');
     alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
 }
 

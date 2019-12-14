@@ -153,8 +153,9 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
 
 function getAndPopulateTopicList(){
-    show("topiclist");
-    document.getElementById("topiclist").innerHTML = document.getElementById("loading").innerHTML;
+    var page="topiclistanchor";
+    show(page);
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
     getJSON(server + '?action=topiclist&qaddress=' + pubkey ).then(function (data) {
         
         var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr>";
@@ -165,11 +166,11 @@ function getAndPopulateTopicList(){
         contents+="</table>";
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
-        document.getElementById("topiclist").innerHTML = contents;
+        document.getElementById(page).innerHTML = contents;
         detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
-        document.getElementById("topiclist").innerHTML = 'Something is wrong:'+status;
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }
