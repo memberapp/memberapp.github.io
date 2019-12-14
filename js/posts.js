@@ -44,6 +44,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 }
 
 function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
+    console.log("deprecated getAndPopulate old called");
     if(type=="")type="all";
     //Clear Topic
     //currentTopic == "";

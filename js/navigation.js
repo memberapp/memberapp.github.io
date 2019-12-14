@@ -63,6 +63,8 @@ function displayContentBasedOnURLParameters() {
         showNewPost();
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
+    } else if (action.startsWith("myfeed")) {
+        showMyFeed();
     } else if (action.startsWith("login")) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
@@ -219,17 +221,22 @@ function showPFC(start, limit, page, pubkey, type){
     showPostsNew('hot', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
 }
 
+function showMyFeed(){
+    getAndPopulateNew('hot', 'posts', 'myfeed', 'myfeed', 0, 25, 'posts', pubkey); 
+}
+
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
     getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', pubkey); 
 }
 
 
 //Topics
-function showTopic(start, limit, topicNameHOSTILE, type) {
+function showTopic(start, limit, topicnameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
-    setTopic(topicNameHOSTILE);
-    if(type=="")type="all";
-    getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
+    setTopic(topicnameHOSTILE);
+    if(type=="")type="hot";
+    getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', pubkey); 
+    //getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }
 
 function getCurrentTopicHOSTILE(){
