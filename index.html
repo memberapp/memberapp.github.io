@@ -88,14 +88,14 @@
                         <span class="headerbuttons">
                                 <span onclick="refreshPool();return false;" title="Refresh Balance" id="balancedetails" class="balancedetails">₿<span id="balance">0</span></span>
                                 <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new" onclick="showNewPost();">📝</a>
-                                <a id="settingsbutton" title="Settings" class="btn" href="#settings" onclick="showSettings();">⚙️</a>
+                                <a id="myfeedbutton" title="My Feed" class="btn" href="#myfeed" onclick="showMyFeed();">📰</a>
                                 <a id="notificationsbutton" title="Notifications" class="btn" href="#notifications?start=0&amp;limit=25" onclick="showNotifications(0,25,'notifications');">🔔</a>
+                                <a id="settingsbutton" title="Settings" class="btn" href="#settings" onclick="showSettings();">⚙️</a>
                         </span>
                     </span>
                     <span class="headerbuttons">
-                            <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist" onclick="showTopicList();">📰</a>
+                            <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist" onclick="showTopicList();">📚</a>
                             <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
-                            <a id="refreshbutton" title="Refresh Content" class="btn" href="" onclick="displayContentBasedOnURLParameters();return false;">🔄</a>
                     </span>
                     <span id="loggedout" class="loggedout">
                             <a id="loginbutton" class="btn" href="#login" onclick="showLogin();">login</a>
@@ -122,6 +122,7 @@
                                 <option value=""></option>
                                 <option value="">---------------</option>
                                 <option value="MyTopics">My Topics</option>
+                                <option value="MyFeed">My Feed</option>
                                 <option value="Member">Member</option>
                                 <option value="Bitcoin Cash">Bitcoin Cash</option>
                                 <option value="Bitcoin SV">Bitcoin SV</option>
@@ -140,6 +141,7 @@
                                 <option value="mypeeps">My Peeps</option>
                             </select>
                         </span>
+                        <a id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href="" onclick="postsSelectorChanged();return false;">🔄</a>
                 </nav>
             </div>
         </header>
@@ -292,7 +294,7 @@
             </div>
 
 
-            <div id="settings" style="display: none;">
+            <div id="settingsanchor" style="display: none;">
                 <h2>Settings</h2>
                 <div>
                     <label for="settingsnametext">Handle</label>
@@ -500,9 +502,9 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Rating</th>
-                            <th>Name</th>
-                            <th>Address</th>
+                            <th>Member</th>
+                            <th></th>
+                            <th>Member</th>
                         </tr>
                     </thead>
                     <tbody id="follows">
@@ -516,9 +518,9 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Rating</th>
-                            <th>Name</th>
-                            <th>Address</th>
+                            <th>Member</th>
+                            <th></th>
+                            <th>Member</th>
                         </tr>
                     </thead>
                     <tbody id="followingtable">
@@ -532,8 +534,9 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Address</th>
+                            <th>Member</th>
+                            <th></th>
+                            <th>Member</th>
                         </tr>
                     </thead>
                     <tbody id="blocks">
@@ -547,8 +550,9 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Address</th>
+                            <th>Member</th>
+                            <th></th>
+                            <th>Member</th>
                         </tr>
                     </thead>
                     <tbody id="blockingtable">
@@ -595,13 +599,13 @@
                 <br />
             </div>
 
-            <div id="topiclist" style="display: none;">
+            <div id="topiclistanchor" style="display: none;">
             </div>
 
 
             <footer>
                 <hr />
-                <span id="developmentversion" style="display: none;">You're viewing the development preview version of Member. It's recommend to <a href="https://memberapp.github.io">use the main app at https://memberapp.github.io</a><br/><br/><hr /></span>
+                <span id="developmentversion" style="display: none;">You're viewing the development preview version of Member. It's recommend to <a href="https://memberapp.github.io">use the stable version at https://memberapp.github.io</a><br/><br/><hr /></span>
                 <span class="footerlinks">
                     <a
                         href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">Top
@@ -610,7 +614,7 @@
                         class="separatorwide"></span><a href="https://www.bitcoin.com">Bitcoin</a><span
                         class="separatorwide"></span><a href="https://github.com/memberapp/protocol">Protocol</a><span
                         class="separatorwide"></span><a href="mailto:memorycoincc@gmail.com">Contact</a><span
-                        class="separatorwide"></span>version 2.9.0.<u>9</u>
+                        class="separatorwide"></span>version 2.10.0.<u>9</u>
                 </span>
                 <br />
                 <br />

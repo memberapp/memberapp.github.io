@@ -34,7 +34,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-        detectMultipleIDS();
+        //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -44,6 +44,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 }
 
 function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
+    console.log("deprecated getAndPopulate old called");
     if(type=="")type="all";
     //Clear Topic
     //currentTopic == "";
@@ -74,7 +75,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-        detectMultipleIDS();
+        //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -142,7 +143,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
         scrollTo("highlightedcomment");
-        detectMultipleIDS();
+        //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(pageName).innerHTML = 'Something is wrong:'+status;
@@ -152,8 +153,9 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
 
 function getAndPopulateTopicList(){
-    show("topiclist");
-    document.getElementById("topiclist").innerHTML = document.getElementById("loading").innerHTML;
+    var page="topiclistanchor";
+    show(page);
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
     getJSON(server + '?action=topiclist&qaddress=' + pubkey ).then(function (data) {
         
         var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr>";
@@ -164,11 +166,11 @@ function getAndPopulateTopicList(){
         contents+="</table>";
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
-        document.getElementById("topiclist").innerHTML = contents;
-        detectMultipleIDS();
+        document.getElementById(page).innerHTML = contents;
+        //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
-        document.getElementById("topiclist").innerHTML = 'Something is wrong:'+status;
+        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
         updateStatus(status);
     });
 }
@@ -194,7 +196,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 
     addStarRatings(data, page);
     window.scrollTo(0, 0);
-    detectMultipleIDS();
+    //detectMultipleIDS();
     return;
 }
 
@@ -619,7 +621,8 @@ function mergeRepliesToRepliesBySameAuthor(data) {
                 for (var j = 0; j < data.length; j++) {
                     //replies must be within 6 hours of each other
                     if (data[i].retxid == data[j].txid && Math.abs(data[i].firstseen-data[j].firstseen)<6*60*60) {
-                        data[j].likes = (Number(data[j].likes) + Number(data[i].likes)).toString();
+                        //Subtract one as each post is automatically liked by its own author
+                        data[j].likes = (Number(data[j].likes) + Number(data[i].likes - 1)).toString();
                         data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();
                         data[j].tips = (Number(data[j].tips) + Number(data[i].tips)).toString();
 

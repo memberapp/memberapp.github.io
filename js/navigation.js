@@ -63,6 +63,8 @@ function displayContentBasedOnURLParameters() {
         showNewPost();
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
+    } else if (action.startsWith("myfeed")) {
+        showMyFeed();
     } else if (action.startsWith("login")) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
@@ -90,7 +92,7 @@ function hideAll() {
     document.getElementById('memberposts').innerHTML = "";
     document.getElementById('notifications').innerHTML = "";
     
-    document.getElementById('settings').style.display = "none";
+    document.getElementById('settingsanchor').style.display = "none";
     document.getElementById('loginbox').style.display = "none";
     document.getElementById('followers').style.display = "none";
     document.getElementById('following').style.display = "none";
@@ -103,7 +105,7 @@ function hideAll() {
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
-    document.getElementById('topiclist').style.display = "none";
+    document.getElementById('topiclistanchor').style.display = "none";
 
 }
 
@@ -178,7 +180,7 @@ function showSettings() {
     }
     getAndPopulateSettings();
     getAndPopulate(0, 25, 'memberposts', pubkey);
-    document.getElementById('settings').style.display = "block";
+    document.getElementById('settingsanchor').style.display = "block";
     document.getElementById('settingsfollow').style.display = "block";
 }
 
@@ -219,17 +221,22 @@ function showPFC(start, limit, page, pubkey, type){
     showPostsNew('hot', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
 }
 
+function showMyFeed(){
+    getAndPopulateNew('hot', 'posts', 'myfeed', 'myfeed', 0, 25, 'posts', pubkey); 
+}
+
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
     getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', pubkey); 
 }
 
 
 //Topics
-function showTopic(start, limit, topicNameHOSTILE, type) {
+function showTopic(start, limit, topicnameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
-    setTopic(topicNameHOSTILE);
-    if(type=="")type="all";
-    getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
+    setTopic(topicnameHOSTILE);
+    if(type=="")type="new";
+    getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', pubkey); 
+    //getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }
 
 function getCurrentTopicHOSTILE(){
