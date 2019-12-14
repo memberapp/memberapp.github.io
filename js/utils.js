@@ -234,7 +234,7 @@ function balanceString(total,append){
 }
 
 function detectMultipleIDS() {
-  console.log("Run Multiple ID check");
+  //console.log("Run Multiple ID check");
   var elms = document.getElementsByTagName("*"), i, len, ids = {}, id;
   for (i = 0, len = elms.length; i < len; i += 1) {
       id = elms[i].id || null;

@@ -34,7 +34,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-        detectMultipleIDS();
+        //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -75,7 +75,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-        detectMultipleIDS();
+        //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -143,7 +143,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
         scrollTo("highlightedcomment");
-        detectMultipleIDS();
+        //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(pageName).innerHTML = 'Something is wrong:'+status;
@@ -167,7 +167,7 @@ function getAndPopulateTopicList(){
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         document.getElementById(page).innerHTML = contents;
-        detectMultipleIDS();
+        //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -196,7 +196,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 
     addStarRatings(data, page);
     window.scrollTo(0, 0);
-    detectMultipleIDS();
+    //detectMultipleIDS();
     return;
 }
 
