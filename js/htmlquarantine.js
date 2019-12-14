@@ -20,7 +20,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
         name = address.substring(0, 10);
     }
     return `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">` + ds(name) + `</a>
-    <div data-ratingsize="`+Number(ratingStarSize)+`" data-ratingaddress="`+ san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div>`;
+    <div data-ratingsize="`+ Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div>`;
 }
 
 function postlinkHTML(txid, linktext) {
@@ -33,9 +33,9 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#show?start=` + (start - 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Back </a> `; }
+    { navbuttons += `<a class="next" href="#show?start=` + (start - 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Back </a> `; }
     if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#show?start=` + (start + 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content  + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter  + `',` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Next</div>`; }
+    { navbuttons += `<a class="back" href="#show?start=` + (start + 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">Next</div>`; }
     return navbuttons;
 
 }
@@ -56,7 +56,7 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
 
 function getItemListandNavButtonsHTML(contentsHTML, navbuttonsHTML, styletype, start) {
     if (styletype != "") {
-        return `<div class="itemlist"><ol start="`+(Number(start)+1)+`" class="` + styletype + `">` + contentsHTML + `</ol></div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
+        return `<div class="itemlist"><ol start="` + (Number(start) + 1) + `" class="` + styletype + `">` + contentsHTML + `</ol></div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
     } else {
         return `<div class="itemlist">` + contentsHTML + `</div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
     }
@@ -71,18 +71,18 @@ function getVoteButtons(txid, address, likedtxid, likeordislike, score) {
     var upvoteHTML;
     let scoreHTML = `<span class="betweenvotesscore" id="score` + san(txid) + `">` + Number(score) + `</span>`;
     var downvoteHTML;
-    
-    if (likeordislike=="1"){
+
+    if (likeordislike == "1") {
         upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="upvote"></span><span class="votetext">up</span></a>`;
         scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
-    }else{
+    } else {
         upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;" onclick="likePost('` + san(txid) + `','` + san(address) + `')"><span id="upvote` + san(txid) + `" class="votearrow" title="upvote"></span><span class="votetext">up</span></a>`;
     }
-    
-    if (likeordislike=="-1") {
+
+    if (likeordislike == "-1") {
         downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;"><span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="downvote"><span class="votetext">down</span></span></a>`;
         scoreHTML = `<span class="betweenvotesscoredown" id="score` + san(txid) + `">` + Number(score) + `</span>`;
-    }else{
+    } else {
         downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="downvote"><span class="votetext">down</span></span></a>`;
     }
 
@@ -90,7 +90,7 @@ function getVoteButtons(txid, address, likedtxid, likeordislike, score) {
 }
 
 function getReplyDiv(txid, page, differentiator) {
-    page=page+differentiator;
+    page = page + differentiator;
     return `
         <div id="reply`+ page + san(txid) + `" style="display:none">
             <br/>
@@ -104,22 +104,22 @@ function getReplyDiv(txid, page, differentiator) {
 
 function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator) {
 
-    var page=page+differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
-    var santxid=san(txid);
-    var articleLink="";
-    var mapLink="";
+    var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
+    var santxid = san(txid);
+    var articleLink = "";
+    var mapLink = "";
 
-    if(article){
-        articleLink=`<a id="articlelink`+ page + santxid + `" href="?`+santxid.substring(0,4)+`#article?post=`+santxid.substring(0,10)+`">article</a> `;
+    if (article) {
+        articleLink = `<a id="articlelink` + page + santxid + `" href="?` + santxid.substring(0, 4) + `#article?post=` + santxid.substring(0, 10) + `">article</a> `;
     }
-    if(geohash!=""){
-       mapLink=` <a id="maplink`+ page + santxid + `" onclick="showMap('` + san(geohash)  + `','` + santxid  + `');" href="javascript:;">🌍map</a> `;
+    if (geohash != "") {
+        mapLink = ` <a id="maplink` + page + santxid + `" onclick="showMap('` + san(geohash) + `','` + santxid + `');" href="javascript:;">🌍map</a> `;
     }
     return `
-        <a id="permalink`+ page + santxid + `" href="?`+santxid.substring(0,4)+`#thread?post=`+santxid.substring(0,10)+`">permalink</a> `
-        +articleLink
-        +mapLink
-        +`<a id="replylink`+ page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;">reply</a>
+        <a id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
+        + articleLink
+        + mapLink
+        + `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;">reply</a>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <span id="tipbox`+ page + santxid + `" style="display:none">
             <input id="tipamount`+ page + santxid + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
@@ -129,21 +129,21 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 }
 
 function getScoresHTML(txid, likes, dislikes, tips) {
-    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `"  data-amount="`+Number(tips)+`">` + balanceString(Number(tips)," sats ") + `</span></span></span>`;
+    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `"  data-amount="` + Number(tips) + `">` + balanceString(Number(tips), " sats ") + `</span></span></span>`;
 }
 
-function getAgeHTML(firstseen,compress) {
-    return `<span class="age"><a>` + timeSince(Number(firstseen),compress) + `</a></span>`;
+function getAgeHTML(firstseen, compress) {
+    return `<span class="age"><a>` + timeSince(Number(firstseen), compress) + `</a></span>`;
 }
 
 function getTopicHTML(topic, append) {
     return ` <span class="topic">` +
-        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">`+ append + capitalizeFirstLetter(ds(topic).substr(0,40)) + `</a> `)
+        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `')">` + append + capitalizeFirstLetter(ds(topic).substr(0, 40)) + `</a> `)
         + `</span>`;
 }
 
 function getPostListItemHTML(postHTML) {
-    if(postHTML==""){
+    if (postHTML == "") {
         return "";
     }
     return `<li>` + postHTML + `</li>`;
@@ -166,23 +166,23 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         }
     }
     //var messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a>`;
-    var messageLinksHTML=anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
-    messageLinksHTML=DOMPurify.sanitize(messageLinksHTML);
+    var messageLinksHTML = anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
+    messageLinksHTML = DOMPurify.sanitize(messageLinksHTML);
 
     //Add youtube etc
-    messageLinksHTML=addImageAndYoutubeMarkdown(messageLinksHTML);
+    messageLinksHTML = addImageAndYoutubeMarkdown(messageLinksHTML);
 
-    if(messageLinksHTML.indexOf("<a ")==-1 && messageLinksHTML.indexOf("<iframe ")==-1){//if no links
-        messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + messageLinksHTML + `</a>`;
+    if (messageLinksHTML.indexOf("<a ") == -1 && messageLinksHTML.indexOf("<iframe ") == -1) {//if no links
+        messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + messageLinksHTML + `</a>`;
     }
-    
+
     //Scan for XSS vulnerabilities
-    
+
 
     return `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
-                    <div class="title">`+messageLinksHTML+` </div>
+                    <div class="title">`+ messageLinksHTML + ` </div>
                     <div class="subtext">
                         <span class="submitter"> 
                         submitted `
@@ -206,41 +206,41 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
 function dslite(input) {
     //if (input === undefined) { return ""; };
     try {
-      //If this error out 'input.replace not a number' probably input is not a string type
-      input = input.replace(/&/g, '&amp;');
-      //input = input.replace(/</g, '&lt;');
-      //input = input.replace(/>/g, '&gt;');
-      input = input.replace(/"/g, '&quot;');
-      input = input.replace(/'/g, '&#x27;');
+        //If this error out 'input.replace not a number' probably input is not a string type
+        input = input.replace(/&/g, '&amp;');
+        //input = input.replace(/</g, '&lt;');
+        //input = input.replace(/>/g, '&gt;');
+        input = input.replace(/"/g, '&quot;');
+        input = input.replace(/'/g, '&#x27;');
     } catch (e) {
-      //Anything funky goes on, we'll return safe empty string
-      return "";
+        //Anything funky goes on, we'll return safe empty string
+        return "";
     }
     return input;
-  }
+}
 
 function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
-    message=dslite(message);
+    message = dslite(message);
 
     //add images and youtube markdown
     //message=addImageAndYoutubeMarkdown(message);
     //add markdown
-    message=ShowdownConverter.makeHtml(message);
+    message = ShowdownConverter.makeHtml(message);
     //message=SnuOwnd.getParser().render(message);
 
     //add links
     //message=anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
     //old newline
     //anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>')
-    
+
     //check for XSS vulnerabilities
-    message=DOMPurify.sanitize(message);
-    
+    message = DOMPurify.sanitize(message);
+
     //Add youtube links
-    message=addImageAndYoutubeMarkdown(message);
-    
+    message = addImageAndYoutubeMarkdown(message);
+
 
     return `<div ` + (txid.startsWith(highlighttxid) ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
                 <div`+ (blockstxid != null ? ` class="blocked"` : ``) + `>
@@ -253,7 +253,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address,false,"", differentiator) + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator) + `</div>
                         </div>
                         `+ getReplyDiv(txid, page, differentiator) + `
                     </div>
@@ -262,17 +262,17 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
             `;
 }
 
-function makeYoutubeIframe(youtubeid){
-    var src=event.srcElement.parentElement.parentElement.parentElement.parentElement;
+function makeYoutubeIframe(youtubeid) {
+    var src = event.srcElement.parentElement.parentElement.parentElement.parentElement;
     //setTimeout(function(){src.innerHTML='<div><br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+san(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe></div>';},100);
-    src.innerHTML='<iframe width="480" height="270" class="youtubeiframe" src="https://www.youtube.com/embed/'+sanyoutubeid(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe>';
+    src.innerHTML = '<iframe width="480" height="270" class="youtubeiframe" src="https://www.youtube.com/embed/' + sanyoutubeid(youtubeid) + '?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe>';
 }
 
-function addImageAndYoutubeMarkdown(message){
-    
+function addImageAndYoutubeMarkdown(message) {
+
     //Youtube
-    message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
-    `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
+    message = message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
+        `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="makeYoutubeIframe('$1');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
     );
 
     /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
@@ -284,23 +284,23 @@ function addImageAndYoutubeMarkdown(message){
     );*/
 
     //'<iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
-    
-    
+
+
     //Imgur
-    message=message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
-    '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img height="300" max-width="100%" class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></div></a>'
+    message = message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
+        '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img height="300" max-width="100%" class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></div></a>'
     );
 
     //Twitter
-    var tweetRegex=/<a.*https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/;
-    
+    var tweetRegex = /<a.*https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/;
+
     //This works but is ugly
-    
-    message=message.replace(tweetRegex,
+
+    message = message.replace(tweetRegex,
         '<div class="twittercontainer"><iframe  height="400" width="550" class="twitteriframe" id="tweet_$3" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe></div>'
     );
 
-    
+
     //Twitter's preferred way to do this doesn't work well with Member's html construction
     /*
     let arr=message.match(tweetRegex);
@@ -335,9 +335,9 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
 
 function getMapPostHTML(lat, lng, requireLogin) {
 
-    var loginRequired="";
-    if(requireLogin){
-        loginRequired=` <a href="#login" onclick="showLogin();">(Login Required)</a>`;
+    var loginRequired = "";
+    if (requireLogin) {
+        loginRequired = ` <a href="#login" onclick="showLogin();">(Login Required)</a>`;
     }
     return `
     <div id="newgeopost" class="bgcolor">
@@ -346,8 +346,8 @@ function getMapPostHTML(lat, lng, requireLogin) {
         <input id="geohash" size="15" type="hidden">
         <textarea class="geoposttextarea" id="newgeopostta" maxlength="217" name="text" rows="4"></textarea><br/>
         <input id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">`
-        +loginRequired
-        +`<input id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit" disabled>
+        + loginRequired
+        + `<input id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit" disabled>
         <div id="newpostgeocompleted"></div>    
     </div>`;
 }
@@ -356,12 +356,13 @@ function getRefreshButtonHTML() {
     return `<a id="refreshbutton" class="btn" href="" onclick="displayContentBasedOnURLParameters();return false;">🔄</a>`;
 }
 
-function getMembersWithRatingHTML(i, page, data) {
-    return `<tr>
-                <td><div id="rating`+ i + page + san(data.address) + `"</div></td>
-                <td>`+ getMemberLink(data.address, data.name) + `</td>
-                <td>`+ getAddressLink(data.address, data.name) + `</td>                
-                </tr>`;
+function getMembersWithRatingHTML(i, page, data, action, reverse) {
+    var field1 = `<td>` + userHTML(data.address, data.name, i + page + data.address, data.rating, 8) + `</td>`;
+    var field2 = `<td>` + getMemberLink(data.address2, data.name2) + `</td>`;
+    if (reverse) {
+        return `<tr>` + field2 + `<td>` + action + `</td>` + field1 + `</tr>`;
+    }
+    return `<tr>` + field1 + `<td>` + action + `</td>` + field2 + `</tr>`;
 }
 
 
@@ -445,21 +446,21 @@ function privatekeyClickToShowHTML() {
 function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, firstreplytxid) {
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
-        if ((data[i].retxid == targettxid || data[i].retxid==firstreplytxid) && data[i].txid!=firstreplytxid) {
-            contents = contents + `<li ` + (data[i].txid.startsWith(highlighttxid) ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid,"dontmatch") + "</li>";
+        if ((data[i].retxid == targettxid || data[i].retxid == firstreplytxid) && data[i].txid != firstreplytxid) {
+            contents = contents + `<li ` + (data[i].txid.startsWith(highlighttxid) ? `class="highlightli" id="highlightli"` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
         }
     }
     contents = contents + "</ul>";
     return contents;
 }
 
-function getHTMLForTopic(data){
-    var ret="";
+function getHTMLForTopic(data) {
+    var ret = "";
     var subscribe = clickActionHTML("sub", data.topicname);
-    if(data.address!=null && data.address!=""){
-        subscribe=clickActionHTML("unsub", data.topicname);;
+    if (data.address != null && data.address != "") {
+        subscribe = clickActionHTML("unsub", data.topicname);;
     }
-    ret+="<tr><td class='tltopicname'>"+getTopicHTML(data.topicname,'')+"</td><td class='tlmessagecount'>"+Number(data.messagescount)+"</td><td class='tlsubscount'>"+Number(data.subscount)+"</td><td class='tlaction'>"+subscribe+"</td></tr>";
+    ret += "<tr><td class='tltopicname'>" + getTopicHTML(data.topicname, '') + "</td><td class='tlmessagecount'>" + Number(data.messagescount) + "</td><td class='tlsubscount'>" + Number(data.subscount) + "</td><td class='tlaction'>" + subscribe + "</td></tr>";
     return ret;
-    	
+
 }

@@ -620,7 +620,8 @@ function mergeRepliesToRepliesBySameAuthor(data) {
                 for (var j = 0; j < data.length; j++) {
                     //replies must be within 6 hours of each other
                     if (data[i].retxid == data[j].txid && Math.abs(data[i].firstseen-data[j].firstseen)<6*60*60) {
-                        data[j].likes = (Number(data[j].likes) + Number(data[i].likes)).toString();
+                        //Subtract one as each post is automatically liked by its own author
+                        data[j].likes = (Number(data[j].likes) + Number(data[i].likes - 1)).toString();
                         data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();
                         data[j].tips = (Number(data[j].tips) + Number(data[i].tips)).toString();
 

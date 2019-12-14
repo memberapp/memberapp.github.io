@@ -7,7 +7,7 @@ function getAndPopulateFollowers(qaddress) {
     getJSON(server + '?action=followers&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getMembersWithRatingHTML(i,page,data[i]);
+            contents = contents + getMembersWithRatingHTML(i,page,data[i],"Follows",false);
         }
 
         document.getElementById('follows').innerHTML = contents;
@@ -30,7 +30,7 @@ function getAndPopulateFollowing(qaddress) {
     getJSON(server + '?action=following&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getMembersWithRatingHTML(i,page,data[i]);
+            contents = contents + getMembersWithRatingHTML(i,page,data[i],"Follows",true);
         }
         document.getElementById('followingtable').innerHTML = contents;
 
@@ -52,7 +52,7 @@ function getAndPopulateBlockers(qaddress){
     getJSON(server+'?action=blockers&qaddress='+qaddress+'&address='+pubkey).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
-            contents=contents+getMembersWithRatingHTML(i,page,data[i]);
+            contents=contents+getMembersWithRatingHTML(i,page,data[i],"Mutes",false);
         }
         document.getElementById('blocks').innerHTML = contents;
         
@@ -76,7 +76,7 @@ function getAndPopulateBlocking(qaddress){
     getJSON(server+'?action=blocking&qaddress='+qaddress+'&address='+pubkey).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
-            contents=contents+getMembersWithRatingHTML(i,page,data[i]);
+            contents=contents+getMembersWithRatingHTML(i,page,data[i],"Mutes",true);
         }
         document.getElementById('blockingtable').innerHTML = contents;
         
