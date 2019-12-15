@@ -113,4 +113,5 @@ function getHTMLForNotification(data, rank, page, starindex) {
             return '';
             break;
     }
+    return '';
 }

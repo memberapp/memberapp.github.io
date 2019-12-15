@@ -222,7 +222,7 @@ function showPFC(start, limit, page, pubkey, type){
 }
 
 function showMyFeed(){
-    getAndPopulateNew('hot', 'posts', 'myfeed', 'myfeed', 0, 25, 'posts', pubkey); 
+    getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, 25, 'posts', pubkey); 
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
