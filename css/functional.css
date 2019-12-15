@@ -588,7 +588,8 @@ footer {
       display: inline;
       margin-top: 5px;
       margin-bottom: 5px;
-      width: 100%;
+      max-height: 300px;
+      max-width: 100%;
       vertical-align: top;
     }
   }
