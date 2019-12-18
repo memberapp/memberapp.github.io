@@ -34,7 +34,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-        //detectMultipleIDS();
+        listenForTwitFrameResizes();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
