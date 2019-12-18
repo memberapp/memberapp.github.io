@@ -301,5 +301,5 @@ window.onmessage = (oe) => {
   if (oe.origin != "https://twitframe.com")
       return;
   if (oe.data.height && oe.data.element.match(/^tweet_/))
-      document.getElementById(oe.data.element).css("height", parseInt(oe.data.height) + "px");
+      document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px"; 
 }

@@ -34,7 +34,6 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-        listenForTwitFrameResizes();
     }, function (status) { //error detection....
         console.log('Something is wrong:'+status);
         document.getElementById(page).innerHTML = 'Something is wrong:'+status;
@@ -181,19 +180,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
     contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype, start);
     var pageElement=document.getElementById(page);
     pageElement.innerHTML = contents; //display the result in the HTML element
-    //Add twitter posts
-    //twttr.widgets.load(pageElement);
-    /*for(var i=0;i<twitterEmbeds.length;i++){
-        twttr.widgets.createTweet(twitterEmbeds[0], document.getElementById(twitterEmbeds[0]), {});
-    }
-    twitterEmbeds=new Array();*/
-
-    /*var listofelements=document.querySelectorAll('*[id^="tweet_"]');
-    listofelements[0].onload = function() {
-        this.contentWindow.postMessage({ element: this.id, query: "height" },"https://twitframe.com");
-    };*/
-  
-
+    listenForTwitFrameResizes();
     addStarRatings(data, page);
     window.scrollTo(0, 0);
     //detectMultipleIDS();
