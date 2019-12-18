@@ -283,3 +283,23 @@ window.onmessage = (event) => {
 };*/
 
 /* listen for the return message once the tweet has been loaded */
+
+function listenForTwitFrameResizes() {
+  /* find all iframes with ids starting with "tweet_" */
+  var tweetIframes=document.querySelectorAll("*[id^='tweet_']");
+  tweetIframes.forEach(element => {
+    element.onload=function() {
+      this.contentWindow.postMessage({ element: this.id, query: "height" },
+          "https://twitframe.com");
+    };
+  });
+  
+}
+
+/* listen for the return message once the tweet has been loaded */
+window.onmessage = (oe) => {
+  if (oe.origin != "https://twitframe.com")
+      return;
+  if (oe.data.height && oe.data.element.match(/^tweet_/))
+      document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px"; 
+}
