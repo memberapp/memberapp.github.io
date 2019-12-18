@@ -170,7 +170,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     messageLinksHTML = DOMPurify.sanitize(messageLinksHTML);
 
     //Add youtube etc
-    messageLinksHTML = addImageAndYoutubeMarkdown(messageLinksHTML);
+    messageLinksHTML = addImageAndYoutubeMarkdown(messageLinksHTML,differentiator);
 
     if (messageLinksHTML.indexOf("<a ") == -1 && messageLinksHTML.indexOf("<iframe ") == -1) {//if no links
         messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + messageLinksHTML + `</a>`;
@@ -239,7 +239,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     message = DOMPurify.sanitize(message);
 
     //Add youtube links
-    message = addImageAndYoutubeMarkdown(message);
+    message = addImageAndYoutubeMarkdown(message,differentiator);
 
 
     return `<div ` + (txid.startsWith(highlighttxid) ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
@@ -268,7 +268,7 @@ function makeYoutubeIframe(youtubeid) {
     src.innerHTML = '<iframe width="480" height="270" class="youtubeiframe" src="https://www.youtube.com/embed/' + sanyoutubeid(youtubeid) + '?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe>';
 }
 
-function addImageAndYoutubeMarkdown(message) {
+function addImageAndYoutubeMarkdown(message,differentiator) {
 
     //Youtube
     message = message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
@@ -295,9 +295,9 @@ function addImageAndYoutubeMarkdown(message) {
     var tweetRegex = /<a.*https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/;
 
     //This works but is ugly
-
+    //Add differentiator so that if a tweet is shown multiple times, it has a different id each time
     message = message.replace(tweetRegex,
-        '<div class="twittercontainer"><iframe  height="400" width="550" class="twitteriframe" id="tweet_$3" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe></div>'
+        '<div class="twittercontainer"><iframe  height="400" width="550" class="twitteriframe" id="tweet_$3'+differentiator+'" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe></div>'
     );
 
 

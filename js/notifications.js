@@ -65,7 +65,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             break;
         case "rating":
             var theRating = 0;
-            if (data.rating != null && data.rating != "") { theRating = (ds(data.rating) / 64) + 1; }
+            if (data.rating != null && data.rating != "") { theRating = (Number(data.rating) / 64) + 1; }
             theRating = Math.round(theRating * 10) / 10;
             return notificationItemHTML(
                 "rating",

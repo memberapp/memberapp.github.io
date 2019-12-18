@@ -21,6 +21,7 @@ ShowdownConverter.setOption('simpleLineBreaks', true);
 ShowdownConverter.setOption('simplifiedAutoLink', true);
 ShowdownConverter.setOption('openLinksInNewWindow', true);
 ShowdownConverter.setOption('ghMentions', false);
+
 //literalMidWordUnderscores
 
 //Create warning if user tries to reload or exit while transactions are in progress or queued.
