@@ -298,7 +298,6 @@ function listenForTwitFrameResizes() {
 
 /* listen for the return message once the tweet has been loaded */
 window.onmessage = (oe) => {
-  var oe = e.originalEvent;
   if (oe.origin != "https://twitframe.com")
       return;
   if (oe.data.height && oe.data.element.match(/^tweet_/))
