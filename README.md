@@ -6,27 +6,20 @@ Notably it displays and creates posts, likes, tips, profiles, reputational ratin
 It is designed to be a 'fat' javascript client app that runs against a relatively dumb server. 
 You can see it online here - https://memberapp.github.io
 
-Branches
---------
-Github requires only master branch can be used for webpages, so development branch is main branch.
-
 
 Client
 ------
-The client is an HTML5/JS BCH blockchain browser app with no outside js dependencies. It can be run from a website, or from a local file system.
-Currently it connects to the Member server to get content, and uses Bitbox to get utxos and broadcast transactions.
+The client is an HTML5/JS BCH blockchain browser app with no outside js dependencies. It can be run from a website, or from a local file system. (Brave/Edge browsers do not allow local storage, so Firefox/Chrome recommended)
+
+It connects to a Member server to get content and broadcast transactions. It can also get utxos from a Member server if that server has a BCHD utxo index. Otherwise it gets utxos from Bitbox
 
 Projects
 
 ->New CSS designs
 
--->Particularly one similar to Reddit.
-
-
 ->Security review
 
 -->Review handling of private keys, assess for XSS vulnerabilities, make recommendations for improvements
-
 
 ->Bug tracker
 
@@ -37,29 +30,8 @@ Server
 
 The server currently consists of
 
-Node.js program with memory leak, needs reset every 6 hours
-
-PHP scripts to serve requests from client
-
-MySQL server
-
-Neo4j server (for trust graph)
-
-Bitbox server dependency
-
-Bitcoin Unlimited node
-
-Projects
-
-->Fix memory leak in Node.js
-
-->Merge PHP scripts into Node.js program
-
-->Replicate parts of Bitbox functionality required (get utxos, broadcast tx mostly)
-
-->Allow alternatives to running mysql server - maybe using file based db system
-
-->Transition to BCHD node
+Node.js program with option of MySQL or SQLite Database
+Requires BCHD or Bitcoin Unlimited Node (other node software untested yet)
 
 Testing
 -------
@@ -76,7 +48,8 @@ The app will package a BCH node (BCHD), Server and Client. It should allow one c
 
 Projects
 
-->Create User Friendly installer for various platforms.
+->Create User Friendly installer for various platforms
+->Update BCHD to support utxoindex with fastsync 
 
 Mobile Apps
 -----------
