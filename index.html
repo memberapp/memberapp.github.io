@@ -75,12 +75,12 @@
             <div class="pagetop">
                 <nav>
                     <span class="memberlogo">
-                        <a href="https://memberapp.github.io">
+                        <a href="/">
                             <img class="memberlogoimage" src="img/bch.png" width="31" height="18" />
                         </a>
                     </span>
                     <span class="membertext">
-                        <a href="https://memberapp.github.io">
+                        <a href="/">
                             <b>Member</b>
                         </a>
                     </span>
@@ -354,6 +354,7 @@
                     <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value);'>
                         <option value="functional.css">Choose Theme</option>
                         <option value="functional.css">Reddit</option>
+						<option value="functionalnightmode.css">Reddit Night Mode</option>
                         <option value="hackernews.css">Hacker News</option>
                         <option value="hnnightmode.css">Hacker News Night Mode</option>
                         <option value="none.css">None</option>
@@ -399,7 +400,7 @@
                 </div>
                 <div>
                     <label for="oneclicktip">One-Click Tip Amount</label>
-                    <input id="oneclicktip" value="0" size="8" type="number" onchange="updateOneClickTip();"
+                    <input id="oneclicktip" value="0" size="8" type="number" step="1000" onchange="updateOneClickTip();"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     (Amount
                     to tip when clicking up arrow, minimum 547)
@@ -602,24 +603,23 @@
             <div id="topiclistanchor" style="display: none;">
             </div>
 
-
-            <footer>
-                <hr />
-                <span id="developmentversion" style="display: none;">You're viewing the development preview version of Member. It's recommend to <a href="https://memberapp.github.io">use the stable version at https://memberapp.github.io</a><br/><br/><hr /></span>
-                <span class="footerlinks">
-                    <a
-                        href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">Top
-                        Supporters</a><span class="separatorwide"></span><a
-                        href="https://github.com/memberapp/memberapp.github.io">Github</a><span
-                        class="separatorwide"></span><a href="https://www.bitcoin.com">Bitcoin</a><span
-                        class="separatorwide"></span><a href="https://github.com/memberapp/protocol">Protocol</a><span
-                        class="separatorwide"></span><a href="mailto:memorycoincc@gmail.com">Contact</a><span
-                        class="separatorwide"></span>version 2.10.0.<u>9</u>
-                </span>
-                <br />
-                <br />
-            </footer>
-        </div>
+		</div>
+		<footer>
+			<hr />
+			<span id="developmentversion" style="display: none;">You're viewing the development preview version of Member. It's recommend to <a href="https://memberapp.github.io">use the stable version at https://memberapp.github.io</a><br/><br/><hr /></span>
+			<span class="footerlinks">
+				<a
+				   href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">Top
+					Supporters</a><span class="separatorwide"></span><a
+																		href="https://github.com/memberapp/memberapp.github.io">Github</a><span
+																																				class="separatorwide"></span><a href="https://www.bitcoin.com">Bitcoin</a><span
+																																																								class="separatorwide"></span><a href="https://github.com/memberapp/protocol">Protocol</a><span
+																																																																															   class="separatorwide"></span><a href="mailto:memorycoincc@gmail.com">Contact</a><span
+																																																																																																					 class="separatorwide"></span>version 2.10.0.<u>9</u>
+			</span>
+			<br />
+			<br />
+		</footer>
     </div>
     <div id="status"></div>
     <div id="tweet-container"></div>
