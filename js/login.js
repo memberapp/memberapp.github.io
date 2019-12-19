@@ -60,6 +60,7 @@ function trylogin(loginkey) {
         return;
     }
     //document.location.href="#posts?type=all&amp;start=0&amp;limit=25";
+    getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
 }
 

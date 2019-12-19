@@ -23,6 +23,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         contents = getNotificationsTableHTML(contents, navbuttons);
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data, page);
+        listenForTwitFrameResizes();
         window.scrollTo(0, 0);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
