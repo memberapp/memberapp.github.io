@@ -1,0 +1,21 @@
+{
+  "short_name": "Member",
+  "name": "Member",
+  "icons": [
+    {
+      "src": "/img/member192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/member512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#ffffff",
+  "theme_color": "#cee3f8",
+  "display": "standalone",
+  "prefer_related_applications": false
+}

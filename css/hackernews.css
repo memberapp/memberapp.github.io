@@ -377,7 +377,6 @@ header {
 }
 
 .topiccontainer {
-  float: right;
   padding-top: 2px;
   padding-right: 2px;
 }
@@ -445,6 +444,8 @@ textarea, .memorandumtitle {
 content: "|";
 }
 
-.separatorwidebreakpoint::before {
-  content: " | ";
+
+
+.pagetop {
+  text-align: left;
 }

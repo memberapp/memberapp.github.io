@@ -246,7 +246,7 @@ function getCurrentTopicHOSTILE(){
 }
 
 function showTopicList(){
-    getAndPopulateTopicList(); 
+    getAndPopulateTopicList(true); 
 }
 
 /*

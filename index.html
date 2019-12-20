@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Member</title>
+    <meta name="description" content="Member ">
+    <title>Member is a fully decentralized public platform for discussion</title>
 
     <!--  Only scripts from this website, inline script needed for operation -->
     <!--  Call Memberjs for content -->
@@ -20,11 +21,22 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!--  Progressive Web App -->
+    <link rel="manifest" href="pwa/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+    <meta name="apple-mobile-web-app-title" content="Member">
+    <link rel="apple-touch-icon" href="/img/member512.png">
+    <meta name="theme-color" content="#cee3f8" />
+    <script src="pwa/pwa.js"></script>
+
     <!--  Leaflet (Map) -->
     <link rel="stylesheet" href="js/leaflet/leaflet.css" />
     <script src="js/leaflet/leaflet.js"></script>
 
-    <link id="pagestyle" rel="stylesheet" href="css/functional.css">
+    <link id="pagestyle" rel="stylesheet" href="css/base.css">
+    <link id="pagestyle2" rel="stylesheet" href="css/none.css">
+    <link id="pagestyle3" rel="stylesheet" href="css/none.css">    
     <link id="addonstyle" rel="stylesheet" href="">
 </head>
 
@@ -352,11 +364,12 @@
                 <div>
                     <label for="cssselector">Theme</label>
                     <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value);'>
-                        <option value="functional.css">Choose Theme</option>
-                        <option value="functional.css">Reddit</option>
-                        <option value="hackernews.css">Hacker News</option>
-                        <option value="hnnightmode.css">Hacker News Night Mode</option>
-                        <option value="none.css">None</option>
+                        <option value="base">Choose Theme</option>
+                        <option value="base">Member</option>
+                        <option value="base nightmode">Member Night Mode</option>
+                        <option value="base hackernews">Hacker News</option>
+                        <option value="base hackernews hnnightmode">Hacker News Night Mode</option>
+                        <option value="none">None</option>
                     </select>
                 </div>
                 <div>

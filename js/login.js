@@ -34,8 +34,8 @@ function init() {
     //check local app storage for key
 
     //Show message if dev version in use
-    if(document.location.href.indexOf('freetrade.github.io/memberdev')!=-1){
-        document.getElementById('developmentversion').style.display='block';
+    if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
+        document.getElementById('developmentversion').style.display = 'block';
     }
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
@@ -60,6 +60,7 @@ function trylogin(loginkey) {
         return;
     }
     //document.location.href="#posts?type=all&amp;start=0&amp;limit=25";
+    getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
 }
 
@@ -126,7 +127,7 @@ function createNewAccount() {
 }
 
 function logout() {
-    if(localStorageSafe!=null){
+    if (localStorageSafe != null) {
         localStorageSafe.clear();
     }
     privkey = "";
@@ -137,8 +138,18 @@ function logout() {
 }
 
 function changeStyle(newStyle) {
+    if (newStyle.indexOf(".css") != -1) {
+        //old style, update
+        newStyle = "base";
+    }
     localStorageSet(localStorageSafe, "style", newStyle);
-    document.getElementById("pagestyle").setAttribute("href", "css/" + newStyle);
+    var cssArray = newStyle.split(" ");
+    if (cssArray[0]){document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css");}
+    else{document.getElementById("pagestyle").setAttribute("href", "css/base.css");}
+    if (cssArray[1]){document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css");}
+    else{document.getElementById("pagestyle2").setAttribute("href", "css/none.css");}
+    if (cssArray[2]){document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css");}
+    else{document.getElementById("pagestyle3").setAttribute("href", "css/none.css");}
 }
 
 function setAddonStyle(newStyle) {
