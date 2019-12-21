@@ -1,1 +1,36 @@
 /*Default night mode. Need just the changes from base.css to make theme night mode*/
+:root {
+    --bodybgcolor: #222;
+    --bodytextcolor:#ddd;
+    --bitcoincash: #4cca47;
+    --table2n: #222;
+    --table2np1: #999;
+    --tabletborder: #ddd;
+    --selectbox:  #777;
+    --selectboxcolor:#ddd;
+    --selectoptions:#222;    
+    --header: #171717;
+    --headerborder: #555;
+    --hr:#555;
+    --preformattedtext: #333;
+    --preformattedbg: #f5f5f5;
+    --preformattedborder: #ccc;
+    --poststext: #c6c6c6;
+    --postsheadertext: #888;
+    --postslikestext: #333;
+    --titletext: #fff;
+    --postfootertext: #888;
+    --votescoredown: #9494FF;
+    --highlightlibg: #002;
+    --liborder: #555;
+    --libgcolor2np1: #222;
+    --libgcolor2n:#333;
+    --replybgcolor: #333;
+    --replyborder: #555;
+    --statusbar: #cccccc;
+    --statusbartext: #000000;
+    --navbuttonsbg: #eee;
+    --navbuttonsborder: #ddd;
+    --navbuttonstext: #222;
+    --linkcolor:#DDDDDD;
+  }
