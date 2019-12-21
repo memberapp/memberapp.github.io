@@ -187,7 +187,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                         <span class="submitter"> 
                         submitted `
         + getAgeHTML(firstseen)
-        + ___i18n('by')
+        + `' ' +___i18n('by') + ' '  
         + userHTML(address, name, ratingID, rating, 8)
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
