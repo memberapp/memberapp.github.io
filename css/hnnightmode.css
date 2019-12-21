@@ -169,3 +169,6 @@ input[type="submit"]:hover, a.morelink:hover {
   background-color: 
   #121230;
 }
+
+header { background-color: #000; }
+select > option {    background:  #000;}
