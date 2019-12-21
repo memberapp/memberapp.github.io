@@ -1,3 +1,41 @@
+/*variables - preferred way to change color is to override these in a new css*/
+
+:root {
+  --bodybgcolor: #ffffff;
+  --bodytextcolor:#000000;
+  --bitcoincash: #4cca47;
+  --table2n: #ffffff;
+  --table2np1: #f9f9f9;
+  --tableborder: #ddd;
+  --selectbox: #cee3f8;
+  --selectboxcolor:#000000;
+  --selectoptions:#cee3f8; 
+  --header: #cee3f8;
+  --headerborder: #4cca47;
+  --hr:#4cca47;
+  --preformattedtext: #333;
+  --preformattedbg: #f5f5f5;
+  --preformattedborder: #ccc;
+  --poststext: #c6c6c6;
+  --postsheadertext: #888;
+  --postslikestext: #333;
+  --titletext: #222;
+  --postfootertext: #888;
+  --votescoredown: #9494FF;
+  --highlightlibg: #ffd;
+  --liborder: #e6e6e6;
+  --libgcolor2np1: #ffffff;
+  --libgcolor2n: #f7f7f8;
+  --replybgcolor: #fafafa;
+  --replyborder: #369;
+  --statusbar: #cccccc;
+  --statusbartext: #000000;
+  --navbuttonsbg: #eee;
+  --navbuttonsborder: #ddd;
+  --navbuttonstext: #369;
+  --linkcolor:#0000EE;
+}
+
 /*General*/
 
 body {
@@ -24,10 +62,13 @@ body {
   margin-left: 0px;
   margin-right: 0px;
   word-wrap: break-word;
+  background-color: var(--bodybgcolor);
+  color: var(--bodytextcolor);
 }
 
 a {
   text-decoration: none;
+  color:var(--linkcolor);
 }
 
 p {
@@ -53,11 +94,11 @@ pre {
   margin: 0 0 10px;
   font-size: 13px;
   line-height: 1.42857143;
-  color: #333;
+  color: var(--preformattedtext);
   word-break: break-all;
   word-wrap: break-word;
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
+  background-color: var(--preformattedbg);
+  border: 1px solid var(--preformattedborder);
   border-radius: 4px;
 }
 
@@ -70,16 +111,16 @@ table {
 }
 
 th, tr:nth-child(2n) {
-  background-color: #ffffff;
+  background-color: var(--table2n);
 }
 
 tr:nth-child(2n+1) {
-  background-color: #f9f9f9;
+  background-color: var(--table2np1);
 }
 
 th {
   vertical-align: bottom;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 2px solid var(--tableborder);
   text-align: left;
   padding: 4px;
 }
@@ -88,7 +129,7 @@ td {
   padding: 4px;
   line-height: 1.42857143;
   vertical-align: top;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid var(--tableborder);
 }
 
 .mainbody {
@@ -112,9 +153,9 @@ hr {
   border: none;
   height: 1px;
   /* Set the hr color */
-  color: #4cca47;
+  color: var(--hr);
   /* old IE */
-  background-color: #4cca47;
+  background-color: var(--hr);
   /* Modern Browsers */
   margin-bottom: 5px;
   margin-top: 0px;
@@ -127,34 +168,33 @@ nav {
   line-height: 25px;
 }
 
-select{
+select {
   border: 1px;
-  background:#cee3f8;
-  
+  background: var(--selectbox);
+  color: var(--selectboxcolor);
   font-family: verdana, arial, helvetica, sans-serif;
-  cursor: pointer; 
-  }
+  cursor: pointer;
+}
 
-  select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: transparent;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-    background-repeat: no-repeat;
-    background-position-x: 100%;
-    background-position-y: -3px;
-    padding-right: 1.2rem;
-  }
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: -3px;
+  padding-right: 1.2rem;
+}
 
-select > option {
-  background: #cee3f8;
+select>option {
+  background: var(--selectoptions);
 }
 
 @media only screen {
   header {
-    border-bottom: 1px solid #4cca47;
+    border-bottom: 1px solid var(--headerborder);
     position: relative;
-    background-color: #cee3f8;
+    background-color: var(--header);
     z-index: 99;
     margin-bottom: 5px;
     padding-left: 5px;
@@ -214,10 +254,10 @@ footer {
 @media only screen {
   /*For numbering color*/
   .posts {
-    color: #c6c6c6;
+    color: var(--poststext);
   }
   .comhead {
-    color: #888;
+    color: var(--postsheadertext);
     font-size: x-small;
   }
   .comhead .likescounttext {
@@ -225,7 +265,7 @@ footer {
   }
   .comhead span.score {
     font-weight: bold;
-    color: #333;
+    color: var(--postslikestext);
   }
   .comhead .hnuser {
     font-weight: bold;
@@ -234,13 +274,13 @@ footer {
     font-size: medium;
     font-weight: normal;
     margin-bottom: 1px;
-    color: #222;
+    color: var(--titletext);
   }
   .post {
     min-height: 55px;
   }
   .subtext {
-    color: #888;
+    color: var(--postfootertext);
     font-size: x-small;
   }
   .subtextbuttons, .reply {
@@ -249,7 +289,7 @@ footer {
     padding-top: 1px;
   }
   .subtextbuttons a {
-    color: #888;
+    color: var(--postsheadertext);
     font-weight: bold;
     padding: 0 1px;
     text-decoration: none;
@@ -258,12 +298,12 @@ footer {
   .subtextbuttons a:hover {
     text-decoration: underline;
   }
-
-  /*To keep number on the same line*/  
-  .numberlineone{
+  /*To keep number on the same line*/
+  .numberlineone {
     float: left;
-    font-size:1px;
+    font-size: 1px;
   }
+}
 
 /*Vote buttons*/
 
@@ -317,15 +357,15 @@ footer {
     text-align: center;
     min-width: 10px;
     display: block;
-    color: #c6c6c6;
+    color: var(--poststext);
     font-weight: bold;
     font-size: small;
   }
   .betweenvotesscoreup {
-    color: #4cca47;
+    color: var(--bitcoincash);
   }
   .betweenvotesscoredown {
-    color: #9494FF;
+    color: var(--votescoredown);
   }
   .votelinks {
     float: left;
@@ -351,27 +391,28 @@ footer {
     display: flex;
     flex-direction: column;
     min-height: 50px;
-    color: #222222;
+    color: var(--titletext);
     padding-bottom: 8px;
   }
   .fatitem {
     border-bottom-style: dotted;
     border-width: 1px;
     padding-bottom: 5px;
-    padding-top: 8px margin-bottom: 5px;
+    padding-top: 8px;
+    margin-bottom: 5px;
   }
   .blocked {
     opacity: 0.2;
   }
   /* Lists, used for displaying posts and threads */
   #highlightli {
-    background-color: #ffd;
+    background-color: var(--highlightlibg);
   }
   /* Desktop Screen */
   @media only screen and (min-width: 600px) {
     .comment-tree li {
       margin: 0px 0px 8px 10px;
-      border: 1px solid #e6e6e6 !important;
+      border: 1px solid var(--liborder) !important;
       border-radius: 3px !important;
       padding: 5px 8px 5px 5px;
       overflow: hidden;
@@ -399,46 +440,46 @@ footer {
       padding-right: 1px;
     }
     li {
-      background-color: white;
+      background-color: var(--libgcolor2np1);
     }
     li li {
-      background-color: #f7f7f8;
+      background-color: var(--libgcolor2n);
     }
     li li li {
-      background-color: white;
+      background-color: var(--libgcolor2np1);
     }
     li li li li {
-      background-color: #f7f7f8;
+      background-color: var(--libgcolor2n);
     }
     li li li li li {
-      background-color: white;
+      background-color: var(--libgcolor2np1);
     }
     li li li li li li {
-      background-color: #f7f7f8;
+      background-color: var(--libgcolor2n);
     }
     li li li li li li li {
-      background-color: white;
+      background-color: var(--libgcolor2np1);
     }
     li li li li li li li li {
-      background-color: #f7f7f8;
+      background-color: var(--libgcolor2n);
     }
     li li li li li li li li li {
-      background-color: white;
+      background-color: var(--libgcolor2np1);
     }
     li li li li li li li li li li {
-      background-color: #f7f7f8;
+      background-color: var(--libgcolor2n);
     }
     li li li li li li li li li li li {
-      background-color: white;
+      background-color: var(--libgcolor2np1);
     }
     li li li li li li li li li li li li {
-      background-color: #f7f7f8;
+      background-color: var(--libgcolor2n);
     }
     li li li li li li li li li li li li li {
-      background-color: white;
+      background-color: var(--libgcolor2np1);
     }
     li li li li li li li li li li li li li li {
-      background-color: #f7f7f8;
+      background-color: var(--libgcolor2n);
     }
   }
   /* Smaller Screen */
@@ -475,7 +516,7 @@ footer {
   }
   /*comment body - override list stuff*/
   .commentbody li {
-    border: 0px solid #e6e6e6 !important;
+    border: 0px solid var(--liborder) !important;
     border-radius: 0px !important;
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
@@ -518,8 +559,8 @@ footer {
     display: none;
   }
   .fatitem .commentbody {
-    background-color: #fafafa;
-    border: 1px solid #369;
+    background-color: var(--replybgcolor);
+    border: 1px solid var(--replyborder);
     border-radius: 7px;
     padding: 5px 10px;
   }
@@ -531,44 +572,28 @@ footer {
     line-height: 1.4285714285714286em;
     display: block;
   }
-
   /* Youtube, Imgur, Twitter */
-
-
-
-/* No idea why 400% works here  */
-.youtubepreview .play-icon {
-
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100px;
-  transform: translate(-50%, -50%);
-
-}
-
-.imgurcontainer{
-
-}
-
-.twittercontainer{
-
-}
-
-
+  /* No idea why 400% works here  */
+  .youtubepreview .play-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    transform: translate(-50%, -50%);
+  }
+  .imgurcontainer {}
+  .twittercontainer {}
   @media only screen and (max-width: 860px) {
-    .youtubepreviewimage{
+    .youtubepreviewimage {
       width: 100%;
       vertical-align: top;
     }
-
-    .youtubepreview{
+    .youtubepreview {
       position: relative;
       width: 100%;
       margin-top: 5px;
       margin-bottom: 5px;
-
     }
     .youtubeiframe {
       display: inline;
@@ -594,19 +619,17 @@ footer {
     }
   }
   @media only screen and (min-width: 860px) {
-    .youtubepreviewimage{
+    .youtubepreviewimage {
       width: 480px;
       height: 270px;
-      vertical-align: top;  
+      vertical-align: top;
     }
-
-    .youtubepreview{
+    .youtubepreview {
       position: relative;
       width: 480px;
       margin-top: 5px;
       margin-bottom: 5px;
       height: 270px;
-
     }
     .youtubeiframe {
       display: inline;
@@ -638,8 +661,8 @@ footer {
 /*Status bar*/
 
 #status {
-  background: #cccccc;
-  color: #000000;
+  background: var(--statusbar);
+  color: var(--statusbartext);
   bottom: 0;
   right: 0;
   margin: 0;
@@ -666,8 +689,8 @@ footer {
 
 .navbuttons a {
   padding: 1px 4px;
-  background: #eee;
-  border: 1px solid #ddd;
+  background: var(--navbuttonsbg);
+  border: 1px solid var(--navbuttonsborder);
   border-radius: 3px;
   font-weight: bold;
   font-size: smaller;
@@ -675,11 +698,11 @@ footer {
   margin-left: 5px;
   margin-right: 5px;
   text-decoration: none;
-  color: #369;
+  color: var(--navbuttonstext);
 }
 
 .navbuttons a:hover {
-  border-color: #4cca47;
+  border-color: var(--bitcoincash);
 }
 
 /*Notifications Page*/
@@ -753,11 +776,11 @@ li.notificationpage::before {
 
 .notificationdetails .post {
   margin: 0px 0px 8px 4px;
-  border: 1px solid #e6e6e6 !important;
+  border: 1px solid var(--liborder) !important;
   border-radius: 10px !important;
   padding: 5px 8px 0px 5px;
   overflow: hidden;
-  background-color: #f7f7f8;
+  background-color: var(--libgcolor2n);
 }
 
 .notificationhr {
@@ -811,7 +834,8 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
 }
 
 /*Topic List*/
-.tlmessagecount, .tlsubscount,.tlagecount,.tlaction{
+
+.tlmessagecount, .tlsubscount, .tlagecount, .tlaction {
   text-align: right;
 }
 
