@@ -139,8 +139,10 @@
                             <select id="contentselector" onchange="postsSelectorChanged();">
                                 <option value="posts" selected="selected"
                                         class="vavilon" data-vavilon="posts">Posts</option>
-                                <option value="replies">Replies</option>
-                                <option value="both">In Both</option>
+                                <option value="replies"
+                                        class="vavilon" data-vavilon="comments">Replies</option>
+                                <option value="both"
+                                        class="vavilon" data-vavilon="all">In Both</option>
                             </select>
                             <select id="topicselector" onchange="postsSelectorChanged();">
                                 <option value="" selected="selected">All Topics</option>
