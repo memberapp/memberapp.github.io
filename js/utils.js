@@ -11,25 +11,25 @@ function timeSince(timestamp, compress) {
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return interval + (compress?" year":" years ago");
+    return ___i18n("%s years ago", interval);
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return interval + (compress?" mons":" months ago");
+    return ___i18n("%s months ago", interval);
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return interval + (compress?" days":" days ago");
+    return ___i18n(compress?"%1 d":"%s days ago", interval);
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return interval + (compress?" hrs":" hours ago");
+    return ___i18n(compress?"%1 h":"%s hours ago", interval);
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return interval + (compress?" mins":" minutes ago");
+    return ___i18n(compress?"%1 m":"%s minutes ago", interval);
   }
-  return Math.floor(seconds) + (compress?" secs":" seconds ago");
+  return ___i18n(compress? "%1 s":"%s seconds ago", Math.floor(seconds));
 }
 
 var getJSON = function (url) {
@@ -225,7 +225,7 @@ function localStorageSet(theSO, itemName, theString) {
 function balanceString(total,append){
   var balString=(Number(total)/1000).toFixed(3);
   //total.toLocaleString();
-  
+
   //Make last three digits superscript
   //if(balString.length>4){
     balString=Number(balString.substr(0,balString.length-4)).toLocaleString()+"<span class='sats'>"+balString.substr(balString.length-3,3)+"</span>"+append;
@@ -293,7 +293,7 @@ function listenForTwitFrameResizes() {
           "https://twitframe.com");
     };
   });
-  
+
 }
 
 /* listen for the return message once the tweet has been loaded */
@@ -301,5 +301,5 @@ window.onmessage = (oe) => {
   if (oe.origin != "https://twitframe.com")
       return;
   if (oe.data.height && oe.data.element.match(/^tweet_/))
-      document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px"; 
+      document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
 }
