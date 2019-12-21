@@ -248,9 +248,9 @@
                 </div>
                 <label>Address</label>
                 <div>
-                    <div id="membercashaddrformatdiv"><span id="membercashaddrformat">loading</span> <span
-                            onclick="showQRCode('membercashaddrformat');">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <div id="membercashaddrformatdiv"><span id="membercashaddrformat">loading</span>
+                        <span onclick="showQRCode('membercashaddrformat');">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                               version="1.1" width="24" height="24"
                               viewBox="0 0 24 24">
                              <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -258,8 +258,8 @@
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
                             </svg>
-
-                        </span></div>
+                        </span>
+                    </div>
                 </div>
                 <label>Legacy Address</label>
                 <div>
@@ -336,7 +336,7 @@
 
 
             <div id="settingsanchor" style="display: none;">
-                <h2 lass="vavilon"
+                <h2 class="vavilon"
                     data-vavilon="settings">Settings</h2>
                 <div>
                     <label for="settingsnametext">Handle</label>
@@ -376,10 +376,12 @@
                     </div>
                 </div>
                 <div>
-                    <label>Address</label>
+                    <label class="vavilon"
+                           data-vavilon="address">Address</label>
                     <span id="cashaddrformat">loading</span>
-                    <div id="cashaddrformatdiv"> <span onclick="showQRCode('cashaddrformat');">
-                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <div id="cashaddrformatdiv">
+                        <span onclick="showQRCode('cashaddrformat');">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                               version="1.1" width="24" height="24"
                               viewBox="0 0 24 24">
                              <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -387,13 +389,14 @@
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
                             </svg>
-                        </span></div>
+                        </span>
+                    </div>
                 </div>
                 <div>
                     <label>Legacy Address</label>
                     <span id="legacyformat">loading</span>
                     <div id="legacyformatdiv"> <span onclick="showQRCode('legacyformat');">
-                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                               version="1.1" width="24" height="24"
                               viewBox="0 0 24 24">
                              <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -408,8 +411,9 @@
                     <label>Private Key</label>
                     <span id="privatekeydisplay" style="display: none;">loading</span><span id="privatekey"></span>
                     <div id="privatekeydisplaydiv"></div>
-                    <div id="privatekeydiv"> <span onclick="showQRCode('privatekeydisplay');">
-                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <div id="privatekeydiv">
+                        <span onclick="showQRCode('privatekeydisplay');">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                               version="1.1" width="24" height="24"
                               viewBox="0 0 24 24">
                              <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
