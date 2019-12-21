@@ -19,17 +19,17 @@ function timeSince(timestamp, compress) {
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return ___i18n(compress?"%1 d":"%s days ago", interval);
+    return ___i18n(compress?"%s d":"%s days ago", interval);
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return ___i18n(compress?"%1 h":"%s hours ago", interval);
+    return ___i18n(compress?"%s h":"%s hours ago", interval);
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return ___i18n(compress?"%1 m":"%s minutes ago", interval);
+    return ___i18n(compress?"%s m":"%s minutes ago", interval);
   }
-  return ___i18n(compress? "%1 s":"%s seconds ago", Math.floor(seconds));
+  return ___i18n(compress? "%s s":"%s seconds ago", Math.floor(seconds));
 }
 
 var getJSON = function (url) {
