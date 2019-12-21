@@ -20,5 +20,8 @@
   "log in": "kirish",
   "log out": "chiqish",
   "comments": "sharhlar",
-  "change theme": "shablonni o'zgartirish"
+  "change theme": "shablonni o'zgartirish",
+  "all": "barchasi",
+  "all dates": "barcha sanalar",
+  "log in to reply": "javob qoldirish uchun, saytga a'zo sifatida kiring"
 }
