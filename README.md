@@ -1,3 +1,11 @@
+Todo
+------
+
+- Don't cache dev origins
+- Failover server requests to cache
+- 
+
+
 Member
 ------
 

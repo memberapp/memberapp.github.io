@@ -23,7 +23,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener("activate", function (event) {
-    console.log('Activate!');
+    console.log('service worker activated.');
     const currentCaches = [INSTALL, RUNTIME];
     event.waitUntil(
         caches.keys().then(cacheNames => {
