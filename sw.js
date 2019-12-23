@@ -20,7 +20,7 @@ self.addEventListener('install', function (event) {
     console.log('Install!');
 });
 
-self.addEventListener("activate", event => {
+self.addEventListener("activate", function (event) {
     console.log('Activate!');
     const currentCaches = [INSTALL, RUNTIME];
     event.waitUntil(
