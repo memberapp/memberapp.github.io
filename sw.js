@@ -16,8 +16,8 @@ self.addEventListener('install', function (event) {
         caches.open(INSTALL)
             .then(cache => cache.addAll(PRECACHE_URLS))
             .then(self.skipWaiting())
-    );
-    console.log('Install!');
+    ).then(console.log('Install!'););
+
 });
 
 self.addEventListener("activate", function (event) {
