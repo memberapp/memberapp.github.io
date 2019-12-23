@@ -12,6 +12,7 @@
         "skr", "sl", "snd", "so", "sq", "sr", "sv", "sw", "szl", "ta", "te",
         "th", "tl", "tr", "ug", "uk", "ur", "uz", "vi", "zh", "zht"];
     var language = (window.navigator.language || window.browserLanguage).toLowerCase();
+    console.log('loading: ' + language);
     if (zhSimplified.includes(language)) {
         language = 'zh'
     } else if (zhTraditional.includes(language)) {
@@ -21,11 +22,8 @@
     }
     // As the language is controlled by the users browser,
     // the input is restricted to a known set of possibilities
-    if (!allowedInput.includes(language)) {
-        console.log("refusing to load unsupported language string:" + language)
-        language = 'en';
-    }
-    console.log('loading: ' + src);
+    const src = allowedInput.includes(language)  ?  language : 'en';
+    console.log('from: ' + './locale/' + src + '.json');
     let script = document.createElement('script');
     script.setAttribute('type', 'application/json');
     script.setAttribute('src', './locale/' + src + '.json');
