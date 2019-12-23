@@ -9,10 +9,11 @@ const PRECACHE_URLS = [
     'locale/en.json'
 ];
 const RUNTIME = 'runtime';
+const INSTALL = 'install-3.1.0.9';
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
-        caches.open(PRECACHE)
+        caches.open(INSTALL)
             .then(cache => cache.addAll(PRECACHE_URLS))
             .then(self.skipWaiting())
     );
@@ -21,7 +22,7 @@ self.addEventListener('install', function (event) {
 
 self.addEventListener("activate", event => {
     console.log('Activate!');
-    const currentCaches = [PRECACHE, RUNTIME];
+    const currentCaches = [INSTALL, RUNTIME];
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
