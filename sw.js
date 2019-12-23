@@ -2,13 +2,16 @@
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
+    './',
+    'manifest.json',
     'index.html',
     'css/article.css',
     'css/base.css',
     'locale/en.json'
 ];
-const RUNTIME = 'runtime';
-const INSTALL = 'install-3.1.0.9';
+const VERSION = '3.1.0.9'
+const RUNTIME = 'runtime-' + VERSION;
+const INSTALL = 'install-' + VERSION;
 
 
 self.addEventListener('install', (event) => {
@@ -34,16 +37,13 @@ self.addEventListener("activate", function (event) {
 });
 
 self.addEventListener('fetch', function (event) {
-    console.log('Fetch!', event.request);
     // Skip cross-origin requests, like those for Google Analytics.
     if (event.request.url.startsWith(self.location.origin)) {
         event.respondWith(
             caches.match(event.request).then(cachedResponse => {
                 if (cachedResponse) {
-                    console.log('cached response for:' + event.request)
                     return cachedResponse;
                 }
-
                 return caches.open(RUNTIME).then(cache => {
                     return fetch(event.request).then(response => {
                         // Put a copy of the response in the runtime cache.
@@ -57,19 +57,3 @@ self.addEventListener('fetch', function (event) {
     }
 });
 
-// navigator.serviceWorker.ready.then(function (registration) {
-//     if (!registration.pushManager) {
-//         alert('No push notifications support.');
-//         return false;
-//     }
-//     //To subscribe `push notification` from push manager
-//     registration.pushManager.subscribe({
-//         userVisibleOnly: true //Always show notification when received
-//     })
-//         .then(function (subscription) {
-//             console.log('Subscribed.');
-//         })
-//         .catch(function (error) {
-//             console.log('Subscription error: ', error);
-//         });
-// })
