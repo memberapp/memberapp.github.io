@@ -10,15 +10,13 @@ const PRECACHE_URLS = [
 const RUNTIME = 'runtime';
 const INSTALL = 'install-3.1.0.9';
 
-self.addEventListener('install', function (event) {
-    event.waitUntil(
-        caches.open(INSTALL)
-            .then(cache => cache.addAll(PRECACHE_URLS))
-            .then(self.skipWaiting())
-    ).then(function () {
-        console.log('Installed & pre-Cached!');
-    });
 
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(INSTALL).then((cache) => {
+            return cache.addAll(PRECACHE_URLS);
+        })
+    );
 });
 
 self.addEventListener("activate", function (event) {
