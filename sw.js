@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
 ];
 
 
-self.addEventListener('install', function () {
+self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(PRECACHE)
             .then(cache => cache.addAll(PRECACHE_URLS))
@@ -18,9 +18,11 @@ self.addEventListener('install', function () {
     );
     console.log('Install!');
 });
+
 self.addEventListener("activate", event => {
     console.log('Activate!');
 });
+
 self.addEventListener('fetch', function (event) {
     console.log('Fetch!', event.request);
     // Skip cross-origin requests, like those for Google Analytics.
