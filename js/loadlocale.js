@@ -21,17 +21,17 @@
     }
     // As the language is controlled by the users browser,
     // the input is restricted to a known set of possibilities
-    if allowedInput.includes(language){
-        console.log('loading: ' + src);
-        let script = document.createElement('script');
-        script.setAttribute('type', 'application/json');
-        script.setAttribute('src', './locale/' + src + '.json');
-        script.setAttribute('data-vavilon-dict', src);
-        script.async = false;
-        document.head.appendChild(script);
-    }else(
+    if (!allowedInput.includes(language)) {
         console.log("refusing to load unsupported language string:" + language)
-    )
+        language = 'en';
+    }
+    console.log('loading: ' + src);
+    let script = document.createElement('script');
+    script.setAttribute('type', 'application/json');
+    script.setAttribute('src', './locale/' + src + '.json');
+    script.setAttribute('data-vavilon-dict', src);
+    script.async = false;
+    document.head.appendChild(script);
 
 }());
 	  
