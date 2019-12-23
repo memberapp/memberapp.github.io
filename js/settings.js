@@ -232,8 +232,11 @@ function getAndPopulateSettings() {
     //Checkboxes
     for(var key in settings){
         var theSetting=localStorageGet(localStorageSafe, key);
+
         if (theSetting != undefined && theSetting != null) {
             document.getElementById(key).checked = Boolean(theSetting=="true");
+        }else{
+            document.getElementById(key).checked = Boolean(settings[key]=="true");
         }
     }
 
