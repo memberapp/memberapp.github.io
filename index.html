@@ -117,25 +117,32 @@
                             <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
                     </span>
                     <span id="loggedout" class="loggedout">
-                            <a id="loginbutton" class="btn" href="#login" onclick="showLogin();">login</a>
+                            <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login" onclick="showLogin();">login</a>
                     </span>
                     <span class="separatorwidebreakpoint"></span>
                     <span id="topiccontainer" class="topiccontainer">
                             <select id="orderselector" onchange="postsSelectorChanged();">
                                 <option value="hot" title="Hottest posts" selected="selected">Hot</option>
                                 <option class="vavilon" data-vavilon="new" value="new" title="Latest posts" >New</option>
-                                <option value="topd" title="Top posts from the past Day">Day</option>
-                                <option value="topw" title="Top posts from the past Week">Week</option>
-                                <option value="topm" title="Top posts from the past Month">Month</option>
-                                <option value="topy" title="Top posts from the past Year">Year</option>
-                                <option value="topa" title="Top posts from all time">All</option>
+                                <option value="topd" title="Top posts from the past Day"
+                                        class="vavilon" data-vavilon="today" >Day</option>
+                                <option value="topw" title="Top posts from the past Week"
+                                        class="vavilon" data-vavilon="this week" >Week</option>
+                                <option value="topm" title="Top posts from the past Month"
+                                        class="vavilon" data-vavilon="this month">Month</option>
+                                <option value="topy" title="Top posts from the past Year"
+                                        class="vavilon" data-vavilon="this year">Year</option>
+                                <option value="topa" title="Top posts from all time"
+                                        class="vavilon" data-vavilon="all dates">All</option>
                             </select>
     
                             <select id="contentselector" onchange="postsSelectorChanged();">
                                 <option value="posts" selected="selected"
                                         class="vavilon" data-vavilon="posts">Posts</option>
-                                <option value="replies">Replies</option>
-                                <option value="both">In Both</option>
+                                <option value="replies"
+                                        class="vavilon" data-vavilon="comments">Replies</option>
+                                <option value="both"
+                                        class="vavilon" data-vavilon="all">In Both</option>
                             </select>
                             <select id="topicselector" onchange="postsSelectorChanged();">
                                 <option value="" selected="selected">All Topics</option>
@@ -248,9 +255,9 @@
                 </div>
                 <label>Address</label>
                 <div>
-                    <div id="membercashaddrformatdiv"><span id="membercashaddrformat">loading</span> <span
-                            onclick="showQRCode('membercashaddrformat');">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <div id="membercashaddrformatdiv"><span id="membercashaddrformat">loading</span>
+                        <span onclick="showQRCode('membercashaddrformat');">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                               version="1.1" width="24" height="24"
                               viewBox="0 0 24 24">
                              <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -258,8 +265,8 @@
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
                             </svg>
-
-                        </span></div>
+                        </span>
+                    </div>
                 </div>
                 <label>Legacy Address</label>
                 <div>
@@ -336,7 +343,7 @@
 
 
             <div id="settingsanchor" style="display: none;">
-                <h2 lass="vavilon"
+                <h2 class="vavilon"
                     data-vavilon="settings">Settings</h2>
                 <div>
                     <label for="settingsnametext">Handle</label>
@@ -376,24 +383,12 @@
                     </div>
                 </div>
                 <div>
-                    <label>Address</label>
+                    <label class="vavilon"
+                           data-vavilon="address">Address</label>
                     <span id="cashaddrformat">loading</span>
-                    <div id="cashaddrformatdiv"> <span onclick="showQRCode('cashaddrformat');">
-                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                              version="1.1" width="24" height="24"
-                              viewBox="0 0 24 24">
-                             <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
-                                      11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
-                                      19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
-                                      15H9V21H3V15M5,17V19H7V17H5Z" />
-                            </svg>
-                        </span></div>
-                </div>
-                <div>
-                    <label>Legacy Address</label>
-                    <span id="legacyformat">loading</span>
-                    <div id="legacyformatdiv"> <span onclick="showQRCode('legacyformat');">
-                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <div id="cashaddrformatdiv">
+                        <span onclick="showQRCode('cashaddrformat');">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                               version="1.1" width="24" height="24"
                               viewBox="0 0 24 24">
                              <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -405,11 +400,28 @@
                     </div>
                 </div>
                 <div>
-                    <label>Private Key</label>
+                    <label>Legacy Address</label>
+                    <span id="legacyformat">loading</span>
+                    <div id="legacyformatdiv"> <span onclick="showQRCode('legacyformat');">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                              version="1.1" width="24" height="24"
+                              viewBox="0 0 24 24">
+                             <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                      11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
+                                      19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
+                                      15H9V21H3V15M5,17V19H7V17H5Z" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+                <div>
+                    <label class="vavilon"
+                           data-vavilon="private key">Private Key</label>
                     <span id="privatekeydisplay" style="display: none;">loading</span><span id="privatekey"></span>
                     <div id="privatekeydisplaydiv"></div>
-                    <div id="privatekeydiv"> <span onclick="showQRCode('privatekeydisplay');">
-                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    <div id="privatekeydiv">
+                        <span onclick="showQRCode('privatekeydisplay');">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                               version="1.1" width="24" height="24"
                               viewBox="0 0 24 24">
                              <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -692,9 +704,7 @@
                     <span class="separatorwide"></span>
                     <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
                     <span class="separatorwide"></span>
-                    <span class="vavilon" data-vavilon="version">
-                        version 3.1.0.<u>9</u>
-                    </span>
+                    <span class="vavilon" data-vavilon="version">version</span> 3.1.0.<u>9</u>
                 </span>
                 <br />
                 <br />

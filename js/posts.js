@@ -340,7 +340,7 @@ function replySuccessFunction(page, txid) {
 
 function showReplyBox(txid) {
     if (privkey == "") {
-        alert("You must login to reply to posts.");
+        alert(___i18n('log in to reply'));
         return false;
     }
     var replybox=document.getElementById("reply" + txid);
