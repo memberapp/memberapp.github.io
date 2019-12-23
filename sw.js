@@ -3,7 +3,6 @@
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
     'index.html',
-    'styles.css',
     'css/article.css',
     'css/base.css',
     'locale/en.json'
@@ -16,7 +15,9 @@ self.addEventListener('install', function (event) {
         caches.open(INSTALL)
             .then(cache => cache.addAll(PRECACHE_URLS))
             .then(self.skipWaiting())
-    ).then(console.log('Install!'););
+    ).then(function () {
+        console.log('Installed & pre-Cached!');
+    });
 
 });
 
