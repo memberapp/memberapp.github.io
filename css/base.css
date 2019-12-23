@@ -33,6 +33,7 @@
   --navbuttonsbg: #eee;
   --navbuttonsborder: #ddd;
   --navbuttonstext: #369;
+  --notificationtitle: #222;	  
   --linkcolor:#0000EE;
 }
 
@@ -767,7 +768,7 @@ li.notificationpage::before {
   font-size: medium;
   font-weight: normal;
   margin-bottom: 4px;
-  color: #222;
+  color: var(--notificationtitle);
 }
 
 .notificationminheight {
