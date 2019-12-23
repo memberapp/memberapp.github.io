@@ -3,7 +3,7 @@
   "name": "Member",
   "icons": [
     {
-      "src": "/img/membericon.svgz",
+      "src": "/img/membericon.svg",
       "sizes": "192x192",
       "type": "image/png"
     },
