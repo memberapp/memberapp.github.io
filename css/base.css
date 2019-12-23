@@ -213,11 +213,27 @@ select>option {
   .loggedout {
     display: inline;
   }
+  .memberlogo {
+    vertical-align: middle;
+    position: relative;
+  }
   .memberlogoimage {
     vertical-align: middle;
+    position: relative;
     padding-left: 2px;
     padding-bottom: 2px;
   }
+  .memberlogoimagebacking {
+    left: 2px;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 55%;
+    display: inline-block;
+    z-index: -100;
+  }
+
   .headerbuttons, .refreshbalance, .newpostbutton {
     font-size: large;
   }
