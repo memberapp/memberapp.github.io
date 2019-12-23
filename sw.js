@@ -6,9 +6,10 @@ const PRECACHE_URLS = [
     'css/article.css',
     'img/bch.png',
     'css/base.css',
-    'locale/en.json'
+    'locale/en.json',
+    'js/leaflet/leaflet.js'
 ];
-const VERSION = '3.1.0.9'
+const VERSION = '3.1.0.9';
 const RUNTIME = 'runtime-' + VERSION;
 const INSTALL = 'install-' + VERSION;
 
