@@ -154,7 +154,9 @@ function changeStyle(newStyle) {
 }
 
 function setAddonStyle(newStyle) {
-    document.getElementById("addonstyle").setAttribute("href", "css/" + newStyle);
+    if(newStyle){
+        document.getElementById("addonstyle").setAttribute("href", "css/" + newStyle);
+    }
 }
 
 
