@@ -36,8 +36,18 @@
     <meta name="theme-color" content="#cee3f8" />
     <script src="pwa/pwa.js"></script>
 
+    <!-- large files -->
+    <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
+    <link rel="preload" href="js/lib/bitcoincash-0.1.10.min.js" as="script">
+
+    <!-- DNS-prefetch resource hints  -->
+    <link rel="preconnect" href="https://memberjs.org">
+    <link rel="preconnect" href="https://i.imgur.com">
+    <link rel="preconnect" href="https://twitframe.com">
+
     <!--  Load Translations -->
     <script src="js/loadlocale.js"></script>
+    <link rel="preload" href="js/lib/vavilon.min.js"  as="script">
 
     <!--  Leaflet (Map) -->
     <link rel="stylesheet" href="js/leaflet/leaflet.css" />
@@ -47,6 +57,7 @@
     <link id="pagestyle2" rel="stylesheet" href="css/none.css">
     <link id="pagestyle3" rel="stylesheet" href="css/none.css">
     <link id="addonstyle" rel="stylesheet" href="">
+
 </head>
 
 <body>
