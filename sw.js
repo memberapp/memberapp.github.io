@@ -4,6 +4,7 @@
 const PRECACHE_URLS = [
     'manifest.json',
     'css/article.css',
+    'img/bch.png',
     'css/base.css',
     'locale/en.json'
 ];
