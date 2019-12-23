@@ -8,7 +8,7 @@ const PRECACHE_URLS = [
     'css/base.css',
     'locale/en.json'
 ];
-
+const RUNTIME = 'runtime';
 
 self.addEventListener('install', function (event) {
     event.waitUntil(
