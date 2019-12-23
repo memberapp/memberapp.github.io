@@ -3,15 +3,15 @@
 
     var language = (window.navigator.language || window.browserLanguage || window.userLanguage).toLowerCase();
     [
-        language,
-        language.split('-')[0]
+        // a short substring is used here in order to
+        language.substring(0,3).split('-')[0]
     ].forEach(function (src) {
         console.log('loading: ' + src);
         let script = document.createElement('script');
         script.setAttribute('type', 'application/json');
         script.setAttribute('src', './locale/' + src + '.json');
         script.setAttribute('data-vavilon-dict', src);
-        script.async = true;
+        script.async = false;
         document.head.appendChild(script);
     });
 
