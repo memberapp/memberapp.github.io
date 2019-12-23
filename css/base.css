@@ -25,7 +25,7 @@
   --highlightlibg: #ffd;
   --liborder: #e6e6e6;
   --libgcolor2np1: #ffffff;
-  --libgcolor2n: #f7f7f8;
+  --libgcolor2n: #ffffff;
   --replybgcolor: #fafafa;
   --replyborder: #369;
   --statusbar: #cccccc;
@@ -169,6 +169,10 @@ nav {
   line-height: 25px;
 }
 
+.membertext a {
+  color: var(--bodytextcolor);
+}
+
 select {
   border: 1px;
   background: var(--selectbox);
@@ -265,7 +269,6 @@ footer {
     display: inline-block;
   }
   .comhead span.score {
-    font-weight: bold;
     color: var(--postslikestext);
   }
   .comhead .hnuser {
@@ -412,10 +415,10 @@ footer {
   /* Desktop Screen */
   @media only screen and (min-width: 600px) {
     .comment-tree li {
-      margin: 0px 0px 8px 10px;
-      border: 1px solid var(--liborder) !important;
+      margin: 0px 0px 0px 10px;
+      border-left: 1px solid var(--liborder) !important;
       border-radius: 3px !important;
-      padding: 5px 8px 5px 5px;
+      padding: 5px 8px 0px 5px;
       overflow: hidden;
       font: normal verdana, arial, helvetica, sans-serif;
     }

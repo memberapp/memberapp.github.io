@@ -136,7 +136,7 @@ function getScoresHTML(txid, likes, dislikes, tips) {
 }
 
 function getAgeHTML(firstseen, compress) {
-    return `<span class="age"><a>` + timeSince(Number(firstseen), compress) + `</a></span>`;
+    return `<span class="age">` + timeSince(Number(firstseen), compress) + `</span>`;
 }
 
 function getTopicHTML(topic, append) {
