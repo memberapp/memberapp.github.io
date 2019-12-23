@@ -810,7 +810,8 @@ label {
 .inlinelabel {
   display: inline;
   font-size: small;
-  color: #7d7d7d;
+  font-weight: bold;
+  color: #373737;
 }
 /*member page*/
 
