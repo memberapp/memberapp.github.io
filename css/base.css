@@ -807,6 +807,10 @@ label {
   font-weight: bold;
 }
 
+.checkboxlabel {
+  display: inline;  
+}
+
 /*member page*/
 
 .memberratingcomment, .memberrating {

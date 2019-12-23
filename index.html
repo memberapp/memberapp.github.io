@@ -105,70 +105,77 @@
                     </span>
                     <span id="loggedin" style="display:none;">
                         <span class="headerbuttons">
-                                <span onclick="refreshPool();return false;" title="Refresh Balance" id="balancedetails" class="balancedetails">₿<span id="balance">0</span></span>
-                                <a id="myfeedbutton" title="My Feed (Latest posts from your topics or peeps)" class="btn" href="#myfeed" onclick="showMyFeed();">📰</a>
-                                <a id="notificationsbutton" title="Notifications" class="btn" href="#notifications?start=0&amp;limit=25" onclick="showNotifications(0,25,'notifications');">🔔</a>
-                                <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new" onclick="showNewPost();">📝</a>
-                                <a id="settingsbutton" title="Settings" class="btn" href="#settings" onclick="showSettings();">⚙️</a>
+                            <span onclick="refreshPool();return false;" title="Refresh Balance" id="balancedetails"
+                                class="balancedetails">₿<span id="balance">0</span></span>
+                            <a id="myfeedbutton" title="My Feed (Latest posts from your topics or peeps)" class="btn"
+                                href="#myfeed" onclick="showMyFeed();">📰</a>
+                            <a id="notificationsbutton" title="Notifications" class="btn"
+                                href="#notifications?start=0&amp;limit=25"
+                                onclick="showNotifications(0,25,'notifications');">🔔</a>
+                            <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
+                                onclick="showNewPost();">📝</a>
+                            <a id="settingsbutton" title="Settings" class="btn" href="#settings"
+                                onclick="showSettings();">⚙️</a>
                         </span>
                     </span>
                     <span class="headerbuttons">
-                            <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist" onclick="showTopicList();">📚</a>
-                            <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
+                        <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
+                            onclick="showTopicList();">📚</a>
+                        <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
                     </span>
                     <span id="loggedout" class="loggedout">
-                            <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login" onclick="showLogin();">login</a>
+                        <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login"
+                            onclick="showLogin();">login</a>
                     </span>
                     <span class="separatorwidebreakpoint"></span>
                     <span id="topiccontainer" class="topiccontainer">
-                            <select id="orderselector" onchange="postsSelectorChanged();">
-                                <option value="hot" title="Hottest posts" selected="selected">Hot</option>
-                                <option class="vavilon" data-vavilon="new" value="new" title="Latest posts" >New</option>
-                                <option value="topd" title="Top posts from the past Day"
-                                        class="vavilon" data-vavilon="today" >Day</option>
-                                <option value="topw" title="Top posts from the past Week"
-                                        class="vavilon" data-vavilon="this week" >Week</option>
-                                <option value="topm" title="Top posts from the past Month"
-                                        class="vavilon" data-vavilon="this month">Month</option>
-                                <option value="topy" title="Top posts from the past Year"
-                                        class="vavilon" data-vavilon="this year">Year</option>
-                                <option value="topa" title="Top posts from all time"
-                                        class="vavilon" data-vavilon="all dates">All</option>
-                            </select>
-    
-                            <select id="contentselector" onchange="postsSelectorChanged();">
-                                <option value="posts" selected="selected"
-                                        class="vavilon" data-vavilon="posts">Posts</option>
-                                <option value="replies"
-                                        class="vavilon" data-vavilon="comments">Replies</option>
-                                <option value="both"
-                                        class="vavilon" data-vavilon="all">In Both</option>
-                            </select>
-                            <select id="topicselector" onchange="postsSelectorChanged();">
-                                <option value="" selected="selected">All Topics</option>
-                                <option value=""></option>
-                                <option value="">---------------</option>
-                                <option value="MyTopics">My Topics</option>
-                                <option value="MyFeed">My Feed</option>
-                                <option value="Member">Member</option>
-                                <option value="Bitcoin Cash">Bitcoin Cash</option>
-                                <option value="Bitcoin SV">Bitcoin SV</option>
-                                <option value="Memo">Memo</option>
-                                <option value="Airdrops">Airdrops</option>
-                                <option value="Tokens">Tokens</option>
-                                <option value="OpenBazaar">OpenBazaar</option>
-                                <option value="Capitalism">Capitalism</option>
-                                <option value="US Politics/Trump">US Politics</option>
-                                <option value="Favorite Quotes">Quotes</option>
-                                <option value="Ideas to improve our lives">Improvement</option>
-                                <option value="#911Truth">#911Truth</option>
-                            </select>
-                            <select id="filterselector" onchange="postsSelectorChanged();">
-                                <option value="everyone" selected="selected">Everyone</option>
-                                <option value="mypeeps">My Peeps</option>
-                            </select>
-                        </span>
-                        <a id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href="" onclick="postsSelectorChanged();return false;">🔄</a>
+                        <select id="orderselector" onchange="postsSelectorChanged();">
+                            <option value="hot" title="Hottest posts" selected="selected">Hot</option>
+                            <option class="vavilon" data-vavilon="new" value="new" title="Latest posts">New</option>
+                            <option value="topd" title="Top posts from the past Day" class="vavilon"
+                                data-vavilon="today">Day</option>
+                            <option value="topw" title="Top posts from the past Week" class="vavilon"
+                                data-vavilon="this week">Week</option>
+                            <option value="topm" title="Top posts from the past Month" class="vavilon"
+                                data-vavilon="this month">Month</option>
+                            <option value="topy" title="Top posts from the past Year" class="vavilon"
+                                data-vavilon="this year">Year</option>
+                            <option value="topa" title="Top posts from all time" class="vavilon"
+                                data-vavilon="all dates">All</option>
+                        </select>
+
+                        <select id="contentselector" onchange="postsSelectorChanged();">
+                            <option value="posts" selected="selected" class="vavilon" data-vavilon="posts">Posts
+                            </option>
+                            <option value="replies" class="vavilon" data-vavilon="comments">Replies</option>
+                            <option value="both" class="vavilon" data-vavilon="all">In Both</option>
+                        </select>
+                        <select id="topicselector" onchange="postsSelectorChanged();">
+                            <option value="" selected="selected">All Topics</option>
+                            <option value=""></option>
+                            <option value="">---------------</option>
+                            <option value="MyTopics">My Topics</option>
+                            <option value="MyFeed">My Feed</option>
+                            <option value="Member">Member</option>
+                            <option value="Bitcoin Cash">Bitcoin Cash</option>
+                            <option value="Bitcoin SV">Bitcoin SV</option>
+                            <option value="Memo">Memo</option>
+                            <option value="Airdrops">Airdrops</option>
+                            <option value="Tokens">Tokens</option>
+                            <option value="OpenBazaar">OpenBazaar</option>
+                            <option value="Capitalism">Capitalism</option>
+                            <option value="US Politics/Trump">US Politics</option>
+                            <option value="Favorite Quotes">Quotes</option>
+                            <option value="Ideas to improve our lives">Improvement</option>
+                            <option value="#911Truth">#911Truth</option>
+                        </select>
+                        <select id="filterselector" onchange="postsSelectorChanged();">
+                            <option value="everyone" selected="selected">Everyone</option>
+                            <option value="mypeeps">My Peeps</option>
+                        </select>
+                    </span>
+                    <a id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href=""
+                        onclick="postsSelectorChanged();return false;">🔄</a>
                 </nav>
             </div>
         </header>
@@ -188,7 +195,8 @@
                         oninput="this.onchange();"></textarea>
                 </div>
                 <div>
-                    <input id="newpostbutton" class="vavilon" data-vavilon="post" value="Post a Memo" type="submit" onclick="post();">
+                    <input id="newpostbutton" class="vavilon" data-vavilon="post" value="Post a Memo" type="submit"
+                        onclick="post();">
                     <input id="newpoststatus" style="display: none;" value="Sending . . ." type="submit" disabled>
                     <div id="newpostcompleted"></div>
                 </div>
@@ -203,7 +211,8 @@
                         onpaste="this.onchange();" oninput="this.onchange();">
                 </div>
                 <div>
-                    <span class="vavilon" data-vavilon="title">title</span> <span id="memorandumtitlelengthadvice">(0/217)</span><br />
+                    <span class="vavilon" data-vavilon="title">title</span> <span
+                        id="memorandumtitlelengthadvice">(0/217)</span><br />
                     <input class="memorandumtitle" id="memorandumtitle" maxlength="217"
                         onchange="topictitleChanged('memorandum'); memorandumPreview();" onkeypress="this.onchange();"
                         onpaste="this.onchange();" oninput="this.onchange();">
@@ -211,14 +220,12 @@
                 </div>
                 <div>
                     text<br />
-                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();" onkeypress="this.onchange();"
-                    onpaste="this.onchange();" oninput="this.onchange();"></textarea>
+                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();"
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
                 </div>
                 <div>
-                    <input id="newpostmemorandumbutton"
-                           class="vavilon" data-vavilon="post"
-                           value="Post a Memorandum" type="submit"
-                        onclick="postmemorandum();">
+                    <input id="newpostmemorandumbutton" class="vavilon" data-vavilon="post" value="Post a Memorandum"
+                        type="submit" onclick="postmemorandum();">
                     <input id="newpostmemorandumstatus" style="display: none;" value="Sending . . ." type="submit"
                         disabled>
                     <div id="newpostmemorandumcompleted"></div>
@@ -258,9 +265,8 @@
                     <div id="membercashaddrformatdiv"><span id="membercashaddrformat">loading</span>
                         <span onclick="showQRCode('membercashaddrformat');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                              version="1.1" width="24" height="24"
-                              viewBox="0 0 24 24">
-                             <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
@@ -272,10 +278,9 @@
                 <div>
                     <div id="memberlegacyformatdiv"><span id="memberlegacyformat">loading</span>
                         <span onclick="showQRCode('memberlegacyformat');">
-                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                              version="1.1" width="24" height="24"
-                              viewBox="0 0 24 24">
-                             <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
@@ -290,8 +295,7 @@
                         </a>
                     </div>
                     <div class="mute">
-                        <label class="vavilon"
-                       data-vavilon="mute">Mute</label>
+                        <label class="vavilon" data-vavilon="mute">Mute</label>
                         <a id="memberblock">
                             <i>loading</i>
                         </a>
@@ -343,15 +347,14 @@
 
 
             <div id="settingsanchor" style="display: none;">
-                <h2 class="vavilon"
-                    data-vavilon="settings">Settings</h2>
+                <h2 class="vavilon" data-vavilon="settings">Settings</h2>
                 <div>
                     <label for="settingsnametext">Handle</label>
                     <input maxlength="217" size="30" id="settingsnametext" value="loading..."
                         onchange="document.getElementById('settingsnametextbutton').disabled=false;"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                    <button id="settingsnametextbutton" type="button" onclick="setName();"
-                            class="vavilon" data-vavilon="update">update</button>
+                    <button id="settingsnametextbutton" type="button" onclick="setName();" class="vavilon"
+                        data-vavilon="update">update</button>
                 </div>
                 <label for="settingspagingid">Paging ID</label>
                 <div id='settingspagingid'>
@@ -362,17 +365,14 @@
                     <input maxlength="217" size="30" id='settingsprofiletext' value="loading..."
                         onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                    <button id="settingsprofiletextbutton" type="button" onclick="setProfile();"
-                       class="vavilon" data-vavilon="update"
-                        disabled>update</button>
+                    <button id="settingsprofiletextbutton" type="button" onclick="setProfile();" class="vavilon"
+                        data-vavilon="update" disabled>update</button>
                 </div>
                 <div>
                     <label for="settingsprofilelogout" class="vavilon" data-vavilon="log out"
-                       href="#logout">Logout</label>
-                    <a title="Logout" id="settingsprofilelogout" class="btn vavilon"
-                       data-vavilon="log out"
-                       href="#logout"
-                        onclick="logout();">Logout</a>
+                        href="#logout">Logout</label>
+                    <a title="Logout" id="settingsprofilelogout" class="btn vavilon" data-vavilon="log out"
+                        href="#logout" onclick="logout();">Logout</a>
                 </div>
 
                 <div>
@@ -383,15 +383,13 @@
                     </div>
                 </div>
                 <div>
-                    <label class="vavilon"
-                           data-vavilon="address">Address</label>
+                    <label class="vavilon" data-vavilon="address">Address</label>
                     <span id="cashaddrformat">loading</span>
                     <div id="cashaddrformatdiv">
                         <span onclick="showQRCode('cashaddrformat');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                              version="1.1" width="24" height="24"
-                              viewBox="0 0 24 24">
-                             <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
@@ -404,9 +402,8 @@
                     <span id="legacyformat">loading</span>
                     <div id="legacyformatdiv"> <span onclick="showQRCode('legacyformat');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                              version="1.1" width="24" height="24"
-                              viewBox="0 0 24 24">
-                             <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
@@ -415,16 +412,14 @@
                     </div>
                 </div>
                 <div>
-                    <label class="vavilon"
-                           data-vavilon="private key">Private Key</label>
+                    <label class="vavilon" data-vavilon="private key">Private Key</label>
                     <span id="privatekeydisplay" style="display: none;">loading</span><span id="privatekey"></span>
                     <div id="privatekeydisplaydiv"></div>
                     <div id="privatekeydiv">
                         <span onclick="showQRCode('privatekeydisplay');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                              version="1.1" width="24" height="24"
-                              viewBox="0 0 24 24">
-                             <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
@@ -433,9 +428,9 @@
                     </div>
                 </div>
                 <div>
-                    <label for="cssselector" class="vavilon" data-vavilon="themes" >Theme</label>
+                    <label for="cssselector" class="vavilon" data-vavilon="themes">Theme</label>
                     <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value);'>
-                        <option class="vavilon" data-vavilon="change theme" value="base" >Choose Theme</option>
+                        <option class="vavilon" data-vavilon="change theme" value="base">Choose Theme</option>
                         <option value="base">Member</option>
                         <option value="base nightmode">Member Night Mode</option>
                         <option value="base hackernews">Hacker News</option>
@@ -501,6 +496,26 @@
                         onchange="updatemutedwords();" onkeypress="this.onchange();" onpaste="this.onchange();"
                         oninput="this.onchange();"></textarea>
                 </div>
+                <div>
+                    <label for="mediasettings" class="labelheader vavilon" data-vavilon="Media Settings">Media
+                        Settings</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showyoutube" onchange="updateSettingsCheckbox('showyoutube');">
+                    <label for="showyoutube" class="checkboxlabel vavilon"
+                        data-vavilon="Show YouTube Preview Images">Show YouTube Preview Images</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showimgur" onchange="updateSettingsCheckbox('showimgur');">
+                    <label for="showimgur" class="checkboxlabel vavilon"
+                        data-vavilon="Show Imgur Images">Show Imgur Images</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
+                    <label for="showtwitter" class="checkboxlabel vavilon"
+                        data-vavilon="Show Tweets">Show Tweets</label>
+                </div>
+
             </div>
 
             <div id="ratings" class="ratings" style="display: none;">
@@ -674,8 +689,7 @@
                 <br />Private Key (Compressed WIF format, starts with 'L' or 'K')
                 <br />
                 <input size="64" id="loginkey">
-                <button type="button" href="#feed"
-                       class="vavilon" data-vavilon="log in"
+                <button type="button" href="#feed" class="vavilon" data-vavilon="log in"
                     onclick="trylogin(document.getElementById('loginkey').value);">login</button>
                 <br />
                 <div id="loginerror">
@@ -690,15 +704,19 @@
 
             <footer>
                 <hr />
-                <span id="developmentversion" style="display: none;">You're viewing the development preview version of Member. It's recommend to <a href="https://memberapp.github.io">use the stable version at https://memberapp.github.io</a><br/><br/><hr /></span>
+                <span id="developmentversion" style="display: none;">You're viewing the development preview version of
+                    Member. It's recommend to <a href="https://memberapp.github.io">use the stable version at
+                        https://memberapp.github.io</a><br /><br />
+                    <hr /></span>
                 <span class="footerlinks">
-                    <a href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">
+                    <a
+                        href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">
                         Top Supporters
                     </a>
                     <span class="separatorwide"></span>
                     <a href="https://github.com/memberapp/memberapp.github.io">Github</a>
                     <span class="separatorwide"></span>
-                    <a class="vavilon" data-vavilon="bitcoin"href="https://www.bitcoin.com">Bitcoin</a>
+                    <a class="vavilon" data-vavilon="bitcoin" href="https://www.bitcoin.com">Bitcoin</a>
                     <span class="separatorwide"></span>
                     <a href="https://github.com/memberapp/protocol">Protocol</a>
                     <span class="separatorwide"></span>

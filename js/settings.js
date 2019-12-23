@@ -229,6 +229,13 @@ function getAndPopulateSettings() {
         maxfee = storedmaxfee;
     }
 
+    //Checkboxes
+    for(var key in settings){
+        var theSetting=localStorageGet(localStorageSafe, key);
+        if (theSetting != undefined && theSetting != null) {
+            document.getElementById(key).checked = Boolean(theSetting=="true");
+        }
+    }
 
 
     getDataCommonToSettingsAndMember(pubkey, "settings");
@@ -281,6 +288,11 @@ function updatemutedwords() {
     localStorageSet(localStorageSafe, "mutedwords", mutedwords);
 
 
+}
+
+function updateSettingsCheckbox(settingsName){
+    settings[settingsName]=""+document.getElementById(settingsName).checked;
+    localStorageSet(localStorageSafe, settingsName, settings[settingsName]);
 }
 
 function updateOneClickTip() {
