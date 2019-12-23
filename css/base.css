@@ -807,6 +807,11 @@ label {
   font-weight: bold;
 }
 
+.inlinelabel {
+  display: inline;
+  font-size: small;
+  color: #7d7d7d;
+}
 /*member page*/
 
 .memberratingcomment, .memberrating {
