@@ -31,6 +31,7 @@ window.onbeforeunload = function () {
 };
 
 function init() {
+    setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
 
     //Show message if dev version in use
