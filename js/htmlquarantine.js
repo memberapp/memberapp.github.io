@@ -294,7 +294,7 @@ function addImageAndYoutubeMarkdown(message, differentiator) {
 
     //Imgur
     message = message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
-        '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur" alt="imgur post $2"><div class="imgurcontainer"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg"></div></a>'
+        '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur" ><div class="imgurcontainer"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg" alt="imgur post $2"></div></a>'
     );
 
     //Twitter

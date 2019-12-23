@@ -114,7 +114,7 @@
                 <nav>
                     <span class="memberlogo">
                         <a href="https://memberapp.github.io">
-                            <img class="memberlogoimage" src="img/membericon.svg" width="31" height="31" />
+                            <img class="memberlogoimage"  src="img/membericon.svg" width="31" height="31" />
                         </a>
                     </span>
                     <span class="membertext">
@@ -140,7 +140,7 @@
                     </span>
                     <span class="separatorwidebreakpoint"></span>
                     <span id="topiccontainer" class="topiccontainer">
-                            <select id="orderselector" onchange="postsSelectorChanged();">
+                            <select id="orderselector" label="order" onchange="postsSelectorChanged();" >
                                 <option value="hot" title="Hottest posts" selected="selected">Hot</option>
                                 <option class="vavilon" data-vavilon="new" value="new" title="Latest posts" >New</option>
                                 <option value="topd" title="Top posts from the past Day"
@@ -155,7 +155,7 @@
                                         class="vavilon" data-vavilon="all dates">All</option>
                             </select>
     
-                            <select id="contentselector" onchange="postsSelectorChanged();">
+                            <select id="contentselector" label="content" onchange="postsSelectorChanged();">
                                 <option value="posts" selected="selected"
                                         class="vavilon" data-vavilon="posts">Posts</option>
                                 <option value="replies"
@@ -163,7 +163,7 @@
                                 <option value="both"
                                         class="vavilon" data-vavilon="all">In Both</option>
                             </select>
-                            <select id="topicselector" onchange="postsSelectorChanged();">
+                            <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
                                 <option value="" selected="selected">All Topics</option>
                                 <option value=""></option>
                                 <option value="">---------------</option>
@@ -182,7 +182,7 @@
                                 <option value="Ideas to improve our lives">Improvement</option>
                                 <option value="#911Truth">#911Truth</option>
                             </select>
-                            <select id="filterselector" onchange="postsSelectorChanged();">
+                            <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
                                 <option value="everyone" selected="selected">Everyone</option>
                                 <option value="mypeeps">My Peeps</option>
                             </select>
