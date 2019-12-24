@@ -243,7 +243,9 @@ function getAndPopulateSettings() {
     //Select boxes
     for (var key in dropdowns) {
         var theSetting = localStorageGet(localStorageSafe, key);
-        dropdowns[key]=theSetting;
+        if(theSetting!=null){
+            dropdowns[key]=theSetting;
+        }
         var selector = document.getElementById(key);
 
         var opts = selector.options;
