@@ -252,7 +252,7 @@ select>option {
   .inlinelabel {
     display: inline;
     font-weight: normal;
-    font-size: small;
+    font-size: x-small;
     color: #373737;
   }
 
