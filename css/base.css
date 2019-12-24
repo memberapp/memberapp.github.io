@@ -808,7 +808,8 @@ label {
 }
 
 .checkboxlabel {
-  display: inline;  
+  display: inline;
+  font-weight: normal;
 }
 
 /*member page*/
