@@ -91,7 +91,7 @@ class UTXOPool {
     }
 
     //var balString=(Math.floor(total/1000)).toLocaleString()+"<span class='sats'>"+(total%1000)+"</span>";
-    document.getElementById("balance").innerHTML = balanceString(total,'');
+    document.getElementById("balance").innerHTML = balanceString(total,true);
   }
 
   refreshPool() {
@@ -544,7 +544,7 @@ class TransactionQueue {
 
     const RawTransactions = BITBOX.RawTransactions;
     let rawtransactions = new RawTransactions();
-    rawtransactions.restURL = dropdowns.txbroadcastServer;
+    rawtransactions.restURL = dropdowns.txbroadcastserver;
     rawtransactions.sendRawTransaction(hex).then((result) => {
       this.updateTransactionPool(utxos, options, tx);
       this.transactionInProgress = false;

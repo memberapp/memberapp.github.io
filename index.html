@@ -106,7 +106,7 @@
                     <span id="loggedin" style="display:none;">
                         <span class="headerbuttons">
                             <span onclick="refreshPool();return false;" title="Refresh Balance" id="balancedetails"
-                                class="balancedetails">₿<span id="balance">0</span></span>
+                                class="balancedetails"><span id="balance">0</span></span>
                             <a id="myfeedbutton" title="My Feed (Latest posts from your topics or peeps)" class="btn"
                                 href="#myfeed" onclick="showMyFeed();">📰</a>
                             <a id="notificationsbutton" title="Notifications" class="btn"
@@ -489,6 +489,13 @@
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     (Max
                     satoshis per byte to pay during network congestion. Min 2)
+                </div>
+                <div>
+                    <label for="currencydisplay" data-vavilon="Currency Display">Currency Display</label>
+                    <select id="currencydisplay" onchange='updateSettingsDropdown("currencydisplay");'>
+                        <option value="USD">USD</option>
+                        <option value="BCH">BCH</option>
+                    </select>
                 </div>
                 <div>
                     <label for="mutedwords">Muted Words (Comma Separate)</label>
