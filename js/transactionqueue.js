@@ -6,8 +6,8 @@ const Buffer = buffer.Buffer;
 const BITBOX = bitboxSdk;
 
 //Note, these can be overwritten in config.js
-let utxoServer = "https://rest.bitcoin.com/v2/";
-let txbroadcastServer = "https://rest.bitcoin.com/v2/";
+//let utxoServer = "https://rest.bitcoin.com/v2/";
+//let txbroadcastServer = "https://rest.bitcoin.com/v2/";
 
 //These are variable
 let extraSatoshis = 5;
@@ -114,7 +114,7 @@ class UTXOPool {
 
     const Address = BITBOX.Address;
     let address = new Address();
-    address.restURL = utxoServer;
+    address.restURL = dropdowns.utxoserver;
 
     (async () => {
       outputInfo = await address.utxo(thePublicKeyQFormat);
@@ -544,7 +544,7 @@ class TransactionQueue {
 
     const RawTransactions = BITBOX.RawTransactions;
     let rawtransactions = new RawTransactions();
-    rawtransactions.restURL = txbroadcastServer;
+    rawtransactions.restURL = dropdowns.txbroadcastServer;
     rawtransactions.sendRawTransaction(hex).then((result) => {
       this.updateTransactionPool(utxos, options, tx);
       this.transactionInProgress = false;

@@ -26,7 +26,9 @@
   "settings": "Settings",
   "mute": "mute",
   "reply": "Reply",
-  
+  "themes": "Theme",
+  "change theme": "Choose Theme",
+
   "submit": "Submit",
   "update": "Update",
   "text": "text",
@@ -34,12 +36,12 @@
   "post": "post",
   "new": "new",
   "title": "title",
-  "themes": "themes",
+
   "none": "none",
   "name": "name",
   "log in": "log in",
   "log out": "log out",
-  "change theme": "change theme",
+  
   "comments feed": "comments feed",
   "log in to reply": "log in to reply",
   "create a new address": "Create a new address",

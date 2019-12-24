@@ -3,7 +3,7 @@
 function getAndPopulateCommunityRatings(qaddress) {
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
-    getJSON(server + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + ratingAndReasonHTML(data[i]);
@@ -25,8 +25,8 @@ function getAndPopulateCommunityRatings(qaddress) {
 
         }
     }, function (status) { //error detection....
-        console.log('Something is wrong:'+status);
-        document.getElementById('communityratingtable').innerHTML = 'Something is wrong:'+status;
+        console.log('Something is wrong:' + status);
+        document.getElementById('communityratingtable').innerHTML = 'Something is wrong:' + status;
         updateStatus(status);
     });
 }
@@ -34,7 +34,7 @@ function getAndPopulateCommunityRatings(qaddress) {
 function getAndPopulateRatings(qaddress) {
     document.getElementById('ratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
-    getJSON(server + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + ratingAndReason2HTML(data[i]);
@@ -52,20 +52,20 @@ function getAndPopulateRatings(qaddress) {
                 disableText: rts(data[i].ratername) + ' rates ' + rts(data[i].name) + ' as {rating}/{maxRating}',
             });
             starRating1.theAddress = theAddress;
-            
+
             starRating1.disable();
 
         }
     }, function (status) { //error detection....
-        console.log('Something is wrong:'+status);
-        document.getElementById('ratingtable').innerHTML = 'Something is wrong:'+status;
+        console.log('Something is wrong:' + status);
+        document.getElementById('ratingtable').innerHTML = 'Something is wrong:' + status;
         updateStatus(status);
     });
 }
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
-    getJSON(server + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
 
 
         //alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
@@ -87,16 +87,16 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'blockingnumber').innerHTML = Number(data[0].blocking);
             document.getElementById(pre + 'nametext').value = data[0].name;
             document.getElementById(pre + 'profiletext').value = data[0].profile;
-            
+
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
-            document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@"+data[0].pagingid);
-            
+            document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
+
             document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
             document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
             document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
 
-            
+
         }
 
         if (pre == "settings") {
@@ -104,7 +104,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'profiletextbutton').disabled = true;
             if (document.getElementById(pre + 'nametext').value == "") {
                 document.getElementById(pre + 'nametext').disabled = false;
-            }else{
+            } else {
                 document.getElementById(pre + 'nametext').disabled = true;
             }
         }
@@ -145,8 +145,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress, data);
             document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
 
-            document.getElementById('memberrating').innerHTML = `<div data-ratingsize="20" data-ratingaddress="`+ san(qaddress) + `" data-ratingraw="` + Number(data[0].rating) + `" id="memberrating` + qaddress + `"></div>`;
-            var theElement=document.getElementById(`memberrating` + qaddress);
+            document.getElementById('memberrating').innerHTML = `<div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + Number(data[0].rating) + `" id="memberrating` + qaddress + `"></div>`;
+            var theElement = document.getElementById(`memberrating` + qaddress);
             var starRating1 = addSingleStarsRating(false, theElement);
 
             /*var theRating = 0; if (data.length > 0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
@@ -174,7 +174,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         }
 
     }, function (status) { //error detection....
-        console.log('Something is wrong:'+status);
+        console.log('Something is wrong:' + status);
         updateStatus(status);
     });
 }
@@ -230,16 +230,30 @@ function getAndPopulateSettings() {
     }
 
     //Checkboxes
-    for(var key in settings){
-        var theSetting=localStorageGet(localStorageSafe, key);
+    for (var key in settings) {
+        var theSetting = localStorageGet(localStorageSafe, key);
 
         if (theSetting != undefined && theSetting != null) {
-            document.getElementById(key).checked = Boolean(theSetting=="true");
-        }else{
-            document.getElementById(key).checked = Boolean(settings[key]=="true");
+            document.getElementById(key).checked = Boolean(theSetting == "true");
+        } else {
+            document.getElementById(key).checked = Boolean(settings[key] == "true");
         }
     }
 
+    //Select boxes
+    for (var key in dropdowns) {
+        var theSetting = localStorageGet(localStorageSafe, key);
+        dropdowns[key]=theSetting;
+        var selector = document.getElementById(key);
+
+        var opts = selector.options;
+        for (var i = 0; i < opts.length; i++) {
+            if (opts[i].value == theSetting) {
+                selector.selectedIndex = i;
+            }
+        }
+
+    }
 
     getDataCommonToSettingsAndMember(pubkey, "settings");
 
@@ -293,9 +307,15 @@ function updatemutedwords() {
 
 }
 
-function updateSettingsCheckbox(settingsName){
-    settings[settingsName]=""+document.getElementById(settingsName).checked;
+function updateSettingsCheckbox(settingsName) {
+    settings[settingsName] = "" + document.getElementById(settingsName).checked;
     localStorageSet(localStorageSafe, settingsName, settings[settingsName]);
+}
+
+function updateSettingsDropdown(settingsName) {
+    var selector = document.getElementById(settingsName);
+    dropdowns[settingsName] = selector.options[selector.selectedIndex].value;
+    localStorageSet(localStorageSafe, settingsName, dropdowns[settingsName]);
 }
 
 function updateOneClickTip() {

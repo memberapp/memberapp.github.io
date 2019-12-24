@@ -507,15 +507,37 @@
                 </div>
                 <div>
                     <input type="checkbox" id="showimgur" onchange="updateSettingsCheckbox('showimgur');">
-                    <label for="showimgur" class="checkboxlabel vavilon"
-                        data-vavilon="Show Imgur Images">Show Imgur Images</label>
+                    <label for="showimgur" class="checkboxlabel vavilon" data-vavilon="Show Imgur Images">Show Imgur
+                        Images</label>
                 </div>
                 <div>
                     <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
-                    <label for="showtwitter" class="checkboxlabel vavilon"
-                        data-vavilon="Show Tweets">Show Tweets</label>
+                    <label for="showtwitter" class="checkboxlabel vavilon" data-vavilon="Show Tweets">Show
+                        Tweets</label>
+                </div>
+                <div>
+                    <label for="contentserver" data-vavilon="Content Server">Content Server</label>
+                    <select id="contentserver" onchange='updateSettingsDropdown("contentserver");'>
+                        <option value="https://memberjs.org:8123/member.js">Memberjs.org</option>
+                        <option value="http://127.0.0.1:3123/member.js">Localhost</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="txbroadcastserver" data-vavilon="TX Broadcast Server">TX Broadcast Server</label>
+                    <select id="txbroadcastserver" onchange='updateSettingsDropdown("txbroadcastserver");'>
+                        <option value="https://memberjs.org:8123/v2/">Memberjs.org</option>
+                        <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+                        <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
+                    </select>
                 </div>
 
+                <div>
+                    <label for="utxoserver" data-vavilon="UTXO Server">UTXO Server</label>
+                    <select id="utxoserver" onchange='updateSettingsDropdown("utxoserver");'>
+                        <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
+                        <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+                    </select>
+                </div>
             </div>
 
             <div id="ratings" class="ratings" style="display: none;">
@@ -687,8 +709,8 @@
                 <a href="https://memo.cash/key/export">Click here to get yours</a>.
                 (Member is SLP546 aware and will not alter your SLP tokens)
                 <br />
-                <br /><span class="vavilon"
-                            data-vavilon="private key">Private Key</span> (Compressed WIF format, starts with 'L...' or 'K...')
+                <br /><span class="vavilon" data-vavilon="private key">Private Key</span> (Compressed WIF format, starts
+                with 'L...' or 'K...')
                 <br />
                 <input size="64" id="loginkey">
                 <button type="button" href="#feed" class="vavilon" data-vavilon="log in"

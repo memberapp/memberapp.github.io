@@ -118,7 +118,7 @@ function onMapClick(e) {
 function loadLocationListFromServerAndPlaceOnMap(event) {
 
     var mapBounds = map.getBounds();
-    var url = server + '?action=map&address=' + pubkey + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
+    var url = dropdowns.contentserver + '?action=map&address=' + pubkey + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
     getJSON(url).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {

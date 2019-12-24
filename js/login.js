@@ -14,6 +14,11 @@ var maxfee = 5;
 var settings = { "showyoutube": "true",
                  "showimgur": "true", 
                  "showtwitter": "true" };
+var dropdowns = { "contentserver": "https://memberjs.org:8123/member.js",
+                 "txbroadcastserver": "https://memberjs.org:8123/member.js", 
+                 "utxoserver": "https://rest.bitcoin.com/v2/" };
+
+
 
 var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }
