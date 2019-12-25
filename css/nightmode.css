@@ -17,9 +17,9 @@
     --preformattedborder: #ccc;
     --poststext: #c6c6c6;
     --postsheadertext: #888;
-    --postslikestext: #333;
+    --postslikestext: #888;
     --titletext: #fff;
-    --postfootertext: #888;
+    --postfootertext: #ddd;
     --votescoredown: #9494FF;
     --highlightlibg: #002;
     --liborder: #555;
@@ -32,5 +32,6 @@
     --navbuttonsbg: #eee;
     --navbuttonsborder: #ddd;
     --navbuttonstext: #222;
+    --notificationtitle: #999;    
     --linkcolor:#DDDDDD;
   }

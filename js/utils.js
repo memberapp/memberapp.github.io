@@ -11,25 +11,25 @@ function timeSince(timestamp, compress) {
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return interval + (compress?" year":" years ago");
+    return ___i18n("%s years ago", interval);
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return interval + (compress?" mons":" months ago");
+    return ___i18n("%s months ago", interval);
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return interval + (compress?" days":" days ago");
+    return ___i18n(compress ? "%s d" : "%s days ago", interval);
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return interval + (compress?" hrs":" hours ago");
+    return ___i18n(compress ? "%s h" : "%s hours ago", interval);
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return interval + (compress?" mins":" minutes ago");
+    return ___i18n(compress ? "%s m" : "%s minutes ago", interval);
   }
-  return Math.floor(seconds) + (compress?" secs":" seconds ago");
+  return ___i18n(compress ? "%s s" : "%s seconds ago", Math.floor(seconds));
 }
 
 var getJSON = function (url) {
@@ -222,32 +222,37 @@ function localStorageSet(theSO, itemName, theString) {
   }
 }
 
-function balanceString(total,append){
-  var balString=(Number(total)/1000).toFixed(3);
-  //total.toLocaleString();
-  
-  //Make last three digits superscript
-  //if(balString.length>4){
-    balString=Number(balString.substr(0,balString.length-4)).toLocaleString()+"<span class='sats'>"+balString.substr(balString.length-3,3)+"</span>"+append;
-  //}
-  return balString;
+var usdrate = 191.36;
+function balanceString(total, includeSymbol) {
+  if (dropdowns.currencydisplay == "BCH") {
+    var balString = (Number(total) / 1000).toFixed(3);
+    balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
+    if (includeSymbol){
+      return "₿" + balString;
+    }else{
+      return balString + " sats ";
+    }
+  }
+
+  var usd = ((Number(total) * usdrate) / 100000000).toFixed(2);
+  return "$"+usd;
 }
 
 function detectMultipleIDS() {
   //console.log("Run Multiple ID check");
   var elms = document.getElementsByTagName("*"), i, len, ids = {}, id;
   for (i = 0, len = elms.length; i < len; i += 1) {
-      id = elms[i].id || null;
-      if (id) {
-          ids[id] =  ids.hasOwnProperty(id) ? ids[id] +=1 : 0;
-      }
+    id = elms[i].id || null;
+    if (id) {
+      ids[id] = ids.hasOwnProperty(id) ? ids[id] += 1 : 0;
+    }
   }
   for (id in ids) {
-      if (ids.hasOwnProperty(id)) {
-          if (ids[id]) {
-              console.warn("Multiple IDs #" + id);
-          }
+    if (ids.hasOwnProperty(id)) {
+      if (ids[id]) {
+        console.warn("Multiple IDs #" + id);
       }
+    }
   }
 }
 
@@ -286,20 +291,20 @@ window.onmessage = (event) => {
 
 function listenForTwitFrameResizes() {
   /* find all iframes with ids starting with "tweet_" */
-  var tweetIframes=document.querySelectorAll("*[id^='tweet_']");
+  var tweetIframes = document.querySelectorAll("*[id^='tweet_']");
   tweetIframes.forEach(element => {
-    element.onload=function() {
+    element.onload = function () {
       this.contentWindow.postMessage({ element: this.id, query: "height" },
-          "https://twitframe.com");
+        "https://twitframe.com");
     };
   });
-  
+
 }
 
 /* listen for the return message once the tweet has been loaded */
 window.onmessage = (oe) => {
   if (oe.origin != "https://twitframe.com")
-      return;
+    return;
   if (oe.data.height && oe.data.element.match(/^tweet_/))
-      document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px"; 
+    document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
 }
