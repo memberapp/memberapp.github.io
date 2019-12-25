@@ -12,11 +12,11 @@ async function getAndPopulateBootstrap(qaddress) {
     document.getElementById('bootstraptable2').innerHTML = document.getElementById("loading").innerHTML;
     document.getElementById('bootstraptable3').innerHTML = document.getElementById("loading").innerHTML;
     
-    getJSON(server + '?action=bootstrap1&qaddress=' + qaddress + '&address=' + pubkey).then(processdataintoratings, somethingwentwrong);
+    getJSON(dropdowns.contentserver + '?action=bootstrap1&qaddress=' + qaddress + '&address=' + pubkey).then(processdataintoratings, somethingwentwrong);
     await sleep(2000);
-    getJSON(server + '?action=bootstrap2&qaddress=' + qaddress + '&address=' + pubkey).then(processdataintoratings, somethingwentwrong);
+    getJSON(dropdowns.contentserver + '?action=bootstrap2&qaddress=' + qaddress + '&address=' + pubkey).then(processdataintoratings, somethingwentwrong);
     await sleep(2000);
-    getJSON(server + '?action=bootstrap3&qaddress=' + qaddress + '&address=' + pubkey).then(processdataintoratings, somethingwentwrong);
+    getJSON(dropdowns.contentserver + '?action=bootstrap3&qaddress=' + qaddress + '&address=' + pubkey).then(processdataintoratings, somethingwentwrong);
 }
 var bstcount=0;
 var bootstrapnames={};

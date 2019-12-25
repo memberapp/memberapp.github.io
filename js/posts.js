@@ -17,7 +17,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
     //Request content from the server and display it when received
-    getJSON(server + '?action=show&order='+order+'&content='+content+'&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter='+filter+ '&address=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=show&order='+order+'&content='+content+'&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter='+filter+ '&address=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
@@ -58,7 +58,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
     
     
     //Request content from the server and display it when received
-    getJSON(server + '?action=' + page + '&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=' + page + '&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicNameHOSTILE, "getAndPopulate", data.length);
@@ -94,7 +94,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
     //If no post is specified, we'll use it as a top level
     if (txid === undefined || txid == "") { txid = roottxid; }
 
-    getJSON(server + '?action=thread&address=' + pubkey + '&txid=' + txid).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=thread&address=' + pubkey + '&txid=' + txid).then(function (data) {
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
@@ -157,7 +157,7 @@ function getAndPopulateTopicList(showpage){
         show(page);
     }
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    getJSON(server + '?action=topiclist&qaddress=' + pubkey ).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey ).then(function (data) {
         
         var selectbox=document.getElementById('topicselector'); 
         while(selectbox.options[6]){
@@ -393,7 +393,7 @@ function likePost(txid, tipAddress) {
 
     if(oneclicktip>=547){
         var tipscount=Number(document.getElementById('tipscount' + txid).dataset.amount);
-        document.getElementById('tipscount' + txid).innerHTML=balanceString(tipscount+oneclicktip," sats ");
+        document.getElementById('tipscount' + txid).innerHTML=balanceString(tipscount+oneclicktip,false);
         document.getElementById('tipscount' + txid).dataset.amount=tipscount+oneclicktip;
         sendTipRaw(txid, tipAddress, oneclicktip, privkey, null);
     }else{
@@ -437,7 +437,7 @@ function sendTip(txid, tipAddress, page) {
     document.getElementById('tipstatus' + page + txid).value = "Sending Tip . . " + tipAmount;
     var tipscount=Number(document.getElementById('tipscount' + txid).dataset.amount);
     document.getElementById('tipscount' + txid).dataset.amount=tipscount+tipAmount;
-    document.getElementById('tipscount' + txid).innerHTML=balanceString(tipscount+tipAmount," sats ");
+    document.getElementById('tipscount' + txid).innerHTML=balanceString(tipscount+tipAmount,false);
 
     sendTipRaw(txid, tipAddress, tipAmount, privkey,
         function () {

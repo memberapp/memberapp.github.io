@@ -837,6 +837,11 @@ label {
   font-weight: bold;
 }
 
+.checkboxlabel {
+  display: inline;
+  font-weight: normal;
+}
+
 /*member page*/
 
 .memberratingcomment, .memberrating {

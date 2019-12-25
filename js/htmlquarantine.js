@@ -19,9 +19,9 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "") {
         name = address.substring(0, 10);
     }
-    var ret=`<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">` + ds(name) + `</a> `;
-    if(ratingStarSize>0){
-        ret+=`<div data-ratingsize="`+ Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div>`;
+    var ret = `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">` + ds(name) + `</a> `;
+    if (ratingStarSize > 0) {
+        ret += `<div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div>`;
     }
     return ret;
 }
@@ -132,7 +132,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 }
 
 function getScoresHTML(txid, likes, dislikes, tips) {
-    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `"  data-amount="` + Number(tips) + `">` + balanceString(Number(tips), " sats ") + `</span></span></span>`;
+    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `"  data-amount="` + Number(tips) + `">` + balanceString(Number(tips), false) + `</span></span></span>`;
 }
 
 function getAgeHTML(firstseen, compress) {
@@ -252,7 +252,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                 <div`+ (blockstxid != null ? ` class="blocked"` : ``) + `>
                     <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike) + `</div>
                     <div class="commentdetails">
-                        <div class="comhead"> <a onclick="collapseComment('`+san(txid) + `');" href="javascript:;">[-]</a> `
+                        <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
         + userHTML(address, name, ratingID, rating, 8)
         + getScoresHTML(txid, likes, dislikes, tips)
         + getAgeHTML(firstseen) +
@@ -276,10 +276,12 @@ function makeYoutubeIframe(youtubeid, starttime) {
 
 function addImageAndYoutubeMarkdown(message, differentiator) {
 
-    //Youtube
-    message = message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*<\/a>/g,
-        `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="makeYoutubeIframe('$1','$4');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" alt="video post" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
-    );
+    if (settings["showyoutube"] == "true") {
+        //Youtube
+        message = message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*<\/a>/g,
+            `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="makeYoutubeIframe('$1','$4');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" alt="video post" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
+        );
+    }
 
     /*message=message.replace(/<a.*(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12}).*<\/a>/g,
     '<iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
@@ -292,19 +294,22 @@ function addImageAndYoutubeMarkdown(message, differentiator) {
     //'<iframe class="youtubeiframe" src="https://www.youtube.com/embed/$1?rel=0&autoplay=0&showinfo=0" frameborder="0" allowfullscreen></iframe>'
 
 
-    //Imgur
-    message = message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
-        '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur" ><div class="imgurcontainer"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg" alt="imgur post $2"></div></a>'
-    );
+    if (settings["showimgur"] == "true") {
+        //Imgur
+        message = message.replace(/<a.*(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/g,
+            '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg" alt="imgur post $2"></div></a>'
+        );
+    }
 
-    //Twitter
-    var tweetRegex = /<a.*https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/;
-
-    //This works but is ugly
-    //Add differentiator so that if a tweet is shown multiple times, it has a different id each time
-    message = message.replace(tweetRegex,
-        '<div class="twittercontainer"><iframe  height="400" width="550" class="twitteriframe" title="$3" id="tweet_$3' + differentiator + '" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3" ></iframe></div>'
-    );
+    if (settings["showtwitter"] == "true") {
+        //Twitter
+        var tweetRegex = /<a.*https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/;
+        //This works but is ugly
+        //Add differentiator so that if a tweet is shown multiple times, it has a different id each time
+        message = message.replace(tweetRegex,
+            '<div class="twittercontainer"><iframe  height="400" width="550" class="twitteriframe" id="tweet_$3' + differentiator + '" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe></div>'
+        );
+    }
 
 
     //Twitter's preferred way to do this doesn't work well with Member's html construction
@@ -453,12 +458,12 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
         if ((data[i].retxid == targettxid || data[i].retxid == firstreplytxid) && data[i].txid != firstreplytxid) {
-            contents += `<li id="LI`+san(data[i].txid)+`"` + (data[i].txid.startsWith(highlighttxid) ? `class="highlightli" ` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
-            contents += `<li class="collapsed" style="display: none;" id="CollapsedLI`+san(data[i].txid)+`"><div class="comhead"><a onclick="uncollapseComment('`+san(data[i].txid) + `');" href="javascript:;">[+] </a>`
-            + userHTML(data[i].address, data[i].name, data[i].ratingID, data[i].rating, 0)
-            + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips)
-            + getAgeHTML(data[i].firstseen)
-            +`</div></li>`;
+            contents += `<li id="LI` + san(data[i].txid) + `"` + (data[i].txid.startsWith(highlighttxid) ? `class="highlightli" ` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
+            contents += `<li class="collapsed" style="display: none;" id="CollapsedLI` + san(data[i].txid) + `"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
+                + userHTML(data[i].address, data[i].name, data[i].ratingID, data[i].rating, 0)
+                + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips)
+                + getAgeHTML(data[i].firstseen)
+                + `</div></li>`;
         }
     }
     contents = contents + "</ul>";
@@ -476,12 +481,12 @@ function getHTMLForTopic(data) {
 
 }
 
-function collapseComment(commentid){
-    document.getElementById('LI'+commentid).style.display='none'; 
-    document.getElementById('CollapsedLI'+commentid).style.display='block'; 
+function collapseComment(commentid) {
+    document.getElementById('LI' + commentid).style.display = 'none';
+    document.getElementById('CollapsedLI' + commentid).style.display = 'block';
 }
 
-function uncollapseComment(commentid){
-    document.getElementById('LI'+commentid).style.display='block'; 
-    document.getElementById('CollapsedLI'+commentid).style.display='none'; 
+function uncollapseComment(commentid) {
+    document.getElementById('LI' + commentid).style.display = 'block';
+    document.getElementById('CollapsedLI' + commentid).style.display = 'none';
 }
