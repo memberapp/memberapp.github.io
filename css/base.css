@@ -16,11 +16,11 @@
   --preformattedtext: #333;
   --preformattedbg: #f5f5f5;
   --preformattedborder: #ccc;
-  --poststext: #c6c6c6;
-  --postsheadertext: #888;
+  --poststext: #555555;
+  --postsheadertext: #555;
   --postslikestext: #333;
   --titletext: #222;
-  --postfootertext: #888;
+  --postfootertext: #555555;
   --votescoredown: #9494FF;
   --highlightlibg: #ffd;
   --liborder: #e6e6e6;
@@ -213,11 +213,27 @@ select>option {
   .loggedout {
     display: inline;
   }
+  .memberlogo {
+    vertical-align: middle;
+    position: relative;
+  }
   .memberlogoimage {
     vertical-align: middle;
+    position: relative;
     padding-left: 2px;
     padding-bottom: 2px;
   }
+  .memberlogoimagebacking {
+    left: 2px;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 55%;
+    display: inline-block;
+    z-index: -100;
+  }
+
   .headerbuttons, .refreshbalance, .newpostbutton {
     font-size: large;
   }
@@ -231,6 +247,20 @@ select>option {
     padding-top: 2px;
     padding-right: 2px;
   }
+
+
+  .inlinelabel {
+    display: inline;
+    font-weight: normal;
+    font-size: x-small;
+    color: #373737;
+  }
+
+  .topiccontainer select{
+    font-weight: bold;
+    color: #000;
+  }
+
   /* Breakline in header for small screen, 720 is about the point where it splits onto a second line
   probably a better way to handle this as topic container is still free floating and unwanted break appears*/
   @media only screen and (max-width: 860px) {

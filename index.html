@@ -23,17 +23,35 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!--  Progressive Web App Service Worker -->
+    <script src="pwa/pwa.js"></script>
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Large Script Files -->
+    <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
+    <link rel="preload" href="js/lib/bitcoincash-0.1.10.min.js" as="script">
+
+    <!-- DNS-prefetch resource hints  -->
+    <link rel="preconnect" href="https://memberjs.org">
+    <link rel="preconnect" href="https://i.imgur.com">
+    <link rel="preconnect" href="https://twitframe.com">
+
     <!--  Progressive Web App -->
-    <link rel="manifest" href="pwa/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Member">
-    <link rel="apple-touch-icon" href="/img/member512.png">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <link rel="mask-icon" href="img/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="icon" type="image/png" href="img/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <meta name="theme-color" content="#cee3f8" />
-    <script src="pwa/pwa.js"></script>
+    <link rel="preload" href="js/lib/vavilon.min.js"  as="script">
+    <link rel="preload" href="img/loading.gif"  as="image">
 
     <!--  Load Translations -->
     <script src="js/loadlocale.js"></script>
+    <link rel="preload" href="js/lib/vavilon.min.js"  as="script">
 
     <!--  Leaflet (Map) -->
     <link rel="stylesheet" href="js/leaflet/leaflet.css" />
@@ -43,6 +61,7 @@
     <link id="pagestyle2" rel="stylesheet" href="css/none.css">
     <link id="pagestyle3" rel="stylesheet" href="css/none.css">
     <link id="addonstyle" rel="stylesheet" href="">
+
 </head>
 
 <body>
@@ -94,12 +113,13 @@
             <div class="pagetop">
                 <nav>
                     <span class="memberlogo">
-                        <a href="https://memberapp.github.io">
-                            <img class="memberlogoimage" src="img/bch.png" width="31" height="18" />
+                        <a href="./index.html" aria-label="Refresh">
+                            <img class="memberlogoimage"  src="img/membericon.svg" width="31" height="31" alt="Member Logo"/>
                         </a>
+                        <span class="memberlogoimagebacking"></span>
                     </span>
                     <span class="membertext">
-                        <a href="https://memberapp.github.io">
+                        <a href="./index.html" aria-label="Member Home">
                             <b>Member</b>
                         </a>
                     </span>
@@ -129,53 +149,57 @@
                     </span>
                     <span class="separatorwidebreakpoint"></span>
                     <span id="topiccontainer" class="topiccontainer">
-                        <select id="orderselector" onchange="postsSelectorChanged();">
-                            <option value="hot" title="Hottest posts" selected="selected">Hot</option>
-                            <option class="vavilon" data-vavilon="new" value="new" title="Latest posts">New</option>
-                            <option value="topd" title="Top posts from the past Day" class="vavilon"
-                                data-vavilon="today">Day</option>
-                            <option value="topw" title="Top posts from the past Week" class="vavilon"
-                                data-vavilon="this week">Week</option>
-                            <option value="topm" title="Top posts from the past Month" class="vavilon"
-                                data-vavilon="this month">Month</option>
-                            <option value="topy" title="Top posts from the past Year" class="vavilon"
-                                data-vavilon="this year">Year</option>
-                            <option value="topa" title="Top posts from all time" class="vavilon"
-                                data-vavilon="all dates">All</option>
-                        </select>
-
-                        <select id="contentselector" onchange="postsSelectorChanged();">
-                            <option value="posts" selected="selected" class="vavilon" data-vavilon="posts">Posts
-                            </option>
-                            <option value="replies" class="vavilon" data-vavilon="comments">Replies</option>
-                            <option value="both" class="vavilon" data-vavilon="all">In Both</option>
-                        </select>
-                        <select id="topicselector" onchange="postsSelectorChanged();">
-                            <option value="" selected="selected">All Topics</option>
-                            <option value=""></option>
-                            <option value="">---------------</option>
-                            <option value="MyTopics">My Topics</option>
-                            <option value="MyFeed">My Feed</option>
-                            <option value="Member">Member</option>
-                            <option value="Bitcoin Cash">Bitcoin Cash</option>
-                            <option value="Bitcoin SV">Bitcoin SV</option>
-                            <option value="Memo">Memo</option>
-                            <option value="Airdrops">Airdrops</option>
-                            <option value="Tokens">Tokens</option>
-                            <option value="OpenBazaar">OpenBazaar</option>
-                            <option value="Capitalism">Capitalism</option>
-                            <option value="US Politics/Trump">US Politics</option>
-                            <option value="Favorite Quotes">Quotes</option>
-                            <option value="Ideas to improve our lives">Improvement</option>
-                            <option value="#911Truth">#911Truth</option>
-                        </select>
-                        <select id="filterselector" onchange="postsSelectorChanged();">
-                            <option value="everyone" selected="selected">Everyone</option>
-                            <option value="mypeeps">My Peeps</option>
-                        </select>
-                    </span>
-                    <a id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href=""
-                        onclick="postsSelectorChanged();return false;">🔄</a>
+                            <label for="orderselector" class="inlinelabel">Filter</label>
+                            <select id="orderselector" onchange="postsSelectorChanged();" >
+                                <option value="hot" title="Hottest posts" selected="selected">Hot</option>
+                                <option class="vavilon" data-vavilon="new" value="new" title="Latest posts" >New</option>
+                                <option value="topd" title="Top posts from the past Day"
+                                        class="vavilon" data-vavilon="today" >Day</option>
+                                <option value="topw" title="Top posts from the past Week"
+                                        class="vavilon" data-vavilon="this week" >Week</option>
+                                <option value="topm" title="Top posts from the past Month"
+                                        class="vavilon" data-vavilon="this month">Month</option>
+                                <option value="topy" title="Top posts from the past Year"
+                                        class="vavilon" data-vavilon="this year">Year</option>
+                                <option value="topa" title="Top posts from all time"
+                                        class="vavilon" data-vavilon="all dates">All</option>
+                            </select>
+                            <label for="contentselector" class="inlinelabel">Content</label>
+                            <select id="contentselector" label="content" onchange="postsSelectorChanged();">
+                                <option value="posts" selected="selected"
+                                        class="vavilon" data-vavilon="posts">Posts</option>
+                                <option value="replies"
+                                        class="vavilon" data-vavilon="comments">Replies</option>
+                                <option value="both"
+                                        class="vavilon" data-vavilon="all">In Both</option>
+                            </select>
+                            <label for="topicselector" class="inlinelabel">Topic</label>
+                            <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
+                                <option value="" selected="selected">All</option>
+                                <option value=""></option>
+                                <option value="">---------------</option>
+                                <option value="MyTopics">My Topics</option>
+                                <option value="MyFeed">My Feed</option>
+                                <option value="Member">Member</option>
+                                <option value="Bitcoin Cash">Bitcoin Cash</option>
+                                <option value="Bitcoin SV">Bitcoin SV</option>
+                                <option value="Memo">Memo</option>
+                                <option value="Airdrops">Airdrops</option>
+                                <option value="Tokens">Tokens</option>
+                                <option value="OpenBazaar">OpenBazaar</option>
+                                <option value="Capitalism">Capitalism</option>
+                                <option value="US Politics/Trump">US Politics</option>
+                                <option value="Favorite Quotes">Quotes</option>
+                                <option value="Ideas to improve our lives">Improvement</option>
+                                <option value="#911Truth">#911Truth</option>
+                            </select>
+                            <label for="filterselector" class="inlinelabel">Feed</label>
+                            <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
+                                <option value="everyone" selected="selected">Everyone</option>
+                                <option value="mypeeps">My Peeps</option>
+                            </select>
+                        </span>
+                        <a id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href="" onclick="postsSelectorChanged();return false;">🔄</a>
                 </nav>
             </div>
         </header>
