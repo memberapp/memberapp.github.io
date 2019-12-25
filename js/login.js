@@ -15,7 +15,7 @@ var settings = { "showyoutube": "true",
                  "showimgur": "true", 
                  "showtwitter": "true" };
 var dropdowns = { "contentserver": "https://memberjs.org:8123/member.js",
-                 "txbroadcastserver": "https://memberjs.org:8123/member.js", 
+                 "txbroadcastserver": "https://memberjs.org:8123/v2/", 
                  "utxoserver": "https://rest.bitcoin.com/v2/",
                  "currencydisplay":"USD"
                 };
