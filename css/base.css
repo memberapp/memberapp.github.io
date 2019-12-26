@@ -16,7 +16,7 @@
   --preformattedtext: #333;
   --preformattedbg: #f5f5f5;
   --preformattedborder: #ccc;
-  --poststext: #555555;
+  --votenumbertext: #c6c6c6;
   --postsheadertext: #555;
   --postslikestext: #333;
   --titletext: #222;
@@ -285,7 +285,7 @@ footer {
 @media only screen {
   /*For numbering color*/
   .posts {
-    color: var(--poststext);
+    color: var(--votenumbertext);
   }
   .comhead {
     color: var(--postsheadertext);
@@ -387,7 +387,7 @@ footer {
     text-align: center;
     min-width: 10px;
     display: block;
-    color: var(--poststext);
+    color: var(--votenumbertext);
     font-weight: bold;
     font-size: small;
   }
