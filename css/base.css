@@ -256,10 +256,6 @@ select>option {
     color: #373737;
   }
 
-  .topiccontainer select{
-    font-weight: bold;
-    color: #000;
-  }
 
   /* Breakline in header for small screen, 720 is about the point where it splits onto a second line
   probably a better way to handle this as topic container is still free floating and unwanted break appears*/
