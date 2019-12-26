@@ -9,7 +9,7 @@ const PRECACHE_URLS = [
     'locale/en.json',
     'js/leaflet/leaflet.js'
 ];
-const VERSION = '3.1.0.9';
+const VERSION = '3.2.0.9';
 const RUNTIME = 'runtime-' + VERSION;
 const INSTALL = 'install-' + VERSION;
 
