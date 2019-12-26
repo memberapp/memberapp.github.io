@@ -1,3 +1,4 @@
+
 "use strict";
 
 var pubkey = ""; //Public Key (Legacy)
@@ -10,6 +11,16 @@ var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
 //var twitterEmbeds=new Array();
+var settings = { "showyoutube": "true",
+                 "showimgur": "true", 
+                 "showtwitter": "true" };
+var dropdowns = { "contentserver": "https://memberjs.org:8123/member.js",
+                 "txbroadcastserver": "https://memberjs.org:8123/v2/", 
+                 "utxoserver": "https://rest.bitcoin.com/v2/",
+                 "currencydisplay":"USD"
+                };
+
+
 
 var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }
