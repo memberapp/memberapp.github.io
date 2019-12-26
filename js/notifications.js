@@ -10,7 +10,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
 
 
     //Request content from the server and display it when received
-    getJSON(server + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
         var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length);
 
@@ -90,7 +90,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             return notificationItemHTML(
                 "like",
                 `💗&nbsp;`,
-                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + balanceString(Number(data.amount),` sats `),
+                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + balanceString(Number(data.amount),false),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID,  data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex)
             );

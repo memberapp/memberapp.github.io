@@ -4,7 +4,7 @@
 function getAndPopulateFollowers(qaddress) {
     show('followers');
     var page="followers";
-    getJSON(server + '?action=followers&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=followers&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getMembersWithRatingHTML(i,page,data[i],"Follows",false);
@@ -27,7 +27,7 @@ function getAndPopulateFollowers(qaddress) {
 function getAndPopulateFollowing(qaddress) {
     show('following');
     var page="following";
-    getJSON(server + '?action=following&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=following&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getMembersWithRatingHTML(i,page,data[i],"Follows",true);
@@ -49,7 +49,7 @@ function getAndPopulateFollowing(qaddress) {
 function getAndPopulateBlockers(qaddress){
     show('blockers');
     var page="blockers";
-    getJSON(server+'?action=blockers&qaddress='+qaddress+'&address='+pubkey).then(function(data) {
+    getJSON(dropdowns.contentserver+'?action=blockers&qaddress='+qaddress+'&address='+pubkey).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
             contents=contents+getMembersWithRatingHTML(i,page,data[i],"Mutes",false);
@@ -73,7 +73,7 @@ function getAndPopulateBlockers(qaddress){
 function getAndPopulateBlocking(qaddress){
     show('blocking');
     var page="blocking";
-    getJSON(server+'?action=blocking&qaddress='+qaddress+'&address='+pubkey).then(function(data) {
+    getJSON(dropdowns.contentserver+'?action=blocking&qaddress='+qaddress+'&address='+pubkey).then(function(data) {
         var contents="";
         for(var i=0;i<data.length;i++){
             contents=contents+getMembersWithRatingHTML(i,page,data[i],"Mutes",true);

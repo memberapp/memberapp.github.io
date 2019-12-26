@@ -16,7 +16,7 @@
   --preformattedtext: #333;
   --preformattedbg: #f5f5f5;
   --preformattedborder: #ccc;
-  --poststext: #555555;
+  --votenumbertext: #c6c6c6;
   --postsheadertext: #555;
   --postslikestext: #333;
   --titletext: #222;
@@ -256,10 +256,6 @@ select>option {
     color: #373737;
   }
 
-  .topiccontainer select{
-    font-weight: bold;
-    color: #000;
-  }
 
   /* Breakline in header for small screen, 720 is about the point where it splits onto a second line
   probably a better way to handle this as topic container is still free floating and unwanted break appears*/
@@ -289,7 +285,7 @@ footer {
 @media only screen {
   /*For numbering color*/
   .posts {
-    color: var(--poststext);
+    color: var(--votenumbertext);
   }
   .comhead {
     color: var(--postsheadertext);
@@ -391,7 +387,7 @@ footer {
     text-align: center;
     min-width: 10px;
     display: block;
-    color: var(--poststext);
+    color: var(--votenumbertext);
     font-weight: bold;
     font-size: small;
   }
@@ -835,6 +831,11 @@ label {
   display: block;
   padding-top: 10px;
   font-weight: bold;
+}
+
+.checkboxlabel {
+  display: inline;
+  font-weight: normal;
 }
 
 /*member page*/

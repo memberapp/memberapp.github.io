@@ -1,6 +1,6 @@
 /*Default night mode. Need just the changes from base.css to make theme night mode*/
 :root {
-    --bodybgcolor: #000;
+    --bodybgcolor: #222;
     --bodytextcolor:#ddd;
     --bitcoincash: #4cca47;
     --table2n: #222;

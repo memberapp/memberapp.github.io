@@ -5,7 +5,7 @@ function getAndPopulateTrustGraph(member, target) {
     //First clear old graph
     document.getElementById('trustgraphdetails').innerHTML = document.getElementById("loading").innerHTML;
 
-    getJSON(server + '?action=trustgraph&address=' + member + '&qaddress=' + target).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=trustgraph&address=' + member + '&qaddress=' + target).then(function (data) {
 
 
         var directrating = 0.0;
