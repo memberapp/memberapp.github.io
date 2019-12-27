@@ -29,19 +29,16 @@
   "reply": "reply",
   "themes": "Theme",
   "change theme": "Choose Theme",
-
   "submit": "Submit",
   "update": "Update",
   "text": "text",
   "new post": "New post",
   "post": "post",
   "title": "title",
-
   "none": "none",
   "name": "name",
-  "log in": "log in",
-  "log out": "log out",
-  
+  "log in": "login",
+  "log out": "logout",
   "comments feed": "comments feed",
   "log in to reply": "log in to reply",
   "create a new address": "Create a new address",
