@@ -199,7 +199,7 @@ function getAndPopulateSettings() {
     //These may already be switched to qrcodes, so try/catch necessary
     try { document.getElementById('legacyformat').innerHTML = pubkey; } catch (err) { }
     try { document.getElementById('cashaddrformat').innerHTML = qpubkey; } catch (err) { }
-    try { document.getElementById('privatekeydisplay').innerHTML = privkey; } catch (err) { }
+    try { document.getElementById('privatekeydisplay').innerHTML = (mnemonic==""?"":"Seed Phrase:"+mnemonic+"<br/>")+"Compressed Private Key:"+privkey; } catch (err) { }
     try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
 
     var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");

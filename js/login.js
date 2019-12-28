@@ -2,7 +2,7 @@
 "use strict";
 
 var pubkey = ""; //Public Key (Legacy)
-var mnemonic = "";
+var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
 var qpubkey = ""; //Public Key (q style address)
 var mutedwords = new Array();
@@ -53,10 +53,14 @@ function init() {
     if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
     }
+    var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
-    if (loginprivkey != "null" && loginprivkey != null && loginprivkey != "") {
+    if (loginmnemonic != "null" && loginmnemonic != null && loginmnemonic != "") {
+        trylogin(loginmnemonic);
+        return;
+    } if (loginprivkey != "null" && loginprivkey != null && loginprivkey != "") {
         trylogin(loginprivkey);
         return;
     } else if (loginpubkey != "null" && loginpubkey != null && loginpubkey != "") {
@@ -85,6 +89,27 @@ function login(loginkey) {
     loginkey = loginkey.trim();
     //check valid private or public key
     var publicaddress = "";
+
+    if (new BITBOX.Mnemonic().validate(loginkey) == "Valid mnemonic") {
+
+        /* Not sure why this isn't working, but gives different results to read.cash
+        // Will change the bitbox method instead
+        // create seed buffer from mnemonic
+        let seedBuffer = new BITBOX.Mnemonic().toSeed(loginkey);
+        // create HDNode from seed buffer
+        let hdNode = new BITBOX.HDNode().fromSeed(seedBuffer);
+        hdNode = new BITBOX.HDNode().derivePath(hdNode, "m/44'/0'/0'/0");
+        // to legacy address
+        var newloginkey = new BITBOX.HDNode().toWIF(hdNode);
+        */
+
+        var newloginkey = new BITBOX.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
+        localStorageSet(localStorageSafe, "mnemonic", loginkey);
+        mnemonic = loginkey;
+        loginkey = newloginkey;
+    }
+
+
     if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
 
 
@@ -108,7 +133,7 @@ function login(loginkey) {
             publicaddress = loginkey;
         }
     } else {
-        alert("Key not recognized, please use a compressed WIF (starts with 'L' or 'K')");
+        alert("Key not recognized, use a valid 12 word BIP39 seed phrase, or a compressed WIF (starts with 'L' or 'K')");
         return;
     }
 
@@ -133,8 +158,8 @@ function login(loginkey) {
 
 function createNewAccount() {
     mnemonic = new BITBOX.Mnemonic().generate(128);
-    var loginkey = new BITBOX.Mnemonic().toKeypairs(mnemonic, 1)[0].privateKeyWIF;
-    login(loginkey);
+    //var loginkey = new BITBOX.Mnemonic().toKeypairs(mnemonic, 1)[0].privateKeyWIF;
+    login(mnemonic);
     show('settingsanchor');
     alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
 }
@@ -145,6 +170,7 @@ function logout() {
     }
     privkey = "";
     pubkey = "";
+    mnemonic = "";
     document.getElementById('loggedin').style.display = "none";
     document.getElementById('loggedout').style.display = "inline";
     show('loginbox');
