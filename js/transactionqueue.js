@@ -108,9 +108,9 @@ class UTXOPool {
 
 
     //Get the cashAddr format
-    const Address2 = bch.Address;
-    let thePublicKeyQFormat = new Address2(this.theAddress).toString(bch.Address.CashAddrFormat);
-
+    //const Address2 = bch.Address;
+    //let thePublicKeyQFormat = new Address2(this.theAddress).toString(bch.Address.CashAddrFormat);
+    let thePublicKeyQFormat = new BITBOX.Address().toCashAddress(this.theAddress);
 
     const Address = BITBOX.Address;
     let address = new Address();
@@ -168,7 +168,6 @@ class TransactionQueue {
         })
       } else if (typeof options.data === 'string') {
         // Exported transaction 
-        //s = bch.Script.fromHex(options.data);
         s = [options.data];
       }
     }
