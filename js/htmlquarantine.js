@@ -99,7 +99,7 @@ function getReplyDiv(txid, page, differentiator) {
             <br/>
             <textarea id="replytext`+ page + san(txid) + `" rows="3"></textarea>
             <br/>
-            <input id="replybutton`+ page + san(txid) + `" value="` + ___i18n('reply') + `" type="submit" onclick="sendReply('` + san(txid) + `','` + page + `','replystatus` + page + san(txid) + `');"/>
+            <input id="replybutton`+ page + san(txid) + `" value="` + ___i18n('reply').toLowerCase() + `" type="submit" onclick="sendReply('` + san(txid) + `','` + page + `','replystatus` + page + san(txid) + `');"/>
             <input id="replystatus`+ page + san(txid) + `" value="sending..." type="submit"  style="display:none" disabled/>
             <div id="replycompleted`+ page + san(txid) + `" value=""></div>
         </div>`;
@@ -122,7 +122,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         <a id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
         + articleLink
         + mapLink
-        + `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + ___i18n('reply') + `</a>
+        + `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + ___i18n('reply').toLowerCase() + `</a>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <span id="tipbox`+ page + santxid + `" style="display:none">
             <input id="tipamount`+ page + santxid + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
@@ -189,14 +189,14 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                     <div class="subtext">
                         <span class="submitter"> 
                         submitted `
-        + getAgeHTML(firstseen)
+        + ` ` + getAgeHTML(firstseen)
         + ` ` + ___i18n('by') + ` `
         + userHTML(address, name, ratingID, rating, 8)
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
         + `<span class="subtextbuttons">`
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + (Math.max(0, Number(replies))) + `&nbsp;`
-        + ___i18n('comments')
+        + ___i18n('comments').toLowerCase()
         + `</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
         + ` `
@@ -255,7 +255,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                         <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
         + userHTML(address, name, ratingID, rating, 8)
         + getScoresHTML(txid, likes, dislikes, tips)
-        + getAgeHTML(firstseen) +
+        + ` ` + getAgeHTML(firstseen) +
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
@@ -462,7 +462,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
             contents += `<li class="collapsed" style="display: none;" id="CollapsedLI` + san(data[i].txid) + `"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
                 + userHTML(data[i].address, data[i].name, data[i].ratingID, data[i].rating, 0)
                 + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips)
-                + getAgeHTML(data[i].firstseen)
+                + ` ` + getAgeHTML(data[i].firstseen)
                 + `</div></li>`;
         }
     }

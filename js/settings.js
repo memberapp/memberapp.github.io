@@ -181,8 +181,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
 function getAndPopulateMember(qaddress) {
     document.getElementById('memberlegacyformat').innerHTML = qaddress;
-    var publicaddress = new bch.Address(qaddress);
-    var memberqpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
+    var memberqpubkey = new BITBOX.Address().toCashAddress(qaddress);
     document.getElementById('membercashaddrformat').innerHTML = memberqpubkey;
     //document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
 
@@ -200,7 +199,7 @@ function getAndPopulateSettings() {
     //These may already be switched to qrcodes, so try/catch necessary
     try { document.getElementById('legacyformat').innerHTML = pubkey; } catch (err) { }
     try { document.getElementById('cashaddrformat').innerHTML = qpubkey; } catch (err) { }
-    try { document.getElementById('privatekeydisplay').innerHTML = privkey; } catch (err) { }
+    try { document.getElementById('privatekeydisplay').innerHTML = (mnemonic==""?"":"Seed Phrase:"+mnemonic+"<br/>")+"Compressed Private Key:"+privkey; } catch (err) { }
     try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
 
     var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");

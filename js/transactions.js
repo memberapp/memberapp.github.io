@@ -220,8 +220,7 @@ function follow(qaddress) {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('memberfollow').style.display = "none";
-    var addressraw = toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
-    addressraw = addressraw.substring(0, addressraw.length - 8);
+    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
 
     const tx = {
         data: ["0x6d06", "0x" + addressraw],
@@ -235,8 +234,7 @@ function unfollow(qaddress) {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('memberfollow').style.display = "none";
-    var addressraw = toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
-    addressraw = addressraw.substring(0, addressraw.length - 8);
+    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
 
     const tx = {
         data: ["0x6d07", "0x" + addressraw],
@@ -250,8 +248,7 @@ function mute(qaddress) {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('memberblock').style.display = "none";
-    var addressraw = toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
-    addressraw = addressraw.substring(0, addressraw.length - 8);
+    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
 
     const tx = {
         data: ["0x6d16", "0x" + addressraw],
@@ -265,8 +262,7 @@ function unmute(qaddress) {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('memberblock').style.display = "none";
-    var addressraw = toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
-    addressraw = addressraw.substring(0, addressraw.length - 8);
+    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
 
     const tx = {
         data: ["0x6d17", "0x" + addressraw],
@@ -294,8 +290,7 @@ function rateUser(qaddress, rating, ratingcomment) {
         ratingcomment = "";
     }
 
-    var addressraw = toHexString(bch.deps.bs58.decode(qaddress)).substring(2);
-    addressraw = addressraw.substring(0, addressraw.length - 8);
+    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
 
     var hexRating = "0x" + toHexString([rating]);
     const tx = {
