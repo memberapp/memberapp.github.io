@@ -27,10 +27,9 @@
 
     <!-- Large Script Files -->
     <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
-    <link rel="preload" href="js/lib/bitcoincash-0.1.10.min.js" as="script">
 
     <!-- DNS-prefetch resource hints  -->
-    <link rel="preconnect" href="https://memberjs.org">
+    <link rel="preconnect" href="https://memberjs.org:8123">
     <link rel="preconnect" href="https://i.imgur.com">
     <link rel="preconnect" href="https://twitframe.com">
 
@@ -66,8 +65,6 @@
     <!--  Extenal Libraries -->
     <script src="js/lib/buffer.js"></script>
     <script src="js/lib/anchorme.min.js"></script>
-    <script src='js/lib/bitcoincash-0.1.10.min.js'></script>
-    <!--  Probably possible to remove this dependency and call functions from BitBox -->
     <script src="js/lib/bitboxsdk.js"></script>
     <script src='js/lib/rater/rating.js'></script>
     <script src='js/lib/geohash.js'></script>
@@ -541,6 +538,24 @@
                         Tweets</label>
                 </div>
                 <div>
+                    <label for="notificationsettings" class="labelheader vavilon" data-vavilon="notifications">Notifications</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showlikes" onchange="toggleNotifications();">
+                    <label for="showyoutube" class="checkboxlabel vavilon"
+                           data-vavilon="likes">Likes</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showreplys" onchange="updateSettingsCheckbox('showreplys');">
+                    <label for="showreplys" class="checkboxlabel vavilon"
+                           data-vavilon="mentions">Replys</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showfollows" onchange="updateSettingsCheckbox('showfollows');">
+                    <label for="showfollows" class="checkboxlabel vavilon"
+                           data-vavilon="mentions">Follows</label>
+                </div>
+                <div>
                     <label for="contentserver" data-vavilon="Content Server">Content Server</label>
                     <select id="contentserver" onchange='updateSettingsDropdown("contentserver");'>
                         <option value="https://memberjs.org:8123/member.js">Memberjs.org</option>
@@ -730,7 +745,7 @@
                 <br />
                 or<br />
                 <br />
-                login with a Memo <span class="vavilon" data-vavilon="private key">private key</span>.
+                login with a 12 word seed phrase or a Memo <span class="vavilon" data-vavilon="private key">private key</span>.
                 <a href="https://memo.cash/key/export">Click here to get yours</a>.
                 (Member is SLP546 aware and will not alter your SLP tokens)
                 <br />
@@ -771,7 +786,7 @@
                     <span class="separatorwide"></span>
                     <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
                     <span class="separatorwide"></span>
-                    <span class="vavilon" data-vavilon="version">version</span> 3.2.0.<u>9</u>
+                    <span class="vavilon" data-vavilon="version">version</span> 3.3.0.<u>9</u>
                 </span>
                 <br />
                 <br />

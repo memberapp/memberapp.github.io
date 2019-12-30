@@ -189,7 +189,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                     <div class="subtext">
                         <span class="submitter"> 
                         submitted `
-        + getAgeHTML(firstseen)
+        + ` ` + getAgeHTML(firstseen)
         + ` ` + ___i18n('by') + ` `
         + userHTML(address, name, ratingID, rating, 8)
         + getTopicHTML(topic, 'to topic/')
@@ -255,7 +255,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                         <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
         + userHTML(address, name, ratingID, rating, 8)
         + getScoresHTML(txid, likes, dislikes, tips)
-        + getAgeHTML(firstseen) +
+        + ` ` + getAgeHTML(firstseen) +
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
@@ -462,7 +462,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
             contents += `<li class="collapsed" style="display: none;" id="CollapsedLI` + san(data[i].txid) + `"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
                 + userHTML(data[i].address, data[i].name, data[i].ratingID, data[i].rating, 0)
                 + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips)
-                + getAgeHTML(data[i].firstseen)
+                + ` ` + getAgeHTML(data[i].firstseen)
                 + `</div></li>`;
         }
     }

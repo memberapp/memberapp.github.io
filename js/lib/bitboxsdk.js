@@ -2142,12 +2142,13 @@ var Mnemonic = /** @class */ (function () {
     Mnemonic.prototype.wordLists = function () {
         return BIP39.wordlists;
     };
-    Mnemonic.prototype.toKeypairs = function (mnemonic, numberOfKeypairs, regtest) {
+    //Need to override this method to use different derivation path for compatibility with read.cash
+    Mnemonic.prototype.toKeypairs = function (mnemonic, numberOfKeypairs, regtest, HDPath) {
         if (numberOfKeypairs === void 0) { numberOfKeypairs = 1; }
         if (regtest === void 0) { regtest = false; }
+        if (HDPath === void 0){ HDPath = "44'/145'/0'/0/"; }
         var rootSeedBuffer = this.toSeed(mnemonic, "");
         var hdNode = Bitcoin.HDNode.fromSeedBuffer(rootSeedBuffer);
-        var HDPath = "44'/145'/0'/0/";
         var accounts = [];
         for (var i = 0; i < numberOfKeypairs; i++) {
             var childHDNode = hdNode.derivePath("" + HDPath + i);

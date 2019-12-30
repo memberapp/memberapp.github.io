@@ -2,6 +2,7 @@
 "use strict";
 
 var pubkey = ""; //Public Key (Legacy)
+var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
 var qpubkey = ""; //Public Key (q style address)
 var mutedwords = new Array();
@@ -11,14 +12,17 @@ var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
 //var twitterEmbeds=new Array();
-var settings = { "showyoutube": "true",
-                 "showimgur": "true", 
-                 "showtwitter": "true" };
-var dropdowns = { "contentserver": "https://memberjs.org:8123/member.js",
-                 "txbroadcastserver": "https://memberjs.org:8123/v2/", 
-                 "utxoserver": "https://rest.bitcoin.com/v2/",
-                 "currencydisplay":"USD"
-                };
+var settings = {
+    "showyoutube": "true",
+    "showimgur": "true",
+    "showtwitter": "true"
+};
+var dropdowns = {
+    "contentserver": "https://memberjs.org:8123/member.js",
+    "txbroadcastserver": "https://memberjs.org:8123/v2/",
+    "utxoserver": "https://rest.bitcoin.com/v2/",
+    "currencydisplay": "USD"
+};
 
 
 
@@ -49,10 +53,14 @@ function init() {
     if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
     }
+    var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
-    if (loginprivkey != "null" && loginprivkey != null && loginprivkey != "") {
+    if (loginmnemonic != "null" && loginmnemonic != null && loginmnemonic != "") {
+        trylogin(loginmnemonic);
+        return;
+    } if (loginprivkey != "null" && loginprivkey != null && loginprivkey != "") {
         trylogin(loginprivkey);
         return;
     } else if (loginpubkey != "null" && loginpubkey != null && loginpubkey != "") {
@@ -78,42 +86,59 @@ function trylogin(loginkey) {
 
 function login(loginkey) {
 
+    loginkey = loginkey.trim();
     //check valid private or public key
     var publicaddress = "";
+
+    if (new BITBOX.Mnemonic().validate(loginkey) == "Valid mnemonic") {
+
+        /* Not sure why this isn't working, but gives different results to read.cash
+        // Will change the bitbox method instead
+        // create seed buffer from mnemonic
+        let seedBuffer = new BITBOX.Mnemonic().toSeed(loginkey);
+        // create HDNode from seed buffer
+        let hdNode = new BITBOX.HDNode().fromSeed(seedBuffer);
+        hdNode = new BITBOX.HDNode().derivePath(hdNode, "m/44'/0'/0'/0");
+        // to legacy address
+        var newloginkey = new BITBOX.HDNode().toWIF(hdNode);
+        */
+
+        var newloginkey = new BITBOX.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
+        localStorageSet(localStorageSafe, "mnemonic", loginkey);
+        mnemonic = loginkey;
+        loginkey = newloginkey;
+    }
+
+
     if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
-        var privaddress = new bch.PrivateKey(loginkey);
-        publicaddress = privaddress.toAddress();
+
+
+        let ecpair = new BITBOX.ECPair().fromWIF(loginkey);
+        publicaddress = new BITBOX.ECPair().toLegacyAddress(ecpair);
+
 
         privkey = loginkey;
         document.getElementById('loginkey').value = "";
         localStorageSet(localStorageSafe, "privkey", privkey);
     } else if (loginkey.startsWith("5")) {
-        /*
-        var privaddress=new bch.PrivateKey(loginkey);
-        publicaddress = privaddress.toAddress();
-
-        privkey=loginkey;
-        document.getElementById('loginkey').value="";
-        */
         document.getElementById('loginkey').value = "";
         alert("Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')");
         return;
     } else if (loginkey.startsWith("q")) {
-        const Address = bch.Address;
-        publicaddress = new Address.fromString('bitcoincash:' + loginkey, 'livenet', 'pubkeyhash', bch.Address.CashAddrFormat);
+        publicaddress = new BITBOX.Address().toLegacyAddress(loginkey);
     } else if (loginkey.startsWith("b")) {
-        const Address = bch.Address;
-        publicaddress = new Address.fromString(loginkey, 'livenet', 'pubkeyhash', bch.Address.CashAddrFormat);
+        publicaddress = new BITBOX.Address().toLegacyAddress(loginkey);
     } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
-        const Address = bch.Address;
-        publicaddress = new Address(loginkey);
+        if (new BITBOX.Address().isLegacyAddress(loginkey)) {
+            publicaddress = loginkey;
+        }
     } else {
-        alert("Key not recognized, please use a compressed WIF (starts with 'L' or 'K')");
+        alert("Key not recognized, use a valid 12 word BIP39 seed phrase, or a compressed WIF (starts with 'L' or 'K')");
         return;
     }
 
     pubkey = publicaddress.toString();
-    qpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
+    qpubkey = new BITBOX.Address().toCashAddress(pubkey);
 
 
     localStorageSet(localStorageSafe, "pubkey", pubkey);
@@ -132,8 +157,9 @@ function login(loginkey) {
 }
 
 function createNewAccount() {
-    const privateKey = new bch.PrivateKey();
-    login(privateKey.toWIF());
+    mnemonic = new BITBOX.Mnemonic().generate(128);
+    //var loginkey = new BITBOX.Mnemonic().toKeypairs(mnemonic, 1)[0].privateKeyWIF;
+    login(mnemonic);
     show('settingsanchor');
     alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
 }
@@ -144,6 +170,7 @@ function logout() {
     }
     privkey = "";
     pubkey = "";
+    mnemonic = "";
     document.getElementById('loggedin').style.display = "none";
     document.getElementById('loggedout').style.display = "inline";
     show('loginbox');
@@ -156,16 +183,16 @@ function changeStyle(newStyle) {
     }
     localStorageSet(localStorageSafe, "style", newStyle);
     var cssArray = newStyle.split(" ");
-    if (cssArray[0]){document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css");}
-    else{document.getElementById("pagestyle").setAttribute("href", "css/base.css");}
-    if (cssArray[1]){document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css");}
-    else{document.getElementById("pagestyle2").setAttribute("href", "css/none.css");}
-    if (cssArray[2]){document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css");}
-    else{document.getElementById("pagestyle3").setAttribute("href", "css/none.css");}
+    if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css"); }
+    else { document.getElementById("pagestyle").setAttribute("href", "css/base.css"); }
+    if (cssArray[1]) { document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css"); }
+    else { document.getElementById("pagestyle2").setAttribute("href", "css/none.css"); }
+    if (cssArray[2]) { document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css"); }
+    else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css"); }
 }
 
 function setAddonStyle(newStyle) {
-    if(newStyle){
+    if (newStyle) {
         document.getElementById("addonstyle").setAttribute("href", "css/" + newStyle);
     }
 }

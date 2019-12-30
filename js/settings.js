@@ -181,8 +181,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
 function getAndPopulateMember(qaddress) {
     document.getElementById('memberlegacyformat').innerHTML = qaddress;
-    var publicaddress = new bch.Address(qaddress);
-    var memberqpubkey = publicaddress.toString(bch.Address.CashAddrFormat);
+    var memberqpubkey = new BITBOX.Address().toCashAddress(qaddress);
     document.getElementById('membercashaddrformat').innerHTML = memberqpubkey;
     //document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
 
@@ -200,7 +199,7 @@ function getAndPopulateSettings() {
     //These may already be switched to qrcodes, so try/catch necessary
     try { document.getElementById('legacyformat').innerHTML = pubkey; } catch (err) { }
     try { document.getElementById('cashaddrformat').innerHTML = qpubkey; } catch (err) { }
-    try { document.getElementById('privatekeydisplay').innerHTML = privkey; } catch (err) { }
+    try { document.getElementById('privatekeydisplay').innerHTML = (mnemonic==""?"":"Seed Phrase:"+mnemonic+"<br/>")+"Compressed Private Key:"+privkey; } catch (err) { }
     try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
 
     var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");
@@ -269,7 +268,10 @@ function showQRCode(spanid) {
     //document.getElementById('qrclicktoshow').style.display='none';
 }
 
-function toggleNotifications(){
+function toggleNotifications() {
+
+    const publicKey = base64UrlToUint8Array('BMpcNLq76iA9alX82IkEdVL-9TS2ieeAoya8xQYuastvmuCS8puEDQ-yJkGf9GIbR8fYD3ZN32OI3oT7Ox4UVi4');
+
     navigator.serviceWorker.ready.then(function (registration) {
         if (!registration.pushManager) {
             alert('No push notifications support.');
@@ -277,15 +279,28 @@ function toggleNotifications(){
         }
         //To subscribe `push notification` from push manager
         registration.pushManager.subscribe({
-            userVisibleOnly: true //Always show notification when received
+            userVisibleOnly: true, //Always show notification when received
+            applicationServerKey: publicKey
         })
             .then(function (subscription) {
-                console.log('Subscribed.');
+                fetch('./register', {
+                    method: 'post',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        subscription: subscription
+                    }),
+                })
+                    .catch(function (e) {
+                        if (Notification.permission === 'denied') {
+                            console.warn('Permission for Notifications was denied');
+                        } else {
+                            console.error('Unable to subscribe to push.', e);
+                        }
+                    });
             })
-            .catch(function (error) {
-                console.log('Subscription error: ', error);
-            });
-    })
+    });
 }
 
 function rateCallbackAction(rating, that, ratingtext) {
