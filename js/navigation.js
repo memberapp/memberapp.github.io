@@ -77,7 +77,7 @@ function displayContentBasedOnURLParameters() {
 }
 
 function hideAll() {
-    setAddonStyle("");
+    setAddonStyle("none.css");
     document.getElementById('feed').style.display = "none";
     document.getElementById('posts').style.display = "none";
     document.getElementById('comments').style.display = "none";
@@ -158,6 +158,7 @@ function showNewPost() {
     topictitleChanged("memorandum");
     topictitleChanged("memo");
     document.getElementById('newpostbutton').style.display = "block";
+    initMarkdownEditor();
 }
 
 
