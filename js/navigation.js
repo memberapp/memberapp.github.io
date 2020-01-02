@@ -325,7 +325,7 @@ function setTopic(topicNameHOSTILE){
     
     selector.selectedIndex=1;
     selector.options[selector.selectedIndex].value=topicNameHOSTILE;
-    selector.options[selector.selectedIndex].text=topicNameHOSTILE.substring(0,15);
+    selector.options[selector.selectedIndex].text=capitalizeFirstLetter(topicNameHOSTILE.substring(0,13));
 }
 
 

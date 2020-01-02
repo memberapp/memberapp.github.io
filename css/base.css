@@ -435,7 +435,7 @@ footer {
     opacity: 0.2;
   }
   /* Lists, used for displaying posts and threads */
-  #highlightli {
+  .highlightli {
     background-color: var(--highlightlibg);
   }
   /* Desktop Screen */
@@ -865,11 +865,11 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
   width: 90%;
 }
 
-#switchToArticleMode{
+.switchToArticleMode{
   display:block;
 }
 
-#switchToRegularMode{
+.switchToRegularMode{
   display:none;
 }
 

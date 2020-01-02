@@ -71,15 +71,15 @@ header {
   width: 100%;
 }
 
-#memoarea {
+.memoarea {
   display: none;
 }
 
-#switchToArticleMode {
+.switchToArticleMode {
   display: none;
 }
 
-#switchToRegularMode {
+.switchToRegularMode {
   display: block;
 }
 
