@@ -237,6 +237,11 @@ select>option {
   .headerbuttons, .refreshbalance, .newpostbutton {
     font-size: large;
   }
+  
+  .headerbuttons a{
+    color:var(--bodytextcolor);
+  }
+
   .sats {
     font-size: 0.6em;
     position: relative;
