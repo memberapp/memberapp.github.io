@@ -1,0 +1,57 @@
+
+.editor-toolbar a{
+    font-size: large;
+}
+
+.editor-toolbar::before {
+    margin-bottom: 0px;
+}
+
+.fa-bold::before {
+    content: "B";
+    font-weight: bold;
+}
+
+.fa-italic::before {
+    content: "I";
+    font-style:italic;
+}
+
+.fa-strikethrough::before {
+    content: "S";
+    text-decoration-line: line-through;
+}
+
+.fa-header::before {
+    content: "H";   
+}
+
+.fa-code::before {
+    content: "<>";
+}
+
+.fa-quote-left::before {
+    content: "‟";
+}
+
+.fa-list-ul::before {
+    content: "•";
+}
+
+.fa-list-ol::before {
+    content: "1..";
+}
+
+.fa-link::before {
+    content: "🔗";
+}
+
+.fa-picture-o::before {
+    content: "🖻";
+}
+
+.fa-table::before {
+    content: "T";
+}
+
+

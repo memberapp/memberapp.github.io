@@ -73,6 +73,7 @@ function init() {
 function trylogin(loginkey) {
     try {
         login(loginkey);
+        displayNotificationCount();
     } catch (error) {
         document.getElementById('loginerror').innerHTML = error.message;
         console.log(error);
@@ -140,7 +141,7 @@ function login(loginkey) {
     pubkey = publicaddress.toString();
     qpubkey = new BITBOX.Address().toCashAddress(pubkey);
 
-
+    lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     localStorageSet(localStorageSafe, "pubkey", pubkey);
     tq.addUTXOPool(pubkey, localStorageSafe);
     document.getElementById('loggedin').style.display = "inline";

@@ -237,6 +237,11 @@ select>option {
   .headerbuttons, .refreshbalance, .newpostbutton {
     font-size: large;
   }
+  
+  .headerbuttons a{
+    color:var(--bodytextcolor);
+  }
+
   .sats {
     font-size: 0.6em;
     position: relative;
@@ -435,7 +440,7 @@ footer {
     opacity: 0.2;
   }
   /* Lists, used for displaying posts and threads */
-  #highlightli {
+  .highlightli {
     background-color: var(--highlightlibg);
   }
   /* Desktop Screen */
@@ -614,6 +619,17 @@ footer {
   }
   .imgurcontainer {}
   .twittercontainer {}
+
+  .commentbody img, .imgurimage {
+    display: inline;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    height: 300px;
+    max-width: 100%;
+    vertical-align: top;
+    align-content: center;
+  }
+
   @media only screen and (max-width: 860px) {
     .youtubepreviewimage {
       width: 100%;
@@ -639,14 +655,7 @@ footer {
       width: 100%;
       vertical-align: top;
     }
-    .imgurimage {
-      display: inline;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      max-height: 300px;
-      max-width: 100%;
-      vertical-align: top;
-    }
+
   }
   @media only screen and (min-width: 860px) {
     .youtubepreviewimage {
@@ -677,14 +686,7 @@ footer {
       width: 550px;
       vertical-align: top;
     }
-    .imgurimage {
-      display: inline;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      height: 300px;
-      max-width: 100%;
-      vertical-align: top;
-    }
+
   }
 }
 
@@ -857,15 +859,23 @@ label {
 
 .newpost {
   font-size: small;
-  font-weight: bold;
+  width:80%;
 }
 
 textarea, .memorandumtitle, .memotopic, .memorandumtopic {
-  width: 80%;
+  width: 99%;
 }
 
 .geoposttextarea {
   width: 90%;
+}
+
+.switchToArticleMode{
+  display:block;
+}
+
+.switchToRegularMode{
+  display:none;
 }
 
 /*Topic List*/

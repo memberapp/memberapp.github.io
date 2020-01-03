@@ -1,5 +1,33 @@
 "use strict";
 
+var lastViewOfNotifications = 0;
+
+function displayNotificationCount() {
+    getJSON(dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications).then(function (data) {
+
+        if (data[0].count == null && document.getElementById("alertcount").innerHTML == "") {
+            document.getElementById("alertcount").innerHTML = "(?)";
+            return;
+        }
+
+        var alertcount = Number(data[0].count);
+        var element = document.getElementById("alertcount");
+        if (alertcount > 0) {
+            element.innerHTML = "(" + alertcount + ")";
+        } else {
+            element.innerHTML = "";
+        }
+        setTimeout(displayNotificationCount, 60000);
+    }, function (status) { //error detection....
+        console.log('Something is wrong:' + status);
+        updateStatus(status);
+        if (document.getElementById("alertcount").innerHTML == "") {
+            document.getElementById("alertcount").innerHTML = "(?)";
+        }
+    });
+
+}
+
 function getAndPopulateNotifications(start, limit, page, qaddress) {
     //Clear existing content
     show(page);
@@ -21,13 +49,16 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         //console.log(contents);
         if (contents == "") { contents = "Nothing in this feed yet"; }
         contents = getNotificationsTableHTML(contents, navbuttons);
+        lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
+        localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
+        document.getElementById("alertcount").innerHTML = "";
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data, page);
         listenForTwitFrameResizes();
         window.scrollTo(0, 0);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:'+status;
+        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
         updateStatus(status);
     });
 
@@ -49,7 +80,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `📣&nbsp;`,
                 userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` ` + postlinkHTML(data.txid, "mentioned you "),
                 timeSince(Number(data.time)),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID,  data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex)
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex)
             );
             //<a href="#thread?root=`+ ds(data.roottxid) + `&post=` + ds(data.txid) + `" onclick="showThread('` + ds(data.roottxid) + `','` + ds(data.txid) + `')">` + anchorme(ds(data.message), { attributes: [{ name: "target", value: "_blank" }] }) + `</a> `;
             break;
@@ -90,9 +121,9 @@ function getHTMLForNotification(data, rank, page, starindex) {
             return notificationItemHTML(
                 "like",
                 `💗&nbsp;`,
-                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + balanceString(Number(data.amount),false),
+                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount)>0?balanceString(Number(data.amount), false):""),
                 timeSince(Number(data.time)),
-                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID,  data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex)
+                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex)
             );
             break;
 

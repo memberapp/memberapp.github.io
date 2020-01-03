@@ -2,7 +2,7 @@
 
 .fatitem {
   text-rendering: optimizeLegibility;
-  color:rgba(0,0,0,0.8);
+  color: rgba(0, 0, 0, 0.8);
   font-style: normal;
   overflow-wrap: break-word;
   word-break: break-word;
@@ -19,7 +19,7 @@
   letter-spacing: 0px;
 }
 
-.mainbody{
+.mainbody {
   flex-direction: column;
   max-width: 728px;
   margin-right: auto;
@@ -31,16 +31,16 @@
   display: flex;
 }
 
-.itemlist{
-  margin-top:30px;
+.itemlist {
+  margin-top: 30px;
 }
 
-.fatitem .votelinks{
-  display:none;
+.fatitem .votelinks {
+  display: none;
 }
 
-.comment .subtextbuttons{
-  display:none;
+.comment .subtextbuttons {
+  display: none;
 }
 
 .fatitem .commentbody {
@@ -50,7 +50,7 @@
   padding: 0px 0px;
 }
 
-.fatitem .comment{
+.fatitem .comment {
   margin-top: 0.86em;
   font-size: 21px;
   margin-bottom: -0.46em;
@@ -61,6 +61,33 @@
   margin: 0;
 }
 
-header{
-  display:none;
+header {
+  display: none;
+}
+
+/*Article Editor Stuff*/
+
+.newpost {
+  width: 100%;
+}
+
+.memoarea {
+  display: none;
+}
+
+.switchToArticleMode {
+  display: none;
+}
+
+.switchToRegularMode {
+  display: block;
+}
+
+.commentbody img {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  max-width: 100%;
+  vertical-align: top;
+  display: block;
+  margin: 0 auto;
 }

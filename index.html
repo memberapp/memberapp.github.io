@@ -43,16 +43,19 @@
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
     <meta name="theme-color" content="#cee3f8" />
-    <link rel="preload" href="js/lib/vavilon.min.js"  as="script">
-    <link rel="preload" href="img/loading.gif"  as="image">
+    <link rel="preload" href="js/lib/vavilon.min.js" as="script">
+    <link rel="preload" href="img/loading.gif" as="image">
 
     <!--  Load Translations -->
     <script src="js/loadlocale.js"></script>
-    <link rel="preload" href="js/lib/vavilon.min.js"  as="script">
+    <link rel="preload" href="js/lib/vavilon.min.js" as="script">
 
     <!--  Leaflet (Map) -->
     <link rel="stylesheet" href="js/leaflet/leaflet.css" />
     <script src="js/leaflet/leaflet.js"></script>
+
+    <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
+    <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
 
     <link id="pagestyle" rel="stylesheet" href="css/base.css">
     <link id="pagestyle2" rel="stylesheet" href="css/none.css">
@@ -74,6 +77,9 @@
     <script src="js/lib/showdown.1.9.1.min.js"></script>
     <!-- https://github.com/cure53/DOMPurify -->
     <script src="js/lib/purify.min.js"></script>
+    <!-- https://github.com/sparksuite/simplemde-markdown-editor -->
+    <script src="js/lib/mde/simplemde.1.11.2.min.js"></script>
+
     <!-- https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites -->
     <!-- <script src="js/lib/twitterwidgets.js"></script> -->
     <!-- i18n internationalization https://github.com/vavilon-js/vavilon.js-->
@@ -109,7 +115,8 @@
                 <nav>
                     <span class="memberlogo">
                         <a href="./index.html" aria-label="Refresh">
-                            <img class="memberlogoimage"  src="img/membericon.svg" width="31" height="31" alt="Member Logo"/>
+                            <img class="memberlogoimage" src="img/membericon.svg" width="31" height="31"
+                                alt="Member Logo" />
                         </a>
                         <span class="memberlogoimagebacking"></span>
                     </span>
@@ -126,7 +133,7 @@
                                 href="#myfeed" onclick="showMyFeed();">📰</a>
                             <a id="notificationsbutton" title="Notifications" class="btn"
                                 href="#notifications?start=0&amp;limit=25"
-                                onclick="showNotifications(0,25,'notifications');">🔔</a>
+                                onclick="showNotifications(0,25,'notifications');">🔔<span class="alertcount" id="alertcount"></span></a>
                             <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
                                 onclick="showNewPost();">📝</a>
                             <a id="settingsbutton" title="Settings" class="btn" href="#settings"
@@ -144,109 +151,117 @@
                     </span>
                     <span class="separatorwidebreakpoint"></span>
                     <span id="topiccontainer" class="topiccontainer">
-                            <select id="orderselector" onchange="postsSelectorChanged();" >
-                                <option value="hot" title="Hottest posts" selected="selected">Hot</option>
-                                <option class="vavilon" data-vavilon="new" value="new" title="Latest posts" >New</option>
-                                <option value="topd" title="Top posts from the past Day"
-                                        class="vavilon" data-vavilon="today" >Day</option>
-                                <option value="topw" title="Top posts from the past Week"
-                                        class="vavilon" data-vavilon="this week" >Week</option>
-                                <option value="topm" title="Top posts from the past Month"
-                                        class="vavilon" data-vavilon="this month">Month</option>
-                                <option value="topy" title="Top posts from the past Year"
-                                        class="vavilon" data-vavilon="this year">Year</option>
-                                <option value="topa" title="Top posts from all time"
-                                        class="vavilon" data-vavilon="all dates">All</option>
-                            </select>
-                            <select id="contentselector" label="content" onchange="postsSelectorChanged();">
-                                <option value="posts" selected="selected"
-                                        class="vavilon" data-vavilon="posts">Posts</option>
-                                <option value="replies"
-                                        class="vavilon" data-vavilon="comments">Replies</option>
-                                <option value="both"
-                                        class="vavilon" data-vavilon="all">In Both</option>
-                            </select>
-                            <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
-                                <option value="" selected="selected">All Topics</option>
-                                <option value=""></option>
-                                <option value="">---------------</option>
-                                <option value="MyTopics">My Topics</option>
-                                <option value="MyFeed">My Feed</option>
-                                <option value="Member">Member</option>
-                                <option value="Bitcoin Cash">Bitcoin Cash</option>
-                                <option value="Bitcoin SV">Bitcoin SV</option>
-                                <option value="Memo">Memo</option>
-                                <option value="Airdrops">Airdrops</option>
-                                <option value="Tokens">Tokens</option>
-                                <option value="OpenBazaar">OpenBazaar</option>
-                                <option value="Capitalism">Capitalism</option>
-                                <option value="US Politics/Trump">US Politics</option>
-                                <option value="Favorite Quotes">Quotes</option>
-                                <option value="Ideas to improve our lives">Improvement</option>
-                                <option value="#911Truth">#911Truth</option>
-                            </select>
-                            <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
-                                <option value="everyone" selected="selected">Everyone</option>
-                                <option value="mypeeps">My Peeps</option>
-                            </select>
-                        </span>
-                        <a id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href="" onclick="postsSelectorChanged();return false;">🔄</a>
+                        <select id="orderselector" onchange="postsSelectorChanged();">
+                            <option value="hot" title="Hottest posts" selected="selected">Hot</option>
+                            <option class="vavilon" data-vavilon="new" value="new" title="Latest posts">New</option>
+                            <option value="topd" title="Top posts from the past Day" class="vavilon"
+                                data-vavilon="today">Day</option>
+                            <option value="topw" title="Top posts from the past Week" class="vavilon"
+                                data-vavilon="this week">Week</option>
+                            <option value="topm" title="Top posts from the past Month" class="vavilon"
+                                data-vavilon="this month">Month</option>
+                            <option value="topy" title="Top posts from the past Year" class="vavilon"
+                                data-vavilon="this year">Year</option>
+                            <option value="topa" title="Top posts from all time" class="vavilon"
+                                data-vavilon="all dates">All</option>
+                        </select>
+                        <select id="contentselector" label="content" onchange="postsSelectorChanged();">
+                            <option value="posts" selected="selected" class="vavilon" data-vavilon="posts">Posts
+                            </option>
+                            <option value="replies" class="vavilon" data-vavilon="comments">Replies</option>
+                            <option value="both" class="vavilon" data-vavilon="all">In Both</option>
+                        </select>
+                        <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
+                            <option value="" selected="selected">All Topics</option>
+                            <option value=""></option>
+                            <option value="">---------------</option>
+                            <option value="MyTopics">My Topics</option>
+                            <option value="MyFeed">My Feed</option>
+                            <option value="Member">Member</option>
+                            <option value="Bitcoin Cash">Bitcoin Cash</option>
+                            <option value="Bitcoin SV">Bitcoin SV</option>
+                            <option value="Memo">Memo</option>
+                            <option value="Airdrops">Airdrops</option>
+                            <option value="Tokens">Tokens</option>
+                            <option value="OpenBazaar">OpenBazaar</option>
+                            <option value="Capitalism">Capitalism</option>
+                            <option value="US Politics/Trump">US Politics</option>
+                            <option value="Favorite Quotes">Quotes</option>
+                            <option value="Ideas to improve our lives">Improvement</option>
+                            <option value="#911Truth">#911Truth</option>
+                        </select>
+                        <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
+                            <option value="everyone" selected="selected">Everyone</option>
+                            <option value="mypeeps">My Peeps</option>
+                        </select>
+                    </span>
+                    <a id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href=""
+                        onclick="postsSelectorChanged();return false;">🔄</a>
                 </nav>
             </div>
         </header>
         <div class="mainbody">
             <div id="newpost" class="applicationpage newpost" style="display: none;">
-                <h2 class="vavilon" data-vavilon="new post">New Post</h2>
-                <div id="memotopicarea">
-                    topic <span id="memotopiclengthadvice">(0/217)</span><br />
-                    <input class="memotopic" id="memotopic" maxlength="217" onchange="topictitleChanged('memo');"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                </div>
-                <div>
-                    <span class="vavilon" data-vavilon="text">text</span>
-                    <span id="memotitlelengthadvice">(0/217)</span><br />
-                    <textarea id="memotitle" maxlength="217" name="text" rows="4" cols="60"
-                        onchange="topictitleChanged('memo');" onkeypress="this.onchange();" onpaste="this.onchange();"
-                        oninput="this.onchange();"></textarea>
-                </div>
-                <div>
-                    <input id="newpostbutton" class="vavilon" data-vavilon="post" value="Post a Memo" type="submit"
-                        onclick="post();">
-                    <input id="newpoststatus" style="display: none;" value="Sending . . ." type="submit" disabled>
-                    <div id="newpostcompleted"></div>
-                </div>
-
                 <br />
-                or
-                <br /><br />
-                <div id="memorandumtopicarea">
-                    topic <span id="memorandumtopiclengthadvice">(0/214)</span><br />
-                    <input class="memorandumtopic" id="memorandumtopic" maxlength="217"
-                        onchange="topictitleChanged('memorandum');" onkeypress="this.onchange();"
-                        onpaste="this.onchange();" oninput="this.onchange();">
-                </div>
-                <div>
-                    <span class="vavilon" data-vavilon="title">title</span> <span
-                        id="memorandumtitlelengthadvice">(0/217)</span><br />
-                    <input class="memorandumtitle" id="memorandumtitle" maxlength="217"
-                        onchange="topictitleChanged('memorandum'); memorandumPreview();" onkeypress="this.onchange();"
-                        onpaste="this.onchange();" oninput="this.onchange();">
+                <div class="memoarea" id="memoarea">
+                    <div id="memotopicarea">
+                        <label for="memotopic">topic <span id="memotopiclengthadvice">(0/217)</span></label>
+                        <input class="memotopic" id="memotopic" maxlength="217" onchange="topictitleChanged('memo');"
+                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                    </div>
+                    <div>
+                        <label for="memotitle"> <span class="vavilon" data-vavilon="text">text</span>
+                            <span id="memotitlelengthadvice">(0/217)</span></label>
+                        <textarea id="memotitle" maxlength="217" name="text" rows="4" cols="60"
+                            onchange="topictitleChanged('memo');" onkeypress="this.onchange();"
+                            onpaste="this.onchange();" oninput="this.onchange();"></textarea>
+                    </div>
+                    <div>
+                        <input id="newpostbutton" class="vavilon" data-vavilon="post" value="Post a Memo" type="submit"
+                            onclick="post();">
+                        <input id="newpoststatus" style="display: none;" value="Sending . . ." type="submit" disabled>
+                        <div id="newpostcompleted"></div>
+                    </div>
 
+                    <br />
+                    or
+                    <br />
                 </div>
-                <div>
-                    text<br />
-                    <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
-                </div>
-                <div>
-                    <input id="newpostmemorandumbutton" class="vavilon" data-vavilon="post" value="Post a Memorandum"
-                        type="submit" onclick="postmemorandum();">
-                    <input id="newpostmemorandumstatus" style="display: none;" value="Sending . . ." type="submit"
-                        disabled>
-                    <div id="newpostmemorandumcompleted"></div>
-                </div>
-                <div id="memorandumpreview" class="fatitem">
+                <div id="memorandumarea">
+                    <div id="memorandumtopicarea">
+                        <label for="memorandumtopic">topic <span id="memorandumtopiclengthadvice">(0/214)</span></label>
+                        <input class="memorandumtopic" id="memorandumtopic" maxlength="217"
+                            onchange="topictitleChanged('memorandum');" onkeypress="this.onchange();"
+                            onpaste="this.onchange();" oninput="this.onchange();">
+                    </div>
+                    <div>
+                        <label for="memorandumtitle"><span class="vavilon" data-vavilon="title">title</span> <span
+                                id="memorandumtitlelengthadvice">(0/217)</span></label>
+                        <input class="memorandumtitle" id="memorandumtitle" maxlength="217"
+                            onchange="topictitleChanged('memorandum'); memorandumPreview();"
+                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
 
+                    </div>
+                    <div>
+                        <label for="newposttamemorandum">text</label>
+                        <textarea id="newposttamemorandum" name="text" rows="20" cols="80"
+                            onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
+                            oninput="this.onchange();"></textarea>
+                    </div>
+                    <div>
+                        <input id="newpostmemorandumbutton" class="vavilon" data-vavilon="post"
+                            value="Post a Memorandum" type="submit" onclick="postmemorandum();">
+                        <input id="newpostmemorandumstatus" style="display: none;" value="Sending . . ." type="submit"
+                            disabled>
+                        <div id="newpostmemorandumcompleted"></div>
+                    </div>
+                    <br />
+                    <label for="memorandumpreview">Memorandum Preview 
+                        <a href='javascript:switchToArticleMode();'><div id="switchToArticleMode" class="switchToArticleMode">(Switch to Article Mode)</a></div>
+                        <a href='javascript:switchToRegularMode();'><div id="switchToRegularMode" class="switchToRegularMode">(Switch to Regular Mode)</a></div>
+                    </label>
+                    <div id="memorandumpreview" class="fatitem">
+                    </div>
                 </div>
 
 
@@ -727,11 +742,12 @@
                 <br />
                 or<br />
                 <br />
-                login with a 12 word seed phrase or a Memo <span class="vavilon" data-vavilon="private key">private key</span>.
+                login with a 12 word seed phrase or a Memo <span class="vavilon" data-vavilon="private key">private
+                    key</span>.
                 <a href="https://memo.cash/key/export">Click here to get yours</a>.
                 (Member is SLP546 aware and will not alter your SLP tokens)
                 <br />
-                <br /><span class="vavilon" data-vavilon="private key">Private Key</span> (Compressed WIF format, starts
+                <br /><span class="vavilon" data-vavilon="private key">Seed Phrase / Private Key</span> (Compressed WIF format, starts
                 with 'L...' or 'K...')
                 <br />
                 <input size="64" id="loginkey">
@@ -751,7 +767,7 @@
             <footer>
                 <hr />
                 <span id="developmentversion" style="display: none;">You're viewing the development preview version of
-                    Member. It's recommend to <a href="https://memberapp.github.io">use the stable version at
+                    Member. You may need to SHIFT + Reload to get the very latest changes. Generally, It's recommend to <a href="https://memberapp.github.io">use the stable version at
                         https://memberapp.github.io</a><br /><br />
                     <hr /></span>
                 <span class="footerlinks">
@@ -768,7 +784,7 @@
                     <span class="separatorwide"></span>
                     <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
                     <span class="separatorwide"></span>
-                    <span class="vavilon" data-vavilon="version">version</span> 3.3.0.<u>9</u>
+                    <span class="vavilon" data-vavilon="version">version</span> 3.5.1.<u>9</u>
                 </span>
                 <br />
                 <br />

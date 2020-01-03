@@ -213,63 +213,33 @@ function unsub(topicHOSTILE) {
     tq.queueTransaction(tx);
 }
 
-
-//Possible to merge following 4 functions?
-
-function follow(qaddress) {
+function addressTransaction(removeElementID,qaddress,actionCode,statusMessage){
     if (!checkForPrivKey()) return false;
 
-    document.getElementById('memberfollow').style.display = "none";
+    document.getElementById(removeElementID).style.display = "none";
     var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
-
     const tx = {
-        data: ["0x6d06", "0x" + addressraw],
+        data: [actionCode, "0x" + addressraw],
         cash: { key: privkey }
     }
-    updateStatus("Sending Follow");
+    updateStatus(statusMessage);
     tq.queueTransaction(tx);
+}
+
+function follow(qaddress) {
+    addressTransaction('memberfollow',qaddress,"0x6d06","Sending Follow");
 }
 
 function unfollow(qaddress) {
-    if (!checkForPrivKey()) return false;
-
-    document.getElementById('memberfollow').style.display = "none";
-    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
-
-    const tx = {
-        data: ["0x6d07", "0x" + addressraw],
-        cash: { key: privkey }
-    }
-    updateStatus("Sending unfollow");
-    tq.queueTransaction(tx);
+    addressTransaction('memberfollow',qaddress,"0x6d07","Sending Unfollow");
 }
 
 function mute(qaddress) {
-    if (!checkForPrivKey()) return false;
-
-    document.getElementById('memberblock').style.display = "none";
-    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
-
-    const tx = {
-        data: ["0x6d16", "0x" + addressraw],
-        cash: { key: privkey }
-    }
-    updateStatus("Sending mute");
-    tq.queueTransaction(tx);
+    addressTransaction('memberblock',qaddress,"0x6d16","Sending Mute");
 }
 
 function unmute(qaddress) {
-    if (!checkForPrivKey()) return false;
-
-    document.getElementById('memberblock').style.display = "none";
-    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
-
-    const tx = {
-        data: ["0x6d17", "0x" + addressraw],
-        cash: { key: privkey }
-    }
-    updateStatus("Sending unmute");
-    tq.queueTransaction(tx);
+    addressTransaction('memberblock',qaddress,"0x6d17","Sending Unmute");
 }
 
 function sendDislike(txid) {
