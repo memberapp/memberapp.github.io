@@ -5,7 +5,7 @@ var lastViewOfNotifications = 0;
 function displayNotificationCount() {
     getJSON(dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications).then(function (data) {
 
-        if(data[0].count==null){
+        if (data[0].count == null && document.getElementById("alertcount").innerHTML == "") {
             document.getElementById("alertcount").innerHTML = "(?)";
             return;
         }
@@ -17,11 +17,13 @@ function displayNotificationCount() {
         } else {
             element.innerHTML = "";
         }
-        setTimeout(displayNotificationCount,60000);
+        setTimeout(displayNotificationCount, 60000);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         updateStatus(status);
-        document.getElementById("alertcount").innerHTML = "(?)";
+        if (document.getElementById("alertcount").innerHTML == "") {
+            document.getElementById("alertcount").innerHTML = "(?)";
+        }
     });
 
 }
@@ -119,7 +121,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             return notificationItemHTML(
                 "like",
                 `💗&nbsp;`,
-                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + balanceString(Number(data.amount), false),
+                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount)>0?balanceString(Number(data.amount), false):""),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex)
             );
