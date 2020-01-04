@@ -13,10 +13,10 @@ Before making changes, it would be a good idea to check
 out [the contribution guidelines](CONTRIBUTING.md) 
 and [open issues](https://github.com/memberapp/memberapp.github.io/issues)
 
-To get started locally simply open `index.html` in Firefox or Chrome, that's it. 
+To get started locally, simply open `index.html` in Firefox or Chrome, that's it. 
  
 Alternatively, the client can also be hosted directly from github pages, 
-by going to **Settings > Github Pages**  
+by going to **Settings > Github Pages**  from a forked version
  
 A more roust way is to serve the directory as a web-page via node or python:  
 
