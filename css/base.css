@@ -220,14 +220,11 @@ select>option {
   .memberlogoimage {
     vertical-align: middle;
     position: relative;
-    padding-left: 2px;
     padding-bottom: 2px;
   }
   .memberlogoimagebacking {
-    left: 2px;
     height: 30px;
     width: 30px;
-    position: absolute;
     background-color: #fff;
     border-radius: 55%;
     display: inline-block;
@@ -237,6 +234,21 @@ select>option {
   .headerbuttons, .refreshbalance, .newpostbutton {
     font-size: large;
   }
+
+  .alertcount:not(:empty) {
+    position: relative;
+    top: -6px;
+    left: -3px;
+    background-color: #ff0000;
+    border-radius: 40%;
+    color: #f4f4f4;
+    font-weight: bold;
+    padding: 4px 4px 4px 4px;
+    font-size: smaller;
+    z-index: 10;
+  }
+
+
   
   .headerbuttons a{
     color:var(--bodytextcolor);
