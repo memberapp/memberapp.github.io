@@ -355,8 +355,7 @@ footer {
   .votearrowactivateddown {
     background: url("../img/uparrowblue.svg");
   }
-  /*Different sizes for large and small screens*/
-  @media only screen and (min-width: 600px) {
+
     .votearrow, .votearrowactivated, .votearrowactivateddown {
       width: 18px;
       height: 14px;
@@ -365,17 +364,9 @@ footer {
       background-size: 18px 14px;
       display: block;
     }
-  }
-  @media only screen and (max-width: 600px) {
-    .votearrow, .votearrowactivated, .votearrowactivateddown {
-      width: 9px;
-      height: 7px;
-      border: 0px;
-      margin: 1px 1px 0px;
-      background-size: 9px 7px;
-      display: block;
-    }
-  }
+
+
+  
   .votearrow.rotate180, .votearrowactivated.rotate180, .votearrowactivateddown.rotate180 {
     -webkit-transform: rotate(180deg);
     /* Chrome and other webkit browsers */
