@@ -23,7 +23,7 @@
 
     <!--  Progressive Web App Service Worker -->
     <script src="pwa/pwa.js"></script>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="pwa/manifest.json">
 
     <!-- Large Script Files -->
     <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
@@ -114,11 +114,12 @@
             <div class="pagetop">
                 <nav>
                     <span class="memberlogo">
+                        <span class="memberlogoimagebacking">
                         <a href="./index.html" aria-label="Refresh">
                             <img class="memberlogoimage" src="img/membericon.svg" width="31" height="31"
                                 alt="Member Logo" />
                         </a>
-                        <span class="memberlogoimagebacking"></span>
+                      </span>
                     </span>
                     <span class="membertext">
                         <a href="./index.html" aria-label="Member Home">
@@ -256,7 +257,7 @@
                         <div id="newpostmemorandumcompleted"></div>
                     </div>
                     <br />
-                    <label for="memorandumpreview">Memorandum Preview 
+                    <label for="memorandumpreview">Memorandum Preview
                         <a href='javascript:switchToArticleMode();'><div id="switchToArticleMode" class="switchToArticleMode">(Switch to Article Mode)</a></div>
                         <a href='javascript:switchToRegularMode();'><div id="switchToRegularMode" class="switchToRegularMode">(Switch to Regular Mode)</a></div>
                     </label>

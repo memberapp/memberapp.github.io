@@ -12,7 +12,7 @@
         "skr", "sl", "snd", "so", "sq", "sr", "sv", "sw", "szl", "ta", "te",
         "th", "tl", "tr", "ug", "uk", "ur", "uz", "vi", "zh", "zht"];
     var language = (window.navigator.language || window.browserLanguage).toLowerCase();
-    console.log('loading: ' + language);
+
     if (zhSimplified.includes(language)) {
         language = 'zh'
     } else if (zhTraditional.includes(language)) {
@@ -22,14 +22,22 @@
     }
     // As the language is controlled by the users browser,
     // the input is restricted to a known set of possibilities
-    const src = allowedInput.includes(language)  ?  language : 'en';
-    console.log('from: ' + './locale/' + src + '.json');
-    let script = document.createElement('script');
-    script.setAttribute('type', 'application/json');
-    script.setAttribute('src', './locale/' + src + '.json');
-    script.setAttribute('data-vavilon-dict', src);
-    script.async = false;
-    document.head.appendChild(script);
+    const src = Object.keys(allowedInput).includes(language) ? language : 'en';
+
+    if (location.protocol === 'https:' || location.protocol === 'http:') {
+        console.log('loading: ' + language);
+        console.log('from: ' + './locale/' + src + '.json');
+        let script = document.createElement('script');
+        script.setAttribute('type', 'application/json');
+        script.setAttribute('src', './locale/' + src + '.json');
+        script.setAttribute('data-vavilon-dict', src);
+        script.async = false;
+        document.head.appendChild(script);
+    } else {
+        console.log("Can only load scripts dynamically over https or http")
+        console.log('skipping: ' + './locale/' + src + '.json');
+    }
+
 
 }());
 	  

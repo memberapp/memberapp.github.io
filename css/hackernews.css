@@ -386,12 +386,8 @@ header {
   padding-left: 4px;
 }
 
-.memberlogo {
-  float: left;  
-}
 
 .membertext{
-  float: left;  
   padding-left: 4px;
   padding-right: 6px;
   padding-top: 1px;
@@ -406,7 +402,12 @@ header {
 
 .memberlogoimage{
   vertical-align:middle;
-  padding-left: 2px;
+}
+
+.memberlogoimagebacking {
+  height: 30px;
+  width: 30px;
+  background-color: #ffffff;
 }
 
 ul {
