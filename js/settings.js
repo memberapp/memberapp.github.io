@@ -208,24 +208,16 @@ function getAndPopulateSettings() {
         mutedwords = storedmutedwords.split(',');
     }
 
-    var storedoneclicktip = localStorageGet(localStorageSafe, "oneclicktip");
-    if (storedoneclicktip != undefined && storedoneclicktip != null) {
-        storedoneclicktip = Number(storedoneclicktip);
-        if (storedoneclicktip < 547) {
-            storedoneclicktip = 0;
+    //numbers
+    for (var key in numbers) {
+        if(key=='defaulttip') continue;
+        var theSetting = localStorageGet(localStorageSafe, key);
+        if (theSetting != undefined && theSetting != null) {
+            document.getElementById(key).value = theSetting;
+            numbers[key]=theSetting;
+        }else{
+            document.getElementById(key).value = numbers[key];
         }
-        document.getElementById('oneclicktip').value = storedoneclicktip;
-        oneclicktip = storedoneclicktip;
-    }
-
-    var storedmaxfee = localStorageGet(localStorageSafe, "maxfee");
-    if (storedmaxfee != undefined && storedmaxfee != null) {
-        storedmaxfee = Number(storedmaxfee);
-        if (storedmaxfee < 1) {
-            storedmaxfee = 2;
-        }
-        document.getElementById('maxfee').value = storedmaxfee;
-        maxfee = storedmaxfee;
     }
 
     //Checkboxes
@@ -234,6 +226,7 @@ function getAndPopulateSettings() {
 
         if (theSetting != undefined && theSetting != null) {
             document.getElementById(key).checked = Boolean(theSetting == "true");
+            settings[key]=theSetting;
         } else {
             document.getElementById(key).checked = Boolean(settings[key] == "true");
         }
@@ -253,12 +246,42 @@ function getAndPopulateSettings() {
                 selector.selectedIndex = i;
             }
         }
-
     }
 
     getDataCommonToSettingsAndMember(pubkey, "settings");
 
 
+}
+
+function updateSettingsCheckbox(settingsName) {
+    settings[settingsName] = "" + document.getElementById(settingsName).checked;
+    localStorageSet(localStorageSafe, settingsName, settings[settingsName]);
+}
+
+function updateSettingsDropdown(settingsName) {
+    var selector = document.getElementById(settingsName);
+    dropdowns[settingsName] = selector.options[selector.selectedIndex].value;
+    localStorageSet(localStorageSafe, settingsName, dropdowns[settingsName]);
+}
+
+function updateSettingsNumber(settingsName) {
+    numbers[settingsName] = Number(document.getElementById(settingsName).value);
+    
+    //No numbers are less than 2 except oneclicktip, which will be reset below
+    if(numbers[settingsName]<2){
+        numbers[settingsName]=2;
+    }
+
+    if (settingsName=="results" && numbers[settingsName] > 100) {
+        numbers[settingsName] = 100;
+    }
+    if (settingsName=="maxfee" && numbers[settingsName] < 2) {
+        numbers[settingsName] = 2;
+    }
+    if (settingsName=="oneclicktip" && numbers[settingsName] < 547) {
+        numbers[settingsName] = 0;
+    }
+    localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
 }
 
 function showQRCode(spanid) {
@@ -327,30 +350,6 @@ function updatemutedwords() {
 
 }
 
-function updateSettingsCheckbox(settingsName) {
-    settings[settingsName] = "" + document.getElementById(settingsName).checked;
-    localStorageSet(localStorageSafe, settingsName, settings[settingsName]);
-}
 
-function updateSettingsDropdown(settingsName) {
-    var selector = document.getElementById(settingsName);
-    dropdowns[settingsName] = selector.options[selector.selectedIndex].value;
-    localStorageSet(localStorageSafe, settingsName, dropdowns[settingsName]);
-}
-
-function updateOneClickTip() {
-    oneclicktip = Number(document.getElementById('oneclicktip').value);
-    localStorageSet(localStorageSafe, "oneclicktip", oneclicktip);
-
-}
-
-function updateMaxFee() {
-    maxfee = Number(document.getElementById('maxfee').value);
-    if (maxfee < 2) {
-        maxfee = 2;
-    }
-    localStorageSet(localStorageSafe, "maxfee", maxfee);
-
-}
 
 

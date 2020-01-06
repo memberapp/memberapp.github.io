@@ -101,7 +101,6 @@
     <script src="js/login.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/htmlquarantine.js"></script>
-    <script src="js/config.js"></script>
 
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
@@ -133,8 +132,8 @@
                             <a id="myfeedbutton" title="My Feed (Latest posts from your topics or peeps)" class="btn"
                                 href="#myfeed" onclick="showMyFeed();">📰</a>
                             <a id="notificationsbutton" title="Notifications" class="btn"
-                                href="#notifications?start=0&amp;limit=25"
-                                onclick="showNotifications(0,25,'notifications');">🔔<span class="alertcount" id="alertcount"></span></a>
+                                href="#notifications?start=0"
+                                onclick="showNotifications(0,numbers.results,'notifications');">🔔<span class="alertcount" id="alertcount"></span></a>
                             <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
                                 onclick="showNewPost();">📝</a>
                             <a id="settingsbutton" title="Settings" class="btn" href="#settings"
@@ -509,17 +508,23 @@
                 </div>
                 <div>
                     <label for="oneclicktip">One-Click Tip Amount</label>
-                    <input id="oneclicktip" value="0" size="8" type="number" onchange="updateOneClickTip();"
+                    <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     (Amount
-                    to tip when clicking up arrow, minimum 547)
+                    to tip when clicking up arrow. Minimum 547)
                 </div>
                 <div>
                     <label for="maxfee">Max Fee</label>
-                    <input id="maxfee" value="5" size="3" type="number" step="1" onchange="updateMaxFee();"
+                    <input id="maxfee" size="3" type="number" step="1" onchange="updateSettingsNumber('maxfee');"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     (Max
-                    satoshis per byte to pay during network congestion. Min 2)
+                    satoshis per byte to pay during network congestion. Minimum 2)
+                </div>
+                <div>
+                    <label for="results">Number Of Results To Show</label>
+                    <input id="results" size="3" type="number" step="1" onchange="updateSettingsNumber('results');"
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                    (Max results to show per page. Maximum 100)
                 </div>
                 <div>
                     <label for="currencydisplay" data-vavilon="Currency Display">Currency Display</label>

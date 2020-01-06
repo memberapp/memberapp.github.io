@@ -20,7 +20,6 @@ function displayNotificationCount() {
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         updateStatus(status);
-        document.getElementById("alertcount").innerHTML = "(?)";
     });
 
 }

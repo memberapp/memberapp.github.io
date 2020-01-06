@@ -36,9 +36,9 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#show?start=` + (start - 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + ___i18n('prev') + `</a> `; }
-    if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#show?start=` + (start + 25) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + ___i18n('next') + `</a>`; }
+    { navbuttons += `<a class="next" href="#show?start=` + (start - numbers.results) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start - numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + ___i18n('prev') + `</a> `; }
+    if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
+    { navbuttons += `<a class="back" href="#show?start=` + (start + numbers.results) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start + numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + ___i18n('next') + `</a>`; }
     return navbuttons;
 
 }
@@ -50,9 +50,9 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start - 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + ___i18n('prev') + `</a> `; }
-    if (numberOfResults > 25) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + 25) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start + 25) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + ___i18n('next') + `</a>`; }
+    { navbuttons += `<a class="next" href="#` + page + `?start=` + (start - numbers.results) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start - numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + ___i18n('prev') + `</a> `; }
+    if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
+    { navbuttons += `<a class="back" href="#` + page + `?start=` + (start + numbers.results) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start + numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + ___i18n('next') + `</a>`; }
     return navbuttons;
 
 }
@@ -141,7 +141,7 @@ function getAgeHTML(firstseen, compress) {
 
 function getTopicHTML(topic, append) {
     return ` <span class="topic">` +
-        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=25&order=new" onclick="showTopic(0,25,'` + unicodeEscape(topic) + `','new')">` + append + capitalizeFirstLetter(ds(topic).substr(0, 40)) + `</a> `)
+        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=`+numbers.results+`&order=new" onclick="showTopic(0,numbers.results,'` + unicodeEscape(topic) + `','new')">` + append + capitalizeFirstLetter(ds(topic).substr(0, 40)) + `</a> `)
         + `</span>`;
 }
 
@@ -394,7 +394,7 @@ function getBootStrapHTML(pubkey, data, lbstcount) {
 //Map
 
 function getMapCloseButtonHTML() {
-    return `<font size="+3"><a href="#posts?type=all&amp;start=0&amp;limit=25" onclick="hideMap();showPosts(0,25,'all');">X</a></font>`;
+    return `<font size="+3"><a href="#posts?type=all&amp;start=0&amp;limit=`+numbers.results+`" onclick="hideMap();showPosts(0,numbers.results,'all');">X</a></font>`;
 }
 
 function getOSMattributionHTML() {
