@@ -2,17 +2,17 @@
 
 :root {
   --bodybgcolor: #ffffff;
-  --bodytextcolor:#000000;
+  --bodytextcolor: #000000;
   --bitcoincash: #4cca47;
   --table2n: #ffffff;
   --table2np1: #f9f9f9;
   --tableborder: #ddd;
   --selectbox: #cee3f8;
-  --selectboxcolor:#000000;
-  --selectoptions:#cee3f8; 
+  --selectboxcolor: #000000;
+  --selectoptions: #cee3f8;
   --header: #cee3f8;
   --headerborder: #4cca47;
-  --hr:#4cca47;
+  --hr: #4cca47;
   --preformattedtext: #333;
   --preformattedbg: #f5f5f5;
   --preformattedborder: #ccc;
@@ -33,8 +33,8 @@
   --navbuttonsbg: #eee;
   --navbuttonsborder: #ddd;
   --navbuttonstext: #369;
-  --notificationtitle: #222;	  
-  --linkcolor:#0000EE;
+  --notificationtitle: #222;
+  --linkcolor: #0000EE;
 }
 
 /*General*/
@@ -69,7 +69,7 @@ body {
 
 a {
   text-decoration: none;
-  color:var(--linkcolor);
+  color: var(--linkcolor);
 }
 
 p {
@@ -230,30 +230,25 @@ select>option {
     display: inline-block;
     z-index: -100;
   }
-
   .headerbuttons, .refreshbalance, .newpostbutton {
     font-size: large;
   }
-
   .alertcount:not(:empty) {
     position: relative;
-    top: -6px;
-    left: -3px;
+    top: -10px;
+    left: -13px;
     background-color: #ff0000;
     border-radius: 40%;
     color: #f4f4f4;
     font-weight: bold;
-    padding: 4px 4px 4px 4px;
-    font-size: smaller;
+    padding: 2px;
+    font-size: xx-small;
     z-index: 10;
+    margin-right: -14px; 
   }
-
-
-  
-  .headerbuttons a{
-    color:var(--bodytextcolor);
+  .headerbuttons a {
+    color: var(--bodytextcolor);
   }
-
   .sats {
     font-size: 0.6em;
     position: relative;
@@ -264,16 +259,12 @@ select>option {
     padding-top: 2px;
     padding-right: 2px;
   }
-
-
   .inlinelabel {
     display: inline;
     font-weight: normal;
     font-size: x-small;
     color: #373737;
   }
-
-
   /* Breakline in header for small screen, 720 is about the point where it splits onto a second line
   probably a better way to handle this as topic container is still free floating and unwanted break appears*/
   @media only screen and (max-width: 860px) {
@@ -367,18 +358,14 @@ footer {
   .votearrowactivateddown {
     background: url("../img/uparrowblue.svg");
   }
-
-    .votearrow, .votearrowactivated, .votearrowactivateddown {
-      width: 18px;
-      height: 14px;
-      border: 0px;
-      margin: 1px 2px 0px;
-      background-size: 18px 14px;
-      display: block;
-    }
-
-
-  
+  .votearrow, .votearrowactivated, .votearrowactivateddown {
+    width: 18px;
+    height: 14px;
+    border: 0px;
+    margin: 1px 2px 0px;
+    background-size: 18px 14px;
+    display: block;
+  }
   .votearrow.rotate180, .votearrowactivated.rotate180, .votearrowactivateddown.rotate180 {
     -webkit-transform: rotate(180deg);
     /* Chrome and other webkit browsers */
@@ -622,7 +609,6 @@ footer {
   }
   .imgurcontainer {}
   .twittercontainer {}
-
   .commentbody img, .imgurimage {
     display: inline;
     margin-top: 5px;
@@ -632,7 +618,6 @@ footer {
     vertical-align: top;
     align-content: center;
   }
-
   @media only screen and (max-width: 860px) {
     .youtubepreviewimage {
       width: 100%;
@@ -658,7 +643,6 @@ footer {
       width: 100%;
       vertical-align: top;
     }
-
   }
   @media only screen and (min-width: 860px) {
     .youtubepreviewimage {
@@ -689,7 +673,6 @@ footer {
       width: 550px;
       vertical-align: top;
     }
-
   }
 }
 
@@ -862,7 +845,7 @@ label {
 
 .newpost {
   font-size: small;
-  width:80%;
+  width: 80%;
 }
 
 textarea, .memorandumtitle, .memotopic, .memorandumtopic {
@@ -873,12 +856,12 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
   width: 90%;
 }
 
-.switchToArticleMode{
-  display:block;
+.switchToArticleMode {
+  display: block;
 }
 
-.switchToRegularMode{
-  display:none;
+.switchToRegularMode {
+  display: none;
 }
 
 /*Topic List*/

@@ -5,8 +5,7 @@ var lastViewOfNotifications = 0;
 function displayNotificationCount() {
     getJSON(dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications).then(function (data) {
 
-        if (data[0].count == null && document.getElementById("alertcount").innerHTML == "") {
-            document.getElementById("alertcount").innerHTML = "?";
+        if (data[0].count == null) {
             return;
         }
 
@@ -21,9 +20,7 @@ function displayNotificationCount() {
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         updateStatus(status);
-        if (document.getElementById("alertcount").innerHTML == "") {
-            document.getElementById("alertcount").innerHTML = "(?)";
-        }
+        document.getElementById("alertcount").innerHTML = "(?)";
     });
 
 }
