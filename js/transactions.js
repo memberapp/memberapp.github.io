@@ -149,7 +149,7 @@ function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
         data: ["0x6d04", "0x" + reversetx],
         cash: {
             key: privkey,
-            to: [{ address: tipAddress, value: tipAmount }]
+            to: [{ address: tipAddress, value: Number(tipAmount) }]
         }
     }
     updateStatus("Sending Tip");
