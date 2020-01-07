@@ -7,7 +7,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     if (content == "") content = "posts";
     if (filter == "") filter = "everyone";
     if (start == "") start = 0;
-    if (limit == "") limit = 25;
+    if (limit == "") limit = numbers.results;
     if (page == "") page = "posts";
 
     //Show the relevant html element
@@ -427,11 +427,11 @@ function likePost(txid, tipAddress) {
     //Change class
     document.getElementById('score' + txid).className = "betweenvotesscoreup";
 
-    if (oneclicktip >= 547) {
+    if (numbers.oneclicktip >= 547) {
         var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
-        document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + oneclicktip, false);
-        document.getElementById('tipscount' + txid).dataset.amount = tipscount + oneclicktip;
-        sendTipRaw(txid, tipAddress, oneclicktip, privkey, null);
+        document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + numbers.oneclicktip, false);
+        document.getElementById('tipscount' + txid).dataset.amount = tipscount + numbers.oneclicktip;
+        sendTipRaw(txid, tipAddress, numbers.oneclicktip, privkey, null);
     } else {
         sendLike(txid);
     }

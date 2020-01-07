@@ -11,7 +11,11 @@ let tq = new TransactionQueue(updateStatus);
 var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
+mapTileProvider='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
 //var twitterEmbeds=new Array();
+
+//These should probably all go in a single config object
 var settings = {
     "showyoutube": "true",
     "showimgur": "true",
@@ -23,6 +27,12 @@ var dropdowns = {
     "utxoserver": "https://rest.bitcoin.com/v2/",
     "currencydisplay": "USD"
 };
+var numbers = {
+    "defaulttip" : 1000,
+    "oneclicktip" : 0,
+    "maxfee" : 2,
+    "results" : 25
+}
 
 
 
@@ -80,7 +90,6 @@ function trylogin(loginkey) {
         updateStatus(error.message);
         return;
     }
-    //document.location.href="#posts?type=all&amp;start=0&amp;limit=25";
     getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
 }

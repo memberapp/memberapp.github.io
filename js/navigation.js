@@ -69,10 +69,10 @@ function displayContentBasedOnURLParameters() {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
         }else{
-            showPosts(0, 25, 'all');    
+            showPosts(0, numbers.results, 'all');    
         }
     } else {
-        showPosts(0, 25, 'all');
+        showPosts(0, numbers.results, 'all');
     }
 }
 
@@ -165,7 +165,7 @@ function showNewPost() {
 function showNotifications(start, limit) {
     
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
-        showPosts(0, 25, 'all');
+        showPosts(0, numbers.results, 'all');
         return;
     }
     
@@ -176,18 +176,18 @@ function showNotifications(start, limit) {
 function showSettings() {
     //Need to be logged in
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
-        showPosts(0, 25, 'all');
+        showPosts(0, numbers.results, 'all');
         return;
     }
     getAndPopulateSettings();
-    getAndPopulate(0, 25, 'memberposts', pubkey);
+    getAndPopulate(0, numbers.results, 'memberposts', pubkey);
     document.getElementById('settingsanchor').style.display = "block";
     document.getElementById('settingsfollow').style.display = "block";
 }
 
 function showMember(qaddress) {
     getAndPopulateMember(qaddress);
-    getAndPopulate(0, 25, 'memberposts', qaddress);
+    getAndPopulate(0, numbers.results, 'memberposts', qaddress);
     document.getElementById('member').style.display = "block";
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display = "block";
@@ -223,7 +223,7 @@ function showPFC(start, limit, page, pubkey, type){
 }
 
 function showMyFeed(){
-    getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, 25, 'posts', pubkey); 
+    getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, numbers.results, 'posts', pubkey); 
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit){
@@ -250,24 +250,6 @@ function showTopicList(){
     getAndPopulateTopicList(true); 
 }
 
-/*
-function topicChanged(){
-    var selector=document.getElementById('topicselector');
-    
-    //special case, no topic selected
-    if(selector.selectedIndex==0){
-        exitTopic();
-        showPosts(0, 25,'all');
-        document.location.href="#posts?type=all&start=0&limit=25";
-        return;
-    }
-
-    //Warning, topicname may contain hostile characters
-    var topicNameHOSTILE=selector.options[selector.selectedIndex].value;
-    document.location.href="#topic?type=all&start=0&limit=25&topicname="+encodeURIComponent(topicNameHOSTILE);
-    showTopic(0,25,topicNameHOSTILE,'all');
-}*/
-
 function postsSelectorChanged(){
     
     //get value from the 4 drop downs
@@ -290,7 +272,7 @@ function postsSelectorChanged(){
     var filter=selector.options[selector.selectedIndex].value;
     
     //set the document location
-    document.location.href="#show?order="+order+"&content="+content+"&topicname="+encodeURIComponent(topicNameHOSTILE)+"&filter="+filter+"&start=0&limit=25";
+    document.location.href="#show?order="+order+"&content="+content+"&topicname="+encodeURIComponent(topicNameHOSTILE)+"&filter="+filter+"&start=0&limit="+Number(numbers.results);
     
     //topicChanged();
 

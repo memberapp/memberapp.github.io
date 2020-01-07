@@ -112,7 +112,8 @@ function san(input) {
 }
 
 function sanitizeAlphanumeric(input) {
-  if (input == null) { return ""; }
+  if (input===undefined || input == null) { return ""; }
+  input=input+"";
   return input.replace(/[^A-Za-z0-9]/g, '');
 }
 
