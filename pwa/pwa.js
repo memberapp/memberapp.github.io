@@ -1,4 +1,4 @@
-/*if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
         navigator.serviceWorker.register('sw.js?version=3.5.2').then(function (registration) {
             // Registration was successful
@@ -12,5 +12,5 @@
     });
 } else {
     console.log('service worker is not supported');
-}*/
+}
 

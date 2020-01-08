@@ -36,14 +36,15 @@ self.addEventListener("activate", function (event) {
     );
 });
 
+/*
 self.addEventListener('fetch', function (event) {
     // Skip cross-origin requests, like those for Google Analytics.
     if (event.request.url.startsWith(self.location.origin)) {
         event.respondWith(
             caches.match(event.request).then(cachedResponse => {
-                /*if (cachedResponse) {
+                if (cachedResponse) {
                     return cachedResponse;
-                }*/
+                }
                 return caches.open(RUNTIME).then(cache => {
                     return fetch(event.request).then(response => {
                         // Put a copy of the response in the runtime cache.
@@ -56,4 +57,4 @@ self.addEventListener('fetch', function (event) {
         );
     }
 });
-
+*/
