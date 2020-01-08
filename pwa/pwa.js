@@ -1,6 +1,6 @@
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js').then(function (registration) {
+        navigator.serviceWorker.register('sw.js?version=3.5.2').then(function (registration) {
             // Registration was successful
             console.log('Registered!');
         }, function (err) {
