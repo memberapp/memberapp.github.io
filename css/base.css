@@ -222,14 +222,7 @@ select>option {
     position: relative;
     padding-bottom: 2px;
   }
-  .memberlogoimagebacking {
-    height: 30px;
-    width: 30px;
-    background-color: #fff;
-    border-radius: 55%;
-    display: inline-block;
-    z-index: -100;
-  }
+
   .headerbuttons, .refreshbalance, .newpostbutton {
     font-size: large;
   }
