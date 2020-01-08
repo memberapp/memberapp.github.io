@@ -41,9 +41,9 @@ self.addEventListener('fetch', function (event) {
     if (event.request.url.startsWith(self.location.origin)) {
         event.respondWith(
             caches.match(event.request).then(cachedResponse => {
-                if (cachedResponse) {
+                /*if (cachedResponse) {
                     return cachedResponse;
-                }
+                }*/
                 return caches.open(RUNTIME).then(cache => {
                     return fetch(event.request).then(response => {
                         // Put a copy of the response in the runtime cache.
