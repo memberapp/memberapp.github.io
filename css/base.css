@@ -237,7 +237,7 @@ select>option {
     padding: 2px;
     font-size: xx-small;
     z-index: 10;
-    margin-right: -14px; 
+    margin-right: -14px;
   }
   .headerbuttons a {
     color: var(--bodytextcolor);

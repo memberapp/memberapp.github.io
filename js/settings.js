@@ -291,7 +291,10 @@ function showQRCode(spanid) {
     //document.getElementById('qrclicktoshow').style.display='none';
 }
 
-function toggleNotifications(){
+function toggleNotifications() {
+
+    const publicKey = base64UrlToUint8Array('BMpcNLq76iA9alX82IkEdVL-9TS2ieeAoya8xQYuastvmuCS8puEDQ-yJkGf9GIbR8fYD3ZN32OI3oT7Ox4UVi4');
+
     navigator.serviceWorker.ready.then(function (registration) {
         if (!registration.pushManager) {
             alert('No push notifications support.');
@@ -299,15 +302,28 @@ function toggleNotifications(){
         }
         //To subscribe `push notification` from push manager
         registration.pushManager.subscribe({
-            userVisibleOnly: true //Always show notification when received
+            userVisibleOnly: true, //Always show notification when received
+            applicationServerKey: publicKey
         })
             .then(function (subscription) {
-                console.log('Subscribed.');
+                fetch('./register', {
+                    method: 'post',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        subscription: subscription
+                    }),
+                })
+                    .catch(function (e) {
+                        if (Notification.permission === 'denied') {
+                            console.warn('Permission for Notifications was denied');
+                        } else {
+                            console.error('Unable to subscribe to push.', e);
+                        }
+                    });
             })
-            .catch(function (error) {
-                console.log('Subscription error: ', error);
-            });
-    })
+    });
 }
 
 function rateCallbackAction(rating, that, ratingtext) {

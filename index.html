@@ -542,6 +542,24 @@
                         Tweets</label>
                 </div>
                 <div>
+                    <label for="notificationsettings" class="labelheader vavilon" data-vavilon="notifications">Notifications</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showlikes" onchange="toggleNotifications();">
+                    <label for="showyoutube" class="checkboxlabel vavilon"
+                           data-vavilon="likes">Likes</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showreplys" onchange="updateSettingsCheckbox('showreplys');">
+                    <label for="showreplys" class="checkboxlabel vavilon"
+                           data-vavilon="mentions">Replys</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="showfollows" onchange="updateSettingsCheckbox('showfollows');">
+                    <label for="showfollows" class="checkboxlabel vavilon"
+                           data-vavilon="mentions">Follows</label>
+                </div>
+                <div>
                     <label for="contentserver" data-vavilon="Content Server">Content Server</label>
                     <select id="contentserver" onchange='updateSettingsDropdown("contentserver");'>
                         <option value="https://memberjs.org:8123/member.js">Memberjs.org</option>
