@@ -24,7 +24,7 @@
     // the input is restricted to a known set of possibilities
     const src = Object.keys(allowedInput).includes(language) ? language : 'en';
 
-    if (location.protocol === 'https:' || location.protocol === 'http:') {console.log('loading: ' + language);
+    if (location.protocol === 'https:' || location.protocol === 'http:') {
         console.log('loading: ' + './locale/' + src + '.json');
         let script = document.createElement('script');
         script.setAttribute('type', 'application/json');
