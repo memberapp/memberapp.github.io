@@ -15,5 +15,5 @@ if (location.protocol === 'https:' || location.hostname === 'localhost'){
         console.log('service worker is not supported');
     }
 } else {
-    console.log('Not attempting to load service worker');
+    console.log('Skipping service worker');
 }
