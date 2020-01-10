@@ -1,9 +1,9 @@
 // sw.js
 
 // A list of local resources we always want to be cached.
-/*
+
 const PRECACHE_URLS = [
-    'manifest.json',
+    'pwa/manifest.json',
     'css/article.css',
     'img/bch.png',
     'css/base.css',
@@ -58,7 +58,7 @@ self.addEventListener('fetch', function (event) {
         );
     }
 });
-*/
+
 
 self.addEventListener('install', (event) => {
     self.skipWaiting();

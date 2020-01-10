@@ -24,18 +24,14 @@
     // the input is restricted to a known set of possibilities
     const src = Object.keys(allowedInput).includes(language) ? language : 'en';
 
-    if (location.protocol === 'https:' || location.protocol === 'http:') {
-        console.log('loading: ' + language);
-        console.log('from: ' + './locale/' + src + '.json');
+    if (location.protocol === 'https:' || location.protocol === 'http:') {console.log('loading: ' + language);
+        console.log('loading: ' + './locale/' + src + '.json');
         let script = document.createElement('script');
         script.setAttribute('type', 'application/json');
         script.setAttribute('src', './locale/' + src + '.json');
         script.setAttribute('data-vavilon-dict', src);
         script.async = false;
         document.head.appendChild(script);
-    } else {
-        console.log("Can only load scripts dynamically over https or http")
-        console.log('skipping: ' + './locale/' + src + '.json');
     }
 
 
