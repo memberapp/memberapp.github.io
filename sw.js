@@ -2,12 +2,12 @@
 
 // A list of local resources we always want to be cached.
 const PRECACHE_URLS = [
+    'manifest.json',
     'css/article.css',
     'css/base.css',
     'img/bch.png',
     'js/leaflet/leaflet.js',
-    'locale/en.json',
-    'pwa/manifest.json'
+    'locale/en.json'
 ];
 const VERSION = '3.5.1.9';
 const RUNTIME = 'runtime-' + VERSION;
