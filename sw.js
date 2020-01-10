@@ -1,16 +1,15 @@
 // sw.js
 
 // A list of local resources we always want to be cached.
-
 const PRECACHE_URLS = [
-    'pwa/manifest.json',
     'css/article.css',
-    'img/bch.png',
     'css/base.css',
+    'img/bch.png',
+    'js/leaflet/leaflet.js',
     'locale/en.json',
-    'js/leaflet/leaflet.js'
+    'pwa/manifest.json'
 ];
-const VERSION = '3.5.2.9';
+const VERSION = '3.5.1.9';
 const RUNTIME = 'runtime-' + VERSION;
 const INSTALL = 'install-' + VERSION;
 
@@ -37,7 +36,6 @@ self.addEventListener("activate", function (event) {
     );
 });
 
-
 self.addEventListener('fetch', function (event) {
     // Skip cross-origin requests, like those for Google Analytics.
     if (event.request.url.startsWith(self.location.origin)) {
@@ -58,9 +56,3 @@ self.addEventListener('fetch', function (event) {
         );
     }
 });
-
-
-self.addEventListener('install', (event) => {
-    self.skipWaiting();
-});
-
