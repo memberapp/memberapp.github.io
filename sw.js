@@ -5,10 +5,10 @@
 const PRECACHE_URLS = [
     'pwa/manifest.json',
     'css/article.css',
-    'img/bch.png',
     'css/base.css',
-    'locale/en.json',
-    'js/leaflet/leaflet.js'
+    'img/bch.png',
+    'js/leaflet/leaflet.js',
+    'locale/en.json'
 ];
 const VERSION = '3.5.2.9';
 const RUNTIME = 'runtime-' + VERSION;
