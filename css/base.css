@@ -434,7 +434,7 @@ footer {
       border-radius: 3px !important;
       padding: 5px 8px 0px 5px;
       overflow: hidden;
-      font-style: normal verdana, arial, helvetica, sans-serif;
+      font: normal verdana, arial, helvetica, sans-serif;
     }
     .comment-tree li li li li li li li li li li {
       margin-left: 1px;
@@ -508,8 +508,7 @@ footer {
       border-left: 1px solid #e6e6e6 !important;
       padding: 2px 4px 2px 2px;
       overflow: hidden;
-      font-style: normal;
-      font-family: verdana, arial, helvetica, sans-serif;
+      font: normal verdana, arial, helvetica, sans-serif;
     }
     .comment-tree li li li li li li li li li li {
       margin-left: 0px;
