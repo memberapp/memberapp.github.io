@@ -237,7 +237,7 @@ select>option {
     padding: 2px;
     font-size: xx-small;
     z-index: 10;
-    margin-right: -14px;
+    margin-right: -14px; 
   }
   .headerbuttons a {
     color: var(--bodytextcolor);
@@ -434,8 +434,7 @@ footer {
       border-radius: 3px !important;
       padding: 5px 8px 0px 5px;
       overflow: hidden;
-      font-style: normal;
-      font-family: verdana, arial, helvetica, sans-serif;
+      font-style: normal verdana, arial, helvetica, sans-serif;
     }
     .comment-tree li li li li li li li li li li {
       margin-left: 1px;
@@ -866,5 +865,5 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
 }
 
 .tltopicname {
-  word-wrap: normal;
+  word-wrap: anywhere;
 }
