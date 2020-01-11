@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
     'js/leaflet/leaflet.js',
     'locale/en.json'
 ];
-const VERSION = '3.5.2.13';
+const VERSION = '3.5.2.9';
 const RUNTIME = 'runtime-' + VERSION;
 const INSTALL = 'install-' + VERSION;
 
@@ -25,22 +25,45 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener("activate", function (event) {
+    
     console.log('service worker activated.');
     const currentCaches = [INSTALL, RUNTIME];
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return cacheNames.filter(cacheName => !currentCaches.includes(cacheName));
-        }).then(cachesToDelete => {
-            return Promise.all(cachesToDelete.map(cacheToDelete => {
-                return caches.delete(cacheToDelete);
-            }));
-        }).then(() => self.clients.claim())
-    );
+
+    self.clients.matchAll({
+        includeUncontrolled: true
+      }).then(function(clientList) {
+        var urls = clientList.map(function(client) {
+          return client.url;
+        });
+        console.log('[ServiceWorker] Matching clients:', urls.join(', '));
+      });
+      event.waitUntil(
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+              cacheNames.map(function(cacheName) {
+                if (cacheName !== !currentCaches.includes(cacheName)) {
+                  console.log('[ServiceWorker] Deleting old cache:', cacheName);
+                  return caches.delete(cacheName);
+                }
+              })
+            );
+          }).then(function() {
+            console.log('[ServiceWorker] Claiming clients for version', version);
+            return self.clients.claim();
+          })
+        );
 });
 
 
 self.addEventListener('fetch', function (event) {
-    // Skip cross-origin requests, like those for Google Analytics.
+    if (event.request.url.includes('/version')) {
+        event.respondWith(new Response(VERSION, {
+          headers: {
+            'content-type': 'text/plain'
+          }
+        }));
+      }
+
     if (event.request.url.startsWith(self.location.origin)) {
         event.respondWith(
             caches.match(event.request).then(cachedResponse => {
