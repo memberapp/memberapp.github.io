@@ -70,7 +70,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
     .then(function(response){
         return response.text()
     }).then(function(version){
-        console.log(version);
+        console.log("member" + version);
         let ver_split = version.lastIndexOf('.');
         document.getElementById('version').innerHTML = version.substring(0, ver_split) + ".<u>" +version.substring(ver_split+1) +"</u>";
     });

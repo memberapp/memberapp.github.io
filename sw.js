@@ -26,7 +26,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener("activate", function (event) {
     
-    console.log('service worker activated.');
+    //console.log('[ServiceWorker] Activated.');
     const currentCaches = [INSTALL, RUNTIME];
 
     self.clients.matchAll({
@@ -35,20 +35,20 @@ self.addEventListener("activate", function (event) {
         var urls = clientList.map(function(client) {
           return client.url;
         });
-        console.log('[ServiceWorker] Matching clients:', urls.join(', '));
+        //console.log('[ServiceWorker] Matching clients:', urls.join(', '));
       });
       event.waitUntil(
         caches.keys().then(function(cacheNames) {
             return Promise.all(
               cacheNames.map(function(cacheName) {
                 if (cacheName !== !currentCaches.includes(cacheName)) {
-                  console.log('[ServiceWorker] Deleting old cache:', cacheName);
+                  //console.log('[ServiceWorker] Deleting old cache:', cacheName);
                   return caches.delete(cacheName);
                 }
               })
             );
           }).then(function() {
-            console.log('[ServiceWorker] Claiming clients for version', version);
+            //console.log('[ServiceWorker] Claiming clients for version', version);
             return self.clients.claim();
           })
         );
