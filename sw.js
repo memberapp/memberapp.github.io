@@ -3,7 +3,7 @@
 // A list of local resources we always want to be cached.
 
 const PRECACHE_URLS = [
-    'pwa/manifest.json',
+    'pwa/manifest.webmanifest',
     'css/article.css',
     'css/base.css',
     'img/bch.png',
