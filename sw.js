@@ -10,9 +10,9 @@ const PRECACHE_URLS = [
     'js/leaflet/leaflet.js',
     'locale/en.json'
 ];
-const VERSION = '3.5.2.9';
-const RUNTIME = 'runtime-' + VERSION;
-const INSTALL = 'install-' + VERSION;
+const version = '3.5.2.10';
+const RUNTIME = 'runtime-' + version;
+const INSTALL = 'install-' + version;
 
 
 self.addEventListener('install', (event) => {
@@ -57,14 +57,14 @@ self.addEventListener("activate", function (event) {
 
 self.addEventListener('fetch', function (event) {
     if (event.request.url.includes('/version')) {
-        event.respondWith(new Response(VERSION, {
+        event.respondWith(new Response(version, {
           headers: {
             'content-type': 'text/plain'
           }
         }));
       }
 
-    if (event.request.url.startsWith(self.location.origin)) {
+    else if (event.request.url.startsWith(self.location.origin)) {
         event.respondWith(
             caches.match(event.request).then(cachedResponse => {
                 if (cachedResponse) {
