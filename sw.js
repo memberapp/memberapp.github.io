@@ -10,12 +10,13 @@ const PRECACHE_URLS = [
     'js/leaflet/leaflet.js',
     'locale/en.json'
 ];
-const VERSION = '3.5.2.12';
+const VERSION = '3.5.2.13';
 const RUNTIME = 'runtime-' + VERSION;
 const INSTALL = 'install-' + VERSION;
 
 
 self.addEventListener('install', (event) => {
+    self.skipWaiting()
     event.waitUntil(
         caches.open(INSTALL).then((cache) => {
             return cache.addAll(PRECACHE_URLS);
