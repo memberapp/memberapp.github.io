@@ -3,9 +3,6 @@ js/lib/bchdgrpc.js
 js/lib/snuownd.js
 js/scratch.js
 node_modules
-<<<<<<< HEAD
 scratch/*
 package-lock.json
 .idea
-=======
->>>>>>> hotfix/sw-repair
