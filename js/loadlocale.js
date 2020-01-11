@@ -22,10 +22,10 @@
     }
     // As the language is controlled by the users browser,
     // the input is restricted to a known set of possibilities
-    const src = Object.keys(allowedInput).includes(language) ? language : 'en';
+    const src = allowedInput.includes(language) ? language : 'en';
 
     if (location.protocol === 'https:' || location.protocol === 'http:') {
-        console.log('loading: ' + './locale/' + src + '.json');
+        console.log('[Localization] loading: ' + './locale/' + src + '.json');
         let script = document.createElement('script');
         script.setAttribute('type', 'application/json');
         script.setAttribute('src', './locale/' + src + '.json');
