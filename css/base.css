@@ -606,7 +606,7 @@ footer {
     display: inline;
     margin-top: 5px;
     margin-bottom: 5px;
-    height: 300px;
+    max-height: 300px;
     max-width: 100%;
     vertical-align: top;
     align-content: center;
@@ -614,11 +614,13 @@ footer {
   @media only screen and (max-width: 860px) {
     .youtubepreviewimage {
       width: 100%;
+      max-height: 270px;
       vertical-align: top;
     }
     .youtubepreview {
       position: relative;
       width: 100%;
+      max-height: 270px;
       margin-top: 5px;
       margin-bottom: 5px;
     }
@@ -645,10 +647,10 @@ footer {
     }
     .youtubepreview {
       position: relative;
-      width: 480px;
       margin-top: 5px;
       margin-bottom: 5px;
       height: 270px;
+      width: 480px;
     }
     .youtubeiframe {
       display: inline;
@@ -859,8 +861,12 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
 
 /*Topic List*/
 
-.tlmessagecount, .tlsubscount, .tlagecount, .tlaction {
+.tlmessagecount, .tlsubscount, .tlagecount {
   text-align: right;
+}
+
+.tlaction {
+  text-align: left;
 }
 
 .tltopicname {
