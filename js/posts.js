@@ -159,17 +159,23 @@ function getAndPopulateTopicList(showpage) {
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
     getJSON(dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey).then(function (data) {
 
+        var selectboxIndex=5;
         var selectbox = document.getElementById('topicselector');
-        while (selectbox.options[6]) {
-            selectbox.remove(6)
+        while (selectbox.options[selectboxIndex]) {
+            selectbox.remove(selectboxIndex)
         }
 
+        
+        var lastValue="";
         for (var i = 0; i < 40; i++) {
             var option = document.createElement("option");
             //Caution, topicname can contain anything
             option.text = capitalizeFirstLetter(data[i].topicname.substr(0, 13));
             option.value = data[i].topicname;
-            selectbox.add(option, [i + 6]);
+            if(option.value==lastValue) continue;
+            lastValue=option.value;
+            selectbox.add(option, [selectboxIndex]);
+            selectboxIndex++;
         }
 
         var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr>";
@@ -505,7 +511,7 @@ function showTipBox(txid) {
 }
 
 function showMore(show, hide) {
-    document.getElementById(show).style.display = "inline";
+    document.getElementById(show).style.display = "contents";
     document.getElementById(hide).style.display = "none";
     return true;
 }
