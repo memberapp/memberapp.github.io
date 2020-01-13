@@ -123,17 +123,17 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
 
         if (data.length < 1 || Number(data[0].isfollowing) == 0) {
-            document.getElementById(pre + 'follow').innerHTML = clickActionHTML("follow", qaddress);
+            document.getElementById(pre + 'follow').innerHTML = clickActionNamedHTML("follow", qaddress, "follow");
         } else {
-            document.getElementById(pre + 'follow').innerHTML = clickActionHTML("unfollow", qaddress);
+            document.getElementById(pre + 'follow').innerHTML = clickActionNamedHTML("unfollow", qaddress, "unfollow");
         }
 
         //document.getElementById(pre + 'ratings').innerHTML = `<a href='#ratings?qaddress=` + qaddress + `' onclick='showRatings(` + escaped + `);'>Show Ratings</a>`;
 
         if (data.length < 1 || Number(data[0].isblocked) == 0) {
-            document.getElementById(pre + 'block').innerHTML = clickActionHTML("mute", qaddress);
+            document.getElementById(pre + 'block').innerHTML = clickActionNamedHTML("mute", qaddress, "mute");
         } else {
-            document.getElementById(pre + 'block').innerHTML = clickActionHTML("unmute", qaddress);
+            document.getElementById(pre + 'block').innerHTML = clickActionNamedHTML("unmute", qaddress, "unmute");
         }
 
         //This condition checks that the user being viewed is not the logged in user
@@ -199,7 +199,7 @@ function getAndPopulateSettings() {
     //These may already be switched to qrcodes, so try/catch necessary
     try { document.getElementById('legacyformat').innerHTML = pubkey; } catch (err) { }
     try { document.getElementById('cashaddrformat').innerHTML = qpubkey; } catch (err) { }
-    try { document.getElementById('privatekeydisplay').innerHTML = (mnemonic==""?"":"Seed Phrase: "+mnemonic+"<br/>")+"Compressed Private Key: "+privkey; } catch (err) { }
+    try { document.getElementById('privatekeydisplay').innerHTML = (mnemonic == "" ? "" : "Seed Phrase: " + mnemonic + "<br/>") + "Compressed Private Key: " + privkey; } catch (err) { }
     try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
 
     var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");
@@ -210,12 +210,12 @@ function getAndPopulateSettings() {
 
     //numbers
     for (var key in numbers) {
-        if(key=='defaulttip') continue;
+        if (key == 'defaulttip') continue;
         var theSetting = localStorageGet(localStorageSafe, key);
         if (theSetting != undefined && theSetting != null) {
             document.getElementById(key).value = theSetting;
-            numbers[key]=theSetting;
-        }else{
+            numbers[key] = theSetting;
+        } else {
             document.getElementById(key).value = numbers[key];
         }
     }
@@ -226,7 +226,7 @@ function getAndPopulateSettings() {
 
         if (theSetting != undefined && theSetting != null) {
             document.getElementById(key).checked = Boolean(theSetting == "true");
-            settings[key]=theSetting;
+            settings[key] = theSetting;
         } else {
             document.getElementById(key).checked = Boolean(settings[key] == "true");
         }
@@ -235,8 +235,8 @@ function getAndPopulateSettings() {
     //Select boxes
     for (var key in dropdowns) {
         var theSetting = localStorageGet(localStorageSafe, key);
-        if(theSetting!=null){
-            dropdowns[key]=theSetting;
+        if (theSetting != null) {
+            dropdowns[key] = theSetting;
         }
         var selector = document.getElementById(key);
 
@@ -266,19 +266,19 @@ function updateSettingsDropdown(settingsName) {
 
 function updateSettingsNumber(settingsName) {
     numbers[settingsName] = Number(document.getElementById(settingsName).value);
-    
-    //No numbers are less than 2 except oneclicktip, which will be reset below
-    if(numbers[settingsName]<2){
-        numbers[settingsName]=2;
-    }
 
-    if (settingsName=="results" && numbers[settingsName] > 100) {
-        numbers[settingsName] = 100;
-    }
-    if (settingsName=="maxfee" && numbers[settingsName] < 2) {
+    //No numbers are less than 2 except oneclicktip, which will be reset below
+    if (numbers[settingsName] < 2) {
         numbers[settingsName] = 2;
     }
-    if (settingsName=="oneclicktip" && numbers[settingsName] < 547) {
+
+    if (settingsName == "results" && numbers[settingsName] > 100) {
+        numbers[settingsName] = 100;
+    }
+    if (settingsName == "maxfee" && numbers[settingsName] < 2) {
+        numbers[settingsName] = 2;
+    }
+    if (settingsName == "oneclicktip" && numbers[settingsName] < 547) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
@@ -291,7 +291,7 @@ function showQRCode(spanid) {
     //document.getElementById('qrclicktoshow').style.display='none';
 }
 
-function toggleNotifications(){
+function toggleNotifications() {
     navigator.serviceWorker.ready.then(function (registration) {
         if (!registration.pushManager) {
             alert('No push notifications support.');
