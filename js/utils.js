@@ -223,7 +223,9 @@ function localStorageSet(theSO, itemName, theString) {
   }
 }
 
+
 var usdrate = 266.75;
+
 function balanceString(total, includeSymbol) {
   if (dropdowns.currencydisplay == "BCH") {
     var balString = (Number(total) / 1000).toFixed(3);

@@ -22,8 +22,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--  Progressive Web App Service Worker -->
-    <script src="pwa/pwa.js?version=3.5.2"></script>
-    <link rel="manifest" href="pwa/manifest.json">
+    <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
+    <script src="pwa/pwa.js"></script>
 
     <!-- Large Script Files -->
     <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
@@ -34,6 +34,7 @@
     <link rel="preconnect" href="https://twitframe.com">
 
     <!--  Progressive Web App -->
+    <meta name="msapplication-config" content="pwa/browserconfig.xml" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Member">
@@ -47,6 +48,8 @@
     <link rel="preload" href="img/loading.gif" as="image">
 
     <!--  Load Translations -->
+
+    <script src="locale/en.json" type="application/json" data-vavilon-dict="en"></script>
     <script src="js/loadlocale.js"></script>
     <link rel="preload" href="js/lib/vavilon.min.js" as="script">
 
@@ -57,7 +60,7 @@
     <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
     <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
 
-    <link id="pagestyle" rel="stylesheet" href="css/base.css?version=3.5.2">
+    <link id="pagestyle" rel="stylesheet" href="css/base.css">
     <link id="pagestyle2" rel="stylesheet" href="css/none.css">
     <link id="pagestyle3" rel="stylesheet" href="css/none.css">
     <link id="addonstyle" rel="stylesheet" href="">
@@ -86,7 +89,7 @@
     <script src="js/lib/vavilon.min.js"></script>
 
     <!--  Member Minified Code. -->
-    <script src="js/lib/member.min.js?version=3.5.2"></script>
+    <script src="js/lib/member.min.js"></script>
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
 
@@ -773,7 +776,7 @@
                     <span class="separatorwide"></span>
                     <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
                     <span class="separatorwide"></span>
-                    <span class="vavilon" data-vavilon="version">version</span> 3.5.3.<u>9</u>
+                    <span class="vavilon" data-vavilon="version">version</span> <span id="version" >3.5.3.<u>9</u></span>
                 </span>
                 <br />
                 <br />

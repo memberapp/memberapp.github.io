@@ -60,7 +60,7 @@ function init() {
     //check local app storage for key
 
     //Show message if dev version in use
-    if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
+    if (document.location.host != 'memberapp.github.io') {
         document.getElementById('developmentversion').style.display = 'block';
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
@@ -78,6 +78,17 @@ function init() {
         return;
     }
     displayContentBasedOnURLParameters();
+}
+
+function getAndSetVersion(){
+    fetch('/version')
+    .then(function(response){
+        return response.text()
+    }).then(function(version){
+        console.log("member" + version);
+        let ver_split = version.lastIndexOf('.');
+        document.getElementById('version').innerHTML = version.substring(0, ver_split) + ".<u>" +version.substring(ver_split+1) +"</u>";
+    });
 }
 
 function trylogin(loginkey) {
