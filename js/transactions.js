@@ -43,11 +43,11 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
         cash: { key: privkey }
     }
 
-    if(topic!=""){
+    if (topic != "") {
         tx = {
             data: ["0x6d0c", topic, posttext],
             cash: { key: privkey }
-        }   
+        }
     }
 
     const replyHex = new Buffer(postbody).toString('hex');
@@ -57,59 +57,59 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
 
 
 function postRaw(posttext, privkey, topic, newpoststatus, memocompleted) {
-    
+
     var tx = {
         data: ["0x6d02", posttext],
         cash: { key: privkey }
     }
 
-    if(topic!=""){
+    if (topic != "") {
         tx = {
             data: ["0x6d0c", topic, posttext],
             cash: { key: privkey }
-        }   
+        }
     }
 
     tq.queueTransaction(tx, memocompleted, null);
 }
 
-function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted){
-    
+function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) {
+
     const tx = {
         data: ["0x6da8", geohash, posttext],
         cash: { key: privkey }
     }
     updateStatus("Sending Geotagged Post");
-    tq.queueTransaction(tx,geocompleted,null);
+    tq.queueTransaction(tx, geocompleted, null);
 }
 
 
 
 async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {
 
-    document.getElementById(divForStatus).value = "Sending Reply . . . " + replyHex.length/2 + " bytes remaining.";
+    document.getElementById(divForStatus).value = "Sending Reply . . . " + replyHex.length / 2 + " bytes remaining.";
 
     var sendHex = "";
     if (replyHex.length > 368) {
         //Search for whitespace - try to break at a whitespace
-        var whitespaceIndex=348;
-        var spaceIndex=replyHex.lastIndexOf("20",368);
-        if(spaceIndex%2==0 && spaceIndex>whitespaceIndex){
-            whitespaceIndex=spaceIndex;
+        var whitespaceIndex = 348;
+        var spaceIndex = replyHex.lastIndexOf("20", 368);
+        if (spaceIndex % 2 == 0 && spaceIndex > whitespaceIndex) {
+            whitespaceIndex = spaceIndex;
         }
-        var nlIndex=replyHex.lastIndexOf("0A",368);
-        if(nlIndex%2==0 && nlIndex>whitespaceIndex){
-            whitespaceIndex=nlIndex;
+        var nlIndex = replyHex.lastIndexOf("0A", 368);
+        if (nlIndex % 2 == 0 && nlIndex > whitespaceIndex) {
+            whitespaceIndex = nlIndex;
         }
-        var crIndex=replyHex.lastIndexOf("0D",368);
-        if(crIndex%2==0 && crIndex>whitespaceIndex){
-            whitespaceIndex=crIndex;
+        var crIndex = replyHex.lastIndexOf("0D", 368);
+        if (crIndex % 2 == 0 && crIndex > whitespaceIndex) {
+            whitespaceIndex = crIndex;
         }
 
-        if(whitespaceIndex>348){
+        if (whitespaceIndex > 348) {
             sendHex = replyHex.substring(0, whitespaceIndex);
             replyHex = replyHex.substring(whitespaceIndex);
-        }else{
+        } else {
             sendHex = replyHex.substring(0, 368);
             replyHex = replyHex.substring(368);
         }
@@ -185,12 +185,12 @@ function setProfile() {
 
 
 function sub(topicHOSTILE) {
-    
+
     if (!checkForPrivKey()) return false;
 
     //Remove the clicked element so it can't be clicked again
-    event.srcElement.style.display="none";
-    
+    event.srcElement.style.display = "none";
+
     const tx = {
         data: ["0x6d0d", topicHOSTILE],
         cash: { key: privkey }
@@ -203,8 +203,8 @@ function unsub(topicHOSTILE) {
     if (!checkForPrivKey()) return false;
 
     //Remove the clicked element so it can't be clicked again
-    event.srcElement.style.display="none";
-    
+    event.srcElement.style.display = "none";
+
     const tx = {
         data: ["0x6d0e", topicHOSTILE],
         cash: { key: privkey }
@@ -213,7 +213,7 @@ function unsub(topicHOSTILE) {
     tq.queueTransaction(tx);
 }
 
-function addressTransaction(removeElementID,qaddress,actionCode,statusMessage){
+function addressTransaction(removeElementID, qaddress, actionCode, statusMessage) {
     if (!checkForPrivKey()) return false;
 
     document.getElementById(removeElementID).style.display = "none";
@@ -227,31 +227,44 @@ function addressTransaction(removeElementID,qaddress,actionCode,statusMessage){
 }
 
 function follow(qaddress) {
-    addressTransaction('memberfollow',qaddress,"0x6d06","Sending Follow");
+    addressTransaction('memberfollow', qaddress, "0x6d06", "Sending Follow");
 }
 
 function unfollow(qaddress) {
-    addressTransaction('memberfollow',qaddress,"0x6d07","Sending Unfollow");
+    addressTransaction('memberfollow', qaddress, "0x6d07", "Sending Unfollow");
 }
 
 function mute(qaddress) {
-    addressTransaction('memberblock',qaddress,"0x6d16","Sending Mute");
+    addressTransaction('memberblock', qaddress, "0x6d16", "Sending Mute");
 }
 
 function unmute(qaddress) {
-    addressTransaction('memberblock',qaddress,"0x6d17","Sending Unmute");
+    addressTransaction('memberblock', qaddress, "0x6d17", "Sending Unmute");
 }
 
 function sendDislike(txid) {
+    txidTransaction(txid, "0x6db4", "Sending Dislike");
+}
+
+function sendHidePost(txid) {
+    txidTransaction(txid, "0x6dc5", "Sending Hide Post");
+}
+
+function sendSendUnhidePost(txid) {
+    txidTransaction(txid, "0x6dc6", "Sending Unhide Post");
+}
+
+function txidTransaction(txid, actionCode, statusMessage) {
     if (!checkForPrivKey()) return false;
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
-        data: ["0x6db4", "0x" + reversetx],
+        data: [actionCode, "0x" + reversetx],
         cash: { key: privkey }
     }
-    updateStatus("Sending Dislike");
+    updateStatus(statusMessage);
     tq.queueTransaction(tx);
+
 }
 
 function rateUser(qaddress, rating, ratingcomment) {
@@ -270,5 +283,35 @@ function rateUser(qaddress, rating, ratingcomment) {
     updateStatus("Sending Rating");
     tq.queueTransaction(tx);
     return true;
+}
+
+function designate(qaddress, topicHOSTILE, elementid) {
+    addressTopicTransaction(elementid, qaddress, '0x6dc1', "Sending Designate Moderator", topicHOSTILE);
+}
+
+function dismiss(qaddress, topicHOSTILE, elementid) {
+    addressTopicTransaction(elementid, qaddress, '0x6dc2', "Sending Dismiss Moderator", topicHOSTILE);
+}
+
+function hideuser(qaddress, topicHOSTILE, elementid) {
+    addressTopicTransaction(elementid, qaddress, '0x6dc3', "Sending Hide Member", topicHOSTILE);
+}
+
+function unhideuser(qaddress, topicHOSTILE, elementid) {
+    addressTopicTransaction(elementid, qaddress, '0x6dc4', "Sending Unhide Member", topicHOSTILE);
+}
+
+
+function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMessage, topicHOSTILE) {
+    if (!checkForPrivKey()) return false;
+
+    document.getElementById(removeElementID).style.display = "none";
+    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
+    const tx = {
+        data: [actionCode, "0x" + addressraw, topicHOSTILE],
+        cash: { key: privkey }
+    }
+    updateStatus(statusMessage);
+    tq.queueTransaction(tx);
 }
 
