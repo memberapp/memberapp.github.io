@@ -56,6 +56,7 @@ window.onbeforeunload = function () {
 };
 
 function init() {
+    getLatestUSDrate();
     setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
 
