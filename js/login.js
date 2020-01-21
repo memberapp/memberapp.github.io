@@ -1,6 +1,10 @@
 
 "use strict";
 
+//Preferable to grab this from sw.js, but don't know how.
+//So must be entered in two places
+var version="3.5.6";
+
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
@@ -56,11 +60,13 @@ window.onbeforeunload = function () {
 };
 
 function init() {
+    document.getElementById('version').innerHTML=version;
+    getLatestUSDrate();
     setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
 
     //Show message if dev version in use
-    if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
+    if (document.location.host != 'memberapp.github.io') {
         document.getElementById('developmentversion').style.display = 'block';
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
@@ -78,6 +84,18 @@ function init() {
         return;
     }
     displayContentBasedOnURLParameters();
+}
+
+//This method doesn't appear to be in use, also doesn't seem to work
+function getAndSetVersion(){
+    fetch('/version')
+    .then(function(response){
+        return response.text()
+    }).then(function(version){
+        console.log("member" + version);
+        let ver_split = version.lastIndexOf('.');
+        document.getElementById('version').innerHTML = version.substring(0, ver_split) + ".<u>" +version.substring(ver_split+1) +"</u>";
+    });
 }
 
 function trylogin(loginkey) {

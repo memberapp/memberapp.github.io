@@ -65,6 +65,7 @@ function getAndPopulateRatings(qaddress) {
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
+
     getJSON(dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
 
 
@@ -214,7 +215,7 @@ function getAndPopulateSettings() {
         var theSetting = localStorageGet(localStorageSafe, key);
         if (theSetting != undefined && theSetting != null) {
             document.getElementById(key).value = theSetting;
-            numbers[key] = theSetting;
+            numbers[key] = Number(theSetting);
         } else {
             document.getElementById(key).value = numbers[key];
         }
@@ -291,24 +292,7 @@ function showQRCode(spanid) {
     //document.getElementById('qrclicktoshow').style.display='none';
 }
 
-function toggleNotifications() {
-    navigator.serviceWorker.ready.then(function (registration) {
-        if (!registration.pushManager) {
-            alert('No push notifications support.');
-            return false;
-        }
-        //To subscribe `push notification` from push manager
-        registration.pushManager.subscribe({
-            userVisibleOnly: true //Always show notification when received
-        })
-            .then(function (subscription) {
-                console.log('Subscribed.');
-            })
-            .catch(function (error) {
-                console.log('Subscription error: ', error);
-            });
-    })
-}
+
 
 function rateCallbackAction(rating, that, ratingtext) {
     if (ratingtext === undefined) {

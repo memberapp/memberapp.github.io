@@ -112,8 +112,8 @@ function san(input) {
 }
 
 function sanitizeAlphanumeric(input) {
-  if (input===undefined || input == null) { return ""; }
-  input=input+"";
+  if (input === undefined || input == null) { return ""; }
+  input = input + "";
   return input.replace(/[^A-Za-z0-9]/g, '');
 }
 
@@ -223,22 +223,37 @@ function localStorageSet(theSO, itemName, theString) {
   }
 }
 
+
 var usdrate = 266.75;
+
+function getLatestUSDrate() {
+  getJSON(`https://api.coinmarketcap.com/v1/ticker/bitcoin-cash/`).then(function (data) {
+    usdrate = Number(data[0].price_usd);
+    updateStatus("Got updated exchange rate:" + usdrate);
+    try{
+      tq.updateBalance();
+    }catch(err){}
+  }, function (status) { //error detection....
+    console.log('Failed to get usd rate:' + status);
+    updateStatus(status);
+  });
+}
+
 function balanceString(total, includeSymbol) {
   if (dropdowns.currencydisplay == "BCH") {
     var balString = (Number(total) / 1000).toFixed(3);
     balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
-    if (includeSymbol){
+    if (includeSymbol) {
       return "₿" + balString;
-    }else{
+    } else {
       return balString + " sats ";
     }
   }
   var usd = ((Number(total) * usdrate) / 100000000).toFixed(2);
-  if(usd<1){
-    return (usd*100).toFixed(0)+"¢";
-  }else{
-    return "$"+usd;
+  if (usd < 1) {
+    return (usd * 100).toFixed(0) + "¢";
+  } else {
+    return "$" + usd;
   }
 }
 
