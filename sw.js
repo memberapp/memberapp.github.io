@@ -10,7 +10,10 @@ const PRECACHE_URLS = [
     'js/leaflet/leaflet.js',
     'locale/en.json'
 ];
-const version = '3.5.5.9';
+
+//If updating version here, also update version in login.js
+const version = '3.5.6';
+
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
 

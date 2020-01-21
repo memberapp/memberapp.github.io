@@ -215,7 +215,7 @@ function getAndPopulateSettings() {
         var theSetting = localStorageGet(localStorageSafe, key);
         if (theSetting != undefined && theSetting != null) {
             document.getElementById(key).value = theSetting;
-            numbers[key] = theSetting;
+            numbers[key] = Number(theSetting);
         } else {
             document.getElementById(key).value = numbers[key];
         }

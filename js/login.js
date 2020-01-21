@@ -1,6 +1,10 @@
 
 "use strict";
 
+//Preferable to grab this from sw.js, but don't know how.
+//So must be entered in two places
+var version="3.5.6";
+
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
@@ -56,6 +60,7 @@ window.onbeforeunload = function () {
 };
 
 function init() {
+    document.getElementById('version').innerHTML=version;
     getLatestUSDrate();
     setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
@@ -81,6 +86,7 @@ function init() {
     displayContentBasedOnURLParameters();
 }
 
+//This method doesn't appear to be in use, also doesn't seem to work
 function getAndSetVersion(){
     fetch('/version')
     .then(function(response){
