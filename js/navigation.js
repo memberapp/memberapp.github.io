@@ -65,6 +65,8 @@ function displayContentBasedOnURLParameters() {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
     } else if (action.startsWith("myfeed")) {
         showMyFeed();
+    } else if (action.startsWith("tools")) {
+        showTools();
     } else if (action.startsWith("login")) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
@@ -106,12 +108,16 @@ function hideAll() {
     document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
-
+    document.getElementById('toolsanchor').style.display = "none";
 }
 
 function show(theDiv) {
     hideAll();
     document.getElementById(theDiv).style.display = "block";
+}
+
+function showTools(){
+    show('toolsanchor');
 }
 
 function showLogin() {

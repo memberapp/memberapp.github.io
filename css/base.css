@@ -802,7 +802,7 @@ li.notificationpage::before {
 
 /*settings page*/
 
-#settingsanchor {
+#settingsanchor, #toolsanchor {
   font-size: small;
 }
 
