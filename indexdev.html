@@ -23,8 +23,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--  Progressive Web App Service Worker -->
-    <script src="pwa/pwa.js"></script>
     <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
+    <script src="pwa/pwa.js"></script>
 
     <!-- Large Script Files -->
     <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
@@ -49,8 +49,9 @@
     <link rel="preload" href="img/loading.gif" as="image">
 
     <!--  Load Translations -->
-    <script src="js/loadlocale.js"></script>
+
     <script src="locale/en.json" type="application/json" data-vavilon-dict="en"></script>
+    <script src="js/loadlocale.js"></script>
     <link rel="preload" href="js/lib/vavilon.min.js" as="script">
 
     <!--  Leaflet (Map) -->
@@ -88,6 +89,9 @@
     <!-- i18n internationalization https://github.com/vavilon-js/vavilon.js-->
     <script src="js/lib/vavilon.min.js"></script>
 
+    <!--  Member Minified Code. -->
+    <script src="js/lib/member.min.js"></script>
+
     <!--  Member Code. In separate files for development convenience -->
     <!--  Can be mininfied and amalgamated for releases -->
 
@@ -104,7 +108,7 @@
     <script src="js/login.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/htmlquarantine.js"></script>
-
+    <script src="js/tools.js"></script>
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
 
@@ -116,12 +120,10 @@
             <div class="pagetop">
                 <nav>
                     <span class="memberlogo">
-                        <span class="memberlogoimagebacking">
                         <a href="./index.html" aria-label="Refresh">
-                            <img class="memberlogoimage" src="img/membericon.svg" width="31" height="31"
+                            <img class="memberlogoimage" src="img/membericon.svg" width="26" height="26"
                                 alt="Member Logo" />
                         </a>
-                      </span>
                     </span>
                     <span class="membertext">
                         <a href="./index.html" aria-label="Member Home">
@@ -134,13 +136,14 @@
                                 class="balancedetails"><span id="balance">0</span></span>
                             <a id="myfeedbutton" title="My Feed (Latest posts from your topics or peeps)" class="btn"
                                 href="#myfeed" onclick="showMyFeed();">📰</a>
-                            <a id="notificationsbutton" title="Notifications" class="btn"
-                                href="#notifications?start=0"
-                                onclick="showNotifications(0,numbers.results,'notifications');">🔔<span class="alertcount" id="alertcount"></span></a>
+                            <a id="notificationsbutton" title="Notifications" class="btn" href="#notifications?start=0"
+                                onclick="showNotifications(0,numbers.results,'notifications');">🔔<span
+                                    class="alertcount" id="alertcount"></span></a>
                             <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
                                 onclick="showNewPost();">📝</a>
                             <a id="settingsbutton" title="Settings" class="btn" href="#settings"
                                 onclick="showSettings();">⚙️</a>
+                            <a id="toolsbutton" title="Tools" class="btn" href="#tools" onclick="showTools();">🛠️</a>
                         </span>
                     </span>
                     <span class="headerbuttons">
@@ -204,6 +207,24 @@
             </div>
         </header>
         <div class="mainbody">
+            <div id="toolsanchor" class="applicationpage" style="display: none;">
+                <br />
+                <div id="usersearchcontainer">
+                    <label for="usersearch">User Search</label>
+                    <input class="usersearch" id="usersearch" maxlength="217" onchange="userSearchChanged();"
+                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                    <br />
+                    <label for="usersearchresults">Results</label>
+                    <div id="usersearchresults"></div>
+                </div>
+                <div id="surrogatecontainer" style="display: none;">
+                    <p>If a person, organization, country, planet, galaxy etc is not on Member yet, but you want to make
+                        a reputational rating, you can create a Surrogate Member account. '(Surrogate)' will follow the
+                        handle to indicate the account is not claiming the identity, just acting as a receptacle for
+                        reputational information.
+                    </p>
+                </div>
+            </div>
             <div id="newpost" class="applicationpage newpost" style="display: none;">
                 <br />
                 <div class="memoarea" id="memoarea">
@@ -260,8 +281,12 @@
                     </div>
                     <br />
                     <label for="memorandumpreview">Memorandum Preview
-                        <a href='javascript:switchToArticleMode();'><div id="switchToArticleMode" class="switchToArticleMode">(Switch to Article Mode)</a></div>
-                        <a href='javascript:switchToRegularMode();'><div id="switchToRegularMode" class="switchToRegularMode">(Switch to Regular Mode)</a></div>
+                        <a href='javascript:switchToArticleMode();'>
+                            <div id="switchToArticleMode" class="switchToArticleMode">(Switch to Article Mode)</div>
+                        </a>
+                        <a href='javascript:switchToRegularMode();'>
+                            <div id="switchToRegularMode" class="switchToRegularMode">(Switch to Regular Mode)</div>
+                        </a>
                     </label>
                     <div id="memorandumpreview" class="fatitem">
                     </div>
@@ -756,7 +781,8 @@
                 <a href="https://memo.cash/key/export">Click here to get yours</a>.
                 (Member is SLP546 aware and will not alter your SLP tokens)
                 <br />
-                <br /><span class="vavilon" data-vavilon="private key">Seed Phrase / Private Key</span> (Compressed WIF format, starts
+                <br /><span class="vavilon" data-vavilon="private key">Seed Phrase / Private Key</span> (Compressed WIF
+                format, starts
                 with 'L...' or 'K...')
                 <br />
                 <input size="64" id="loginkey">
@@ -776,7 +802,8 @@
             <footer>
                 <hr />
                 <span id="developmentversion" style="display: none;">You're viewing the development preview version of
-                    Member. You may need to SHIFT + Reload to get the very latest changes. Generally, It's recommend to <a href="https://memberapp.github.io">use the stable version at
+                    Member. You may need to SHIFT + Reload to get the very latest changes. Generally, It's recommend to
+                    <a href="https://memberapp.github.io">use the stable version at
                         https://memberapp.github.io</a><br /><br />
                     <hr /></span>
                 <span class="footerlinks">
@@ -793,7 +820,8 @@
                     <span class="separatorwide"></span>
                     <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
                     <span class="separatorwide"></span>
-                    <span class="vavilon" data-vavilon="version">version</span> <span id="version" >loading</span>.<u>9</u>
+                    <span class="vavilon" data-vavilon="version">version</span> <span
+                        id="version">loading</span>.<u>9</u>
                 </span>
                 <br />
                 <br />
