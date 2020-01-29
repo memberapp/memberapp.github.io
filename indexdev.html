@@ -210,7 +210,7 @@
             <div id="toolsanchor" class="applicationpage" style="display: none;">
                 <br />
                 <div id="usersearchcontainer">
-                    <label for="usersearch">User Search</label>
+                    <label for="usersearch">Member Search</label>
                     <input class="usersearch" id="usersearch" maxlength="217" onchange="userSearchChanged();"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     <br />
@@ -555,6 +555,7 @@
                     (Max results to show per page. Maximum 100)
                 </div>
                 <div>
+                    <input id="usdrate" type="number">
                     <label for="currencydisplay" data-vavilon="Currency Display">Currency Display</label>
                     <select id="currencydisplay" onchange='updateSettingsDropdown("currencydisplay");'>
                         <option value="USD">USD</option>

@@ -224,12 +224,13 @@ function localStorageSet(theSO, itemName, theString) {
 }
 
 
-var usdrate = 266.75;
+//var usdrate = 266.75;
 
 function getLatestUSDrate() {
   getJSON(`https://api.coinmarketcap.com/v1/ticker/bitcoin-cash/`).then(function (data) {
-    usdrate = Number(data[0].price_usd);
-    updateStatus("Got updated exchange rate:" + usdrate);
+    document.getElementById("usdrate").value = Number(data[0].price_usd);
+    updateSettingsNumber('usdrate');
+    updateStatus("Got updated exchange rate:" + numbers.usdrate);
     try{
       tq.updateBalance();
     }catch(err){}
@@ -240,7 +241,7 @@ function getLatestUSDrate() {
 }
 
 function balanceString(total, includeSymbol) {
-  if (dropdowns.currencydisplay == "BCH") {
+  if (dropdowns.currencydisplay == "BCH" || numbers.usdrate==undefined) {
     var balString = (Number(total) / 1000).toFixed(3);
     balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
     if (includeSymbol) {
@@ -249,7 +250,7 @@ function balanceString(total, includeSymbol) {
       return balString + " sats ";
     }
   }
-  var usd = ((Number(total) * usdrate) / 100000000).toFixed(2);
+  var usd = ((Number(total) * numbers.usdrate) / 100000000).toFixed(2);
   if (usd < 1) {
     return (usd * 100).toFixed(0) + "¢";
   } else {
