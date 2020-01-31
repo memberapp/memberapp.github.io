@@ -170,6 +170,8 @@ function getAndPopulateTopicList(showpage) {
         for (var i = 0; i < 40; i++) {
             var option = document.createElement("option");
             //Caution, topicname can contain anything
+            if(data[i].topicname==null) continue;
+
             option.text = capitalizeFirstLetter(data[i].topicname.substr(0, 13));
             option.value = data[i].topicname;
             if (option.value == lastValue) continue;
@@ -180,16 +182,29 @@ function getAndPopulateTopicList(showpage) {
 
         var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr>";
 
+        //group data rows by moderater before displaying
         var modsArray = [];
         for (var i = 0; i < data.length; i++) {
             if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
                 modsArray.push(data[i]);
             } else {
-                contents += getHTMLForTopicArray(modsArray);
+                contents += getHTMLForTopicArray(modsArray,true);
                 modsArray = [];
                 modsArray.push(data[i]);
             }
         }
+
+        var modsArray = [];
+        for (var i = 0; i < data.length; i++) {
+            if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
+                modsArray.push(data[i]);
+            } else {
+                contents += getHTMLForTopicArray(modsArray,false);
+                modsArray = [];
+                modsArray.push(data[i]);
+            }
+        }
+
         contents += "</table>";
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);

@@ -286,11 +286,11 @@ function rateUser(qaddress, rating, ratingcomment) {
 }
 
 function designate(qaddress, topicHOSTILE, elementid) {
-    addressTopicTransaction(elementid, qaddress, '0x6dc1', "Sending Designate Moderator", topicHOSTILE);
+    addressTopicTransaction(elementid, qaddress, '0x6dc1', "Sending Add Filter", topicHOSTILE);
 }
 
 function dismiss(qaddress, topicHOSTILE, elementid) {
-    addressTopicTransaction(elementid, qaddress, '0x6dc2', "Sending Dismiss Moderator", topicHOSTILE);
+    addressTopicTransaction(elementid, qaddress, '0x6dc2', "Sending Remove Filter", topicHOSTILE);
 }
 
 function hideuser(qaddress, topicHOSTILE, elementid) {

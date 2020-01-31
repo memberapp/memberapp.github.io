@@ -241,7 +241,7 @@ function getLatestUSDrate() {
 }
 
 function balanceString(total, includeSymbol) {
-  if (dropdowns.currencydisplay == "BCH" || numbers.usdrate==undefined) {
+  if (dropdowns.currencydisplay == "BCH" || numbers.usdrate===undefined|| numbers.usdrate===0) {
     var balString = (Number(total) / 1000).toFixed(3);
     balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
     if (includeSymbol) {
