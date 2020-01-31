@@ -497,11 +497,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     return contents;
 }
 
-function getHTMLForTopicArray(data,showSubs) {
-
-    var isSubscribed=(data[0].address != null || data[0].topicname[0]=="");
-    if(showSubs!=isSubscribed) return "";
-
+function getHTMLForTopicArray(data) {
 
     var ret = getHTMLForTopic(data[0]);
 

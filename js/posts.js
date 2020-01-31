@@ -188,22 +188,12 @@ function getAndPopulateTopicList(showpage) {
             if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
                 modsArray.push(data[i]);
             } else {
-                contents += getHTMLForTopicArray(modsArray,true);
+                contents += getHTMLForTopicArray(modsArray);
                 modsArray = [];
                 modsArray.push(data[i]);
             }
         }
 
-        var modsArray = [];
-        for (var i = 0; i < data.length; i++) {
-            if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
-                modsArray.push(data[i]);
-            } else {
-                contents += getHTMLForTopicArray(modsArray,false);
-                modsArray = [];
-                modsArray.push(data[i]);
-            }
-        }
 
         contents += "</table>";
         //Threads have no navbuttons
