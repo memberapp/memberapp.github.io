@@ -249,6 +249,9 @@ function getAndPopulateSettings() {
         }
     }
 
+    //Should have the usdrate populated now
+    getLatestUSDrate();
+    
     getDataCommonToSettingsAndMember(pubkey, "settings");
 
 

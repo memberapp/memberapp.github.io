@@ -159,37 +159,52 @@ function getAndPopulateTopicList(showpage) {
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
     getJSON(dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey).then(function (data) {
 
-        var selectboxIndex=5;
+        var selectboxIndex = 5;
         var selectbox = document.getElementById('topicselector');
         while (selectbox.options[selectboxIndex]) {
             selectbox.remove(selectboxIndex)
         }
 
-        
-        var lastValue="";
+
+        var lastValue = "";
         for (var i = 0; i < 40; i++) {
             var option = document.createElement("option");
             //Caution, topicname can contain anything
+            if(data[i].topicname==null) continue;
+
             option.text = capitalizeFirstLetter(data[i].topicname.substr(0, 13));
             option.value = data[i].topicname;
-            if(option.value==lastValue) continue;
-            lastValue=option.value;
+            if (option.value == lastValue) continue;
+            lastValue = option.value;
             selectbox.add(option, [selectboxIndex]);
             selectboxIndex++;
         }
 
         var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr>";
 
+        //group data rows by moderater before displaying
         var modsArray = [];
         for (var i = 0; i < data.length; i++) {
             if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
                 modsArray.push(data[i]);
             } else {
-                contents += getHTMLForTopicArray(modsArray);
+                contents += getHTMLForTopicArray(modsArray,true);
                 modsArray = [];
                 modsArray.push(data[i]);
             }
         }
+
+        var modsArray = [];
+        for (var i = 0; i < data.length; i++) {
+            if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
+                modsArray.push(data[i]);
+            } else {
+                contents += getHTMLForTopicArray(modsArray,false);
+                modsArray = [];
+                modsArray.push(data[i]);
+            }
+        }
+
         contents += "</table>";
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
@@ -295,23 +310,25 @@ function addSingleStarsRating(disable, theElement) {
 var simplemde;
 
 function initMarkdownEditor() {
-    simplemde = new SimpleMDE({
-        element: document.getElementById("newposttamemorandum"),
-        autoDownloadFontAwesome: false,
-        autosave: {
-            enabled: true,
-            uniqueId: "MyUniqueID",
-            delay: 10000,
-        },
-        forceSync: true,
-        promptURLs: true,
-        spellChecker: false,
-        showIcons: ["code", "table", "strikethrough", "heading-1", "heading-2", "heading-3", "quote"],
-        hideIcons: ["preview", "side-by-side", "fullscreen", "guide", "heading"]
-    });
-    simplemde.codemirror.on("change", function () {
-        memorandumPreview();
-    });
+    if (simplemde == null) {
+        simplemde = new SimpleMDE({
+            element: document.getElementById("newposttamemorandum"),
+            autoDownloadFontAwesome: false,
+            autosave: {
+                enabled: true,
+                uniqueId: "MyUniqueID",
+                delay: 10000,
+            },
+            forceSync: true,
+            promptURLs: true,
+            spellChecker: false,
+            showIcons: ["code", "table", "strikethrough", "heading-1", "heading-2", "heading-3", "quote"],
+            hideIcons: ["preview", "side-by-side", "fullscreen", "guide", "heading"]
+        });
+        simplemde.codemirror.on("change", function () {
+            memorandumPreview();
+        });
+    }
     memorandumPreview();
 
 }

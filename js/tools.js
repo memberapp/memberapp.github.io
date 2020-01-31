@@ -32,7 +32,7 @@ async function userSearchChanged(){
 
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
+        document.getElementById('usersearch').innerHTML = 'Something is wrong:' + status;
         updateStatus(status);
     });
 

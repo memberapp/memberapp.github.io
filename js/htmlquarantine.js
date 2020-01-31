@@ -138,7 +138,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         <a  id="moderatelink`+ page + santxid + `" onclick="showMore('moderate` + page + santxid + `','moderatelink` + page + santxid + `');" href="javascript:;">+moderate</a>
         <span id="moderate`+ page + santxid + `" style="display:none">
             <a id="hidepostlink`+ page + santxid + `" onclick="sendHidePost('` + santxid + `');" href="javascript:;">hide(post)</a>`
-            + hideuserHTML +
+        + hideuserHTML +
         `</span>
 
         <span id="tipbox`+ page + santxid + `" style="display:none">
@@ -156,9 +156,15 @@ function getAgeHTML(firstseen, compress) {
     return `<span class="age">` + timeSince(Number(firstseen), compress) + `</span>`;
 }
 
-function getTopicHTML(topic, append) {
+function getTopicHTML(topicHOSTILE, append) {
+    //If the topic is All Topics, keep that as the display name, but use the empty string for server
+    var displayNameHOSTILE=topicHOSTILE;
+    if(topicHOSTILE==''){
+        if(append!='') return '';
+        displayNameHOSTILE='All Topics';
+    }
     return ` <span class="topic">` +
-        (topic == '' ? "" : `<a href="#topic?topicname=` + encodeURIComponent(topic) + `&start=0&limit=` + numbers.results + `&order=new" onclick="showTopic(0,numbers.results,'` + unicodeEscape(topic) + `','new')">` + append + capitalizeFirstLetter(ds(topic).substr(0, 40)) + `</a> `)
+        `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new" onclick="showTopic(0,numbers.results,'` + unicodeEscape(topicHOSTILE) + `','new')">` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
         + `</span>`;
 }
 
@@ -491,14 +497,21 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     return contents;
 }
 
-function getHTMLForTopicArray(data) {
+function getHTMLForTopicArray(data,showSubs) {
+
+    var isSubscribed=(data[0].address != null || data[0].topicname[0]=="");
+    if(showSubs!=isSubscribed) return "";
+
+
     var ret = getHTMLForTopic(data[0]);
 
     //This line so the alternate coloring on table rows still works
     ret += "<tr style='display:none'></tr>";
-    ret += `<tr style='display:none' id='modmore` + data[0].mostrecent + `'><td colspan='4'>`;
-    ret += clickActionNamedHTML("unsub", data.topicname, "Unsubscribe") + "<br/>";
 
+    ret += `<tr style='display:none' id='modmore` + data[0].mostrecent + `'><td colspan='4'>`;
+    if(data[0].topic!=""){
+        ret += clickActionNamedHTML("unsub", data.topicname, "Unsubscribe") + "<br/>";
+    }
     var alreadymod = false;
     for (var i = 0; i < data.length; i++) {
         if (data[i].existingmod == pubkey) {
@@ -514,9 +527,9 @@ function getHTMLForTopicArray(data) {
         if (data[i].existingmod == pubkey) continue;
         if (data[i].existingmod != null) {
             if (data[i].existingmodaddress != null) {
-                ret += clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Dismiss a moderator ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")<br/>";
+                ret += clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")<br/>";
             } else {
-                ret += clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Appoint a moderator ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")<br/>";
+                ret += clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")<br/>";
             }
         }
     }
@@ -527,8 +540,15 @@ function getHTMLForTopicArray(data) {
 function getHTMLForTopic(data) {
     var ret = "";
     var subscribe = clickActionNamedHTML("sub", data.topicname, "sub");
-    if (data.address != null && data.address != "") {
+
+    //Show more button if the user is subscribed or topic is emtpy string
+    if (data.address != null || data.topicname=="") {
         subscribe = `<a id="modmorelink` + data.mostrecent + `" onclick="showMore('modmore` + data.mostrecent + `','modmorelink` + data.mostrecent + `');" href="javascript:;">more</a>`;
+    }
+    //Special values for empty topic
+    if(data.topicname==""){
+        data.messagescount="";
+        data.subscount="";
     }
     ret += "<tr><td class='tltopicname'>" + getTopicHTML(data.topicname, '') + "</td><td class='tlmessagecount'>" + Number(data.messagescount) + "</td><td class='tlsubscount'>" + Number(data.subscount) + "</td><td class='tlaction'>" + subscribe + "</td></tr>";
     return ret;

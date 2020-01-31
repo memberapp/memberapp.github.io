@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version="3.6.0";
+var version="3.7.0";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -35,7 +35,8 @@ var numbers = {
     "defaulttip" : 1000,
     "oneclicktip" : 0,
     "maxfee" : 2,
-    "results" : 25
+    "results" : 25,
+    "usdrate" : 0
 }
 
 
@@ -61,7 +62,6 @@ window.onbeforeunload = function () {
 
 function init() {
     document.getElementById('version').innerHTML=version;
-    getLatestUSDrate();
     setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
 
