@@ -89,8 +89,8 @@
     <!-- i18n internationalization https://github.com/vavilon-js/vavilon.js-->
     <script src="js/lib/vavilon.min.js"></script>
 
-    <!--  Member Minified Code. -->
-    <script src="js/lib/member.min.js"></script>
+    <!--  Member Minified Code. 
+    <script src="js/lib/member.min.js"></script>-->
 
     <!--  Member Code. In separate files for development convenience -->
     <!--  Can be mininfied and amalgamated for releases -->
@@ -208,21 +208,28 @@
         </header>
         <div class="mainbody">
             <div id="toolsanchor" class="applicationpage" style="display: none;">
+                <h2 class="vavilon" data-vavilon="Tools">Tools</h2>
                 <br />
                 <div id="usersearchcontainer">
                     <label for="usersearch">Member Search</label>
-                    <input class="usersearch" id="usersearch" maxlength="217" onchange="userSearchChanged();"
+                    <input class="usersearch" id="usersearch" maxlength="217" onchange="userSearchChanged('usersearch','usersearchresults');"
                         onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                     <br />
-                    <label for="usersearchresults">Results</label>
                     <div id="usersearchresults"></div>
                 </div>
-                <div id="surrogatecontainer" style="display: none;">
-                    <p>If a person, organization, country, planet, galaxy etc is not on Member yet, but you want to make
-                        a reputational rating, you can create a Surrogate Member account. '(Surrogate)' will follow the
+                <div id="surrogatecontainer">
+                    <label for="surrogatename">Create Surrogate Member Account</label>
+                    <p>You can create a Surrogate Member account if you want to rate a user or organization that does
+                        not have their own Member account yet. '(Surrogate)' will follow the
                         handle to indicate the account is not claiming the identity, just acting as a receptacle for
                         reputational information.
                     </p>
+                    <input class="surrogatename" id="surrogatename" maxlength="200" onchange="userSearchChanged('surrogatename','surrogatesearchresults');"
+                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                    <button id="createsurrogatebutton" type="button" onclick="createSurrogate();" class="vavilon"
+                        data-vavilon="Create Surrogate">Create Surrogate Account</button>
+                    <br />
+                    <div id="surrogatesearchresults"></div>
                 </div>
             </div>
             <div id="newpost" class="applicationpage newpost" style="display: none;">

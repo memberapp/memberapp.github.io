@@ -25,11 +25,12 @@ class UTXOPool {
     this.utxoPool = {};
     this.statusMessageFunction = statusMessageFunction;
     this.storageObject = storageObject;
+    this.onscreenElementName = null;
 
     //Try to retrieve utxopool from localstorage and set balance
     try {
       if (this.storageObject != null) {
-        let loadup = JSON.parse(localStorageGet(this.storageObject, "utxopool"));
+        let loadup = JSON.parse(localStorageGet(this.storageObject, "utxopool" + this.theAddress));
         if (loadup != "null" && loadup != null && loadup != "") {
           this.utxoPool = loadup;
           this.updateBalance();
@@ -80,7 +81,7 @@ class UTXOPool {
 
     try {
       if (this.storageObject != undefined && this.storageObject != null) {
-        localStorageSet(this.storageObject, "utxopool", JSON.stringify(this.utxoPool));
+        localStorageSet(this.storageObject, "utxopool" + this.theAddress, JSON.stringify(this.utxoPool));
       }
     } catch (err) {
     }
@@ -91,7 +92,9 @@ class UTXOPool {
     }
 
     //var balString=(Math.floor(total/1000)).toLocaleString()+"<span class='sats'>"+(total%1000)+"</span>";
-    document.getElementById("balance").innerHTML = balanceString(total,true);
+    if (this.onscreenElementName != null) {
+      document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
+    }
   }
 
   refreshPool() {
@@ -184,11 +187,15 @@ class TransactionQueue {
     this.utxopools = {};
   }
 
-  addUTXOPool(address, storageObject) {
+  addUTXOPool(address, storageObject, onscreenElementName) {
     this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject);
-    try{
+    //This is used to display this UTXOPool balance on screen
+    if(onscreenElementName!=null){
+      this.utxopools[address].onscreenElementName=onscreenElementName;
+    }
+    try {
       this.utxopools[address].refreshPool();
-    }catch(err){
+    } catch (err) {
       this.statusMessageFunction(err);
     }
   }
@@ -555,7 +562,7 @@ class TransactionQueue {
       this.transactionInProgress = false;
       //Remove unexpected input in error message
       err.message = sanitizeAlphanumeric(err.error);
-      if (err.message === undefined || err.message=="") {
+      if (err.message === undefined || err.message == "") {
         err.message = "Network Error";
       }
       callback(err, null, this);

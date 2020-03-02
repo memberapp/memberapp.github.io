@@ -315,3 +315,49 @@ function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMe
     tq.queueTransaction(tx);
 }
 
+async function createSurrogateUser(name) {
+
+    //Send sufficient funds to new account to create name
+    
+    //create new random private key
+    let smnemonic = new BITBOX.Mnemonic().generate(128);
+    var sprivkey = new BITBOX.Mnemonic().toKeypairs(smnemonic, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
+    let ecpair = new BITBOX.ECPair().fromWIF(sprivkey);
+    let publicaddress = new BITBOX.ECPair().toLegacyAddress(ecpair);
+    console.log(publicaddress);
+
+    const tx = {
+        cash: {
+            key: privkey,
+            to: [{ address: publicaddress, value: 547 }]
+        }
+    }
+    updateStatus("Sending Funds To Surrogate Account");
+    tq.queueTransaction(tx);
+
+    //Wait a while for tx to enter mempool
+    updateStatus("Wait a few seconds for funds to arrive");
+    await sleep(3 * 1000);
+
+    //Try to set new name 
+    let newName = name + " (Surrogate)";
+    updateStatus("Try to set surrogate name - " + newName);
+
+    tq.addUTXOPool(publicaddress);
+    updateStatus("Wait a few seconds for utxos to arrive");
+    await sleep(3 * 1000);
+
+
+    const tx2 = {
+        data: ["0x6d01", newName],
+        cash: { key: sprivkey }
+    }
+
+    tq.queueTransaction(tx2);
+
+    //TODO: send change back to original address
+    //TODO: cleanup extra utxopool - destroy, free up memory, storage
+    //TODO: disable, send updates to button text, re-enable button and create link to surrogate profile, update version
+
+}
+

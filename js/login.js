@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version="3.7.0";
+var version = "3.7.0";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -15,7 +15,7 @@ let tq = new TransactionQueue(updateStatus);
 var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
-mapTileProvider='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 //var twitterEmbeds=new Array();
 
@@ -32,11 +32,11 @@ var dropdowns = {
     "currencydisplay": "USD"
 };
 var numbers = {
-    "defaulttip" : 1000,
-    "oneclicktip" : 0,
-    "maxfee" : 2,
-    "results" : 25,
-    "usdrate" : 0
+    "defaulttip": 1000,
+    "oneclicktip": 0,
+    "maxfee": 2,
+    "results": 25,
+    "usdrate": 0
 }
 
 
@@ -61,7 +61,7 @@ window.onbeforeunload = function () {
 };
 
 function init() {
-    document.getElementById('version').innerHTML=version;
+    document.getElementById('version').innerHTML = version;
     setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
 
@@ -87,15 +87,15 @@ function init() {
 }
 
 //This method doesn't appear to be in use, also doesn't seem to work
-function getAndSetVersion(){
+function getAndSetVersion() {
     fetch('/version')
-    .then(function(response){
-        return response.text()
-    }).then(function(version){
-        console.log("member" + version);
-        let ver_split = version.lastIndexOf('.');
-        document.getElementById('version').innerHTML = version.substring(0, ver_split) + ".<u>" +version.substring(ver_split+1) +"</u>";
-    });
+        .then(function (response) {
+            return response.text()
+        }).then(function (version) {
+            console.log("member" + version);
+            let ver_split = version.lastIndexOf('.');
+            document.getElementById('version').innerHTML = version.substring(0, ver_split) + ".<u>" + version.substring(ver_split + 1) + "</u>";
+        });
 }
 
 function trylogin(loginkey) {
@@ -170,7 +170,7 @@ function login(loginkey) {
 
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     localStorageSet(localStorageSafe, "pubkey", pubkey);
-    tq.addUTXOPool(pubkey, localStorageSafe);
+    tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
     getAndPopulateSettings();
