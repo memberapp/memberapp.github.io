@@ -48,5 +48,5 @@ async function userSearchChanged(searchbox,targetelement){
 
 function createSurrogate(){
     var surrogateName=document.getElementById('surrogatename').value;
-    createSurrogateUser(surrogateName);
+    createSurrogateUser(surrogateName,'createsurrogatebutton','surrogatelink');
 }

@@ -315,8 +315,17 @@ function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMe
     tq.queueTransaction(tx);
 }
 
-async function createSurrogateUser(name) {
+async function createSurrogateUser(name,buttonElement,surrogatelink) {
 
+    //Clear old link if there is one
+    var surrogateLinkElement=document.getElementById(surrogatelink);
+    surrogateLinkElement.innerHTML="";
+    
+    //Disable button
+    var buttonElement=document.getElementById(buttonElement);
+    buttonElement.disabled=true;
+    buttonElement.innerText="Creating Private Key";
+    
     //Send sufficient funds to new account to create name
     
     //create new random private key
@@ -332,19 +341,19 @@ async function createSurrogateUser(name) {
             to: [{ address: publicaddress, value: 547 }]
         }
     }
-    updateStatus("Sending Funds To Surrogate Account");
+    //updateStatus("Sending Funds To Surrogate Account");
     tq.queueTransaction(tx);
 
     //Wait a while for tx to enter mempool
-    updateStatus("Wait a few seconds for funds to arrive");
+    buttonElement.innerText="Wait a few seconds for funds to arrive";
     await sleep(3 * 1000);
 
     //Try to set new name 
     let newName = name + " (Surrogate)";
-    updateStatus("Try to set surrogate name - " + newName);
+    buttonElement.innerText="Try to set surrogate name - " + newName;
 
+    buttonElement.innerText="Fetch UTXOs";
     tq.addUTXOPool(publicaddress);
-    updateStatus("Wait a few seconds for utxos to arrive");
     await sleep(3 * 1000);
 
 
@@ -353,7 +362,16 @@ async function createSurrogateUser(name) {
         cash: { key: sprivkey }
     }
 
-    tq.queueTransaction(tx2);
+    buttonElement.innerText="Fetch UTXOs";
+    
+    tq.queueTransaction(tx2, 
+                            function(){
+                                buttonElement.innerText="Create Surrogate Account";
+                                buttonElement.disabled=false;
+                                surrogateLinkElement.innerHTML=userHTML(publicaddress, newName, "none", 0, 16);
+                            }
+                        );
+    
 
     //TODO: send change back to original address
     //TODO: cleanup extra utxopool - destroy, free up memory, storage
