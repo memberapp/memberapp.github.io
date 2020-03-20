@@ -227,8 +227,8 @@ function localStorageSet(theSO, itemName, theString) {
 //var usdrate = 266.75;
 
 function getLatestUSDrate() {
-  getJSON(`https://api.coinmarketcap.com/v1/ticker/bitcoin-cash/`).then(function (data) {
-    document.getElementById("usdrate").value = Number(data[0].price_usd);
+  getJSON(`https://markets.api.bitcoin.com/live/bitcoin`).then(function (data) {
+    document.getElementById("usdrate").value = Number(data.data.BCH);
     updateSettingsNumber('usdrate');
     updateStatus("Got updated exchange rate:" + numbers.usdrate);
     try{
