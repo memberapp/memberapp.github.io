@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "3.7.2";
+var version = "3.7.3";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
