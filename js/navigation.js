@@ -6,7 +6,15 @@ function displayContentBasedOnURLParameters() {
 
     var url = window.location.href;
 
-    var action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
+    var action;
+
+    if(url.indexOf('#')==-1){
+        //navigation back to home page, clear topic
+        setTopic("");
+        action="";
+    }else{
+        action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
+    }
 
     if (action.startsWith("show")) {
         setOrder('orderselector', getParameterByName("order"));

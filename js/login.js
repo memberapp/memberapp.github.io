@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "3.7.3";
+var version = "3.7.4";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -66,7 +66,7 @@ function init() {
     //check local app storage for key
 
     //Show message if dev version in use
-    if (document.location.host != 'memberapp.github.io') {
+    if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
