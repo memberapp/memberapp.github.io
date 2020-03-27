@@ -66,7 +66,7 @@ function init() {
     //check local app storage for key
 
     //Show message if dev version in use
-    if (document.location.host != 'memberapp.github.io') {
+    if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
