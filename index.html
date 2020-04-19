@@ -14,10 +14,10 @@
     <!--  IMG SRC for inline images, rating star image -->
     <!--  Openstreetmap for map tiles -->
     <!--  Youtube/Imgur for content -->
-    <!--  Coinmarketcap for latest price -->
+    <!--  bitcoin.com for latest price -->
 
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://markets.api.bitcoin.com/live/bitcoin https://memberjs.org https://rest.bitcoin.com/v2/ https://memberjs.org:8123/ https://memberjs.org:8124/ http://127.0.0.1:3123/ http://127.0.0.1:3124/; img-src 'self' https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ data: https://tile.openstreetmap.org/; frame-src 'self' https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
+        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://markets.api.bitcoin.com/live/bitcoin https://memberjs.org https://rest.bitcoin.com/v2/ https://memberjs.org:8123/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/; img-src 'self' https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ data: https://tile.openstreetmap.org/; frame-src 'self' https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,6 +31,7 @@
 
     <!-- DNS-prefetch resource hints  -->
     <link rel="preconnect" href="https://memberjs.org:8123">
+    <link rel="preconnect" href="https://memberjs.bchd.cash">
     <link rel="preconnect" href="https://i.imgur.com">
     <link rel="preconnect" href="https://twitframe.com">
 
@@ -599,6 +600,7 @@
                     <label for="contentserver" data-vavilon="Content Server">Content Server</label>
                     <select id="contentserver" onchange='updateSettingsDropdown("contentserver");'>
                         <option value="https://memberjs.org:8123/member.js">Memberjs.org</option>
+                        <option value="https://memberjs.bchd.cash/member.js">memberjs.bchd.cash</option>
                         <option value="http://127.0.0.1:3123/member.js">Localhost</option>
                     </select>
                 </div>
@@ -606,6 +608,7 @@
                     <label for="txbroadcastserver" data-vavilon="TX Broadcast Server">TX Broadcast Server</label>
                     <select id="txbroadcastserver" onchange='updateSettingsDropdown("txbroadcastserver");'>
                         <option value="https://memberjs.org:8123/v2/">Memberjs.org</option>
+                        <option value="https://memberjs.bchd.cash/v2/">memberjs.bchd.cash</option>
                         <option value="http://127.0.0.1:3123/v2/">Localhost</option>
                         <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
                     </select>
@@ -615,6 +618,7 @@
                     <label for="utxoserver" data-vavilon="UTXO Server">UTXO Server</label>
                     <select id="utxoserver" onchange='updateSettingsDropdown("utxoserver");'>
                         <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
+                        <option value="https://memberjs.bchd.cash/v2/">memberjs.bchd.cash</option>
                         <option value="http://127.0.0.1:3123/v2/">Localhost</option>
                     </select>
                 </div>

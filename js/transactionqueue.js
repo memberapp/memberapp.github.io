@@ -19,13 +19,13 @@ let miningFeeMultiplier = 1;
 
 class UTXOPool {
 
-  constructor(address, statusMessageFunction, storageObject) {
+  constructor(address, statusMessageFunction, storageObject, onscreenElementName) {
     //This takes legacy address format
     this.theAddress = address;
     this.utxoPool = {};
     this.statusMessageFunction = statusMessageFunction;
     this.storageObject = storageObject;
-    this.onscreenElementName = null;
+    this.onscreenElementName = onscreenElementName;
 
     //Try to retrieve utxopool from localstorage and set balance
     try {
@@ -188,11 +188,11 @@ class TransactionQueue {
   }
 
   addUTXOPool(address, storageObject, onscreenElementName) {
-    this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject);
+    this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject,onscreenElementName);
     //This is used to display this UTXOPool balance on screen
-    if(onscreenElementName!=null){
+    /*if(onscreenElementName!=null){
       this.utxopools[address].onscreenElementName=onscreenElementName;
-    }
+    }*/
     try {
       this.utxopools[address].refreshPool();
     } catch (err) {
