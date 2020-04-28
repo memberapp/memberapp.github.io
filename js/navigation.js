@@ -67,7 +67,10 @@ function displayContentBasedOnURLParameters() {
         showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), false);
     } else if (action.startsWith("settings")) {
         showSettings();
-    } else if (action.startsWith("new")) {
+    } else if (action.startsWith("messages")) {
+        showMessages();
+    } 
+    else if (action.startsWith("new")) {
         showNewPost();
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
@@ -117,6 +120,8 @@ function hideAll() {
     document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
+    document.getElementById('messagesanchor').style.display = "none";
+
 }
 
 function show(theDiv) {
@@ -225,6 +230,11 @@ function showTrustGraph(member, target) {
 function showMemberPosts(start, limit, qaddress) {
     getAndPopulate(start, limit, 'memberposts', qaddress);
 }
+
+function showMessages(start, limit) {
+    show("messagesanchor");
+    getAndPopulateMessages(start, limit);
+}   
 
 //These three should be refactored away
 function showFeed(start, limit, type) {

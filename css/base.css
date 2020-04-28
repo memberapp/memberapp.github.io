@@ -811,7 +811,7 @@ li.notificationpage::before {
 
 /*settings page*/
 
-#settingsanchor, #toolsanchor {
+#settingsanchor, #toolsanchor, #messagesanchor {
   font-size: small;
 }
 
