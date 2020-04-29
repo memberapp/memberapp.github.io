@@ -68,23 +68,7 @@ function createSurrogate() {
     const pubKeyBuf = Buffer.from(publickey, 'hex');
     const data = Buffer.from(text);
     const structuredEj = await eccryptoJs.encrypt(pubKeyBuf, data);
-
-    // Exta: Serialize the encrypted data
-    /*const encryptedEj = Buffer.concat([
-        structuredEj.ephemPublicKey,
-        structuredEj.iv,
-        structuredEj.ciphertext,
-        structuredEj.mac
-    ])*/
     const encryptedMessage = eccryptoJs.serialize(structuredEj).toString('hex');
-
-
-    //const length = 32;
-    //const key = eccryptoJs.randomBytes(length);
-
-    //var encryptedMessage=encryptMessage(text,publickey,privkey);
-
-    //const replyHex = new Buffer(encryptedMessage).toString('hex');
     sendMessageRaw(privkey, null, encryptedMessage, 1000, status, privateMessagePosted, messageRecipient, stampAmount);
 }
 

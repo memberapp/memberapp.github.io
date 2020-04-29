@@ -18,7 +18,7 @@
 
 //Get html for a user, given their address and name
 function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
-    if (name == "") {
+    if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
     var ret = `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">` + ds(name) + `</a> `;
@@ -558,6 +558,11 @@ function sendEncryptedMessageHTML(address, name, publickey) {
 }
 
 function populateSendMessage(address, name, publickey) {
+    show('messagesanchor');
+    if(publickey==null || publickey==""){
+        alert("Public key is not available - maybe the user hasn't set their name/handle.");
+        return;
+    }
     document.getElementById('sendmessagebox').style.display = 'block';
     document.getElementById('messagerecipient').innerText = name;
     document.getElementById('messageaddress').innerText = address;
@@ -579,10 +584,8 @@ function getMessageHTML(data,count) {
     // Decrypt the message
     let ecpair = new BITBOX.ECPair().fromWIF(privkey);
     var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
-
     decryptMessageAndPlaceInDiv(privateKeyBuf,data.message,data.roottxid);
-
-    contents += "<li>" + userHTML(data.address, data.name, count+"privatemessages"+data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) +"<br/><div id='"+san(data.roottxid)+"'>processing</div><br/></li>";
+    contents += "<li>" + userHTML(data.address, data.name, count+"privatemessages"+data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) +" "+sendEncryptedMessageHTML(data.address, data.name, data.publickey)+"<br/><div id='"+san(data.roottxid)+"'>processing</div><br/></li>";
     return contents;
 }
 
@@ -599,6 +602,6 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf,message,roottxid){
         console.log(err);
         await sleep(500);
     }
-
+    //decrypted message can contain anything - don't do anything fancy with it - js/css risk!
     document.getElementById(roottxid).innerText=decryptedMessage;
 }

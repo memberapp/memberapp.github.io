@@ -92,6 +92,7 @@ function getAndPopulateMessages(start, limit) {
         data = mergeRepliesToRepliesBySameAuthor(data, true);
         var contents = "";
         for (var i = 0; i < data.length; i++) {
+            data[i].address=data[i].senderaddress;
             contents += getMessageHTML(data[i],i);
         }
         if(contents==""){contents="No messages found.";}
