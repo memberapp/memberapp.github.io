@@ -36,6 +36,54 @@ function setName() {
 }
 
 
+
+async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction,messageRecipient,stampAmount) {
+
+    document.getElementById(divForStatus).value = "Sending Message . . . " + replyHex.length / 2 + " bytes remaining.";
+
+    var sendHex = "";
+    if (replyHex.length > 368) {
+        sendHex = replyHex.substring(0, 368);
+        replyHex = replyHex.substring(368);
+    } else {
+        sendHex = replyHex;
+        replyHex = "";
+    }
+
+    var tx;
+    if (txid == null) {
+        //start of message
+        tx = {
+            data: ["0x6dd0", "0x" + sendHex],
+            cash: { key: privatekey,
+                    to: [{ address: messageRecipient, value: Number(stampAmount) }]
+            }
+        }
+    } else {
+        var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
+        tx = {
+            data: ["0x6dd1", "0x" + reversetx, "0x" + sendHex],
+            cash: { key: privatekey }
+        }
+    }
+
+    //await sleep(500); // Wait a little to show message
+    if (waitTimeMilliseconds > 0) {
+        updateStatus("Waiting " + (waitTimeMilliseconds / 1000) + " Seconds");
+        await sleep(waitTimeMilliseconds);
+    }
+
+    //If there is still more to send
+    if (replyHex.length > 0) {
+        tq.queueTransaction(tx, function (newtxid) { sendMessageRaw(privatekey, newtxid, replyHex, 1000, divForStatus, completionFunction); }, null);
+    } else {
+        //last one
+        tq.queueTransaction(tx, completionFunction, null);
+    }
+
+}
+
+
 function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandumstatus, memorandumpostcompleted) {
 
     var tx = {
@@ -315,19 +363,19 @@ function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMe
     tq.queueTransaction(tx);
 }
 
-async function createSurrogateUser(name,buttonElement,surrogatelink) {
+async function createSurrogateUser(name, buttonElement, surrogatelink) {
 
     //Clear old link if there is one
-    var surrogateLinkElement=document.getElementById(surrogatelink);
-    surrogateLinkElement.innerHTML="";
-    
+    var surrogateLinkElement = document.getElementById(surrogatelink);
+    surrogateLinkElement.innerHTML = "";
+
     //Disable button
-    var buttonElement=document.getElementById(buttonElement);
-    buttonElement.disabled=true;
-    buttonElement.innerText="Creating Private Key";
-    
+    var buttonElement = document.getElementById(buttonElement);
+    buttonElement.disabled = true;
+    buttonElement.innerText = "Creating Private Key";
+
     //Send sufficient funds to new account to create name
-    
+
     //create new random private key
     let smnemonic = new BITBOX.Mnemonic().generate(128);
     var sprivkey = new BITBOX.Mnemonic().toKeypairs(smnemonic, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
@@ -345,14 +393,14 @@ async function createSurrogateUser(name,buttonElement,surrogatelink) {
     tq.queueTransaction(tx);
 
     //Wait a while for tx to enter mempool
-    buttonElement.innerText="Wait a few seconds for funds to arrive";
+    buttonElement.innerText = "Wait a few seconds for funds to arrive";
     await sleep(3 * 1000);
 
     //Try to set new name 
     let newName = name + " (Surrogate)";
-    buttonElement.innerText="Try to set surrogate name - " + newName;
+    buttonElement.innerText = "Try to set surrogate name - " + newName;
 
-    buttonElement.innerText="Fetch UTXOs";
+    buttonElement.innerText = "Fetch UTXOs";
     tq.addUTXOPool(publicaddress);
     await sleep(3 * 1000);
 
@@ -362,16 +410,16 @@ async function createSurrogateUser(name,buttonElement,surrogatelink) {
         cash: { key: sprivkey }
     }
 
-    buttonElement.innerText="Fetch UTXOs";
-    
-    tq.queueTransaction(tx2, 
-                            function(){
-                                buttonElement.innerText="Create Surrogate Account";
-                                buttonElement.disabled=false;
-                                surrogateLinkElement.innerHTML=userHTML(publicaddress, newName, "none", 0, 16);
-                            }
-                        );
-    
+    buttonElement.innerText = "Fetch UTXOs";
+
+    tq.queueTransaction(tx2,
+        function () {
+            buttonElement.innerText = "Create Surrogate Account";
+            buttonElement.disabled = false;
+            surrogateLinkElement.innerHTML = userHTML(publicaddress, newName, "none", 0, 16);
+        }
+    );
+
 
     //TODO: send change back to original address
     //TODO: cleanup extra utxopool - destroy, free up memory, storage

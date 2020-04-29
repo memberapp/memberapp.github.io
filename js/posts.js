@@ -27,7 +27,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
 
-        data = mergeRepliesToRepliesBySameAuthor(data);
+        data = mergeRepliesToRepliesBySameAuthor(data, false);
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -67,7 +67,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
 
-        data = mergeRepliesToRepliesBySameAuthor(data);
+        data = mergeRepliesToRepliesBySameAuthor(data, false);
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -81,6 +81,29 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
         updateStatus(status);
     });
 
+}
+
+function getAndPopulateMessages(start, limit) {
+
+    document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
+
+    getJSON(dropdowns.contentserver + '?action=messages&address=' + pubkey).then(function (data) {
+
+        data = mergeRepliesToRepliesBySameAuthor(data, true);
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+            data[i].address=data[i].senderaddress;
+            contents += getMessageHTML(data[i],i);
+        }
+        if(contents==""){contents="No messages found.";}
+        document.getElementById('messageslist').innerHTML = contents;
+        addStarRatings(data, "privatemessages");
+        //detectMultipleIDS();
+    }, function (status) { //error detection....
+        console.log('Something is wrong:' + status);
+        document.getElementById('messageslist').innerHTML = 'Something is wrong:' + status;
+        updateStatus(status);
+    });
 }
 
 function getAndPopulateThread(roottxid, txid, pageName) {
@@ -99,7 +122,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
 
-        data = mergeRepliesToRepliesBySameAuthor(data);
+        data = mergeRepliesToRepliesBySameAuthor(data, false);
 
         //Make sure we have id of the top level post
         if (data.length > 0) { roottxid = data[0].roottxid; }
@@ -170,7 +193,7 @@ function getAndPopulateTopicList(showpage) {
         for (var i = 0; i < 40; i++) {
             var option = document.createElement("option");
             //Caution, topicname can contain anything
-            if(data[i].topicname==null) continue;
+            if (data[i].topicname == null) continue;
 
             option.text = capitalizeFirstLetter(data[i].topicname.substr(0, 13));
             option.value = data[i].topicname;
@@ -662,7 +685,7 @@ function removeDuplicates(data) {
     return data;
 }
 
-function mergeRepliesToRepliesBySameAuthor(data) {
+function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
 
     var replies = [];
     var authors = [];
@@ -675,8 +698,8 @@ function mergeRepliesToRepliesBySameAuthor(data) {
     //console.log(data);
     for (var i = 0; i < data.length; i++) {
 
-        //Do not merge root, or first reply
-        if (data[i].retxid != "" && data[i].retxid != data[i].roottxid) {
+        //Do not merge root, or first reply, unless its a private message
+        if (isPrivateMessage || (data[i].retxid != "" && data[i].retxid != data[i].roottxid)) {
             //if the author of the post is the same as the parent post
             if (data[i].address == authors[data[i].retxid]) {
 

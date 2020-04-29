@@ -1,5 +1,4 @@
 //All functions that generate HTML should be quarantined here. 
-//This is a work in progress, HTML is fairly spread out at the moment
 
 //All HTML to be escaped should go through functions in this file
 //variables ending in HTML should already be HTML escaped
@@ -14,9 +13,12 @@
 //unicodeEscape to escape text going into function
 
 "use strict";
+
+
+
 //Get html for a user, given their address and name
 function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
-    if (name == "") {
+    if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
     var ret = `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">` + ds(name) + `</a> `;
@@ -158,10 +160,10 @@ function getAgeHTML(firstseen, compress) {
 
 function getTopicHTML(topicHOSTILE, append) {
     //If the topic is All Topics, keep that as the display name, but use the empty string for server
-    var displayNameHOSTILE=topicHOSTILE;
-    if(topicHOSTILE==''){
-        if(append!='') return '';
-        displayNameHOSTILE='All Topics';
+    var displayNameHOSTILE = topicHOSTILE;
+    if (topicHOSTILE == '') {
+        if (append != '') return '';
+        displayNameHOSTILE = 'All Topics';
     }
     return ` <span class="topic">` +
         `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new" onclick="showTopic(0,numbers.results,'` + unicodeEscape(topicHOSTILE) + `','new')">` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
@@ -505,7 +507,7 @@ function getHTMLForTopicArray(data) {
     ret += "<tr style='display:none'></tr>";
 
     ret += `<tr style='display:none' id='modmore` + data[0].mostrecent + `'><td colspan='4'>`;
-    if(data[0].topic!=""){
+    if (data[0].topic != "") {
         ret += clickActionNamedHTML("unsub", data.topicname, "Unsubscribe") + "<br/>";
     }
     var alreadymod = false;
@@ -538,17 +540,33 @@ function getHTMLForTopic(data) {
     var subscribe = clickActionNamedHTML("sub", data.topicname, "sub");
 
     //Show more button if the user is subscribed or topic is emtpy string
-    if (data.address != null || data.topicname=="") {
+    if (data.address != null || data.topicname == "") {
         subscribe = `<a id="modmorelink` + data.mostrecent + `" onclick="showMore('modmore` + data.mostrecent + `','modmorelink` + data.mostrecent + `');" href="javascript:;">more</a>`;
     }
     //Special values for empty topic
-    if(data.topicname==""){
-        data.messagescount="";
-        data.subscount="";
+    if (data.topicname == "") {
+        data.messagescount = "";
+        data.subscount = "";
     }
     ret += "<tr><td class='tltopicname'>" + getTopicHTML(data.topicname, '') + "</td><td class='tlmessagecount'>" + Number(data.messagescount) + "</td><td class='tlsubscount'>" + Number(data.subscount) + "</td><td class='tlaction'>" + subscribe + "</td></tr>";
     return ret;
 
+}
+
+function sendEncryptedMessageHTML(address, name, publickey) {
+    return ` <a onclick="populateSendMessage('` + san(address) + `','` + unicodeEscape(name) + `','` + san(publickey) + `');" href='javascript:;'>Send Message</a>`;
+}
+
+function populateSendMessage(address, name, publickey) {
+    show('messagesanchor');
+    if(publickey==null || publickey==""){
+        alert("Public key is not available - maybe the user hasn't set their name/handle.");
+        return;
+    }
+    document.getElementById('sendmessagebox').style.display = 'block';
+    document.getElementById('messagerecipient').innerText = name;
+    document.getElementById('messageaddress').innerText = address;
+    document.getElementById('messagepublickey').innerText = publickey;
 }
 
 function collapseComment(commentid) {
@@ -559,4 +577,31 @@ function collapseComment(commentid) {
 function uncollapseComment(commentid) {
     document.getElementById('LI' + commentid).style.display = 'block';
     document.getElementById('CollapsedLI' + commentid).style.display = 'none';
+}
+
+function getMessageHTML(data,count) {
+    var contents = "";
+    // Decrypt the message
+    let ecpair = new BITBOX.ECPair().fromWIF(privkey);
+    var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
+    decryptMessageAndPlaceInDiv(privateKeyBuf,data.message,data.roottxid);
+    contents += "<li>" + userHTML(data.address, data.name, count+"privatemessages"+data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) +" "+sendEncryptedMessageHTML(data.address, data.name, data.publickey)+"<br/><div id='"+san(data.roottxid)+"'>processing</div><br/></li>";
+    return contents;
+}
+
+async function decryptMessageAndPlaceInDiv(privateKeyBuf,message,roottxid){
+    //const privateKeyBuf5 = wif.decode(privkey).privateKey;
+    var decryptedMessage = "Try again later: Unable to decrypt message: ";
+    try {
+        const encrypted = eccryptoJs.deserialize(Buffer.from(message, 'hex'));
+        const structuredEj = await eccryptoJs.decrypt(privateKeyBuf, encrypted);
+        decryptedMessage = structuredEj.toString();
+
+    } catch (err) {
+        decryptedMessage+=err;
+        console.log(err);
+        await sleep(500);
+    }
+    //decrypted message can contain anything - don't do anything fancy with it - js/css risk!
+    document.getElementById(roottxid).innerText=decryptedMessage;
 }
