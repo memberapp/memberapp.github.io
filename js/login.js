@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.0.0";
+var version = "4.0.1";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -169,6 +169,8 @@ function login(loginkey) {
     qpubkey = new BITBOX.Address().toCashAddress(pubkey);
 
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
+    lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
+    
     localStorageSet(localStorageSafe, "pubkey", pubkey);
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     document.getElementById('loggedin').style.display = "inline";
