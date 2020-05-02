@@ -89,6 +89,11 @@ function getAndPopulateMessages(start, limit) {
 
     getJSON(dropdowns.contentserver + '?action=messages&address=' + pubkey).then(function (data) {
 
+        lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
+        localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
+        document.getElementById("alertcountpm").innerHTML = "";
+
+
         data = mergeRepliesToRepliesBySameAuthor(data, true);
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -96,6 +101,8 @@ function getAndPopulateMessages(start, limit) {
             contents += getMessageHTML(data[i],i);
         }
         if(contents==""){contents="No messages found.";}
+
+        
         document.getElementById('messageslist').innerHTML = contents;
         addStarRatings(data, "privatemessages");
         //detectMultipleIDS();

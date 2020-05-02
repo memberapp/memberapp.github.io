@@ -1,9 +1,10 @@
 "use strict";
 
 var lastViewOfNotifications = 0;
+var lastViewOfNotificationspm = 0;
 
 function displayNotificationCount() {
-    getJSON(dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm).then(function (data) {
 
         if (data[0].count == null) {
             return;
@@ -16,6 +17,15 @@ function displayNotificationCount() {
         } else {
             element.innerHTML = "";
         }
+
+        var alertcountpm = Number(data[0].countpm);
+        var element = document.getElementById("alertcountpm");
+        if (alertcountpm > 0) {
+            element.innerHTML =  alertcountpm;
+        } else {
+            element.innerHTML = "";
+        }
+
         setTimeout(displayNotificationCount, 60000);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
@@ -48,6 +58,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
         document.getElementById("alertcount").innerHTML = "";
+        
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addStarRatings(data, page);
         listenForTwitFrameResizes();
