@@ -175,6 +175,11 @@ function login(loginkey) {
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
+    
+    document.getElementById('newseedphrasedescription').style.display = "none";
+    document.getElementById('newseedphrase').innerText="";
+    document.getElementById('loginkey').value="";
+
     getAndPopulateSettings();
 
     //Set the saved style if available
@@ -189,9 +194,14 @@ function login(loginkey) {
 function createNewAccount() {
     mnemonic = new BITBOX.Mnemonic().generate(128);
     //var loginkey = new BITBOX.Mnemonic().toKeypairs(mnemonic, 1)[0].privateKeyWIF;
-    login(mnemonic);
-    show('settingsanchor');
-    alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
+    //login(mnemonic);
+    //show('settingsanchor');
+    //alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
+    document.getElementById('newseedphrasedescription').style.display = "inline";
+    document.getElementById('newseedphrase').innerText=mnemonic;
+    document.getElementById('loginkey').value=mnemonic;
+
+
 }
 
 function logout() {
