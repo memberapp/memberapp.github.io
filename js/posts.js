@@ -33,6 +33,15 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         for (var i = 0; i < data.length; i++) {
             contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
+
+        if(contents==""){
+            contents=getNothingFoundMessageHTML("Nothing here yet - Try hot or new, or a different topic or a longer time period");
+
+            if(filter=="mypeeps" || filter=="myfeed" || topicnameHOSTILE=="MyFeed" || topicnameHOSTILE=="MyTopics"){
+                contents=getNothingFoundMessageHTML("Nothing in your feed - Try following more people or subscribing to more topics");
+            }
+            
+        }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);

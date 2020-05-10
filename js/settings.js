@@ -200,6 +200,10 @@ function getAndPopulateSettings() {
     //These may already be switched to qrcodes, so try/catch necessary
     try { document.getElementById('legacyformat').innerHTML = pubkey; } catch (err) { }
     try { document.getElementById('cashaddrformat').innerHTML = qpubkey; } catch (err) { }
+    try { document.getElementById('lowfundsaddress').innerHTML = qpubkey; } catch (err) { }
+    try { document.getElementById('privatekeyformat').innerHTML = privkey; } catch (err) { }
+
+    
     try { document.getElementById('privatekeydisplay').innerHTML = (mnemonic == "" ? "" : "Seed Phrase: " + mnemonic + "<br/>") + "Compressed Private Key: " + privkey; } catch (err) { }
     try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
 
@@ -288,10 +292,15 @@ function updateSettingsNumber(settingsName) {
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
 }
 
-function showQRCode(spanid) {
+function showQRCode(spanid, size) {
     var addressToQR = document.getElementById(spanid).innerHTML;
     document.getElementById(spanid + "div").innerHTML = "";
-    new QRCode(document.getElementById(spanid + "div"), addressToQR);
+    new QRCode(document.getElementById(spanid + "div"), 
+    {
+        text: addressToQR,
+        width: size,
+        height: size,
+    });
     //document.getElementById('qrclicktoshow').style.display='none';
 }
 

@@ -605,3 +605,7 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf,message,roottxid){
     //decrypted message can contain anything - don't do anything fancy with it - js/css risk!
     document.getElementById(roottxid).innerText=decryptedMessage;
 }
+
+function getNothingFoundMessageHTML(message){
+    return "<div class='message'>" + message + "</div>";
+}

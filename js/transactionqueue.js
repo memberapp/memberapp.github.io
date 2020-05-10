@@ -94,7 +94,18 @@ class UTXOPool {
     //var balString=(Math.floor(total/1000)).toLocaleString()+"<span class='sats'>"+(total%1000)+"</span>";
     if (this.onscreenElementName != null) {
       document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
+
+
+      if (total < 2000) {
+        document.getElementById('satoshiamount').innerHTML = total;
+        document.getElementById('lowfundswarning').style.display = 'block';
+        showQRCode('lowfundsaddress', 100);
+      } else {
+        document.getElementById('lowfundswarning').style.display = 'none';
+      }
     }
+
+
   }
 
   refreshPool() {
@@ -188,7 +199,7 @@ class TransactionQueue {
   }
 
   addUTXOPool(address, storageObject, onscreenElementName) {
-    this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject,onscreenElementName);
+    this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject, onscreenElementName);
     //This is used to display this UTXOPool balance on screen
     /*if(onscreenElementName!=null){
       this.utxopools[address].onscreenElementName=onscreenElementName;

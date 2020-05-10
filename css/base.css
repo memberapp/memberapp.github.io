@@ -35,6 +35,7 @@
   --navbuttonstext: #369;
   --notificationtitle: #222;
   --linkcolor: #0000EE;
+  --loginbutton:#008CBA;
 }
 
 /*General*/
@@ -288,6 +289,41 @@ footer {
   font-size: small;
   text-align: center;
   margin-top: 10px;
+}
+
+
+/* Login/Create New Account Stuff */
+
+.loginbox {
+  text-align: center;
+}
+
+.loginbutton {
+  background-color: var(--loginbutton);
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.loginnotes{
+  font-size:x-small;
+}
+
+.message{
+  color:var(--postsheadertext);
+}
+
+.alert {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  margin: 5px;
+  padding: 5px;
 }
 
 /* Posts */
@@ -828,6 +864,11 @@ label {
 .checkboxlabel {
   display: inline;
   font-weight: normal;
+}
+
+.qrcodeclick {
+  cursor: pointer;
+  font-size: x-small;
 }
 
 /*member page*/
