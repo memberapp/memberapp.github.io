@@ -314,6 +314,10 @@ footer {
   font-size:x-small;
 }
 
+.message{
+  color:var(--postsheadertext);
+}
+
 /* Posts */
 
 @media only screen {
@@ -852,6 +856,11 @@ label {
 .checkboxlabel {
   display: inline;
   font-weight: normal;
+}
+
+.qrcodeclick {
+  cursor: pointer;
+  font-size: x-small;
 }
 
 /*member page*/

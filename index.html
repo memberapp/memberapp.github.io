@@ -217,6 +217,7 @@
             </div>
         </header>
         <div class="mainbody">
+            <div id="lowfundswarning" class="warning" style="display: none;"></div>  
             <div id="toolsanchor" class="applicationpage" style="display: none;">
                 <h2 class="vavilon" data-vavilon="Tools">Tools</h2>
                 <a rel='noopener noreferrer' target="tokenrecycler" href="https://slpvh.github.io/Token-Recycler/">Token Recycler (External link)</a><br/>
@@ -333,29 +334,31 @@
                 </div>
                 <label>Address</label>
                 <div>
-                    <div id="membercashaddrformatdiv"><span id="membercashaddrformat">loading</span>
-                        <span onclick="showQRCode('membercashaddrformat');">
+                    <span id="membercashaddrformat">loading</span>
+                    <div id="membercashaddrformatdiv">
+                        <span class="qrcodeclick" onclick="showQRCode('membercashaddrformat');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
-                            </svg>
+                            </svg> Click to enlarge QR code
                         </span>
                     </div>
                 </div>
                 <label>Legacy Address</label>
                 <div>
-                    <div id="memberlegacyformatdiv"><span id="memberlegacyformat">loading</span>
-                        <span onclick="showQRCode('memberlegacyformat');">
+                    <span id="memberlegacyformat">loading</span>
+                    <div id="memberlegacyformatdiv">
+                        <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
-                            </svg>
+                            </svg> Click to enlarge QR code
                         </span></div>
                 </div>
                 <div>
@@ -457,28 +460,29 @@
                     <label class="vavilon" data-vavilon="address">Address</label>
                     <span id="cashaddrformat">loading</span>
                     <div id="cashaddrformatdiv">
-                        <span onclick="showQRCode('cashaddrformat');">
+                        <span class="qrcodeclick" onclick="showQRCode('cashaddrformat');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
-                            </svg>
+                            </svg> Click to enlarge QR code
                         </span>
                     </div>
                 </div>
                 <div>
                     <label>Legacy Address</label>
                     <span id="legacyformat">loading</span>
-                    <div id="legacyformatdiv"> <span onclick="showQRCode('legacyformat');">
+                    <div id="legacyformatdiv">
+                        <span class="qrcodeclick" onclick="showQRCode('legacyformat');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
-                            </svg>
+                            </svg> Click to enlarge QR code
                         </span>
                     </div>
                 </div>
@@ -487,14 +491,14 @@
                     <span id="privatekeydisplay" style="display: none;">loading</span><span id="privatekey"></span>
                     <div id="privatekeydisplaydiv"></div>
                     <div id="privatekeydiv">
-                        <span onclick="showQRCode('privatekeydisplay');">
+                        <span class="qrcodeclick" onclick="showQRCode('privatekeydisplay');">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z" />
-                            </svg>
+                            </svg> Click to enlarge QR code
                         </span>
                     </div>
                 </div>
@@ -843,7 +847,7 @@
                 <br />
                 <br />
                 <div class="loginnotes">
-                *Memo Users. You can also login with your private key (Uncompressed WIF: Starts with 'L..' or 'K..'). <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">Fetch from Memo</a>. 
+                *Memo Users. You can also login with your key (Uncompressed WIF: Starts with 'L..' or 'K..'). <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">Fetch from Memo</a>. 
                 </div>
                 <br />
                 <br />

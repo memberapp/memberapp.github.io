@@ -53,7 +53,9 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
             contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i);
         }
         //console.log(contents);
-        if (contents == "") { contents = "Nothing in this feed yet"; }
+        if(contents==""){
+            contents=getNothingFoundMessageHTML("No notifications yet - Try trolling someone to see if you can get a response.");   
+        }
         contents = getNotificationsTableHTML(contents, navbuttons);
         lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
