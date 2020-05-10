@@ -318,6 +318,14 @@ footer {
   color:var(--postsheadertext);
 }
 
+.alert {
+  color: #8a6d3b;
+  background-color: #fcf8e3;
+  border-color: #faebcc;
+  margin: 5px;
+  padding: 5px;
+}
+
 /* Posts */
 
 @media only screen {

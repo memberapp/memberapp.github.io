@@ -217,7 +217,20 @@
             </div>
         </header>
         <div class="mainbody">
-            <div id="lowfundswarning" class="warning" style="display: none;"></div>  
+            <div id="lowfundswarning" class="alert" style="display: none;">
+                <table><tr style="background-color: transparent;"><td>You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each action (posting, liking, subscribing, following, messaging etc)
+                    requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough. 
+                    Your address is <span id="lowfundsaddress"></span>
+                    <br/>
+                    <br/>
+                    Do you need a Bitcoin wallet? member.cash recommends the <a rel='noopener noreferrer' target="tokenrecycler" href="https://wallet.bitcoin.com/">Bitcoin.com wallet</a>.
+                    <br/>
+                    <br/>
+                    <a href="" onclick="refreshPool();return false;">Refresh your balance</a> or 
+                    <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;">Dismiss this message</a>
+                   </td><td>   <span id="lowfundsaddressdiv"></span>
+                   </td></tr></table>
+            </div>  
             <div id="toolsanchor" class="applicationpage" style="display: none;">
                 <h2 class="vavilon" data-vavilon="Tools">Tools</h2>
                 <a rel='noopener noreferrer' target="tokenrecycler" href="https://slpvh.github.io/Token-Recycler/">Token Recycler (External link)</a><br/>
@@ -336,7 +349,7 @@
                 <div>
                     <span id="membercashaddrformat">loading</span>
                     <div id="membercashaddrformatdiv">
-                        <span class="qrcodeclick" onclick="showQRCode('membercashaddrformat');">
+                        <span class="qrcodeclick" onclick="showQRCode('membercashaddrformat',200);">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -351,7 +364,7 @@
                 <div>
                     <span id="memberlegacyformat">loading</span>
                     <div id="memberlegacyformatdiv">
-                        <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat');">
+                        <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -460,7 +473,7 @@
                     <label class="vavilon" data-vavilon="address">Address</label>
                     <span id="cashaddrformat">loading</span>
                     <div id="cashaddrformatdiv">
-                        <span class="qrcodeclick" onclick="showQRCode('cashaddrformat');">
+                        <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -475,7 +488,7 @@
                     <label>Legacy Address</label>
                     <span id="legacyformat">loading</span>
                     <div id="legacyformatdiv">
-                        <span class="qrcodeclick" onclick="showQRCode('legacyformat');">
+                        <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
@@ -487,11 +500,15 @@
                     </div>
                 </div>
                 <div>
-                    <label class="vavilon" data-vavilon="private key">Private Key</label>
-                    <span id="privatekeydisplay" style="display: none;">loading</span><span id="privatekey"></span>
+                    <label class="vavilon" data-vavilon="private key">Seed Phrase / Private Key / WIF</label>
+                    <span id="privatekeydisplay" style="display: none;">loading</span>
+                    <span id="privatekey"></span>
                     <div id="privatekeydisplaydiv"></div>
-                    <div id="privatekeydiv">
-                        <span class="qrcodeclick" onclick="showQRCode('privatekeydisplay');">
+
+                    <span id="privatekeyformat" style="display: none;">loading</span>
+                    
+                    <div id="privatekeyformatdiv">
+                        <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                 version="1.1" width="24" height="24" viewBox="0 0 24 24">
                                 <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
