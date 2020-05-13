@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.0.2";
+var version = "4.0.3";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -214,6 +214,10 @@ function logout() {
     document.getElementById('loggedin').style.display = "none";
     document.getElementById('loggedout').style.display = "inline";
     show('loginbox');
+
+    //This clears any personal info that might be left in the html document.
+    location.reload();
+
 }
 
 function changeStyle(newStyle) {

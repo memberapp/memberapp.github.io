@@ -220,13 +220,15 @@
             <div id="lowfundswarning" class="alert" style="display: none;">
                 <table><tr style="background-color: transparent;"><td>You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each action (posting, liking, subscribing, following, messaging etc)
                     requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough. 
+                    <br/>
+                    <br/>
+                    You might be able to get some at the <a rel='noopener noreferrer' target="bitcoincom" href="https://free.bitcoin.com/">Bitcoin.com Faucet</a> (Just steps 2 and 3 required). 
+                    <br/>
+                    <br/>
                     Your address is <span id="lowfundsaddress"></span>
                     <br/>
                     <br/>
-                    Do you need a Bitcoin wallet? member.cash recommends the <a rel='noopener noreferrer' target="tokenrecycler" href="https://wallet.bitcoin.com/">Bitcoin.com wallet</a>.
-                    <br/>
-                    <br/>
-                    <a href="" onclick="refreshPool();return false;">Refresh your balance</a> or 
+                    <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';refreshPool();return false;">Refresh your balance</a> or 
                     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;">Dismiss this message</a>
                    </td><td>   <span id="lowfundsaddressdiv"></span>
                    </td></tr></table>
