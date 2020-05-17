@@ -609,3 +609,8 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf,message,roottxid){
 function getNothingFoundMessageHTML(message){
     return "<div class='message'>" + message + "</div>";
 }
+
+//nb iframe not allowed by twitter
+function createiframe(url,elementname){
+    document.getElementById(elementname).innerHTML=`<iframe height="400" width="550" id="alsotweet" border=0 frameborder=0 src="`+url+`"></iframe>`;
+}
