@@ -595,42 +595,14 @@ function geopost(lat, long) {
 
 }
 
-function post() {
-    if (!checkForPrivKey()) return false;
-    var txtarea = document.getElementById('memotitle');
-    var posttext = txtarea.value;
-    if (posttext.length == 0) {
-        alert("No Message Body");
-        return false;
-    }
-
-    var topic = document.getElementById('memotopic').value;
-
-    document.getElementById('newpostcompleted').innerText = "";
-    document.getElementById('newpostbutton').style.display = "none";
-    document.getElementById('newpoststatus').style.display = "block";
-    document.getElementById('newpoststatus').value = "Sending Memo...";
-
-    postRaw(posttext, privkey, topic, "newpoststatus", memocompleted);
-
-    //if (typeof popupOverlay !== "undefined") {
-    //    popupOverlay.hide();
-    //}
-}
-
 function postmemorandum() {
     if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
     if (posttext.length == 0) {
-        alert("No Title");
+        alert("No Memo - Try adding something in the memo box");
         return false;
     }
     var postbody = document.getElementById('newposttamemorandum').value;
-    if (postbody.length == 0) {
-        alert("No Message Body");
-        return false;
-    }
-
     var topic = document.getElementById('memorandumtopic').value;
     //topic may be empty string
 
@@ -639,9 +611,14 @@ function postmemorandum() {
     document.getElementById('newpostmemorandumstatus').style.display = "block";
     document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
 
+    if (postbody.length == 0 || document.getElementById('memorandumtextarea').style.display == 'none') {
+        //post a regular memo
+        postRaw(posttext, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
+    }else{
+        postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);    
+    }
 
 
-    postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
 
     //if (typeof popupOverlay !== "undefined") {
     //    popupOverlay.hide();
@@ -651,6 +628,7 @@ function postmemorandum() {
 function memorandumpostcompleted() {
     document.getElementById('memorandumtitle').value = "";
     document.getElementById('newposttamemorandum').value = "";
+    simplemde.value("");
     document.getElementById('newpostmemorandumstatus').style.display = "none";
     document.getElementById('newpostmemorandumbutton').style.display = "block";
     document.getElementById('newpostmemorandumcompleted').innerHTML = "Message Sent. ";

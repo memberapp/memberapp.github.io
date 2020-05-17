@@ -164,19 +164,19 @@ function showNewPost() {
     show("newpost");
     document.getElementById('memorandumpreview').innerHTML = "";
     let topicNameHOSTILE = getCurrentTopicHOSTILE();
-    document.getElementById('memotopic').value = topicNameHOSTILE;
+    //document.getElementById('memotopic').value = topicNameHOSTILE;
     document.getElementById('memorandumtopic').value = topicNameHOSTILE;
     if (topicNameHOSTILE != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
-        document.getElementById('memotopicarea').style.display = "block";
+        document.getElementById('memorandumtopicbutton').style.display = "none";
     } else {
         document.getElementById('memorandumtopicarea').style.display = "none";
-        document.getElementById('memotopicarea').style.display = "none";
+        document.getElementById('memorandumtopicbutton').style.display = "block";
     }
     //Do calculations on maxlengths for topics and titles
     topictitleChanged("memorandum");
-    topictitleChanged("memo");
-    document.getElementById('newpostbutton').style.display = "block";
+    //topictitleChanged("memo");
+    //document.getElementById('newpostbutton').style.display = "block";
 
     //Markdown editor doesn't seem to work well on Android
     var ua = navigator.userAgent.toLowerCase();

@@ -145,9 +145,9 @@
                                     class="alertcount noselect" id="alertcount"></span></a>
                             <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
                                 onclick="showNewPost();">📝</a>
-                            <a id="privatemessagesbutton" title="Messages" class="btn privatemessagesbutton" href="#messages"
-                                onclick="showMessages();">📧<span
-                                class="alertcount noselect" id="alertcountpm"></span></a>
+                            <a id="privatemessagesbutton" title="Messages" class="btn privatemessagesbutton"
+                                href="#messages" onclick="showMessages();">📧<span class="alertcount noselect"
+                                    id="alertcountpm"></span></a>
                             <a id="settingsbutton" title="Settings" class="btn" href="#settings"
                                 onclick="showSettings();">⚙️</a>
                             <a id="toolsbutton" title="Tools" class="btn" href="#tools" onclick="showTools();">🛠️</a>
@@ -161,7 +161,7 @@
                     <span id="loggedout" class="loggedout">
                         <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login"
                             onclick="showLogin();">login</a>
-                            <span class="separatorwide"></span>
+                        <span class="separatorwide"></span>
                         <a id="loginbutton" class="btn vavilon" data-vavilon="new account" href="#login"
                             onclick="showLogin();">new account</a>
                     </span>
@@ -218,24 +218,36 @@
         </header>
         <div class="mainbody">
             <div id="lowfundswarning" class="alert" style="display: none;">
-                <table><tr style="background-color: transparent;"><td>You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each action (posting, liking, subscribing, following, messaging etc)
-                    requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough. 
-                    <br/>
-                    <br/>
-                    You might be able to get some at the <a rel='noopener noreferrer' target="bitcoincom" href="https://free.bitcoin.com/">Bitcoin.com Faucet</a> (Just steps 2 and 3 required). 
-                    <br/>
-                    <br/>
-                    Your address is <span id="lowfundsaddress"></span>
-                    <br/>
-                    <br/>
-                    <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';refreshPool();return false;">Refresh your balance</a> or 
-                    <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;">Dismiss this message</a>
-                   </td><td>   <span id="lowfundsaddressdiv"></span>
-                   </td></tr></table>
-            </div>  
+                <table>
+                    <tr style="background-color: transparent;">
+                        <td>You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each
+                            action (posting, liking, subscribing, following, messaging etc)
+                            requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.
+                            <br />
+                            <br />
+                            You might be able to get some at the <a rel='noopener noreferrer' target="bitcoincom"
+                                href="https://free.bitcoin.com/">Bitcoin.com Faucet</a> (Just steps 2 and 3 required).
+                            <br />
+                            <br />
+                            Your address is <span id="lowfundsaddress"></span>
+                            <br />
+                            <br />
+                            <a href=""
+                                onclick="document.getElementById('lowfundswarning').style.display = 'none';refreshPool();return false;">Refresh
+                                your balance</a> or
+                            <a href=""
+                                onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;">Dismiss
+                                this message</a>
+                        </td>
+                        <td> <span id="lowfundsaddressdiv"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div id="toolsanchor" class="applicationpage" style="display: none;">
                 <h2 class="vavilon" data-vavilon="Tools">Tools</h2>
-                <a rel='noopener noreferrer' target="tokenrecycler" href="https://slpvh.github.io/Token-Recycler/">Token Recycler (External link)</a><br/>
+                <a rel='noopener noreferrer' target="tokenrecycler" href="https://slpvh.github.io/Token-Recycler/">Token
+                    Recycler (External link)</a><br />
                 <div id="surrogatecontainer">
                     <label for="surrogatename">Create Surrogate Member Account</label>
                     <p>You can create a Surrogate Member account if you want to rate a user or organization that
@@ -256,69 +268,69 @@
             </div>
             <div id="newpost" class="applicationpage newpost" style="display: none;">
                 <br />
-                <div class="memoarea" id="memoarea">
-                    <div id="memotopicarea">
-                        <label for="memotopic">topic <span id="memotopiclengthadvice">(0/217)</span></label>
-                        <input class="memotopic" id="memotopic" maxlength="217" onchange="topictitleChanged('memo');"
-                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                    </div>
-                    <div>
-                        <label for="memotitle"> <span class="vavilon" data-vavilon="text">text</span>
-                            <span id="memotitlelengthadvice">(0/217)</span></label>
-                        <textarea id="memotitle" maxlength="217" name="text" rows="4" cols="60"
-                            onchange="topictitleChanged('memo');" onkeypress="this.onchange();"
-                            onpaste="this.onchange();" oninput="this.onchange();"></textarea>
-                    </div>
-                    <div>
-                        <input id="newpostbutton" class="vavilon" data-vavilon="post" value="Post a Memo" type="submit"
-                            onclick="post();">
-                        <input id="newpoststatus" style="display: none;" value="Sending . . ." type="submit" disabled>
-                        <div id="newpostcompleted"></div>
-                    </div>
-
-                    <br />
-                    or
-                    <br />
-                </div>
                 <div id="memorandumarea">
-                    <div id="memorandumtopicarea">
-                        <label for="memorandumtopic">topic <span id="memorandumtopiclengthadvice">(0/214)</span></label>
+                    <div id="memorandumtopicbutton">
+                        <a href=""
+                            onclick="document.getElementById('memorandumtopicarea').style.display = 'block';document.getElementById('memorandumtopicbutton').style.display = 'none'; return false;">+add
+                            topic</a>
+                    </div>
+                    <div id="memorandumtopicarea" style="display: none;">
+                        <label for="memorandumtopic">topic (optional) <span
+                                id="memorandumtopiclengthadvice">(0/214)</span></label>
                         <input class="memorandumtopic" id="memorandumtopic" maxlength="217"
                             onchange="topictitleChanged('memorandum');" onkeypress="this.onchange();"
                             onpaste="this.onchange();" oninput="this.onchange();">
                     </div>
                     <div>
-                        <label for="memorandumtitle"><span class="vavilon" data-vavilon="title">title</span> <span
+                        <label for="memorandumtitle"><span class="vavilon" data-vavilon="title">memo</span> <span
                                 id="memorandumtitlelengthadvice">(0/217)</span></label>
-                        <input class="memorandumtitle" id="memorandumtitle" maxlength="217"
+                        <textarea class="memorandumtitle" id="memorandumtitle" maxlength="217" rows="4" cols="60"
                             onchange="topictitleChanged('memorandum'); memorandumPreview();"
-                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                            onkeypress="this.onchange();" onpaste="this.onchange();"
+                            oninput="this.onchange();"></textarea>
 
                     </div>
-                    <div>
-                        <label for="newposttamemorandum">text</label>
+                    <div id="memorandumtextbutton">
+                        <br />
+                        <a href=""
+                            onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
+                            text</a>
+                    </div>
+                    <div id="memorandumtextarea" style="display: none;">
+                        <label for="newposttamemorandum">text (optional)</label>
                         <textarea id="newposttamemorandum" name="text" rows="20" cols="80"
                             onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
                             oninput="this.onchange();"></textarea>
                     </div>
+                    <br />
                     <div>
-                        <input id="newpostmemorandumbutton" class="vavilon" data-vavilon="post"
-                            value="Post a Memorandum" type="submit" onclick="postmemorandum();">
+                        <input id="newpostmemorandumbutton" class="vavilon" data-vavilon="post" value="Post"
+                            type="submit" onclick="postmemorandum();">
                         <input id="newpostmemorandumstatus" style="display: none;" value="Sending . . ." type="submit"
                             disabled>
                         <div id="newpostmemorandumcompleted"></div>
                     </div>
                     <br />
-                    <label for="memorandumpreview">Memorandum Preview
-                        <a href='javascript:switchToArticleMode();'>
-                            <div id="switchToArticleMode" class="switchToArticleMode">(Switch to Article Mode)</div>
-                        </a>
-                        <a href='javascript:switchToRegularMode();'>
-                            <div id="switchToRegularMode" class="switchToRegularMode">(Switch to Regular Mode)</div>
-                        </a>
-                    </label>
-                    <div id="memorandumpreview" class="fatitem">
+                    <div id="memorandumpreviewareabutton">
+                        <br />
+                        <a href=""
+                            onclick="document.getElementById('memorandumpreviewarea').style.display = 'block';document.getElementById('memorandumpreviewareabutton').style.display = 'none'; return false;">+see
+                            preview</a>
                     </div>
+                    <div id="memorandumpreviewarea"  style="display: none;">
+
+                        <label for="memorandumpreview">Preview
+                            <a href='javascript:switchToArticleMode();'>
+                                <div id="switchToArticleMode" class="switchToArticleMode">(Switch to Article Mode)</div>
+                            </a>
+                            <a href='javascript:switchToRegularMode();'>
+                                <div id="switchToRegularMode" class="switchToRegularMode">(Switch to Regular Mode)</div>
+                            </a>
+                        </label>
+                        <div id="memorandumpreview" class="fatitem">
+                        </div>
+                    </div>
+
                 </div>
 
 
@@ -508,7 +520,7 @@
                     <div id="privatekeydisplaydiv"></div>
 
                     <span id="privatekeyformat" style="display: none;">loading</span>
-                    
+
                     <div id="privatekeyformatdiv">
                         <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -794,9 +806,12 @@
 
             <div id="messagesanchor" class="applicationpage" style="display: none;">
                 <h2>Private Messages</h2>
-                <p>Warning: The metadata of your private messages will be public on the blockchain (that's the sender, recipient, size and time of your message).
-                    Additionally, if the recipient's private key is made public in the future, the recipient's messages will become public. Using the blockchain for  
-                    messaging is generally not advised. Nevertheless, you're a big boy and this facility is made available to you if you wish to use it.
+                <p>Warning: The metadata of your private messages will be public on the blockchain (that's the sender,
+                    recipient, size and time of your message).
+                    Additionally, if the recipient's private key is made public in the future, the recipient's messages
+                    will become public. Using the blockchain for
+                    messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
+                    available to you if you wish to use it.
                 </p>
                 <div id="usersearchcontainer">
                     <label for="usersearch">Member Search</label>
@@ -827,8 +842,8 @@
                             <div id="newpostmessagecompleted"></div>
                         </div>
                     </div>
-                    <br/>
-                    <br/>
+                    <br />
+                    <br />
                 </div>
                 <div id="messageslist"></div>
             </div>
@@ -848,14 +863,15 @@
                     New Account</button>
                 <br />
                 <div id="newseedphrasedescription" style="display: none;">
-                    <br/>Here is your password. It is a phrase. Write it down.<br/><br/><label>12 Word Seed Phrase</label>
+                    <br />Here is your password. It is a phrase. Write it down.<br /><br /><label>12 Word Seed
+                        Phrase</label>
                     <div id="newseedphrase"></div>
                 </div>
                 <br />
                 <hr />
                 <br />
                 <br />
-                <br /><span class="vavilon" data-vavilon="seed phrase">Seed Phrase (12 words)</span> 
+                <br /><span class="vavilon" data-vavilon="seed phrase">Seed Phrase (12 words)</span>
                 <br />
                 <input size="64" id="loginkey">
                 <button class="loginbutton" type="button" href="#feed" class="vavilon" data-vavilon="log in"
@@ -866,7 +882,8 @@
                 <br />
                 <br />
                 <div class="loginnotes">
-                *Memo Users. You can also login with your key (Uncompressed WIF: Starts with 'L..' or 'K..'). <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">Fetch from Memo</a>. 
+                    *Memo Users. You can also login with your key (Uncompressed WIF: Starts with 'L..' or 'K..'). <a
+                        rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">Fetch from Memo</a>.
                 </div>
                 <br />
                 <br />
