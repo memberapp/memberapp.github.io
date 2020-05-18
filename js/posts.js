@@ -34,13 +34,13 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
 
-        if(contents==""){
-            contents=getNothingFoundMessageHTML("Nothing here yet - Try hot or new, or a different topic or a longer time period");
+        if (contents == "") {
+            contents = getNothingFoundMessageHTML("Nothing here yet - Try hot or new, or a different topic or a longer time period");
 
-            if(filter=="mypeeps" || filter=="myfeed" || topicnameHOSTILE=="MyFeed" || topicnameHOSTILE=="MyTopics"){
-                contents=getNothingFoundMessageHTML("Nothing in your feed - Try following more people or subscribing to more topics");
+            if (filter == "mypeeps" || filter == "myfeed" || topicnameHOSTILE == "MyFeed" || topicnameHOSTILE == "MyTopics") {
+                contents = getNothingFoundMessageHTML("Nothing in your feed - Try following more people or subscribing to more topics");
             }
-            
+
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
     }, function (status) { //error detection....
@@ -106,12 +106,12 @@ function getAndPopulateMessages(start, limit) {
         data = mergeRepliesToRepliesBySameAuthor(data, true);
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            data[i].address=data[i].senderaddress;
-            contents += getMessageHTML(data[i],i);
+            data[i].address = data[i].senderaddress;
+            contents += getMessageHTML(data[i], i);
         }
-        if(contents==""){contents="No messages found.";}
+        if (contents == "") { contents = "No messages found."; }
 
-        
+
         document.getElementById('messageslist').innerHTML = contents;
         addStarRatings(data, "privatemessages");
         //detectMultipleIDS();
@@ -614,8 +614,8 @@ function postmemorandum() {
     if (postbody.length == 0 || document.getElementById('memorandumtextarea').style.display == 'none') {
         //post a regular memo
         postRaw(posttext, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
-    }else{
-        postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);    
+    } else {
+        postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
     }
 
 
@@ -625,14 +625,21 @@ function postmemorandum() {
     //}
 }
 
-function memorandumpostcompleted() {
+function memorandumpostcompleted(txid) {
+    txid=san(txid);
+    var encodedURL = `https://twitter.com/intent/tweet?text=`+encodeURIComponent(document.getElementById('memorandumtitle').value + ` member.cash/?` + txid.substr(0, 4) + `#thread?post=` + txid.substr(0, 10));
+    document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('`+txid+`')" href="#thread?post=`+txid+`">View It</a> or  <a rel='noopener noreferrer' target="twitter" href="` + encodedURL + `">Also Post To Twitter (opens a new window)</a>`;
+
+    //iframe not allowed by twitter
+    //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a rel='noopener noreferrer' onclick="createiframe('`+encodedURL+`','posttotwitter');return false;" href="">Also Post To Twitter</a><div id="posttotwitter"></div>`;
+    
+
+
     document.getElementById('memorandumtitle').value = "";
     document.getElementById('newposttamemorandum').value = "";
     simplemde.value("");
     document.getElementById('newpostmemorandumstatus').style.display = "none";
     document.getElementById('newpostmemorandumbutton').style.display = "block";
-    document.getElementById('newpostmemorandumcompleted').innerHTML = "Message Sent. ";
-
 }
 
 function memocompleted() {
