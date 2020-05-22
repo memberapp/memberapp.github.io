@@ -75,4 +75,7 @@ function createSurrogate() {
 function privateMessagePosted(){
     document.getElementById('newpostmessagebutton').disabled = false;
     document.getElementById('newpostmessagebutton').value="Send Message";
+    document.getElementById('newposttamessage').value="";
+    document.getElementById('newpostmessagecompleted').innerText="Message Sent";
+
 }
