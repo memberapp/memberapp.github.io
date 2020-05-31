@@ -640,9 +640,12 @@ function memorandumpostcompleted(txid) {
 
     document.getElementById('memorandumtitle').value = "";
     document.getElementById('newposttamemorandum').value = "";
-    simplemde.value("");
     document.getElementById('newpostmemorandumstatus').style.display = "none";
     document.getElementById('newpostmemorandumbutton').style.display = "block";
+    if(simplemde){
+        simplemde.value("");
+    }
+
 }
 
 function memocompleted() {
