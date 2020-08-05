@@ -79,3 +79,45 @@ function privateMessagePosted(){
     document.getElementById('newpostmessagecompleted').innerText="Message Sent";
 
 }
+
+function sendfunds(){
+    var sendAmount=Number(document.getElementById("fundsamount").value);
+    if (sendAmount<547){
+        alert("Amount has to be 547 satoshis or larger.");
+        return;
+    }
+    var totalAmountPossible=tq.updateBalance(pubkey);
+    if (sendAmount>totalAmountPossible){
+        alert("This amount is larger than your balance. "+totalAmountPossible);
+        return;
+    }
+
+
+    var sendAddress=document.getElementById("sendfundsaddress").value.trim();
+    if(sendAddress==""){
+        alert("Make sure to enter an address to send to.");
+    }
+
+    document.getElementById("fundsamount").disabled=true;
+    document.getElementById("sendfundsaddress").disabled=true;
+    document.getElementById("sendfundsbutton").disabled=true;
+
+    const tx = {
+        cash: {
+            key: privkey,
+            to: [{ address: sendAddress, value: sendAmount }]
+        }
+    }
+    //updateStatus("Sending Funds To Surrogate Account");
+    tq.queueTransaction(tx,sendFundsComplete);
+
+}
+
+function sendFundsComplete(){
+    document.getElementById("fundsamount").value="";
+    document.getElementById("sendfundsaddress").value="";
+    document.getElementById("fundsamount").disabled=false;
+    document.getElementById("sendfundsaddress").disabled=false;
+    document.getElementById("sendfundsbutton").disabled=false;
+
+}
