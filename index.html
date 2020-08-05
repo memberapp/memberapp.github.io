@@ -246,8 +246,23 @@
             </div>
             <div id="toolsanchor" class="applicationpage" style="display: none;">
                 <h2 class="vavilon" data-vavilon="Tools">Tools</h2>
-                <a rel='noopener noreferrer' target="tokenrecycler" href="https://slpvh.github.io/Token-Recycler/">Token
-                    Recycler (External link)</a><br />
+                <div id="sendfunds">
+                    <label for="sendfundsname">Send Funds To Another Address</label>
+                    <p>You can send funds to another Bitcoin Cash address.</p>
+
+                    <label for="fundsamount">Amount (In Satoshi)</label>
+                    <input id="fundsamount" size="12" type="number" maxlength="12">
+
+                    <label for="fundsamount">Bitcoin Cash Address (Any format)</label>
+                    <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
+                    <button id="sendfundsbutton" type="button" onclick="sendfunds();" class="vavilon"
+                        data-vavilon="Send Funds">Send Funds</button>
+                    <br />
+                </div>
+                
+                <br />
+                <hr/>
+                <br />
                 <div id="surrogatecontainer">
                     <label for="surrogatename">Create Surrogate Member Account</label>
                     <p>You can create a Surrogate Member account if you want to rate a user or organization that
@@ -265,6 +280,12 @@
                     <div id="surrogatelink"></div>
                     <div id="surrogatesearchresults"></div>
                 </div>
+                <br />
+                <hr/>
+                <br />
+                <a rel='noopener noreferrer' target="tokenrecycler" href="https://slpvh.github.io/Token-Recycler/">Token
+                    Recycler (External link)</a><br />
+                    <br />
             </div>
             <div id="newpost" class="applicationpage newpost" style="display: none;">
                 <br />

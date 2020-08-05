@@ -105,7 +105,7 @@ class UTXOPool {
       }
     }
 
-
+    return total;
   }
 
   refreshPool() {
@@ -601,8 +601,10 @@ class TransactionQueue {
       }
     }
     theUTXOPool.updateBalance();
+  }
 
-
+  updateBalance(address){
+    return this.utxopools[address].updateBalance();
   }
 
 }

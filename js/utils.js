@@ -232,7 +232,7 @@ function getLatestUSDrate() {
     updateSettingsNumber('usdrate');
     updateStatus("Got updated exchange rate:" + numbers.usdrate);
     try{
-      tq.updateBalance("balance");
+      tq.updateBalance(pubkey);
     }catch(err){}
   }, function (status) { //error detection....
     console.log('Failed to get usd rate:' + status);
