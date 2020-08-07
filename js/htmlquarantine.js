@@ -120,10 +120,12 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     if (geohash != "") {
         mapLink = ` <a id="maplink` + page + santxid + `" onclick="showMap('` + san(geohash) + `','` + santxid + `');" href="javascript:;">🌍map</a> `;
     }
-    var hideuserHTML = "";
+    var hideuserHTML = hideuserHTML = `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user)</a>`;
     if (topicHOSTILE != "") {
-        hideuserHTML = `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','` + unicodeEscape(topicHOSTILE) + `','hideuserlink` + page + santxid + `');" href="javascript:;">hide(user for topic)</a>`;
+        hideuserHTML += `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','` + unicodeEscape(topicHOSTILE) + `','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user for topic)</a>`;
     }
+        
+    
     return `
         <a id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
         + articleLink
@@ -139,7 +141,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 
         <a  id="moderatelink`+ page + santxid + `" onclick="showMore('moderate` + page + santxid + `','moderatelink` + page + santxid + `');" href="javascript:;">+moderate</a>
         <span id="moderate`+ page + santxid + `" style="display:none">
-            <a id="hidepostlink`+ page + santxid + `" onclick="sendHidePost('` + santxid + `');" href="javascript:;">hide(post)</a>`
+            <a id="hidepostlink`+ page + santxid + `" onclick="sendHidePost('` + santxid + `');" href="javascript:;">flag(post)</a>`
         + hideuserHTML +
         `</span>
 
