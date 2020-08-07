@@ -218,9 +218,8 @@
         </header>
         <div class="mainbody">
             <div id="lowfundswarning" class="alert" style="display: none;">
-                <table>
-                    <tr style="background-color: transparent;">
-                        <td>You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each
+                <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span>
+                You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each
                             action (posting, liking, subscribing, following, messaging etc)
                             requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.
                             <br />
@@ -238,11 +237,7 @@
                             <a href=""
                                 onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;">Dismiss
                                 this message</a>
-                        </td>
-                        <td> <span id="lowfundsaddressdiv"></span>
-                        </td>
-                    </tr>
-                </table>
+                         
             </div>
             <div id="toolsanchor" class="applicationpage" style="display: none;">
                 <h2 class="vavilon" data-vavilon="Tools">Tools</h2>

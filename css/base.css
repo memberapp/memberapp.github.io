@@ -326,6 +326,10 @@ footer {
   padding: 5px;
 }
 
+.lowfundsaddressdiv {
+  float: right;
+}
+
 /* Posts */
 
 @media only screen {
