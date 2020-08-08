@@ -39,7 +39,10 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
 
     if (start != 0) //Don't show back buttons if we're at the start
     { navbuttons += `<a class="next" href="#show?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start - numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + ___i18n('prev') + `</a> `; }
-    if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
+    
+    //Removing this if, because sometimes flagged posts are removed server side, so this condition may be true even where there are more results to return.
+    //Proper fix is to have the server return a flag to say if there are more results available.
+    //if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
     { navbuttons += `<a class="back" href="#show?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start + numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + ___i18n('next') + `</a>`; }
     return navbuttons;
 
@@ -53,7 +56,9 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
 
     if (start != 0) //Don't show back buttons if we're at the start
     { navbuttons += `<a class="next" href="#` + page + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start - numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + ___i18n('prev') + `</a> `; }
-    if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
+    //Removing this if, because sometimes flagged posts are removed server side, so this condition may be true even where there are more results to return.
+    //Proper fix is to have the server return a flag to say if there are more results available.
+    //if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
     { navbuttons += `<a class="back" href="#` + page + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start + numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + ___i18n('next') + `</a>`; }
     return navbuttons;
 
