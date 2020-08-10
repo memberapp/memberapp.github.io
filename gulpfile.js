@@ -38,7 +38,6 @@ gulp.task("sass-site", function () {
       .pipe(concat("feels.css"))
       // .pipe(uglifyCss())
       .pipe(gulp.dest("css/"))
-      .pipe(browserSync.reload({ stream: true }))
   );
 });
 
