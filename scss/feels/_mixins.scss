@@ -17,3 +17,19 @@
     max-width: 540px;
   }
 }
+
+@mixin container-thin {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @include media(">tablet") {
+    max-width: 800px;
+  }
+
+  @include media("<=tablet") {
+    max-width: 540px;
+  }
+}

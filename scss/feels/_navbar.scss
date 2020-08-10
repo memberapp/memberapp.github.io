@@ -1,0 +1,84 @@
+header {
+  .pagetop {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12); //#4dc846;
+    width: 100%;
+    background: white;
+    nav {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      flex-flow: row wrap;
+      justify-content: center;
+
+      @include container;
+      .memberlogo {
+        margin-right: 0.5rem;
+        margin-top: 4px;
+        img {
+          height: 2.4rem;
+          width: 2.4rem;
+        }
+      }
+      .membertext {
+        // margin-right: auto;
+        @include media(">desktop") {
+          margin-right: auto;
+        }
+
+        font-size: 1.25rem;
+        a {
+          color: $theme-primary;
+        }
+      }
+      .loggedin {
+        .headerbuttons {
+        }
+      }
+
+      #notificationsbutton {
+        .alertcount {
+          background: $theme-danger;
+          font-size: 0.75rem;
+          border-radius: 1rem;
+          padding: 0.25rem;
+          color: white;
+          font-weight: bold;
+          margin-left: 0.25rem;
+        }
+      }
+      .headerbuttons {
+        @include media(">desktop") {
+          margin-right: auto;
+        }
+      }
+      .btn {
+        margin-right: 0.75rem;
+      }
+
+      .topiccontainer {
+        display: none;
+        @include media(">desktop") {
+          display: block;
+        }
+
+        select {
+          min-width: 50px;
+          margin-right: 0.75rem;
+          padding: 0.25rem 0.5rem;
+          font-size: 1rem;
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          border-radius: 0.25rem;
+          height: 1.75rem;
+          appearance: none;
+        }
+      }
+
+      #refreshbutton {
+        display: none;
+        // @include media(">desktop") {
+        //   display: block;
+        // }
+      }
+    }
+  }
+}
