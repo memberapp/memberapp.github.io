@@ -1,0 +1,19 @@
+@mixin container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @include media(">desktop") {
+    max-width: 1140px;
+  }
+
+  @include media(">tablet", "<=desktop") {
+    max-width: 960px;
+  }
+
+  @include media("<=tablet") {
+    max-width: 540px;
+  }
+}

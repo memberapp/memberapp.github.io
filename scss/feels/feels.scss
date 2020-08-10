@@ -1,0 +1,81 @@
+@import "_reboot";
+@import "_include-media";
+@import "_mixins";
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  text-align: left;
+}
+
+a {
+  text-decoration: none;
+}
+
+.mainbodywrapper {
+  margin: 0;
+
+  header {
+    .pagetop {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12); //#4dc846;
+      width: 100%;
+      nav {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        @include container;
+        .memberlogo {
+          margin-right: 1rem;
+        }
+        .membertext {
+          margin-right: auto;
+          font-size: 1.25rem;
+          a {
+            color: #4dc846;
+          }
+        }
+        .loggedin {
+          .headerbuttons {
+          }
+        }
+
+        #notificationsbutton {
+          .alertcount {
+            background: #c1292e;
+            font-size: 0.75rem;
+            border-radius: 1rem;
+            padding: 0.25rem;
+            color: white;
+          }
+        }
+        .headerbuttons {
+          margin-right: auto;
+        }
+        .btn {
+          margin-right: 0.75rem;
+        }
+        .topiccontainer {
+          select {
+            min-width: 50px;
+            margin-right: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            font-size: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 0.25rem;
+            height: 1.75rem;
+            appearance: none;
+          }
+        }
+      }
+    }
+  }
+
+  .mainbody {
+    @include container;
+  }
+}
