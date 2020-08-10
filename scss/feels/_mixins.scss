@@ -33,3 +33,9 @@
     max-width: 540px;
   }
 }
+
+// make dat div or img pop bro
+@mixin pop {
+  outline-offset: -1px;
+  outline: 1px solid rgba(0, 0, 0, 0.05);
+}

@@ -1,0 +1,47 @@
+.mainbodywrapper {
+  #posts {
+    @include container-thin;
+    .itemlist {
+      ol.posts {
+        padding: 0;
+        li {
+          background: white;
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          border-radius: 0.5rem;
+          margin-bottom: 1.5rem;
+          overflow: hidden;
+          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+          &:hover {
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+              0 1px 2px rgba(0, 0, 0, 0.24);
+          }
+        }
+      }
+    }
+
+    .navbuttons {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: space-between;
+
+      a {
+        text-align: center;
+        display: block;
+        width: 45%;
+        border: 1px solid darken($theme-secondary, 10);
+        padding: 0.5rem 1rem;
+        background-color: $theme-secondary;
+        border-radius: 0.5rem;
+        color: white;
+        &:hover {
+          background: darken($theme-secondary, 10);
+        }
+        &:only-child {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

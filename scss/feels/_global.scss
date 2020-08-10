@@ -8,16 +8,204 @@ body {
   color: #212529;
   text-align: left;
   background: #f7f7f7;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
 
 a {
   text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  &:hover {
+  }
 }
 
 .mainbodywrapper {
   margin: 0;
 
   .mainbody {
-    @include container-thin;
+    margin-top: 2rem;
+  }
+}
+
+.post {
+  display: flex;
+
+  .votelinks {
+    background: #f8f9fa;
+    padding: $post-padding 0.5rem;
+    min-width: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    span {
+      text-align: center;
+      display: block;
+    }
+    .rotate180 {
+      transform: rotate(180deg);
+    }
+    .votearrow {
+      width: $arrow-size;
+      height: $arrow-size;
+      border: 0px;
+      margin: 3px 2px 2px;
+      background: url(../img/grayuparrow.svg);
+      background-size: $arrow-size $arrow-size;
+      display: block;
+    }
+    .votearrowactivated,
+    .votearrowactivateddown {
+      background: url(../img/grayuparrow.svg);
+      filter: brightness(0.7) sepia(1) hue-rotate(340deg) saturate(6);
+      width: $arrow-size;
+      height: $arrow-size;
+      border: 0px;
+      margin: 3px 2px 2px;
+      background: url(../img/grayuparrow.svg);
+      background-size: $arrow-size $arrow-size;
+      display: block;
+    }
+    .betweenvotesscore {
+      font-size: 0.75rem;
+      font-weight: bold;
+    }
+    .votetext {
+      display: none;
+    }
+  }
+  .postdetails {
+    padding: $post-padding 1rem $post-padding/2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .title {
+      margin-bottom: 0.875rem;
+      white-space: break-spaces;
+      line-break: anywhere;
+      a {
+        color: rgba(0, 0, 0, 0.76);
+      }
+      img {
+        margin-top: 1rem;
+        @include pop;
+      }
+      .twittercontainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+      .youtubepreview {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .youtubepreviewimage {
+          height: 220px;
+
+          @include media(">desktop") {
+            height: 300px;
+          }
+
+          object-fit: cover;
+        }
+        .play-icon {
+          position: absolute;
+          width: 100px;
+          height: auto;
+        }
+      }
+      .youtubecontainer {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+    }
+    .subtext {
+      font-size: 0.75rem;
+      color: rgba(0, 0, 0, 0.54);
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+      a {
+        color: rgba(0, 0, 0, 0.54);
+        &:hover {
+          color: rgba(0, 0, 0, 0.68);
+        }
+      }
+      .submitter {
+        margin-bottom: 0.25rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        padding-bottom: 0.25rem;
+      }
+      .subtextbuttons {
+        padding-top: 0.25rem;
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row wrap;
+
+        a {
+          position: relative;
+          display: flex;
+
+          &::before {
+            width: $arrow-size;
+            height: $arrow-size;
+            border: 0px;
+            margin: 3px 6px 2px 0;
+            display: none;
+            filter: opacity(0.5);
+
+            content: "";
+          }
+        }
+
+        [id^="permalinkposts"] {
+          &::before {
+            background: url(../img/link-45deg.svg);
+            background-size: $arrow-size $arrow-size;
+            display: inline-block;
+          }
+        }
+
+        [id^="replylinkposts"] {
+          &::before {
+            background: url(../img/chat-right-fill.svg);
+            background-size: $arrow-size $arrow-size;
+            display: inline-block;
+          }
+        }
+
+        a:first-of-type {
+          &::before {
+            background: url(../img/chat-left-fill.svg);
+            background-size: $arrow-size $arrow-size;
+            display: inline-block;
+          }
+        }
+
+        [id^="tiplinkposts"] {
+          &::before {
+            background: url(../img/tip.svg);
+            background-size: $arrow-size $arrow-size;
+            display: inline-block;
+          }
+        }
+
+        [id^="articlelinkposts"] {
+          &::before {
+            background: url(../img/file-earmark-medical-fill.svg);
+            background-size: $arrow-size $arrow-size;
+            display: inline-block;
+          }
+        }
+
+        [id^="hideuserlinkposts"],
+        [id^="hidepostlinkposts"] {
+          color: $theme-danger;
+        }
+      }
+    }
   }
 }

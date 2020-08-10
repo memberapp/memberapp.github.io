@@ -1,11 +1,12 @@
-// div#status {
-//   position: fixed;
-//   bottom: 0;
-//   width: 100%;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   background: rgba(0, 0, 0, 0.4);
-//   font-size: 0.75rem;
-//   color: white;
-// }
+div#status {
+  //   position: fixed;
+  //   bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #c2c2c2;
+  font-size: 0.75rem;
+  padding: 0.5rem;
+  font-weight: bold;
+}
