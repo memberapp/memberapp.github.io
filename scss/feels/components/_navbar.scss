@@ -17,10 +17,13 @@ header {
         img {
           height: 2.4rem;
           width: 2.4rem;
+          margin-top: 0;
+          outline: none;
         }
       }
       .membertext {
         // margin-right: auto;
+        text-transform: capitalize;
         @include media(">desktop") {
           margin-right: auto;
         }
@@ -44,6 +47,9 @@ header {
           color: white;
           font-weight: bold;
           margin-left: 0.25rem;
+          &:empty {
+            display: none;
+          }
         }
       }
       .headerbuttons {

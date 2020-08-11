@@ -529,7 +529,7 @@ h4,
 h5,
 h6 {
   margin-top: 0;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   line-height: 1.15; }
 
 h1 {
@@ -571,7 +571,12 @@ table {
     border-right: 1px solid black;
     padding: 0 0.5rem; }
 
-textarea {
+label {
+  font-weight: bold;
+  margin-bottom: 0.25rem; }
+
+textarea,
+input {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -586,7 +591,8 @@ textarea {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   box-sizing: border-box; }
-  textarea:focus {
+  textarea:focus,
+  input:focus {
     color: #495057;
     background-color: #fff;
     border-color: #5b7fb8;
@@ -602,7 +608,10 @@ textarea {
   margin: 0.875rem 0;
   height: 138px; }
 
-input[type="submit"] {
+input[type="submit"],
+button {
+  line-height: 1;
+  cursor: pointer;
   text-decoration: none;
   margin-bottom: 0.875rem;
   transition: all 0.15s ease-in-out;
@@ -613,8 +622,82 @@ input[type="submit"] {
   border: 1px solid #354f78;
   background: #44669c;
   padding: 0.5rem 1.5rem; }
-  input[type="submit"]:hover {
+  input[type="submit"]:hover,
+  button:hover {
     background: #354f78; }
+  input[type="submit"]:disabled,
+  button:disabled {
+    opacity: 0.65; }
+
+.fatitem .reply div:only-child {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row; }
+
+.fatitem .reply .votelinks a,
+.fatitem .reply .votelinks span {
+  display: none; }
+
+.fatitem .reply .comhead,
+.fatitem .reply .subtextbuttons {
+  display: none; }
+
+.fatitem .reply .commentdetails {
+  padding: 0.875rem; }
+
+.comment-tree {
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 0.4375rem 0; }
+  .comment-tree:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+  .comment-tree ul {
+    padding: 0;
+    margin: 0; }
+    .comment-tree ul li {
+      list-style-type: none; }
+      .comment-tree ul li .reply {
+        margin-bottom: 0.875rem; }
+        .comment-tree ul li .reply div:only-child {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: row;
+          flex-direction: row; }
+          .comment-tree ul li .reply div:only-child .votelinks {
+            background: white;
+            position: relative; }
+            .comment-tree ul li .reply div:only-child .votelinks:before {
+              content: "";
+              position: absolute; }
+            .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscoredown,
+            .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscore,
+            .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscoreup {
+              display: none; }
+          .comment-tree ul li .reply div:only-child .commentdetails {
+            padding: 0.875rem 0.875rem 0.875rem 0;
+            width: 100%; }
+            .comment-tree ul li .reply div:only-child .commentdetails .comhead {
+              font-size: 0.75rem;
+              color: rgba(0, 0, 0, 0.54); }
+            .comment-tree ul li .reply div:only-child .commentdetails .comment {
+              font-size: 1rem; }
+              .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons {
+                font-size: 0.75rem;
+                display: -ms-flexbox;
+                display: flex; }
+                .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons a {
+                  margin-right: 0.5rem;
+                  color: rgba(0, 0, 0, 0.54); }
+                  .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons a:hover {
+                    color: rgba(0, 0, 0, 0.78); }
+      .comment-tree ul li ul {
+        margin-left: 2.5rem;
+        border-left: 1px solid #e6e6e6 !important; }
 
 div#status {
   width: 100%;
@@ -663,8 +746,11 @@ header {
       margin-top: 4px; }
       header .pagetop nav .memberlogo img {
         height: 2.4rem;
-        width: 2.4rem; }
+        width: 2.4rem;
+        margin-top: 0;
+        outline: none; }
     header .pagetop nav .membertext {
+      text-transform: capitalize;
       font-size: 1.25rem; }
       @media (min-width: 1025px) {
         header .pagetop nav .membertext {
@@ -679,6 +765,8 @@ header {
       color: white;
       font-weight: bold;
       margin-left: 0.25rem; }
+      header .pagetop nav #notificationsbutton .alertcount:empty {
+        display: none; }
     @media (min-width: 1025px) {
       header .pagetop nav .headerbuttons {
         margin-right: auto; } }
@@ -742,6 +830,28 @@ footer {
     footer .footerlinks .vavilon {
       margin-right: 0.25rem; }
 
+.navbuttons {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+  .navbuttons a {
+    text-align: center;
+    display: block;
+    width: 45%;
+    border: 1px solid #354f78;
+    padding: 0.5rem 1rem;
+    background-color: #44669c;
+    border-radius: 0.5rem;
+    color: white; }
+    .navbuttons a:hover {
+      background: #354f78; }
+    .navbuttons a:only-child {
+      width: 100%; }
+
 .mainbodywrapper #posts {
   width: 100%;
   padding-right: 15px;
@@ -765,27 +875,6 @@ footer {
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
       .mainbodywrapper #posts .itemlist ol.posts li:hover {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
-  .mainbodywrapper #posts .navbuttons {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    width: 100%;
-    -ms-flex-pack: justify;
-    justify-content: space-between; }
-    .mainbodywrapper #posts .navbuttons a {
-      text-align: center;
-      display: block;
-      width: 45%;
-      border: 1px solid #354f78;
-      padding: 0.5rem 1rem;
-      background-color: #44669c;
-      border-radius: 0.5rem;
-      color: white; }
-      .mainbodywrapper #posts .navbuttons a:hover {
-        background: #354f78; }
-      .mainbodywrapper #posts .navbuttons a:only-child {
-        width: 100%; }
 
 #thread {
   width: 100%;
@@ -799,6 +888,8 @@ footer {
   @media (max-width: 768px) {
     #thread {
       max-width: 540px; } }
+  #thread .title {
+    font-weight: bold; }
   #thread .itemlist .fatitem {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -808,70 +899,6 @@ footer {
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
     #thread .itemlist .fatitem:hover {
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
-    #thread .itemlist .fatitem .reply div:only-child {
-      display: -ms-flexbox;
-      display: flex;
-      flex-align: column; }
-    #thread .itemlist .fatitem .reply .votelinks a,
-    #thread .itemlist .fatitem .reply .votelinks span {
-      display: none; }
-    #thread .itemlist .fatitem .reply .comhead,
-    #thread .itemlist .fatitem .reply .subtextbuttons {
-      display: none; }
-    #thread .itemlist .fatitem .reply .commentdetails {
-      padding: 0.875rem; }
-  #thread .itemlist .comment-tree {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    padding: 0.4375rem 0; }
-    #thread .itemlist .comment-tree:hover {
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
-    #thread .itemlist .comment-tree ul {
-      padding: 0;
-      margin: 0; }
-      #thread .itemlist .comment-tree ul li {
-        list-style-type: none; }
-        #thread .itemlist .comment-tree ul li .reply {
-          margin-bottom: 0.875rem; }
-          #thread .itemlist .comment-tree ul li .reply div:only-child {
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-direction: row;
-            flex-direction: row; }
-            #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks {
-              background: white;
-              position: relative; }
-              #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks:before {
-                content: "";
-                position: absolute; }
-              #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscoredown,
-              #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscore,
-              #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscoreup {
-                display: none; }
-            #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails {
-              padding: 0.875rem 0.875rem 0.875rem 0;
-              width: 100%; }
-              #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comhead {
-                font-size: 0.75rem;
-                color: rgba(0, 0, 0, 0.54); }
-              #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment {
-                font-size: 0.875rem; }
-                #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons {
-                  font-size: 0.75rem;
-                  display: -ms-flexbox;
-                  display: flex; }
-                  #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons a {
-                    margin-right: 0.5rem;
-                    color: rgba(0, 0, 0, 0.54); }
-                    #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons a:hover {
-                      color: rgba(0, 0, 0, 0.78); }
-        #thread .itemlist .comment-tree ul li ul {
-          margin-left: 2.5rem;
-          border-left: 1px solid #e6e6e6 !important; }
 
 #newpost {
   width: 100%;
@@ -885,6 +912,8 @@ footer {
   @media (max-width: 768px) {
     #newpost {
       max-width: 540px; } }
+  #newpost br {
+    display: none; }
   #newpost #memorandumarea {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -892,6 +921,139 @@ footer {
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    padding: 0.875rem; }
+    padding: 1.75rem 0.875rem; }
     #newpost #memorandumarea:hover {
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+    #newpost #memorandumarea #memorandumtopicbutton {
+      margin-bottom: 0.875rem;
+      font-weight: bold; }
+    #newpost #memorandumarea #memorandumtopicarea {
+      margin-bottom: 0.875rem; }
+      #newpost #memorandumarea #memorandumtopicarea label {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -ms-flex-align: center;
+        align-items: center;
+        text-transform: capitalize; }
+        #newpost #memorandumarea #memorandumtopicarea label span {
+          font-size: 0.875rem;
+          color: rgba(0, 0, 0, 0.54);
+          font-weight: normal; }
+      #newpost #memorandumarea #memorandumtopicarea input {
+        width: 100%; }
+    #newpost #memorandumarea .titlecontainer {
+      margin-bottom: 0.875rem;
+      display: -ms-flexbox;
+      display: flex;
+      text-transform: capitalize;
+      -ms-flex-direction: column;
+      flex-direction: column; }
+      #newpost #memorandumarea .titlecontainer label {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -ms-flex-align: center;
+        align-items: center;
+        text-transform: capitalize; }
+        #newpost #memorandumarea .titlecontainer label span:last-of-type {
+          font-size: 0.875rem;
+          color: rgba(0, 0, 0, 0.54);
+          font-weight: normal; }
+      #newpost #memorandumarea .titlecontainer .memorandumtitle {
+        height: 80px; }
+    #newpost #memorandumarea #memorandumtextbutton {
+      margin-bottom: 0.875rem;
+      font-weight: bold; }
+    #newpost #memorandumarea #memorandumpreviewareabutton {
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%; }
+      #newpost #memorandumarea #memorandumpreviewareabutton a {
+        border: 1px solid;
+        border-radius: 0.25rem;
+        font-weight: bold;
+        text-transform: capitalize;
+        padding: 0.5rem 1.5rem;
+        width: 100%;
+        text-align: center;
+        line-height: 1; }
+        #newpost #memorandumarea #memorandumpreviewareabutton a:hover {
+          background-color: #43659a;
+          color: white; }
+    #newpost #memorandumarea .switchToRegularMode {
+      display: none; }
+    #newpost #memorandumarea .switchToArticleMode {
+      display: block; }
+    #newpost #memorandumarea div#memorandumpreview {
+      margin-left: -15px;
+      margin-right: -15px;
+      margin-bottom: -1.75rem; }
+      #newpost #memorandumarea div#memorandumpreview .post .title {
+        font-weight: bold; }
+
+#settingsanchor {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 769px) {
+    #settingsanchor {
+      max-width: 800px; } }
+  @media (max-width: 768px) {
+    #settingsanchor {
+      max-width: 540px; } }
+  #settingsanchor .content {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 1.75rem 0.875rem; }
+    #settingsanchor .content:hover {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+    #settingsanchor .content div {
+      margin-bottom: 1rem; }
+    #settingsanchor .content .formgroup {
+      display: -ms-flexbox;
+      display: flex; }
+      #settingsanchor .content .formgroup button {
+        -ms-flex: 1;
+        flex: 1; }
+
+#memberposts {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 769px) {
+    #memberposts {
+      max-width: 800px; } }
+  @media (max-width: 768px) {
+    #memberposts {
+      max-width: 540px; } }
+  #memberposts .itemlist ol {
+    padding: 0;
+    margin: 0; }
+    #memberposts .itemlist ol li {
+      list-style-type: none;
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      #memberposts .itemlist ol li:hover {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+
+#cashaddrformatdiv {
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto; }
+  #cashaddrformatdiv img {
+    outline: none; }

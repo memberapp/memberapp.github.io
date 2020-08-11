@@ -1,4 +1,10 @@
-textarea {
+label {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+textarea,
+input {
   display: block;
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
@@ -33,7 +39,11 @@ textarea {
   }
 }
 
-input[type="submit"] {
+// buttons
+input[type="submit"],
+button {
+  line-height: 1;
+  cursor: pointer;
   text-decoration: none;
   margin-bottom: $post-padding;
   transition: all 0.15s ease-in-out;
@@ -46,5 +56,8 @@ input[type="submit"] {
   padding: 0.5rem 1.5rem;
   &:hover {
     background: darken($theme-secondary, 10);
+  }
+  &:disabled {
+    opacity: 0.65;
   }
 }

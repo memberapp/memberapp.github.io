@@ -484,6 +484,7 @@
         >
           <br />
           <div id="memorandumarea">
+            <h3>Create a post</h3>
             <div id="memorandumtopicbutton">
               <a
                 href=""
@@ -506,7 +507,7 @@
                 oninput="this.onchange();"
               />
             </div>
-            <div>
+            <div class="titlecontainer">
               <label for="memorandumtitle"
                 ><span class="vavilon" data-vavilon="title">memo</span>
                 <span id="memorandumtitlelengthadvice">(0/217)</span></label
@@ -569,7 +570,7 @@
               <a
                 href=""
                 onclick="document.getElementById('memorandumpreviewarea').style.display = 'block';document.getElementById('memorandumpreviewareabutton').style.display = 'none'; return false;"
-                >+see preview</a
+                >Preview Post</a
               >
             </div>
             <div id="memorandumpreviewarea" style="display: none;">
@@ -739,402 +740,415 @@
         </div>
 
         <div id="settingsanchor" style="display: none;">
-          <h2 class="vavilon" data-vavilon="settings">Settings</h2>
-          <div>
-            <label for="settingsnametext">Handle</label>
-            <input
-              maxlength="217"
-              size="30"
-              id="settingsnametext"
-              value="loading..."
-              onchange="document.getElementById('settingsnametextbutton').disabled=false;"
-              onkeypress="this.onchange();"
-              onpaste="this.onchange();"
-              oninput="this.onchange();"
-            />
-            <button
-              id="settingsnametextbutton"
-              type="button"
-              onclick="setName();"
-              class="vavilon"
-              data-vavilon="update"
-            >
-              update
-            </button>
-          </div>
-          <label for="settingspagingid">Paging ID</label>
-          <div id="settingspagingid">
-            <i>loading</i>
-          </div>
-          <div>
-            <label for="settingsprofiletext">Profile</label>
-            <input
-              maxlength="217"
-              size="30"
-              id="settingsprofiletext"
-              value="loading..."
-              onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
-              onkeypress="this.onchange();"
-              onpaste="this.onchange();"
-              oninput="this.onchange();"
-            />
-            <button
-              id="settingsprofiletextbutton"
-              type="button"
-              onclick="setProfile();"
-              class="vavilon"
-              data-vavilon="update"
-              disabled
-            >
-              update
-            </button>
-          </div>
-          <div>
-            <label
-              for="settingsprofilelogout"
-              class="vavilon"
-              data-vavilon="log out"
-              href="#logout"
-              >Logout</label
-            >
-            <a
-              title="Logout"
-              id="settingsprofilelogout"
-              class="btn vavilon"
-              data-vavilon="log out"
-              href="#logout"
-              onclick="logout();"
-              >Logout</a
-            >
-          </div>
-
-          <div>
-            <label>Profile Links</label>
+          <div class="content">
+            <h2 class="vavilon" data-vavilon="settings">Settings</h2>
             <div>
-              <a href="" id="settingsprofilelink">Member</a
-              ><span class="separatorwide"></span
-              ><a
-                rel="noopener noreferrer"
-                target="memo"
-                href=""
-                id="settingsmemoprofilelink"
-                >Memo</a
+              <label for="settingsnametext">Handle</label>
+              <div class="formgroup">
+                <input
+                  maxlength="217"
+                  size="30"
+                  id="settingsnametext"
+                  value="loading..."
+                  onchange="document.getElementById('settingsnametextbutton').disabled=false;"
+                  onkeypress="this.onchange();"
+                  onpaste="this.onchange();"
+                  oninput="this.onchange();"
+                />
+                <button
+                  id="settingsnametextbutton"
+                  type="button"
+                  onclick="setName();"
+                  class="vavilon"
+                  data-vavilon="update"
+                >
+                  update
+                </button>
+              </div>
+            </div>
+            <label for="settingspagingid">Paging ID</label>
+            <div id="settingspagingid">
+              <i>loading</i>
+            </div>
+            <div>
+              <label for="settingsprofiletext">Profile</label>
+              <div class="formgroup">
+                <input
+                  maxlength="217"
+                  size="30"
+                  id="settingsprofiletext"
+                  value="loading..."
+                  onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
+                  onkeypress="this.onchange();"
+                  onpaste="this.onchange();"
+                  oninput="this.onchange();"
+                />
+                <button
+                  id="settingsprofiletextbutton"
+                  type="button"
+                  onclick="setProfile();"
+                  class="vavilon"
+                  data-vavilon="update"
+                  disabled
+                >
+                  update
+                </button>
+              </div>
+            </div>
+            <div>
+              <label
+                for="settingsprofilelogout"
+                class="vavilon"
+                data-vavilon="log out"
+                href="#logout"
+                >Logout</label
+              >
+              <a
+                title="Logout"
+                id="settingsprofilelogout"
+                class="btn vavilon"
+                data-vavilon="log out"
+                href="#logout"
+                onclick="logout();"
+                >Logout</a
               >
             </div>
-          </div>
-          <div>
-            <label class="vavilon" data-vavilon="address">Address</label>
-            <span id="cashaddrformat">loading</span>
-            <div id="cashaddrformatdiv">
-              <span
-                class="qrcodeclick"
-                onclick="showQRCode('cashaddrformat',200);"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  version="1.1"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+
+            <div class="settingsprofilelinks">
+              <label>Profile Links</label>
+              <div>
+                <a href="" id="settingsprofilelink">Member</a
+                ><span class="separatorwide"></span
+                ><a
+                  rel="noopener noreferrer"
+                  target="memo"
+                  href=""
+                  id="settingsmemoprofilelink"
+                  >Memo</a
                 >
-                  <path
-                    d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+              </div>
+            </div>
+            <div>
+              <label class="vavilon" data-vavilon="address">Address</label>
+              <span id="cashaddrformat">loading</span>
+              <div id="cashaddrformatdiv">
+                <span
+                  class="qrcodeclick"
+                  onclick="showQRCode('cashaddrformat',200);"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z"
-                  />
-                </svg>
-                Click to enlarge QR code
-              </span>
+                    />
+                  </svg>
+                  Click to enlarge QR code
+                </span>
+              </div>
             </div>
-          </div>
-          <div>
-            <label>Legacy Address</label>
-            <span id="legacyformat">loading</span>
-            <div id="legacyformatdiv">
-              <span
-                class="qrcodeclick"
-                onclick="showQRCode('legacyformat',200);"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  version="1.1"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+            <div>
+              <label>Legacy Address</label>
+              <span id="legacyformat">loading</span>
+              <div id="legacyformatdiv">
+                <span
+                  class="qrcodeclick"
+                  onclick="showQRCode('legacyformat',200);"
                 >
-                  <path
-                    d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z"
-                  />
-                </svg>
-                Click to enlarge QR code
-              </span>
+                    />
+                  </svg>
+                  Click to enlarge QR code
+                </span>
+              </div>
             </div>
-          </div>
-          <div>
-            <label class="vavilon" data-vavilon="private key"
-              >Seed Phrase / Private Key / WIF</label
-            >
-            <span id="privatekeydisplay" style="display: none;">loading</span>
-            <span id="privatekey"></span>
-            <div id="privatekeydisplaydiv"></div>
-
-            <span id="privatekeyformat" style="display: none;">loading</span>
-
-            <div id="privatekeyformatdiv">
-              <span
-                class="qrcodeclick"
-                onclick="showQRCode('privatekeyformat',200);"
+            <div>
+              <label class="vavilon" data-vavilon="private key"
+                >Seed Phrase / Private Key / WIF</label
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  version="1.1"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+              <span id="privatekeydisplay" style="display: none;">loading</span>
+              <span id="privatekey"></span>
+              <div id="privatekeydisplaydiv"></div>
+
+              <span id="privatekeyformat" style="display: none;">loading</span>
+
+              <div id="privatekeyformatdiv">
+                <span
+                  class="qrcodeclick"
+                  onclick="showQRCode('privatekeyformat',200);"
                 >
-                  <path
-                    d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z"
-                  />
-                </svg>
-                Click to enlarge QR code
-              </span>
+                    />
+                  </svg>
+                  Click to enlarge QR code
+                </span>
+              </div>
             </div>
-          </div>
-          <div>
-            <label for="cssselector" class="vavilon" data-vavilon="themes"
-              >Theme</label
-            >
-            <select
-              id="cssselector"
-              onchange='changeStyle(document.getElementById("cssselector").value);'
-            >
-              <option class="vavilon" data-vavilon="change theme" value="base"
-                >Choose Theme</option
+            <div>
+              <label for="cssselector" class="vavilon" data-vavilon="themes"
+                >Theme</label
               >
-              <option value="base">Member</option>
-              <option value="base nightmode">Member Night Mode</option>
-              <option value="base hackernews">Hacker News</option>
-              <option value="base hackernews hnnightmode"
-                >Hacker News Night Mode</option
+              <select
+                id="cssselector"
+                onchange='changeStyle(document.getElementById("cssselector").value);'
               >
-              <option class="vavilon" data-vavilon="none" value="none"
-                >None</option
-              >
-            </select>
-          </div>
-          <div>
-            <div class="follow">
-              <label>Follow</label>
-              <a id="settingsfollow">
-                <i>loading</i>
-              </a>
+                <option class="vavilon" data-vavilon="change theme" value="base"
+                  >Choose Theme</option
+                >
+                <option value="base">Member</option>
+                <option value="base nightmode">Member Night Mode</option>
+                <option value="base hackernews">Hacker News</option>
+                <option value="base hackernews hnnightmode"
+                  >Hacker News Night Mode</option
+                >
+                <option class="vavilon" data-vavilon="none" value="none"
+                  >None</option
+                >
+              </select>
             </div>
-            <div class="mute">
-              <label class="vavilon" data-vavilon="mute">Mute</label>
-              <a id="settingsblock">
-                <i>loading</i>
-              </a>
+            <div>
+              <div class="follow">
+                <label>Follow</label>
+                <a id="settingsfollow">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="mute">
+                <label class="vavilon" data-vavilon="mute">Mute</label>
+                <a id="settingsblock">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="followers">
+                <label>Followers</label>
+                <a id="settingsfollowersnumber">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="following">
+                <label>Following</label>
+                <a id="settingsfollowingnumber">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="muters">
+                <label>Muters</label>
+                <a id="settingsblockersnumber">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="muting">
+                <label>Muting</label>
+                <a id="settingsblockingnumber">
+                  <i>loading</i>
+                </a>
+              </div>
             </div>
-            <div class="followers">
-              <label>Followers</label>
-              <a id="settingsfollowersnumber">
-                <i>loading</i>
-              </a>
+            <div>
+              <label for="oneclicktip">One-Click Tip Amount</label>
+              <input
+                id="oneclicktip"
+                size="8"
+                type="number"
+                onchange="updateSettingsNumber('oneclicktip');"
+                onkeypress="this.onchange();"
+                onpaste="this.onchange();"
+                oninput="this.onchange();"
+              />
+              (Amount to tip when clicking up arrow. Minimum 547)
             </div>
-            <div class="following">
-              <label>Following</label>
-              <a id="settingsfollowingnumber">
-                <i>loading</i>
-              </a>
+            <div>
+              <label for="maxfee">Max Fee</label>
+              <input
+                id="maxfee"
+                size="3"
+                type="number"
+                step="1"
+                onchange="updateSettingsNumber('maxfee');"
+                onkeypress="this.onchange();"
+                onpaste="this.onchange();"
+                oninput="this.onchange();"
+              />
+              (Max satoshis per byte to pay during network congestion. Minimum
+              2)
             </div>
-            <div class="muters">
-              <label>Muters</label>
-              <a id="settingsblockersnumber">
-                <i>loading</i>
-              </a>
+            <div>
+              <label for="results">Number Of Results To Show</label>
+              <input
+                id="results"
+                size="3"
+                type="number"
+                step="1"
+                onchange="updateSettingsNumber('results');"
+                onkeypress="this.onchange();"
+                onpaste="this.onchange();"
+                oninput="this.onchange();"
+              />
+              (Max results to show per page. Maximum 100)
             </div>
-            <div class="muting">
-              <label>Muting</label>
-              <a id="settingsblockingnumber">
-                <i>loading</i>
-              </a>
-            </div>
-          </div>
-          <div>
-            <label for="oneclicktip">One-Click Tip Amount</label>
-            <input
-              id="oneclicktip"
-              size="8"
-              type="number"
-              onchange="updateSettingsNumber('oneclicktip');"
-              onkeypress="this.onchange();"
-              onpaste="this.onchange();"
-              oninput="this.onchange();"
-            />
-            (Amount to tip when clicking up arrow. Minimum 547)
-          </div>
-          <div>
-            <label for="maxfee">Max Fee</label>
-            <input
-              id="maxfee"
-              size="3"
-              type="number"
-              step="1"
-              onchange="updateSettingsNumber('maxfee');"
-              onkeypress="this.onchange();"
-              onpaste="this.onchange();"
-              oninput="this.onchange();"
-            />
-            (Max satoshis per byte to pay during network congestion. Minimum 2)
-          </div>
-          <div>
-            <label for="results">Number Of Results To Show</label>
-            <input
-              id="results"
-              size="3"
-              type="number"
-              step="1"
-              onchange="updateSettingsNumber('results');"
-              onkeypress="this.onchange();"
-              onpaste="this.onchange();"
-              oninput="this.onchange();"
-            />
-            (Max results to show per page. Maximum 100)
-          </div>
-          <div>
-            <input id="usdrate" type="number" style="display: none;" />
-            <label for="currencydisplay" data-vavilon="Currency Display"
-              >Currency Display</label
-            >
-            <select
-              id="currencydisplay"
-              onchange='updateSettingsDropdown("currencydisplay");'
-            >
-              <option value="USD">USD</option>
-              <option value="BCH">BCH</option>
-            </select>
-          </div>
-          <div>
-            <label for="mutedwords">Muted Words (Comma Separate)</label>
-            <textarea
-              id="mutedwords"
-              maxlength="217"
-              name="text"
-              rows="4"
-              cols="60"
-              onchange="updatemutedwords();"
-              onkeypress="this.onchange();"
-              onpaste="this.onchange();"
-              oninput="this.onchange();"
-            ></textarea>
-          </div>
-          <div>
-            <label
-              for="mediasettings"
-              class="labelheader vavilon"
-              data-vavilon="Media Settings"
-              >Media Settings</label
-            >
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id="showyoutube"
-              onchange="updateSettingsCheckbox('showyoutube');"
-            />
-            <label
-              for="showyoutube"
-              class="checkboxlabel vavilon"
-              data-vavilon="Show YouTube Preview Images"
-              >Show YouTube Preview Images</label
-            >
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id="showimgur"
-              onchange="updateSettingsCheckbox('showimgur');"
-            />
-            <label
-              for="showimgur"
-              class="checkboxlabel vavilon"
-              data-vavilon="Show Imgur Images"
-              >Show Imgur Images</label
-            >
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id="showtwitter"
-              onchange="updateSettingsCheckbox('showtwitter');"
-            />
-            <label
-              for="showtwitter"
-              class="checkboxlabel vavilon"
-              data-vavilon="Show Tweets"
-              >Show Tweets</label
-            >
-          </div>
-          <div>
-            <label for="contentserver" data-vavilon="Content Server"
-              >Content Server</label
-            >
-            <select
-              id="contentserver"
-              onchange='updateSettingsDropdown("contentserver");'
-            >
-              <option value="https://memberjs.org:8123/member.js"
-                >Memberjs.org</option
+            <div>
+              <input id="usdrate" type="number" style="display: none;" />
+              <label for="currencydisplay" data-vavilon="Currency Display"
+                >Currency Display</label
               >
-              <option value="https://memberjs.bchd.cash/member.js"
-                >memberjs.bchd.cash</option
+              <select
+                id="currencydisplay"
+                onchange='updateSettingsDropdown("currencydisplay");'
               >
-              <option value="http://127.0.0.1:3123/member.js">Localhost</option>
-            </select>
-          </div>
-          <div>
-            <label for="txbroadcastserver" data-vavilon="TX Broadcast Server"
-              >TX Broadcast Server</label
-            >
-            <select
-              id="txbroadcastserver"
-              onchange='updateSettingsDropdown("txbroadcastserver");'
-            >
-              <option value="https://memberjs.org:8123/v2/"
-                >Memberjs.org</option
+                <option value="USD">USD</option>
+                <option value="BCH">BCH</option>
+              </select>
+            </div>
+            <div>
+              <label for="mutedwords">Muted Words (Comma Separate)</label>
+              <textarea
+                id="mutedwords"
+                maxlength="217"
+                name="text"
+                rows="4"
+                cols="60"
+                onchange="updatemutedwords();"
+                onkeypress="this.onchange();"
+                onpaste="this.onchange();"
+                oninput="this.onchange();"
+              ></textarea>
+            </div>
+            <div>
+              <label
+                for="mediasettings"
+                class="labelheader vavilon"
+                data-vavilon="Media Settings"
+                >Media Settings</label
               >
-              <option value="https://memberjs.bchd.cash/v2/"
-                >memberjs.bchd.cash</option
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                id="showyoutube"
+                onchange="updateSettingsCheckbox('showyoutube');"
+              />
+              <label
+                for="showyoutube"
+                class="checkboxlabel vavilon"
+                data-vavilon="Show YouTube Preview Images"
+                >Show YouTube Preview Images</label
               >
-              <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-              <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
-            </select>
-          </div>
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                id="showimgur"
+                onchange="updateSettingsCheckbox('showimgur');"
+              />
+              <label
+                for="showimgur"
+                class="checkboxlabel vavilon"
+                data-vavilon="Show Imgur Images"
+                >Show Imgur Images</label
+              >
+            </div>
+            <div>
+              <input
+                type="checkbox"
+                id="showtwitter"
+                onchange="updateSettingsCheckbox('showtwitter');"
+              />
+              <label
+                for="showtwitter"
+                class="checkboxlabel vavilon"
+                data-vavilon="Show Tweets"
+                >Show Tweets</label
+              >
+            </div>
+            <div>
+              <label for="contentserver" data-vavilon="Content Server"
+                >Content Server</label
+              >
+              <select
+                id="contentserver"
+                onchange='updateSettingsDropdown("contentserver");'
+              >
+                <option value="https://memberjs.org:8123/member.js"
+                  >Memberjs.org</option
+                >
+                <option value="https://memberjs.bchd.cash/member.js"
+                  >memberjs.bchd.cash</option
+                >
+                <option value="http://127.0.0.1:3123/member.js"
+                  >Localhost</option
+                >
+              </select>
+            </div>
+            <div>
+              <label for="txbroadcastserver" data-vavilon="TX Broadcast Server"
+                >TX Broadcast Server</label
+              >
+              <select
+                id="txbroadcastserver"
+                onchange='updateSettingsDropdown("txbroadcastserver");'
+              >
+                <option value="https://memberjs.org:8123/v2/"
+                  >Memberjs.org</option
+                >
+                <option value="https://memberjs.bchd.cash/v2/"
+                  >memberjs.bchd.cash</option
+                >
+                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+                <option value="https://rest.bitcoin.com/v2/"
+                  >Bitcoin.com</option
+                >
+              </select>
+            </div>
 
-          <div>
-            <label for="utxoserver" data-vavilon="UTXO Server"
-              >UTXO Server</label
-            >
-            <select
-              id="utxoserver"
-              onchange='updateSettingsDropdown("utxoserver");'
-            >
-              <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
-              <option value="https://memberjs.bchd.cash/v2/"
-                >memberjs.bchd.cash</option
+            <div>
+              <label for="utxoserver" data-vavilon="UTXO Server"
+                >UTXO Server</label
               >
-              <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-            </select>
+              <select
+                id="utxoserver"
+                onchange='updateSettingsDropdown("utxoserver");'
+              >
+                <option value="https://rest.bitcoin.com/v2/"
+                  >Bitcoin.com</option
+                >
+                <option value="https://memberjs.bchd.cash/v2/"
+                  >memberjs.bchd.cash</option
+                >
+                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+              </select>
+            </div>
           </div>
         </div>
 

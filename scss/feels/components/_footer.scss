@@ -26,3 +26,27 @@ footer {
     }
   }
 }
+
+.navbuttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+
+  a {
+    text-align: center;
+    display: block;
+    width: 45%;
+    border: 1px solid darken($theme-secondary, 10);
+    padding: 0.5rem 1rem;
+    background-color: $theme-secondary;
+    border-radius: 0.5rem;
+    color: white;
+    &:hover {
+      background: darken($theme-secondary, 10);
+    }
+    &:only-child {
+      width: 100%;
+    }
+  }
+}
