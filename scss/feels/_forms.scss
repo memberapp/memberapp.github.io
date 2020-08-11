@@ -1,0 +1,50 @@
+textarea {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box;
+  &:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: lighten($theme-secondary, 10);
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}
+
+[id^="replyposts"],
+[id^="replythread"] {
+  br {
+    display: none;
+  }
+  textarea {
+    margin: $post-padding 0;
+    height: 138px;
+  }
+}
+
+input[type="submit"] {
+  text-decoration: none;
+  margin-bottom: $post-padding;
+  transition: all 0.15s ease-in-out;
+  color: white;
+  float: right;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  border: 1px solid darken($theme-secondary, 10);
+  background: $theme-secondary;
+  padding: 0.5rem 1.5rem;
+  &:hover {
+    background: darken($theme-secondary, 10);
+  }
+}

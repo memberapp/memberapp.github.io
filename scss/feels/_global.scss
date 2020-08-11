@@ -16,7 +16,9 @@ body {
 a {
   text-decoration: none;
   transition: all 0.15s ease-in-out;
+  color: $theme-secondary;
   &:hover {
+    color: darken($theme-secondary, 10);
   }
 }
 
@@ -28,53 +30,56 @@ a {
   }
 }
 
+.votelinks {
+  background: #f8f9fa;
+  padding: $post-padding 0.5rem;
+  min-width: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    text-align: center;
+    display: block;
+  }
+  .rotate180 {
+    transform: rotate(180deg);
+  }
+  .votearrow {
+    width: $arrow-size;
+    height: $arrow-size;
+    border: 0px;
+    margin: 3px 2px 2px;
+    background: url(../img/grayuparrow.svg);
+    background-size: $arrow-size $arrow-size;
+    display: block;
+  }
+  .votearrowactivated,
+  .votearrowactivateddown {
+    background: url(../img/grayuparrow.svg);
+    filter: brightness(0.7) sepia(1) hue-rotate(340deg) saturate(6);
+    width: $arrow-size;
+    height: $arrow-size;
+    border: 0px;
+    margin: 3px 2px 2px;
+    background: url(../img/grayuparrow.svg);
+    background-size: $arrow-size $arrow-size;
+    display: block;
+  }
+  .betweenvotesscoredown,
+  .betweenvotesscore,
+  .betweenvotesscoreup {
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  .votetext {
+    display: none;
+  }
+}
+
 .post {
   display: flex;
 
-  .votelinks {
-    background: #f8f9fa;
-    padding: $post-padding 0.5rem;
-    min-width: 1.75rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    span {
-      text-align: center;
-      display: block;
-    }
-    .rotate180 {
-      transform: rotate(180deg);
-    }
-    .votearrow {
-      width: $arrow-size;
-      height: $arrow-size;
-      border: 0px;
-      margin: 3px 2px 2px;
-      background: url(../img/grayuparrow.svg);
-      background-size: $arrow-size $arrow-size;
-      display: block;
-    }
-    .votearrowactivated,
-    .votearrowactivateddown {
-      background: url(../img/grayuparrow.svg);
-      filter: brightness(0.7) sepia(1) hue-rotate(340deg) saturate(6);
-      width: $arrow-size;
-      height: $arrow-size;
-      border: 0px;
-      margin: 3px 2px 2px;
-      background: url(../img/grayuparrow.svg);
-      background-size: $arrow-size $arrow-size;
-      display: block;
-    }
-    .betweenvotesscore {
-      font-size: 0.75rem;
-      font-weight: bold;
-    }
-    .votetext {
-      display: none;
-    }
-  }
   .postdetails {
     padding: $post-padding 1rem $post-padding/2;
     width: 100%;
@@ -124,14 +129,14 @@ a {
     }
     .subtext {
       font-size: 0.75rem;
-      color: rgba(0, 0, 0, 0.54);
+      color: $text-secondary;
       display: flex;
       flex-direction: column;
       font-weight: bold;
       a {
-        color: rgba(0, 0, 0, 0.54);
+        color: $text-secondary;
         &:hover {
-          color: rgba(0, 0, 0, 0.68);
+          color: $text-primary;
         }
       }
       .submitter {
@@ -208,4 +213,13 @@ a {
       }
     }
   }
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+li {
+  list-style-type: none;
 }
