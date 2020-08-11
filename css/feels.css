@@ -308,12 +308,6 @@ img {
   height: auto; }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  text-align: left;
   background: #f7f7f7;
   display: -ms-flexbox;
   display: flex;
@@ -375,6 +369,44 @@ a {
   .votelinks .votetext {
     display: none; }
 
+img {
+  margin-top: 1rem;
+  outline-offset: -1px;
+  outline: 1px solid rgba(0, 0, 0, 0.05); }
+
+.twittercontainer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-top: 1rem; }
+
+.youtubepreview {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+  .youtubepreview .youtubepreviewimage {
+    height: 220px;
+    object-fit: cover; }
+    @media (min-width: 1025px) {
+      .youtubepreview .youtubepreviewimage {
+        height: 300px; } }
+  .youtubepreview .play-icon {
+    position: absolute;
+    width: 100px;
+    height: auto; }
+
+.youtubecontainer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-top: 1rem; }
+
 .post {
   display: -ms-flexbox;
   display: flex; }
@@ -391,40 +423,6 @@ a {
       line-break: anywhere; }
       .post .postdetails .title a {
         color: rgba(0, 0, 0, 0.76); }
-      .post .postdetails .title img {
-        margin-top: 1rem;
-        outline-offset: -1px;
-        outline: 1px solid rgba(0, 0, 0, 0.05); }
-      .post .postdetails .title .twittercontainer {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-pack: center;
-        justify-content: center;
-        margin-top: 1rem; }
-      .post .postdetails .title .youtubepreview {
-        position: relative;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-align: center;
-        align-items: center;
-        -ms-flex-pack: center;
-        justify-content: center; }
-        .post .postdetails .title .youtubepreview .youtubepreviewimage {
-          height: 220px;
-          object-fit: cover; }
-          @media (min-width: 1025px) {
-            .post .postdetails .title .youtubepreview .youtubepreviewimage {
-              height: 300px; } }
-        .post .postdetails .title .youtubepreview .play-icon {
-          position: absolute;
-          width: 100px;
-          height: auto; }
-      .post .postdetails .title .youtubecontainer {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-pack: center;
-        justify-content: center;
-        margin-top: 1rem; }
     .post .postdetails .subtext {
       font-size: 0.75rem;
       color: rgba(0, 0, 0, 0.54);
@@ -516,6 +514,62 @@ p {
 
 li {
   list-style-type: none; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(0, 0, 0, 0.87); }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.15; }
+
+h1 {
+  font-size: 3.052em; }
+
+h2 {
+  font-size: 2.441em; }
+
+h3 {
+  font-size: 1.953em; }
+
+h4 {
+  font-size: 1.563em; }
+
+h5 {
+  font-size: 1.25em; }
+
+h6 {
+  font-size: 1.25em; }
+
+small,
+.text_small {
+  font-size: 0.8em; }
+
+ol li {
+  list-style-type: decimal; }
+
+ul li {
+  list-style-type: disc; }
+
+table {
+  border-spacing: 0;
+  text-align: center;
+  margin-bottom: 1rem; }
+  table thead tr th {
+    border-right: 1px solid black;
+    padding: 0 0.5rem; }
+  table tbody tr td {
+    border-right: 1px solid black;
+    padding: 0 0.5rem; }
 
 textarea {
   display: block;
@@ -754,6 +808,18 @@ footer {
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
     #thread .itemlist .fatitem:hover {
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+    #thread .itemlist .fatitem .reply div:only-child {
+      display: -ms-flexbox;
+      display: flex;
+      flex-align: column; }
+    #thread .itemlist .fatitem .reply .votelinks a,
+    #thread .itemlist .fatitem .reply .votelinks span {
+      display: none; }
+    #thread .itemlist .fatitem .reply .comhead,
+    #thread .itemlist .fatitem .reply .subtextbuttons {
+      display: none; }
+    #thread .itemlist .fatitem .reply .commentdetails {
+      padding: 0.875rem; }
   #thread .itemlist .comment-tree {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -767,40 +833,65 @@ footer {
     #thread .itemlist .comment-tree ul {
       padding: 0;
       margin: 0; }
-      #thread .itemlist .comment-tree ul li .reply {
-        margin-bottom: 0.875rem; }
-        #thread .itemlist .comment-tree ul li .reply div:only-child {
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-direction: row;
-          flex-direction: row; }
-          #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks {
-            background: white;
-            position: relative; }
-            #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks:before {
-              content: "";
-              position: absolute; }
-            #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscoredown,
-            #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscore,
-            #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscoreup {
-              display: none; }
-          #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails {
-            padding: 0.875rem 0.875rem 0.875rem 0;
-            width: 100%; }
-            #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comhead {
-              font-size: 0.75rem;
-              color: rgba(0, 0, 0, 0.54); }
-            #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment {
-              font-size: 0.875rem; }
-              #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons {
+      #thread .itemlist .comment-tree ul li {
+        list-style-type: none; }
+        #thread .itemlist .comment-tree ul li .reply {
+          margin-bottom: 0.875rem; }
+          #thread .itemlist .comment-tree ul li .reply div:only-child {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: row;
+            flex-direction: row; }
+            #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks {
+              background: white;
+              position: relative; }
+              #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks:before {
+                content: "";
+                position: absolute; }
+              #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscoredown,
+              #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscore,
+              #thread .itemlist .comment-tree ul li .reply div:only-child .votelinks .betweenvotesscoreup {
+                display: none; }
+            #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails {
+              padding: 0.875rem 0.875rem 0.875rem 0;
+              width: 100%; }
+              #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comhead {
                 font-size: 0.75rem;
-                display: -ms-flexbox;
-                display: flex; }
-                #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons a {
-                  margin-right: 0.5rem;
-                  color: rgba(0, 0, 0, 0.54); }
-                  #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons a:hover {
-                    color: rgba(0, 0, 0, 0.78); }
-      #thread .itemlist .comment-tree ul li ul {
-        margin-left: 2.5rem;
-        border-left: 1px solid #e6e6e6 !important; }
+                color: rgba(0, 0, 0, 0.54); }
+              #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment {
+                font-size: 0.875rem; }
+                #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons {
+                  font-size: 0.75rem;
+                  display: -ms-flexbox;
+                  display: flex; }
+                  #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons a {
+                    margin-right: 0.5rem;
+                    color: rgba(0, 0, 0, 0.54); }
+                    #thread .itemlist .comment-tree ul li .reply div:only-child .commentdetails .comment .subtextbuttons a:hover {
+                      color: rgba(0, 0, 0, 0.78); }
+        #thread .itemlist .comment-tree ul li ul {
+          margin-left: 2.5rem;
+          border-left: 1px solid #e6e6e6 !important; }
+
+#newpost {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 769px) {
+    #newpost {
+      max-width: 800px; } }
+  @media (max-width: 768px) {
+    #newpost {
+      max-width: 540px; } }
+  #newpost #memorandumarea {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 0.875rem; }
+    #newpost #memorandumarea:hover {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }

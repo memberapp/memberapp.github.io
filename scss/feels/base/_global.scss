@@ -1,12 +1,4 @@
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  text-align: left;
   background: #f7f7f7;
   display: flex;
   min-height: 100vh;
@@ -77,6 +69,41 @@ a {
   }
 }
 
+img {
+  margin-top: 1rem;
+  @include pop;
+}
+.twittercontainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.youtubepreview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .youtubepreviewimage {
+    height: 220px;
+
+    @include media(">desktop") {
+      height: 300px;
+    }
+
+    object-fit: cover;
+  }
+  .play-icon {
+    position: absolute;
+    width: 100px;
+    height: auto;
+  }
+}
+.youtubecontainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
 .post {
   display: flex;
 
@@ -91,40 +118,6 @@ a {
       line-break: anywhere;
       a {
         color: rgba(0, 0, 0, 0.76);
-      }
-      img {
-        margin-top: 1rem;
-        @include pop;
-      }
-      .twittercontainer {
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
-      }
-      .youtubepreview {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        .youtubepreviewimage {
-          height: 220px;
-
-          @include media(">desktop") {
-            height: 300px;
-          }
-
-          object-fit: cover;
-        }
-        .play-icon {
-          position: absolute;
-          width: 100px;
-          height: auto;
-        }
-      }
-      .youtubecontainer {
-        display: flex;
-        justify-content: center;
-        margin-top: 1rem;
       }
     }
     .subtext {

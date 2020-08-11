@@ -1,0 +1,7 @@
+#newpost {
+  @include container-thin;
+  #memorandumarea {
+    @include card;
+    padding: $post-padding;
+  }
+}

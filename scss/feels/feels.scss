@@ -1,13 +1,21 @@
-@import "_normalize";
-@import "_vars";
-@import "_include-media";
-@import "_utils";
-@import "_mixins";
-@import "_global";
-// after
-@import "_forms";
-@import "_status";
-@import "_navbar";
-@import "_footer";
-@import "_feed";
-@import "_thread";
+// plugins
+@import "plugins/_normalize";
+@import "plugins/_include-media";
+
+// base
+@import "base/_vars";
+@import "base/_utils";
+@import "base/_mixins";
+@import "base/_global";
+@import "base/_typography";
+
+// components
+@import "components/_forms";
+@import "components/_status";
+@import "components/_navbar";
+@import "components/_footer";
+
+// pages
+@import "pages/_feed";
+@import "pages/_thread";
+@import "pages/_new";

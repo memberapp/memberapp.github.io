@@ -4,6 +4,26 @@
   .itemlist {
     .fatitem {
       @include card;
+      .reply {
+        // styles for long text-post
+        div:only-child {
+          display: flex;
+          flex-align: column;
+        }
+        .votelinks {
+          a,
+          span {
+            display: none;
+          }
+        }
+        .comhead,
+        .subtextbuttons {
+          display: none;
+        }
+        .commentdetails {
+          padding: $post-padding;
+        }
+      }
     }
 
     .comment-tree {
@@ -12,7 +32,9 @@
       ul {
         padding: 0;
         margin: 0;
+
         li {
+          list-style-type: none;
           .reply {
             margin-bottom: $post-padding;
             div:only-child {
