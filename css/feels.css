@@ -688,6 +688,65 @@ select {
     border-bottom-left-radius: 0;
     height: calc(1.5em + 0.75rem + 2px); }
 
+.customcheckbox {
+  padding-left: 2.25rem;
+  min-height: 2.25rem;
+  margin-bottom: 1rem;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative; }
+  .customcheckbox input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+    opacity: 0; }
+    .customcheckbox input:checked ~ label:after {
+      background-color: #fff;
+      transform: translateX(1.7rem); }
+    .customcheckbox input:checked ~ label:before {
+      background: #44669c;
+      box-shadow: none; }
+  .customcheckbox label {
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding-left: 2rem;
+    font-weight: normal;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+    .customcheckbox label:after, .customcheckbox label:before {
+      position: absolute;
+      top: 0.25rem;
+      left: -1.5rem;
+      display: block;
+      width: 1rem;
+      height: 1rem;
+      content: ""; }
+    .customcheckbox label:before {
+      pointer-events: all;
+      border-radius: 2rem;
+      border: 0;
+      position: absolute;
+      top: 0.25rem;
+      left: 0;
+      height: 1.8rem;
+      width: 3.5rem;
+      pointer-events: all;
+      border-radius: 2rem;
+      border: 0;
+      background: #e4e4e4; }
+    .customcheckbox label:after {
+      z-index: 1;
+      left: 0;
+      width: 1.8rem;
+      height: 1.8rem;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 0 0 rgba(0, 0, 0, 0.04), 0 4px 9px rgba(0, 0, 0, 0.13), 0 3px 3px rgba(0, 0, 0, 0.05);
+      border-radius: 50%;
+      transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
+
 .fatitem .reply div:only-child {
   display: -ms-flexbox;
   display: flex;
