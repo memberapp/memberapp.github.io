@@ -18,13 +18,11 @@ header {
       justify-content: center;
       @include container-fluid;
 
-      @include media(">tablet", "<desktop") {
-        @include container-fluid;
-        width: 100%;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-      }
+      // @include media(">tablet", "<desktop") {
+      //   @include container-fluid;
+      //   width: 100%;
+
+      // }
 
       @include media(">desktop") {
         @include container;
@@ -110,17 +108,26 @@ header {
           }
           a {
             &:hover {
-              background-color: rgba(0, 0, 0, 0.06);
+              // background-color: rgba(0, 0, 0, 0.06);
+              background-color: lighten($theme-primary, 40);
+              // border-bottom: 4px solid rgba(0, 0, 0, 0.12);
             }
           }
 
           #balance {
             font-weight: bold;
             padding: 0;
+            .sats {
+              padding: 0;
+            }
           }
           #mapbutton {
             margin-right: 0.75rem;
           }
+
+          // #tools:target a[href="#toolsbutton"] {
+          //   background-color: red;
+          // }
         }
       }
       // .separatorwidebreakpoint {

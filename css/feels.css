@@ -614,6 +614,10 @@ input {
     border-color: #5b7fb8;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+  textarea:disabled,
+  input:disabled {
+    background-color: #e9ecef;
+    opacity: 1; }
 
 [id^="replyposts"] br,
 [id^="replythread"] br {
@@ -626,7 +630,7 @@ input {
 
 input[type="submit"],
 button {
-  line-height: 1;
+  line-height: 1.2;
   cursor: pointer;
   text-decoration: none;
   margin-bottom: 0.875rem;
@@ -674,10 +678,15 @@ select {
     flex: 1 1 auto;
     width: 1%;
     min-width: 0;
-    margin-bottom: 0; }
+    margin-bottom: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0; }
   .formgroup button {
     display: -ms-flexbox;
-    display: flex; }
+    display: flex;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    height: calc(1.5em + 0.75rem + 2px); }
 
 .fatitem .reply div:only-child {
   display: -ms-flexbox;
@@ -786,20 +795,6 @@ header {
       padding-left: 15px;
       margin-right: auto;
       margin-left: auto; }
-
-@media (min-width: 769px) and (max-width: 1023px) {
-  header .pagetop nav {
-    max-width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    width: 100%;
-    padding: 0;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: center;
-    justify-content: center; } }
       @media (min-width: 1025px) {
         header .pagetop nav {
           width: 100%;
@@ -888,10 +883,12 @@ header {
               header .pagetop nav .navitemsmain .headerbuttons span {
                 padding: 0.5rem; } }
           header .pagetop nav .navitemsmain .headerbuttons a:hover {
-            background-color: rgba(0, 0, 0, 0.06); }
+            background-color: #e4f7e3; }
           header .pagetop nav .navitemsmain .headerbuttons #balance {
             font-weight: bold;
             padding: 0; }
+            header .pagetop nav .navitemsmain .headerbuttons #balance .sats {
+              padding: 0; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
             margin-right: 0.75rem; }
       header .pagetop nav .alertcount {
@@ -995,12 +992,13 @@ footer {
 
 #lowfundswarning {
   background: #ffe099;
-  padding: 2.625rem 0;
+  padding: 1.75rem 0;
   margin-top: -1rem;
   margin-bottom: 2rem; }
   @media (min-width: 1025px) {
     #lowfundswarning {
-      margin-top: -2rem; } }
+      margin-top: -2rem;
+      padding: 2.625rem 0; } }
   #lowfundswarning .content {
     width: 100%;
     padding-right: 15px;
@@ -1017,7 +1015,8 @@ footer {
         max-width: 540px; } }
     #lowfundswarning .content #satoshiamount,
     #lowfundswarning .content #lowfundsaddress {
-      font-weight: bold; }
+      font-weight: bold;
+      word-break: break-all; }
 
 .mainbodywrapper #posts {
   width: 100%;
@@ -1212,12 +1211,76 @@ footer {
       #memberposts .itemlist ol li:hover {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
-#cashaddrformatdiv {
-  max-width: 300px;
-  height: auto;
-  margin: 0 auto; }
-  #cashaddrformatdiv img {
-    outline: none; }
+#cssselector {
+  width: 100%; }
+
+#settingsprofileaddress,
+#settingslegacyprofileaddress,
+#settingsprivatekey {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+  #settingsprofileaddress span,
+  #settingslegacyprofileaddress span,
+  #settingsprivatekey span {
+    word-break: break-all;
+    margin-bottom: 1rem; }
+  #settingsprofileaddress #cashaddrformatdiv,
+  #settingsprofileaddress #legacyformatdiv,
+  #settingsprofileaddress #privatekeyformatdiv,
+  #settingslegacyprofileaddress #cashaddrformatdiv,
+  #settingslegacyprofileaddress #legacyformatdiv,
+  #settingslegacyprofileaddress #privatekeyformatdiv,
+  #settingsprivatekey #cashaddrformatdiv,
+  #settingsprivatekey #legacyformatdiv,
+  #settingsprivatekey #privatekeyformatdiv {
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto;
+    text-align: center; }
+    #settingsprofileaddress #cashaddrformatdiv .qrcodeclick,
+    #settingsprofileaddress #legacyformatdiv .qrcodeclick,
+    #settingsprofileaddress #privatekeyformatdiv .qrcodeclick,
+    #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick,
+    #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick,
+    #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick,
+    #settingsprivatekey #cashaddrformatdiv .qrcodeclick,
+    #settingsprivatekey #legacyformatdiv .qrcodeclick,
+    #settingsprivatekey #privatekeyformatdiv .qrcodeclick {
+      cursor: pointer;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      color: #44669c; }
+      #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
+      #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
+      #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
+      #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
+      #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick:hover,
+      #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
+      #settingsprivatekey #cashaddrformatdiv .qrcodeclick:hover,
+      #settingsprivatekey #legacyformatdiv .qrcodeclick:hover,
+      #settingsprivatekey #privatekeyformatdiv .qrcodeclick:hover {
+        color: #354f78; }
+    #settingsprofileaddress #cashaddrformatdiv img,
+    #settingsprofileaddress #legacyformatdiv img,
+    #settingsprofileaddress #privatekeyformatdiv img,
+    #settingslegacyprofileaddress #cashaddrformatdiv img,
+    #settingslegacyprofileaddress #legacyformatdiv img,
+    #settingslegacyprofileaddress #privatekeyformatdiv img,
+    #settingsprivatekey #cashaddrformatdiv img,
+    #settingsprivatekey #legacyformatdiv img,
+    #settingsprivatekey #privatekeyformatdiv img {
+      outline: none; }
+
+.settingsprofilelinks div a {
+  margin-right: 1rem; }
+  .settingsprofilelinks div a:last-of-type {
+    margin-right: 0; }
 
 .profilestats {
   display: -ms-flexbox;
@@ -1225,7 +1288,9 @@ footer {
   -ms-flex-direction: row;
   flex-direction: row;
   -ms-flex-pack: justify;
-  justify-content: space-between; }
+  justify-content: space-between;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
   .profilestats div {
     margin: 0 1rem;
     display: -ms-flexbox;
@@ -1233,9 +1298,9 @@ footer {
     -ms-flex-direction: column;
     flex-direction: column;
     -ms-flex-align: center;
-    align-items: center; }
-    .profilestats div:first-of-type {
-      margin: 0; }
+    align-items: center;
+    -ms-flex: 1;
+    flex: 1; }
 
 #toolsanchor {
   width: 100%;
