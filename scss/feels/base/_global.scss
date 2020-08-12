@@ -3,7 +3,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  margin-top: 61px;
+  position: relative;
 }
 
 a {
@@ -15,8 +15,23 @@ a {
   }
 }
 
+hr {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 0;
+}
+
+img {
+  @include pop;
+  margin-top: 1rem;
+  max-height: 640px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
 .mainbodywrapper {
-  margin: 0;
+  // margin-top: 61px;
   .mainbody {
     margin-top: 1rem;
     @include media(">desktop") {
@@ -72,15 +87,6 @@ a {
   }
 }
 
-img {
-  @include pop;
-  margin-top: 1rem;
-  max-height: 640px;
-  width: auto;
-  max-width: 100%;
-  margin: 0 auto;
-  display: block;
-}
 .twittercontainer {
   display: flex;
   justify-content: center;

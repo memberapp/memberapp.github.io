@@ -83,3 +83,19 @@ select {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
 }
+
+.formgroup {
+  display: flex;
+
+  input {
+    position: relative;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+    margin-bottom: 0;
+  }
+
+  button {
+    display: flex;
+  }
+}

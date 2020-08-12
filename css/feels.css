@@ -314,7 +314,7 @@ body {
   min-height: 100vh;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin-top: 61px; }
+  position: relative; }
 
 a {
   text-decoration: none;
@@ -323,13 +323,25 @@ a {
   a:hover {
     color: #354f78; }
 
-.mainbodywrapper {
-  margin: 0; }
-  .mainbodywrapper .mainbody {
-    margin-top: 1rem; }
-    @media (min-width: 1025px) {
-      .mainbodywrapper .mainbody {
-        margin-top: 2rem; } }
+hr {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 0; }
+
+img {
+  outline-offset: -1px;
+  outline: 1px solid rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+  max-height: 640px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block; }
+
+.mainbodywrapper .mainbody {
+  margin-top: 1rem; }
+  @media (min-width: 1025px) {
+    .mainbodywrapper .mainbody {
+      margin-top: 2rem; } }
 
 .votelinks {
   background: #f8f9fa;
@@ -372,16 +384,6 @@ a {
     font-weight: bold; }
   .votelinks .votetext {
     display: none; }
-
-img {
-  outline-offset: -1px;
-  outline: 1px solid rgba(0, 0, 0, 0.05);
-  margin-top: 1rem;
-  max-height: 640px;
-  width: auto;
-  max-width: 100%;
-  margin: 0 auto;
-  display: block; }
 
 .twittercontainer {
   display: -ms-flexbox;
@@ -663,6 +665,20 @@ select {
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
+.formgroup {
+  display: -ms-flexbox;
+  display: flex; }
+  .formgroup input {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+    margin-bottom: 0; }
+  .formgroup button {
+    display: -ms-flexbox;
+    display: flex; }
+
 .fatitem .reply div:only-child {
   display: -ms-flexbox;
   display: flex;
@@ -751,22 +767,25 @@ header {
   width: 100%;
   background: white;
   box-shadow: 0px 1px 5px -3px rgba(0, 0, 0, 0.5);
-  position: fixed;
+  position: sticky;
   top: 0;
-  z-index: 2; }
-  header .pagetop nav {
-    min-height: 60px;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-flow: row;
-    flex-flow: row;
-    -ms-flex-pack: center;
-    justify-content: center;
-    max-width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto; }
+  z-index: 1071;
+  min-height: 61px; }
+  header .pagetop {
+    min-height: 61px; }
+    header .pagetop nav {
+      min-height: 61px;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-flow: row;
+      flex-flow: row;
+      -ms-flex-pack: center;
+      justify-content: center;
+      max-width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto; }
 
 @media (min-width: 769px) and (max-width: 1023px) {
   header .pagetop nav {
@@ -781,13 +800,13 @@ header {
     display: flex;
     -ms-flex-pack: center;
     justify-content: center; } }
-    @media (min-width: 1025px) {
-      header .pagetop nav {
-        width: 100%;
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto; } }
+      @media (min-width: 1025px) {
+        header .pagetop nav {
+          width: 100%;
+          padding-right: 15px;
+          padding-left: 15px;
+          margin-right: auto;
+          margin-left: auto; } }
   @media (min-width: 1025px) and (min-width: 1025px) {
     header .pagetop nav {
       max-width: 1140px; } }
@@ -798,117 +817,118 @@ header {
   @media (min-width: 1025px) and (max-width: 768px) {
     header .pagetop nav {
       max-width: 540px; } }
-    header .pagetop nav .memberlogo {
-      margin-right: 15px;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-align: center;
-      align-items: center;
-      height: auto; }
-      header .pagetop nav .memberlogo a {
-        width: -webkit-max-content;
-        width: max-content; }
-        header .pagetop nav .memberlogo a img {
-          margin-top: 0;
-          outline: none;
-          height: 2.4rem;
-          width: 2.4rem; }
-          @media (min-width: 1025px) {
-            header .pagetop nav .memberlogo a img {
-              height: 2rem;
-              width: 2rem; } }
-    header .pagetop nav .membertext {
-      display: none;
-      font-size: 1.25rem; }
-      @media (min-width: 1025px) {
-        header .pagetop nav .membertext {
+      header .pagetop nav .memberlogo {
+        margin-right: 15px;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        height: auto; }
+        header .pagetop nav .memberlogo a {
+          width: -webkit-max-content;
+          width: max-content; }
+          header .pagetop nav .memberlogo a img {
+            margin-top: 0;
+            outline: none;
+            height: 2.4rem;
+            width: 2.4rem; }
+            @media (min-width: 1025px) {
+              header .pagetop nav .memberlogo a img {
+                height: 2rem;
+                width: 2rem; } }
+      header .pagetop nav .membertext {
+        display: none;
+        font-size: 1.25rem; }
+        @media (min-width: 1025px) {
+          header .pagetop nav .membertext {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            text-transform: capitalize;
+            padding: 0.75rem 0;
+            margin-right: auto;
+            padding: 0; } }
+        header .pagetop nav .membertext a {
+          color: #4dc846; }
+      header .pagetop nav .navitemsmain {
+        overflow: auto;
+        white-space: nowrap;
+        margin-right: -15px;
+        display: -ms-flexbox;
+        display: flex;
+        height: auto;
+        -ms-flex-align: center;
+        align-items: center; }
+        @media (min-width: 769px) {
+          header .pagetop nav .navitemsmain {
+            margin: initial; } }
+        @media (min-width: 1025px) {
+          header .pagetop nav .navitemsmain {
+            border-top: none;
+            margin: initial; } }
+        header .pagetop nav .navitemsmain #loggedin {
+          height: 100%; }
+        header .pagetop nav .navitemsmain .headerbuttons {
           display: -ms-flexbox;
           display: flex;
+          height: 100%;
           -ms-flex-align: center;
-          align-items: center;
-          text-transform: capitalize;
-          padding: 0.75rem 0;
-          margin-right: auto;
-          padding: 0; } }
-      header .pagetop nav .membertext a {
-        color: #4dc846; }
-    header .pagetop nav .navitemsmain {
-      overflow: auto;
-      white-space: nowrap;
-      margin-right: -15px;
-      display: -ms-flexbox;
-      display: flex;
-      height: auto;
-      -ms-flex-align: center;
-      align-items: center; }
-      @media (min-width: 769px) {
-        header .pagetop nav .navitemsmain {
-          margin: initial; } }
+          align-items: center; }
+          header .pagetop nav .navitemsmain .headerbuttons a,
+          header .pagetop nav .navitemsmain .headerbuttons span {
+            padding: 0.5rem 1rem;
+            height: 100%;
+            -ms-flex-align: center;
+            align-items: center;
+            display: -ms-flexbox;
+            display: flex; }
+            @media (min-width: 1025px) {
+              header .pagetop nav .navitemsmain .headerbuttons a,
+              header .pagetop nav .navitemsmain .headerbuttons span {
+                padding: 0.5rem; } }
+          header .pagetop nav .navitemsmain .headerbuttons a:hover {
+            background-color: rgba(0, 0, 0, 0.06); }
+          header .pagetop nav .navitemsmain .headerbuttons #balance {
+            font-weight: bold;
+            padding: 0; }
+          header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
+            margin-right: 0.75rem; }
+      header .pagetop nav .alertcount {
+        background: #c1292e;
+        font-size: 0.6rem;
+        border-radius: 1rem;
+        padding: 0.1rem 0.2rem !important;
+        color: white;
+        font-weight: bold;
+        margin-left: 0.25rem;
+        top: 0.8rem;
+        left: 0.8rem;
+        position: absolute !important;
+        height: auto !important; }
+        header .pagetop nav .alertcount:empty {
+          display: none !important; }
+      header .pagetop nav #notificationsbutton,
+      header .pagetop nav #privatemessagesbutton {
+        position: relative; }
       @media (min-width: 1025px) {
-        header .pagetop nav .navitemsmain {
-          border-top: none;
-          margin: initial; } }
-      header .pagetop nav .navitemsmain #loggedin {
-        height: 100%; }
-      header .pagetop nav .navitemsmain .headerbuttons {
+        header .pagetop nav .headerbuttons {
+          margin-right: auto; } }
+      header .pagetop nav .topiccontainer {
         display: -ms-flexbox;
         display: flex;
         height: 100%;
         -ms-flex-align: center;
         align-items: center; }
-        header .pagetop nav .navitemsmain .headerbuttons a,
-        header .pagetop nav .navitemsmain .headerbuttons span {
-          padding: 0.5rem 1rem;
-          height: 100%;
-          -ms-flex-align: center;
-          align-items: center;
-          display: -ms-flexbox;
-          display: flex; }
+        header .pagetop nav .topiccontainer select {
+          margin-right: 0.75rem;
+          height: 1.865rem;
+          padding: 0.25rem; }
           @media (min-width: 1025px) {
-            header .pagetop nav .navitemsmain .headerbuttons a,
-            header .pagetop nav .navitemsmain .headerbuttons span {
-              padding: 0.5rem; } }
-        header .pagetop nav .navitemsmain .headerbuttons a:hover {
-          background-color: rgba(0, 0, 0, 0.06); }
-        header .pagetop nav .navitemsmain .headerbuttons #balance {
-          font-weight: bold;
-          padding: 0; }
-        header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
-          margin-right: 0.75rem; }
-    header .pagetop nav .alertcount {
-      background: #c1292e;
-      font-size: 0.6rem;
-      border-radius: 1rem;
-      padding: 0.1rem !important;
-      color: white;
-      font-weight: bold;
-      margin-left: 0.25rem;
-      top: 0.1rem;
-      left: 0.8rem;
-      position: absolute !important; }
-      header .pagetop nav .alertcount:empty {
-        display: none !important; }
-    header .pagetop nav #notificationsbutton,
-    header .pagetop nav #privatemessagesbutton {
-      position: relative; }
-    @media (min-width: 1025px) {
-      header .pagetop nav .headerbuttons {
-        margin-right: auto; } }
-    header .pagetop nav .topiccontainer {
-      display: -ms-flexbox;
-      display: flex;
-      height: 100%;
-      -ms-flex-align: center;
-      align-items: center; }
-      header .pagetop nav .topiccontainer select {
-        margin-right: 0.75rem;
-        height: 1.865rem;
-        padding: 0.25rem; }
-        @media (min-width: 1025px) {
-          header .pagetop nav .topiccontainer select:last-of-type {
-            margin-right: 0; } }
-    header .pagetop nav #refreshbutton {
-      display: none; }
+            header .pagetop nav .topiccontainer select:last-of-type {
+              margin-right: 0; } }
+      header .pagetop nav #refreshbutton {
+        display: none; }
 
 footer {
   background-color: #e0e0e0;
@@ -972,6 +992,32 @@ footer {
       background: #354f78; }
     .navbuttons a:only-child {
       width: 100%; }
+
+#lowfundswarning {
+  background: #ffe099;
+  padding: 2.625rem 0;
+  margin-top: -1rem;
+  margin-bottom: 2rem; }
+  @media (min-width: 1025px) {
+    #lowfundswarning {
+      margin-top: -2rem; } }
+  #lowfundswarning .content {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    color: #332400; }
+    @media (min-width: 769px) {
+      #lowfundswarning .content {
+        max-width: 800px; } }
+    @media (max-width: 768px) {
+      #lowfundswarning .content {
+        max-width: 540px; } }
+    #lowfundswarning .content #satoshiamount,
+    #lowfundswarning .content #lowfundsaddress {
+      font-weight: bold; }
 
 .mainbodywrapper #posts {
   width: 100%;
@@ -1134,17 +1180,11 @@ footer {
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    padding: 1.75rem 0.875rem; }
+    padding: 1.75rem; }
     #settingsanchor .content:hover {
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
     #settingsanchor .content div {
       margin-bottom: 1rem; }
-    #settingsanchor .content .formgroup {
-      display: -ms-flexbox;
-      display: flex; }
-      #settingsanchor .content .formgroup button {
-        -ms-flex: 1;
-        flex: 1; }
 
 #memberposts {
   width: 100%;
@@ -1178,3 +1218,47 @@ footer {
   margin: 0 auto; }
   #cashaddrformatdiv img {
     outline: none; }
+
+.profilestats {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between; }
+  .profilestats div {
+    margin: 0 1rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center; }
+    .profilestats div:first-of-type {
+      margin: 0; }
+
+#toolsanchor {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 769px) {
+    #toolsanchor {
+      max-width: 800px; } }
+  @media (max-width: 768px) {
+    #toolsanchor {
+      max-width: 540px; } }
+  #toolsanchor .content {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 1.75rem; }
+    #toolsanchor .content:hover {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+    #toolsanchor .content a {
+      text-align: center;
+      display: block; }

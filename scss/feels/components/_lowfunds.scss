@@ -1,0 +1,22 @@
+#lowfundswarning {
+  background: $theme-warning;
+  padding: $post-padding * 3 0;
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+  @include media(">desktop") {
+    margin-top: -2rem;
+  }
+
+  .content {
+    @include container-thin;
+    text-align: center;
+    color: darken($theme-warning, 70);
+    #satoshiamount,
+    #lowfundsaddress {
+      font-weight: bold;
+    }
+    br {
+      //   display: none;
+    }
+  }
+}
