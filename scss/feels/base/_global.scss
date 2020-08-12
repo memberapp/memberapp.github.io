@@ -250,3 +250,9 @@ p {
 li {
   list-style-type: none;
 }
+
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}

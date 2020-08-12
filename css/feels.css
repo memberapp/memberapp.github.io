@@ -515,6 +515,11 @@ p {
 li {
   list-style-type: none; }
 
+*,
+::after,
+::before {
+  box-sizing: border-box; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
@@ -802,6 +807,8 @@ footer {
     display: flex;
     -ms-flex-pack: center;
     justify-content: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
