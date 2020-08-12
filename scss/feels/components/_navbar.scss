@@ -6,14 +6,28 @@ header {
     nav {
       min-height: 60px;
       display: flex;
-      align-items: center;
+      // align-items: center;
       flex-flow: row wrap;
       justify-content: center;
+      @include container-fluid;
 
-      @include container;
+      @include media(">tablet", "<desktop") {
+        @include container-fluid;
+        width: 100%;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      @include media(">desktop") {
+        @include container;
+      }
+
       .memberlogo {
         margin-right: 0.5rem;
         margin-top: 4px;
+        display: flex;
+        align-items: center;
         img {
           height: 2.4rem;
           width: 2.4rem;
@@ -23,6 +37,8 @@ header {
       }
       .membertext {
         // margin-right: auto;
+        display: flex;
+        align-items: center;
         text-transform: capitalize;
         @include media(">desktop") {
           margin-right: auto;
@@ -33,24 +49,82 @@ header {
           color: $theme-primary;
         }
       }
-      .loggedin {
+      .navitemsmain {
+        overflow: auto;
+
+        white-space: nowrap;
+        // padding: 0.5rem 0;
+
+        margin: 0 -15px;
+        display: flex;
+        height: auto;
+        align-items: center;
+
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+        @include media(">desktop") {
+          border-top: none;
+
+          margin: initial;
+        }
+        #loggedin {
+          height: 100%;
+        }
+
         .headerbuttons {
+          display: flex;
+          height: 100%;
+          align-items: center;
+          a,
+          span {
+            padding: 0.5rem;
+            height: 100%;
+            align-items: center;
+            display: flex;
+          }
+          a {
+            &:hover {
+              background-color: rgba(0, 0, 0, 0.06);
+            }
+          }
+
+          #balance {
+            font-weight: bold;
+          }
+          #mapbutton {
+            margin-right: 0.75rem;
+          }
+        }
+      }
+      // .separatorwidebreakpoint {
+      //   background: black;
+      //   height: 1rem;
+      //   width: 1rem;
+      //   margin-left: auto;
+      //   @include media(">desktop") {
+      //     display: none;
+      //   }
+      // }
+
+      .alertcount {
+        background: $theme-danger;
+        font-size: 0.6rem;
+        border-radius: 1rem;
+        padding: 0.1rem !important;
+        color: white;
+        font-weight: bold;
+        margin-left: 0.25rem;
+        top: 0.1rem;
+        left: 0.8rem;
+        position: absolute !important;
+        &:empty {
+          display: none !important;
         }
       }
 
-      #notificationsbutton {
-        .alertcount {
-          background: $theme-danger;
-          font-size: 0.75rem;
-          border-radius: 1rem;
-          padding: 0.25rem;
-          color: white;
-          font-weight: bold;
-          margin-left: 0.25rem;
-          &:empty {
-            display: none;
-          }
-        }
+      #notificationsbutton,
+      #privatemessagesbutton {
+        position: relative;
       }
       .headerbuttons {
         @include media(">desktop") {
@@ -58,24 +132,29 @@ header {
         }
       }
       .btn {
-        margin-right: 0.75rem;
+        // margin-right: 0.75rem;
       }
 
       .topiccontainer {
-        display: none;
-        @include media(">desktop") {
-          display: block;
-        }
+        display: flex;
+        height: 100%;
+        align-items: center;
 
         select {
-          min-width: 50px;
+          // min-width: 50px;
           margin-right: 0.75rem;
-          padding: 0.25rem 0.5rem;
-          font-size: 1rem;
-          border: 1px solid rgba(0, 0, 0, 0.12);
-          border-radius: 0.25rem;
-          height: 1.75rem;
-          appearance: none;
+          height: 1.865rem;
+          padding: 0.25rem;
+          // font-size: 1rem;
+          // border: 1px solid rgba(0, 0, 0, 0.12);
+          // border-radius: 0.25rem;
+          // height: 1.75rem;
+          // appearance: none;
+          @include media(">desktop") {
+            &:last-of-type {
+              margin-right: 0;
+            }
+          }
         }
       }
 

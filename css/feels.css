@@ -634,6 +634,26 @@ button {
   button:disabled {
     opacity: 0.65; }
 
+select {
+  height: calc(1.5em + 0.75rem + 2px);
+  min-width: 3rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
+  select:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #5b7fb8;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+
 .fatitem .reply div:only-child {
   display: -ms-flexbox;
   display: flex;
@@ -725,36 +745,63 @@ header {
     min-height: 60px;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-align: center;
-    align-items: center;
     -ms-flex-flow: row wrap;
     flex-flow: row wrap;
     -ms-flex-pack: center;
     justify-content: center;
-    width: 100%;
+    max-width: 100%;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto; }
+
+@media (min-width: 769px) and (max-width: 1023px) {
+  header .pagetop nav {
+    max-width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+    padding: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center; } }
     @media (min-width: 1025px) {
       header .pagetop nav {
-        max-width: 1140px; } }
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto; } }
+  @media (min-width: 1025px) and (min-width: 1025px) {
+    header .pagetop nav {
+      max-width: 1140px; } }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 1025px) and (min-width: 769px) and (max-width: 1024px) {
   header .pagetop nav {
     max-width: 960px; } }
-    @media (max-width: 768px) {
-      header .pagetop nav {
-        max-width: 540px; } }
+  @media (min-width: 1025px) and (max-width: 768px) {
+    header .pagetop nav {
+      max-width: 540px; } }
     header .pagetop nav .memberlogo {
       margin-right: 0.5rem;
-      margin-top: 4px; }
+      margin-top: 4px;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center; }
       header .pagetop nav .memberlogo img {
         height: 2.4rem;
         width: 2.4rem;
         margin-top: 0;
         outline: none; }
     header .pagetop nav .membertext {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
       text-transform: capitalize;
       font-size: 1.25rem; }
       @media (min-width: 1025px) {
@@ -762,37 +809,74 @@ header {
           margin-right: auto; } }
       header .pagetop nav .membertext a {
         color: #4dc846; }
-    header .pagetop nav #notificationsbutton .alertcount {
+    header .pagetop nav .navitemsmain {
+      overflow: auto;
+      white-space: nowrap;
+      margin: 0 -15px;
+      display: -ms-flexbox;
+      display: flex;
+      height: auto;
+      -ms-flex-align: center;
+      align-items: center;
+      border-top: 1px solid rgba(0, 0, 0, 0.12); }
+      @media (min-width: 1025px) {
+        header .pagetop nav .navitemsmain {
+          border-top: none;
+          margin: initial; } }
+      header .pagetop nav .navitemsmain #loggedin {
+        height: 100%; }
+      header .pagetop nav .navitemsmain .headerbuttons {
+        display: -ms-flexbox;
+        display: flex;
+        height: 100%;
+        -ms-flex-align: center;
+        align-items: center; }
+        header .pagetop nav .navitemsmain .headerbuttons a,
+        header .pagetop nav .navitemsmain .headerbuttons span {
+          padding: 0.5rem;
+          height: 100%;
+          -ms-flex-align: center;
+          align-items: center;
+          display: -ms-flexbox;
+          display: flex; }
+        header .pagetop nav .navitemsmain .headerbuttons a:hover {
+          background-color: rgba(0, 0, 0, 0.06); }
+        header .pagetop nav .navitemsmain .headerbuttons #balance {
+          font-weight: bold; }
+        header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
+          margin-right: 0.75rem; }
+    header .pagetop nav .alertcount {
       background: #c1292e;
-      font-size: 0.75rem;
+      font-size: 0.6rem;
       border-radius: 1rem;
-      padding: 0.25rem;
+      padding: 0.1rem !important;
       color: white;
       font-weight: bold;
-      margin-left: 0.25rem; }
-      header .pagetop nav #notificationsbutton .alertcount:empty {
-        display: none; }
+      margin-left: 0.25rem;
+      top: 0.1rem;
+      left: 0.8rem;
+      position: absolute !important; }
+      header .pagetop nav .alertcount:empty {
+        display: none !important; }
+    header .pagetop nav #notificationsbutton,
+    header .pagetop nav #privatemessagesbutton {
+      position: relative; }
     @media (min-width: 1025px) {
       header .pagetop nav .headerbuttons {
         margin-right: auto; } }
-    header .pagetop nav .btn {
-      margin-right: 0.75rem; }
     header .pagetop nav .topiccontainer {
-      display: none; }
-      @media (min-width: 1025px) {
-        header .pagetop nav .topiccontainer {
-          display: block; } }
+      display: -ms-flexbox;
+      display: flex;
+      height: 100%;
+      -ms-flex-align: center;
+      align-items: center; }
       header .pagetop nav .topiccontainer select {
-        min-width: 50px;
         margin-right: 0.75rem;
-        padding: 0.25rem 0.5rem;
-        font-size: 1rem;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        border-radius: 0.25rem;
-        height: 1.75rem;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none; }
+        height: 1.865rem;
+        padding: 0.25rem; }
+        @media (min-width: 1025px) {
+          header .pagetop nav .topiccontainer select:last-of-type {
+            margin-right: 0; } }
     header .pagetop nav #refreshbutton {
       display: none; }
 
