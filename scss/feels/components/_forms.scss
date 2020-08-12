@@ -32,6 +32,10 @@ input {
   }
 }
 
+textarea {
+  height: 138px;
+}
+
 [id^="replyposts"],
 [id^="replythread"] {
   br {
@@ -39,7 +43,6 @@ input {
   }
   textarea {
     margin: $post-padding 0;
-    height: 138px;
   }
 }
 

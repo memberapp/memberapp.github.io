@@ -1,0 +1,8 @@
+#map {
+  position: absolute !important;
+  height: calc(100vh - 61px);
+  top: 61px;
+  .leaflet-control {
+    display: none;
+  }
+}

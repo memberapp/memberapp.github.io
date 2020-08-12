@@ -337,6 +337,10 @@ img {
   margin: 0 auto;
   display: block; }
 
+.assistivetext {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 0.875rem; }
+
 .mainbodywrapper .mainbody {
   margin-top: 1rem; }
   @media (min-width: 1025px) {
@@ -619,14 +623,16 @@ input {
     background-color: #e9ecef;
     opacity: 1; }
 
+textarea {
+  height: 138px; }
+
 [id^="replyposts"] br,
 [id^="replythread"] br {
   display: none; }
 
 [id^="replyposts"] textarea,
 [id^="replythread"] textarea {
-  margin: 0.875rem 0;
-  height: 138px; }
+  margin: 0.875rem 0; }
 
 input[type="submit"],
 button {
@@ -1077,6 +1083,13 @@ footer {
       font-weight: bold;
       word-break: break-all; }
 
+#map {
+  position: absolute !important;
+  height: calc(100vh - 61px);
+  top: 61px; }
+  #map .leaflet-control {
+    display: none; }
+
 .mainbodywrapper #posts {
   width: 100%;
   padding-right: 15px;
@@ -1243,6 +1256,102 @@ footer {
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
     #settingsanchor .content div {
       margin-bottom: 1rem; }
+    #settingsanchor .content #cssselector,
+    #settingsanchor .content #contentserver,
+    #settingsanchor .content #txbroadcastserver,
+    #settingsanchor .content #utxoserver,
+    #settingsanchor .content #currencydisplay {
+      width: 100%; }
+    #settingsanchor .content #settingsprofileaddress,
+    #settingsanchor .content #settingslegacyprofileaddress,
+    #settingsanchor .content #settingsprivatekey {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+      flex-direction: column; }
+      #settingsanchor .content #settingsprofileaddress span,
+      #settingsanchor .content #settingslegacyprofileaddress span,
+      #settingsanchor .content #settingsprivatekey span {
+        word-break: break-all;
+        margin-bottom: 1rem; }
+      #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv,
+      #settingsanchor .content #settingsprofileaddress #legacyformatdiv,
+      #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv,
+      #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv,
+      #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv,
+      #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv,
+      #settingsanchor .content #settingsprivatekey #cashaddrformatdiv,
+      #settingsanchor .content #settingsprivatekey #legacyformatdiv,
+      #settingsanchor .content #settingsprivatekey #privatekeyformatdiv {
+        max-width: 300px;
+        height: auto;
+        margin: 0 auto;
+        text-align: center; }
+        #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv .qrcodeclick,
+        #settingsanchor .content #settingsprofileaddress #legacyformatdiv .qrcodeclick,
+        #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv .qrcodeclick,
+        #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick,
+        #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick,
+        #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick,
+        #settingsanchor .content #settingsprivatekey #cashaddrformatdiv .qrcodeclick,
+        #settingsanchor .content #settingsprivatekey #legacyformatdiv .qrcodeclick,
+        #settingsanchor .content #settingsprivatekey #privatekeyformatdiv .qrcodeclick {
+          cursor: pointer;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-align: center;
+          align-items: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          color: #44669c; }
+          #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
+          #settingsanchor .content #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
+          #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
+          #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
+          #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick:hover,
+          #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
+          #settingsanchor .content #settingsprivatekey #cashaddrformatdiv .qrcodeclick:hover,
+          #settingsanchor .content #settingsprivatekey #legacyformatdiv .qrcodeclick:hover,
+          #settingsanchor .content #settingsprivatekey #privatekeyformatdiv .qrcodeclick:hover {
+            color: #354f78; }
+        #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv img,
+        #settingsanchor .content #settingsprofileaddress #legacyformatdiv img,
+        #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv img,
+        #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv img,
+        #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv img,
+        #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv img,
+        #settingsanchor .content #settingsprivatekey #cashaddrformatdiv img,
+        #settingsanchor .content #settingsprivatekey #legacyformatdiv img,
+        #settingsanchor .content #settingsprivatekey #privatekeyformatdiv img {
+          outline: none; }
+    #settingsanchor .content .settingsprofilelinks div a {
+      margin-right: 1rem; }
+      #settingsanchor .content .settingsprofilelinks div a:last-of-type {
+        margin-right: 0; }
+    #settingsanchor .content .profilestats {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+      #settingsanchor .content .profilestats div {
+        margin: 0.5rem;
+        padding: 0.5rem;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex: 1;
+        flex: 1;
+        border: 1px solid rgba(0, 0, 0, 0.37);
+        border-radius: 0.25rem; }
+        #settingsanchor .content .profilestats div label {
+          margin-bottom: 0; }
 
 #memberposts {
   width: 100%;
@@ -1269,97 +1378,6 @@ footer {
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
       #memberposts .itemlist ol li:hover {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
-
-#cssselector {
-  width: 100%; }
-
-#settingsprofileaddress,
-#settingslegacyprofileaddress,
-#settingsprivatekey {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column; }
-  #settingsprofileaddress span,
-  #settingslegacyprofileaddress span,
-  #settingsprivatekey span {
-    word-break: break-all;
-    margin-bottom: 1rem; }
-  #settingsprofileaddress #cashaddrformatdiv,
-  #settingsprofileaddress #legacyformatdiv,
-  #settingsprofileaddress #privatekeyformatdiv,
-  #settingslegacyprofileaddress #cashaddrformatdiv,
-  #settingslegacyprofileaddress #legacyformatdiv,
-  #settingslegacyprofileaddress #privatekeyformatdiv,
-  #settingsprivatekey #cashaddrformatdiv,
-  #settingsprivatekey #legacyformatdiv,
-  #settingsprivatekey #privatekeyformatdiv {
-    max-width: 300px;
-    height: auto;
-    margin: 0 auto;
-    text-align: center; }
-    #settingsprofileaddress #cashaddrformatdiv .qrcodeclick,
-    #settingsprofileaddress #legacyformatdiv .qrcodeclick,
-    #settingsprofileaddress #privatekeyformatdiv .qrcodeclick,
-    #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick,
-    #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick,
-    #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick,
-    #settingsprivatekey #cashaddrformatdiv .qrcodeclick,
-    #settingsprivatekey #legacyformatdiv .qrcodeclick,
-    #settingsprivatekey #privatekeyformatdiv .qrcodeclick {
-      cursor: pointer;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-align: center;
-      align-items: center;
-      -ms-flex-pack: center;
-      justify-content: center;
-      color: #44669c; }
-      #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
-      #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
-      #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
-      #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
-      #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick:hover,
-      #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
-      #settingsprivatekey #cashaddrformatdiv .qrcodeclick:hover,
-      #settingsprivatekey #legacyformatdiv .qrcodeclick:hover,
-      #settingsprivatekey #privatekeyformatdiv .qrcodeclick:hover {
-        color: #354f78; }
-    #settingsprofileaddress #cashaddrformatdiv img,
-    #settingsprofileaddress #legacyformatdiv img,
-    #settingsprofileaddress #privatekeyformatdiv img,
-    #settingslegacyprofileaddress #cashaddrformatdiv img,
-    #settingslegacyprofileaddress #legacyformatdiv img,
-    #settingslegacyprofileaddress #privatekeyformatdiv img,
-    #settingsprivatekey #cashaddrformatdiv img,
-    #settingsprivatekey #legacyformatdiv img,
-    #settingsprivatekey #privatekeyformatdiv img {
-      outline: none; }
-
-.settingsprofilelinks div a {
-  margin-right: 1rem; }
-  .settingsprofilelinks div a:last-of-type {
-    margin-right: 0; }
-
-.profilestats {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap; }
-  .profilestats div {
-    margin: 0 1rem;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex: 1;
-    flex: 1; }
 
 #toolsanchor {
   width: 100%;

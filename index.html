@@ -1008,7 +1008,9 @@
                 onpaste="this.onchange();"
                 oninput="this.onchange();"
               />
-              (Amount to tip when clicking up arrow. Minimum 547)
+              <div class="assistivetext">
+                (Amount to tip when clicking up arrow. Minimum 547)
+              </div>
             </div>
             <div>
               <label for="maxfee">Max Fee</label>
@@ -1022,8 +1024,10 @@
                 onpaste="this.onchange();"
                 oninput="this.onchange();"
               />
-              (Max satoshis per byte to pay during network congestion. Minimum
-              2)
+              <div class="assistivetext">
+                (Max satoshis per byte to pay during network congestion. Minimum
+                2)
+              </div>
             </div>
             <div>
               <label for="results">Number Of Results To Show</label>
@@ -1037,7 +1041,9 @@
                 onpaste="this.onchange();"
                 oninput="this.onchange();"
               />
-              (Max results to show per page. Maximum 100)
+              <div class="assistivetext">
+                (Max results to show per page. Maximum 100)
+              </div>
             </div>
             <div>
               <input id="usdrate" type="number" style="display: none;" />
@@ -1067,7 +1073,12 @@
               ></textarea>
             </div>
             <div>
-              <h4>Media Settings</h4>
+              <label
+                for="mediasettings"
+                class="labelheader vavilon"
+                data-vavilon="Media Settings"
+                >Media Settings</label
+              >
             </div>
             <div class="customcheckbox">
               <input
