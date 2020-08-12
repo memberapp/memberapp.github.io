@@ -3,6 +3,7 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
+  margin-top: 61px;
 }
 
 a {
@@ -16,9 +17,11 @@ a {
 
 .mainbodywrapper {
   margin: 0;
-
   .mainbody {
-    margin-top: 2rem;
+    margin-top: 1rem;
+    @include media(">desktop") {
+      margin-top: 2rem;
+    }
   }
 }
 
@@ -70,8 +73,13 @@ a {
 }
 
 img {
-  margin-top: 1rem;
   @include pop;
+  margin-top: 1rem;
+  max-height: 640px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
 }
 .twittercontainer {
   display: flex;

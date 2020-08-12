@@ -313,7 +313,8 @@ body {
   display: flex;
   min-height: 100vh;
   -ms-flex-direction: column;
-  flex-direction: column; }
+  flex-direction: column;
+  margin-top: 61px; }
 
 a {
   text-decoration: none;
@@ -325,7 +326,10 @@ a {
 .mainbodywrapper {
   margin: 0; }
   .mainbodywrapper .mainbody {
-    margin-top: 2rem; }
+    margin-top: 1rem; }
+    @media (min-width: 1025px) {
+      .mainbodywrapper .mainbody {
+        margin-top: 2rem; } }
 
 .votelinks {
   background: #f8f9fa;
@@ -370,9 +374,14 @@ a {
     display: none; }
 
 img {
-  margin-top: 1rem;
   outline-offset: -1px;
-  outline: 1px solid rgba(0, 0, 0, 0.05); }
+  outline: 1px solid rgba(0, 0, 0, 0.05);
+  margin-top: 1rem;
+  max-height: 640px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block; }
 
 .twittercontainer {
   display: -ms-flexbox;
@@ -740,13 +749,17 @@ div#status {
 header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   width: 100%;
-  background: white; }
+  background: white;
+  box-shadow: 0px 1px 5px -3px rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  z-index: 2; }
   header .pagetop nav {
     min-height: 60px;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-flow: row wrap;
-    flex-flow: row wrap;
+    -ms-flex-flow: row;
+    flex-flow: row;
     -ms-flex-pack: center;
     justify-content: center;
     max-width: 100%;
@@ -786,39 +799,51 @@ header {
     header .pagetop nav {
       max-width: 540px; } }
     header .pagetop nav .memberlogo {
-      margin-right: 0.5rem;
-      margin-top: 4px;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-align: center;
-      align-items: center; }
-      header .pagetop nav .memberlogo img {
-        height: 2.4rem;
-        width: 2.4rem;
-        margin-top: 0;
-        outline: none; }
-    header .pagetop nav .membertext {
+      margin-right: 15px;
       display: -ms-flexbox;
       display: flex;
       -ms-flex-align: center;
       align-items: center;
-      text-transform: capitalize;
+      height: auto; }
+      header .pagetop nav .memberlogo a {
+        width: -webkit-max-content;
+        width: max-content; }
+        header .pagetop nav .memberlogo a img {
+          margin-top: 0;
+          outline: none;
+          height: 2.4rem;
+          width: 2.4rem; }
+          @media (min-width: 1025px) {
+            header .pagetop nav .memberlogo a img {
+              height: 2rem;
+              width: 2rem; } }
+    header .pagetop nav .membertext {
+      display: none;
       font-size: 1.25rem; }
       @media (min-width: 1025px) {
         header .pagetop nav .membertext {
-          margin-right: auto; } }
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-align: center;
+          align-items: center;
+          text-transform: capitalize;
+          padding: 0.75rem 0;
+          margin-right: auto;
+          padding: 0; } }
       header .pagetop nav .membertext a {
         color: #4dc846; }
     header .pagetop nav .navitemsmain {
       overflow: auto;
       white-space: nowrap;
-      margin: 0 -15px;
+      margin-right: -15px;
       display: -ms-flexbox;
       display: flex;
       height: auto;
       -ms-flex-align: center;
-      align-items: center;
-      border-top: 1px solid rgba(0, 0, 0, 0.12); }
+      align-items: center; }
+      @media (min-width: 769px) {
+        header .pagetop nav .navitemsmain {
+          margin: initial; } }
       @media (min-width: 1025px) {
         header .pagetop nav .navitemsmain {
           border-top: none;
@@ -833,16 +858,21 @@ header {
         align-items: center; }
         header .pagetop nav .navitemsmain .headerbuttons a,
         header .pagetop nav .navitemsmain .headerbuttons span {
-          padding: 0.5rem;
+          padding: 0.5rem 1rem;
           height: 100%;
           -ms-flex-align: center;
           align-items: center;
           display: -ms-flexbox;
           display: flex; }
+          @media (min-width: 1025px) {
+            header .pagetop nav .navitemsmain .headerbuttons a,
+            header .pagetop nav .navitemsmain .headerbuttons span {
+              padding: 0.5rem; } }
         header .pagetop nav .navitemsmain .headerbuttons a:hover {
           background-color: rgba(0, 0, 0, 0.06); }
         header .pagetop nav .navitemsmain .headerbuttons #balance {
-          font-weight: bold; }
+          font-weight: bold;
+          padding: 0; }
         header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
           margin-right: 0.75rem; }
     header .pagetop nav .alertcount {
