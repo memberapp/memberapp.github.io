@@ -1679,7 +1679,10 @@ footer {
       -ms-flex-wrap: wrap;
       flex-wrap: wrap;
       -ms-flex-align: center;
-      align-items: center; }
+      align-items: center;
+      margin-bottom: 1rem; }
+      #messagesanchor .content #messageslist li:last-of-type {
+        margin-bottom: 0; }
       #messagesanchor .content #messageslist li .hnuser,
       #messagesanchor .content #messageslist li a,
       #messagesanchor .content #messageslist li .age {
