@@ -647,7 +647,8 @@ button {
 label {
   font-weight: bold;
   margin-bottom: 0.25rem;
-  text-transform: capitalize; }
+  text-transform: capitalize;
+  display: block; }
 
 textarea,
 input {
@@ -1604,12 +1605,73 @@ footer {
   @media (max-width: 768px) {
     #messagesanchor {
       max-width: 540px; } }
-  #messagesanchor .title {
-    font-weight: bold; }
-  #messagesanchor .itemlist .fatitem {
+  #messagesanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.5rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 1.75rem; }
+    #messagesanchor .content p {
+      color: rgba(0, 0, 0, 0.54);
+      font-size: 0.875rem; }
+    #messagesanchor .content #usersearchresults {
+      margin-bottom: 2rem; }
+      #messagesanchor .content #usersearchresults br {
+        display: none; }
+      #messagesanchor .content #usersearchresults .usersearchresult {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        padding: 0.5rem 0; }
+        #messagesanchor .content #usersearchresults .usersearchresult .hnuser {
+          margin-right: 0.5rem; }
+        #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type {
+          margin-left: auto;
+          line-height: 1.2;
+          cursor: pointer;
+          text-decoration: none;
+          transition: all 0.15s ease-in-out;
+          color: #44669c;
+          text-transform: uppercase;
+          border-radius: 0.25rem;
+          border: 1px solid #44669c;
+          background: transparent;
+          padding: 0.5rem 1.5rem;
+          padding: 0.5rem 1rem;
+          font-size: 0.875rem; }
+          #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:hover {
+            background: #e9eef6; }
+          #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:disabled {
+            opacity: 0.65; }
+    #messagesanchor .content #sendmessagecontainer label:first-of-type {
+      font-size: 1.5rem; }
+    #messagesanchor .content #sendmessagecontainer input,
+    #messagesanchor .content #sendmessagecontainer textarea {
+      margin-bottom: 1rem; }
+    #messagesanchor .content #sendmessagecontainer .messagerecipient {
+      font-weight: bold; }
+    #messagesanchor .content #sendmessagecontainer .messageaddress {
+      color: rgba(0, 0, 0, 0.54); }
+    #messagesanchor .content #sendmessagecontainer .messagepublickey {
+      color: rgba(0, 0, 0, 0.54); }
+    #messagesanchor .content #sendmessagecontainer #sendmessagebox {
+      margin-top: 1rem; }
+      #messagesanchor .content #sendmessagecontainer #sendmessagebox label:first-of-type {
+        font-size: 1rem; }
+    #messagesanchor .content #sendmessagecontainer #newpostmessagecompleted:not(:empty) {
+      border: 1px solid #4dc846;
+      background: #ace5a8;
+      color: #2b8227;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -ms-flex-align: center;
+      align-items: center;
+      display: -ms-flexbox;
+      display: flex;
+      padding: 0.4375rem 0.875rem;
+      border-radius: 0.25rem;
+      font-weight: bold; }
