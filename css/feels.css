@@ -1737,6 +1737,115 @@ footer {
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    #member .content #settingsprofileaddress,
+    #member .content #settingslegacyprofileaddress,
+    #member .content #settingsprivatekey {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+      flex-direction: column; }
+      #member .content #settingsprofileaddress span,
+      #member .content #settingslegacyprofileaddress span,
+      #member .content #settingsprivatekey span {
+        word-break: break-all;
+        margin-bottom: 1rem; }
+      #member .content #settingsprofileaddress #cashaddrformatdiv,
+      #member .content #settingsprofileaddress #legacyformatdiv,
+      #member .content #settingsprofileaddress #privatekeyformatdiv,
+      #member .content #settingsprofileaddress #membercashaddrformatdiv,
+      #member .content #settingsprofileaddress #memberlegacyformatdiv,
+      #member .content #settingslegacyprofileaddress #cashaddrformatdiv,
+      #member .content #settingslegacyprofileaddress #legacyformatdiv,
+      #member .content #settingslegacyprofileaddress #privatekeyformatdiv,
+      #member .content #settingslegacyprofileaddress #membercashaddrformatdiv,
+      #member .content #settingslegacyprofileaddress #memberlegacyformatdiv,
+      #member .content #settingsprivatekey #cashaddrformatdiv,
+      #member .content #settingsprivatekey #legacyformatdiv,
+      #member .content #settingsprivatekey #privatekeyformatdiv,
+      #member .content #settingsprivatekey #membercashaddrformatdiv,
+      #member .content #settingsprivatekey #memberlegacyformatdiv {
+        height: auto;
+        margin: 0 auto;
+        text-align: center;
+        display: inline-block;
+        /* margin: 0 auto; */
+        padding: 0.75rem;
+        border: 2px solid rgba(0, 0, 0, 0.78);
+        border-radius: 0.25rem;
+        background: white; }
+        #member .content #settingsprofileaddress #cashaddrformatdiv img,
+        #member .content #settingsprofileaddress #legacyformatdiv img,
+        #member .content #settingsprofileaddress #privatekeyformatdiv img,
+        #member .content #settingsprofileaddress #membercashaddrformatdiv img,
+        #member .content #settingsprofileaddress #memberlegacyformatdiv img,
+        #member .content #settingslegacyprofileaddress #cashaddrformatdiv img,
+        #member .content #settingslegacyprofileaddress #legacyformatdiv img,
+        #member .content #settingslegacyprofileaddress #privatekeyformatdiv img,
+        #member .content #settingslegacyprofileaddress #membercashaddrformatdiv img,
+        #member .content #settingslegacyprofileaddress #memberlegacyformatdiv img,
+        #member .content #settingsprivatekey #cashaddrformatdiv img,
+        #member .content #settingsprivatekey #legacyformatdiv img,
+        #member .content #settingsprivatekey #privatekeyformatdiv img,
+        #member .content #settingsprivatekey #membercashaddrformatdiv img,
+        #member .content #settingsprivatekey #memberlegacyformatdiv img {
+          height: 140px;
+          width: 140px; }
+        #member .content #settingsprofileaddress #cashaddrformatdiv .qrcodeclick,
+        #member .content #settingsprofileaddress #legacyformatdiv .qrcodeclick,
+        #member .content #settingsprofileaddress #privatekeyformatdiv .qrcodeclick,
+        #member .content #settingsprofileaddress #membercashaddrformatdiv .qrcodeclick,
+        #member .content #settingsprofileaddress #memberlegacyformatdiv .qrcodeclick,
+        #member .content #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick,
+        #member .content #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick,
+        #member .content #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick,
+        #member .content #settingslegacyprofileaddress #membercashaddrformatdiv .qrcodeclick,
+        #member .content #settingslegacyprofileaddress #memberlegacyformatdiv .qrcodeclick,
+        #member .content #settingsprivatekey #cashaddrformatdiv .qrcodeclick,
+        #member .content #settingsprivatekey #legacyformatdiv .qrcodeclick,
+        #member .content #settingsprivatekey #privatekeyformatdiv .qrcodeclick,
+        #member .content #settingsprivatekey #membercashaddrformatdiv .qrcodeclick,
+        #member .content #settingsprivatekey #memberlegacyformatdiv .qrcodeclick {
+          cursor: pointer;
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-align: center;
+          align-items: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          margin-bottom: 0;
+          color: #44669c; }
+          #member .content #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
+          #member .content #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
+          #member .content #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
+          #member .content #settingsprofileaddress #membercashaddrformatdiv .qrcodeclick:hover,
+          #member .content #settingsprofileaddress #memberlegacyformatdiv .qrcodeclick:hover,
+          #member .content #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
+          #member .content #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick:hover,
+          #member .content #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
+          #member .content #settingslegacyprofileaddress #membercashaddrformatdiv .qrcodeclick:hover,
+          #member .content #settingslegacyprofileaddress #memberlegacyformatdiv .qrcodeclick:hover,
+          #member .content #settingsprivatekey #cashaddrformatdiv .qrcodeclick:hover,
+          #member .content #settingsprivatekey #legacyformatdiv .qrcodeclick:hover,
+          #member .content #settingsprivatekey #privatekeyformatdiv .qrcodeclick:hover,
+          #member .content #settingsprivatekey #membercashaddrformatdiv .qrcodeclick:hover,
+          #member .content #settingsprivatekey #memberlegacyformatdiv .qrcodeclick:hover {
+            color: #354f78; }
+        #member .content #settingsprofileaddress #cashaddrformatdiv img,
+        #member .content #settingsprofileaddress #legacyformatdiv img,
+        #member .content #settingsprofileaddress #privatekeyformatdiv img,
+        #member .content #settingsprofileaddress #membercashaddrformatdiv img,
+        #member .content #settingsprofileaddress #memberlegacyformatdiv img,
+        #member .content #settingslegacyprofileaddress #cashaddrformatdiv img,
+        #member .content #settingslegacyprofileaddress #legacyformatdiv img,
+        #member .content #settingslegacyprofileaddress #privatekeyformatdiv img,
+        #member .content #settingslegacyprofileaddress #membercashaddrformatdiv img,
+        #member .content #settingslegacyprofileaddress #memberlegacyformatdiv img,
+        #member .content #settingsprivatekey #cashaddrformatdiv img,
+        #member .content #settingsprivatekey #legacyformatdiv img,
+        #member .content #settingsprivatekey #privatekeyformatdiv img,
+        #member .content #settingsprivatekey #membercashaddrformatdiv img,
+        #member .content #settingsprivatekey #memberlegacyformatdiv img {
+          outline: none; }
 
 #ratings {
   width: 100%;

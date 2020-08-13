@@ -3,6 +3,42 @@
   .content {
     @include card;
     padding: $post-padding * 2;
+    #settingsprofileaddress,
+    #settingslegacyprofileaddress,
+    #settingsprivatekey {
+      display: flex;
+      flex-direction: column;
+      span {
+        word-break: break-all;
+        margin-bottom: 1rem;
+      }
+      #cashaddrformatdiv,
+      #legacyformatdiv,
+      #privatekeyformatdiv,
+      #membercashaddrformatdiv,
+      #memberlegacyformatdiv {
+        height: auto;
+        margin: 0 auto;
+        text-align: center;
+        @include qr-box;
+
+        .qrcodeclick {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 0;
+          color: $theme-secondary;
+
+          &:hover {
+            color: darken($theme-secondary, 10);
+          }
+        }
+        img {
+          outline: none;
+        }
+      }
+    }
   }
 }
 
