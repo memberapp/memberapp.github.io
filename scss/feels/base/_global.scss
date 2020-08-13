@@ -1,8 +1,5 @@
 body {
   background: #f7f7f7;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
   position: relative;
 }
 
@@ -36,7 +33,12 @@ img {
 }
 .mainbodywrapper {
   // margin-top: 61px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
   .mainbody {
+    flex: 1;
     margin-top: 1rem;
     @include media(">desktop") {
       margin-top: 2rem;
@@ -273,4 +275,13 @@ li {
 ::after,
 ::before {
   box-sizing: border-box;
+}
+
+.loading {
+  background-image: url(../img/puff-loader.svg);
+  height: calc(100vh - 61px);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  background-size: 100px 82px;
 }

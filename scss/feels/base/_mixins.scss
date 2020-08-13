@@ -59,3 +59,57 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   }
 }
+
+@mixin qr-box {
+  display: inline-block;
+  /* margin: 0 auto; */
+  padding: 0.75rem;
+  border: 2px solid $text-primary;
+  border-radius: 0.25rem;
+  background: white;
+
+  img {
+    height: 140px;
+    width: 140px;
+  }
+}
+
+@mixin btn {
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: $post-padding;
+  transition: all 0.15s ease-in-out;
+  color: white;
+  float: right;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  border: 1px solid darken($theme-secondary, 10);
+  background: $theme-secondary;
+  padding: 0.5rem 1.5rem;
+  &:hover {
+    background: darken($theme-secondary, 10);
+  }
+  &:disabled {
+    opacity: 0.65;
+  }
+}
+
+@mixin btn-outline {
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  color: $theme-secondary;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  border: 1px solid $theme-secondary;
+  background: transparent;
+  padding: 0.5rem 1.5rem;
+  &:hover {
+    background: lighten($theme-secondary, 50);
+  }
+  &:disabled {
+    opacity: 0.65;
+  }
+}

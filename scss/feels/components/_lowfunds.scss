@@ -17,8 +17,23 @@
       font-weight: bold;
       word-break: break-all;
     }
+    #lowfundsaddress {
+      display: block;
+    }
     br {
-      //   display: none;
+      // display: none;
+      height: 0.5rem;
+    }
+    .lowfundsaddressdiv {
+      @include qr-box;
+      margin-bottom: 0.5rem;
+    }
+    a:not([rel~="noreferrer"]) {
+      @include btn-outline;
+      display: block;
+      @include media(">tablet") {
+        display: inline-block;
+      }
     }
   }
 }

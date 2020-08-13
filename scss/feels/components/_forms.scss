@@ -32,43 +32,6 @@ input {
   }
 }
 
-textarea {
-  height: 138px;
-}
-
-[id^="replyposts"],
-[id^="replythread"] {
-  br {
-    display: none;
-  }
-  textarea {
-    margin: $post-padding 0;
-  }
-}
-
-// buttons
-input[type="submit"],
-button {
-  line-height: 1.2;
-  cursor: pointer;
-  text-decoration: none;
-  margin-bottom: $post-padding;
-  transition: all 0.15s ease-in-out;
-  color: white;
-  float: right;
-  text-transform: uppercase;
-  border-radius: 0.25rem;
-  border: 1px solid darken($theme-secondary, 10);
-  background: $theme-secondary;
-  padding: 0.5rem 1.5rem;
-  &:hover {
-    background: darken($theme-secondary, 10);
-  }
-  &:disabled {
-    opacity: 0.65;
-  }
-}
-
 select {
   height: calc(1.5em + 0.75rem + 2px);
   min-width: 3rem;
@@ -88,6 +51,20 @@ select {
     border-color: lighten($theme-secondary, 10);
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+}
+
+textarea {
+  height: 138px;
+}
+
+[id^="replyposts"],
+[id^="replythread"] {
+  br {
+    display: none;
+  }
+  textarea {
+    margin: $post-padding 0;
   }
 }
 
