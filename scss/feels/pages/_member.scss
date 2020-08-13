@@ -1,0 +1,31 @@
+#member {
+  @include container-thin;
+  .content {
+    @include card;
+    padding: $post-padding * 2;
+  }
+}
+
+#ratings {
+  @include container-thin;
+  .content {
+    @include card;
+    padding: $post-padding * 2;
+  }
+}
+
+#trustgraph {
+  @include container-thin;
+  .content {
+    @include card;
+    padding: $post-padding * 2;
+  }
+}
+
+#community {
+  @include container-thin;
+  .content {
+    @include card;
+    padding: $post-padding * 2;
+  }
+}

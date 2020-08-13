@@ -61,7 +61,9 @@ img {
   .rotate180 {
     transform: rotate(180deg);
   }
-  .votearrow {
+  .votearrow,
+  .votearrowactivated,
+  .votearrowactivateddown {
     width: $arrow-size;
     height: $arrow-size;
     border: 0px;
@@ -72,15 +74,7 @@ img {
   }
   .votearrowactivated,
   .votearrowactivateddown {
-    background: url(../img/grayuparrow.svg);
     filter: brightness(0.7) sepia(1) hue-rotate(340deg) saturate(6);
-    width: $arrow-size;
-    height: $arrow-size;
-    border: 0px;
-    margin: 3px 2px 2px;
-    background: url(../img/grayuparrow.svg);
-    background-size: $arrow-size $arrow-size;
-    display: block;
   }
   .betweenvotesscoredown,
   .betweenvotesscore,

@@ -622,141 +622,145 @@
         <div id="feed" style="display: none;"></div>
         <div id="notifications" style="display: none;"></div>
         <div id="member" class="member" style="display: none;">
-          <h2>Member</h2>
-          <label for="membernametext">Handle</label>
-          <div id="membernametext">
-            <i>loading</i>
-          </div>
-          <label for="memberpagingid">Paging ID</label>
-          <div id="memberpagingid">
-            <i>loading</i>
-          </div>
-          <label for="memberprofiletext">Profile</label>
-          <div id="memberprofiletext">
-            <i>loading</i>
-          </div>
-          <label>Profile Links</label>
-          <div>
-            <a href="" id="memberprofilelink">Member</a
-            ><span class="separatorwide"></span
-            ><a
-              rel="noopener noreferrer"
-              target="memo"
-              href=""
-              id="membermemoprofilelink"
-              >Memo</a
-            >
-          </div>
-          <label>Address</label>
-          <div>
-            <span id="membercashaddrformat">loading</span>
-            <div id="membercashaddrformatdiv">
-              <span
-                class="qrcodeclick"
-                onclick="showQRCode('membercashaddrformat',200);"
+          <div class="content">
+            <h2>Member</h2>
+            <label for="membernametext">Handle</label>
+            <div id="membernametext">
+              <i>loading</i>
+            </div>
+            <label for="memberpagingid">Paging ID</label>
+            <div id="memberpagingid">
+              <i>loading</i>
+            </div>
+            <label for="memberprofiletext">Profile</label>
+            <div id="memberprofiletext">
+              <i>loading</i>
+            </div>
+            <label>Profile Links</label>
+            <div>
+              <a href="" id="memberprofilelink">Member</a
+              ><span class="separatorwide"></span
+              ><a
+                rel="noopener noreferrer"
+                target="memo"
+                href=""
+                id="membermemoprofilelink"
+                >Memo</a
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  version="1.1"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+            </div>
+            <label>Address</label>
+            <div>
+              <span id="membercashaddrformat">loading</span>
+              <div id="membercashaddrformatdiv">
+                <span
+                  class="qrcodeclick"
+                  onclick="showQRCode('membercashaddrformat',200);"
                 >
-                  <path
-                    d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z"
-                  />
-                </svg>
-                Click to enlarge QR code
-              </span>
+                    />
+                  </svg>
+                  Click to enlarge QR code
+                </span>
+              </div>
             </div>
-          </div>
-          <label>Legacy Address</label>
-          <div>
-            <span id="memberlegacyformat">loading</span>
-            <div id="memberlegacyformatdiv">
-              <span
-                class="qrcodeclick"
-                onclick="showQRCode('memberlegacyformat',200);"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  version="1.1"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+            <label>Legacy Address</label>
+            <div>
+              <span id="memberlegacyformat">loading</span>
+              <div id="memberlegacyformatdiv">
+                <span
+                  class="qrcodeclick"
+                  onclick="showQRCode('memberlegacyformat',200);"
                 >
-                  <path
-                    d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    version="1.1"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
                                       11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
                                       19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
                                       15H9V21H3V15M5,17V19H7V17H5Z"
-                  />
-                </svg>
-                Click to enlarge QR code
-              </span>
+                    />
+                  </svg>
+                  Click to enlarge QR code
+                </span>
+              </div>
             </div>
-          </div>
-          <div>
-            <div class="follow">
-              <label>Follow</label>
-              <a id="memberfollow">
-                <i>loading</i>
-              </a>
+            <div>
+              <div class="follow">
+                <label>Follow</label>
+                <a id="memberfollow">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="mute">
+                <label class="vavilon" data-vavilon="mute">Mute</label>
+                <a id="memberblock">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="followers">
+                <label>Followers</label>
+                <a id="memberfollowersnumber">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="following">
+                <label>Following</label>
+                <a id="memberfollowingnumber">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="muters">
+                <label>Muters</label>
+                <a id="memberblockersnumber">
+                  <i>loading</i>
+                </a>
+              </div>
+              <div class="muting">
+                <label>Muting</label>
+                <a id="memberblockingnumber">
+                  <i>loading</i>
+                </a>
+              </div>
             </div>
-            <div class="mute">
-              <label class="vavilon" data-vavilon="mute">Mute</label>
-              <a id="memberblock">
-                <i>loading</i>
-              </a>
-            </div>
-            <div class="followers">
-              <label>Followers</label>
-              <a id="memberfollowersnumber">
-                <i>loading</i>
-              </a>
-            </div>
-            <div class="following">
-              <label>Following</label>
-              <a id="memberfollowingnumber">
-                <i>loading</i>
-              </a>
-            </div>
-            <div class="muters">
-              <label>Muters</label>
-              <a id="memberblockersnumber">
-                <i>loading</i>
-              </a>
-            </div>
-            <div class="muting">
-              <label>Muting</label>
-              <a id="memberblockingnumber">
-                <i>loading</i>
-              </a>
-            </div>
-          </div>
-          <div id="memberratinggroup">
-            <label for="memberratingcomment">You Rate</label>
-            <div class="memberratinggroup">
-              <div class="memberratingcomment" id="memberratingcomment"></div>
-              <div class="memberrating" id="memberrating"></div>
+            <div id="memberratinggroup">
+              <label for="memberratingcomment">You Rate</label>
+              <div class="memberratinggroup">
+                <div class="memberratingcomment" id="memberratingcomment"></div>
+                <div class="memberrating" id="memberrating"></div>
+              </div>
             </div>
           </div>
         </div>
 
         <div id="trustgraph" class="trustgraph" style="display: none;">
-          <h2>Trust Graph</h2>
-          <div id="trustgraphdetails"></div>
-          <br />
-          <br />
-          <div id="trustgraphnotes">
-            *Notes: A follow is interpreted a 4-star rating, a mute as a 2-star
-            rating. This is an approximation of a trust rating - the rating can
-            be overridden by directly rating the user.
+          <div class="content">
+            <h2>Trust Graph</h2>
+            <div id="trustgraphdetails"></div>
+            <br />
+            <br />
+            <div id="trustgraphnotes">
+              *Notes: A follow is interpreted a 4-star rating, a mute as a
+              2-star rating. This is an approximation of a trust rating - the
+              rating can be overridden by directly rating the user.
+            </div>
           </div>
         </div>
 
@@ -1185,50 +1189,54 @@
         </div>
 
         <div id="ratings" class="ratings" style="display: none;">
-          <h2>Ratings By This Member</h2>
-          <br />
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Member</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>Rates</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>Member</th>
-                <th></th>
-                <th>Note</th>
-              </tr>
-            </thead>
-            <tbody id="ratingtable"></tbody>
-          </table>
+          <div class="content">
+            <h2>Ratings By This Member</h2>
+            <br />
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>Rates</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>Member</th>
+                  <th></th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody id="ratingtable"></tbody>
+            </table>
+          </div>
         </div>
 
         <div id="community" class="community" style="display: none;">
-          <h2>Ratings Of This Member</h2>
-          <br />
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Member</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>Rates</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>Member</th>
-                <th></th>
-                <th>Note</th>
-              </tr>
-            </thead>
-            <tbody id="communityratingtable"></tbody>
-          </table>
-          <br /><br />
+          <div class="content">
+            <h2>Ratings Of This Member</h2>
+            <br />
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Member</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>Rates</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th>Member</th>
+                  <th></th>
+                  <th>Note</th>
+                </tr>
+              </thead>
+              <tbody id="communityratingtable"></tbody>
+            </table>
+            <br /><br />
+          </div>
         </div>
 
         <div id="bootstrap" style="display: none;">
