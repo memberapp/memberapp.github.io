@@ -816,7 +816,7 @@
                 </button>
               </div>
             </div>
-            <div>
+            <div class="logout">
               <label
                 for="settingsprofilelogout"
                 class="vavilon"
@@ -1405,59 +1405,63 @@
           class="applicationpage loginbox"
           style="display: none;"
         >
-          <br />
-          <br />
-          <br />
-          <button
-            class="loginbutton"
-            type="button"
-            href="#settings"
-            onclick="createNewAccount();"
-          >
-            Create A New Account
-          </button>
-          <br />
-          <div id="newseedphrasedescription" style="display: none;">
-            <br />Here is your password. It is a phrase. Write it down.<br /><br /><label
-              >12 Word Seed Phrase</label
+          <div class="content">
+            <br />
+            <br />
+            <br />
+            <button
+              class="loginbutton"
+              type="button"
+              href="#settings"
+              onclick="createNewAccount();"
             >
-            <div id="newseedphrase"></div>
+              Create A New Account
+            </button>
+            <br />
+            <div id="newseedphrasedescription" style="display: none;">
+              <br />Here is your password. It is a phrase. Write it down.<br /><br /><label
+                >12 Word Seed Phrase</label
+              >
+              <div id="newseedphrase"></div>
+            </div>
+            <br />
+            <hr />
+            <br />
+            <br />
+            <br /><span class="vavilon" data-vavilon="seed phrase"
+              >Seed Phrase (12 words)</span
+            >
+            <br />
+            <div class="formgroup">
+              <input size="64" id="loginkey" />
+              <button
+                class="loginbutton"
+                type="button"
+                href="#feed"
+                class="vavilon"
+                data-vavilon="log in"
+                onclick="trylogin(document.getElementById('loginkey').value);"
+              >
+                login
+              </button>
+            </div>
+            <br />
+            <div id="loginerror"></div>
+            <br />
+            <br />
+            <div class="loginnotes">
+              *Memo Users. You can also login with your key (Uncompressed WIF:
+              Starts with 'L..' or 'K..').
+              <a
+                rel="noopener noreferrer"
+                target="memo"
+                href="https://memo.cash/key/export"
+                >Fetch from Memo</a
+              >.
+            </div>
+            <br />
+            <br />
           </div>
-          <br />
-          <hr />
-          <br />
-          <br />
-          <br /><span class="vavilon" data-vavilon="seed phrase"
-            >Seed Phrase (12 words)</span
-          >
-          <br />
-          <input size="64" id="loginkey" />
-          <button
-            class="loginbutton"
-            type="button"
-            href="#feed"
-            class="vavilon"
-            data-vavilon="log in"
-            onclick="trylogin(document.getElementById('loginkey').value);"
-          >
-            login
-          </button>
-          <br />
-          <div id="loginerror"></div>
-          <br />
-          <br />
-          <div class="loginnotes">
-            *Memo Users. You can also login with your key (Uncompressed WIF:
-            Starts with 'L..' or 'K..').
-            <a
-              rel="noopener noreferrer"
-              target="memo"
-              href="https://memo.cash/key/export"
-              >Fetch from Memo</a
-            >.
-          </div>
-          <br />
-          <br />
         </div>
 
         <div id="topiclistanchor" style="display: none;"></div>

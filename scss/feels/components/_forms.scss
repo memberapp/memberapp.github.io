@@ -1,6 +1,7 @@
 label {
   font-weight: bold;
   margin-bottom: 0.25rem;
+  text-transform: capitalize;
 }
 
 textarea,
@@ -77,14 +78,14 @@ textarea {
     width: 1%;
     min-width: 0;
     margin-bottom: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
   }
 
   button {
     display: flex;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
     height: calc(1.5em + 0.75rem + 2px);
   }
 }

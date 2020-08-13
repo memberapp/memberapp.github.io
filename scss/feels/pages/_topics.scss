@@ -1,0 +1,8 @@
+#topiclistanchor {
+  @include container-thin;
+  table {
+    @include card;
+    width: 100%;
+    padding: $post-padding * 2;
+  }
+}

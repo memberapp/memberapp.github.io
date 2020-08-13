@@ -30,6 +30,12 @@
 
     li {
       list-style-type: none;
+      &.collapsed {
+        margin-left: 2.25rem;
+        font-size: $font-size-tiny;
+        padding: $post-padding/2 0;
+        font-weight: bold;
+      }
       .reply {
         margin-bottom: $post-padding;
         div:only-child {
@@ -55,22 +61,24 @@
             .comhead {
               font-size: 0.75rem;
               color: rgba(0, 0, 0, 0.54);
+              margin-bottom: 0.5rem;
+              font-weight: bold;
             }
             .comment {
               font-size: 1rem;
               .commentbody {
               }
-              .subtextbuttons {
-                font-size: 0.75rem;
-                display: flex;
-                a {
-                  margin-right: 0.5rem;
-                  color: $text-secondary;
-                  &:hover {
-                    color: $text-primary;
-                  }
-                }
-              }
+              // .subtextbuttons {
+              //   font-size: 0.75rem;
+              //   display: flex;
+              //   a {
+              //     margin-right: 0.5rem;
+              //     color: $text-secondary;
+              //     &:hover {
+              //       color: $text-primary;
+              //     }
+              //   }
+              // }
             }
           }
         }

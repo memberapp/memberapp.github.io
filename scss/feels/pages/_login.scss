@@ -1,0 +1,33 @@
+#loginbox {
+  @include container-thin;
+  .content {
+    @include card;
+    padding: 1.75rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+
+    br {
+      display: none;
+    }
+    .loginnotes {
+      color: $text-secondary;
+      font-size: $font-size-small;
+      a {
+        display: block;
+        margin-top: $post-padding;
+      }
+    }
+    .loginbutton {
+      //   @include btn-outline;
+    }
+    #newseedphrase {
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 0.25rem;
+      padding: $post-padding/2 $post-padding;
+      margin: 1rem 0;
+    }
+  }
+}

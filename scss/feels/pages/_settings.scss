@@ -7,6 +7,19 @@
       margin-bottom: 1rem;
     }
 
+    .logout,
+    .settingsprofilelinks {
+      a {
+        @include btn-outline;
+        display: inline-block;
+      }
+    }
+
+    #settingsnametextbutton,
+    #settingsprofiletextbutton {
+      @include btn-outline;
+    }
+
     #cssselector,
     #contentserver,
     #txbroadcastserver,
@@ -15,6 +28,9 @@
       width: 100%;
     }
 
+    label {
+      display: block;
+    }
     #settingsprofileaddress,
     #settingslegacyprofileaddress,
     #settingsprivatekey {
@@ -27,16 +43,17 @@
       #cashaddrformatdiv,
       #legacyformatdiv,
       #privatekeyformatdiv {
-        max-width: 300px;
         height: auto;
         margin: 0 auto;
         text-align: center;
+        @include qr-box;
 
         .qrcodeclick {
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
+          margin-bottom: 0;
           color: $theme-secondary;
 
           &:hover {

@@ -1,0 +1,12 @@
+#messagesanchor {
+  @include container-thin;
+  .title {
+    font-weight: bold;
+  }
+
+  .itemlist {
+    .fatitem {
+      @include card;
+    }
+  }
+}
