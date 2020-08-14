@@ -126,6 +126,7 @@ header {
           height: 100%;
           align-items: center;
           text-transform: capitalize;
+          flex-shrink: 0;
         }
 
         .headerbuttons {
