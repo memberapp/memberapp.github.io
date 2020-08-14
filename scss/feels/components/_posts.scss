@@ -126,6 +126,14 @@ img {
       a {
         color: rgba(0, 0, 0, 0.76);
       }
+      a[href]:not([href^="#thread?"]) {
+        color: $theme-secondary;
+        padding-bottom: 1rem;
+        display: block;
+        &:hover {
+          color: #354f78;
+        }
+      }
     }
 
     .subtext {

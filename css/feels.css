@@ -918,6 +918,12 @@ img {
       hyphens: auto; }
       .post .postdetails .title a {
         color: rgba(0, 0, 0, 0.76); }
+      .post .postdetails .title a[href]:not([href^="#thread?"]) {
+        color: #44669c;
+        padding-bottom: 1rem;
+        display: block; }
+        .post .postdetails .title a[href]:not([href^="#thread?"]):hover {
+          color: #354f78; }
     .post .postdetails .subtext {
       font-size: 0.75rem;
       color: rgba(0, 0, 0, 0.54);
