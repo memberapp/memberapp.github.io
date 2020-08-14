@@ -384,11 +384,15 @@ table {
   text-align: center;
   margin-bottom: 1rem; }
   table thead tr th {
-    border-right: 1px solid black;
-    padding: 0 0.5rem; }
+    border-bottom: 1px solid rgba(0, 0, 0, 0.34);
+    background: rgba(0, 0, 0, 0.12);
+    padding: 0 0.5rem;
+    font-weight: bold; }
   table tbody tr td {
-    border-right: 1px solid black;
-    padding: 0 0.5rem; }
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 0.5rem; }
+  table tbody tr:nth-child(even) {
+    background: #e9eef6; }
 
 input[type="submit"],
 button {
@@ -1664,6 +1668,8 @@ footer {
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
+  #topiclistanchor br {
+    display: none; }
   @media (min-width: 769px) {
     #topiclistanchor {
       max-width: 800px; } }
@@ -1687,6 +1693,31 @@ footer {
         border-left: 0;
         border-right: 0;
         border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+    #topiclistanchor table tbody tr td a[href^="#modmorelink"],
+    #topiclistanchor table tbody tr td a[href^="javascript:;"] {
+      line-height: 1.2;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 0.875rem;
+      transition: all 0.15s ease-in-out;
+      color: white;
+      float: right;
+      text-transform: uppercase;
+      border-radius: 0.25rem;
+      border: 1px solid #354f78;
+      background: #44669c;
+      padding: 0.5rem 1.5rem;
+      width: 100%;
+      margin-bottom: 0; }
+      #topiclistanchor table tbody tr td a[href^="#modmorelink"]:hover,
+      #topiclistanchor table tbody tr td a[href^="javascript:;"]:hover {
+        background: #354f78; }
+      #topiclistanchor table tbody tr td a[href^="#modmorelink"]:disabled,
+      #topiclistanchor table tbody tr td a[href^="javascript:;"]:disabled {
+        opacity: 0.65; }
+    #topiclistanchor table tbody tr td:first-of-type {
+      text-align: left;
+      font-weight: bold; }
 
 #messagesanchor {
   width: 100%;

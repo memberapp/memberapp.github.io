@@ -63,25 +63,3 @@ ul {
     list-style-type: disc;
   }
 }
-
-table {
-  border-spacing: 0;
-  text-align: center;
-  margin-bottom: 1rem;
-  thead {
-    tr {
-      th {
-        border-right: 1px solid black;
-        padding: 0 0.5rem;
-      }
-    }
-  }
-  tbody {
-    tr {
-      td {
-        border-right: 1px solid black;
-        padding: 0 0.5rem;
-      }
-    }
-  }
-}
