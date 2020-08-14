@@ -1,7 +1,7 @@
 header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12); //#4dc846;
   width: 100%;
-  background: white;
+  background: $white;
   box-shadow: 0px 1px 5px -3px rgba(0, 0, 0, 0.5);
   position: sticky;
   top: 0;
@@ -32,7 +32,7 @@ header {
         z-index: 2;
         background: linear-gradient(
           270deg,
-          white 0%,
+          $white 0%,
           rgba(255, 255, 255, 0) 100%
         );
       }
@@ -79,7 +79,7 @@ header {
       .navitemsmain {
         overflow: auto;
         position: relative;
-        white-space: nowrap;
+        $white-space: nowrap;
         // padding: 0.5rem 0;
 
         margin-right: -15px;
@@ -165,7 +165,7 @@ header {
         font-size: 0.6rem;
         border-radius: 1rem;
         padding: 0.1rem 0.2rem !important;
-        color: white;
+        color: $white;
         font-weight: bold;
         margin-left: 0.25rem;
 

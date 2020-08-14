@@ -120,7 +120,7 @@ img {
     flex-direction: column;
     .title {
       margin-bottom: 0.875rem;
-      // white-space: break-spaces;
+      // $white-space: break-spaces;
       // line-break: anywhere;
       @include word-wrap;
       a {

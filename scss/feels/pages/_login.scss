@@ -25,7 +25,7 @@
     #newseedphrase {
       border: 1px solid rgba(0, 0, 0, 0.12);
       background: rgba(0, 0, 0, 0.06);
-      border-radius: 0.25rem;
+      border-radius: $border-radius-regular;
       padding: $post-padding/2 $post-padding;
       margin: 1rem 0;
     }

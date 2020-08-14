@@ -68,7 +68,7 @@
         line-height: 1;
         &:hover {
           background-color: darken($theme-secondary, 0.5);
-          color: white;
+          color: $white;
         }
       }
     }

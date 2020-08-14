@@ -665,7 +665,7 @@ input {
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
-  background-color: #fff;
+  background-color: white;
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
@@ -674,7 +674,7 @@ input {
   textarea:focus,
   input:focus {
     color: #495057;
-    background-color: #fff;
+    background-color: white;
     border-color: #5b7fb8;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
@@ -1222,7 +1222,6 @@ header {
       header .pagetop nav .navitemsmain {
         overflow: auto;
         position: relative;
-        white-space: nowrap;
         margin-right: -15px;
         display: -ms-flexbox;
         display: flex;

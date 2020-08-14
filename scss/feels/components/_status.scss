@@ -7,7 +7,7 @@ div#status {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.5);
-  color: white;
+  color: $white;
   font-size: $font-size-tiny;
   padding: 0.25rem 1rem;
   border-top-left-radius: 0.25rem;
@@ -20,7 +20,7 @@ div#status {
     background: rgba(0, 0, 0, 0.28);
   }
   a {
-    color: white;
+    color: $white;
     text-decoration: underline;
     &:hover {
       filter: opacity(0.5);
