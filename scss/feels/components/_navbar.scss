@@ -126,29 +126,6 @@ header {
           height: 100%;
           align-items: center;
           text-transform: capitalize;
-          #loginbutton {
-            // line-height: 1;
-            // cursor: pointer;
-            // text-decoration: none;
-            // transition: all 0.15s ease-in-out;
-            // color: white;
-            // float: right;
-            // text-transform: uppercase;
-            // border-radius: 0.25rem;
-            // border: 1px solid darken($theme-secondary, 10);
-            // background: $theme-secondary;
-            // padding: 0.5rem 1rem;
-            // &:hover {
-            //   background: darken($theme-secondary, 10);
-            // }
-            // &:disabled {
-            //   opacity: 0.65;
-            // }
-
-            // @include media(">desktop") {
-            //   padding: 0.5rem;
-            // }
-          }
         }
 
         .headerbuttons {
@@ -221,15 +198,10 @@ header {
         align-items: center;
 
         select {
-          // min-width: 50px;
           margin-right: 0.75rem;
           height: 1.865rem;
           padding: 0.25rem;
-          // font-size: 1rem;
-          // border: 1px solid rgba(0, 0, 0, 0.12);
-          // border-radius: 0.25rem;
-          // height: 1.75rem;
-          // appearance: none;
+
           &:first-of-type {
             margin-left: 0.75rem;
           }

@@ -41,7 +41,7 @@ footer {
     border: 1px solid darken($theme-secondary, 10);
     padding: 0.5rem 1rem;
     background-color: $theme-secondary;
-    border-radius: 0.5rem;
+    border-radius: $border-radius-regular * 2;
     color: white;
     &:hover {
       background: darken($theme-secondary, 10);

@@ -59,7 +59,7 @@
         align-items: center;
         display: flex;
         padding: $post-padding/2 $post-padding;
-        border-radius: 0.25rem;
+        border-radius: $border-radius-regular;
         font-weight: bold;
       }
     }
@@ -67,7 +67,7 @@
       li {
         // border-bottom: 1px solid rgba(0, 0, 0, 0.12);
         border: 1px solid rgba(0, 0, 0, 0.12);
-        border-radius: 0.25rem;
+        border-radius: $border-radius-regular;
         padding: $post-padding/2 $post-padding;
         display: flex;
         flex-wrap: wrap;
