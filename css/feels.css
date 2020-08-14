@@ -314,6 +314,12 @@ body {
   body ::selection {
     background: rgba(134, 217, 129, 0.6); }
 
+html:lang(zh),
+html :lang(zh-Hans),
+html :lang(zh-Hant),
+html :lang(ar) {
+  font-weight: normal !important; }
+
 *,
 ::after,
 ::before {
@@ -327,8 +333,234 @@ body {
   width: 100%;
   background-size: 100px 82px; }
 
-li {
-  list-style-type: none; }
+.profilestats,
+.memberstats {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap; }
+  .profilestats div,
+  .memberstats div {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex: 1;
+    flex: 1;
+    border: 1px solid rgba(0, 0, 0, 0.37);
+    border-radius: 0.25rem; }
+    .profilestats div label,
+    .memberstats div label {
+      margin-bottom: 0; }
+
+.settingsprofilelinks div a,
+#settingsprofilelinks div a,
+#memberprofilelinks div a {
+  margin-right: 1rem;
+  line-height: 1.2;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  color: #44669c;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  border: 1px solid #44669c;
+  background: transparent;
+  padding: 0.5rem 1.5rem;
+  display: inline-block; }
+  .settingsprofilelinks div a:hover,
+  #settingsprofilelinks div a:hover,
+  #memberprofilelinks div a:hover {
+    background: #e9eef6; }
+  .settingsprofilelinks div a:disabled,
+  #settingsprofilelinks div a:disabled,
+  #memberprofilelinks div a:disabled {
+    opacity: 0.65; }
+  .settingsprofilelinks div a:last-of-type,
+  #settingsprofilelinks div a:last-of-type,
+  #memberprofilelinks div a:last-of-type {
+    margin-right: 0; }
+
+#settingsprofileaddress,
+#settingslegacyprofileaddress,
+#settingsprivatekey,
+#membercashaddress,
+#memberlegacyaddress {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+  #settingsprofileaddress span,
+  #settingslegacyprofileaddress span,
+  #settingsprivatekey span,
+  #membercashaddress span,
+  #memberlegacyaddress span {
+    word-break: break-all;
+    margin-bottom: 1rem; }
+  #settingsprofileaddress div,
+  #settingslegacyprofileaddress div,
+  #settingsprivatekey div,
+  #membercashaddress div,
+  #memberlegacyaddress div {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column; }
+  #settingsprofileaddress #cashaddrformatdiv,
+  #settingsprofileaddress #legacyformatdiv,
+  #settingsprofileaddress #privatekeyformatdiv,
+  #settingsprofileaddress #membercashaddrformatdiv,
+  #settingsprofileaddress #memberlegacyformatdiv,
+  #settingslegacyprofileaddress #cashaddrformatdiv,
+  #settingslegacyprofileaddress #legacyformatdiv,
+  #settingslegacyprofileaddress #privatekeyformatdiv,
+  #settingslegacyprofileaddress #membercashaddrformatdiv,
+  #settingslegacyprofileaddress #memberlegacyformatdiv,
+  #settingsprivatekey #cashaddrformatdiv,
+  #settingsprivatekey #legacyformatdiv,
+  #settingsprivatekey #privatekeyformatdiv,
+  #settingsprivatekey #membercashaddrformatdiv,
+  #settingsprivatekey #memberlegacyformatdiv,
+  #membercashaddress #cashaddrformatdiv,
+  #membercashaddress #legacyformatdiv,
+  #membercashaddress #privatekeyformatdiv,
+  #membercashaddress #membercashaddrformatdiv,
+  #membercashaddress #memberlegacyformatdiv,
+  #memberlegacyaddress #cashaddrformatdiv,
+  #memberlegacyaddress #legacyformatdiv,
+  #memberlegacyaddress #privatekeyformatdiv,
+  #memberlegacyaddress #membercashaddrformatdiv,
+  #memberlegacyaddress #memberlegacyformatdiv {
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+    display: inline-block;
+    /* margin: 0 auto; */
+    padding: 0.75rem;
+    border: 2px solid rgba(0, 0, 0, 0.78);
+    border-radius: 0.25rem;
+    background: white; }
+    #settingsprofileaddress #cashaddrformatdiv img,
+    #settingsprofileaddress #legacyformatdiv img,
+    #settingsprofileaddress #privatekeyformatdiv img,
+    #settingsprofileaddress #membercashaddrformatdiv img,
+    #settingsprofileaddress #memberlegacyformatdiv img,
+    #settingslegacyprofileaddress #cashaddrformatdiv img,
+    #settingslegacyprofileaddress #legacyformatdiv img,
+    #settingslegacyprofileaddress #privatekeyformatdiv img,
+    #settingslegacyprofileaddress #membercashaddrformatdiv img,
+    #settingslegacyprofileaddress #memberlegacyformatdiv img,
+    #settingsprivatekey #cashaddrformatdiv img,
+    #settingsprivatekey #legacyformatdiv img,
+    #settingsprivatekey #privatekeyformatdiv img,
+    #settingsprivatekey #membercashaddrformatdiv img,
+    #settingsprivatekey #memberlegacyformatdiv img,
+    #membercashaddress #cashaddrformatdiv img,
+    #membercashaddress #legacyformatdiv img,
+    #membercashaddress #privatekeyformatdiv img,
+    #membercashaddress #membercashaddrformatdiv img,
+    #membercashaddress #memberlegacyformatdiv img,
+    #memberlegacyaddress #cashaddrformatdiv img,
+    #memberlegacyaddress #legacyformatdiv img,
+    #memberlegacyaddress #privatekeyformatdiv img,
+    #memberlegacyaddress #membercashaddrformatdiv img,
+    #memberlegacyaddress #memberlegacyformatdiv img {
+      height: 140px;
+      width: 140px; }
+    #settingsprofileaddress #cashaddrformatdiv .qrcodeclick,
+    #settingsprofileaddress #legacyformatdiv .qrcodeclick,
+    #settingsprofileaddress #privatekeyformatdiv .qrcodeclick,
+    #settingsprofileaddress #membercashaddrformatdiv .qrcodeclick,
+    #settingsprofileaddress #memberlegacyformatdiv .qrcodeclick,
+    #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick,
+    #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick,
+    #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick,
+    #settingslegacyprofileaddress #membercashaddrformatdiv .qrcodeclick,
+    #settingslegacyprofileaddress #memberlegacyformatdiv .qrcodeclick,
+    #settingsprivatekey #cashaddrformatdiv .qrcodeclick,
+    #settingsprivatekey #legacyformatdiv .qrcodeclick,
+    #settingsprivatekey #privatekeyformatdiv .qrcodeclick,
+    #settingsprivatekey #membercashaddrformatdiv .qrcodeclick,
+    #settingsprivatekey #memberlegacyformatdiv .qrcodeclick,
+    #membercashaddress #cashaddrformatdiv .qrcodeclick,
+    #membercashaddress #legacyformatdiv .qrcodeclick,
+    #membercashaddress #privatekeyformatdiv .qrcodeclick,
+    #membercashaddress #membercashaddrformatdiv .qrcodeclick,
+    #membercashaddress #memberlegacyformatdiv .qrcodeclick,
+    #memberlegacyaddress #cashaddrformatdiv .qrcodeclick,
+    #memberlegacyaddress #legacyformatdiv .qrcodeclick,
+    #memberlegacyaddress #privatekeyformatdiv .qrcodeclick,
+    #memberlegacyaddress #membercashaddrformatdiv .qrcodeclick,
+    #memberlegacyaddress #memberlegacyformatdiv .qrcodeclick {
+      cursor: pointer;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      margin-bottom: 0;
+      color: #44669c; }
+      #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
+      #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
+      #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
+      #settingsprofileaddress #membercashaddrformatdiv .qrcodeclick:hover,
+      #settingsprofileaddress #memberlegacyformatdiv .qrcodeclick:hover,
+      #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
+      #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick:hover,
+      #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
+      #settingslegacyprofileaddress #membercashaddrformatdiv .qrcodeclick:hover,
+      #settingslegacyprofileaddress #memberlegacyformatdiv .qrcodeclick:hover,
+      #settingsprivatekey #cashaddrformatdiv .qrcodeclick:hover,
+      #settingsprivatekey #legacyformatdiv .qrcodeclick:hover,
+      #settingsprivatekey #privatekeyformatdiv .qrcodeclick:hover,
+      #settingsprivatekey #membercashaddrformatdiv .qrcodeclick:hover,
+      #settingsprivatekey #memberlegacyformatdiv .qrcodeclick:hover,
+      #membercashaddress #cashaddrformatdiv .qrcodeclick:hover,
+      #membercashaddress #legacyformatdiv .qrcodeclick:hover,
+      #membercashaddress #privatekeyformatdiv .qrcodeclick:hover,
+      #membercashaddress #membercashaddrformatdiv .qrcodeclick:hover,
+      #membercashaddress #memberlegacyformatdiv .qrcodeclick:hover,
+      #memberlegacyaddress #cashaddrformatdiv .qrcodeclick:hover,
+      #memberlegacyaddress #legacyformatdiv .qrcodeclick:hover,
+      #memberlegacyaddress #privatekeyformatdiv .qrcodeclick:hover,
+      #memberlegacyaddress #membercashaddrformatdiv .qrcodeclick:hover,
+      #memberlegacyaddress #memberlegacyformatdiv .qrcodeclick:hover {
+        color: #354f78; }
+    #settingsprofileaddress #cashaddrformatdiv img,
+    #settingsprofileaddress #legacyformatdiv img,
+    #settingsprofileaddress #privatekeyformatdiv img,
+    #settingsprofileaddress #membercashaddrformatdiv img,
+    #settingsprofileaddress #memberlegacyformatdiv img,
+    #settingslegacyprofileaddress #cashaddrformatdiv img,
+    #settingslegacyprofileaddress #legacyformatdiv img,
+    #settingslegacyprofileaddress #privatekeyformatdiv img,
+    #settingslegacyprofileaddress #membercashaddrformatdiv img,
+    #settingslegacyprofileaddress #memberlegacyformatdiv img,
+    #settingsprivatekey #cashaddrformatdiv img,
+    #settingsprivatekey #legacyformatdiv img,
+    #settingsprivatekey #privatekeyformatdiv img,
+    #settingsprivatekey #membercashaddrformatdiv img,
+    #settingsprivatekey #memberlegacyformatdiv img,
+    #membercashaddress #cashaddrformatdiv img,
+    #membercashaddress #legacyformatdiv img,
+    #membercashaddress #privatekeyformatdiv img,
+    #membercashaddress #membercashaddrformatdiv img,
+    #membercashaddress #memberlegacyformatdiv img,
+    #memberlegacyaddress #cashaddrformatdiv img,
+    #memberlegacyaddress #legacyformatdiv img,
+    #memberlegacyaddress #privatekeyformatdiv img,
+    #memberlegacyaddress #membercashaddrformatdiv img,
+    #memberlegacyaddress #memberlegacyformatdiv img {
+      outline: none; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -1406,8 +1638,7 @@ footer {
         border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
     #settingsanchor .content div {
       margin-bottom: 1rem; }
-    #settingsanchor .content .logout a,
-    #settingsanchor .content .settingsprofilelinks a {
+    #settingsanchor .content .logout a {
       line-height: 1.2;
       cursor: pointer;
       text-decoration: none;
@@ -1419,11 +1650,9 @@ footer {
       background: transparent;
       padding: 0.5rem 1.5rem;
       display: inline-block; }
-      #settingsanchor .content .logout a:hover,
-      #settingsanchor .content .settingsprofilelinks a:hover {
+      #settingsanchor .content .logout a:hover {
         background: #e9eef6; }
-      #settingsanchor .content .logout a:disabled,
-      #settingsanchor .content .settingsprofilelinks a:disabled {
+      #settingsanchor .content .logout a:disabled {
         opacity: 0.65; }
     #settingsanchor .content #settingsnametextbutton,
     #settingsanchor .content #settingsprofiletextbutton {
@@ -1451,113 +1680,6 @@ footer {
       width: 100%; }
     #settingsanchor .content label {
       display: block; }
-    #settingsanchor .content #settingsprofileaddress,
-    #settingsanchor .content #settingslegacyprofileaddress,
-    #settingsanchor .content #settingsprivatekey {
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: column;
-      flex-direction: column; }
-      #settingsanchor .content #settingsprofileaddress span,
-      #settingsanchor .content #settingslegacyprofileaddress span,
-      #settingsanchor .content #settingsprivatekey span {
-        word-break: break-all;
-        margin-bottom: 1rem; }
-      #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv,
-      #settingsanchor .content #settingsprofileaddress #legacyformatdiv,
-      #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv,
-      #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv,
-      #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv,
-      #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv,
-      #settingsanchor .content #settingsprivatekey #cashaddrformatdiv,
-      #settingsanchor .content #settingsprivatekey #legacyformatdiv,
-      #settingsanchor .content #settingsprivatekey #privatekeyformatdiv {
-        height: auto;
-        margin: 0 auto;
-        text-align: center;
-        display: inline-block;
-        /* margin: 0 auto; */
-        padding: 0.75rem;
-        border: 2px solid rgba(0, 0, 0, 0.78);
-        border-radius: 0.25rem;
-        background: white; }
-        #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv img,
-        #settingsanchor .content #settingsprofileaddress #legacyformatdiv img,
-        #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv img,
-        #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv img,
-        #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv img,
-        #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv img,
-        #settingsanchor .content #settingsprivatekey #cashaddrformatdiv img,
-        #settingsanchor .content #settingsprivatekey #legacyformatdiv img,
-        #settingsanchor .content #settingsprivatekey #privatekeyformatdiv img {
-          height: 140px;
-          width: 140px; }
-        #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv .qrcodeclick,
-        #settingsanchor .content #settingsprofileaddress #legacyformatdiv .qrcodeclick,
-        #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv .qrcodeclick,
-        #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick,
-        #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick,
-        #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick,
-        #settingsanchor .content #settingsprivatekey #cashaddrformatdiv .qrcodeclick,
-        #settingsanchor .content #settingsprivatekey #legacyformatdiv .qrcodeclick,
-        #settingsanchor .content #settingsprivatekey #privatekeyformatdiv .qrcodeclick {
-          cursor: pointer;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-align: center;
-          align-items: center;
-          -ms-flex-pack: center;
-          justify-content: center;
-          margin-bottom: 0;
-          color: #44669c; }
-          #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
-          #settingsanchor .content #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
-          #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
-          #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
-          #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick:hover,
-          #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
-          #settingsanchor .content #settingsprivatekey #cashaddrformatdiv .qrcodeclick:hover,
-          #settingsanchor .content #settingsprivatekey #legacyformatdiv .qrcodeclick:hover,
-          #settingsanchor .content #settingsprivatekey #privatekeyformatdiv .qrcodeclick:hover {
-            color: #354f78; }
-        #settingsanchor .content #settingsprofileaddress #cashaddrformatdiv img,
-        #settingsanchor .content #settingsprofileaddress #legacyformatdiv img,
-        #settingsanchor .content #settingsprofileaddress #privatekeyformatdiv img,
-        #settingsanchor .content #settingslegacyprofileaddress #cashaddrformatdiv img,
-        #settingsanchor .content #settingslegacyprofileaddress #legacyformatdiv img,
-        #settingsanchor .content #settingslegacyprofileaddress #privatekeyformatdiv img,
-        #settingsanchor .content #settingsprivatekey #cashaddrformatdiv img,
-        #settingsanchor .content #settingsprivatekey #legacyformatdiv img,
-        #settingsanchor .content #settingsprivatekey #privatekeyformatdiv img {
-          outline: none; }
-    #settingsanchor .content .settingsprofilelinks div a {
-      margin-right: 1rem; }
-      #settingsanchor .content .settingsprofilelinks div a:last-of-type {
-        margin-right: 0; }
-    #settingsanchor .content .profilestats {
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: row;
-      flex-direction: row;
-      -ms-flex-pack: justify;
-      justify-content: space-between;
-      -ms-flex-wrap: wrap;
-      flex-wrap: wrap; }
-      #settingsanchor .content .profilestats div {
-        margin: 0.5rem;
-        padding: 0.5rem;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        -ms-flex-align: center;
-        align-items: center;
-        -ms-flex: 1;
-        flex: 1;
-        border: 1px solid rgba(0, 0, 0, 0.37);
-        border-radius: 0.25rem; }
-        #settingsanchor .content .profilestats div label {
-          margin-bottom: 0; }
 
 #memberposts {
   width: 100%;
@@ -1890,6 +2012,8 @@ footer {
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    #member .content div {
+      margin-bottom: 1rem; }
     @media (max-width: 400px) {
       #member .content {
         margin-left: -15px !important;
@@ -1898,115 +2022,9 @@ footer {
         border-left: 0;
         border-right: 0;
         border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
-    #member .content #settingsprofileaddress,
-    #member .content #settingslegacyprofileaddress,
-    #member .content #settingsprivatekey {
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: column;
-      flex-direction: column; }
-      #member .content #settingsprofileaddress span,
-      #member .content #settingslegacyprofileaddress span,
-      #member .content #settingsprivatekey span {
-        word-break: break-all;
-        margin-bottom: 1rem; }
-      #member .content #settingsprofileaddress #cashaddrformatdiv,
-      #member .content #settingsprofileaddress #legacyformatdiv,
-      #member .content #settingsprofileaddress #privatekeyformatdiv,
-      #member .content #settingsprofileaddress #membercashaddrformatdiv,
-      #member .content #settingsprofileaddress #memberlegacyformatdiv,
-      #member .content #settingslegacyprofileaddress #cashaddrformatdiv,
-      #member .content #settingslegacyprofileaddress #legacyformatdiv,
-      #member .content #settingslegacyprofileaddress #privatekeyformatdiv,
-      #member .content #settingslegacyprofileaddress #membercashaddrformatdiv,
-      #member .content #settingslegacyprofileaddress #memberlegacyformatdiv,
-      #member .content #settingsprivatekey #cashaddrformatdiv,
-      #member .content #settingsprivatekey #legacyformatdiv,
-      #member .content #settingsprivatekey #privatekeyformatdiv,
-      #member .content #settingsprivatekey #membercashaddrformatdiv,
-      #member .content #settingsprivatekey #memberlegacyformatdiv {
-        height: auto;
-        margin: 0 auto;
-        text-align: center;
-        display: inline-block;
-        /* margin: 0 auto; */
-        padding: 0.75rem;
-        border: 2px solid rgba(0, 0, 0, 0.78);
-        border-radius: 0.25rem;
-        background: white; }
-        #member .content #settingsprofileaddress #cashaddrformatdiv img,
-        #member .content #settingsprofileaddress #legacyformatdiv img,
-        #member .content #settingsprofileaddress #privatekeyformatdiv img,
-        #member .content #settingsprofileaddress #membercashaddrformatdiv img,
-        #member .content #settingsprofileaddress #memberlegacyformatdiv img,
-        #member .content #settingslegacyprofileaddress #cashaddrformatdiv img,
-        #member .content #settingslegacyprofileaddress #legacyformatdiv img,
-        #member .content #settingslegacyprofileaddress #privatekeyformatdiv img,
-        #member .content #settingslegacyprofileaddress #membercashaddrformatdiv img,
-        #member .content #settingslegacyprofileaddress #memberlegacyformatdiv img,
-        #member .content #settingsprivatekey #cashaddrformatdiv img,
-        #member .content #settingsprivatekey #legacyformatdiv img,
-        #member .content #settingsprivatekey #privatekeyformatdiv img,
-        #member .content #settingsprivatekey #membercashaddrformatdiv img,
-        #member .content #settingsprivatekey #memberlegacyformatdiv img {
-          height: 140px;
-          width: 140px; }
-        #member .content #settingsprofileaddress #cashaddrformatdiv .qrcodeclick,
-        #member .content #settingsprofileaddress #legacyformatdiv .qrcodeclick,
-        #member .content #settingsprofileaddress #privatekeyformatdiv .qrcodeclick,
-        #member .content #settingsprofileaddress #membercashaddrformatdiv .qrcodeclick,
-        #member .content #settingsprofileaddress #memberlegacyformatdiv .qrcodeclick,
-        #member .content #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick,
-        #member .content #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick,
-        #member .content #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick,
-        #member .content #settingslegacyprofileaddress #membercashaddrformatdiv .qrcodeclick,
-        #member .content #settingslegacyprofileaddress #memberlegacyformatdiv .qrcodeclick,
-        #member .content #settingsprivatekey #cashaddrformatdiv .qrcodeclick,
-        #member .content #settingsprivatekey #legacyformatdiv .qrcodeclick,
-        #member .content #settingsprivatekey #privatekeyformatdiv .qrcodeclick,
-        #member .content #settingsprivatekey #membercashaddrformatdiv .qrcodeclick,
-        #member .content #settingsprivatekey #memberlegacyformatdiv .qrcodeclick {
-          cursor: pointer;
-          display: -ms-flexbox;
-          display: flex;
-          -ms-flex-align: center;
-          align-items: center;
-          -ms-flex-pack: center;
-          justify-content: center;
-          margin-bottom: 0;
-          color: #44669c; }
-          #member .content #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
-          #member .content #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
-          #member .content #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
-          #member .content #settingsprofileaddress #membercashaddrformatdiv .qrcodeclick:hover,
-          #member .content #settingsprofileaddress #memberlegacyformatdiv .qrcodeclick:hover,
-          #member .content #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
-          #member .content #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick:hover,
-          #member .content #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
-          #member .content #settingslegacyprofileaddress #membercashaddrformatdiv .qrcodeclick:hover,
-          #member .content #settingslegacyprofileaddress #memberlegacyformatdiv .qrcodeclick:hover,
-          #member .content #settingsprivatekey #cashaddrformatdiv .qrcodeclick:hover,
-          #member .content #settingsprivatekey #legacyformatdiv .qrcodeclick:hover,
-          #member .content #settingsprivatekey #privatekeyformatdiv .qrcodeclick:hover,
-          #member .content #settingsprivatekey #membercashaddrformatdiv .qrcodeclick:hover,
-          #member .content #settingsprivatekey #memberlegacyformatdiv .qrcodeclick:hover {
-            color: #354f78; }
-        #member .content #settingsprofileaddress #cashaddrformatdiv img,
-        #member .content #settingsprofileaddress #legacyformatdiv img,
-        #member .content #settingsprofileaddress #privatekeyformatdiv img,
-        #member .content #settingsprofileaddress #membercashaddrformatdiv img,
-        #member .content #settingsprofileaddress #memberlegacyformatdiv img,
-        #member .content #settingslegacyprofileaddress #cashaddrformatdiv img,
-        #member .content #settingslegacyprofileaddress #legacyformatdiv img,
-        #member .content #settingslegacyprofileaddress #privatekeyformatdiv img,
-        #member .content #settingslegacyprofileaddress #membercashaddrformatdiv img,
-        #member .content #settingslegacyprofileaddress #memberlegacyformatdiv img,
-        #member .content #settingsprivatekey #cashaddrformatdiv img,
-        #member .content #settingsprivatekey #legacyformatdiv img,
-        #member .content #settingsprivatekey #privatekeyformatdiv img,
-        #member .content #settingsprivatekey #membercashaddrformatdiv img,
-        #member .content #settingsprivatekey #memberlegacyformatdiv img {
-          outline: none; }
+    #member .content .memberrating {
+      margin: 0 auto;
+      display: table; }
 
 #ratings {
   width: 100%;

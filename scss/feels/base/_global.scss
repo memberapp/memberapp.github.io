@@ -11,6 +11,15 @@ body {
   }
 }
 
+html {
+  &:lang(zh),
+  :lang(zh-Hans),
+  :lang(zh-Hant),
+  :lang(ar) {
+    font-weight: normal !important;
+  }
+}
+
 *,
 ::after,
 ::before {
@@ -26,6 +35,88 @@ body {
   background-size: 100px 82px;
 }
 
-li {
-  list-style-type: none;
+// Settings and memmber pages
+
+.profilestats,
+.memberstats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  div {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    border: 1px solid rgba(0, 0, 0, 0.37);
+    border-radius: 0.25rem;
+    &:first-of-type {
+      // margin: 0;
+    }
+    label {
+      margin-bottom: 0;
+    }
+    a {
+    }
+  }
+}
+
+.settingsprofilelinks,
+#settingsprofilelinks,
+#memberprofilelinks {
+  div {
+    a {
+      margin-right: 1rem;
+      @include btn-outline;
+      display: inline-block;
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+#settingsprofileaddress,
+#settingslegacyprofileaddress,
+#settingsprivatekey,
+#membercashaddress,
+#memberlegacyaddress {
+  display: flex;
+  flex-direction: column;
+  span {
+    word-break: break-all;
+    margin-bottom: 1rem;
+  }
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+  #cashaddrformatdiv,
+  #legacyformatdiv,
+  #privatekeyformatdiv,
+  #membercashaddrformatdiv,
+  #memberlegacyformatdiv {
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+    @include qr-box;
+
+    .qrcodeclick {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+      color: $theme-secondary;
+
+      &:hover {
+        color: darken($theme-secondary, 10);
+      }
+    }
+    img {
+      outline: none;
+    }
+  }
 }

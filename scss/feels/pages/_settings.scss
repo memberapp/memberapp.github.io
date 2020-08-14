@@ -7,8 +7,7 @@
       margin-bottom: 1rem;
     }
 
-    .logout,
-    .settingsprofilelinks {
+    .logout {
       a {
         @include btn-outline;
         display: inline-block;
@@ -30,75 +29,6 @@
 
     label {
       display: block;
-    }
-    #settingsprofileaddress,
-    #settingslegacyprofileaddress,
-    #settingsprivatekey {
-      display: flex;
-      flex-direction: column;
-      span {
-        word-break: break-all;
-        margin-bottom: 1rem;
-      }
-      #cashaddrformatdiv,
-      #legacyformatdiv,
-      #privatekeyformatdiv {
-        height: auto;
-        margin: 0 auto;
-        text-align: center;
-        @include qr-box;
-
-        .qrcodeclick {
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 0;
-          color: $theme-secondary;
-
-          &:hover {
-            color: darken($theme-secondary, 10);
-          }
-        }
-        img {
-          outline: none;
-        }
-      }
-    }
-
-    .settingsprofilelinks {
-      div {
-        a {
-          margin-right: 1rem;
-          &:last-of-type {
-            margin-right: 0;
-          }
-        }
-      }
-    }
-    .profilestats {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      div {
-        margin: 0.5rem;
-        padding: 0.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        flex: 1;
-        border: 1px solid rgba(0, 0, 0, 0.37);
-        border-radius: 0.25rem;
-        &:first-of-type {
-          // margin: 0;
-        }
-        label {
-          margin-bottom: 0;
-        }
-        a {
-        }
-      }
     }
   }
 }
