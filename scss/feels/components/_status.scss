@@ -19,4 +19,11 @@ div#status {
     float: right;
     background: rgba(0, 0, 0, 0.28);
   }
+  a {
+    color: white;
+    text-decoration: underline;
+    &:hover {
+      filter: opacity(0.5);
+    }
+  }
 }

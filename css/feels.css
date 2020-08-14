@@ -1129,6 +1129,11 @@ div#status {
       width: auto;
       float: right;
       background: rgba(0, 0, 0, 0.28); } }
+  div#status a {
+    color: white;
+    text-decoration: underline; }
+    div#status a:hover {
+      filter: opacity(0.5); }
 
 header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
