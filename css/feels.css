@@ -1122,7 +1122,7 @@ div#status {
   font-size: 0.75rem;
   padding: 0.25rem 1rem;
   border-top-left-radius: 0.25rem;
-  font-weight: bold;
+  font-weight: normal;
   text-transform: capitalize; }
   @media (min-width: 1025px) {
     div#status {

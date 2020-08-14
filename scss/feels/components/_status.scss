@@ -11,7 +11,7 @@ div#status {
   font-size: $font-size-tiny;
   padding: 0.25rem 1rem;
   border-top-left-radius: 0.25rem;
-  font-weight: bold;
+  font-weight: normal;
   text-transform: capitalize;
 
   @include media(">desktop") {
