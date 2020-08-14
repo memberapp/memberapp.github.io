@@ -2,6 +2,13 @@ body {
   background: #f7f7f7;
   position: relative;
   scroll-behavior: smooth;
+
+  ::-moz-selection {
+    background: rgba(134, 217, 129, 0.6);
+  }
+  ::selection {
+    background: rgba(134, 217, 129, 0.6);
+  }
 }
 
 *,

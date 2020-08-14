@@ -311,6 +311,8 @@ body {
   background: #f7f7f7;
   position: relative;
   scroll-behavior: smooth; }
+  body ::selection {
+    background: rgba(134, 217, 129, 0.6); }
 
 *,
 ::after,
@@ -2082,3 +2084,7 @@ footer {
         font-size: 0.875rem;
         background: #f8f9fa;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+        #notifications ul.notificationslist li .notificationtitle .hnuser,
+        #notifications ul.notificationslist li .notificationtitle .star-rating {
+          margin-right: 0.5rem;
+          margin-right: 0.25rem; }
