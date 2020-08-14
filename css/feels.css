@@ -565,7 +565,7 @@ html :lang(ar) {
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: normal;
   line-height: 1.65;
   color: rgba(0, 0, 0, 0.87); }
 
@@ -579,31 +579,29 @@ h3,
 h4,
 h5,
 h6 {
-  margin-top: 0;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
   line-height: 1.15; }
 
 h1 {
-  font-size: 3.052em; }
+  margin-top: 0;
+  font-size: 1.802em; }
 
 h2 {
-  font-size: 2.441em; }
+  font-size: 1.602em; }
 
 h3 {
-  font-size: 1.953em; }
+  font-size: 1.424em; }
 
 h4 {
-  font-size: 1.563em; }
+  font-size: 1.266em; }
 
 h5 {
-  font-size: 1.25em; }
-
-h6 {
-  font-size: 1.25em; }
+  font-size: 1.125em; }
 
 small,
 .text_small {
-  font-size: 0.8em; }
+  font-size: 0.889em; }
 
 ol li {
   list-style-type: decimal; }
