@@ -6,6 +6,14 @@
     }
     @include card;
     padding: $post-padding * 2;
+    #membernametext {
+      display: flex;
+      a[href^="javascript:;"] {
+        @include btn;
+
+        margin-left: auto;
+      }
+    }
 
     .memberrating {
       margin: 0 auto;
