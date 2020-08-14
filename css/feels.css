@@ -2030,19 +2030,23 @@ footer {
       margin: 0 auto;
       display: table; }
 
-#ratings {
+#ratings,
+#community {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 769px) {
-    #ratings {
+    #ratings,
+    #community {
       max-width: 800px; } }
   @media (max-width: 768px) {
-    #ratings {
+    #ratings,
+    #community {
       max-width: 540px; } }
-  #ratings .content {
+  #ratings .content,
+  #community .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
@@ -2051,13 +2055,38 @@ footer {
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
-      #ratings .content {
+      #ratings .content,
+      #community .content {
         margin-left: -15px !important;
         margin-right: -15px !important;
         border-radius: 0;
         border-left: 0;
         border-right: 0;
         border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+    #ratings .content br,
+    #community .content br {
+      display: none; }
+    #ratings .content table,
+    #community .content table {
+      width: 100%; }
+      #ratings .content table th:last-of-type,
+      #ratings .content table td:last-of-type,
+      #community .content table th:last-of-type,
+      #community .content table td:last-of-type {
+        text-align: left;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        -ms-word-break: break-all;
+        word-break: break-all;
+        word-break: break-word;
+        -ms-hyphens: auto;
+        -webkit-hyphens: auto;
+        hyphens: auto; }
+      #ratings .content table td img,
+      #community .content table td img {
+        outline: none;
+        height: 1rem;
+        width: 1rem; }
 
 #trustgraph {
   width: 100%;
@@ -2087,35 +2116,23 @@ footer {
         border-left: 0;
         border-right: 0;
         border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
-
-#community {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto; }
-  @media (min-width: 769px) {
-    #community {
-      max-width: 800px; } }
-  @media (max-width: 768px) {
-    #community {
-      max-width: 540px; } }
-  #community .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.25rem;
-    margin-bottom: 1.5rem;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    padding: 1.75rem; }
-    @media (max-width: 400px) {
-      #community .content {
-        margin-left: -15px !important;
-        margin-right: -15px !important;
-        border-radius: 0;
-        border-left: 0;
-        border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+    #trustgraph .content br {
+      display: none; }
+    #trustgraph .content table {
+      width: 100%; }
+    #trustgraph .content #trustgraphdetails {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-direction: column;
+      flex-direction: column;
+      -ms-flex-align: center;
+      align-items: center; }
+      #trustgraph .content #trustgraphdetails table {
+        width: 100%; }
+    #trustgraph .content #trustgraphnotes {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.12); }
 
 #notifications {
   width: 100%;
