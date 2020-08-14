@@ -1,12 +1,22 @@
 div#status {
-  //   position: fixed;
-  //   bottom: 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #c2c2c2;
-  font-size: 0.75rem;
-  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: $font-size-tiny;
+  padding: 0.25rem 1rem;
+  border-top-left-radius: 0.25rem;
   font-weight: bold;
+  text-transform: capitalize;
+
+  @include media(">desktop") {
+    width: auto;
+    float: right;
+    background: rgba(0, 0, 0, 0.28);
+  }
 }
