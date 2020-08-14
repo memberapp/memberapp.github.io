@@ -128,8 +128,9 @@ img {
     flex-direction: column;
     .title {
       margin-bottom: 0.875rem;
-      white-space: break-spaces;
-      line-break: anywhere;
+      // white-space: break-spaces;
+      // line-break: anywhere;
+      @include word-wrap;
       a {
         color: rgba(0, 0, 0, 0.76);
       }

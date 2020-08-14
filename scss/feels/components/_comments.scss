@@ -67,6 +67,7 @@
             .comment {
               font-size: 1rem;
               .commentbody {
+                @include word-wrap;
               }
               // .subtextbuttons {
               //   font-size: 0.75rem;

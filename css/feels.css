@@ -431,8 +431,14 @@ img {
     flex-direction: column; }
     .post .postdetails .title {
       margin-bottom: 0.875rem;
-      white-space: break-spaces;
-      line-break: anywhere; }
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      -ms-word-break: break-all;
+      word-break: break-all;
+      word-break: break-word;
+      -ms-hyphens: auto;
+      -webkit-hyphens: auto;
+      hyphens: auto; }
       .post .postdetails .title a {
         color: rgba(0, 0, 0, 0.76); }
     .post .postdetails .subtext {
@@ -843,6 +849,15 @@ textarea {
               font-weight: bold; }
             .comment-tree ul li .reply div:only-child .commentdetails .comment {
               font-size: 1rem; }
+              .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody {
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+                -ms-word-break: break-all;
+                word-break: break-all;
+                word-break: break-word;
+                -ms-hyphens: auto;
+                -webkit-hyphens: auto;
+                hyphens: auto; }
       .comment-tree ul li ul {
         margin-left: 2.5rem;
         border-left: 1px solid #e6e6e6 !important; }
