@@ -23,7 +23,7 @@
       //   @include btn-outline;
     }
     #newseedphrase {
-      border: 1px solid rgba(0, 0, 0, 0.12);
+      border: 1px solid $text-divider;
       background: rgba(0, 0, 0, 0.06);
       border-radius: $border-radius-regular;
       padding: $post-padding/2 $post-padding;

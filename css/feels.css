@@ -445,7 +445,7 @@ html :lang(ar) {
     display: inline-block;
     /* margin: 0 auto; */
     padding: 0.75rem;
-    border: 2px solid rgba(0, 0, 0, 0.78);
+    border: 2px solid rgba(0, 0, 0, 0.87);
     border-radius: 0.25rem;
     background: white; }
     #settingsprofileaddress #cashaddrformatdiv img,
@@ -930,7 +930,7 @@ img {
       .post .postdetails .subtext a {
         color: rgba(0, 0, 0, 0.54); }
         .post .postdetails .subtext a:hover {
-          color: rgba(0, 0, 0, 0.78); }
+          color: rgba(0, 0, 0, 0.87); }
       .post .postdetails .subtext .submitter {
         margin-bottom: 0.25rem;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
@@ -972,7 +972,7 @@ img {
       transition: filter 1s ease-in-out; }
     .postdetails .subtextbuttons a:hover,
     .comment-tree ul li .reply div .subtextbuttons a:hover {
-      color: rgba(0, 0, 0, 0.78); }
+      color: rgba(0, 0, 0, 0.87); }
   .postdetails .subtextbuttons span.score,
   .comment-tree ul li .reply div .subtextbuttons span.score {
     margin-right: 0.5rem; }
@@ -1415,7 +1415,7 @@ footer {
       display: inline-block;
       /* margin: 0 auto; */
       padding: 0.75rem;
-      border: 2px solid rgba(0, 0, 0, 0.78);
+      border: 2px solid rgba(0, 0, 0, 0.87);
       border-radius: 0.25rem;
       background: white;
       margin-bottom: 0.5rem; }

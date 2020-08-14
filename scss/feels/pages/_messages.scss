@@ -15,7 +15,7 @@
       .usersearchresult {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid $text-divider;
         padding: 0.5rem 0;
         .hnuser {
           margin-right: 0.5rem;
@@ -65,8 +65,8 @@
     }
     #messageslist {
       li {
-        // border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-        border: 1px solid rgba(0, 0, 0, 0.12);
+        // border-bottom: 1px solid $text-divider;
+        border: 1px solid $text-divider;
         border-radius: $border-radius-regular;
         padding: $post-padding/2 $post-padding;
         display: flex;
@@ -101,7 +101,7 @@
         div:last-of-type {
           margin-top: 0.75rem;
           padding-top: 0.5rem;
-          border-top: 1px solid rgba(0, 0, 0, 0.12);
+          border-top: 1px solid $text-divider;
           width: 100%;
         }
         .star-value {

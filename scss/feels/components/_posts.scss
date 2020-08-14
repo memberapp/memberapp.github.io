@@ -8,7 +8,7 @@ a {
 }
 
 hr {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid $text-divider;
   border-bottom: 0;
 }
 
@@ -142,7 +142,7 @@ img {
       }
       .submitter {
         margin-bottom: 0.25rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid $text-divider;
         padding-bottom: 0.25rem;
         display: inline-block;
         a {
