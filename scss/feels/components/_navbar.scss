@@ -86,6 +86,7 @@ header {
         display: flex;
         height: auto;
         align-items: center;
+        flex-shrink: 0;
 
         // border-top: 1px solid $text-divider;
         @include media(">tablet") {
