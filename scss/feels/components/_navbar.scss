@@ -86,7 +86,6 @@ header {
         display: flex;
         height: auto;
         align-items: center;
-        flex-shrink: 0;
 
         // border-top: 1px solid $text-divider;
         @include media(">tablet") {
@@ -103,7 +102,7 @@ header {
           height: 100%;
           align-items: center;
           display: flex;
-
+          flex-shrink: 0;
           box-sizing: content-box;
 
           @include media(">desktop") {
