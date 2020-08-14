@@ -309,7 +309,253 @@ img {
 
 body {
   background: #f7f7f7;
+  position: relative;
+  scroll-behavior: smooth; }
+
+*,
+::after,
+::before {
+  box-sizing: border-box; }
+
+.loading {
+  background-image: url(../img/puff-loader.svg);
+  height: calc(100vh - 61px);
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  background-size: 100px 82px; }
+
+li {
+  list-style-type: none; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(0, 0, 0, 0.87); }
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem; }
+
+li {
+  list-style-type: none; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  line-height: 1.15; }
+
+h1 {
+  font-size: 3.052em; }
+
+h2 {
+  font-size: 2.441em; }
+
+h3 {
+  font-size: 1.953em; }
+
+h4 {
+  font-size: 1.563em; }
+
+h5 {
+  font-size: 1.25em; }
+
+h6 {
+  font-size: 1.25em; }
+
+small,
+.text_small {
+  font-size: 0.8em; }
+
+ol li {
+  list-style-type: decimal; }
+
+ul li {
+  list-style-type: disc; }
+
+table {
+  border-spacing: 0;
+  text-align: center;
+  margin-bottom: 1rem; }
+  table thead tr th {
+    border-right: 1px solid black;
+    padding: 0 0.5rem; }
+  table tbody tr td {
+    border-right: 1px solid black;
+    padding: 0 0.5rem; }
+
+input[type="submit"],
+button {
+  line-height: 1.2;
+  cursor: pointer;
+  text-decoration: none;
+  margin-bottom: 0.875rem;
+  transition: all 0.15s ease-in-out;
+  color: white;
+  float: right;
+  text-transform: uppercase;
+  border-radius: 0.25rem;
+  border: 1px solid #354f78;
+  background: #44669c;
+  padding: 0.5rem 1.5rem;
+  float: right;
+  margin-bottom: 0.875rem; }
+  input[type="submit"]:hover,
+  button:hover {
+    background: #354f78; }
+  input[type="submit"]:disabled,
+  button:disabled {
+    opacity: 0.65; }
+
+label {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+  text-transform: capitalize;
+  display: block; }
+
+textarea,
+input {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  box-sizing: border-box; }
+  textarea:focus,
+  input:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #5b7fb8;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+  textarea:disabled,
+  input:disabled {
+    background-color: #e9ecef;
+    opacity: 1; }
+
+select {
+  height: calc(1.5em + 0.75rem + 2px);
+  min-width: 3rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
+  select:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #5b7fb8;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+
+textarea {
+  height: 138px; }
+
+[id^="replyposts"] br,
+[id^="replythread"] br {
+  display: none; }
+
+[id^="replyposts"] textarea,
+[id^="replythread"] textarea {
+  margin: 0.875rem 0; }
+
+.formgroup {
+  display: -ms-flexbox;
+  display: flex; }
+  .formgroup input {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+    margin-bottom: 0;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important; }
+  .formgroup button {
+    display: -ms-flexbox;
+    display: flex;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    height: calc(1.5em + 0.75rem + 2px); }
+
+.customcheckbox {
+  padding-left: 2.25rem;
+  min-height: 2.25rem;
+  margin-bottom: 1rem;
+  display: -ms-flexbox;
+  display: flex;
   position: relative; }
+  .customcheckbox input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+    opacity: 0; }
+    .customcheckbox input:checked ~ label:after {
+      background-color: #fff;
+      transform: translateX(1.7rem); }
+    .customcheckbox input:checked ~ label:before {
+      background: #44669c;
+      box-shadow: none; }
+  .customcheckbox label {
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    padding-left: 2rem;
+    font-weight: normal;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+    .customcheckbox label:after, .customcheckbox label:before {
+      position: absolute;
+      top: 0.25rem;
+      left: -1.5rem;
+      display: block;
+      width: 1rem;
+      height: 1rem;
+      content: ""; }
+    .customcheckbox label:before {
+      pointer-events: all;
+      border-radius: 2rem;
+      border: 0;
+      position: absolute;
+      top: 0.25rem;
+      left: 0;
+      height: 1.8rem;
+      width: 3.5rem;
+      pointer-events: all;
+      border-radius: 2rem;
+      border: 0;
+      background: #e4e4e4; }
+    .customcheckbox label:after {
+      z-index: 1;
+      left: 0;
+      width: 1.8rem;
+      height: 1.8rem;
+      background: #fff;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 0 0 rgba(0, 0, 0, 0.04), 0 4px 9px rgba(0, 0, 0, 0.13), 0 3px 3px rgba(0, 0, 0, 0.05);
+      border-radius: 50%;
+      transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
 
 a {
   text-decoration: none;
@@ -545,248 +791,6 @@ img {
   .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkthread"] {
     color: #c1292e; }
 
-p {
-  margin-top: 0;
-  margin-bottom: 1rem; }
-
-li {
-  list-style-type: none; }
-
-*,
-::after,
-::before {
-  box-sizing: border-box; }
-
-.loading {
-  background-image: url(../img/puff-loader.svg);
-  height: calc(100vh - 61px);
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-  background-size: 100px 82px; }
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.65;
-  color: rgba(0, 0, 0, 0.87); }
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 0;
-  margin-bottom: 0.75rem;
-  line-height: 1.15; }
-
-h1 {
-  font-size: 3.052em; }
-
-h2 {
-  font-size: 2.441em; }
-
-h3 {
-  font-size: 1.953em; }
-
-h4 {
-  font-size: 1.563em; }
-
-h5 {
-  font-size: 1.25em; }
-
-h6 {
-  font-size: 1.25em; }
-
-small,
-.text_small {
-  font-size: 0.8em; }
-
-ol li {
-  list-style-type: decimal; }
-
-ul li {
-  list-style-type: disc; }
-
-table {
-  border-spacing: 0;
-  text-align: center;
-  margin-bottom: 1rem; }
-  table thead tr th {
-    border-right: 1px solid black;
-    padding: 0 0.5rem; }
-  table tbody tr td {
-    border-right: 1px solid black;
-    padding: 0 0.5rem; }
-
-input[type="submit"],
-button {
-  line-height: 1.2;
-  cursor: pointer;
-  text-decoration: none;
-  margin-bottom: 0.875rem;
-  transition: all 0.15s ease-in-out;
-  color: white;
-  float: right;
-  text-transform: uppercase;
-  border-radius: 0.25rem;
-  border: 1px solid #354f78;
-  background: #44669c;
-  padding: 0.5rem 1.5rem;
-  float: right;
-  margin-bottom: 0.875rem; }
-  input[type="submit"]:hover,
-  button:hover {
-    background: #354f78; }
-  input[type="submit"]:disabled,
-  button:disabled {
-    opacity: 0.65; }
-
-label {
-  font-weight: bold;
-  margin-bottom: 0.25rem;
-  text-transform: capitalize;
-  display: block; }
-
-textarea,
-input {
-  display: block;
-  width: 100%;
-  height: calc(1.5em + 0.75rem + 2px);
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  box-sizing: border-box; }
-  textarea:focus,
-  input:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #5b7fb8;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-  textarea:disabled,
-  input:disabled {
-    background-color: #e9ecef;
-    opacity: 1; }
-
-select {
-  height: calc(1.5em + 0.75rem + 2px);
-  min-width: 3rem;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
-  select:focus {
-    color: #495057;
-    background-color: #fff;
-    border-color: #5b7fb8;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-
-textarea {
-  height: 138px; }
-
-[id^="replyposts"] br,
-[id^="replythread"] br {
-  display: none; }
-
-[id^="replyposts"] textarea,
-[id^="replythread"] textarea {
-  margin: 0.875rem 0; }
-
-.formgroup {
-  display: -ms-flexbox;
-  display: flex; }
-  .formgroup input {
-    position: relative;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    width: 1%;
-    min-width: 0;
-    margin-bottom: 0;
-    border-top-right-radius: 0 !important;
-    border-bottom-right-radius: 0 !important; }
-  .formgroup button {
-    display: -ms-flexbox;
-    display: flex;
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-    height: calc(1.5em + 0.75rem + 2px); }
-
-.customcheckbox {
-  padding-left: 2.25rem;
-  min-height: 2.25rem;
-  margin-bottom: 1rem;
-  display: -ms-flexbox;
-  display: flex;
-  position: relative; }
-  .customcheckbox input {
-    position: absolute;
-    left: 0;
-    z-index: -1;
-    width: 1rem;
-    height: 1.25rem;
-    opacity: 0; }
-    .customcheckbox input:checked ~ label:after {
-      background-color: #fff;
-      transform: translateX(1.7rem); }
-    .customcheckbox input:checked ~ label:before {
-      background: #44669c;
-      box-shadow: none; }
-  .customcheckbox label {
-    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    padding-left: 2rem;
-    font-weight: normal;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center; }
-    .customcheckbox label:after, .customcheckbox label:before {
-      position: absolute;
-      top: 0.25rem;
-      left: -1.5rem;
-      display: block;
-      width: 1rem;
-      height: 1rem;
-      content: ""; }
-    .customcheckbox label:before {
-      pointer-events: all;
-      border-radius: 2rem;
-      border: 0;
-      position: absolute;
-      top: 0.25rem;
-      left: 0;
-      height: 1.8rem;
-      width: 3.5rem;
-      pointer-events: all;
-      border-radius: 2rem;
-      border: 0;
-      background: #e4e4e4; }
-    .customcheckbox label:after {
-      z-index: 1;
-      left: 0;
-      width: 1.8rem;
-      height: 1.8rem;
-      background: #fff;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 0 0 rgba(0, 0, 0, 0.04), 0 4px 9px rgba(0, 0, 0, 0.13), 0 3px 3px rgba(0, 0, 0, 0.05);
-      border-radius: 50%;
-      transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
-
 .fatitem .reply div:only-child {
   display: -ms-flexbox;
   display: flex;
@@ -807,11 +811,19 @@ textarea {
 .comment-tree {
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   margin-bottom: 1.5rem;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.4375rem 0; }
+  @media (max-width: 400px) {
+    .comment-tree {
+      margin-left: -15px !important;
+      margin-right: -15px !important;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
   .comment-tree ul {
     padding: 0;
     margin: 0; }
@@ -1194,11 +1206,19 @@ footer {
     .mainbodywrapper #posts .itemlist ol.posts li {
       background: white;
       border: 1px solid rgba(0, 0, 0, 0.12);
-      border-radius: 0.5rem;
+      border-radius: 0.25rem;
       margin-bottom: 1.5rem;
       overflow: hidden;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      @media (max-width: 400px) {
+        .mainbodywrapper #posts .itemlist ol.posts li {
+          margin-left: -15px !important;
+          margin-right: -15px !important;
+          border-radius: 0;
+          border-left: 0;
+          border-right: 0;
+          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
       .mainbodywrapper #posts .itemlist ol.posts li:hover {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
 
@@ -1219,10 +1239,18 @@ footer {
   #thread .itemlist .fatitem {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    @media (max-width: 400px) {
+      #thread .itemlist .fatitem {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
 
 #newpost {
   width: 100%;
@@ -1241,11 +1269,19 @@ footer {
   #newpost #memorandumarea {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem 0.875rem; }
+    @media (max-width: 400px) {
+      #newpost #memorandumarea {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
     #newpost #memorandumarea #memorandumtopicbutton {
       margin-bottom: 0.875rem;
       font-weight: bold; }
@@ -1331,11 +1367,19 @@ footer {
   #settingsanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #settingsanchor .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
     #settingsanchor .content div {
       margin-bottom: 1rem; }
     #settingsanchor .content .logout a,
@@ -1510,10 +1554,18 @@ footer {
       list-style-type: none;
       background: white;
       border: 1px solid rgba(0, 0, 0, 0.12);
-      border-radius: 0.5rem;
+      border-radius: 0.25rem;
       margin-bottom: 1.5rem;
       overflow: hidden;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      @media (max-width: 400px) {
+        #memberposts .itemlist ol li {
+          margin-left: -15px !important;
+          margin-right: -15px !important;
+          border-radius: 0;
+          border-left: 0;
+          border-right: 0;
+          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
 
 #toolsanchor {
   width: 100%;
@@ -1530,11 +1582,19 @@ footer {
   #toolsanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #toolsanchor .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
     #toolsanchor .content a {
       text-align: center;
       display: block; }
@@ -1554,7 +1614,7 @@ footer {
   #loginbox .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -1566,6 +1626,14 @@ footer {
     -ms-flex-direction: column;
     flex-direction: column;
     text-align: center; }
+    @media (max-width: 400px) {
+      #loginbox .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
     #loginbox .content br {
       display: none; }
     #loginbox .content .loginnotes {
@@ -1596,12 +1664,20 @@ footer {
   #topiclistanchor table {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     width: 100%;
     padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #topiclistanchor table {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
 
 #messagesanchor {
   width: 100%;
@@ -1618,11 +1694,19 @@ footer {
   #messagesanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #messagesanchor .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
     #messagesanchor .content p {
       color: rgba(0, 0, 0, 0.54);
       font-size: 0.875rem; }
@@ -1750,11 +1834,19 @@ footer {
   #member .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #member .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
     #member .content #settingsprofileaddress,
     #member .content #settingslegacyprofileaddress,
     #member .content #settingsprivatekey {
@@ -1880,11 +1972,19 @@ footer {
   #ratings .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #ratings .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
 
 #trustgraph {
   width: 100%;
@@ -1901,11 +2001,19 @@ footer {
   #trustgraph .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #trustgraph .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
 
 #community {
   width: 100%;
@@ -1922,11 +2030,19 @@ footer {
   #community .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #community .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
 
 #notifications {
   width: 100%;
@@ -1946,11 +2062,19 @@ footer {
       list-style-type: none;
       background: white;
       border: 1px solid rgba(0, 0, 0, 0.12);
-      border-radius: 0.5rem;
+      border-radius: 0.25rem;
       margin-bottom: 1.5rem;
       overflow: hidden;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      @media (max-width: 400px) {
+        #notifications ul.notificationslist li {
+          margin-left: -15px !important;
+          margin-right: -15px !important;
+          border-radius: 0;
+          border-left: 0;
+          border-right: 0;
+          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
       #notifications ul.notificationslist li:hover {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
