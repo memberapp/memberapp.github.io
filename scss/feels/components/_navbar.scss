@@ -18,14 +18,23 @@ header {
       justify-content: center;
       @include container-fluid;
 
-      // @include media(">tablet", "<desktop") {
-      //   @include container-fluid;
-      //   width: 100%;
-
-      // }
-
       @include media(">desktop") {
         @include container;
+      }
+
+      &:before {
+        position: absolute;
+        content: " ";
+        right: 0;
+        top: 0;
+        width: 2rem;
+        height: 100%;
+        z-index: 2;
+        background: linear-gradient(
+          270deg,
+          white 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
       }
 
       .memberlogo {
@@ -69,7 +78,7 @@ header {
       }
       .navitemsmain {
         overflow: auto;
-
+        position: relative;
         white-space: nowrap;
         // padding: 0.5rem 0;
 
@@ -150,6 +159,7 @@ header {
           #balance {
             font-weight: bold;
             padding: 0;
+            margin-right: 0.5rem;
             .sats {
               padding: 0;
             }
@@ -222,6 +232,9 @@ header {
           // appearance: none;
           &:first-of-type {
             margin-left: 0.75rem;
+          }
+          &:last-of-type {
+            margin-right: 3rem;
           }
 
           @include media(">desktop") {

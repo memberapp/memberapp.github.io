@@ -591,9 +591,6 @@ img {
     -ms-flex: 1;
     flex: 1;
     margin-top: 1rem; }
-    @media (min-width: 1025px) {
-      .mainbodywrapper .mainbody {
-        margin-top: 2rem; } }
 
 .votelinks {
   background: #f8f9fa;
@@ -927,6 +924,15 @@ header {
   @media (min-width: 1025px) and (max-width: 768px) {
     header .pagetop nav {
       max-width: 540px; } }
+      header .pagetop nav:before {
+        position: absolute;
+        content: " ";
+        right: 0;
+        top: 0;
+        width: 2rem;
+        height: 100%;
+        z-index: 2;
+        background: linear-gradient(270deg, white 0%, rgba(255, 255, 255, 0) 100%); }
       header .pagetop nav .memberlogo {
         margin-right: 15px;
         display: -ms-flexbox;
@@ -963,6 +969,7 @@ header {
           color: #4dc846; }
       header .pagetop nav .navitemsmain {
         overflow: auto;
+        position: relative;
         white-space: nowrap;
         margin-right: -15px;
         display: -ms-flexbox;
@@ -1008,7 +1015,8 @@ header {
           align-items: center; }
           header .pagetop nav .navitemsmain .headerbuttons #balance {
             font-weight: bold;
-            padding: 0; }
+            padding: 0;
+            margin-right: 0.5rem; }
             header .pagetop nav .navitemsmain .headerbuttons #balance .sats {
               padding: 0; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
@@ -1050,6 +1058,8 @@ header {
           padding: 0.25rem; }
           header .pagetop nav .topiccontainer select:first-of-type {
             margin-left: 0.75rem; }
+          header .pagetop nav .topiccontainer select:last-of-type {
+            margin-right: 3rem; }
           @media (min-width: 1025px) {
             header .pagetop nav .topiccontainer select:last-of-type {
               margin-right: 0; } }

@@ -35,9 +35,6 @@ img {
   .mainbody {
     flex: 1;
     margin-top: 1rem;
-    @include media(">desktop") {
-      margin-top: 2rem;
-    }
   }
 }
 
