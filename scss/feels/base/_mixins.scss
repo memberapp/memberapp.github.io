@@ -133,3 +133,8 @@
   -webkit-hyphens: auto;
   hyphens: auto;
 }
+
+@mixin assistive-text {
+  font-size: $font-size-small;
+  color: $text-secondary;
+}

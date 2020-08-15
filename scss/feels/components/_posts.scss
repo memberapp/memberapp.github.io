@@ -22,10 +22,6 @@ img {
   display: block;
 }
 
-.assistivetext {
-  color: $text-secondary;
-  font-size: $font-size-small;
-}
 .mainbodywrapper {
   // margin-top: 61px;
   display: flex;
@@ -36,6 +32,10 @@ img {
     flex: 1;
     margin-top: 1rem;
   }
+}
+
+.assistivetext {
+  @include assistive-text;
 }
 
 .votelinks {

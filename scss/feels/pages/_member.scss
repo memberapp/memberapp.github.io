@@ -77,6 +77,7 @@
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid $text-divider;
+      @include assistive-text;
     }
   }
 }
