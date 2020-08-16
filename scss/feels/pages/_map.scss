@@ -61,6 +61,10 @@
         &:hover {
           color: $text-primary;
         }
+
+        @include media("<phone") {
+          right: -1rem;
+        }
       }
     }
   }
