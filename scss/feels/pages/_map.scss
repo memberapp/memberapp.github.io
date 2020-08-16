@@ -30,6 +30,10 @@
           }
           #newgeopost {
             padding: $base-padding;
+            a#login {
+              text-align: center;
+              display: block;
+            }
           }
         }
       }
