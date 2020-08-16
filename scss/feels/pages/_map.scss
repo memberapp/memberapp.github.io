@@ -27,6 +27,11 @@
             border-top: 1px solid $text-divider;
             border-radius: 0;
             margin-bottom: 0;
+
+            @include media("<phone") {
+              margin-left: 0 !important;
+              margin-right: 0 !important;
+            }
           }
           #newgeopost {
             padding: $base-padding;
