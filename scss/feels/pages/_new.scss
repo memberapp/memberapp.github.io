@@ -5,14 +5,14 @@
   }
   #memorandumarea {
     @include card;
-    padding: $post-padding * 2 $post-padding;
+    padding: $base-padding * 2 $base-padding;
     #memorandumtopicbutton {
-      margin-bottom: $post-padding;
+      margin-bottom: $base-padding;
       font-weight: bold;
     }
 
     #memorandumtopicarea {
-      margin-bottom: $post-padding;
+      margin-bottom: $base-padding;
       label {
         display: flex;
         justify-content: space-between;
@@ -30,7 +30,7 @@
     }
 
     .titlecontainer {
-      margin-bottom: $post-padding;
+      margin-bottom: $base-padding;
       display: flex;
       text-transform: capitalize;
       flex-direction: column;
@@ -50,7 +50,7 @@
       }
     }
     #memorandumtextbutton {
-      margin-bottom: $post-padding;
+      margin-bottom: $base-padding;
       font-weight: bold;
     }
 

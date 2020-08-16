@@ -16,14 +16,14 @@
       display: none;
     }
     .commentdetails {
-      padding: $post-padding;
+      padding: $base-padding;
     }
   }
 }
 
 .comment-tree {
   @include card;
-  padding: $post-padding/2 0;
+  padding: $base-padding/2 0;
   ul {
     padding: 0;
     margin: 0;
@@ -33,11 +33,11 @@
       &.collapsed {
         margin-left: 2.25rem;
         font-size: $font-size-tiny;
-        padding: $post-padding/2 0;
+        padding: $base-padding/2 0;
         font-weight: bold;
       }
       .reply {
-        margin-bottom: $post-padding;
+        margin-bottom: $base-padding;
         div:only-child {
           display: flex;
           flex-direction: row;
@@ -55,7 +55,7 @@
             }
           }
           .commentdetails {
-            padding: $post-padding $post-padding $post-padding 0;
+            padding: $base-padding $base-padding $base-padding 0;
             width: 100%;
 
             .comhead {

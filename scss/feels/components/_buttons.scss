@@ -3,5 +3,5 @@ input[type="submit"],
 button {
   @include btn;
   float: right;
-  margin-bottom: $post-padding;
+  margin-bottom: $base-padding;
 }

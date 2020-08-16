@@ -1,11 +1,11 @@
 #lowfundswarning {
   background: $theme-warning;
-  padding: $post-padding * 2 0;
+  padding: $base-padding * 2 0;
   margin-top: -1rem;
   margin-bottom: 2rem;
   @include media(">desktop") {
     margin-top: -2rem;
-    padding: $post-padding * 3 0;
+    padding: $base-padding * 3 0;
   }
 
   .content {

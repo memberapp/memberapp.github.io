@@ -1,0 +1,56 @@
+#map {
+  position: absolute !important;
+  height: calc(100vh - 61px);
+  top: 61px;
+  img {
+    outline: none;
+  }
+  .leaflet-control {
+    display: none;
+  }
+  .leaflet-popup-pane {
+    .leaflet-popup {
+      .leaflet-popup-content-wrapper {
+        @include card;
+        margin-bottom: 0;
+        border: 0;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19),
+          0 6px 6px rgba(0, 0, 0, 0.23);
+        .leaflet-popup-content {
+          margin: 0;
+          .postdetails {
+            font-weight: bold;
+          }
+          .comment-tree {
+            border: none;
+            border-top: 1px solid $text-divider;
+            border-radius: 0;
+          }
+          #newgeopost {
+            padding: $base-padding;
+          }
+        }
+      }
+      a.leaflet-popup-close-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.5rem;
+        border: none;
+        text-align: center;
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.4rem;
+        color: $text-secondary;
+        text-decoration: none;
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+          color: $text-primary;
+        }
+      }
+    }
+  }
+}

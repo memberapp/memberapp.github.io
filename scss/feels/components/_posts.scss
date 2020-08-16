@@ -40,7 +40,7 @@ img {
 
 .votelinks {
   background: #f8f9fa;
-  padding: $post-padding 0.5rem;
+  padding: $base-padding 0.5rem;
   width: 2.25rem;
   display: flex;
   flex-direction: column;
@@ -114,7 +114,7 @@ img {
   display: flex;
 
   .postdetails {
-    padding: $post-padding 1rem $post-padding/2;
+    padding: $base-padding 1rem $base-padding/2;
     width: 100%;
     display: flex;
     flex-direction: column;

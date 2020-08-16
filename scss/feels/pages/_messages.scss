@@ -2,7 +2,7 @@
   @include container-thin;
   .content {
     @include card;
-    padding: $post-padding * 2;
+    padding: $base-padding * 2;
     p {
       color: $text-secondary;
       font-size: $font-size-small;
@@ -58,7 +58,7 @@
         justify-content: center;
         align-items: center;
         display: flex;
-        padding: $post-padding/2 $post-padding;
+        padding: $base-padding/2 $base-padding;
         border-radius: $border-radius-regular;
         font-weight: bold;
       }
@@ -68,7 +68,7 @@
         // border-bottom: 1px solid $text-divider;
         border: 1px solid $text-divider;
         border-radius: $border-radius-regular;
-        padding: $post-padding/2 $post-padding;
+        padding: $base-padding/2 $base-padding;
         display: flex;
         flex-wrap: wrap;
         align-items: center;

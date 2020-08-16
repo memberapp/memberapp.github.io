@@ -2,7 +2,7 @@
   @include container-thin;
   .content {
     @include card;
-    padding: $post-padding * 2;
+    padding: $base-padding * 2;
 
     a {
       text-align: center;

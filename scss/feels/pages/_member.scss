@@ -5,7 +5,7 @@
       margin-bottom: 1rem;
     }
     @include card;
-    padding: $post-padding * 2;
+    padding: $base-padding * 2;
     #membernametext {
       display: flex;
       a[href^="javascript:;"] {
@@ -27,7 +27,7 @@
   @include container-thin;
   .content {
     @include card;
-    padding: $post-padding * 2;
+    padding: $base-padding * 2;
     br {
       display: none;
     }
@@ -58,7 +58,7 @@
   @include container-thin;
   .content {
     @include card;
-    padding: $post-padding * 2;
+    padding: $base-padding * 2;
     br {
       display: none;
     }
