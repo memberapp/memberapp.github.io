@@ -156,65 +156,65 @@
                                     onclick="showSettings();">⚙️</a>
                                 <a id="toolsbutton" title="Tools" class="btn" href="#tools" onclick="showTools();">🛠️</a>
                             </span>
+                        </span>      
+                        <span class="headerbuttons">
+                            <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
+                                onclick="showTopicList();">📚</a>
+                            <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
                         </span>
-                    </span>
-                    <span class="headerbuttons">
-                        <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
-                            onclick="showTopicList();">📚</a>
-                        <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
-                    </span>
-                    <span id="loggedout" class="loggedout">
-                        <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login"
-                            onclick="showLogin();">login</a>
-                        <span class="separatorwide"></span>
-                        <a id="loginbutton" class="btn vavilon" data-vavilon="new account" href="#login"
-                            onclick="showLogin();">new account</a>
-                    </span>
-                    <span class="separatorwidebreakpoint"></span>
-                    <span id="topiccontainer" class="topiccontainer">
-                        <select id="orderselector" onchange="postsSelectorChanged();">
-                            <option value="hot" title="Hottest posts" selected="selected">Hot</option>
-                            <option class="vavilon" data-vavilon="new" value="new" title="Latest posts">New</option>
-                            <option value="topd" title="Top posts from the past Day" class="vavilon"
-                                data-vavilon="today">Day</option>
-                            <option value="topw" title="Top posts from the past Week" class="vavilon"
-                                data-vavilon="this week">Week</option>
-                            <option value="topm" title="Top posts from the past Month" class="vavilon"
-                                data-vavilon="this month">Month</option>
-                            <option value="topy" title="Top posts from the past Year" class="vavilon"
-                                data-vavilon="this year">Year</option>
-                            <option value="topa" title="Top posts from all time" class="vavilon"
-                                data-vavilon="all dates">All</option>
-                        </select>
-                        <select id="contentselector" label="content" onchange="postsSelectorChanged();">
-                            <option value="posts" selected="selected" class="vavilon" data-vavilon="posts">Posts
-                            </option>
-                            <option value="replies" class="vavilon" data-vavilon="comments">Replies</option>
-                            <option value="both" class="vavilon" data-vavilon="all">In Both</option>
-                        </select>
-                        <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
-                            <option value="" selected="selected">All Topics</option>
-                            <option value=""></option>
-                            <option value="">---------------</option>
-                            <option value="MyTopics">My Topics</option>
-                            <option value="MyFeed">My Feed</option>
-                            <option value="Member">Member</option>
-                            <option value="Bitcoin Cash">Bitcoin Cash</option>
-                            <option value="Bitcoin SV">Bitcoin SV</option>
-                            <option value="Memo">Memo</option>
-                            <option value="Airdrops">Airdrops</option>
-                            <option value="Tokens">Tokens</option>
-                            <option value="OpenBazaar">OpenBazaar</option>
-                            <option value="Capitalism">Capitalism</option>
-                            <option value="US Politics/Trump">US Politics</option>
-                            <option value="Favorite Quotes">Quotes</option>
-                            <option value="Ideas to improve our lives">Improvement</option>
-                            <option value="#911Truth">#911Truth</option>
-                        </select>
-                        <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
-                            <option value="everyone" selected="selected">Everyone</option>
-                            <option value="mypeeps">My Peeps</option>
-                        </select>
+                        <span id="loggedout" class="loggedout">
+                            <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login"
+                                onclick="showLogin();">login</a>
+                            <span class="separatorwide"></span>
+                            <a id="loginbutton" class="btn vavilon" data-vavilon="new account" href="#login"
+                                onclick="showLogin();">new account</a>
+                        </span>
+                        <span class="separatorwidebreakpoint"></span>
+                        <span id="topiccontainer" class="topiccontainer">
+                            <select id="orderselector" onchange="postsSelectorChanged();">
+                                <option value="hot" title="Hottest posts" selected="selected">Hot</option>
+                                <option class="vavilon" data-vavilon="new" value="new" title="Latest posts">New</option>
+                                <option value="topd" title="Top posts from the past Day" class="vavilon"
+                                    data-vavilon="today">Day</option>
+                                <option value="topw" title="Top posts from the past Week" class="vavilon"
+                                    data-vavilon="this week">Week</option>
+                                <option value="topm" title="Top posts from the past Month" class="vavilon"
+                                    data-vavilon="this month">Month</option>
+                                <option value="topy" title="Top posts from the past Year" class="vavilon"
+                                    data-vavilon="this year">Year</option>
+                                <option value="topa" title="Top posts from all time" class="vavilon"
+                                    data-vavilon="all dates">All</option>
+                            </select>
+                            <select id="contentselector" label="content" onchange="postsSelectorChanged();">
+                                <option value="posts" selected="selected" class="vavilon" data-vavilon="posts">Posts
+                                </option>
+                                <option value="replies" class="vavilon" data-vavilon="comments">Replies</option>
+                                <option value="both" class="vavilon" data-vavilon="all">In Both</option>
+                            </select>
+                            <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
+                                <option value="" selected="selected">All Topics</option>
+                                <option value=""></option>
+                                <option value="">---------------</option>
+                                <option value="MyTopics">My Topics</option>
+                                <option value="MyFeed">My Feed</option>
+                                <option value="Member">Member</option>
+                                <option value="Bitcoin Cash">Bitcoin Cash</option>
+                                <option value="Bitcoin SV">Bitcoin SV</option>
+                                <option value="Memo">Memo</option>
+                                <option value="Airdrops">Airdrops</option>
+                                <option value="Tokens">Tokens</option>
+                                <option value="OpenBazaar">OpenBazaar</option>
+                                <option value="Capitalism">Capitalism</option>
+                                <option value="US Politics/Trump">US Politics</option>
+                                <option value="Favorite Quotes">Quotes</option>
+                                <option value="Ideas to improve our lives">Improvement</option>
+                                <option value="#911Truth">#911Truth</option>
+                            </select>
+                            <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
+                                <option value="everyone" selected="selected">Everyone</option>
+                                <option value="mypeeps">My Peeps</option>
+                            </select>
+                        </span>
                     </span>
                     <a id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href=""
                         onclick="postsSelectorChanged();return false;">🔄</a>
