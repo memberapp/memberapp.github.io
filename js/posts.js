@@ -43,6 +43,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
+        //Render identicons
+        jdenticon();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(page).innerHTML = 'Something is wrong:' + status;
@@ -84,6 +86,8 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
         //detectMultipleIDS();
+        //Render identicons
+        jdenticon();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(page).innerHTML = 'Something is wrong:' + status;
@@ -115,6 +119,8 @@ function getAndPopulateMessages(start, limit) {
         document.getElementById('messageslist').innerHTML = contents;
         addStarRatings(data, "privatemessages");
         //detectMultipleIDS();
+        //Render identicons
+        jdenticon();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById('messageslist').innerHTML = 'Something is wrong:' + status;
@@ -181,6 +187,8 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
         scrollTo("highlightedcomment");
+        //Render identicons
+        jdenticon();
         //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
