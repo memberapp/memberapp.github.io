@@ -272,11 +272,13 @@
                         handle to indicate the account is not claiming the identity, just acting as a receptacle for
                         reputational information.
                     </p>
-                    <input class="surrogatename" id="surrogatename" maxlength="200"
-                        onchange="userSearchChanged('surrogatename','surrogatesearchresults');"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                    <button id="createsurrogatebutton" type="button" onclick="createSurrogate();" class="vavilon"
-                        data-vavilon="Create Surrogate">Create Surrogate Account</button>
+                    <div class="formgroup">
+                        <input class="surrogatename" id="surrogatename" maxlength="200"
+                            onchange="userSearchChanged('surrogatename','surrogatesearchresults');"
+                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                        <button id="createsurrogatebutton" type="button" onclick="createSurrogate();" class="vavilon"
+                            data-vavilon="Create Surrogate">Create Surrogate Account</button>
+                    </div>
                     <br />
                     <div id="surrogatelink"></div>
                     <div id="surrogatesearchresults"></div>
@@ -473,11 +475,13 @@
                 <h2 class="vavilon" data-vavilon="settings">Settings</h2>
                 <div>
                     <label for="settingsnametext">Handle</label>
-                    <input maxlength="217" size="30" id="settingsnametext" value="loading..."
-                        onchange="document.getElementById('settingsnametextbutton').disabled=false;"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                    <button id="settingsnametextbutton" type="button" onclick="setName();" class="vavilon"
-                        data-vavilon="update">update</button>
+                    <div class="formgroup">
+                        <input maxlength="217" size="30" id="settingsnametext" value="loading..."
+                            onchange="document.getElementById('settingsnametextbutton').disabled=false;"
+                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                        <button id="settingsnametextbutton" type="button" onclick="setName();" class="vavilon"
+                            data-vavilon="update">update</button>
+                    </div>
                 </div>
                 <label for="settingspagingid">Paging ID</label>
                 <div id='settingspagingid'>
@@ -485,11 +489,13 @@
                 </div>
                 <div>
                     <label for="settingsprofiletext">Profile</label>
-                    <input maxlength="217" size="30" id='settingsprofiletext' value="loading..."
-                        onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
-                        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                    <button id="settingsprofiletextbutton" type="button" onclick="setProfile();" class="vavilon"
-                        data-vavilon="update" disabled>update</button>
+                    <div class="formgroup">
+                        <input maxlength="217" size="30" id='settingsprofiletext' value="loading..."
+                            onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
+                            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                        <button id="settingsprofiletextbutton" type="button" onclick="setProfile();" class="vavilon"
+                            data-vavilon="update" disabled>update</button>
+                    </div>
                 </div>
                 <div>
                     <label for="settingsprofilelogout" class="vavilon" data-vavilon="log out"
@@ -896,9 +902,11 @@
                 <br />
                 <br /><span class="vavilon" data-vavilon="seed phrase">Seed Phrase (12 words)</span>
                 <br />
-                <input size="64" id="loginkey">
-                <button class="loginbutton" type="button" href="#feed" class="vavilon" data-vavilon="log in"
-                    onclick="trylogin(document.getElementById('loginkey').value);">login</button>
+                <div class="formgroup">
+                    <input size="64" id="loginkey">
+                    <button class="loginbutton" type="button" href="#feed" class="vavilon" data-vavilon="log in"
+                        onclick="trylogin(document.getElementById('loginkey').value);">login</button>
+                </div>
                 <br />
                 <div id="loginerror">
                 </div>
