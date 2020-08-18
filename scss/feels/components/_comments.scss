@@ -21,6 +21,16 @@
   }
 }
 
+.comhead {
+  [href^="#member?"] {
+    display: inline-flex;
+    align-items: center;
+    .jdenticon {
+      height: 1rem;
+      margin-right: 0.25rem;
+    }
+  }
+}
 .comment-tree {
   @include card;
   padding: $base-padding/2 0;

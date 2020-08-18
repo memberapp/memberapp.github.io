@@ -27,6 +27,8 @@
     .lowfundsaddressdiv {
       @include qr-box;
       margin-bottom: 0.5rem;
+      display: table;
+      margin: 0 auto;
     }
     a:not([rel~="noreferrer"]) {
       @include btn-outline;
