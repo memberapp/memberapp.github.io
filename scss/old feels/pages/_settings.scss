@@ -1,0 +1,49 @@
+#settingsanchor {
+  @include container-thin;
+  .content {
+    @include card;
+    padding: $base-padding * 2;
+    div {
+      margin-bottom: 1rem;
+    }
+
+    .logout {
+      a {
+        @include btn-outline;
+        display: inline-block;
+      }
+    }
+
+    #settingsnametextbutton,
+    #settingsprofiletextbutton {
+      @include btn-outline;
+    }
+
+    #cssselector,
+    #contentserver,
+    #txbroadcastserver,
+    #utxoserver,
+    #currencydisplay {
+      width: 100%;
+    }
+
+    label {
+      display: block;
+    }
+  }
+}
+
+#memberposts {
+  @include container-thin;
+  .itemlist {
+    ol {
+      padding: 0;
+      margin: 0;
+
+      li {
+        list-style-type: none;
+        @include card;
+      }
+    }
+  }
+}

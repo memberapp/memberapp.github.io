@@ -1,0 +1,109 @@
+#newpost {
+  @include container-thin;
+  br {
+    display: none;
+  }
+  #memorandumarea {
+    @include card;
+    padding: $base-padding * 2 $base-padding;
+    #memorandumtopicbutton {
+      margin-bottom: $base-padding;
+      font-weight: bold;
+    }
+
+    #memorandumtopicarea {
+      margin-bottom: $base-padding;
+      label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: capitalize;
+        span {
+          font-size: $font-size-small;
+          color: $text-secondary;
+          font-weight: normal;
+        }
+      }
+      input {
+        width: 100%;
+      }
+    }
+
+    .titlecontainer {
+      margin-bottom: $base-padding;
+      display: flex;
+      text-transform: capitalize;
+      flex-direction: column;
+      label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-transform: capitalize;
+        span:last-of-type {
+          font-size: $font-size-small;
+          color: $text-secondary;
+          font-weight: normal;
+        }
+      }
+      .memorandumtitle {
+        height: 80px;
+      }
+    }
+    #memorandumtextbutton {
+      margin-bottom: $base-padding;
+      font-weight: bold;
+    }
+
+    #memorandumpreviewareabutton {
+      display: flex;
+      width: 100%;
+      a {
+        border: 1px solid;
+        border-radius: $border-radius-regular;
+        font-weight: bold;
+        text-transform: capitalize;
+        padding: 0.5rem 1.5rem;
+        width: 100%;
+        text-align: center;
+        line-height: 1;
+        &:hover {
+          background-color: darken($theme-secondary, 0.5);
+          color: $white;
+        }
+      }
+    }
+
+    .switchToRegularMode {
+      display: none;
+    }
+    .switchToArticleMode {
+      display: block;
+    }
+
+    div#memorandumpreview {
+      margin-left: -15px;
+      margin-right: -15px;
+      margin-bottom: -1.75rem;
+      .post {
+        .title {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  // .switchToArticleMode {
+  //   display: none;
+  // }
+
+  // .switchToArticleMode {
+  //   display: block;
+  // }
+  // .switchToArticleMode {
+  //   display: none;
+  // }
+
+  // .switchToRegularMode {
+  //   display: block;
+  // }
+}
