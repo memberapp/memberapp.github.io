@@ -1,0 +1,274 @@
+a {
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  color: $theme-secondary;
+  &:hover {
+    color: darken($theme-secondary, 10);
+  }
+}
+
+hr {
+  border-top: 1px solid $text-divider;
+  border-bottom: 0;
+}
+
+img {
+  @include pop;
+  margin-top: 1rem;
+  max-height: 640px;
+  width: auto;
+  max-width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+.mainbodywrapper {
+  // margin-top: 61px;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  .mainbody {
+    flex: 1;
+    margin-top: 1rem;
+  }
+}
+
+.assistivetext {
+  @include assistive-text;
+}
+
+.votelinks {
+  background: #f8f9fa;
+  padding: $base-padding 0.5rem;
+  width: 2.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  span {
+    text-align: center;
+    display: block;
+  }
+  .rotate180 {
+    transform: rotate(180deg);
+  }
+  .votearrow,
+  .votearrowactivated,
+  .votearrowactivateddown {
+    width: $arrow-size;
+    height: $arrow-size;
+    border: 0px;
+    margin: 3px 2px 2px;
+    background: url(../img/grayuparrow.svg);
+    background-size: $arrow-size $arrow-size;
+    display: block;
+  }
+  .votearrowactivated,
+  .votearrowactivateddown {
+    filter: brightness(0.7) sepia(1) hue-rotate(340deg) saturate(6);
+  }
+  .betweenvotesscoredown,
+  .betweenvotesscore,
+  .betweenvotesscoreup {
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+  .votetext {
+    display: none;
+  }
+}
+
+.twittercontainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.youtubepreview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .youtubepreviewimage {
+    height: 220px;
+
+    @include media(">desktop") {
+      height: 300px;
+    }
+
+    object-fit: cover;
+  }
+  .play-icon {
+    position: absolute;
+    width: 100px;
+    height: auto;
+  }
+}
+.youtubecontainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.post {
+  display: flex;
+
+  .postdetails {
+    padding: $base-padding 1rem $base-padding/2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .title {
+      margin-bottom: 0.875rem;
+      // $white-space: break-spaces;
+      // line-break: anywhere;
+      @include word-wrap;
+      a {
+        color: rgba(0, 0, 0, 0.76);
+      }
+      a[href]:not([href^="#thread?"]) {
+        color: $theme-secondary;
+        padding-bottom: 1rem;
+        display: block;
+        &:hover {
+          color: #354f78;
+        }
+      }
+    }
+
+    .subtext {
+      font-size: 0.75rem;
+      color: $text-secondary;
+      display: flex;
+      flex-direction: column;
+      font-weight: bold;
+      a {
+        color: $text-secondary;
+        &:hover {
+          color: $text-primary;
+        }
+      }
+      .submitter {
+        margin-bottom: 0.25rem;
+        border-bottom: 1px solid $text-divider;
+        padding-bottom: 0.25rem;
+        display: inline-block;
+        a {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+.postdetails .subtextbuttons,
+.comment-tree ul li .reply div .subtextbuttons {
+  padding-top: 0.25rem;
+  display: flex;
+  // justify-content: space-between;
+  flex-flow: row wrap;
+
+  font-size: 0.75rem;
+  display: flex;
+  a {
+    position: relative;
+    display: flex;
+    margin-right: 1rem;
+    transition: all 0.15s ease-in-out;
+    &:last-of-type {
+      // margin-right: 0;
+    }
+
+    &::before {
+      width: $arrow-size;
+      height: $arrow-size;
+      border: 0px;
+      margin: 3px 6px 2px 0;
+      display: none;
+      filter: opacity(0.5);
+      transition: filter 1s ease-in-out;
+      content: "";
+    }
+    &:hover {
+      &:before {
+        transition: filter 1s ease-in-out;
+      }
+    }
+
+    margin-right: 0.5rem;
+    color: $text-secondary;
+    &:hover {
+      color: $text-primary;
+    }
+  }
+
+  span.score {
+    margin-right: 0.5rem;
+    .likescounttext {
+      margin-right: 0.15rem;
+    }
+  }
+
+  [id^="permalinkposts"],
+  [id^="permalinkthread"] {
+    &::before {
+      background: url(../img/link-45deg.svg);
+      background-size: $arrow-size $arrow-size;
+      display: inline-block;
+    }
+  }
+
+  [id^="replylinkposts"],
+  [id^="replylinkthread"] {
+    &::before {
+      background: url(../img/chat-right-fill.svg);
+      background-size: $arrow-size $arrow-size;
+      display: inline-block;
+    }
+  }
+
+  a[href^="#thread?"] {
+    &::before {
+      background: url(../img/chat-left-fill.svg);
+      background-size: $arrow-size $arrow-size;
+      display: inline-block;
+    }
+  }
+
+  a[id^="tiplinkposts"],
+  a[id^="tiplinkthread"] {
+    &::before {
+      background: url(../img/tip.svg);
+      background-size: $arrow-size $arrow-size;
+      display: inline-block;
+      -webkit-transition: filter 1s ease-in-out;
+    }
+    // &:hover {
+    //   color: $theme-primary;
+    //   transition: filter 1s ease-in-out;
+    //   -webkit-transition: filter 1s ease-in-out;
+
+    //   &:before {
+    //     filter: invert(56%) sepia(98%) saturate(324%) hue-rotate(69deg)
+    //       brightness(98%) contrast(93%);
+    //     -webkit-transition: filter 1s ease-in-out;
+    //   }
+    // }
+  }
+
+  a[id^="articlelinkposts"],
+  a[id^="articlelinkthread"] {
+    &::before {
+      background: url(../img/file-earmark-medical-fill.svg);
+      background-size: $arrow-size $arrow-size;
+      display: inline-block;
+    }
+  }
+
+  a[id^="hideuserlinkposts"],
+  a[id^="hidepostlinkposts"],
+  a[id^="hidepostlinkthread"],
+  a[id^="hideuserlinkthread"] {
+    color: $theme-danger;
+  }
+}

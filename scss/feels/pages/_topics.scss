@@ -1,0 +1,28 @@
+#topiclistanchor {
+  br {
+    display: none;
+  }
+  @include container-thin;
+  table {
+    @include card;
+    width: 100%;
+    padding: $base-padding * 2;
+    tbody {
+      tr {
+        td {
+          a[href^="#modmorelink"],
+          a[href^="javascript:;"] {
+            @include btn;
+            width: 100%;
+            margin-bottom: 0;
+          }
+
+          &:first-of-type {
+            text-align: left;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
