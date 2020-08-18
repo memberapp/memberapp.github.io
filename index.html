@@ -62,8 +62,8 @@
     <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
     <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
 
-    <link id="pagestyle" rel="stylesheet" href="css/base.css">
-    <link id="pagestyle2" rel="stylesheet" href="css/none.css">
+    <link id="pagestyle" rel="stylesheet" href="css/feels.css">
+    <link id="pagestyle2" rel="stylesheet" href="">
     <link id="pagestyle3" rel="stylesheet" href="css/none.css">
     <link id="addonstyle" rel="stylesheet" href="">
 
@@ -221,26 +221,27 @@
         </header>
         <div class="mainbody">
             <div id="lowfundswarning" class="alert" style="display: none;">
-                <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span>
-                You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each
-                            action (posting, liking, subscribing, following, messaging etc)
-                            requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.
-                            <br />
-                            <br />
-                            You might be able to get some at the <a rel='noopener noreferrer' target="bitcoincom"
-                                href="https://free.bitcoin.com/">Bitcoin.com Faucet</a> (Just steps 2 and 3 required).
-                            <br />
-                            <br />
-                            Your address is <span id="lowfundsaddress"></span>
-                            <br />
-                            <br />
-                            <a href=""
-                                onclick="document.getElementById('lowfundswarning').style.display = 'none';refreshPool();return false;">Refresh
-                                your balance</a> or
-                            <a href=""
-                                onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;">Dismiss
-                                this message</a>
-                         
+                <div class="content">
+                    <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span>
+                    You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each
+                                action (posting, liking, subscribing, following, messaging etc)
+                                requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.
+                                <br />
+                                <br />
+                                You might be able to get some at the <a rel='noopener noreferrer' target="bitcoincom"
+                                    href="https://free.bitcoin.com/">Bitcoin.com Faucet</a> (Just steps 2 and 3 required).
+                                <br />
+                                <br />
+                                Your address is <span id="lowfundsaddress"></span>
+                                <br />
+                                <br />
+                                <a href=""
+                                    onclick="document.getElementById('lowfundswarning').style.display = 'none';refreshPool();return false;">Refresh
+                                    your balance</a> or
+                                <a href=""
+                                    onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;">Dismiss
+                                    this message</a>
+                </div>
             </div>
             <div id="toolsanchor" class="applicationpage" style="display: none;">
                 <h2 class="vavilon" data-vavilon="Tools">Tools</h2>
