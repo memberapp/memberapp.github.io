@@ -174,8 +174,8 @@
                         <span class="separatorwidebreakpoint"></span>
                         <span id="topiccontainer" class="topiccontainer">
                             <select id="orderselector" onchange="postsSelectorChanged();">
-                                <option value="hot" title="Hottest posts" selected="selected">Hot</option>
-                                <option class="vavilon" data-vavilon="new" value="new" title="Latest posts">New</option>
+                                <option value="hot" title="Hottest posts" class="vavilon" data-vavilon="hot" selected="selected">Hot</option>
+                                <option value="new" title="Latest posts" class="vavilon" data-vavilon="new">New</option>
                                 <option value="topd" title="Top posts from the past Day" class="vavilon"
                                     data-vavilon="today">Day</option>
                                 <option value="topw" title="Top posts from the past Week" class="vavilon"
@@ -194,7 +194,7 @@
                                 <option value="both" class="vavilon" data-vavilon="all">In Both</option>
                             </select>
                             <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
-                                <option value="" selected="selected">All Topics</option>
+                                <option value="" class="vavilon" data-vavilon="all topics" selected="selected">All Topics</option>
                                 <option value=""></option>
                                 <option value="">---------------</option>
                                 <option value="MyTopics">My Topics</option>
@@ -213,8 +213,8 @@
                                 <option value="#911Truth">#911Truth</option>
                             </select>
                             <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
-                                <option value="everyone" selected="selected">Everyone</option>
-                                <option value="mypeeps">My Peeps</option>
+                                <option value="everyone" class="vavilon" data-vavilon="everyone" selected="selected">Everyone</option>
+                                <option value="mypeeps" class="vavilon" data-vavilon="mypeople">My Peeps</option>
                             </select>
                         </span>
                     </span>
@@ -227,24 +227,29 @@
             <div id="lowfundswarning" class="alert" style="display: none;">
                 <div class="content">
                     <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span>
-                    You have <span id="satoshiamount">0</span> satoshis in your member.cash account - each
+                    <span id="satoshiamount">0</span> <span class="vavilon" data-vavilon="satoshiamounttext">satoshis exist in your member.cash account - each
                     action (posting, liking, subscribing, following, messaging etc)
-                    requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.
+                    requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.</span>
                     <br />
                     <br />
-                    You might be able to get some at the <a rel='noopener noreferrer' target="bitcoincom"
-                        href="https://free.bitcoin.com/">Bitcoin.com Faucet</a> (Just steps 2 and 3 required).
+                    <span class="vavilon" data-vavilon="ask nuggets">Send Nuggets your address for a few cents if you're finding it difficult to get some.</span>
+                    <br />
+                    <a rel='noopener noreferrer' href="https://twitter.com/chickenorgold">Twitter @chickenorgold</a><br />
+                    <a rel='noopener noreferrer' href="https://www.reddit.com/user/theamazingnuggets">Reddit /u/theamazingnuggets</a><br />
+                    <a rel='noopener noreferrer' href="mailto:nuggetcoins@gmail.com">Email - nuggetcoins@gmail.com</a><br />
+                    <span class="vavilon" data-vavilon="get some at">You might be able to get some at the</span> <a rel='noopener noreferrer' target="bitcoincom"
+                        href="https://free.bitcoin.com/">Bitcoin.com Faucet</a> <span class="vavilon" data-vavilon="steps required">(Just steps 2 and 3 required)</span>.
                     <br />
                     <br />
-                    Your address is <span id="lowfundsaddress"></span>
+                    <span class="vavilon" data-vavilon="your address is">Your address is</span> <span id="lowfundsaddress"></span>
                     <br />
                     <br />
                     <a href=""
-                        onclick="document.getElementById('lowfundswarning').style.display = 'none';refreshPool();return false;">Refresh
-                        your balance</a> or
+                        onclick="document.getElementById('lowfundswarning').style.display = 'none';refreshPool();return false;"><span class="vavilon" data-vavilon="refresh balance">Refresh
+                            your balance</span></a> or
                     <a href=""
-                        onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;">Dismiss
-                        this message</a>
+                        onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span class="vavilon" data-vavilon="dismiss message">Dismiss
+                            this message</span></a>
                 </div>
             </div>
             <div id="toolsanchor" class="applicationpage" style="display: none;">
