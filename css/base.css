@@ -383,6 +383,12 @@ footer {
     float: left;
     font-size: 1px;
   }
+  .jdenticon {
+    width: 15px;
+    height: 15px;
+    margin-bottom: -3px;
+    margin-right: 2px;
+  }
 }
 
 /*Vote buttons*/

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="41" viewBox="0 0 25 41">
+  <defs>
+    <linearGradient id="marker-icon-b" x1="50%" x2="50%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#4DC846"/>
+      <stop offset="100%" stop-color="#3AAD34"/>
+    </linearGradient>
+    <path id="marker-icon-a" d="M12.5,41 C20.8333333,26.6023729 25,17.1023729 25,12.5 C25,5.59644063 19.4035594,0 12.5,0 C5.59644063,0 0,5.59644063 0,12.5 C0,17.1023729 4.16666667,26.6023729 12.5,41 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <use fill="#4DC846" xlink:href="#marker-icon-a"/>
+    <path fill="url(#marker-icon-b)" stroke="#000" stroke-linejoin="square" stroke-opacity=".12" d="M12.5,0.5 C15.8137085,0.5 18.8137085,1.84314575 20.9852814,4.01471863 C23.1568542,6.1862915 24.5,9.1862915 24.5,12.5 C24.5,16.9848547 20.4727607,26.1489958 12.4994532,39.9988738 C4.52673888,26.1478571 0.5,16.9845761 0.5,12.5 C0.5,9.1862915 1.84314575,6.1862915 4.01471863,4.01471863 C6.1862915,1.84314575 9.1862915,0.5 12.5,0.5 Z"/>
+    <circle cx="12.5" cy="12.5" r="5" fill="#FFF" stroke="#000" stroke-opacity=".12"/>
+  </g>
+</svg>

@@ -1,0 +1,41 @@
+#lowfundswarning {
+  background: $theme-warning;
+  padding: $base-padding * 2 0;
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+  @include media(">desktop") {
+    margin-top: -2rem;
+    padding: $base-padding * 3 0;
+  }
+
+  .content {
+    @include container-thin;
+    text-align: center;
+    color: darken($theme-warning, 70);
+    #satoshiamount,
+    #lowfundsaddress {
+      font-weight: bold;
+      word-break: break-all;
+    }
+    #lowfundsaddress {
+      display: block;
+    }
+    br {
+      // display: none;
+      height: 0.5rem;
+    }
+    .lowfundsaddressdiv {
+      @include qr-box;
+      margin: 0 auto;
+      margin-bottom: 0.5rem;
+      display: table;
+    }
+    a:not([rel~="noreferrer"]) {
+      @include btn-outline;
+      display: block;
+      @include media(">tablet") {
+        display: inline-block;
+      }
+    }
+  }
+}

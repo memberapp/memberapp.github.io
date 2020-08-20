@@ -21,7 +21,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">` + ds(name) + `</a> `;
+    var ret = `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" data-jdenticon-value="` + san(address) + `"></svg>` + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div>`;
     }

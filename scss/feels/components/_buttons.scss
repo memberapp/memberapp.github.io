@@ -1,0 +1,7 @@
+// buttons
+input[type="submit"],
+button {
+  @include btn;
+  float: right;
+  margin-bottom: $base-padding;
+}

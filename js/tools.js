@@ -92,7 +92,6 @@ function sendfunds(){
         return;
     }
 
-
     var sendAddress=document.getElementById("sendfundsaddress").value.trim();
     if(sendAddress==""){
         alert("Make sure to enter an address to send to.");
@@ -102,6 +101,7 @@ function sendfunds(){
     document.getElementById("sendfundsaddress").disabled=true;
     document.getElementById("sendfundsbutton").disabled=true;
 
+    //maybe move to transactions.js
     const tx = {
         cash: {
             key: privkey,

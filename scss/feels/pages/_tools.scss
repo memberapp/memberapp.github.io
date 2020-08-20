@@ -1,0 +1,12 @@
+#toolsanchor {
+  @include container-thin;
+  .content {
+    @include card;
+    padding: $base-padding * 2;
+
+    a {
+      text-align: center;
+      display: block;
+    }
+  }
+}
