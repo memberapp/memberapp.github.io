@@ -389,6 +389,11 @@ footer {
     margin-bottom: -3px;
     margin-right: 2px;
   }
+  .jdenticonlarge {
+    width: 100px;
+    height: 100px;
+  }
+
 }
 
 /*Vote buttons*/

@@ -186,7 +186,7 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-function scrollTo(name) {
+function scrollToElement(name) {
   var element = document.getElementById(name);
   if (element != undefined) {
     ScrollToResolver(element);

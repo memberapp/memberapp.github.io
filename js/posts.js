@@ -43,8 +43,6 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-        //Render identicons
-        jdenticon();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(page).innerHTML = 'Something is wrong:' + status;
@@ -85,9 +83,6 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
             contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-        //detectMultipleIDS();
-        //Render identicons
-        jdenticon();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(page).innerHTML = 'Something is wrong:' + status;
@@ -118,8 +113,6 @@ function getAndPopulateMessages(start, limit) {
 
         document.getElementById('messageslist').innerHTML = contents;
         addStarRatings(data, "privatemessages");
-        //detectMultipleIDS();
-        //Render identicons
         jdenticon();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
@@ -186,7 +179,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         if (popup != undefined) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
-        scrollTo("highlightedcomment");
+        scrollToElement("highlightedcomment");
         //Render identicons
         jdenticon();
         //detectMultipleIDS();
@@ -262,6 +255,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
     pageElement.innerHTML = contents; //display the result in the HTML element
     listenForTwitFrameResizes();
     addStarRatings(data, page);
+    jdenticon();
     window.scrollTo(0, 0);
     //detectMultipleIDS();
     return;

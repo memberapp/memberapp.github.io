@@ -92,13 +92,13 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
-
-            document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
-            document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
-            document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
-
-
         }
+
+        document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
+        document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
+        document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
+        document.getElementById(pre + 'identicon').innerHTML = `<svg class="jdenticonlarge" data-jdenticon-value="`+san(qaddress)+`"></svg>`;
+
 
         if (pre == "settings") {
             document.getElementById(pre + 'nametextbutton').disabled = true;
@@ -149,31 +149,9 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById('memberrating').innerHTML = `<div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + Number(data[0].rating) + `" id="memberrating` + qaddress + `"></div>`;
             var theElement = document.getElementById(`memberrating` + qaddress);
             var starRating1 = addSingleStarsRating(false, theElement);
-
-            /*var theRating = 0; if (data.length > 0 && data[0].rating != null) { theRating = (ds(data[0].rating) / 64) + 1; }
-            var starRating1 = raterJs({
-                starSize: 20,
-                //rating: theRating,
-                element: document.querySelector("#memberrating" + qaddress),
-                rateCallback: function rateCallback(rating, done) {
-                    var ratingText = document.getElementById("memberratingcommentinputbox" + qaddress);
-                    rateCallbackAction(rating, this, ratingText.value);
-                    done();
-                }
-            });
-            if (theRating != 0) {
-                starRating1.setRating(theRating);
-            }
-
-            starRating1.theAddress = qaddress;
-            */
-            //var tgmember = pubkey;
-            //if (tgmember == null || tgmember == '') {
-            //    tgmember = "19RyV6XQEww5td2LPWDpK8o5V8at7Vpwgv";
-            //}
-            //document.getElementById(pre + 'trustgraph').innerHTML = `<a href='#trustgraph?member=` + tgmember + `&amp;target=` + qaddress + `' onclick='showTrustGraph("` + pubkey + `","` + qaddress + `");'>Show Trust Graph</a>`;
         }
 
+        jdenticon();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         updateStatus(status);

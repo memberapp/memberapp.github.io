@@ -485,7 +485,7 @@ function clickActionTopicHTML(action, qaddress, topicHOSTILE, buttonText, elemen
 }
 
 function getRatingComment(qaddress, data) {
-    return `<input size="30" maxlength="210" id="memberratingcommentinputbox` + san(qaddress) + `" value="` + (data.length > 0 ? ds(data[0].ratingreason) : "") + `" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+    return `<input size="30" maxlength="190" id="memberratingcommentinputbox` + san(qaddress) + `" value="` + (data.length > 0 ? ds(data[0].ratingreason) : "") + `" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
 function privatekeyClickToShowHTML() {
