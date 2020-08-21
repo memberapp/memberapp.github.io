@@ -35,10 +35,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         if (contents == "") {
-            contents = getNothingFoundMessageHTML("Nothing here yet - Try hot or new, or a different topic or a longer time period");
+            contents = getNothingFoundMessageHTML("Nothing here yet");
 
             if (filter == "mypeeps" || filter == "myfeed" || topicnameHOSTILE == "MyFeed" || topicnameHOSTILE == "MyTopics") {
-                contents = getNothingFoundMessageHTML("Nothing in your feed - Try following more people or subscribing to more topics");
+                contents = getNothingFoundMessageHTML("Nothing in your feed");
             }
 
         }
@@ -437,7 +437,7 @@ function replySuccessFunction(page, txid) {
 
 function showReplyBox(txid) {
     if (privkey == "") {
-        alert(___i18n('log in to reply'));
+        alert(getSafeTranslation('log in to reply'));
         return false;
     }
     var replybox = document.getElementById("reply" + txid);

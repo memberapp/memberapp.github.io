@@ -25,7 +25,10 @@ class UTXOPool {
     this.utxoPool = {};
     this.statusMessageFunction = statusMessageFunction;
     this.storageObject = storageObject;
+
+    //these two are a bit hacky and break encapsulation
     this.onscreenElementName = onscreenElementName;
+    this.showwarning=false;
 
     //Try to retrieve utxopool from localstorage and set balance
     try {
@@ -96,12 +99,11 @@ class UTXOPool {
       document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
 
 
-      if (total < 2000) {
+      if (total < 2000 && this.showwarning==true) {
         document.getElementById('satoshiamount').innerHTML = total;
         document.getElementById('lowfundswarning').style.display = 'block';
         showQRCode('lowfundsaddress', 100);
         //only show this message once per app load
-        this.onscreenElementName=null;
       } else {
         document.getElementById('lowfundswarning').style.display = 'none';
       }
