@@ -100,6 +100,8 @@ class UTXOPool {
         document.getElementById('satoshiamount').innerHTML = total;
         document.getElementById('lowfundswarning').style.display = 'block';
         showQRCode('lowfundsaddress', 100);
+        //only show this message once per app load
+        this.onscreenElementName=null;
       } else {
         document.getElementById('lowfundswarning').style.display = 'none';
       }
