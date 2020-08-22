@@ -28,7 +28,7 @@ class UTXOPool {
 
     //these two are a bit hacky and break encapsulation
     this.onscreenElementName = onscreenElementName;
-    this.showwarning=false;
+    this.showwarning=true;
 
     //Try to retrieve utxopool from localstorage and set balance
     try {
@@ -104,6 +104,7 @@ class UTXOPool {
         document.getElementById('lowfundswarning').style.display = 'block';
         showQRCode('lowfundsaddress', 100);
         //only show this message once per app load
+        this.showwarning==false;
       } else {
         document.getElementById('lowfundswarning').style.display = 'none';
       }
