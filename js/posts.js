@@ -220,7 +220,8 @@ function getAndPopulateTopicList(showpage) {
             selectboxIndex++;
         }
 
-        var contents = "<br/><table><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr>";
+        //todo, move this to htmlquarantine.
+        var contents = "<br/><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>";
 
         //group data rows by moderater before displaying
         var modsArray = [];
@@ -235,7 +236,7 @@ function getAndPopulateTopicList(showpage) {
         }
 
 
-        contents += "</table>";
+        contents += "</tbody></table>";
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         document.getElementById(page).innerHTML = contents;

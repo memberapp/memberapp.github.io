@@ -21,7 +21,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" data-jdenticon-value="` + san(address) + `"></svg>` + ds(name) + `</a> `;
+    var ret = `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>` + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div>`;
     }
@@ -455,11 +455,11 @@ function rts(thetext) {
 //Settings
 //These two functions could be combined
 function ratingAndReasonHTML(data) {
-    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='crating" + san(data.address) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td><td><span class='separatornarrow'></span></td><td>" + ds(data.reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td align='center'> <div id='crating" + san(data.address) + "'></div>  </td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td></tr> <tr><td></td><td colspan='4'>" + ds(data.reason) + "</td></tr>";
 }
 
 function ratingAndReason2HTML(data) {
-    return "<tr><td>" + getMemberLink(data.rateraddress, data.ratername) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + san(data.rates) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.name) + "</td><td><span class='separatornarrow'></span></td><td>" + ds(data.reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.rateraddress, data.ratername) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td align='center'> <div id='rating" + san(data.rates) + "'></div>  </td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.name) + "</td></tr> <tr><td></td><td colspan='4'>" + ds(data.reason) + "</td></tr>";
 }
 
 function clickActionNamedHTML(action, qaddress, name) {
