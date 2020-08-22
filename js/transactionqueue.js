@@ -98,16 +98,14 @@ class UTXOPool {
     if (this.onscreenElementName != null) {
       document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
 
-
+      document.getElementById('satoshiamount').innerHTML = total;
+        
       if (total < 2000 && this.showwarning==true) {
-        document.getElementById('satoshiamount').innerHTML = total;
         document.getElementById('lowfundswarning').style.display = 'block';
         showQRCode('lowfundsaddress', 100);
         //only show this message once per app load
         this.showwarning=false;
-      } else {
-        document.getElementById('lowfundswarning').style.display = 'none';
-      }
+      } 
     }
 
     return total;
