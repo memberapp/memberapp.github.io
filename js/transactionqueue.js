@@ -104,7 +104,7 @@ class UTXOPool {
         document.getElementById('lowfundswarning').style.display = 'block';
         showQRCode('lowfundsaddress', 100);
         //only show this message once per app load
-        this.showwarning==false;
+        this.showwarning=false;
       } else {
         document.getElementById('lowfundswarning').style.display = 'none';
       }
