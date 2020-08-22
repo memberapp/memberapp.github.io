@@ -29,3 +29,7 @@
 .separatorwide::before {
   content: " ";
 }
+
+.membertext {
+  text-transform: none;
+}
