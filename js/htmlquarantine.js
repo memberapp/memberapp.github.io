@@ -42,7 +42,7 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
 
     //Removing this if, because sometimes flagged posts are removed server side, so this condition may be true even where there are more results to return.
     //Proper fix is to have the server return a flag to say if there are more results available.
-    //if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
+    if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
     { navbuttons += `<a class="back" href="#show?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start + numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + getSafeTranslation('next') + `</a>`; }
     return navbuttons;
 
@@ -58,7 +58,7 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
     { navbuttons += `<a class="next" href="#` + page + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start - numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + getSafeTranslation('prev') + `</a> `; }
     //Removing this if, because sometimes flagged posts are removed server side, so this condition may be true even where there are more results to return.
     //Proper fix is to have the server return a flag to say if there are more results available.
-    //if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
+    if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
     { navbuttons += `<a class="back" href="#` + page + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start + numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + getSafeTranslation('next') + `</a>`; }
     return navbuttons;
 
@@ -257,7 +257,7 @@ function dslite(input) {
     return input;
 }
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message = dslite(message);
@@ -284,7 +284,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
 
 
     return `<div ` + (txid.startsWith(highlighttxid) ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
-                <div`+ (blockstxid != null ? ` class="blocked"` : ``) + `>
+                <div`+ (blockstxid != null || moderatedtxid != null ? ` class="blocked"` : ``) + `>
                     <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                     <div class="commentdetails">
                         <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `

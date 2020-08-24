@@ -30,6 +30,19 @@
   content: " ";
 }
 
+/*! don't capitalize member.cash */
 .membertext {
   text-transform: none;
+}
+
+/*! newline after each user search result*/
+
+#usersearchresults br {
+  display: inherit;
+}
+
+/*! grey out muted users or filtered users/posts in threads*/
+
+.blocked {
+  opacity: 0.2;
 }

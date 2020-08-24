@@ -21,7 +21,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length>0?data[0].unduplicatedlength:0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -31,7 +31,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
+            contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
         }
 
         if (contents == "") {
@@ -70,7 +70,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
     getJSON(dropdowns.contentserver + '?action=' + page + '&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicNameHOSTILE, "getAndPopulate", data.length);
+        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicNameHOSTILE, "getAndPopulate", data.length>0?data[0].unduplicatedlength:0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -80,7 +80,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null));
+            contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
     }, function (status) { //error detection....
@@ -169,7 +169,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
-                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply]));
+                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true));
                 contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID));
             }
         }
@@ -383,11 +383,17 @@ function memorandumPreview() {
     document.getElementById('memorandumpreview').innerHTML =
         ``
         + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview')
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value);
+        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value, null);
 }
 
-function getHTMLForPost(data, rank, page, starindex, dataReply) {
-    if (checkForMutedWords(data)) return "";
+function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
+    
+    //Always show if post is directly requested
+    if(!alwaysShow){
+        if (checkForMutedWords(data)) return "";
+        if (data.moderated != null) return "";
+    }
+    
     let mainRatingID = starindex + page + ds(data.address);
     var retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex);
     if (dataReply != null) {
@@ -399,7 +405,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply) {
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated);
 }
 
 function showReplyButton(txid, page, divForStatus) {
