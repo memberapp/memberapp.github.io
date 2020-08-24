@@ -62,7 +62,7 @@
     <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
     <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
 
-    <link id="pagestyle" rel="stylesheet" href="css/base.css">
+    <link id="pagestyle" rel="stylesheet" href="css/feels.css">
     <link id="pagestyle2" rel="stylesheet" href="">
     <link id="pagestyle3" rel="stylesheet" href="css/none.css">
     <link id="addonstyle" rel="stylesheet" href="">
@@ -226,7 +226,7 @@
         <div class="mainbody">
             <div id="lowfundswarning" class="alert" style="display: none;">
                 <div class="content">
-                    <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span>
+                    <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span><br/>
                     <span id="satoshiamount">0</span> <span class="vavilon" data-vavilon="satoshiamounttext">satoshis exist in your member.cash account - each
                     action (posting, liking, subscribing, following, messaging etc)
                     requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.</span>
@@ -245,7 +245,7 @@
                     <br />
                     <br />
                     <a href=""
-                        onclick="document.getElementById('lowfundswarning').style.display = 'none';refreshPool();return false;"><span class="vavilon" data-vavilon="refresh balance">Refresh
+                        onclick="refreshPool();return false;"><span class="vavilon" data-vavilon="refresh balance">Refresh
                             your balance</span></a> or
                     <a href=""
                         onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span class="vavilon" data-vavilon="dismiss message">Dismiss
@@ -585,10 +585,10 @@
                     <div>
                         <label for="cssselector" class="vavilon" data-vavilon="themes">Theme</label>
                         <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value);'>
-                            <option class="vavilon" data-vavilon="change theme" value="base">Choose Theme</option>
-                            <option value="base">Member</option>
+                            <option class="vavilon" data-vavilon="change theme" value="feels">Choose Theme</option>
+                            <option value="base none">Member</option>
                             <option value="feels">Feels</option>
-                            <option value="base nightmode">Member Night Mode</option>
+                            <option value="base nightmode none">Member Night Mode</option>
                             <option value="base hackernews">Hacker News</option>
                             <option value="base hackernews hnnightmode">Hacker News Night Mode</option>
                             <option class="vavilon" data-vavilon="none" value="none">None</option>
@@ -723,15 +723,9 @@
                             <tr>
                                 <th>Member</th>
                                 <th></th>
-                                <th></th>
-                                <th></th>
                                 <th>Rates</th>
                                 <th></th>
-                                <th></th>
-                                <th></th>
                                 <th>Member</th>
-                                <th></th>
-                                <th>Note</th>
                             </tr>
                         </thead>
                         <tbody id="ratingtable">
@@ -749,15 +743,9 @@
                             <tr>
                                 <th>Member</th>
                                 <th></th>
-                                <th></th>
-                                <th></th>
                                 <th>Rates</th>
                                 <th></th>
-                                <th></th>
-                                <th></th>
                                 <th>Member</th>
-                                <th></th>
-                                <th>Note</th>
                             </tr>
                         </thead>
                         <tbody id="communityratingtable">

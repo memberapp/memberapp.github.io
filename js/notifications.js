@@ -46,7 +46,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
     //Request content from the server and display it when received
     getJSON(dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
-        var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length);
+        var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length>0?data[0].unduplicatedlength:0);
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -54,7 +54,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         }
         //console.log(contents);
         if(contents==""){
-            contents=getNothingFoundMessageHTML("No notifications yet - Try trolling someone to see if you can get a response.");   
+            contents=getNothingFoundMessageHTML("No notifications yet");   
         }
         contents = getNotificationsTableHTML(contents, navbuttons);
         lastViewOfNotifications = parseInt(new Date().getTime() / 1000);

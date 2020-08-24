@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.2.1";
+var version = "4.2.5";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -221,14 +221,15 @@ function logout() {
 }
 
 function changeStyle(newStyle) {
-    if (newStyle.indexOf(".css") != -1) {
+    if (newStyle.indexOf(".css") != -1 || newStyle=="base" || newStyle=="base nightmode") {
         //old style, update
-        newStyle = "base";
+        //base style will now have value 'base none'
+        newStyle = "feels";
     }
     localStorageSet(localStorageSafe, "style", newStyle);
     var cssArray = newStyle.split(" ");
     if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css"); }
-    else { document.getElementById("pagestyle").setAttribute("href", "css/base.css"); }
+    else { document.getElementById("pagestyle").setAttribute("href", "css/feels.css"); }
     if (cssArray[1]) { document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css"); }
     else { document.getElementById("pagestyle2").setAttribute("href", "css/none.css"); }
     if (cssArray[2]) { document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css"); }

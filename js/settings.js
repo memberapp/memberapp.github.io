@@ -97,7 +97,12 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
         document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
         document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
-        document.getElementById(pre + 'identicon').innerHTML = `<svg class="jdenticonlarge" data-jdenticon-value="`+san(qaddress)+`"></svg>`;
+
+        var jdenticonname=data[0].name;
+        if (jdenticonname == "" || jdenticonname == null) {
+            jdenticonname = qaddress.substring(0, 10);
+        }
+        document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="`+unicodeEscape(jdenticonname)+`"></svg>`;
 
 
         if (pre == "settings") {

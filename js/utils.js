@@ -11,25 +11,25 @@ function timeSince(timestamp, compress) {
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return ___i18n("%s years ago", interval);
+    return getSafeTranslation("%s years ago", interval);
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return ___i18n("%s months ago", interval);
+    return getSafeTranslation("%s months ago", interval);
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return ___i18n(compress ? "%s d" : "%s days ago", interval);
+    return getSafeTranslation(compress ? "%s d" : "%s days ago", interval);
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return ___i18n(compress ? "%s h" : "%s hours ago", interval);
+    return getSafeTranslation(compress ? "%s h" : "%s hours ago", interval);
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return ___i18n(compress ? "%s m" : "%s minutes ago", interval);
+    return getSafeTranslation(compress ? "%s m" : "%s minutes ago", interval);
   }
-  return ___i18n(compress ? "%s s" : "%s seconds ago", Math.floor(seconds));
+  return getSafeTranslation(compress ? "%s s" : "%s seconds ago", Math.floor(seconds));
 }
 
 var getJSON = function (url) {
