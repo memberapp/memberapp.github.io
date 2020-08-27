@@ -9,16 +9,11 @@ var notify = require("gulp-notify");
 var gutil = require("gulp-util");
 var argv = require("minimist");
 var autoprefixer = require("gulp-autoprefixer");
-
 var inlineCss = require("gulp-inline-css");
 
 gulp.task("watch", function () {
   gulp.watch("scss/**/*.scss", ["sass-site"]);
 });
-
-// gulp.task("watch-site", function () {
-//   gulp.watch("scss/**/*.scss", ["sass-site"]);
-// });
 
 gulp.task("sass-site", function () {
   return gulp
