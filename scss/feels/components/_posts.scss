@@ -83,6 +83,10 @@ img {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
+  iframe {
+    width: 100%;
+    max-width: 550px;
+  }
 }
 .youtubepreview {
   position: relative;
