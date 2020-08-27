@@ -34,14 +34,14 @@ Developed using `SCSS`
 
 Using Node in a new termainal run the following commands
 
-`npm i`
-`npx reload`
+    npm i
+    npx reload
 
 Navigate to the `localhost:*` address
 
 Open a new termianl and run the following command
 
-`npx gulp watch`
+    npx gulp watch
 
 Edit the base theme by navigating to `/src/feels`
 
