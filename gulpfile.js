@@ -12,13 +12,13 @@ var autoprefixer = require("gulp-autoprefixer");
 
 var inlineCss = require("gulp-inline-css");
 
-gulp.task("watch", ["watch-site"], function () {
-  //lol
-});
-
-gulp.task("watch-site", function () {
+gulp.task("watch", function () {
   gulp.watch("scss/**/*.scss", ["sass-site"]);
 });
+
+// gulp.task("watch-site", function () {
+//   gulp.watch("scss/**/*.scss", ["sass-site"]);
+// });
 
 gulp.task("sass-site", function () {
   return gulp
@@ -41,15 +41,6 @@ gulp.task("sass-site", function () {
 
 /// error handeling
 var reportError = function (error) {
-  // [log]
-  //console.log(error);
-
-  // Format and ouput the whole error object
-  //console.log(error.toString());
-
-  // ----------------------------------------------
-  // Pretty error reporting
-
   var report = "\n";
   var chalk = gutil.colors.white.bgRed;
 
