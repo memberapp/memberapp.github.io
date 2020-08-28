@@ -16,22 +16,24 @@ gulp.task("watch", function () {
 });
 
 gulp.task("sass-site", function () {
-  return gulp
-    .src("scss/feels/feels.scss")
-    .pipe(plumber())
-    .pipe(
-      sass({ includePaths: ["./scss/feels/**/*"] }, { errLogToConsole: true })
-    )
-    .on("error", reportError)
-    .pipe(
-      autoprefixer({
-        browsers: ["last 2 versions"],
-        cascade: false,
-      })
-    )
-    .pipe(concat("feels.css"))
-    .pipe(uglifyCss())
-    .pipe(gulp.dest("css/"));
+  return (
+    gulp
+      .src("scss/feels/feels.scss")
+      .pipe(plumber())
+      .pipe(
+        sass({ includePaths: ["./scss/feels/**/*"] }, { errLogToConsole: true })
+      )
+      .on("error", reportError)
+      .pipe(
+        autoprefixer({
+          browsers: ["last 2 versions"],
+          cascade: false,
+        })
+      )
+      .pipe(concat("feels.css"))
+      // .pipe(uglifyCss()) // minify css
+      .pipe(gulp.dest("css/"))
+  );
 });
 
 /// error handeling
