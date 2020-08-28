@@ -264,6 +264,7 @@ function addDynamicHTMLElements(data, page, disable) {
     jdenticon();
     //Add ratings, disable controls if the star rating can be updated
     addStarRatings(data, page, disable);
+    window.scrollTo(0, 0);
 }
 
 function addStarRatings(data, page, disable) {

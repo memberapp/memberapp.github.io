@@ -72,6 +72,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         //alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
         //Note, data may not contain any rows, for new or unknown users.
 
+        var jdenticonname = "";
+
         if (data.length < 1) {
             document.getElementById(pre + 'followersnumber').innerHTML = "0";
             document.getElementById(pre + 'followingnumber').innerHTML = "0";
@@ -92,13 +94,14 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
+            jdenticonname=data[0].name;
         }
 
         document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
         document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
         document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
 
-        var jdenticonname=data[0].name;
+         
         if (jdenticonname == "" || jdenticonname == null) {
             jdenticonname = qaddress.substring(0, 10);
         }
