@@ -31,9 +31,9 @@ async function userSearchChanged(searchbox, targetelement) {
         var test = data;
         var contents = `<label for="usersearchresults">Results</label>`;
         for (var i = 0; i < data.length; i++) {
-            contents = contents + userHTML(data[i].address, data[i].name, i + searchbox + data[i].address, data[i].rating, 16)
+            contents = "<div class='usersearchresult'>" + contents + userHTML(data[i].address, data[i].name, i + searchbox + data[i].address, data[i].rating, 16)
                 + sendEncryptedMessageHTML(data[i].address, data[i].name, data[i].publickey)
-                + "<br/>";
+                + "</div><br/>";
         }
         document.getElementById(targetelement).innerHTML = contents;
         addDynamicHTMLElements(data, searchbox);
