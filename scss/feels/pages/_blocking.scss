@@ -1,2 +1,13 @@
-#blockers {
+#blockers,
+#blocking,
+#following,
+#followers {
+  @include container-thin;
+  .content {
+    @include card;
+    padding: $base-padding * 2;
+    br {
+      display: none;
+    }
+  }
 }

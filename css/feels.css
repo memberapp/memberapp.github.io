@@ -649,7 +649,8 @@ table {
   border-spacing: 0;
   text-align: center;
   margin-bottom: 1rem;
-  display: table; }
+  display: table;
+  width: 100%; }
   @media (max-width: 1023px) {
     table {
       overflow-x: auto; } }
@@ -2350,3 +2351,52 @@ footer {
         #notifications ul.notificationslist li .notificationtitle .star-rating {
           margin-right: 0.5rem;
           margin-right: 0.25rem; }
+
+#blockers,
+#blocking,
+#following,
+#followers {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 769px) {
+    #blockers,
+    #blocking,
+    #following,
+    #followers {
+      max-width: 800px; } }
+  @media (max-width: 768px) {
+    #blockers,
+    #blocking,
+    #following,
+    #followers {
+      max-width: 540px; } }
+  #blockers .content,
+  #blocking .content,
+  #following .content,
+  #followers .content {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    padding: 1.75rem; }
+    @media (max-width: 400px) {
+      #blockers .content,
+      #blocking .content,
+      #following .content,
+      #followers .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+    #blockers .content br,
+    #blocking .content br,
+    #following .content br,
+    #followers .content br {
+      display: none; }
