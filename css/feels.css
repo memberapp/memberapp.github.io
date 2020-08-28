@@ -313,6 +313,9 @@ img {
   margin-bottom: -3px;
   margin-right: 2px; }
 
+.blocked {
+  opacity: 0.2; }
+
 body {
   background: #f7f7f7;
   position: relative;
