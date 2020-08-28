@@ -9,47 +9,35 @@ var notify = require("gulp-notify");
 var gutil = require("gulp-util");
 var argv = require("minimist");
 var autoprefixer = require("gulp-autoprefixer");
-
 var inlineCss = require("gulp-inline-css");
 
-gulp.task("watch", ["watch-site"], function () {
-  //lol
-});
-
-gulp.task("watch-site", function () {
+gulp.task("watch", function () {
   gulp.watch("scss/**/*.scss", ["sass-site"]);
 });
 
 gulp.task("sass-site", function () {
-  return gulp
-    .src("scss/feels/feels.scss")
-    .pipe(plumber())
-    .pipe(
-      sass({ includePaths: ["./scss/feels/**/*"] }, { errLogToConsole: true })
-    )
-    .on("error", reportError)
-    .pipe(
-      autoprefixer({
-        browsers: ["last 2 versions"],
-        cascade: false,
-      })
-    )
-    .pipe(concat("feels.css"))
-    .pipe(uglifyCss())
-    .pipe(gulp.dest("css/"));
+  return (
+    gulp
+      .src("scss/feels/feels.scss")
+      .pipe(plumber())
+      .pipe(
+        sass({ includePaths: ["./scss/feels/**/*"] }, { errLogToConsole: true })
+      )
+      .on("error", reportError)
+      .pipe(
+        autoprefixer({
+          browsers: ["last 2 versions"],
+          cascade: false,
+        })
+      )
+      .pipe(concat("feels.css"))
+      // .pipe(uglifyCss()) // minify css
+      .pipe(gulp.dest("css/"))
+  );
 });
 
 /// error handeling
 var reportError = function (error) {
-  // [log]
-  //console.log(error);
-
-  // Format and ouput the whole error object
-  //console.log(error.toString());
-
-  // ----------------------------------------------
-  // Pretty error reporting
-
   var report = "\n";
   var chalk = gutil.colors.white.bgRed;
 

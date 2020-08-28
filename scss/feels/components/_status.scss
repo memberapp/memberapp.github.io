@@ -10,7 +10,7 @@ div#status {
   color: $white;
   font-size: $font-size-tiny;
   padding: 0.25rem 1rem;
-  border-top-left-radius: 0.25rem;
+
   font-weight: normal;
   text-transform: capitalize;
 
@@ -18,6 +18,7 @@ div#status {
     width: auto;
     float: right;
     background: rgba(0, 0, 0, 0.28);
+    border-top-left-radius: 0.25rem;
   }
   a {
     color: $white;
