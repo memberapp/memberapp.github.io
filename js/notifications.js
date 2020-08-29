@@ -13,7 +13,7 @@ function displayNotificationCount() {
         var alertcount = Number(data[0].count);
         var element = document.getElementById("alertcount");
         if (alertcount > 0) {
-            element.innerHTML =  alertcount;
+            element.innerHTML = alertcount;
         } else {
             element.innerHTML = "";
         }
@@ -21,7 +21,7 @@ function displayNotificationCount() {
         var alertcountpm = Number(data[0].countpm);
         var element = document.getElementById("alertcountpm");
         if (alertcountpm > 0) {
-            element.innerHTML =  alertcountpm;
+            element.innerHTML = alertcountpm;
         } else {
             element.innerHTML = "";
         }
@@ -46,23 +46,28 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
     //Request content from the server and display it when received
     getJSON(dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
-        var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length>0?data[0].unduplicatedlength:0);
+        var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i);
         }
         //console.log(contents);
-        if(contents==""){
-            contents=getNothingFoundMessageHTML("No notifications yet");   
+        if (contents == "") {
+            contents = getNothingFoundMessageHTML("No notifications yet");
         }
         contents = getNotificationsTableHTML(contents, navbuttons);
-        lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
-        localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
+
+        //Update last view of notifications iff the user is looking at the first page of notifications.
+        if(start==0){
+            lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
+            localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
+        }
+
         document.getElementById("alertcount").innerHTML = "";
-        
+
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
-        addStarRatings(data, page);
+        addDynamicHTMLElements(data, page);
         listenForTwitFrameResizes();
         window.scrollTo(0, 0);
     }, function (status) { //error detection....
@@ -126,11 +131,15 @@ function getHTMLForNotification(data, rank, page, starindex) {
             );
             break;
         case "like":
+            if(data.llikedtxid==null){
+                //Server returns empty likes sometimes, probably if a like is superceeded by another like
+                return "";
+            }
             postRatingID = starindex + page + ds(data.address) + type;
             return notificationItemHTML(
                 "like",
                 `💗&nbsp;`,
-                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount)>0?balanceString(Number(data.amount), false):""),
+                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` liked your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex)
             );

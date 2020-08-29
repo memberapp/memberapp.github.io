@@ -2,7 +2,8 @@ table {
   border-spacing: 0;
   text-align: center;
   margin-bottom: 1rem;
-  display: block;
+  display: table;
+  width: 100%;
   @include media("<desktop") {
     overflow-x: auto;
   }

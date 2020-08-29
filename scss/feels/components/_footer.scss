@@ -2,6 +2,19 @@ footer {
   background-color: #e0e0e0;
   padding-top: 4rem;
   margin-top: 6rem;
+
+  #developmentversion {
+    font-size: 1rem;
+    text-align: center;
+    color: $theme-danger;
+    background: lighten($theme-danger, 20);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 0.25rem;
+    border: 1px solid darken($theme-danger, 20);
+    @include container;
+  }
+
   hr {
     display: none;
   }

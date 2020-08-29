@@ -389,10 +389,12 @@
                     <div id='memberprofiletext'>
                         <i>loading</i>
                     </div>
-                    <label>Profile Links</label>
-                    <div>
-                        <a href="" id='memberprofilelink'>Member</a><span class="separatorwide"></span><a
-                            rel='noopener noreferrer' target="memo" href="" id='membermemoprofilelink'>Memo</a>
+                    <div id="memberprofilelinks">
+                        <label>Profile Links</label>
+                        <div>
+                            <a href="" id='memberprofilelink'>Member</a><span class="separatorwide"></span><a
+                                rel='noopener noreferrer' target="memo" href="" id='membermemoprofilelink'>Memo</a>
+                        </div>
                     </div>
                     <label for="memberidenticon">Identicon</label>
                     <div id='memberidenticon'>
@@ -412,21 +414,23 @@
                             </span>
                         </div>
                     </div>
-                    <label>Legacy Address</label>
-                    <div>
-                        <span id="memberlegacyformat">loading</span>
-                        <div id="memberlegacyformatdiv">
-                            <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
-                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    version="1.1" width="24" height="24" viewBox="0 0 24 24">
-                                    <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
-                                          11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
-                                          19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
-                                          15H9V21H3V15M5,17V19H7V17H5Z" />
-                                </svg> Click to enlarge QR code
-                            </span></div>
+                    <div id="memberlegacyaddress">
+                        <label>Legacy Address</label>
+                        <div>
+                            <span id="memberlegacyformat">loading</span>
+                            <div id="memberlegacyformatdiv">
+                                <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                                        <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                              11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
+                                              19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
+                                              15H9V21H3V15M5,17V19H7V17H5Z" />
+                                    </svg> Click to enlarge QR code
+                                </span></div>
+                        </div>
                     </div>
-                    <div>
+                    <div class="memberstats">
                         <div class="follow">
                             <label>Follow</label>
                             <a id="memberfollow">
@@ -522,7 +526,7 @@
                             href="#logout" onclick="logout();">Logout</a>
                     </div>
 
-                    <div>
+                    <div class="settingsprofilelinks">
                         <label>Profile Links</label>
                         <div>
                             <a href="" id='settingsprofilelink'>Member</a><span class="separatorwide"></span><a
@@ -532,7 +536,8 @@
                     <label for="settingsidenticon">Identicon</label>
                     <div id='settingsidenticon'>
                     </div> 
-                    <div>
+                    <div id="settingsprofileaddress">
+
                         <label class="vavilon" data-vavilon="address">Address</label>
                         <span id="cashaddrformat">loading</span>
                         <div id="cashaddrformatdiv">
@@ -547,7 +552,7 @@
                             </span>
                         </div>
                     </div>
-                    <div>
+                    <div id="settingslegacyprofileaddress">
                         <label>Legacy Address</label>
                         <span id="legacyformat">loading</span>
                         <div id="legacyformatdiv">
@@ -562,7 +567,7 @@
                             </span>
                         </div>
                     </div>
-                    <div>
+                    <div id="settingsprivatekey">
                         <label class="vavilon" data-vavilon="private key">Seed Phrase / Private Key / WIF</label>
                         <span id="privatekeydisplay" style="display: none;">loading</span>
                         <span id="privatekey"></span>
@@ -594,7 +599,7 @@
                             <option class="vavilon" data-vavilon="none" value="none">None</option>
                         </select>
                     </div>
-                    <div>
+                    <div class="profilestats">
                         <div class="follow">
                             <label>Follow</label>
                             <a id="settingsfollow">
@@ -670,17 +675,17 @@
                         <label for="mediasettings" class="labelheader vavilon" data-vavilon="Media Settings">Media
                             Settings</label>
                     </div>
-                    <div>
+                    <div class="customcheckbox">
                         <input type="checkbox" id="showyoutube" onchange="updateSettingsCheckbox('showyoutube');">
                         <label for="showyoutube" class="checkboxlabel vavilon"
                             data-vavilon="Show YouTube Preview Images">Show YouTube Preview Images</label>
                     </div>
-                    <div>
+                    <div class="customcheckbox">
                         <input type="checkbox" id="showimgur" onchange="updateSettingsCheckbox('showimgur');">
                         <label for="showimgur" class="checkboxlabel vavilon" data-vavilon="Show Imgur Images">Show Imgur
                             Images</label>
                     </div>
-                    <div>
+                    <div class="customcheckbox">
                         <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
                         <label for="showtwitter" class="checkboxlabel vavilon" data-vavilon="Show Tweets">Show
                             Tweets</label>
@@ -784,67 +789,75 @@
             </div>
 
             <div id="followers" class="followers" style="display: none;">
-                <h2>Followers</h2>
-                <br />
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Member</th>
-                            <th></th>
-                            <th>Member</th>
-                        </tr>
-                    </thead>
-                    <tbody id="follows">
-                    </tbody>
-                </table>
+                <div class="content">
+                    <h2>Followers</h2>
+                    <br />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th></th>
+                                <th>Member</th>
+                            </tr>
+                        </thead>
+                        <tbody id="follows">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div id="following" class="following" style="display: none;">
-                <h2>Following</h2>
-                <br />
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Member</th>
-                            <th></th>
-                            <th>Member</th>
-                        </tr>
-                    </thead>
-                    <tbody id="followingtable">
-                    </tbody>
-                </table>
+                <div class="content">
+                    <h2>Following</h2>
+                    <br />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th></th>
+                                <th>Member</th>
+                            </tr>
+                        </thead>
+                        <tbody id="followingtable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div id="blockers" class="blockers" style="display: none;">
-                <h2>Muters</h2>
-                <br />
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Member</th>
-                            <th></th>
-                            <th>Member</th>
-                        </tr>
-                    </thead>
-                    <tbody id="blocks">
-                    </tbody>
-                </table>
+                <div class="content">
+                    <h2>Muters</h2>
+                    <br />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th></th>
+                                <th>Member</th>
+                            </tr>
+                        </thead>
+                        <tbody id="blocks">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div id="blocking" class="blocking" style="display: none;">
-                <h2>Muting</h2>
-                <br />
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Member</th>
-                            <th></th>
-                            <th>Member</th>
-                        </tr>
-                    </thead>
-                    <tbody id="blockingtable">
-                    </tbody>
-                </table>
+                <div class="content">
+                    <h2>Muting</h2>
+                    <br />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Member</th>
+                                <th></th>
+                                <th>Member</th>
+                            </tr>
+                        </thead>
+                        <tbody id="blockingtable">
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div id="messagesanchor" class="applicationpage" style="display: none;">
@@ -942,41 +955,39 @@
             </div>
 
             <div id="topiclistanchor" style="display: none;">
-            </div>
-
-
-            <footer>
-                <hr />
-                <span id="developmentversion" style="display: none;">You're viewing the development preview version
-                    of
-                    member.cash You may need to SHIFT + Reload to get the very latest changes. Generally, It's
-                    recommend
-                    to
-                    <a href="https://member.cash">use the stable version at
-                        https://member.cash</a><br /><br />
-                    <hr /></span>
-                <span class="footerlinks">
-                    <a
-                        href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">
-                        Top Supporters
-                    </a>
-                    <span class="separatorwide"></span>
-                    <a href="https://github.com/memberapp/memberapp.github.io">Github</a>
-                    <span class="separatorwide"></span>
-                    <a class="vavilon" data-vavilon="bitcoin" href="https://www.bitcoin.com">Bitcoin</a>
-                    <span class="separatorwide"></span>
-                    <a href="https://github.com/memberapp/protocol">Protocol</a>
-                    <span class="separatorwide"></span>
-                    <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
-                    <span class="separatorwide"></span>
-                    <span class="vavilon" data-vavilon="version">version</span> <span
-                        id="version">loading</span>.<u>9</u>
-                </span>
-                <br />
-                <br />
-            </footer>
+            </div> 
         </div>
     </div>
+    <footer>
+        <hr />
+        <span id="developmentversion" style="display: none;">You're viewing the development preview version
+            of
+            member.cash You may need to SHIFT + Reload to get the very latest changes. Generally, It's
+            recommend
+            to
+            <a href="https://member.cash">use the stable version at
+                https://member.cash</a><br /><br />
+            <hr /></span>
+        <span class="footerlinks">
+            <a
+                href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">
+                Top Supporters
+            </a>
+            <span class="separatorwide"></span>
+            <a href="https://github.com/memberapp/memberapp.github.io">Github</a>
+            <span class="separatorwide"></span>
+            <a class="vavilon" data-vavilon="bitcoin" href="https://www.bitcoin.com">Bitcoin</a>
+            <span class="separatorwide"></span>
+            <a href="https://github.com/memberapp/protocol">Protocol</a>
+            <span class="separatorwide"></span>
+            <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
+            <span class="separatorwide"></span>
+            <span class="vavilon" data-vavilon="version">version</span> <span
+                id="version">loading</span>.<u>9</u>
+        </span>
+        <br />
+        <br />
+    </footer>
     <div id="status"></div>
     <div id="tweet-container"></div>
     <script>

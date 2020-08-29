@@ -31,12 +31,12 @@ async function userSearchChanged(searchbox, targetelement) {
         var test = data;
         var contents = `<label for="usersearchresults">Results</label>`;
         for (var i = 0; i < data.length; i++) {
-            contents = contents + userHTML(data[i].address, data[i].name, i + searchbox + data[i].address, data[i].rating, 16)
+            contents = contents + "<div class='usersearchresult'>" + userHTML(data[i].address, data[i].name, i + searchbox + data[i].address, data[i].rating, 16)
                 + sendEncryptedMessageHTML(data[i].address, data[i].name, data[i].publickey)
-                + "<br/>";
+                + "</div><br/>";
         }
         document.getElementById(targetelement).innerHTML = contents;
-        addStarRatings(data, searchbox);
+        addDynamicHTMLElements(data, searchbox);
 
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
@@ -53,7 +53,7 @@ function createSurrogate() {
     createSurrogateUser(surrogateName, 'createsurrogatebutton', 'surrogatelink');
 }
 
- async function postprivatemessage() {
+async function postprivatemessage() {
     document.getElementById('newpostmessagebutton').disabled = true;
 
     var text = document.getElementById('newposttamessage').value;
@@ -72,34 +72,34 @@ function createSurrogate() {
     sendMessageRaw(privkey, null, encryptedMessage, 1000, status, privateMessagePosted, messageRecipient, stampAmount);
 }
 
-function privateMessagePosted(){
+function privateMessagePosted() {
     document.getElementById('newpostmessagebutton').disabled = false;
-    document.getElementById('newpostmessagebutton').value="Send Message";
-    document.getElementById('newposttamessage').value="";
-    document.getElementById('newpostmessagecompleted').innerText="Message Sent";
+    document.getElementById('newpostmessagebutton').value = "Send Message";
+    document.getElementById('newposttamessage').value = "";
+    document.getElementById('newpostmessagecompleted').innerText = "Message Sent";
 
 }
 
-function sendfunds(){
-    var sendAmount=Number(document.getElementById("fundsamount").value);
-    if (sendAmount<547){
+function sendfunds() {
+    var sendAmount = Number(document.getElementById("fundsamount").value);
+    if (sendAmount < 547) {
         alert("Amount has to be 547 satoshis or larger.");
         return;
     }
-    var totalAmountPossible=tq.updateBalance(pubkey);
-    if (sendAmount>totalAmountPossible){
-        alert("This amount is larger than your balance. "+totalAmountPossible);
+    var totalAmountPossible = tq.updateBalance(pubkey);
+    if (sendAmount > totalAmountPossible) {
+        alert("This amount is larger than your balance. " + totalAmountPossible);
         return;
     }
 
-    var sendAddress=document.getElementById("sendfundsaddress").value.trim();
-    if(sendAddress==""){
+    var sendAddress = document.getElementById("sendfundsaddress").value.trim();
+    if (sendAddress == "") {
         alert("Make sure to enter an address to send to.");
     }
 
-    document.getElementById("fundsamount").disabled=true;
-    document.getElementById("sendfundsaddress").disabled=true;
-    document.getElementById("sendfundsbutton").disabled=true;
+    document.getElementById("fundsamount").disabled = true;
+    document.getElementById("sendfundsaddress").disabled = true;
+    document.getElementById("sendfundsbutton").disabled = true;
 
     //maybe move to transactions.js
     const tx = {
@@ -109,15 +109,15 @@ function sendfunds(){
         }
     }
     //updateStatus("Sending Funds To Surrogate Account");
-    tq.queueTransaction(tx,sendFundsComplete);
+    tq.queueTransaction(tx, sendFundsComplete);
 
 }
 
-function sendFundsComplete(){
-    document.getElementById("fundsamount").value="";
-    document.getElementById("sendfundsaddress").value="";
-    document.getElementById("fundsamount").disabled=false;
-    document.getElementById("sendfundsaddress").disabled=false;
-    document.getElementById("sendfundsbutton").disabled=false;
+function sendFundsComplete() {
+    document.getElementById("fundsamount").value = "";
+    document.getElementById("sendfundsaddress").value = "";
+    document.getElementById("fundsamount").disabled = false;
+    document.getElementById("sendfundsaddress").disabled = false;
+    document.getElementById("sendfundsbutton").disabled = false;
 
 }

@@ -21,7 +21,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length>0?data[0].unduplicatedlength:0);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -70,7 +70,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
     getJSON(dropdowns.contentserver + '?action=' + page + '&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicNameHOSTILE, "getAndPopulate", data.length>0?data[0].unduplicatedlength:0);
+        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicNameHOSTILE, "getAndPopulate", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -112,8 +112,7 @@ function getAndPopulateMessages(start, limit) {
 
 
         document.getElementById('messageslist').innerHTML = contents;
-        addStarRatings(data, "privatemessages");
-        jdenticon();
+        addDynamicHTMLElements(data, "privatemessages");
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById('messageslist').innerHTML = 'Something is wrong:' + status;
@@ -180,9 +179,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
         scrollToElement("highlightedcomment");
-        //Render identicons
-        jdenticon();
-        //detectMultipleIDS();
+        
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(pageName).innerHTML = 'Something is wrong:' + status;
@@ -255,14 +252,20 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
     var pageElement = document.getElementById(page);
     pageElement.innerHTML = contents; //display the result in the HTML element
     listenForTwitFrameResizes();
-    addStarRatings(data, page);
-    jdenticon();
+    addDynamicHTMLElements(data, page);
     window.scrollTo(0, 0);
     //detectMultipleIDS();
     return;
 }
 
 
+function addDynamicHTMLElements(data, page, disable) {
+    //Add identicons
+    jdenticon();
+    //Add ratings, disable controls if the star rating can be updated
+    addStarRatings(data, page, disable);
+    window.scrollTo(0, 0);
+}
 
 function addStarRatings(data, page, disable) {
     for (var i = 0; i < data.length; i++) {
@@ -387,13 +390,13 @@ function memorandumPreview() {
 }
 
 function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
-    
+
     //Always show if post is directly requested
-    if(!alwaysShow){
+    if (!alwaysShow) {
         if (checkForMutedWords(data)) return "";
         if (data.moderated != null) return "";
     }
-    
+
     let mainRatingID = starindex + page + ds(data.address);
     var retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex);
     if (dataReply != null) {
@@ -584,7 +587,7 @@ function topictitleChanged(elementName) {
     document.getElementById(elementName + 'topiclengthadvice').innerHTML = "(" + document.getElementById(elementName + 'topic').value.length + "/" + document.getElementById(elementName + 'topic').maxLength + ")";
 }
 
-function geopost(lat, long) {
+function geopost() {
     if (!checkForPrivKey()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
@@ -593,7 +596,18 @@ function geopost(lat, long) {
         alert("No Message Body");
         return false;
     }
-    var geohash = encodeGeoHash(document.getElementById("lat").value, document.getElementById("lon").value);
+    var lat=Number(document.getElementById("lat").value);
+    var lon=Number(document.getElementById("lon").value);
+    
+    //Leaflet bug allow longitude values outside proper range
+    while(lon<0){
+        lon=lon+180;
+    }
+    while(lon>180){
+        lon=lon-180;
+    }
+    var geohash = encodeGeoHash(lat, lon);
+
 
     document.getElementById('newpostgeocompleted').innerText = "";
     document.getElementById('newpostgeobutton').style.display = "none";
@@ -635,23 +649,23 @@ function postmemorandum() {
 }
 
 function memorandumpostcompleted(txid) {
-    txid=san(txid);
-    var encodedURL = `https://twitter.com/intent/tweet?text=`+encodeURIComponent(document.getElementById('memorandumtitle').value + '\r\n'+` member.cash/?` + txid.substr(0, 4) + `#thread?post=` + txid.substr(0, 10));
+    txid = san(txid);
+    var encodedURL = `https://twitter.com/intent/tweet?text=` + encodeURIComponent(document.getElementById('memorandumtitle').value + '\r\n' + ` member.cash/?` + txid.substr(0, 4) + `#thread?post=` + txid.substr(0, 10));
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('`+txid+`')" href="#thread?post=`+txid+`">View It</a> or  <a rel='noopener noreferrer' target="_blank" href="` + encodedURL + `">Also Post To Twitter (opens a new window)</a>`;
-    document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('`+txid+`')" href="#thread?post=`+txid+`">View It</a> or  <a href="" onclick="window.open('` + encodedURL + `', 'twitterwindow', 'width=300,height=250');return false;">Also Post To Twitter (opens a new window)</a>`;
+    document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('` + txid + `')" href="#thread?post=` + txid + `">View It</a> or  <a href="" onclick="window.open('` + encodedURL + `', 'twitterwindow', 'width=300,height=250');return false;">Also Post To Twitter (opens a new window)</a>`;
 
 
-    
+
     //iframe not allowed by twitter
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a rel='noopener noreferrer' onclick="createiframe('`+encodedURL+`','posttotwitter');return false;" href="">Also Post To Twitter</a><div id="posttotwitter"></div>`;
-    
+
 
 
     document.getElementById('memorandumtitle').value = "";
     document.getElementById('newposttamemorandum').value = "";
     document.getElementById('newpostmemorandumstatus').style.display = "none";
     document.getElementById('newpostmemorandumbutton').style.display = "block";
-    if(simplemde){
+    if (simplemde) {
         simplemde.value("");
     }
 

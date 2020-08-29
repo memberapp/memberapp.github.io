@@ -2,7 +2,7 @@
   @include container-thin;
   .content {
     @include card;
-    padding: 1.75rem;
+    padding: $base-padding * 2;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -19,11 +19,10 @@
       }
     }
     .loginbutton {
-      //   @include btn-outline;
     }
     #newseedphrase {
       border: 1px solid $text-divider;
-      background: rgba(0, 0, 0, 0.06);
+      background: $theme-warning;
       border-radius: $border-radius-regular;
       padding: $base-padding/2 $base-padding;
       margin: 1rem 0;

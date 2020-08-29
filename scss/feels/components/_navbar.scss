@@ -1,5 +1,5 @@
 header {
-  border-bottom: 1px solid $text-divider; //#4dc846;
+  border-bottom: 1px solid $text-divider;
   width: 100%;
   background: $white;
   box-shadow: 0px 1px 5px -3px rgba(0, 0, 0, 0.5);
@@ -13,7 +13,6 @@ header {
     nav {
       min-height: 61px;
       display: flex;
-      // align-items: center;
       flex-flow: row;
       justify-content: center;
       @include container-fluid;
@@ -38,8 +37,7 @@ header {
       }
 
       .memberlogo {
-        margin-right: 15px;
-
+        margin-right: 0.5rem;
         display: flex;
         align-items: center;
         height: auto;
@@ -58,24 +56,32 @@ header {
           }
         }
       }
-      .membertext {
-        // margin-right: auto;
 
+      .membertext {
         display: none;
         @include media(">desktop") {
           display: flex;
           align-items: center;
-          text-transform: capitalize;
+          letter-spacing: -1px;
+          font-style: italic;
           padding: 0.75rem 0;
           margin-right: auto;
           padding: 0;
+          font-size: 1.375rem;
         }
 
-        font-size: 1.25rem;
         a {
           color: $theme-primary;
         }
       }
+      .membertext,
+      .memberlogo {
+        transition: all 0.15s ease-in-out;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
       .navitemsmain {
         overflow: auto;
         position: relative;
