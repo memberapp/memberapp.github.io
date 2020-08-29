@@ -154,7 +154,11 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress, data);
             document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
 
-            document.getElementById('memberrating').innerHTML = `<div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + Number(data[0].rating) + `" id="memberrating` + qaddress + `"></div>`;
+            var ratingScore=0;
+            if (data.length >0) {
+                ratingScore=Number(data[0].rating);
+            }
+            document.getElementById('memberrating').innerHTML = `<div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + ratingScore + `" id="memberrating` + qaddress + `"></div>`;
             var theElement = document.getElementById(`memberrating` + qaddress);
             var starRating1 = addSingleStarsRating(false, theElement);
         }
