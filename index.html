@@ -174,7 +174,8 @@
                         <span class="separatorwidebreakpoint"></span>
                         <span id="topiccontainer" class="topiccontainer">
                             <select id="orderselector" onchange="postsSelectorChanged();">
-                                <option value="hot" title="Hottest posts" class="vavilon" data-vavilon="hot" selected="selected">Hot</option>
+                                <option value="hot" title="Hottest posts" class="vavilon" data-vavilon="hot"
+                                    selected="selected">Hot</option>
                                 <option value="new" title="Latest posts" class="vavilon" data-vavilon="new">New</option>
                                 <option value="topd" title="Top posts from the past Day" class="vavilon"
                                     data-vavilon="today">Day</option>
@@ -194,7 +195,8 @@
                                 <option value="both" class="vavilon" data-vavilon="all">In Both</option>
                             </select>
                             <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
-                                <option value="" class="vavilon" data-vavilon="all topics" selected="selected">All Topics</option>
+                                <option value="" class="vavilon" data-vavilon="all topics" selected="selected">All
+                                    Topics</option>
                                 <option value=""></option>
                                 <option value="">---------------</option>
                                 <option value="MyTopics">My Topics</option>
@@ -213,7 +215,8 @@
                                 <option value="#911Truth">#911Truth</option>
                             </select>
                             <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
-                                <option value="everyone" class="vavilon" data-vavilon="everyone" selected="selected">Everyone</option>
+                                <option value="everyone" class="vavilon" data-vavilon="everyone" selected="selected">
+                                    Everyone</option>
                                 <option value="mypeeps" class="vavilon" data-vavilon="mypeople">My Peeps</option>
                             </select>
                         </span>
@@ -226,29 +229,38 @@
         <div class="mainbody">
             <div id="lowfundswarning" class="alert" style="display: none;">
                 <div class="content">
-                    <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span><br/>
-                    <span id="satoshiamount">0</span> <span class="vavilon" data-vavilon="satoshiamounttext">satoshis exist in your member.cash account - each
-                    action (posting, liking, subscribing, following, messaging etc)
-                    requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.</span>
+                    <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span><br />
+                    <span id="satoshiamount">0</span> <span class="vavilon" data-vavilon="satoshiamounttext">satoshis
+                        exist in your member.cash account - each
+                        action (posting, liking, subscribing, following, messaging etc)
+                        requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.</span>
                     <br />
                     <br />
-                    <span class="vavilon" data-vavilon="ask nuggets">Send Nuggets your address for a few cents if you're finding it difficult to get some.</span>
+                    <span class="vavilon" data-vavilon="ask nuggets">Send Nuggets your address for a few cents if you're
+                        finding it difficult to get some.</span>
                     <br />
-                    Twitter <a rel='noopener noreferrer' href="https://twitter.com/chickenorgold">@chickenorgold</a><br />
-                    Reddit <a rel='noopener noreferrer' href="https://www.reddit.com/user/theamazingnuggets">/u/theamazingnuggets</a><br />
-                    Email <a rel='noopener noreferrer' href="mailto:nuggetcoins@gmail.com">nuggetcoins@gmail.com</a><br />
-                    <span class="vavilon" data-vavilon="get some at">You might be able to get some at the</span> <a rel='noopener noreferrer' target="bitcoincom"
-                        href="https://free.bitcoin.com/">Bitcoin.com Faucet</a> <span class="vavilon" data-vavilon="steps required">(Just steps 2 and 3 required)</span>.
+                    Twitter <a rel='noopener noreferrer'
+                        href="https://twitter.com/chickenorgold">@chickenorgold</a><br />
+                    Reddit <a rel='noopener noreferrer'
+                        href="https://www.reddit.com/user/theamazingnuggets">/u/theamazingnuggets</a><br />
+                    Email <a rel='noopener noreferrer'
+                        href="mailto:nuggetcoins@gmail.com">nuggetcoins@gmail.com</a><br />
+                    <span class="vavilon" data-vavilon="get some at">You might be able to get some at the</span> <a
+                        rel='noopener noreferrer' target="bitcoincom" href="https://free.bitcoin.com/">Bitcoin.com
+                        Faucet</a> <span class="vavilon" data-vavilon="steps required">(Just steps 2 and 3
+                        required)</span>.
                     <br />
                     <br />
-                    <span class="vavilon" data-vavilon="your address is">Your address is</span> <span id="lowfundsaddress"></span>
+                    <span class="vavilon" data-vavilon="your address is">Your address is</span> <span
+                        id="lowfundsaddress"></span>
                     <br />
                     <br />
-                    <a href=""
-                        onclick="refreshPool();return false;"><span class="vavilon" data-vavilon="refresh balance">Refresh
+                    <a href="" onclick="refreshPool();return false;"><span class="vavilon"
+                            data-vavilon="refresh balance">Refresh
                             your balance</span></a> or
                     <a href=""
-                        onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span class="vavilon" data-vavilon="dismiss message">Dismiss
+                        onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
+                            class="vavilon" data-vavilon="dismiss message">Dismiss
                             this message</span></a>
                 </div>
             </div>
@@ -535,7 +547,7 @@
                     </div>
                     <label for="settingsidenticon">Identicon</label>
                     <div id='settingsidenticon'>
-                    </div> 
+                    </div>
                     <div id="settingsprofileaddress">
 
                         <label class="vavilon" data-vavilon="address">Address</label>
@@ -955,35 +967,37 @@
             </div>
 
             <div id="topiclistanchor" style="display: none;">
-            </div> 
+            </div>
         </div>
     </div>
     <footer>
         <hr />
         <span id="developmentversion" style="display: none;">You're viewing the development preview version
-            of
-            member.cash You may need to SHIFT + Reload to get the very latest changes. Generally, It's
-            recommend
-            to
-            <a href="https://member.cash">use the stable version at
+            of member.cash You may need to SHIFT + Reload to get the very latest changes. Generally, It's
+            recommended to <a rel='noopener noreferrer' target="member" href="https://member.cash">use the stable
+                version at
                 https://member.cash</a><br /><br />
             <hr /></span>
         <span class="footerlinks">
-            <a
+            <a rel='noopener noreferrer' target="memo"
                 href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">
                 Top Supporters
             </a>
             <span class="separatorwide"></span>
-            <a href="https://github.com/memberapp/memberapp.github.io">Github</a>
+            <a rel='noopener noreferrer' target="member"
+                href="https://member.cash/#member?qaddress=16gs2oeLVJJT3YTL8uHLoRyLQtaWfEDxh1">Donate</a>
             <span class="separatorwide"></span>
-            <a class="vavilon" data-vavilon="bitcoin" href="https://www.bitcoin.com">Bitcoin</a>
+            <a rel='noopener noreferrer' target="github"
+                href="https://github.com/memberapp/memberapp.github.io">Github</a>
             <span class="separatorwide"></span>
-            <a href="https://github.com/memberapp/protocol">Protocol</a>
+            <a class="vavilon" data-vavilon="bitcoin" rel='noopener noreferrer' target="bitcoin"
+                href="https://www.bitcoin.com">Bitcoin</a>
+            <span class="separatorwide"></span>
+            <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/protocol">Protocol</a>
             <span class="separatorwide"></span>
             <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
             <span class="separatorwide"></span>
-            <span class="vavilon" data-vavilon="version">version</span> <span
-                id="version">loading</span>.<u>9</u>
+            <span class="vavilon" data-vavilon="version">version</span> <span id="version">loading</span>.<u>9</u>
         </span>
         <br />
         <br />

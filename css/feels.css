@@ -2400,3 +2400,9 @@ footer {
     #following .content br,
     #followers .content br {
       display: none; }
+
+/*Patch*/
+
+.post .postdetails .title a[href]:not([href^="#thread?"]) {
+  display: inline;
+}
