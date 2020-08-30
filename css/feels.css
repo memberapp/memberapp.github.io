@@ -2406,3 +2406,7 @@ footer {
 .post .postdetails .title a[href]:not([href^="#thread?"]) {
   display: inline;
 }
+
+.starrating {
+  display: inline;
+}
