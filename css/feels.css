@@ -342,6 +342,24 @@ img {
 .blocked {
   opacity: 0.2; }
 
+.starrating {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 0.2rem 0.25rem;
+  margin-right: 0.5rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 0.25rem; }
+  .starrating div {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    width: 100%; }
+
 body {
   background: #f7f7f7;
   position: relative;
@@ -2400,13 +2418,3 @@ footer {
     #following .content br,
     #followers .content br {
       display: none; }
-
-/*Patch*/
-
-.post .postdetails .title a[href]:not([href^="#thread?"]) {
-  display: inline;
-}
-
-.starrating {
-  display: inline;
-}
