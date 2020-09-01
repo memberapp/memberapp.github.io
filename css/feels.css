@@ -342,6 +342,24 @@ img {
 .blocked {
   opacity: 0.2; }
 
+.starrating {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  padding: 0.2rem 0.25rem;
+  margin-right: 0.5rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 0.25rem; }
+  .starrating div {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    width: 100%; }
+
 body {
   background: #f7f7f7;
   position: relative;
@@ -1153,6 +1171,10 @@ img {
       .comment-tree ul li ul {
         margin-left: 2.5rem;
         border-left: 1px solid #e6e6e6 !important; }
+        .comment-tree ul li ul ul {
+          margin-left: .5rem; }
+          .comment-tree ul li ul ul ul {
+            margin-left: .5rem; }
 
 div#status {
   position: fixed;
@@ -1379,31 +1401,31 @@ header {
 footer {
   background-color: #e0e0e0;
   padding-top: 4rem;
-  margin-top: 6rem; }
+  margin-top: 6rem;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 1025px) {
+    footer {
+      max-width: 1140px; } }
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  footer {
+    max-width: 960px; } }
+  @media (max-width: 768px) {
+    footer {
+      max-width: 540px; } }
   footer #developmentversion {
     font-size: 1rem;
     text-align: center;
     color: #c1292e;
-    background: #e16f73;
+    background: #e99a9c;
     padding: 1rem;
     margin-bottom: 2rem;
     border-radius: 0.25rem;
-    border: 1px solid #6d171a;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto; }
-    @media (min-width: 1025px) {
-      footer #developmentversion {
-        max-width: 1140px; } }
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  footer #developmentversion {
-    max-width: 960px; } }
-    @media (max-width: 768px) {
-      footer #developmentversion {
-        max-width: 540px; } }
+    border: 1px solid #972024; }
   footer hr {
     display: none; }
   footer .footerlinks {
@@ -1412,22 +1434,7 @@ footer {
     -ms-flex-pack: center;
     justify-content: center;
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto; }
-    @media (min-width: 1025px) {
-      footer .footerlinks {
-        max-width: 1140px; } }
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  footer .footerlinks {
-    max-width: 960px; } }
-    @media (max-width: 768px) {
-      footer .footerlinks {
-        max-width: 540px; } }
+    flex-wrap: wrap; }
     footer .footerlinks .separatorwide {
       border-right: 1px solid rgba(0, 0, 0, 0.36);
       margin-right: 1rem;
@@ -2400,13 +2407,3 @@ footer {
     #following .content br,
     #followers .content br {
       display: none; }
-
-/*Patch*/
-
-.post .postdetails .title a[href]:not([href^="#thread?"]) {
-  display: inline;
-}
-
-.starrating {
-  display: inline;
-}
