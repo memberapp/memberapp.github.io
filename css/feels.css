@@ -1807,7 +1807,8 @@ footer {
 body.article {
   background: white; }
   body.article #thread .itemlist .fatitem {
-    border: none; }
+    border: none;
+    font-size: 1.125rem; }
     body.article #thread .itemlist .fatitem .votelinks {
       background: white; }
 
