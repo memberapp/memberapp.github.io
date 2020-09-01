@@ -1802,6 +1802,9 @@ footer {
           border-right: 0;
           border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
 
+body.article {
+  background: #ffff; }
+
 #toolsanchor {
   width: 100%;
   padding-right: 15px;
