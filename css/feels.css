@@ -1151,7 +1151,7 @@ img {
       border-radius: 0;
       border-left: 0;
       border-right: 0;
-      border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
   .comment-tree ul {
     padding: 0;
     margin: 0; }
@@ -1594,7 +1594,7 @@ footer {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
       .mainbodywrapper #posts .itemlist ol.posts li:hover {
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24); }
 
@@ -1626,7 +1626,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
 
 #newpost {
   width: 100%;
@@ -1657,7 +1657,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #newpost #memorandumarea #memorandumtopicbutton {
       margin-bottom: 0.875rem;
       font-weight: bold; }
@@ -1755,7 +1755,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #settingsanchor .content div {
       margin-bottom: 1rem; }
     #settingsanchor .content .logout a {
@@ -1831,7 +1831,7 @@ footer {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
 
 body.article {
   background: white; }
@@ -1870,7 +1870,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #toolsanchor .content a {
       text-align: center;
       display: block; }
@@ -1909,7 +1909,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #loginbox .content br {
       display: none; }
     #loginbox .content .loginnotes {
@@ -1955,7 +1955,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #topiclistanchor table tbody tr td a[href^="#modmorelink"],
     #topiclistanchor table tbody tr td a[href^="javascript:;"] {
       line-height: 1.2;
@@ -2009,7 +2009,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #messagesanchor .content p {
       color: rgba(0, 0, 0, 0.54);
       font-size: 0.875rem; }
@@ -2151,7 +2151,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #member .content #membernametext {
       display: -ms-flexbox;
       display: flex; }
@@ -2209,7 +2209,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #ratings .content br,
     #community .content br {
       display: none; }
@@ -2262,7 +2262,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #trustgraph .content br {
       display: none; }
     #trustgraph .content table {
@@ -2308,7 +2308,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
       max-height: 400px;
       overflow: scroll;
@@ -2384,7 +2384,7 @@ body.article {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
       #notifications ul.notificationslist li:hover {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
@@ -2442,7 +2442,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #blockers .content br,
     #blocking .content br,
     #following .content br,
