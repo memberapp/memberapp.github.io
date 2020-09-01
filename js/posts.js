@@ -172,6 +172,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
                 contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID));
             }
         }
+        
         //Threads have no navbuttons
         displayItemListandNavButtonsHTML(contents, "", "thread", data, "", 0);
 
@@ -373,11 +374,11 @@ function getMemorandumText() {
 }
 
 function switchToArticleMode() {
-    setAddonStyle("article.css");
+    setBodyStyle("article");
 }
 
 function switchToRegularMode() {
-    setAddonStyle("none.css");
+    setBodyStyle("none");
 }
 
 function memorandumPreview() {

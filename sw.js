@@ -4,7 +4,7 @@
 
 const PRECACHE_URLS = [
     'pwa/manifest.webmanifest',
-    'css/article.css',
+    'css/feels.css',
     'css/base.css',
     'img/bch.png',
     'js/leaflet/leaflet.js',

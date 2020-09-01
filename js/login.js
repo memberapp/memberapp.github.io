@@ -238,9 +238,9 @@ function changeStyle(newStyle) {
     else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css"); }
 }
 
-function setAddonStyle(newStyle) {
+function setBodyStyle(newStyle){
     if (newStyle) {
-        document.getElementById("addonstyle").setAttribute("href", "css/" + newStyle);
+        document.getElementById("mainbody").setAttribute("class", newStyle);
     }
 }
 
