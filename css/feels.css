@@ -343,14 +343,15 @@ img {
   opacity: 0.2; }
 
 .starrating {
-  display: -ms-flexbox;
-  display: flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
   -ms-flex-align: center;
   align-items: center;
   -ms-flex-pack: center;
   justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.12);
   padding: 0.2rem 0.25rem;
+  margin-left: 0.25rem;
   margin-right: 0.5rem;
   background: rgba(0, 0, 0, 0.03);
   border-radius: 0.25rem; }
@@ -1803,7 +1804,11 @@ footer {
           border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
 
 body.article {
-  background: #ffff; }
+  background: white; }
+  body.article #thread .itemlist .fatitem {
+    border: none; }
+    body.article #thread .itemlist .fatitem .votelinks {
+      background: white; }
 
 #toolsanchor {
   width: 100%;
