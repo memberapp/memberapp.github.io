@@ -272,9 +272,9 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     //message=anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
     //old newline
     //anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>')
-    
+
     var message = anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
-    
+
     //check for XSS vulnerabilities
     message = DOMPurify.sanitize(message);
 
@@ -482,8 +482,9 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
         if ((data[i].retxid == targettxid || data[i].retxid == firstreplytxid) && data[i].txid != firstreplytxid) {
-            contents += `<li id="LI` + san(data[i].txid) + `"` + (data[i].txid.startsWith(highlighttxid) ? `class="highlightli" ` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
-            contents += `<li class="collapsed" style="display: none;" id="CollapsedLI` + san(data[i].txid) + `"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
+            var isMuted = (data[i].blockstxid != null || data[i].moderated != null);
+            contents += `<li style="display:` + (isMuted ? `none` : `block`) + `" id="LI` + san(data[i].txid) + `"` + (data[i].txid.startsWith(highlighttxid) ? `" class="highlightli" ` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
+            contents += `<li style="display:` + (isMuted ? `block` : `none`) + `" id="CollapsedLI` + san(data[i].txid) + `" class="collapsed"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
                 + userHTML(data[i].address, data[i].name, data[i].ratingID, data[i].rating, 0)
                 + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips)
                 + ` ` + getAgeHTML(data[i].firstseen)
