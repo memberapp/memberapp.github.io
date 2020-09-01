@@ -562,6 +562,7 @@ function populateSendMessage(address, name, publickey) {
     document.getElementById('messagerecipient').innerText = name;
     document.getElementById('messageaddress').innerText = address;
     document.getElementById('messagepublickey').innerText = publickey;
+    scrollToElement("sendmessagecontainer");
 }
 
 function collapseComment(commentid) {

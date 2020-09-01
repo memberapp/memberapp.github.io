@@ -172,7 +172,6 @@ function login(loginkey) {
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
     
     localStorageSet(localStorageSafe, "pubkey", pubkey);
-    tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
     
@@ -181,6 +180,9 @@ function login(loginkey) {
     document.getElementById('loginkey').value="";
 
     getAndPopulateSettings();
+    tq.addUTXOPool(pubkey, localStorageSafe, "balance");
+    //Get latest rate and update balance
+    getLatestUSDrate();
 
     //Set the saved style if available
     let style = localStorageGet(localStorageSafe, "style");
