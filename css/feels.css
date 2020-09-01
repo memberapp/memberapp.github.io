@@ -1162,6 +1162,8 @@ img {
         font-size: 0.75rem;
         padding: 0.4375rem 0;
         font-weight: bold; }
+      .comment-tree ul li .highlight {
+        background: rgba(77, 200, 70, 0.06); }
       .comment-tree ul li .reply {
         margin-bottom: 0.875rem; }
         .comment-tree ul li .reply div:only-child {
@@ -1170,7 +1172,7 @@ img {
           -ms-flex-direction: row;
           flex-direction: row; }
           .comment-tree ul li .reply div:only-child .votelinks {
-            background: white;
+            background: transparent;
             position: relative; }
             .comment-tree ul li .reply div:only-child .votelinks:before {
               content: "";
