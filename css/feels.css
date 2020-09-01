@@ -1703,6 +1703,8 @@ footer {
     #newpost #memorandumarea #memorandumtextbutton {
       margin-bottom: 0.875rem;
       font-weight: bold; }
+    #newpost #memorandumarea #memorandumpreviewarea br {
+      display: block; }
     #newpost #memorandumarea #memorandumpreviewareabutton {
       display: -ms-flexbox;
       display: flex;
