@@ -398,6 +398,10 @@ footer {
   .starrating {
     display: inline;
   }
+  .membercontainer {
+    display: inline;
+    font-size: inherit;
+  }
 }
 
 /*Vote buttons*/
