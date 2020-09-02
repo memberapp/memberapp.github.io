@@ -343,14 +343,15 @@ img {
   opacity: 0.2; }
 
 .starrating {
-  display: -ms-flexbox;
-  display: flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
   -ms-flex-align: center;
   align-items: center;
   -ms-flex-pack: center;
   justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.12);
   padding: 0.2rem 0.25rem;
+  margin-left: 0.25rem;
   margin-right: 0.5rem;
   background: rgba(0, 0, 0, 0.03);
   border-radius: 0.25rem; }
@@ -662,6 +663,35 @@ ol li {
 
 ul li {
   list-style-type: disc; }
+
+pre {
+  padding: 1rem;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f6f8fa;
+  border-radius: 6px;
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace; }
+  pre code {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: initial;
+    border: 0; }
+
+blockquote {
+  background-color: #f6f8fa;
+  font-style: italic;
+  padding: 0 1em;
+  color: #6a737d;
+  border-left: .25em solid #dfe2e5;
+  margin: 0; }
+  blockquote p {
+    font-size: 1rem;
+    padding: 0.25rem 0; }
 
 table {
   border-spacing: 0;
@@ -1121,7 +1151,7 @@ img {
       border-radius: 0;
       border-left: 0;
       border-right: 0;
-      border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
   .comment-tree ul {
     padding: 0;
     margin: 0; }
@@ -1132,6 +1162,8 @@ img {
         font-size: 0.75rem;
         padding: 0.4375rem 0;
         font-weight: bold; }
+      .comment-tree ul li .highlight {
+        background: rgba(77, 200, 70, 0.06); }
       .comment-tree ul li .reply {
         margin-bottom: 0.875rem; }
         .comment-tree ul li .reply div:only-child {
@@ -1140,7 +1172,7 @@ img {
           -ms-flex-direction: row;
           flex-direction: row; }
           .comment-tree ul li .reply div:only-child .votelinks {
-            background: white;
+            background: transparent;
             position: relative; }
             .comment-tree ul li .reply div:only-child .votelinks:before {
               content: "";
@@ -1401,22 +1433,23 @@ header {
 footer {
   background-color: #e0e0e0;
   padding-top: 4rem;
-  margin-top: 6rem;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto; }
-  @media (min-width: 1025px) {
-    footer {
-      max-width: 1140px; } }
+  margin-top: 6rem; }
+  footer .content {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto; }
+    @media (min-width: 1025px) {
+      footer .content {
+        max-width: 1140px; } }
 
 @media (min-width: 769px) and (max-width: 1024px) {
-  footer {
+  footer .content {
     max-width: 960px; } }
-  @media (max-width: 768px) {
-    footer {
-      max-width: 540px; } }
+    @media (max-width: 768px) {
+      footer .content {
+        max-width: 540px; } }
   footer #developmentversion {
     font-size: 1rem;
     text-align: center;
@@ -1563,9 +1596,9 @@ footer {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
       .mainbodywrapper #posts .itemlist ol.posts li:hover {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.24); }
 
 #thread {
   width: 100%;
@@ -1595,7 +1628,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
 
 #newpost {
   width: 100%;
@@ -1626,7 +1659,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #newpost #memorandumarea #memorandumtopicbutton {
       margin-bottom: 0.875rem;
       font-weight: bold; }
@@ -1670,6 +1703,8 @@ footer {
     #newpost #memorandumarea #memorandumtextbutton {
       margin-bottom: 0.875rem;
       font-weight: bold; }
+    #newpost #memorandumarea #memorandumpreviewarea br {
+      display: block; }
     #newpost #memorandumarea #memorandumpreviewareabutton {
       display: -ms-flexbox;
       display: flex;
@@ -1724,7 +1759,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #settingsanchor .content div {
       margin-bottom: 1rem; }
     #settingsanchor .content .logout a {
@@ -1800,7 +1835,17 @@ footer {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+
+body.article {
+  background: white; }
+  body.article #thread .itemlist .fatitem {
+    border: none;
+    font-size: 1.125rem; }
+    body.article #thread .itemlist .fatitem .votelinks {
+      background: white; }
+    body.article #thread .itemlist .fatitem table {
+      font-size: 1rem; }
 
 #toolsanchor {
   width: 100%;
@@ -1829,7 +1874,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #toolsanchor .content a {
       text-align: center;
       display: block; }
@@ -1868,7 +1913,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #loginbox .content br {
       display: none; }
     #loginbox .content .loginnotes {
@@ -1914,7 +1959,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #topiclistanchor table tbody tr td a[href^="#modmorelink"],
     #topiclistanchor table tbody tr td a[href^="javascript:;"] {
       line-height: 1.2;
@@ -1968,7 +2013,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #messagesanchor .content p {
       color: rgba(0, 0, 0, 0.54);
       font-size: 0.875rem; }
@@ -2110,7 +2155,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #member .content #membernametext {
       display: -ms-flexbox;
       display: flex; }
@@ -2168,7 +2213,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #ratings .content br,
     #community .content br {
       display: none; }
@@ -2221,7 +2266,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #trustgraph .content br {
       display: none; }
     #trustgraph .content table {
@@ -2267,7 +2312,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
       max-height: 400px;
       overflow: scroll;
@@ -2343,7 +2388,7 @@ footer {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
       #notifications ul.notificationslist li:hover {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
@@ -2401,7 +2446,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #blockers .content br,
     #blocking .content br,
     #following .content br,
