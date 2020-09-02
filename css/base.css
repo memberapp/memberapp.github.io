@@ -358,6 +358,10 @@ footer {
     margin-bottom: 1px;
     color: var(--titletext);
   }
+  .title p {
+    margin-top: 0px;
+  }
+
   .post {
     min-height: 55px;
   }
@@ -398,7 +402,7 @@ footer {
   .starrating {
     display: inline;
   }
-  .membercontainer {
+  .memberfilter {
     display: inline;
     font-size: inherit;
   }

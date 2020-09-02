@@ -523,9 +523,9 @@ function getHTMLForTopicArray(data) {
         if (data[i].existingmod == pubkey) continue;
         if (data[i].existingmod != null) {
             if (data[i].existingmodaddress != null) {
-                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")" + "</div>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
             } else {
-                ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")" + "</div>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
             }
         }
     }
