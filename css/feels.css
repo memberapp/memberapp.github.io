@@ -1857,7 +1857,8 @@ body.article {
     display: none; }
   body.article #thread .itemlist .fatitem {
     border: none;
-    font-size: 1.25rem; }
+    font-size: 1.25rem;
+    font-family: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol; }
     body.article #thread .itemlist .fatitem .votelinks {
       background: white; }
     body.article #thread .itemlist .fatitem table {
