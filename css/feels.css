@@ -1868,6 +1868,10 @@ body.article {
       background: white; }
     body.article #thread .itemlist .fatitem table {
       font-size: 1.125rem; }
+    body.article #thread .itemlist .fatitem .post {
+      font-size: 2rem; }
+      body.article #thread .itemlist .fatitem .post .subtext {
+        display: none; }
 
 #toolsanchor {
   width: 100%;
