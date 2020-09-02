@@ -1001,20 +1001,19 @@ img {
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column; }
-    .post .postdetails .title {
+    .post .postdetails .title p {
       margin-bottom: 0.875rem;
       overflow-wrap: break-word;
       word-wrap: break-word;
       -ms-word-break: break-all;
       word-break: break-all;
       word-break: break-word; }
-      .post .postdetails .title a {
+      .post .postdetails .title p a {
         color: rgba(0, 0, 0, 0.76); }
-      .post .postdetails .title a[href]:not([href^="#thread?"]) {
+      .post .postdetails .title p a[href]:not([href^="#thread?"]) {
         color: #44669c;
-        padding-bottom: 1rem;
         display: block; }
-        .post .postdetails .title a[href]:not([href^="#thread?"]):hover {
+        .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
     .post .postdetails .subtext {
       font-size: 0.75rem;
