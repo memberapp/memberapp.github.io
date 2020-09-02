@@ -437,7 +437,9 @@ html :lang(ar) {
   .settingsprofilelinks div a:disabled,
   #settingsprofilelinks div a:disabled,
   #memberprofilelinks div a:disabled {
-    opacity: 0.65; }
+    opacity: 0.65;
+    cursor: not-allowed;
+    pointer-events: none; }
   .settingsprofilelinks div a:last-of-type,
   #settingsprofilelinks div a:last-of-type,
   #memberprofilelinks div a:last-of-type {
@@ -1011,8 +1013,7 @@ img {
       .post .postdetails .title p a {
         color: rgba(0, 0, 0, 0.76); }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {
-        color: #44669c;
-        display: block; }
+        color: #44669c; }
         .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
     .post .postdetails .subtext {
@@ -1457,11 +1458,13 @@ footer {
     font-size: 1rem;
     text-align: center;
     color: #c1292e;
-    background: #e99a9c;
+    background: #f2c4c5;
     padding: 1rem;
     margin-bottom: 2rem;
     border-radius: 0.25rem;
-    border: 1px solid #972024; }
+    border: 1px solid #c1292e; }
+    footer #developmentversion br {
+      display: none; }
   footer hr {
     display: none; }
   footer .footerlinks {
@@ -1565,7 +1568,9 @@ footer {
       #lowfundswarning .content a:not([rel~="noreferrer"]):hover {
         background: #e9eef6; }
       #lowfundswarning .content a:not([rel~="noreferrer"]):disabled {
-        opacity: 0.65; }
+        opacity: 0.65;
+        cursor: not-allowed;
+        pointer-events: none; }
       @media (min-width: 769px) {
         #lowfundswarning .content a:not([rel~="noreferrer"]) {
           display: inline-block; } }
@@ -1780,7 +1785,9 @@ footer {
       #settingsanchor .content .logout a:hover {
         background: #e9eef6; }
       #settingsanchor .content .logout a:disabled {
-        opacity: 0.65; }
+        opacity: 0.65;
+        cursor: not-allowed;
+        pointer-events: none; }
     #settingsanchor .content #settingsnametextbutton,
     #settingsanchor .content #settingsprofiletextbutton {
       line-height: 1.2;
@@ -1798,7 +1805,9 @@ footer {
         background: #e9eef6; }
       #settingsanchor .content #settingsnametextbutton:disabled,
       #settingsanchor .content #settingsprofiletextbutton:disabled {
-        opacity: 0.65; }
+        opacity: 0.65;
+        cursor: not-allowed;
+        pointer-events: none; }
     #settingsanchor .content #cssselector,
     #settingsanchor .content #contentserver,
     #settingsanchor .content #txbroadcastserver,
@@ -1842,13 +1851,17 @@ footer {
 
 body.article {
   background: white; }
+  body.article header,
+  body.article footer,
+  body.article #lowfundswarning {
+    display: none; }
   body.article #thread .itemlist .fatitem {
     border: none;
-    font-size: 1.125rem; }
+    font-size: 1.25rem; }
     body.article #thread .itemlist .fatitem .votelinks {
       background: white; }
     body.article #thread .itemlist .fatitem table {
-      font-size: 1rem; }
+      font-size: 1.125rem; }
 
 #toolsanchor {
   width: 100%;
@@ -1963,6 +1976,13 @@ body.article {
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+    #topiclistanchor table .filterprovider {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-align: center;
+      align-items: center;
+      -ms-flex-pack: center;
+      justify-content: center; }
     #topiclistanchor table tbody tr td a[href^="#modmorelink"],
     #topiclistanchor table tbody tr td a[href^="javascript:;"] {
       line-height: 1.2;
@@ -2050,7 +2070,9 @@ body.article {
           #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:hover {
             background: #e9eef6; }
           #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:disabled {
-            opacity: 0.65; }
+            opacity: 0.65;
+            cursor: not-allowed;
+            pointer-events: none; }
     #messagesanchor .content #sendmessagecontainer label:first-of-type {
       font-size: 1.5rem; }
     #messagesanchor .content #sendmessagecontainer input,
@@ -2118,7 +2140,9 @@ body.article {
         #messagesanchor .content #messageslist li a[href="javascript:;"]:hover {
           background: #e9eef6; }
         #messagesanchor .content #messageslist li a[href="javascript:;"]:disabled {
-          opacity: 0.65; }
+          opacity: 0.65;
+          cursor: not-allowed;
+          pointer-events: none; }
       #messagesanchor .content #messageslist li div:last-of-type {
         margin-top: 0.75rem;
         padding-top: 0.5rem;
