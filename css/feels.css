@@ -1851,6 +1851,10 @@ footer {
 
 body.article {
   background: white; }
+  body.article header,
+  body.article footer,
+  body.article #lowfundswarning {
+    display: none; }
   body.article #thread .itemlist .fatitem {
     border: none;
     font-size: 1.125rem; }
