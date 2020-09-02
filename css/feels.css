@@ -767,8 +767,12 @@ input {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
   textarea:disabled,
   input:disabled {
-    background-color: #e9ecef;
-    opacity: 1; }
+    background-color: rgba(0, 0, 0, 0.38);
+    border: 1px solid rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.54);
+    opacity: 1;
+    cursor: not-allowed;
+    pointer-events: none; }
 
 select {
   height: calc(1.5em + 0.75rem + 2px);
@@ -997,23 +1001,19 @@ img {
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column; }
-    .post .postdetails .title {
+    .post .postdetails .title p {
       margin-bottom: 0.875rem;
       overflow-wrap: break-word;
       word-wrap: break-word;
       -ms-word-break: break-all;
       word-break: break-all;
-      word-break: break-word;
-      -ms-hyphens: auto;
-      -webkit-hyphens: auto;
-      hyphens: auto; }
-      .post .postdetails .title a {
+      word-break: break-word; }
+      .post .postdetails .title p a {
         color: rgba(0, 0, 0, 0.76); }
-      .post .postdetails .title a[href]:not([href^="#thread?"]) {
+      .post .postdetails .title p a[href]:not([href^="#thread?"]) {
         color: #44669c;
-        padding-bottom: 1rem;
         display: block; }
-        .post .postdetails .title a[href]:not([href^="#thread?"]):hover {
+        .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
     .post .postdetails .subtext {
       font-size: 0.75rem;
@@ -1196,10 +1196,7 @@ img {
                 word-wrap: break-word;
                 -ms-word-break: break-all;
                 word-break: break-all;
-                word-break: break-word;
-                -ms-hyphens: auto;
-                -webkit-hyphens: auto;
-                hyphens: auto; }
+                word-break: break-word; }
       .comment-tree ul li ul {
         margin-left: 2.5rem;
         border-left: 1px solid #e6e6e6 !important; }
@@ -1293,7 +1290,10 @@ header {
         display: flex;
         -ms-flex-align: center;
         align-items: center;
-        height: auto; }
+        height: auto;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none; }
         header .pagetop nav .memberlogo a {
           width: -webkit-max-content;
           width: max-content; }
@@ -1321,7 +1321,10 @@ header {
             padding: 0;
             font-size: 1.375rem; } }
         header .pagetop nav .membertext a {
-          color: #4dc846; }
+          color: #4dc846;
+          -webkit-user-select: none;
+          -ms-user-select: none;
+          user-select: none; }
       header .pagetop nav .membertext,
       header .pagetop nav .memberlogo {
         transition: all 0.15s ease-in-out; }
@@ -2229,10 +2232,7 @@ body.article {
         word-wrap: break-word;
         -ms-word-break: break-all;
         word-break: break-all;
-        word-break: break-word;
-        -ms-hyphens: auto;
-        -webkit-hyphens: auto;
-        hyphens: auto; }
+        word-break: break-word; }
       #ratings .content table td img,
       #community .content table td img {
         outline: none;
