@@ -192,9 +192,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     //Replies respect newlines, but root posts do not
     var isReply = (roottxid != txid);
     var messageHTML = ds(message);
-    if (isReply) {
-        messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    } else {
+    messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
+    
+    
+    if (!isReply){
         //only if main post
         if (repliesroot > replies) {
             replies = repliesroot;
@@ -217,7 +218,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     return `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
-                    <div class="title">`+ messageLinksHTML + ` </div>
+                    <div class="title"><p>`+ messageLinksHTML + `</p></div>
                     <div class="subtext">
                         <span class="submitter"> 
                         submitted `
