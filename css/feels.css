@@ -1857,11 +1857,11 @@ body.article {
     display: none; }
   body.article #thread .itemlist .fatitem {
     border: none;
-    font-size: 1.125rem; }
+    font-size: 1.25rem; }
     body.article #thread .itemlist .fatitem .votelinks {
       background: white; }
     body.article #thread .itemlist .fatitem table {
-      font-size: 1rem; }
+      font-size: 1.125rem; }
 
 #toolsanchor {
   width: 100%;
