@@ -1872,6 +1872,34 @@ body.article {
       font-size: 2rem; }
       body.article #thread .itemlist .fatitem .post .subtext {
         display: none; }
+    body.article #thread .itemlist .fatitem pre {
+      padding: 1rem;
+      overflow: auto;
+      font-size: 85%;
+      line-height: 1.45;
+      background-color: #f6f8fa;
+      border-radius: 6px;
+      font-size: 1.25rem;
+      font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace; }
+      body.article #thread .itemlist .fatitem pre code {
+        display: inline;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        line-height: inherit;
+        word-wrap: normal;
+        background-color: initial;
+        border: 0; }
+    body.article #thread .itemlist .fatitem blockquote {
+      background-color: #f6f8fa;
+      font-style: italic;
+      padding: 0 1em;
+      color: #6a737d;
+      border-left: .25em solid #dfe2e5;
+      margin: 0; }
+      body.article #thread .itemlist .fatitem blockquote p {
+        font-size: 1.25rem;
+        padding: 0.25rem 0; }
 
 #toolsanchor {
   width: 100%;
