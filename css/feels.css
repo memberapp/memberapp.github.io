@@ -1003,10 +1003,7 @@ img {
       word-wrap: break-word;
       -ms-word-break: break-all;
       word-break: break-all;
-      word-break: break-word;
-      -ms-hyphens: auto;
-      -webkit-hyphens: auto;
-      hyphens: auto; }
+      word-break: break-word; }
       .post .postdetails .title a {
         color: rgba(0, 0, 0, 0.76); }
       .post .postdetails .title a[href]:not([href^="#thread?"]) {
@@ -1196,10 +1193,7 @@ img {
                 word-wrap: break-word;
                 -ms-word-break: break-all;
                 word-break: break-all;
-                word-break: break-word;
-                -ms-hyphens: auto;
-                -webkit-hyphens: auto;
-                hyphens: auto; }
+                word-break: break-word; }
       .comment-tree ul li ul {
         margin-left: 2.5rem;
         border-left: 1px solid #e6e6e6 !important; }
@@ -2229,10 +2223,7 @@ body.article {
         word-wrap: break-word;
         -ms-word-break: break-all;
         word-break: break-all;
-        word-break: break-word;
-        -ms-hyphens: auto;
-        -webkit-hyphens: auto;
-        hyphens: auto; }
+        word-break: break-word; }
       #ratings .content table td img,
       #community .content table td img {
         outline: none;
