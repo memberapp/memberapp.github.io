@@ -65,11 +65,10 @@
     <link id="pagestyle" rel="stylesheet" href="css/feels.css">
     <link id="pagestyle2" rel="stylesheet" href="">
     <link id="pagestyle3" rel="stylesheet" href="css/none.css">
-    <link id="addonstyle" rel="stylesheet" href="">
 
 </head>
 
-<body>
+<body id="mainbody">
     <!--  Extenal Libraries -->
     <script src="js/lib/buffer.js"></script>
     <script src="js/lib/anchorme.min.js"></script>
@@ -412,7 +411,7 @@
                     <div id='memberidenticon'>
                     </div>
                     <label>Address</label>
-                    <div>
+                    <div id="membercashaddress">
                         <span id="membercashaddrformat">loading</span>
                         <div id="membercashaddrformatdiv">
                             <span class="qrcodeclick" onclick="showQRCode('membercashaddrformat',200);">
@@ -601,7 +600,7 @@
                     </div>
                     <div>
                         <label for="cssselector" class="vavilon" data-vavilon="themes">Theme</label>
-                        <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value);'>
+                        <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value, true);'>
                             <option class="vavilon" data-vavilon="change theme" value="feels">Choose Theme</option>
                             <option value="base none">Member</option>
                             <option value="feels">Feels</option>
@@ -971,36 +970,38 @@
         </div>
     </div>
     <footer>
-        <hr />
-        <span id="developmentversion" style="display: none;">You're viewing the development preview version
-            of member.cash You may need to SHIFT + Reload to get the very latest changes. Generally, It's
-            recommended to <a rel='noopener noreferrer' target="member" href="https://member.cash">use the stable
-                version at
-                https://member.cash</a><br /><br />
-            <hr /></span>
-        <span class="footerlinks">
-            <a rel='noopener noreferrer' target="memo"
-                href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">
-                Top Supporters
-            </a>
-            <span class="separatorwide"></span>
-            <a rel='noopener noreferrer' target="member"
-                href="https://member.cash/#member?qaddress=16gs2oeLVJJT3YTL8uHLoRyLQtaWfEDxh1">Donate</a>
-            <span class="separatorwide"></span>
-            <a rel='noopener noreferrer' target="github"
-                href="https://github.com/memberapp/memberapp.github.io">Github</a>
-            <span class="separatorwide"></span>
-            <a class="vavilon" data-vavilon="bitcoin" rel='noopener noreferrer' target="bitcoin"
-                href="https://www.bitcoin.com">Bitcoin</a>
-            <span class="separatorwide"></span>
-            <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/protocol">Protocol</a>
-            <span class="separatorwide"></span>
-            <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
-            <span class="separatorwide"></span>
-            <span class="vavilon" data-vavilon="version">version</span> <span id="version">loading</span>.<u>9</u>
-        </span>
-        <br />
-        <br />
+        <div class="content">
+            <hr />
+            <span id="developmentversion" style="display: none;">You're viewing the development preview version
+                of member.cash You may need to SHIFT + Reload to get the very latest changes. Generally, It's
+                recommended to <a rel='noopener noreferrer' target="member" href="https://member.cash">use the stable
+                    version at
+                    https://member.cash</a><br /><br />
+                <hr /></span>
+            <span class="footerlinks">
+                <a rel='noopener noreferrer' target="memo"
+                    href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">
+                    Top Supporters
+                </a>
+                <span class="separatorwide"></span>
+                <a rel='noopener noreferrer' target="member"
+                    href="https://member.cash/#member?qaddress=16gs2oeLVJJT3YTL8uHLoRyLQtaWfEDxh1">Donate</a>
+                <span class="separatorwide"></span>
+                <a rel='noopener noreferrer' target="github"
+                    href="https://github.com/memberapp/memberapp.github.io">Github</a>
+                <span class="separatorwide"></span>
+                <a class="vavilon" data-vavilon="bitcoin" rel='noopener noreferrer' target="bitcoin"
+                    href="https://www.bitcoin.com">Bitcoin</a>
+                <span class="separatorwide"></span>
+                <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/protocol">Protocol</a>
+                <span class="separatorwide"></span>
+                <a href="mailto:memorycoincc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
+                <span class="separatorwide"></span>
+                <span class="vavilon" data-vavilon="version">version</span> <span id="version">loading</span>.<u>9</u>
+            </span>
+            <br />
+            <br />
+        </div>
     </footer>
     <div id="status"></div>
     <div id="tweet-container"></div>

@@ -21,10 +21,11 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + `"></svg>` + ds(name) + `</a> `;
+    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + `"></svg>` + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     }
+    ret += "</span>";
     return ret;
 }
 
@@ -132,7 +133,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 
 
     return `
-        <a id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
+        <a class="permalink" id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
         + articleLink
         + mapLink
         + `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply').toLowerCase() + `</a>
@@ -192,9 +193,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     //Replies respect newlines, but root posts do not
     var isReply = (roottxid != txid);
     var messageHTML = ds(message);
-    if (isReply) {
-        messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    } else {
+    messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
+
+
+    if (!isReply) {
         //only if main post
         if (repliesroot > replies) {
             replies = repliesroot;
@@ -217,7 +219,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     return `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
-                    <div class="title">`+ messageLinksHTML + ` </div>
+                    <div class="title"><p>`+ messageLinksHTML + `</p></div>
                     <div class="subtext">
                         <span class="submitter"> 
                         submitted `
@@ -272,9 +274,9 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     //message=anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
     //old newline
     //anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>')
-    
+
     var message = anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
-    
+
     //check for XSS vulnerabilities
     message = DOMPurify.sanitize(message);
 
@@ -316,8 +318,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     if (settings["showyoutube"] == "true") {
         //Youtube
         var youtubeRegex = global ?
-            /<a href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*<\/a>/gi :
-            /<a href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*<\/a>/i;
+            /<a href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).+?<\/a>/gi :
+            /<a href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).+?<\/a>/i;
         message = message.replace(youtubeRegex,
             `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="makeYoutubeIframe('$1','$4');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" alt="video post" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
         );
@@ -326,8 +328,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     if (settings["showimgur"] == "true") {
         //Imgur
         var imgurRegex = global ?
-            /<a href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/gi :
-            /<a href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*<\/a>/i;
+            /<a href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.+?<\/a>/gi :
+            /<a href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.+?<\/a>/i;
         message = message.replace(imgurRegex,
             '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg" alt="imgur post $2"></div></a>'
         );
@@ -336,8 +338,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     if (settings["showtwitter"] == "true") {
         //Twitter
         var tweetRegex = global ?
-            /<a href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/gi :
-            /<a href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*<\/a>/i;
+            /<a href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.+?<\/a>/gi :
+            /<a href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.+?<\/a>/i;
         //This works but is ugly
         //Add differentiator so that if a tweet is shown multiple times, it has a different id each time
         message = message.replace(tweetRegex,
@@ -482,8 +484,9 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
         if ((data[i].retxid == targettxid || data[i].retxid == firstreplytxid) && data[i].txid != firstreplytxid) {
-            contents += `<li id="LI` + san(data[i].txid) + `"` + (data[i].txid.startsWith(highlighttxid) ? `class="highlightli" ` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
-            contents += `<li class="collapsed" style="display: none;" id="CollapsedLI` + san(data[i].txid) + `"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
+            var isMuted = (data[i].blockstxid != null || data[i].moderated != null);
+            contents += `<li style="display:` + (isMuted ? `none` : `block`) + `" id="LI` + san(data[i].txid) + `"` + (data[i].txid.startsWith(highlighttxid) ? `" class="highlightli" ` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
+            contents += `<li style="display:` + (isMuted ? `block` : `none`) + `" id="CollapsedLI` + san(data[i].txid) + `" class="collapsed"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
                 + userHTML(data[i].address, data[i].name, data[i].ratingID, data[i].rating, 0)
                 + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips)
                 + ` ` + getAgeHTML(data[i].firstseen)
@@ -503,26 +506,26 @@ function getHTMLForTopicArray(data) {
 
     ret += `<tr style='display:none' id='modmore` + data[0].mostrecent + `'><td colspan='4'>`;
     if (data[0].topic != "") {
-        ret += clickActionNamedHTML("unsub", data.topicname, "Unsubscribe") + "<br/>";
+        ret += `<div class="filterprovider">` + clickActionNamedHTML("unsub", data.topicname, "Unsubscribe") + "</div>";
     }
     var alreadymod = false;
     for (var i = 0; i < data.length; i++) {
         if (data[i].existingmod == pubkey) {
-            ret += clickActionTopicHTML("dismiss", pubkey, data[i].topicname, "Resign as moderator", "dismiss" + Number(data[i].mostrecent)) + '<br/>';
+            ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", pubkey, data[i].topicname, "Resign as moderator", "dismiss" + Number(data[i].mostrecent)) + "</div>";
             alreadymod = true;
         }
     }
     if (!alreadymod) {
-        ret += clickActionTopicHTML("designate", pubkey, data[0].topicname, "Volunteer to moderate", "designate" + Number(data[0].mostrecent)) + '<br/>';
+        ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", pubkey, data[0].topicname, "Volunteer to moderate", "designate" + Number(data[0].mostrecent)) + "</div>";
     }
 
     for (var i = 0; i < data.length; i++) {
         if (data[i].existingmod == pubkey) continue;
         if (data[i].existingmod != null) {
             if (data[i].existingmodaddress != null) {
-                ret += clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")<br/>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
             } else {
-                ret += clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")<br/>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
             }
         }
     }
@@ -536,7 +539,7 @@ function getHTMLForTopic(data) {
 
     //Show more button if the user is subscribed or topic is emtpy string
     if (data.address != null || data.topicname == "") {
-        subscribe = `<a id="modmorelink` + data.mostrecent + `" onclick="showMore('modmore` + data.mostrecent + `','modmorelink` + data.mostrecent + `');" href="javascript:;">more</a>`;
+        subscribe = `<a id="modmorelink` + data.mostrecent + `" onclick="showMore('modmore` + data.mostrecent + `','modmorelink` + data.mostrecent + `'); jdenticon();" href="javascript:;">more</a>`;
     }
     //Special values for empty topic
     if (data.topicname == "") {
@@ -562,6 +565,7 @@ function populateSendMessage(address, name, publickey) {
     document.getElementById('messagerecipient').innerText = name;
     document.getElementById('messageaddress').innerText = address;
     document.getElementById('messagepublickey').innerText = publickey;
+    scrollToElement("sendmessagecontainer");
 }
 
 function collapseComment(commentid) {

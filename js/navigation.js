@@ -62,9 +62,9 @@ function displayContentBasedOnURLParameters() {
         //Warning - topicname may contain special characters
         showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("article")) {
-        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), true);
+        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), 'article');
     } else if (action.startsWith("thread")) {
-        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), false);
+        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), 'thread');
     } else if (action.startsWith("settings")) {
         showSettings();
     } else if (action.startsWith("messages")) {
@@ -90,7 +90,7 @@ function displayContentBasedOnURLParameters() {
 }
 
 function hideAll() {
-    setAddonStyle("none.css");
+    switchToRegularMode();
     document.getElementById('feed').style.display = "none";
     document.getElementById('posts').style.display = "none";
     document.getElementById('comments').style.display = "none";
@@ -343,8 +343,8 @@ function setTopic(topicNameHOSTILE) {
 
 function showThread(roottxid, txid, articleStyle) {
     getAndPopulateThread(roottxid, txid, 'thread');
-    if (articleStyle) {
-        setAddonStyle("article.css");
+    if(articleStyle=="article"){
+        switchToArticleMode();
     }
 }
 

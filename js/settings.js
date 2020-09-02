@@ -83,6 +83,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'profiletext').value = "";
             document.getElementById(pre + 'nametext').innerHTML = "";
             document.getElementById(pre + 'profiletext').innerHTML = "";
+            document.getElementById(pre + 'pagingid').innerHTML = "";
         } else {
             document.getElementById(pre + 'followersnumber').innerHTML = Number(data[0].followers);
             document.getElementById(pre + 'followingnumber').innerHTML = Number(data[0].following);
@@ -90,7 +91,6 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'blockingnumber').innerHTML = Number(data[0].blocking);
             document.getElementById(pre + 'nametext').value = data[0].name;
             document.getElementById(pre + 'profiletext').value = data[0].profile;
-
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
@@ -243,8 +243,7 @@ function getAndPopulateSettings() {
         }
     }
 
-    //Should have the usdrate populated now
-    getLatestUSDrate();
+
     
     getDataCommonToSettingsAndMember(pubkey, "settings");
 
