@@ -1169,7 +1169,7 @@ img {
         padding: 0.4375rem 0;
         font-weight: bold; }
       .comment-tree ul li .highlight {
-        background: rgba(77, 200, 70, 0.06); }
+        background: rgba(77, 200, 70, 0.12); }
       .comment-tree ul li .reply {
         margin-bottom: 0.875rem; }
         .comment-tree ul li .reply div:only-child {
