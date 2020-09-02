@@ -193,9 +193,9 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var isReply = (roottxid != txid);
     var messageHTML = ds(message);
     messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
-    
-    
-    if (!isReply){
+
+
+    if (!isReply) {
         //only if main post
         if (repliesroot > replies) {
             replies = repliesroot;
@@ -505,26 +505,26 @@ function getHTMLForTopicArray(data) {
 
     ret += `<tr style='display:none' id='modmore` + data[0].mostrecent + `'><td colspan='4'>`;
     if (data[0].topic != "") {
-        ret += clickActionNamedHTML("unsub", data.topicname, "Unsubscribe") + "<br/>";
+        ret += `<div class="filterprovider">` + clickActionNamedHTML("unsub", data.topicname, "Unsubscribe") + "</div>";
     }
     var alreadymod = false;
     for (var i = 0; i < data.length; i++) {
         if (data[i].existingmod == pubkey) {
-            ret += clickActionTopicHTML("dismiss", pubkey, data[i].topicname, "Resign as moderator", "dismiss" + Number(data[i].mostrecent)) + '<br/>';
+            ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", pubkey, data[i].topicname, "Resign as moderator", "dismiss" + Number(data[i].mostrecent)) + "</div>";
             alreadymod = true;
         }
     }
     if (!alreadymod) {
-        ret += clickActionTopicHTML("designate", pubkey, data[0].topicname, "Volunteer to moderate", "designate" + Number(data[0].mostrecent)) + '<br/>';
+        ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", pubkey, data[0].topicname, "Volunteer to moderate", "designate" + Number(data[0].mostrecent)) + "</div>";
     }
 
     for (var i = 0; i < data.length; i++) {
         if (data[i].existingmod == pubkey) continue;
         if (data[i].existingmod != null) {
             if (data[i].existingmodaddress != null) {
-                ret += clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")<br/>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")" + "</div>";
             } else {
-                ret += clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")<br/>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")" + "</div>";
             }
         }
     }
