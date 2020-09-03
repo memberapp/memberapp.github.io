@@ -90,7 +90,7 @@ function displayContentBasedOnURLParameters() {
 }
 
 function hideAll() {
-    setBodyStyle("none");
+    switchToRegularMode();
     document.getElementById('feed').style.display = "none";
     document.getElementById('posts').style.display = "none";
     document.getElementById('comments').style.display = "none";
@@ -343,7 +343,9 @@ function setTopic(topicNameHOSTILE) {
 
 function showThread(roottxid, txid, articleStyle) {
     getAndPopulateThread(roottxid, txid, 'thread');
-    setBodyStyle(articleStyle);
+    if(articleStyle=="article"){
+        switchToArticleMode();
+    }
 }
 
 function showFollowers(qaddress) {

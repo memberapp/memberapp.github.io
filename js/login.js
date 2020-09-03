@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.2.8";
+var version = "4.3.1";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -170,27 +170,31 @@ function login(loginkey) {
 
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
-    
+
     localStorageSet(localStorageSafe, "pubkey", pubkey);
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
-    
+
     document.getElementById('newseedphrasedescription').style.display = "none";
-    document.getElementById('newseedphrase').innerText="";
-    document.getElementById('loginkey').value="";
+    document.getElementById('newseedphrase').innerText = "";
+    document.getElementById('loginkey').value = "";
 
     getAndPopulateSettings();
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     //Get latest rate and update balance
     getLatestUSDrate();
+    loadStyle();
 
+    return;
+
+}
+
+function loadStyle() {
     //Set the saved style if available
     let style = localStorageGet(localStorageSafe, "style");
     if (style != undefined && style != null) {
-        changeStyle(style);
+        changeStyle(style, true);
     }
-    return;
-
 }
 
 function createNewAccount() {
@@ -200,8 +204,8 @@ function createNewAccount() {
     //show('settingsanchor');
     //alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
     document.getElementById('newseedphrasedescription').style.display = "inline";
-    document.getElementById('newseedphrase').innerText=mnemonic;
-    document.getElementById('loginkey').value=mnemonic;
+    document.getElementById('newseedphrase').innerText = mnemonic;
+    document.getElementById('loginkey').value = mnemonic;
 
 
 }
@@ -222,13 +226,15 @@ function logout() {
 
 }
 
-function changeStyle(newStyle) {
-    if (newStyle.indexOf(".css") != -1 || newStyle=="base" || newStyle=="base nightmode") {
+function changeStyle(newStyle, setStorage) {
+    if (newStyle.indexOf(".css") != -1 || newStyle == "base" || newStyle == "base nightmode") {
         //old style, update
         //base style will now have value 'base none'
         newStyle = "feels";
     }
-    localStorageSet(localStorageSafe, "style", newStyle);
+    if (setStorage) {
+        localStorageSet(localStorageSafe, "style", newStyle);
+    }
     var cssArray = newStyle.split(" ");
     if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css"); }
     else { document.getElementById("pagestyle").setAttribute("href", "css/feels.css"); }
@@ -238,7 +244,7 @@ function changeStyle(newStyle) {
     else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css"); }
 }
 
-function setBodyStyle(newStyle){
+function setBodyStyle(newStyle) {
     if (newStyle) {
         document.getElementById("mainbody").setAttribute("class", newStyle);
     }

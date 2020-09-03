@@ -374,10 +374,12 @@ function getMemorandumText() {
 }
 
 function switchToArticleMode() {
+    changeStyle('base none', false);
     setBodyStyle("article");
 }
 
 function switchToRegularMode() {
+    loadStyle();
     setBodyStyle("none");
 }
 
