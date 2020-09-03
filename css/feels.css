@@ -2480,6 +2480,9 @@ body.article {
         font-size: 0.875rem;
         background: #f8f9fa;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+        #notifications ul.notificationslist li .notificationtitle .memberfilter {
+          display: -ms-inline-flexbox;
+          display: inline-flex; }
         #notifications ul.notificationslist li .notificationtitle .hnuser,
         #notifications ul.notificationslist li .notificationtitle .star-rating {
           margin-right: 0.5rem;
