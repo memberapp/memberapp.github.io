@@ -704,10 +704,11 @@ table {
   @media (max-width: 1023px) {
     table {
       overflow-x: auto; } }
-  table thead tr th {
+  table thead tr th,
+  table thead tr td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.34);
     background: rgba(0, 0, 0, 0.12);
-    padding: 0 0.5rem;
+    padding: 0.5rem;
     font-weight: bold; }
   table tbody tr td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
@@ -2019,8 +2020,26 @@ body.article {
       display: flex;
       -ms-flex-align: center;
       align-items: center;
-      -ms-flex-pack: center;
-      justify-content: center; }
+      -ms-flex-pack: justify;
+      justify-content: space-between;
+      -ms-flex-direction: row-reverse;
+      flex-direction: row-reverse;
+      margin-bottom: 1rem; }
+      #topiclistanchor table .filterprovider a[id^="designate"] {
+        width: inherit;
+        width: 100%;
+        text-align: center;
+        background: #4dc846;
+        border: 1px solid #39a932; }
+        #topiclistanchor table .filterprovider a[id^="designate"]:hover {
+          background: #39a932;
+          border: 1px solid #2b8227; }
+      #topiclistanchor table .filterprovider .mib {
+        color: transparent; }
+      #topiclistanchor table .filterprovider a[href^="javascript:;"] {
+        width: auto; }
+    #topiclistanchor table .tltopicname {
+      text-align: left; }
     #topiclistanchor table tbody tr td a[href^="#modmorelink"],
     #topiclistanchor table tbody tr td a[href^="javascript:;"] {
       line-height: 1.2;
