@@ -21,7 +21,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + `"></svg>` + ds(name) + `</a> `;
+    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     }
@@ -465,7 +465,7 @@ function ratingAndReason2HTML(data) {
 }
 
 function clickActionNamedHTML(action, qaddress, name) {
-    return `<a href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `");'>` + ds(name) + `</a>`;
+    return `<a class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `");'>` + ds(name) + `</a>`;
 }
 
 function clickActionTopicHTML(action, qaddress, topicHOSTILE, buttonText, elementid) {
@@ -584,7 +584,7 @@ function getMessageHTML(data, count) {
     let ecpair = new BITBOX.ECPair().fromWIF(privkey);
     var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
     decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
-    contents += "<li>" + userHTML(data.address, data.name, count + "privatemessages" + data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "<br/><div id='" + san(data.roottxid) + "'>processing</div><br/></li>";
+    contents += "<li><span class='messagemeta'>" + userHTML(data.address, data.name, count + "privatemessages" + data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>processing</div><br/></li>";
     return contents;
 }
 
