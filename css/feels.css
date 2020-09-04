@@ -925,7 +925,7 @@ img {
 .votelinks {
   background: #f8f9fa;
   padding: 0.875rem 0.5rem;
-  width: 2.25rem;
+  min-width: 2.25rem;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
