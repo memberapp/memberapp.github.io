@@ -2176,14 +2176,20 @@ body.article {
       #messagesanchor .content #messageslist li div br {
         display: block; }
       #messagesanchor .content #messageslist li .messagemeta {
-        display: -ms-flexbox;
-        display: flex;
         width: 100%;
-        -ms-flex-align: center;
-        align-items: center;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12);
         margin-bottom: 0.5rem;
-        padding-bottom: 0.5rem; }
+        padding-bottom: 0.5rem;
+        -ms-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -ms-flexbox;
+        display: flex; }
+        @media (min-width: 769px) {
+          #messagesanchor .content #messageslist li .messagemeta {
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap; } }
         #messagesanchor .content #messageslist li .messagemeta span.memberfilter {
           display: -ms-inline-flexbox;
           display: inline-flex;
