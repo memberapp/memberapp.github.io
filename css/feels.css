@@ -2171,6 +2171,11 @@ body.article {
       margin-bottom: 1rem; }
       #messagesanchor .content #messageslist li:last-of-type {
         margin-bottom: 0; }
+      #messagesanchor .content #messageslist li span.memberfilter {
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -ms-flex-align: center;
+        align-items: center; }
       #messagesanchor .content #messageslist li .hnuser,
       #messagesanchor .content #messageslist li a,
       #messagesanchor .content #messageslist li .age {
@@ -2181,6 +2186,11 @@ body.article {
       #messagesanchor .content #messageslist li .age {
         color: rgba(0, 0, 0, 0.54);
         margin-right: 0.5rem; }
+      #messagesanchor .content #messageslist li a[href="#member"] {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center; }
       #messagesanchor .content #messageslist li a[href="javascript:;"] {
         margin-left: auto;
         line-height: 1.2;
@@ -2200,11 +2210,8 @@ body.article {
           opacity: 0.65;
           cursor: not-allowed;
           pointer-events: none; }
-      #messagesanchor .content #messageslist li div:last-of-type {
-        margin-top: 0.75rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.12);
-        width: 100%; }
+      #messagesanchor .content #messageslist li br {
+        display: none; }
       #messagesanchor .content #messageslist li .star-value {
         margin: 0 !important;
         border: 0 !important;
@@ -2480,6 +2487,9 @@ body.article {
         font-size: 0.875rem;
         background: #f8f9fa;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+        #notifications ul.notificationslist li .notificationtitle .memberfilter {
+          display: -ms-inline-flexbox;
+          display: inline-flex; }
         #notifications ul.notificationslist li .notificationtitle .hnuser,
         #notifications ul.notificationslist li .notificationtitle .star-rating {
           margin-right: 0.5rem;
