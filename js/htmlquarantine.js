@@ -132,21 +132,18 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     }
 
 
-    return `
-        <a class="permalink" id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
-        + articleLink
-        + mapLink
-        + `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply').toLowerCase() + `</a>
+    return mapLink + 
+        `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
+        <a id="repostlink` + page + santxid + `" onclick="repost('` + santxid + `','');" href="javascript:;"> ` + getSafeTranslation('repost') + `</a>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <a  id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
-        <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/` + santxid + `">memo</a>
+            <a class="permalink" id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
+            + articleLink + `
+            <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/` + santxid + `">memo</a>
             <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/` + santxid + `">bitcoin.com</a>
             <a rel="noopener noreferrer" target="blockchair" href="https://blockchair.com/bitcoin-cash/transaction/` + santxid + `">blockchair</a>
-        </span>
-
-        <a  id="moderatelink`+ page + santxid + `" onclick="showMore('moderate` + page + santxid + `','moderatelink` + page + santxid + `');" href="javascript:;">+moderate</a>
-        <span id="moderate`+ page + santxid + `" style="display:none">
+            <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/` + santxid + `">btc.com</a>
             <a id="hidepostlink`+ page + santxid + `" onclick="sendHidePost('` + santxid + `');" href="javascript:;">flag(post)</a>`
         + hideuserHTML +
         `</span>
