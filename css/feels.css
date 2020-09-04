@@ -2171,51 +2171,62 @@ body.article {
       margin-bottom: 1rem; }
       #messagesanchor .content #messageslist li:last-of-type {
         margin-bottom: 0; }
-      #messagesanchor .content #messageslist li span.memberfilter {
-        display: -ms-inline-flexbox;
-        display: inline-flex;
-        -ms-flex-align: center;
-        align-items: center; }
-      #messagesanchor .content #messageslist li .hnuser,
-      #messagesanchor .content #messageslist li a,
-      #messagesanchor .content #messageslist li .age {
-        font-size: 0.875rem;
-        font-weight: bold; }
-      #messagesanchor .content #messageslist li [data-ratingsize],
-      #messagesanchor .content #messageslist li .hnuser,
-      #messagesanchor .content #messageslist li .age {
-        color: rgba(0, 0, 0, 0.54);
-        margin-right: 0.5rem; }
-      #messagesanchor .content #messageslist li a[href="#member"] {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-align: center;
-        align-items: center; }
-      #messagesanchor .content #messageslist li a[href="javascript:;"] {
-        margin-left: auto;
-        line-height: 1.2;
-        cursor: pointer;
-        text-decoration: none;
-        transition: all 0.15s ease-in-out;
-        color: #44669c;
-        text-transform: uppercase;
-        border-radius: 0.25rem;
-        border: 1px solid #44669c;
-        background: transparent;
-        padding: 0.5rem 1.5rem;
-        padding: 0.5rem 1rem; }
-        #messagesanchor .content #messageslist li a[href="javascript:;"]:hover {
-          background: #e9eef6; }
-        #messagesanchor .content #messageslist li a[href="javascript:;"]:disabled {
-          opacity: 0.65;
-          cursor: not-allowed;
-          pointer-events: none; }
       #messagesanchor .content #messageslist li br {
         display: none; }
-      #messagesanchor .content #messageslist li .star-value {
-        margin: 0 !important;
-        border: 0 !important;
-        padding: 0 !important; }
+      #messagesanchor .content #messageslist li div br {
+        display: block; }
+      #messagesanchor .content #messageslist li .messagemeta {
+        display: -ms-flexbox;
+        display: flex;
+        width: 100%;
+        -ms-flex-align: center;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem; }
+        #messagesanchor .content #messageslist li .messagemeta span.memberfilter {
+          display: -ms-inline-flexbox;
+          display: inline-flex;
+          -ms-flex-align: center;
+          align-items: center; }
+        #messagesanchor .content #messageslist li .messagemeta .hnuser,
+        #messagesanchor .content #messageslist li .messagemeta a,
+        #messagesanchor .content #messageslist li .messagemeta .age {
+          font-size: 0.875rem;
+          font-weight: bold; }
+        #messagesanchor .content #messageslist li .messagemeta [data-ratingsize],
+        #messagesanchor .content #messageslist li .messagemeta .hnuser,
+        #messagesanchor .content #messageslist li .messagemeta .age {
+          color: rgba(0, 0, 0, 0.54);
+          margin-right: 0.5rem; }
+        #messagesanchor .content #messageslist li .messagemeta .star-value {
+          margin: 0 !important;
+          border: 0 !important;
+          padding: 0 !important; }
+        #messagesanchor .content #messageslist li .messagemeta a[href="#member"] {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-align: center;
+          align-items: center; }
+        #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"] {
+          margin-left: auto;
+          line-height: 1.2;
+          cursor: pointer;
+          text-decoration: none;
+          transition: all 0.15s ease-in-out;
+          color: #44669c;
+          text-transform: uppercase;
+          border-radius: 0.25rem;
+          border: 1px solid #44669c;
+          background: transparent;
+          padding: 0.5rem 1.5rem;
+          padding: 0.5rem 1rem; }
+          #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:hover {
+            background: #e9eef6; }
+          #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            pointer-events: none; }
 
 #member {
   width: 100%;
