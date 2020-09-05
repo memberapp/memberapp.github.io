@@ -113,7 +113,7 @@ function hideAll() {
     document.getElementById('blocking').style.display = "none";
     document.getElementById('member').style.display = "none";
     document.getElementById('newpost').style.display = "none";
-    document.getElementById('ratings').style.display = "none";
+    document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
@@ -150,9 +150,9 @@ function hideMap() {
 }
 
 function showRatings(qaddress) {
-    show("ratings");
+    show('anchorratings');
     getAndPopulateRatings(qaddress);
-    document.getElementById('ratings').style.display = "block";
+    document.getElementById('anchorratings').style.display = "block";
 }
 
 function showBootstrap(qaddress) {
@@ -219,7 +219,7 @@ function showMember(qaddress) {
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
-    document.getElementById('ratings').style.display = "block";
+    document.getElementById('anchorratings').style.display = "block";
     document.getElementById('trustgraph').style.display = "block";
 }
 

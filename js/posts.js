@@ -269,9 +269,14 @@ function addDynamicHTMLElements(data, page, disable) {
 }
 
 function addStarRatings(data, page, disable) {
-    //Should be possible to replace this function with one that scans the dom for all ratings widgets and initializes them
+    var matches = document.querySelectorAll("[id^='rating']");
+    for (var i = 0; i < matches.length; i++) {
+        addSingleStarsRating(disable, matches[i]);
+        //var test=matches[i];
+    }
 
-    for (var i = 0; i < data.length; i++) {
+
+/*    for (var i = 0; i < data.length; i++) {
 
         //Standard message display
         //var name = data[i].name;
@@ -283,11 +288,6 @@ function addStarRatings(data, page, disable) {
             theAddress = ds(data[i].origin);
             //name = ds(data[i].originname);
         }
-
-        //For ratings, we're looking for members view of the rater
-        /*if (data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
-            rawRating = data[i].raterrating;
-        }*/
 
         var querySelector = "#rating" + i + page + theAddress;
         var theElement = document.querySelector(querySelector);
@@ -318,7 +318,7 @@ function addStarRatings(data, page, disable) {
             addSingleStarsRating(disable, theElement);
         }
 
-    }
+    }*/
 }
 
 function addSingleStarsRating(disable, theElement) {
@@ -337,7 +337,7 @@ function addSingleStarsRating(disable, theElement) {
         disableText: 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
-            if (ratingText !== undefined) {
+            if (ratingText!=null && ratingText !== undefined) {
                 rateCallbackAction(rating, this, ratingText.value);
             } else {
                 rateCallbackAction(rating, this);
@@ -414,7 +414,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     var retHTML = "";
     if (data.repost != undefined && data.repost != "" && data.repost != "null") {
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);    
-        retHTML = "<span class='repost'>"+userHTML(data.address, data.name, repostRatingID, data.rating, 8) + " reposted</span>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex);
+        retHTML = "<span class='repost'>"+userHTML(data.address, data.name, repostRatingID, data.rating, 8) + " re-membered</span>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex);
     } else {
         retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex);
     }

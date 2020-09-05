@@ -856,6 +856,11 @@ li.notificationpage::before {
   content: "📣";
 }
 
+li.notificationrepost::before {
+  content: "🔗";
+}
+
+
 .notificationtitle {
   font-size: medium;
   font-weight: normal;
