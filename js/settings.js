@@ -32,14 +32,14 @@ function getAndPopulateCommunityRatings(qaddress) {
 }
 
 function getAndPopulateRatings(qaddress) {
-    document.getElementById('ratingtable').innerHTML = document.getElementById("loading").innerHTML;
+    document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     getJSON(dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + ratingAndReason2HTML(data[i]);
         }
-        document.getElementById('ratingtable').innerHTML = contents;
+        document.getElementById('memberratingtable').innerHTML = contents;
 
         for (var i = 0; i < data.length; i++) {
 
@@ -58,7 +58,7 @@ function getAndPopulateRatings(qaddress) {
         }
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
-        document.getElementById('ratingtable').innerHTML = 'Something is wrong:' + status;
+        document.getElementById('memberratingtable').innerHTML = 'Something is wrong:' + status;
         updateStatus(status);
     });
 }

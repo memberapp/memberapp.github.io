@@ -144,7 +144,17 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex)
             );
             break;
-
+        case "repost":
+                postRatingID = starindex + page + ds(data.address) + type;
+                return notificationItemHTML(
+                    "repost",
+                    `🔗&nbsp;`,
+                    userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` re-membered your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
+                    timeSince(Number(data.time)),
+                    getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex)
+                );
+                break;
+    
         // Maybe shelve these 'negative' ones
         case "unfollow":
             //return `Unfollow: User x unfollowed you time`;

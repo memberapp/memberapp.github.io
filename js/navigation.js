@@ -8,11 +8,11 @@ function displayContentBasedOnURLParameters() {
 
     var action;
 
-    if(url.indexOf('#')==-1){
+    if (url.indexOf('#') == -1) {
         //navigation back to home page, clear topic
         setTopic("");
-        action="";
-    }else{
+        action = "";
+    } else {
         action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
     }
 
@@ -69,7 +69,7 @@ function displayContentBasedOnURLParameters() {
         showSettings();
     } else if (action.startsWith("messages")) {
         showMessages();
-    } 
+    }
     else if (action.startsWith("new")) {
         showNewPost();
     } else if (action.startsWith("map")) {
@@ -113,7 +113,7 @@ function hideAll() {
     document.getElementById('blocking').style.display = "none";
     document.getElementById('member').style.display = "none";
     document.getElementById('newpost').style.display = "none";
-    document.getElementById('ratings').style.display = "none";
+    document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('bootstrap').style.display = "none";
@@ -150,9 +150,9 @@ function hideMap() {
 }
 
 function showRatings(qaddress) {
-    show("ratings");
+    show('anchorratings');
     getAndPopulateRatings(qaddress);
-    document.getElementById('ratings').style.display = "block";
+    document.getElementById('anchorratings').style.display = "block";
 }
 
 function showBootstrap(qaddress) {
@@ -204,20 +204,22 @@ function showSettings() {
         showPosts(0, numbers.results, 'all');
         return;
     }
+    hideAll();
     getAndPopulateSettings();
-    getAndPopulate(0, numbers.results, 'memberposts', pubkey);
+    //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
     document.getElementById('settingsanchor').style.display = "block";
     document.getElementById('settingsfollow').style.display = "block";
 }
 
 function showMember(qaddress) {
     getAndPopulateMember(qaddress);
-    getAndPopulate(0, numbers.results, 'memberposts', qaddress);
+    getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
+    //getAndPopulate(0, numbers.results, 'memberposts', qaddress);
     document.getElementById('member').style.display = "block";
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
-    document.getElementById('ratings').style.display = "block";
+    document.getElementById('anchorratings').style.display = "block";
     document.getElementById('trustgraph').style.display = "block";
 }
 
@@ -228,13 +230,14 @@ function showTrustGraph(member, target) {
 }
 
 function showMemberPosts(start, limit, qaddress) {
-    getAndPopulate(start, limit, 'memberposts', qaddress);
+    //getAndPopulate(start, limit, 'memberposts', qaddress);
+    getAndPopulateNew('new', 'all', '', '', start, limit, 'memberposts', qaddress);
 }
 
 function showMessages(start, limit) {
     show("messagesanchor");
     getAndPopulateMessages(start, limit);
-}   
+}
 
 //These three should be refactored away
 function showFeed(start, limit, type) {
@@ -253,11 +256,11 @@ function showPFC(start, limit, page, pubkey, type) {
 }
 
 function showMyFeed() {
-    getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, numbers.results, 'posts', pubkey);
+    getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, numbers.results, 'posts', '');
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit) {
-    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', pubkey);
+    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', '');
 }
 
 
@@ -266,7 +269,7 @@ function showTopic(start, limit, topicnameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
     setTopic(topicnameHOSTILE);
     if (type == "") type = "new";
-    getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', pubkey);
+    getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', '');
     //getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }
 
@@ -343,7 +346,7 @@ function setTopic(topicNameHOSTILE) {
 
 function showThread(roottxid, txid, articleStyle) {
     getAndPopulateThread(roottxid, txid, 'thread');
-    if(articleStyle=="article"){
+    if (articleStyle == "article") {
         switchToArticleMode();
     }
 }
