@@ -113,7 +113,7 @@ function getReplyDiv(txid, page, differentiator) {
         </div>`;
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, repostcount) {
 
     var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid = san(txid);
@@ -134,7 +134,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 
     return mapLink + 
         `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
-        <a id="repostlink` + page + santxid + `" onclick="repost('` + santxid + `','');" href="javascript:;"> ` + getSafeTranslation('re-member') + `</a>
+        <a id="repostlink` + page + santxid + `" onclick="repost('` + santxid + `','');" href="javascript:;"> ` + Number(repostcount) + " " + getSafeTranslation('re-members') + `</a>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <a  id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
@@ -182,7 +182,7 @@ function getPostListItemHTML(postHTML) {
     return `<li>` + postHTML + `</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount) {
     if (name == null) { name = address.substring(0, 10); }
 
     repliesroot = Number(repliesroot);
@@ -231,7 +231,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + `</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
         + ` `
-        + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic) +
+        + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount) +
         `</span>
                     </div>`
         + getReplyDiv(txid, page, differentiator) + `
@@ -256,7 +256,7 @@ function dslite(input) {
     return input;
 }
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message = dslite(message);
@@ -293,7 +293,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE) + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount) + `</div>
                             `+ getReplyDiv(txid, page, differentiator) + `
                         </div>
                     </div>
