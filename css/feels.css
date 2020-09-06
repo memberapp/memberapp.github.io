@@ -994,6 +994,29 @@ img {
   justify-content: center;
   margin-top: 1rem; }
 
+.notificationtitle,
+.repost {
+  padding: 0.875rem;
+  font-weight: bold;
+  font-size: 0.875rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center; }
+  .notificationtitle .memberfilter,
+  .repost .memberfilter {
+    display: -ms-inline-flexbox;
+    display: inline-flex; }
+  .notificationtitle .hnuser,
+  .notificationtitle .star-rating,
+  .repost .hnuser,
+  .repost .star-rating {
+    margin-right: 0.5rem;
+    margin-right: 0.25rem; }
+
 .post {
   display: -ms-flexbox;
   display: flex; }
@@ -2498,19 +2521,6 @@ body.article {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
-      #notifications ul.notificationslist li .notificationtitle {
-        padding: 0.875rem;
-        font-weight: bold;
-        font-size: 0.875rem;
-        background: #f8f9fa;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
-        #notifications ul.notificationslist li .notificationtitle .memberfilter {
-          display: -ms-inline-flexbox;
-          display: inline-flex; }
-        #notifications ul.notificationslist li .notificationtitle .hnuser,
-        #notifications ul.notificationslist li .notificationtitle .star-rating {
-          margin-right: 0.5rem;
-          margin-right: 0.25rem; }
 
 #blockers,
 #blocking,
