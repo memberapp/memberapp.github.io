@@ -123,7 +123,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     if (article) {
         articleLink = `<a id="articlelink` + page + santxid + `" href="?` + santxid.substring(0, 4) + `#article?post=` + santxid.substring(0, 10) + `">article</a> `;
     }
-    if (geohash != "") {
+    if (geohash!=null && geohash != "") {
         mapLink = ` <a id="maplink` + page + santxid + `" onclick="showMap('` + san(geohash) + `','` + santxid + `');" href="javascript:;">🌍map</a> `;
     }
     var hideuserHTML = hideuserHTML = `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user)</a>`;
