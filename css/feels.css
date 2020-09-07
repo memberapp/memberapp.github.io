@@ -994,6 +994,29 @@ img {
   justify-content: center;
   margin-top: 1rem; }
 
+.notificationtitle,
+.repost {
+  padding: 0.875rem;
+  font-weight: bold;
+  font-size: 0.875rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center; }
+  .notificationtitle .memberfilter,
+  .repost .memberfilter {
+    display: -ms-inline-flexbox;
+    display: inline-flex; }
+  .notificationtitle .hnuser,
+  .notificationtitle .star-rating,
+  .repost .hnuser,
+  .repost .star-rating {
+    margin-right: 0.5rem;
+    margin-right: 0.25rem; }
+
 .post {
   display: -ms-flexbox;
   display: flex; }
@@ -1084,15 +1107,28 @@ img {
       margin-right: 0.15rem; }
   .postdetails .subtextbuttons [id^="permalinkposts"]::before,
   .postdetails .subtextbuttons [id^="permalinkthread"]::before,
+  .postdetails .subtextbuttons [id^="permalinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="permalinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="permalinkthread"]::before {
+  .comment-tree ul li .reply div .subtextbuttons [id^="permalinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="permalinknotifications"]::before {
     background: url(../img/link-45deg.svg);
+    background-size: 0.875rem 0.875rem;
+    display: inline-block; }
+  .postdetails .subtextbuttons [id^="repostlinknotifications"]::before,
+  .postdetails .subtextbuttons [id^="repostlinkposts"]::before,
+  .postdetails .subtextbuttons [id^="repostlinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinknotifications"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkposts"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkthread"]::before {
+    background: url(../img/re-member.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
   .postdetails .subtextbuttons [id^="replylinkposts"]::before,
   .postdetails .subtextbuttons [id^="replylinkthread"]::before,
+  .postdetails .subtextbuttons [id^="replylinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="replylinkthread"]::before {
+  .comment-tree ul li .reply div .subtextbuttons [id^="replylinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="replylinknotifications"]::before {
     background: url(../img/chat-right-fill.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
@@ -1103,8 +1139,10 @@ img {
     display: inline-block; }
   .postdetails .subtextbuttons a[id^="tiplinkposts"]::before,
   .postdetails .subtextbuttons a[id^="tiplinkthread"]::before,
+  .postdetails .subtextbuttons a[id^="tiplinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkthread"]::before {
+  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinknotifications"]::before {
     background: url(../img/tip.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block;
@@ -1119,10 +1157,12 @@ img {
   .postdetails .subtextbuttons a[id^="hideuserlinkposts"],
   .postdetails .subtextbuttons a[id^="hidepostlinkposts"],
   .postdetails .subtextbuttons a[id^="hidepostlinkthread"],
+  .postdetails .subtextbuttons a[id^="hidepostlinknotifications"],
   .postdetails .subtextbuttons a[id^="hideuserlinkthread"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkposts"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinkposts"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinkthread"],
+  .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinknotifications"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkthread"] {
     color: #c1292e; }
 
@@ -2498,19 +2538,6 @@ body.article {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
-      #notifications ul.notificationslist li .notificationtitle {
-        padding: 0.875rem;
-        font-weight: bold;
-        font-size: 0.875rem;
-        background: #f8f9fa;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
-        #notifications ul.notificationslist li .notificationtitle .memberfilter {
-          display: -ms-inline-flexbox;
-          display: inline-flex; }
-        #notifications ul.notificationslist li .notificationtitle .hnuser,
-        #notifications ul.notificationslist li .notificationtitle .star-rating {
-          margin-right: 0.5rem;
-          margin-right: 0.25rem; }
 
 #blockers,
 #blocking,
