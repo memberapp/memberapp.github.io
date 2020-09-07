@@ -21,7 +21,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + `"></svg>` + ds(name) + `</a> `;
+    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     }
@@ -113,7 +113,7 @@ function getReplyDiv(txid, page, differentiator) {
         </div>`;
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, repostcount) {
 
     var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid = san(txid);
@@ -123,7 +123,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     if (article) {
         articleLink = `<a id="articlelink` + page + santxid + `" href="?` + santxid.substring(0, 4) + `#article?post=` + santxid.substring(0, 10) + `">article</a> `;
     }
-    if (geohash != "") {
+    if (geohash!=null && geohash != "") {
         mapLink = ` <a id="maplink` + page + santxid + `" onclick="showMap('` + san(geohash) + `','` + santxid + `');" href="javascript:;">🌍map</a> `;
     }
     var hideuserHTML = hideuserHTML = `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user)</a>`;
@@ -132,21 +132,18 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     }
 
 
-    return `
-        <a class="permalink" id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
-        + articleLink
-        + mapLink
-        + `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply').toLowerCase() + `</a>
+    return mapLink + 
+        `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
+        <a id="repostlink` + page + santxid + `" onclick="repost('` + santxid + `','');" href="javascript:;"> ` + Number(repostcount) + " " + getSafeTranslation('re-members') + `</a>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <a  id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
-        <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/` + santxid + `">memo</a>
+            <a class="permalink" id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
+            + articleLink + `
+            <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/` + santxid + `">memo</a>
             <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/` + santxid + `">bitcoin.com</a>
             <a rel="noopener noreferrer" target="blockchair" href="https://blockchair.com/bitcoin-cash/transaction/` + santxid + `">blockchair</a>
-        </span>
-
-        <a  id="moderatelink`+ page + santxid + `" onclick="showMore('moderate` + page + santxid + `','moderatelink` + page + santxid + `');" href="javascript:;">+moderate</a>
-        <span id="moderate`+ page + santxid + `" style="display:none">
+            <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/` + santxid + `">btc.com</a>
             <a id="hidepostlink`+ page + santxid + `" onclick="sendHidePost('` + santxid + `');" href="javascript:;">flag(post)</a>`
         + hideuserHTML +
         `</span>
@@ -185,7 +182,7 @@ function getPostListItemHTML(postHTML) {
     return `<li>` + postHTML + `</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount) {
     if (name == null) { name = address.substring(0, 10); }
 
     repliesroot = Number(repliesroot);
@@ -234,7 +231,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + `</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
         + ` `
-        + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic) +
+        + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount) +
         `</span>
                     </div>`
         + getReplyDiv(txid, page, differentiator) + `
@@ -259,7 +256,7 @@ function dslite(input) {
     return input;
 }
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message = dslite(message);
@@ -296,7 +293,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE) + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount) + `</div>
                             `+ getReplyDiv(txid, page, differentiator) + `
                         </div>
                     </div>
@@ -465,7 +462,7 @@ function ratingAndReason2HTML(data) {
 }
 
 function clickActionNamedHTML(action, qaddress, name) {
-    return `<a href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `");'>` + ds(name) + `</a>`;
+    return `<a class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `");'>` + ds(name) + `</a>`;
 }
 
 function clickActionTopicHTML(action, qaddress, topicHOSTILE, buttonText, elementid) {
@@ -584,7 +581,7 @@ function getMessageHTML(data, count) {
     let ecpair = new BITBOX.ECPair().fromWIF(privkey);
     var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
     decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
-    contents += "<li>" + userHTML(data.address, data.name, count + "privatemessages" + data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "<br/><div id='" + san(data.roottxid) + "'>processing</div><br/></li>";
+    contents += "<li><span class='messagemeta'>" + userHTML(data.address, data.name, count + "privatemessages" + data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>processing</div><br/></li>";
     return contents;
 }
 

@@ -32,14 +32,14 @@ function getAndPopulateCommunityRatings(qaddress) {
 }
 
 function getAndPopulateRatings(qaddress) {
-    document.getElementById('ratingtable').innerHTML = document.getElementById("loading").innerHTML;
+    document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     getJSON(dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + ratingAndReason2HTML(data[i]);
         }
-        document.getElementById('ratingtable').innerHTML = contents;
+        document.getElementById('memberratingtable').innerHTML = contents;
 
         for (var i = 0; i < data.length; i++) {
 
@@ -58,7 +58,7 @@ function getAndPopulateRatings(qaddress) {
         }
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
-        document.getElementById('ratingtable').innerHTML = 'Something is wrong:' + status;
+        document.getElementById('memberratingtable').innerHTML = 'Something is wrong:' + status;
         updateStatus(status);
     });
 }
@@ -94,18 +94,18 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
-            jdenticonname=data[0].name;
+            jdenticonname = data[0].name;
         }
 
         document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
         document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
         document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
 
-         
+
         if (jdenticonname == "" || jdenticonname == null) {
             jdenticonname = qaddress.substring(0, 10);
         }
-        document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="`+unicodeEscape(jdenticonname)+`"></svg>`;
+        document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + unicodeEscape(jdenticonname) + san(qaddress) + `"></svg>`;
 
 
         if (pre == "settings") {
@@ -154,9 +154,9 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress, data);
             document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
 
-            var ratingScore=0;
-            if (data.length >0) {
-                ratingScore=Number(data[0].rating);
+            var ratingScore = 0;
+            if (data.length > 0) {
+                ratingScore = Number(data[0].rating);
             }
             document.getElementById('memberrating').innerHTML = `<div class="starrating"><div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + ratingScore + `" id="memberrating` + qaddress + `"></div></div>`;
             var theElement = document.getElementById(`memberrating` + qaddress);
@@ -193,7 +193,7 @@ function getAndPopulateSettings() {
     try { document.getElementById('lowfundsaddress').innerHTML = qpubkey; } catch (err) { }
     try { document.getElementById('privatekeyformat').innerHTML = privkey; } catch (err) { }
 
-    
+
     try { document.getElementById('privatekeydisplay').innerHTML = (mnemonic == "" ? "" : "Seed Phrase: " + mnemonic + "<br/>") + "Compressed Private Key: " + privkey; } catch (err) { }
     try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
 
@@ -244,7 +244,7 @@ function getAndPopulateSettings() {
     }
 
 
-    
+
     getDataCommonToSettingsAndMember(pubkey, "settings");
 
 
@@ -284,12 +284,12 @@ function updateSettingsNumber(settingsName) {
 function showQRCode(spanid, size) {
     var addressToQR = document.getElementById(spanid).innerHTML;
     document.getElementById(spanid + "div").innerHTML = "";
-    new QRCode(document.getElementById(spanid + "div"), 
-    {
-        text: addressToQR,
-        width: size,
-        height: size,
-    });
+    new QRCode(document.getElementById(spanid + "div"),
+        {
+            text: addressToQR,
+            width: size,
+            height: size,
+        });
     //document.getElementById('qrclicktoshow').style.display='none';
 }
 

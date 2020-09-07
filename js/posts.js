@@ -17,7 +17,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
     //Request content from the server and display it when received
-    getJSON(dropdowns.contentserver + '?action=show&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+    getJSON(dropdowns.contentserver + '?action=show&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
@@ -51,7 +51,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 }
 
-function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
+/*function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
     console.log("deprecated getAndPopulate old called");
     if (type == "") type = "all";
     //Clear Topic
@@ -89,7 +89,7 @@ function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
         updateStatus(status);
     });
 
-}
+}*/
 
 function getAndPopulateMessages(start, limit) {
 
@@ -172,7 +172,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
                 contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID));
             }
         }
-        
+
         //Threads have no navbuttons
         displayItemListandNavButtonsHTML(contents, "", "thread", data, "", 0);
 
@@ -180,7 +180,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
         }
         scrollToElement("highlightedcomment");
-        
+
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(pageName).innerHTML = 'Something is wrong:' + status;
@@ -269,7 +269,14 @@ function addDynamicHTMLElements(data, page, disable) {
 }
 
 function addStarRatings(data, page, disable) {
-    for (var i = 0; i < data.length; i++) {
+    var matches = document.querySelectorAll("[id^='rating']");
+    for (var i = 0; i < matches.length; i++) {
+        addSingleStarsRating(disable, matches[i]);
+        //var test=matches[i];
+    }
+
+
+/*    for (var i = 0; i < data.length; i++) {
 
         //Standard message display
         //var name = data[i].name;
@@ -281,11 +288,6 @@ function addStarRatings(data, page, disable) {
             theAddress = ds(data[i].origin);
             //name = ds(data[i].originname);
         }
-
-        //For ratings, we're looking for members view of the rater
-        /*if (data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating") {
-            rawRating = data[i].raterrating;
-        }*/
 
         var querySelector = "#rating" + i + page + theAddress;
         var theElement = document.querySelector(querySelector);
@@ -308,7 +310,15 @@ function addStarRatings(data, page, disable) {
             addSingleStarsRating(disable, theElement);
         }
 
-    }
+        //For reposts
+        if (data[i].repost != null && data[i].repost != "" && data[i].repost != undefined) {
+            var theAddress = ds(data[i].rpaddress);
+            var querySelector = "#rating" + i + "repost" + theAddress;
+            var theElement = document.querySelector(querySelector);
+            addSingleStarsRating(disable, theElement);
+        }
+
+    }*/
 }
 
 function addSingleStarsRating(disable, theElement) {
@@ -327,7 +337,7 @@ function addSingleStarsRating(disable, theElement) {
         disableText: 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
-            if (ratingText !== undefined) {
+            if (ratingText!=null && ratingText !== undefined) {
                 rateCallbackAction(rating, this, ratingText.value);
             } else {
                 rateCallbackAction(rating, this);
@@ -388,8 +398,8 @@ function memorandumPreview() {
     var time = new Date().getTime() / 1000;
     document.getElementById('memorandumpreview').innerHTML =
         ``
-        + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview')
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value, null);
+        + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview',0)
+        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value, null, 0);
 }
 
 function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
@@ -401,7 +411,13 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     }
 
     let mainRatingID = starindex + page + ds(data.address);
-    var retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex);
+    var retHTML = "";
+    if (data.repost != undefined && data.repost != "" && data.repost != "null") {
+        let repostRatingID = starindex + "repost" + ds(data.rpaddress);    
+        retHTML = "<span class='repost'>"+userHTML(data.address, data.name, repostRatingID, data.rating, 8) + " re-membered</span>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount);
+    } else {
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount);
+    }
     if (dataReply != null) {
         retHTML += getHTMLForReply(dataReply, 0, page, starindex, null);
     }
@@ -411,7 +427,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -599,15 +615,15 @@ function geopost() {
         alert("No Message Body");
         return false;
     }
-    var lat=Number(document.getElementById("lat").value);
-    var lon=Number(document.getElementById("lon").value);
-    
+    var lat = Number(document.getElementById("lat").value);
+    var lon = Number(document.getElementById("lon").value);
+
     //Leaflet bug allow longitude values outside proper range
-    while(lon<0){
-        lon=lon+180;
+    while (lon < 0) {
+        lon = lon + 180;
     }
-    while(lon>180){
-        lon=lon-180;
+    while (lon > 180) {
+        lon = lon - 180;
     }
     var geohash = encodeGeoHash(lat, lon);
 

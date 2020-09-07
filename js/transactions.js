@@ -16,6 +16,28 @@ function sendTransaction(tx) {
     tq.queueTransaction(tx);
 }
 
+function repost(txid, message) {
+    
+    //Repost memo 	0x6d0b 	txhash(32), message(184)
+
+    if (!checkForPrivKey()) return false;
+    var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
+    var tx = {
+        data: ["0x6d0b", "0x" + reversetx],
+        cash: { key: privkey }
+    }
+
+    if(message!=null && message!=''){
+        tx = {
+            data: ["0x6d0b", "0x" + reversetx, message],
+            cash: { key: privkey }
+        }
+    }
+
+    updateStatus("Reposting");
+    tq.queueTransaction(tx);
+}
+
 function setName() {
     if (!checkForPrivKey()) return false;
 
@@ -37,7 +59,7 @@ function setName() {
 
 
 
-async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction,messageRecipient,stampAmount) {
+async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction, messageRecipient, stampAmount) {
 
     document.getElementById(divForStatus).value = "Sending Message . . . " + replyHex.length / 2 + " bytes remaining.";
 
@@ -55,8 +77,9 @@ async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, 
         //start of message
         tx = {
             data: ["0x6dd0", "0x" + sendHex],
-            cash: { key: privatekey,
-                    to: [{ address: messageRecipient, value: Number(stampAmount) }]
+            cash: {
+                key: privatekey,
+                to: [{ address: messageRecipient, value: Number(stampAmount) }]
             }
         }
     } else {

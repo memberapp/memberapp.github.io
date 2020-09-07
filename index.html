@@ -188,7 +188,7 @@
                                     data-vavilon="all dates">All</option>
                             </select>
                             <select id="contentselector" label="content" onchange="postsSelectorChanged();">
-                                <option value="posts" selected="selected" class="vavilon" data-vavilon="posts">Posts
+                                <option value="posts" class="vavilon" data-vavilon="posts" selected="selected">Posts
                                 </option>
                                 <option value="replies" class="vavilon" data-vavilon="comments">Replies</option>
                                 <option value="both" class="vavilon" data-vavilon="all">In Both</option>
@@ -600,7 +600,8 @@
                     </div>
                     <div>
                         <label for="cssselector" class="vavilon" data-vavilon="themes">Theme</label>
-                        <select id="cssselector" onchange='changeStyle(document.getElementById("cssselector").value, true);'>
+                        <select id="cssselector"
+                            onchange='changeStyle(document.getElementById("cssselector").value, true);'>
                             <option class="vavilon" data-vavilon="change theme" value="feels">Choose Theme</option>
                             <option value="base none">Member</option>
                             <option value="feels">Feels</option>
@@ -730,7 +731,7 @@
                 </div>
             </div>
 
-            <div id="ratings" class="ratings" style="display: none;">
+            <div id="anchorratings" class="ratings" style="display: none;">
                 <div class="content">
                     <h2>Ratings By This Member</h2>
                     <br />
@@ -744,7 +745,7 @@
                                 <th>Member</th>
                             </tr>
                         </thead>
-                        <tbody id="ratingtable">
+                        <tbody id="memberratingtable">
                         </tbody>
                     </table>
                 </div>

@@ -925,7 +925,7 @@ img {
 .votelinks {
   background: #f8f9fa;
   padding: 0.875rem 0.5rem;
-  width: 2.25rem;
+  min-width: 2.25rem;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
@@ -993,6 +993,29 @@ img {
   -ms-flex-pack: center;
   justify-content: center;
   margin-top: 1rem; }
+
+.notificationtitle,
+.repost {
+  padding: 0.875rem;
+  font-weight: bold;
+  font-size: 0.875rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center; }
+  .notificationtitle .memberfilter,
+  .repost .memberfilter {
+    display: -ms-inline-flexbox;
+    display: inline-flex; }
+  .notificationtitle .hnuser,
+  .notificationtitle .star-rating,
+  .repost .hnuser,
+  .repost .star-rating {
+    margin-right: 0.5rem;
+    margin-right: 0.25rem; }
 
 .post {
   display: -ms-flexbox;
@@ -1084,15 +1107,28 @@ img {
       margin-right: 0.15rem; }
   .postdetails .subtextbuttons [id^="permalinkposts"]::before,
   .postdetails .subtextbuttons [id^="permalinkthread"]::before,
+  .postdetails .subtextbuttons [id^="permalinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="permalinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="permalinkthread"]::before {
+  .comment-tree ul li .reply div .subtextbuttons [id^="permalinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="permalinknotifications"]::before {
     background: url(../img/link-45deg.svg);
+    background-size: 0.875rem 0.875rem;
+    display: inline-block; }
+  .postdetails .subtextbuttons [id^="repostlinknotifications"]::before,
+  .postdetails .subtextbuttons [id^="repostlinkposts"]::before,
+  .postdetails .subtextbuttons [id^="repostlinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinknotifications"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkposts"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkthread"]::before {
+    background: url(../img/re-member.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
   .postdetails .subtextbuttons [id^="replylinkposts"]::before,
   .postdetails .subtextbuttons [id^="replylinkthread"]::before,
+  .postdetails .subtextbuttons [id^="replylinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="replylinkthread"]::before {
+  .comment-tree ul li .reply div .subtextbuttons [id^="replylinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="replylinknotifications"]::before {
     background: url(../img/chat-right-fill.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
@@ -1103,8 +1139,10 @@ img {
     display: inline-block; }
   .postdetails .subtextbuttons a[id^="tiplinkposts"]::before,
   .postdetails .subtextbuttons a[id^="tiplinkthread"]::before,
+  .postdetails .subtextbuttons a[id^="tiplinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkthread"]::before {
+  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinknotifications"]::before {
     background: url(../img/tip.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block;
@@ -1119,10 +1157,12 @@ img {
   .postdetails .subtextbuttons a[id^="hideuserlinkposts"],
   .postdetails .subtextbuttons a[id^="hidepostlinkposts"],
   .postdetails .subtextbuttons a[id^="hidepostlinkthread"],
+  .postdetails .subtextbuttons a[id^="hidepostlinknotifications"],
   .postdetails .subtextbuttons a[id^="hideuserlinkthread"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkposts"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinkposts"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinkthread"],
+  .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinknotifications"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkthread"] {
     color: #c1292e; }
 
@@ -2171,44 +2211,68 @@ body.article {
       margin-bottom: 1rem; }
       #messagesanchor .content #messageslist li:last-of-type {
         margin-bottom: 0; }
-      #messagesanchor .content #messageslist li .hnuser,
-      #messagesanchor .content #messageslist li a,
-      #messagesanchor .content #messageslist li .age {
-        font-size: 0.875rem;
-        font-weight: bold; }
-      #messagesanchor .content #messageslist li [data-ratingsize],
-      #messagesanchor .content #messageslist li .hnuser,
-      #messagesanchor .content #messageslist li .age {
-        color: rgba(0, 0, 0, 0.54);
-        margin-right: 0.5rem; }
-      #messagesanchor .content #messageslist li a[href="javascript:;"] {
-        margin-left: auto;
-        line-height: 1.2;
-        cursor: pointer;
-        text-decoration: none;
-        transition: all 0.15s ease-in-out;
-        color: #44669c;
-        text-transform: uppercase;
-        border-radius: 0.25rem;
-        border: 1px solid #44669c;
-        background: transparent;
-        padding: 0.5rem 1.5rem;
-        padding: 0.5rem 1rem; }
-        #messagesanchor .content #messageslist li a[href="javascript:;"]:hover {
-          background: #e9eef6; }
-        #messagesanchor .content #messageslist li a[href="javascript:;"]:disabled {
-          opacity: 0.65;
-          cursor: not-allowed;
-          pointer-events: none; }
-      #messagesanchor .content #messageslist li div:last-of-type {
-        margin-top: 0.75rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid rgba(0, 0, 0, 0.12);
-        width: 100%; }
-      #messagesanchor .content #messageslist li .star-value {
-        margin: 0 !important;
-        border: 0 !important;
-        padding: 0 !important; }
+      #messagesanchor .content #messageslist li br {
+        display: none; }
+      #messagesanchor .content #messageslist li div br {
+        display: block; }
+      #messagesanchor .content #messageslist li .messagemeta {
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem;
+        -ms-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+        -ms-flex-align: center;
+        align-items: center;
+        display: -ms-flexbox;
+        display: flex; }
+        @media (min-width: 769px) {
+          #messagesanchor .content #messageslist li .messagemeta {
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap; } }
+        #messagesanchor .content #messageslist li .messagemeta span.memberfilter {
+          display: -ms-inline-flexbox;
+          display: inline-flex;
+          -ms-flex-align: center;
+          align-items: center; }
+        #messagesanchor .content #messageslist li .messagemeta .hnuser,
+        #messagesanchor .content #messageslist li .messagemeta a,
+        #messagesanchor .content #messageslist li .messagemeta .age {
+          font-size: 0.875rem;
+          font-weight: bold; }
+        #messagesanchor .content #messageslist li .messagemeta [data-ratingsize],
+        #messagesanchor .content #messageslist li .messagemeta .hnuser,
+        #messagesanchor .content #messageslist li .messagemeta .age {
+          color: rgba(0, 0, 0, 0.54);
+          margin-right: 0.5rem; }
+        #messagesanchor .content #messageslist li .messagemeta .star-value {
+          margin: 0 !important;
+          border: 0 !important;
+          padding: 0 !important; }
+        #messagesanchor .content #messageslist li .messagemeta a[href="#member"] {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-align: center;
+          align-items: center; }
+        #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"] {
+          margin-left: auto;
+          line-height: 1.2;
+          cursor: pointer;
+          text-decoration: none;
+          transition: all 0.15s ease-in-out;
+          color: #44669c;
+          text-transform: uppercase;
+          border-radius: 0.25rem;
+          border: 1px solid #44669c;
+          background: transparent;
+          padding: 0.5rem 1.5rem;
+          padding: 0.5rem 1rem; }
+          #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:hover {
+            background: #e9eef6; }
+          #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            pointer-events: none; }
 
 #member {
   width: 100%;
@@ -2474,16 +2538,6 @@ body.article {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
-      #notifications ul.notificationslist li .notificationtitle {
-        padding: 0.875rem;
-        font-weight: bold;
-        font-size: 0.875rem;
-        background: #f8f9fa;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
-        #notifications ul.notificationslist li .notificationtitle .hnuser,
-        #notifications ul.notificationslist li .notificationtitle .star-rating {
-          margin-right: 0.5rem;
-          margin-right: 0.25rem; }
 
 #blockers,
 #blocking,

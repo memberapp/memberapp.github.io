@@ -30,20 +30,7 @@ and dynamically loaded scripts.
 
 ## Theme Dev
 
-Developed using `SCSS`
-
-Using Node in a new termainal run the following commands
-
-    npm i
-    npx reload
-
-Navigate to the `localhost:*` address
-
-Open a new termianl and run the following command
-
-    npx gulp watch
-
-Edit the base theme by navigating to `/src/feels`
+Developed using `SCSS`, find out more information here https://github.com/memberapp/FeelsTheme
 
 ## Client
 
@@ -104,9 +91,9 @@ Projects
 
 ## Financial
 
-Member is a non profit project. It is free to use and there won't be ads or data mining. However it's always helpful to have more funds for development and hosting. 
+Member is a non profit project. It is free to use and there won't be ads or data mining. However it's always helpful to have more funds for development and hosting.
 
-The direct donation address is bitcoincash:qqlx98vrupdm9gmnenwpcgy2yv4hfzktwv6raa4n3g 
+The direct donation address is bitcoincash:qqlx98vrupdm9gmnenwpcgy2yv4hfzktwv6raa4n3g
 
 Alternatively you can buy some MEMBER tokens at the lowest available market rate here
 https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?for-sale
