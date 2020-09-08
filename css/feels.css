@@ -2587,3 +2587,8 @@ body.article {
     #following .content br,
     #followers .content br {
       display: none; }
+
+
+      .notificationtitle, .repost {
+        display: inherit;
+    }
