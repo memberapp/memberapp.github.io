@@ -506,6 +506,12 @@ function increaseGUILikes(txid) {
     document.getElementById('score' + txid).innerHTML = likescount + 1;
 }
 
+function increaseGUIReposts(txid) {
+    //Change counts
+    var repostscount = Number(document.getElementById('repostscount' + txid).innerHTML);
+    document.getElementById('repostscount' + txid).innerHTML = repostscount + 1;
+}
+
 function likePost(txid, tipAddress) {
     if (privkey == "") {
         alert("You must login to like posts.");
@@ -541,6 +547,22 @@ function dislikePost(txid, tipAddress) {
 
     sendDislike(txid);
 }
+
+function repostPost(txid) {
+    if (privkey == "") {
+        alert("You must login to like posts.");
+        return false;
+    }
+
+    increaseGUIReposts(txid);
+
+    //Change class
+    //document.getElementById('score' + txid).className = "betweenvotesscoreup";
+
+    repost(txid);
+
+}
+
 
 
 function sendTip(txid, tipAddress, page) {

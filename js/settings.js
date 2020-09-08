@@ -259,6 +259,9 @@ function updateSettingsDropdown(settingsName) {
     var selector = document.getElementById(settingsName);
     dropdowns[settingsName] = selector.options[selector.selectedIndex].value;
     localStorageSet(localStorageSafe, settingsName, dropdowns[settingsName]);
+    if(settingsName=="currencydisplay"){
+        tq.updateBalance(pubkey);
+    }
 }
 
 function updateSettingsNumber(settingsName) {

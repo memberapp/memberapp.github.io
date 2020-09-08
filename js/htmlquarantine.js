@@ -134,7 +134,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 
     return mapLink + 
         `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
-        <a id="repostlink` + page + santxid + `" onclick="repost('` + santxid + `','');" href="javascript:;"> ` + Number(repostcount) + " " + getSafeTranslation('re-members') + `</a>
+        <span class="remeberscounttext"><a id="repostlink` + page + santxid + `" onclick="repostPost('` + santxid + `',''); this.onclick='';" href="javascript:;"> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('re-members') + `</a></span>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <a  id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
