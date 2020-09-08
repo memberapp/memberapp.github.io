@@ -308,8 +308,8 @@ img {
   height: auto; }
 
 .jdenticon {
-  width: 15px;
-  height: 15px;
+  width: 1rem;
+  height: 1rem;
   margin-bottom: -3px;
   margin-right: 2px; }
 
@@ -341,25 +341,6 @@ img {
 /*! grey out muted users or filtered users/posts in threads*/
 .blocked {
   opacity: 0.2; }
-
-.starrating {
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  padding: 0.2rem 0.25rem;
-  margin-left: 0.25rem;
-  margin-right: 0.5rem;
-  background: rgba(0, 0, 0, 0.03);
-  border-radius: 0.25rem; }
-  .starrating div {
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-    width: 100%; }
 
 body {
   background: #f7f7f7;
@@ -994,6 +975,17 @@ img {
   justify-content: center;
   margin-top: 1rem; }
 
+.memberfilter {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin-left: 0.25rem; }
+  .memberfilter .starrating {
+    margin: 0 0.25rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+
 .notificationtitle,
 .repost {
   padding: 0.875rem;
@@ -1006,16 +998,15 @@ img {
   display: flex;
   -ms-flex-align: center;
   align-items: center; }
-  .notificationtitle .memberfilter,
-  .repost .memberfilter {
-    display: -ms-inline-flexbox;
-    display: inline-flex; }
   .notificationtitle .hnuser,
   .notificationtitle .star-rating,
   .repost .hnuser,
   .repost .star-rating {
-    margin-right: 0.5rem;
-    margin-right: 0.25rem; }
+    margin-right: 0.25rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
 
 .post {
   display: -ms-flexbox;
@@ -1114,6 +1105,13 @@ img {
     background: url(../img/link-45deg.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
+  .postdetails .subtextbuttons [id^="repostlinknotifications"] .repostscount,
+  .postdetails .subtextbuttons [id^="repostlinkposts"] .repostscount,
+  .postdetails .subtextbuttons [id^="repostlinkthread"] .repostscount,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinknotifications"] .repostscount,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkposts"] .repostscount,
+  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkthread"] .repostscount {
+    margin-right: 0.15rem; }
   .postdetails .subtextbuttons [id^="repostlinknotifications"]::before,
   .postdetails .subtextbuttons [id^="repostlinkposts"]::before,
   .postdetails .subtextbuttons [id^="repostlinkthread"]::before,
@@ -1251,6 +1249,14 @@ img {
           margin-left: .5rem; }
           .comment-tree ul li ul ul ul {
             margin-left: .5rem; }
+            .comment-tree ul li ul ul ul ul {
+              margin-left: .5rem; }
+              .comment-tree ul li ul ul ul ul ul {
+                margin-left: .5rem; }
+                .comment-tree ul li ul ul ul ul ul ul {
+                  margin-left: .5rem; }
+                  .comment-tree ul li ul ul ul ul ul ul ul {
+                    margin-left: .1rem; }
 
 div#status {
   position: fixed;
@@ -1432,7 +1438,10 @@ header {
             padding: 0;
             margin-right: 0.5rem; }
             header .pagetop nav .navitemsmain .headerbuttons #balance .sats {
-              padding: 0; }
+              padding: 0;
+              position: relative; }
+              header .pagetop nav .navitemsmain .headerbuttons #balance .sats:before {
+                content: ","; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
             margin-right: 0.75rem; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
@@ -2328,8 +2337,26 @@ body.article {
     #member .content .memberrating {
       margin: 0 auto;
       display: table; }
+      #member .content .memberrating .starrating {
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        padding: 0.2rem 0.25rem;
+        margin-left: 0.25rem;
+        margin-right: 0.5rem;
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 0.25rem; }
+        #member .content .memberrating .starrating div {
+          margin: 0 !important;
+          padding: 0 !important;
+          border: none !important;
+          width: 100%; }
 
-#ratings,
+#anchorratings,
 #community {
   width: 100%;
   padding-right: 15px;
@@ -2337,14 +2364,14 @@ body.article {
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 769px) {
-    #ratings,
+    #anchorratings,
     #community {
       max-width: 800px; } }
   @media (max-width: 768px) {
-    #ratings,
+    #anchorratings,
     #community {
       max-width: 540px; } }
-  #ratings .content,
+  #anchorratings .content,
   #community .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2354,7 +2381,7 @@ body.article {
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
-      #ratings .content,
+      #anchorratings .content,
       #community .content {
         margin-left: -15px !important;
         margin-right: -15px !important;
@@ -2362,14 +2389,14 @@ body.article {
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
-    #ratings .content br,
+    #anchorratings .content br,
     #community .content br {
       display: none; }
-    #ratings .content table,
+    #anchorratings .content table,
     #community .content table {
       width: 100%; }
-      #ratings .content table th:last-of-type,
-      #ratings .content table td:last-of-type,
+      #anchorratings .content table th:last-of-type,
+      #anchorratings .content table td:last-of-type,
       #community .content table th:last-of-type,
       #community .content table td:last-of-type {
         text-align: left;
@@ -2378,7 +2405,7 @@ body.article {
         -ms-word-break: break-all;
         word-break: break-all;
         word-break: break-word; }
-      #ratings .content table td img,
+      #anchorratings .content table td img,
       #community .content table td img {
         outline: none;
         height: 1rem;
@@ -2515,6 +2542,9 @@ body.article {
   @media (max-width: 768px) {
     #notifications {
       max-width: 540px; } }
+  #notifications .notificationtitle,
+  #notifications .repost {
+    display: inherit; }
   #notifications ul.notificationslist {
     padding: 0; }
     #notifications ul.notificationslist li {
