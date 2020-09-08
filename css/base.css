@@ -891,7 +891,7 @@ li.notificationrepost::before {
   font-size: small;
 }
 
-.member, .ratings, .trustgraph, .community, .followers, .following, .blockers, .blocking {
+.member, .anchorratings, .trustgraph, .community, .followers, .following, .blockers, .blocking {
   font-size: small;
 }
 
