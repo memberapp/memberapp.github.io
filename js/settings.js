@@ -6,10 +6,12 @@ function getAndPopulateCommunityRatings(qaddress) {
     getJSON(dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + ratingAndReasonHTML(data[i]);
+            //contents = contents + ratingAndReasonHTML(data[i]);
+            contents = contents + ratingAndReasonNew(data[i].name, data[i].address, data[i].rateename, data[i].rates, data[i].rating, data[i].reason);
         }
         document.getElementById('communityratingtable').innerHTML = contents;
 
+        /*
         for (var i = 0; i < data.length; i++) {
 
             var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
@@ -22,8 +24,7 @@ function getAndPopulateCommunityRatings(qaddress) {
             });
             starRating1.theAddress = theAddress;
             starRating1.disable();
-
-        }
+        }*/
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById('communityratingtable').innerHTML = 'Something is wrong:' + status;
@@ -37,10 +38,12 @@ function getAndPopulateRatings(qaddress) {
     getJSON(dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + ratingAndReason2HTML(data[i]);
+            //contents = contents + ratingAndReason2HTML(data[i]);
+            contents = contents + ratingAndReasonNew(data[i].ratername,data[i].rateraddress,data[i].name,data[i].address,data[i].rating,[i].reason);
         }
         document.getElementById('memberratingtable').innerHTML = contents;
 
+        /*
         for (var i = 0; i < data.length; i++) {
 
             var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
@@ -48,14 +51,14 @@ function getAndPopulateRatings(qaddress) {
             var starRating1 = raterJs({
                 starSize: 24,
                 rating: Math.round(theRating * 10) / 10,
-                element: document.querySelector("#rating" + theAddress),
+                element: document.querySelector("#mrating" + theAddress),
                 disableText: rts(data[i].ratername) + ' rates ' + rts(data[i].name) + ' as {rating}/{maxRating}',
             });
             starRating1.theAddress = theAddress;
 
             starRating1.disable();
 
-        }
+        }*/
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById('memberratingtable').innerHTML = 'Something is wrong:' + status;

@@ -333,13 +333,14 @@ function addSingleStarsRating(disable, theElement) {
     let theAddress = theElement.dataset.ratingaddress;
     let rawRating = theElement.dataset.ratingraw;
     let starSize = theElement.dataset.ratingsize;
+    let disabledtext = theElement.dataset.disabledtext;
 
     var theRating = 0; if (rawRating != null && rawRating != 0) { theRating = (ds(rawRating) / 64) + 1; }
     var starRating1 = raterJs({
         starSize: starSize,
         rating: Math.round(theRating * 10) / 10,
         element: theElement,
-        disableText: 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
+        disableText: disabledtext?disabledtext:'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
             if (ratingText!=null && ratingText !== undefined) {
@@ -351,7 +352,7 @@ function addSingleStarsRating(disable, theElement) {
         }
     });
     starRating1.theAddress = theAddress;
-    if (disable) {
+    if (disabledtext) {
         starRating1.disable();
     }
     return starRating1;

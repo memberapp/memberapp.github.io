@@ -407,7 +407,7 @@ function getAddressLink(address, name) {
 //Temporary function to bootstrap selection of members to rate
 function getBootStrapHTML(pubkey, data, lbstcount) {
     return "<tr><td>" + getMemberLink(pubkey, data.ratername) + "</td>"
-        + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='rating" + lbstcount + san(data.testaddress) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.testaddress, data.name) + "</td><td>" + `<a href='#trustgraph?member=` + san(pubkey) + `&amp;target=` + san(data.testaddress) + `' onclick='showTrustGraph("` + san(pubkey) + `","` + san(data.testaddress) + `");'>Full Trust Graph</a>` + "</td></tr>";
+        + "<td></td><td></td><td align='center'> <div id='rating" + lbstcount + san(data.testaddress) + "'></div>  </td><td></td><td></td>" + "" + "<td>" + getMemberLink(data.testaddress, data.name) + "</td><td>" + `<a href='#trustgraph?member=` + san(pubkey) + `&amp;target=` + san(data.testaddress) + `' onclick='showTrustGraph("` + san(pubkey) + `","` + san(data.testaddress) + `");'>Full Trust Graph</a>` + "</td></tr>";
 }
 
 //Map
@@ -435,11 +435,11 @@ function getNotificationsTableHTML(contents, navbuttons) {
 
 //Trust graph
 function getDirectRatingHTML(data) {
-    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td></td><td></td><td align='center'> <div id='trust" + san(data.member) + san(data.target) + "'></div>  </td><td></td><td></td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td></td><td></td><td align='center'> <div id='trust" + san(data.member) + san(data.target) + "'></div>  </td><td></td><td></td>" + "<td align='center'>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
 }
 
 function getIndirectRatingHTML(data) {
-    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust" + san(data.member) + san(data.inter) + "'></div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td align='center'>" + getMemberLink(data.inter, data.intername) + "</td>" + `<td><img height='16' width='16' src='img/rightarrow.png'/></td><td> <div id='trust` + san(data.inter) + san(data.target) + "'> </div> </td><td><img height='16' width='16' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td> <div id='trust" + san(data.member) + san(data.inter) + "'></div> </td>" + "<td align='center'>" + getMemberLink(data.inter, data.intername) + "</td>" + `<td> <div id='trust` + san(data.inter) + san(data.target) + "'> </div> </td>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {
@@ -452,14 +452,26 @@ function rts(thetext) {
 }
 
 //Settings
-//These two functions could be combined
+function ratingAndReasonNew(ratername,rateraddress,rateename,rateeaddress,rating,reason){
+    //Careful to ensure disabletext is sanitized
+    var disableText = rts(ratername) + ' rates ' + rts(rateename) + ' as {rating}/{maxRating}';
+    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="`+disableText+`" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='rating"` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
+}
+
+/*
 function ratingAndReasonHTML(data) {
-    return "<tr><td>" + getMemberLink(data.address, data.name) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td align='center'> <div id='crating" + san(data.address) + "'></div>  </td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.rateename) + "</td></tr> <tr><td></td><td colspan='4'>" + ds(data.reason) + "</td></tr>";
+    //Careful to ensure disabletext is sanitized
+    var disableText = rts(data.name) + ' rates ' + rts(data.rateename) + ' as {rating}/{maxRating}';
+    return "<tr><td>" + getMemberLink(data.address, data.name) + `</td><td align='center'> <div data-disabledtext="`+disableText+`" data-ratingsize="24" data-ratingaddress="` + san(data.address) + `" data-ratingraw="` + Number(data.rating) + `" id='rating"` + san(data.address) + "'></div>  </td><td>" + getMemberLink(data.rates, data.rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(data.reason) + "</td></tr>";
 }
 
 function ratingAndReason2HTML(data) {
-    return "<tr><td>" + getMemberLink(data.rateraddress, data.ratername) + "</td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td><td align='center'> <div id='rating" + san(data.rates) + "'></div>  </td>" + "<td align='center'><img height='24' width='24' src='img/rightarrow.png'/></td>" + "<td>" + getMemberLink(data.rates, data.name) + "</td></tr> <tr><td></td><td colspan='4'>" + ds(data.reason) + "</td></tr>";
+    //Careful to ensure disabletext is sanitized
+    var disableText = rts(data.ratername) + ' rates ' + rts(data.name) + ' as {rating}/{maxRating}';
+    return "<tr><td>" + getMemberLink(data.rateraddress, data.ratername) + `</td><td align='center'> <div data-disabledtext="`+disableText+`" data-ratingsize="24" data-ratingaddress="` + san(data.rates) + `" data-ratingraw="` + Number(data.rating) + `" id='rating"` + san(data.rates) + "'></div>  </td><td>" + getMemberLink(data.rates, data.name) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(data.reason) + "</td></tr>";
 }
+/*
+
 
 function clickActionNamedHTML(action, qaddress, name) {
     return `<a class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `");'>` + ds(name) + `</a>`;
