@@ -100,6 +100,7 @@ function getAndPopulateMessages(start, limit) {
         lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
         document.getElementById("alertcountpm").innerHTML = "";
+        document.title = "member.cash";
 
 
         data = mergeRepliesToRepliesBySameAuthor(data, true);
@@ -261,6 +262,10 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 
 
 function addDynamicHTMLElements(data, page, disable) {
+
+    if(data.length>0){
+        updateStatus("QT:"+(Math.round(data[0].msc * 100) / 100).toFixed(2));
+    }
     //Add identicons
     jdenticon();
     //Add ratings, disable controls if the star rating can be updated

@@ -40,7 +40,7 @@ async function userSearchChanged(searchbox, targetelement) {
 
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
-        document.getElementById('usersearch').innerHTML = 'Something is wrong:' + status;
+        //document.getElementById('usersearch').innerHTML = 'Something is wrong:' + status;
         updateStatus(status);
     });
 

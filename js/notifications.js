@@ -26,6 +26,12 @@ function displayNotificationCount() {
             element.innerHTML = "";
         }
 
+        var pageTitleCount = alertcount + alertcountpm;
+        var pageTitle = "";
+        if (pageTitleCount > 0) {
+            pageTitle = "(" + pageTitleCount + ") ";
+        }
+        document.title = pageTitle + "member.cash";
         setTimeout(displayNotificationCount, 60000);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
@@ -59,13 +65,14 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         contents = getNotificationsTableHTML(contents, navbuttons);
 
         //Update last view of notifications iff the user is looking at the first page of notifications.
-        if(start==0){
+        if (start == 0) {
             lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
             localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
         }
 
         document.getElementById("alertcount").innerHTML = "";
-
+        document.title = "member.cash";
+        
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data, page);
         listenForTwitFrameResizes();
@@ -131,7 +138,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             );
             break;
         case "like":
-            if(data.llikedtxid==null){
+            if (data.llikedtxid == null) {
                 //Server returns empty likes sometimes, probably if a like is superceeded by another like
                 return "";
             }
@@ -145,16 +152,16 @@ function getHTMLForNotification(data, rank, page, starindex) {
             );
             break;
         case "repost":
-                postRatingID = starindex + page + ds(data.address) + type;
-                return notificationItemHTML(
-                    "repost",
-                    `🔗&nbsp;`,
-                    userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` re-membered your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
-                    timeSince(Number(data.time)),
-                    getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount)
-                );
-                break;
-    
+            postRatingID = starindex + page + ds(data.address) + type;
+            return notificationItemHTML(
+                "repost",
+                `🔗&nbsp;`,
+                userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16) + ` re-membered your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
+                timeSince(Number(data.time)),
+                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount)
+            );
+            break;
+
         // Maybe shelve these 'negative' ones
         case "unfollow":
             //return `Unfollow: User x unfollowed you time`;
