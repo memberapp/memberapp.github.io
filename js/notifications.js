@@ -71,7 +71,8 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         }
 
         document.getElementById("alertcount").innerHTML = "";
-
+        document.title = "member.cash";
+        
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data, page);
         listenForTwitFrameResizes();
