@@ -470,7 +470,7 @@ function ratingAndReason2HTML(data) {
     var disableText = rts(data.ratername) + ' rates ' + rts(data.name) + ' as {rating}/{maxRating}';
     return "<tr><td>" + getMemberLink(data.rateraddress, data.ratername) + `</td><td align='center'> <div data-disabledtext="`+disableText+`" data-ratingsize="24" data-ratingaddress="` + san(data.rates) + `" data-ratingraw="` + Number(data.rating) + `" id='rating"` + san(data.rates) + "'></div>  </td><td>" + getMemberLink(data.rates, data.name) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(data.reason) + "</td></tr>";
 }
-/*
+*/
 
 
 function clickActionNamedHTML(action, qaddress, name) {
