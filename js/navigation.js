@@ -129,6 +129,10 @@ function show(theDiv) {
     document.getElementById(theDiv).style.display = "block";
 }
 
+function showOnly(theDiv) {
+    document.getElementById(theDiv).style.display = "block";
+}
+
 function hide(theDiv) {
     document.getElementById(theDiv).style.display = "none";
 }
@@ -260,6 +264,7 @@ function showPFC(start, limit, page, pubkey, type) {
 }
 
 function showMyFeed() {
+    setTopic('');
     getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, numbers.results, 'posts', '');
 }
 
@@ -347,7 +352,7 @@ function setTopic(topicNameHOSTILE) {
     if(topicNameHOSTILE.toLowerCase()=="myfeed" || topicNameHOSTILE.toLowerCase()=="mytopics"){
         hide("topicmeta");
     }else{
-        show("topicmeta");
+        showOnly("topicmeta");
         getAndPopulateTopic(topicNameHOSTILE);
     }
 
