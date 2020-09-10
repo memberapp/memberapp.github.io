@@ -1,7 +1,7 @@
 "use strict";
 
 function displayContentBasedOnURLParameters() {
-
+  
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
 
     var url = window.location.href;
@@ -293,8 +293,15 @@ function showTopicList() {
     getAndPopulateTopicList(true);
 }
 
+function resetScroll(){
+    scrollhistory = [];
+}
+
 function postsSelectorChanged() {
 
+    //Reset scroll history
+    resetScroll();
+ 
     //get value from the 4 drop downs
     var selector;
 
@@ -417,3 +424,10 @@ window.addEventListener("hashchange", detectBackOrForward(
     function () { displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
 ));
 
+var scrollhistory = [];
+
+//record the scroll position
+document.addEventListener("click", function() {
+    scrollhistory[window.location.hash]=window.scrollY;
+    //alert("document capture click");
+ }, true)
