@@ -344,7 +344,7 @@ function setTopic(topicNameHOSTILE) {
         return;
     }
 
-    if(topicNameHOSTILE=="myfeed" || topicNameHOSTILE=="mytopics"){
+    if(topicNameHOSTILE.toLowerCase()=="myfeed" || topicNameHOSTILE.toLowerCase()=="mytopics"){
         hide("topicmeta");
     }else{
         show("topicmeta");

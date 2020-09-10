@@ -238,7 +238,7 @@ function getAndPopulateTopicList(showpage) {
             if (data[i].topicname == null) continue;
 
             option.text = capitalizeFirstLetter(data[i].topicname.substr(0, 13));
-            option.value = data[i].topicname;
+            option.value = data[i].topicname.trim();
             if (option.value == lastValue) continue;
             lastValue = option.value;
             selectbox.add(option, [selectboxIndex]);
