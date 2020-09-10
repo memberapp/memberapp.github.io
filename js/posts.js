@@ -189,6 +189,32 @@ function getAndPopulateThread(roottxid, txid, pageName) {
     });
 }
 
+function getAndPopulateTopic(topicNameHOSTILE){
+    var page = "topicmeta";
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+    getJSON(dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkey).then(function (data) {
+
+        //todo, move this to htmlquarantine.
+        var contents = "";
+        //group data rows by moderator before displaying
+        var modsArray = [];
+        for (var i = 0; i < data.length; i++) {
+            if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
+                modsArray.push(data[i]);
+            }
+        }
+        if(modsArray.length>0){
+            contents += getHTMLForTopicArray(modsArray);
+        }
+
+        document.getElementById(page).innerHTML = getHTMLForTopicHeader(topicNameHOSTILE,contents);
+
+    }, function (status) { //error detection....
+        console.log('Something is wrong:' + status);
+        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
+        updateStatus(status);
+    });
+}
 
 function getAndPopulateTopicList(showpage) {
     var page = "topiclistanchor";
@@ -219,11 +245,9 @@ function getAndPopulateTopicList(showpage) {
             selectboxIndex++;
         }
 
-        //todo, move this to htmlquarantine.
-        var contents = "<br/><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>";
-
-        //group data rows by moderater before displaying
+        //group data rows by moderator before displaying
         var modsArray = [];
+        var contents="";
         for (var i = 0; i < data.length; i++) {
             if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
                 modsArray.push(data[i]);
@@ -234,11 +258,10 @@ function getAndPopulateTopicList(showpage) {
             }
         }
 
-
-        contents += "</tbody></table>";
+        document.getElementById(page).innerHTML = getHTMLForTopicHeader("",contents);
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
-        document.getElementById(page).innerHTML = contents;
+        //document.getElementById(page).innerHTML = contents;
         //detectMultipleIDS();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
@@ -263,8 +286,8 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 
 function addDynamicHTMLElements(data, page, disable) {
 
-    if(data.length>0){
-        updateStatus("QT:"+(Math.round(data[0].msc * 100) / 100).toFixed(2));
+    if (data.length > 0) {
+        updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
     }
     //Add identicons
     jdenticon();
@@ -281,49 +304,49 @@ function addStarRatings(data, page, disable) {
     }
 
 
-/*    for (var i = 0; i < data.length; i++) {
-
-        //Standard message display
-        //var name = data[i].name;
-        var theAddress = ds(data[i].address);
-        //var rawRating = data[i].rating;
-
-        if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating" || data[i].type == "page") {
-            //Notifications, or like, or follow reply
-            theAddress = ds(data[i].origin);
-            //name = ds(data[i].originname);
-        }
-
-        var querySelector = "#rating" + i + page + theAddress;
-        var theElement = document.querySelector(querySelector);
-        addSingleStarsRating(disable, theElement);
-
-
-        //Add second one for reply
-        if (data[i].type == "reply" || data[i].type == "page") {
-            var querySelector = "#rating" + i + page + theAddress + data[i].type;
-            var theElement = document.querySelector(querySelector);
-            addSingleStarsRating(disable, theElement);
-        }
-
-        //Add second one for like
-        if (data[i].type == "like") {
-            //var rawRating = data[i].selfrating;
+    /*    for (var i = 0; i < data.length; i++) {
+    
+            //Standard message display
+            //var name = data[i].name;
             var theAddress = ds(data[i].address);
-            var querySelector = "#rating" + i + page + theAddress + data[i].type;
+            //var rawRating = data[i].rating;
+    
+            if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating" || data[i].type == "page") {
+                //Notifications, or like, or follow reply
+                theAddress = ds(data[i].origin);
+                //name = ds(data[i].originname);
+            }
+    
+            var querySelector = "#rating" + i + page + theAddress;
             var theElement = document.querySelector(querySelector);
             addSingleStarsRating(disable, theElement);
-        }
-
-        //For reposts
-        if (data[i].repost != null && data[i].repost != "" && data[i].repost != undefined) {
-            var theAddress = ds(data[i].rpaddress);
-            var querySelector = "#rating" + i + "repost" + theAddress;
-            var theElement = document.querySelector(querySelector);
-            addSingleStarsRating(disable, theElement);
-        }
-
-    }*/
+    
+    
+            //Add second one for reply
+            if (data[i].type == "reply" || data[i].type == "page") {
+                var querySelector = "#rating" + i + page + theAddress + data[i].type;
+                var theElement = document.querySelector(querySelector);
+                addSingleStarsRating(disable, theElement);
+            }
+    
+            //Add second one for like
+            if (data[i].type == "like") {
+                //var rawRating = data[i].selfrating;
+                var theAddress = ds(data[i].address);
+                var querySelector = "#rating" + i + page + theAddress + data[i].type;
+                var theElement = document.querySelector(querySelector);
+                addSingleStarsRating(disable, theElement);
+            }
+    
+            //For reposts
+            if (data[i].repost != null && data[i].repost != "" && data[i].repost != undefined) {
+                var theAddress = ds(data[i].rpaddress);
+                var querySelector = "#rating" + i + "repost" + theAddress;
+                var theElement = document.querySelector(querySelector);
+                addSingleStarsRating(disable, theElement);
+            }
+    
+        }*/
 }
 
 function addSingleStarsRating(disable, theElement) {
@@ -340,10 +363,10 @@ function addSingleStarsRating(disable, theElement) {
         starSize: starSize,
         rating: Math.round(theRating * 10) / 10,
         element: theElement,
-        disableText: disabledtext?disabledtext:'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
+        disableText: disabledtext ? disabledtext : 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
-            if (ratingText!=null && ratingText !== undefined) {
+            if (ratingText != null && ratingText !== undefined) {
                 rateCallbackAction(rating, this, ratingText.value);
             } else {
                 rateCallbackAction(rating, this);
@@ -404,7 +427,7 @@ function memorandumPreview() {
     var time = new Date().getTime() / 1000;
     document.getElementById('memorandumpreview').innerHTML =
         ``
-        + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview',0)
+        + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview', 0)
         + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value, null, 0);
 }
 
@@ -419,8 +442,8 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     let mainRatingID = starindex + page + ds(data.address);
     var retHTML = "";
     if (data.repost != undefined && data.repost != "" && data.repost != "null") {
-        let repostRatingID = starindex + "repost" + ds(data.rpaddress);    
-        retHTML = "<span class='repost'>"+userHTML(data.address, data.name, repostRatingID, data.rating, 8) + " re-membered</span>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount);
+        let repostRatingID = starindex + "repost" + ds(data.rpaddress);
+        retHTML = "<span class='repost'>" + userHTML(data.address, data.name, repostRatingID, data.rating, 8) + " re-membered</span>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount);
     } else {
         retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount);
     }

@@ -129,6 +129,10 @@ function show(theDiv) {
     document.getElementById(theDiv).style.display = "block";
 }
 
+function hide(theDiv) {
+    document.getElementById(theDiv).style.display = "none";
+}
+
 function showTools() {
     show('toolsanchor');
 }
@@ -280,6 +284,7 @@ function getCurrentTopicHOSTILE() {
 }
 
 function showTopicList() {
+    setTopic("");
     getAndPopulateTopicList(true);
 }
 
@@ -335,7 +340,15 @@ function setTopic(topicNameHOSTILE) {
 
     if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
         selector.selectedIndex = 0;
+        hide("topicmeta");
         return;
+    }
+
+    if(topicNameHOSTILE=="myfeed" || topicNameHOSTILE=="mytopics"){
+        hide("topicmeta");
+    }else{
+        show("topicmeta");
+        getAndPopulateTopic(topicNameHOSTILE);
     }
 
     selector.selectedIndex = 1;

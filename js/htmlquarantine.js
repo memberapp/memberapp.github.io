@@ -534,7 +534,12 @@ function getHTMLForTopicArray(data) {
             if (data[i].existingmodaddress != null) {
                 ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
             } else {
-                ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
+                var userName=document.getElementById('settingsnametext').value;
+                var userIsGroupFilter=userName.toLowerCase().endsWith("filter") || userName.toLowerCase().endsWith("group");
+                var modIsGroupFilter=data[i].existingmodname.toLowerCase().endsWith("filter") || data[i].existingmodname.toLowerCase().endsWith("group");
+                if(userIsGroupFilter != modIsGroupFilter){ 
+                    ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
+                }
             }
         }
     }
@@ -558,6 +563,13 @@ function getHTMLForTopic(data) {
     ret += "<tr><td class='tltopicname'>" + getTopicHTML(data.topicname, '') + "</td><td class='tlmessagecount'>" + Number(data.messagescount) + "</td><td class='tlsubscount'>" + Number(data.subscount) + "</td><td class='tlaction'>" + subscribe + "</td></tr>";
     return ret;
 
+}
+
+function getHTMLForTopicHeader(topicNameHOSTILE,contents){
+        //todo, move this to htmlquarantine.
+        return "<h1 class='topicheader'>"+capitalizeFirstLetter(ds(topicNameHOSTILE))+"</h1><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>"
+        + contents
+        + "</tbody></table>";
 }
 
 function sendEncryptedMessageHTML(address, name, publickey) {
