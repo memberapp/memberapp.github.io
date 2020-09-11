@@ -142,33 +142,33 @@
                                 <span onclick="refreshPool();return false;" title="Refresh Balance" id="balancedetails"
                                     class="balancedetails"><span id="balance">0</span></span>
                                 <a id="myfeedbutton" title="My Feed (Latest posts from your topics or peeps)"
-                                    class="btn" href="#myfeed" onclick="showMyFeed();">📰</a>
+                                    class="btn" href="#myfeed" onclick="resetScroll();showMyFeed();">📰</a>
                                 <a id="notificationsbutton" title="Notifications" class="btn"
                                     href="#notifications?start=0"
-                                    onclick="showNotifications(0,numbers.results,'notifications');">🔔<span
+                                    onclick="resetScroll();showNotifications(0,numbers.results,'notifications');">🔔<span
                                         class="alertcount noselect" id="alertcount"></span></a>
                                 <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
-                                    onclick="showNewPost();">📝</a>
+                                    onclick="resetScroll();showNewPost();">📝</a>
                                 <a id="privatemessagesbutton" title="Messages" class="btn privatemessagesbutton"
-                                    href="#messages" onclick="showMessages();">📧<span class="alertcount noselect"
+                                    href="#messages" onclick="resetScroll();showMessages();">📧<span class="alertcount noselect"
                                         id="alertcountpm"></span></a>
                                 <a id="settingsbutton" title="Settings" class="btn" href="#settings"
-                                    onclick="showSettings();">⚙️</a>
+                                    onclick="resetScroll();showSettings();">⚙️</a>
                                 <a id="toolsbutton" title="Tools" class="btn" href="#tools"
-                                    onclick="showTools();">🛠️</a>
+                                    onclick="resetScroll();showTools();">🛠️</a>
                             </span>
                         </span>
                         <span class="headerbuttons">
                             <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
-                                onclick="showTopicList();">📚</a>
+                                onclick="resetScroll();showTopicList();">📚</a>
                             <a id="mapbutton" title="Map" class="btn" href="#map" onclick="showMap();">🌍</a>
                         </span>
                         <span id="loggedout" class="loggedout">
                             <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login"
-                                onclick="showLogin();">login</a>
+                                onclick="resetScroll();showLogin();">login</a>
                             <span class="separatorwide"></span>
                             <a id="loginbutton" class="btn vavilon" data-vavilon="new account" href="#login"
-                                onclick="showLogin();">new account</a>
+                                onclick="resetScroll();showLogin();">new account</a>
                         </span>
                         <span class="separatorwidebreakpoint"></span>
                         <span id="topiccontainer" class="topiccontainer">
@@ -739,9 +739,7 @@
                         <thead>
                             <tr>
                                 <th>Member</th>
-                                <th></th>
                                 <th>Rates</th>
-                                <th></th>
                                 <th>Member</th>
                             </tr>
                         </thead>
@@ -759,9 +757,7 @@
                         <thead>
                             <tr>
                                 <th>Member</th>
-                                <th></th>
                                 <th>Rates</th>
-                                <th></th>
                                 <th>Member</th>
                             </tr>
                         </thead>
@@ -919,6 +915,8 @@
                     <div id="messageslist"></div>
                 </div>
             </div>
+
+            <div id="topicmeta" class="applicationpage" style="display: none;"></div>
 
             <div id="posts" style="display: none;"></div>
 

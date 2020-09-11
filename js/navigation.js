@@ -1,7 +1,7 @@
 "use strict";
 
 function displayContentBasedOnURLParameters() {
-
+  
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
 
     var url = window.location.href;
@@ -127,6 +127,14 @@ function hideAll() {
 function show(theDiv) {
     hideAll();
     document.getElementById(theDiv).style.display = "block";
+}
+
+function showOnly(theDiv) {
+    document.getElementById(theDiv).style.display = "block";
+}
+
+function hide(theDiv) {
+    document.getElementById(theDiv).style.display = "none";
 }
 
 function showTools() {
@@ -256,6 +264,7 @@ function showPFC(start, limit, page, pubkey, type) {
 }
 
 function showMyFeed() {
+    setTopic('');
     getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, numbers.results, 'posts', '');
 }
 
@@ -280,11 +289,19 @@ function getCurrentTopicHOSTILE() {
 }
 
 function showTopicList() {
+    setTopic("");
     getAndPopulateTopicList(true);
+}
+
+function resetScroll(){
+    scrollhistory = [];
 }
 
 function postsSelectorChanged() {
 
+    //Reset scroll history
+    resetScroll();
+ 
     //get value from the 4 drop downs
     var selector;
 
@@ -335,7 +352,15 @@ function setTopic(topicNameHOSTILE) {
 
     if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
         selector.selectedIndex = 0;
+        hide("topicmeta");
         return;
+    }
+
+    if(topicNameHOSTILE.toLowerCase()=="myfeed" || topicNameHOSTILE.toLowerCase()=="mytopics"){
+        hide("topicmeta");
+    }else{
+        showOnly("topicmeta");
+        getAndPopulateTopic(topicNameHOSTILE);
     }
 
     selector.selectedIndex = 1;
@@ -394,8 +419,16 @@ var detectBackOrForward = function (onBack, onForward) {
     }
 };
 
+var followOrBackFlag=false;
 window.addEventListener("hashchange", detectBackOrForward(
-    function () { displayContentBasedOnURLParameters(); },
-    function () { displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
+    function () { followOrBackFlag=true; displayContentBasedOnURLParameters(); },
+    function () { followOrBackFlag=true; displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
 ));
 
+var scrollhistory = [];
+
+//record the scroll position
+document.addEventListener("click", function() {
+    scrollhistory[window.location.hash]=window.scrollY;
+    //alert("document capture click");
+ }, true)
