@@ -567,9 +567,9 @@ function getHTMLForTopic(data) {
 
 function getHTMLForTopicHeader(topicNameHOSTILE,contents){
         //todo, move this to htmlquarantine.
-        return "<h1 class='topicheader'>"+capitalizeFirstLetter(ds(topicNameHOSTILE))+"</h1><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>"
+        return "<div class='content'><h1 class='topicheader'>"+capitalizeFirstLetter(ds(topicNameHOSTILE))+"</h1><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>"
         + contents
-        + "</tbody></table>";
+        + "</tbody></table></div>";
 }
 
 function sendEncryptedMessageHTML(address, name, publickey) {
