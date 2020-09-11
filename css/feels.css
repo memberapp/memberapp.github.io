@@ -976,15 +976,13 @@ img {
   margin-top: 1rem; }
 
 .memberfilter {
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: inline-block;
   margin-left: 0.25rem; }
   .memberfilter .starrating {
     margin: 0 0.25rem;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center; }
+    display: inline-block; }
+  .memberfilter .hnuser {
+    display: inline-block !important; }
 
 .notificationtitle,
 .repost {
