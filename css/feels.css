@@ -342,6 +342,12 @@ img {
 .blocked {
   opacity: 0.2; }
 
+.sats {
+  padding: 0;
+  position: relative; }
+  .sats:before {
+    content: ","; }
+
 body {
   background: #f7f7f7;
   position: relative;
@@ -976,15 +982,13 @@ img {
   margin-top: 1rem; }
 
 .memberfilter {
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: inline-block;
   margin-left: 0.25rem; }
   .memberfilter .starrating {
     margin: 0 0.25rem;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center; }
+    display: inline-block; }
+  .memberfilter .hnuser {
+    display: inline-block !important; }
 
 .notificationtitle,
 .repost {
@@ -1179,7 +1183,8 @@ img {
   display: none; }
 
 .fatitem .reply .commentdetails {
-  padding: 0.875rem; }
+  padding: 0.875rem;
+  width: 100%; }
 
 .comment-tree {
   background: white;
@@ -1437,11 +1442,6 @@ header {
             font-weight: bold;
             padding: 0;
             margin-right: 0.5rem; }
-            header .pagetop nav .navitemsmain .headerbuttons #balance .sats {
-              padding: 0;
-              position: relative; }
-              header .pagetop nav .navitemsmain .headerbuttons #balance .sats:before {
-                content: ","; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
             margin-right: 0.75rem; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
@@ -2115,6 +2115,34 @@ body.article {
       text-align: left;
       font-weight: bold; }
 
+#topicmeta {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto; }
+  @media (min-width: 769px) {
+    #topicmeta {
+      max-width: 800px; } }
+  @media (max-width: 768px) {
+    #topicmeta {
+      max-width: 540px; } }
+  #topicmeta .content {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    @media (max-width: 400px) {
+      #topicmeta .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+
 #messagesanchor {
   width: 100%;
   padding-right: 15px;
@@ -2617,8 +2645,3 @@ body.article {
     #following .content br,
     #followers .content br {
       display: none; }
-
-
-      .notificationtitle, .repost {
-        display: inherit;
-    }
