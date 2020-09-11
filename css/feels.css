@@ -2126,6 +2126,21 @@ body.article {
   @media (max-width: 768px) {
     #topicmeta {
       max-width: 540px; } }
+  #topicmeta .content {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+    @media (max-width: 400px) {
+      #topicmeta .content {
+        margin-left: -15px !important;
+        margin-right: -15px !important;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
 
 #messagesanchor {
   width: 100%;
