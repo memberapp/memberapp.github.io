@@ -309,7 +309,7 @@ img {
 
 .imgurimage {
   background-color: white;
-  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0.2)), linear-gradient(45deg, rgba(0, 0, 0, 0.2) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0.2));
+  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.12) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.12) 75%, rgba(0, 0, 0, 0.12)), linear-gradient(45deg, rgba(0, 0, 0, 0.12) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.12) 75%, rgba(0, 0, 0, 0.12));
   background-size: 50px 50px;
   background-position: 0 0, 25px 25px; }
 
