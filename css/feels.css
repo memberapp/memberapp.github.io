@@ -1179,7 +1179,8 @@ img {
   display: none; }
 
 .fatitem .reply .commentdetails {
-  padding: 0.875rem; }
+  padding: 0.875rem;
+  width: 100%; }
 
 .comment-tree {
   background: white;
@@ -2617,8 +2618,3 @@ body.article {
     #following .content br,
     #followers .content br {
       display: none; }
-
-
-      .notificationtitle, .repost {
-        display: inherit;
-    }
