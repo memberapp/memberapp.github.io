@@ -419,9 +419,10 @@ var detectBackOrForward = function (onBack, onForward) {
     }
 };
 
+var followOrBackFlag=false;
 window.addEventListener("hashchange", detectBackOrForward(
-    function () { displayContentBasedOnURLParameters(); },
-    function () { displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
+    function () { followOrBackFlag=true; displayContentBasedOnURLParameters(); },
+    function () { followOrBackFlag=true; displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
 ));
 
 var scrollhistory = [];

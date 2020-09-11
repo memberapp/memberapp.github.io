@@ -278,7 +278,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
     pageElement.innerHTML = contents; //display the result in the HTML element
     listenForTwitFrameResizes();
     addDynamicHTMLElements(data, page);
-    window.scrollTo(0, scrollhistory[window.location.hash]);
+    //window.scrollTo(0, scrollhistory[window.location.hash]);
     //detectMultipleIDS();
     return;
 }
@@ -293,7 +293,12 @@ function addDynamicHTMLElements(data, page, disable) {
     jdenticon();
     //Add ratings, disable controls if the star rating can be updated
     addStarRatings(data, page, disable);
-    window.scrollTo(0, scrollhistory[window.location.hash]);
+    if(followOrBackFlag){
+        window.scrollTo(0, scrollhistory[window.location.hash]);
+        followOrBackFlag=false;
+    }else{
+        window.scrollTo(0, 0);
+    }
 }
 
 function addStarRatings(data, page, disable) {
