@@ -342,6 +342,12 @@ img {
 .blocked {
   opacity: 0.2; }
 
+.sats {
+  padding: 0;
+  position: relative; }
+  .sats:before {
+    content: ","; }
+
 body {
   background: #f7f7f7;
   position: relative;
@@ -1436,11 +1442,6 @@ header {
             font-weight: bold;
             padding: 0;
             margin-right: 0.5rem; }
-            header .pagetop nav .navitemsmain .headerbuttons #balance .sats {
-              padding: 0;
-              position: relative; }
-              header .pagetop nav .navitemsmain .headerbuttons #balance .sats:before {
-                content: ","; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
             margin-right: 0.75rem; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
