@@ -76,7 +76,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data, page);
         listenForTwitFrameResizes();
-        window.scrollTo(0, scrollhistory[window.location.hash]);
+        //window.scrollTo(0, scrollhistory[window.location.hash]);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(page).innerHTML = 'Something is wrong:' + status;
