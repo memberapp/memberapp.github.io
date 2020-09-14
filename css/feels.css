@@ -1115,26 +1115,31 @@ img {
     background: url(../img/link-45deg.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
-  .postdetails .subtextbuttons [id^="repostlinknotifications"] .repostscount,
-  .postdetails .subtextbuttons [id^="repostlinkposts"] .repostscount,
-  .postdetails .subtextbuttons [id^="repostlinkthread"] .repostscount,
-  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinknotifications"] .repostscount,
-  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkposts"] .repostscount,
-  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkthread"] .repostscount {
+  .postdetails .subtextbuttons .rememberscounttext,
+  .comment-tree ul li .reply div .subtextbuttons .rememberscounttext {
     margin-right: 0.15rem; }
-  .postdetails .subtextbuttons [id^="repostlinknotifications"]::before,
-  .postdetails .subtextbuttons [id^="repostlinkposts"]::before,
-  .postdetails .subtextbuttons [id^="repostlinkthread"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinknotifications"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="repostlinkthread"]::before {
-    background: url(../img/re-member.svg);
-    background-size: 0.875rem 0.875rem;
-    display: inline-block; }
+    .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
+    .postdetails .subtextbuttons .rememberscounttext a.remebersactive::before,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersactive::before {
+      background: url(../img/re-member.svg);
+      background-size: 0.875rem 0.875rem;
+      display: inline-block; }
+    .postdetails .subtextbuttons .rememberscounttext a.remebersinactive,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive {
+      color: #4dc846; }
+      .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
+      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before {
+        fill: #4dc846; }
+    .postdetails .subtextbuttons .rememberscounttext .repostscount,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext .repostscount {
+      margin-right: 0.15rem; }
   .postdetails .subtextbuttons [id^="replylinkposts"]::before,
+  .postdetails .subtextbuttons [id^="replylinkmemberposts"]::before,
   .postdetails .subtextbuttons [id^="replylinkthread"]::before,
   .postdetails .subtextbuttons [id^="replylinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkposts"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="replylinkmemberposts"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkthread"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinknotifications"]::before {
     background: url(../img/chat-right-fill.svg);
@@ -1147,9 +1152,11 @@ img {
     display: inline-block; }
   .postdetails .subtextbuttons a[id^="tiplinkposts"]::before,
   .postdetails .subtextbuttons a[id^="tiplinkthread"]::before,
+  .postdetails .subtextbuttons a[id^="tiplinkmemberposts"]::before,
   .postdetails .subtextbuttons a[id^="tiplinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkposts"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkmemberposts"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinknotifications"]::before {
     background: url(../img/tip.svg);
     background-size: 0.875rem 0.875rem;
@@ -1165,11 +1172,15 @@ img {
   .postdetails .subtextbuttons a[id^="hideuserlinkposts"],
   .postdetails .subtextbuttons a[id^="hidepostlinkposts"],
   .postdetails .subtextbuttons a[id^="hidepostlinkthread"],
+  .postdetails .subtextbuttons a[id^="hidepostlinkmemberposts"],
+  .postdetails .subtextbuttons a[id^="hideuserlinkmemberposts"],
   .postdetails .subtextbuttons a[id^="hidepostlinknotifications"],
   .postdetails .subtextbuttons a[id^="hideuserlinkthread"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkposts"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinkposts"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinkthread"],
+  .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinkmemberposts"],
+  .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkmemberposts"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinknotifications"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkthread"] {
     color: #c1292e; }
