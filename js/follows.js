@@ -15,7 +15,7 @@ function getAndPopulateFollowers(qaddress) {
         if (qaddress != pubkey) {
             disable = true;
         }
-        addDynamicHTMLElements(data, page, disable);
+        addDynamicHTMLElements(data, disable);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(page).innerHTML = 'Something is wrong:' + status;
@@ -38,7 +38,7 @@ function getAndPopulateFollowing(qaddress) {
         if (qaddress != pubkey) {
             disable = true;
         }
-        addDynamicHTMLElements(data, page, disable);
+        addDynamicHTMLElements(data, disable);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById(page).innerHTML = 'Something is wrong:' + status;
@@ -60,7 +60,7 @@ function getAndPopulateBlockers(qaddress) {
         if (qaddress != pubkey) {
             disable = true;
         }
-        addDynamicHTMLElements(data, page, disable);
+        addDynamicHTMLElements(data, disable);
 
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
@@ -84,7 +84,7 @@ function getAndPopulateBlocking(qaddress) {
         if (qaddress != pubkey) {
             disable = true;
         }
-        addDynamicHTMLElements(data, page, disable);
+        addDynamicHTMLElements(data, disable);
 
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
