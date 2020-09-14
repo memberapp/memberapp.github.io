@@ -2055,15 +2055,17 @@ body.article {
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
-  margin-left: auto; }
-  #topiclistanchor br {
-    display: none; }
+  margin-left: auto;
+  overflow-x: auto;
+  white-space: nowrap; }
   @media (min-width: 769px) {
     #topiclistanchor {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #topiclistanchor {
       max-width: 540px; } }
+  #topiclistanchor br {
+    display: none; }
   #topiclistanchor table {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2081,6 +2083,10 @@ body.article {
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+    @media (max-width: 399px) {
+      #topiclistanchor table td.tltopicname {
+        max-width: 200px;
+        white-space: pre-wrap; } }
     #topiclistanchor table .filterprovider {
       display: -ms-flexbox;
       display: flex;
