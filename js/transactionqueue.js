@@ -291,7 +291,7 @@ class TransactionQueue {
         try{
           //Try refreshing the utxo pool
           const ECPair = BITBOX.ECPair;
-          let keyPair = new ECPair().fromWIF(this.queue[0].cash.key);
+          let keyPair = new ECPair().fromWIF(returnObject.queue[0].cash.key);
           let theAddress = keyPair.getAddress();
           returnObject.utxopools[theAddress].refreshPool();        
         }catch(err){
