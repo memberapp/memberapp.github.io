@@ -262,9 +262,9 @@ class TransactionQueue {
 
     returnObject.isSending = false;
     if (err) {
-      console.log(err);
+      console.log(err.code+" "+err.message);
       let errorMessage = err.message;
-      returnObject.updateStatus("Error:" + errorMessage);
+      returnObject.updateStatus("Error:" + err.code + " " + errorMessage);
       if (errorMessage === undefined) {
         errorMessage = "Network Error";
       }

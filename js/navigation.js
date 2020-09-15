@@ -321,10 +321,12 @@ function postsSelectorChanged() {
     selector = document.getElementById('filterselector');
     var filter = selector.options[selector.selectedIndex].value;
 
-    //set the document location
-    document.location.href = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
+    //These two statements may trigger page load twice on firefox but not on other browsers
 
-    //topicChanged();
+    //set the document location without triggering the back/forward function
+    suspendPageReload=true;
+    document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
+    setTimeout(function () {suspendPageReload=false;},1000);
 
     //show the posts
     displayContentBasedOnURLParameters();
@@ -398,6 +400,7 @@ var suspendPageReload = false;
 
 var detectBackOrForward = function (onBack, onForward) {
     //Note, sometimes onForward is being called even though it a regular navigation click event
+    //Set the suspendPageReload to true before changing the href to stop this from happening
     let hashHistory = [window.location.hash];
     let historyLength = window.history.length;
 
@@ -416,14 +419,17 @@ var detectBackOrForward = function (onBack, onForward) {
             hashHistory.push(hash);
             historyLength = length;
         }
+        return true;
     }
 };
 
 var followOrBackFlag=false;
-window.addEventListener("hashchange", detectBackOrForward(
+var backforwardfunction = detectBackOrForward(
     function () { followOrBackFlag=true; displayContentBasedOnURLParameters(); },
     function () { followOrBackFlag=true; displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
-));
+)
+
+window.onhashchange=backforwardfunction;
 
 var scrollhistory = [];
 

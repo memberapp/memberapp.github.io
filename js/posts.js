@@ -16,6 +16,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Show loading animation
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
+    if(topicnameHOSTILE==null || topicnameHOSTILE==""){
+        setTopic('');
+    }
+
     //Request content from the server and display it when received
     getJSON(dropdowns.contentserver + '?action=show&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
@@ -232,7 +236,7 @@ function getAndPopulateTopicList(showpage) {
 
 
         var lastValue = "";
-        for (var i = 0; i < 40; i++) {
+        for (var i = 0; i < Math.min(40,data.length); i++) {
             var option = document.createElement("option");
             //Caution, topicname can contain anything
             if (data[i].topicname == null) continue;
