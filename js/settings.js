@@ -11,6 +11,7 @@ function getAndPopulateCommunityRatings(qaddress) {
         }
         document.getElementById('communityratingtable').innerHTML = contents;
 
+        addDynamicHTMLElements();
         /*
         for (var i = 0; i < data.length; i++) {
 
@@ -39,7 +40,7 @@ function getAndPopulateRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReason2HTML(data[i]);
-            contents = contents + ratingAndReasonNew(data[i].ratername,data[i].rateraddress,data[i].name,data[i].address,data[i].rating,[i].reason);
+            contents = contents + ratingAndReasonNew(data[i].ratername,data[i].rateraddress,data[i].name,data[i].address,data[i].rating,data[i].reason);
         }
         document.getElementById('memberratingtable').innerHTML = contents;
 
@@ -59,6 +60,7 @@ function getAndPopulateRatings(qaddress) {
             starRating1.disable();
 
         }*/
+        addDynamicHTMLElements();
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById('memberratingtable').innerHTML = 'Something is wrong:' + status;
@@ -163,7 +165,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             }
             document.getElementById('memberrating').innerHTML = `<div class="starrating"><div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + ratingScore + `" id="memberrating` + qaddress + `"></div></div>`;
             var theElement = document.getElementById(`memberrating` + qaddress);
-            var starRating1 = addSingleStarsRating(false, theElement);
+            var starRating1 = addSingleStarsRating(theElement);
         }
 
         jdenticon();
@@ -235,6 +237,8 @@ function getAndPopulateSettings() {
         var theSetting = localStorageGet(localStorageSafe, key);
         if (theSetting != null) {
             dropdowns[key] = theSetting;
+        }else{
+            theSetting=dropdowns[key];
         }
         var selector = document.getElementById(key);
 

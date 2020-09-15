@@ -262,15 +262,16 @@ class TransactionQueue {
 
     returnObject.isSending = false;
     if (err) {
-      console.log(err);
+      console.log(err.code+" "+err.message);
       let errorMessage = err.message;
-      returnObject.updateStatus("Error:" + errorMessage);
+      returnObject.updateStatus("Error:" + err.code + " " + errorMessage);
       if (errorMessage === undefined) {
         errorMessage = "Network Error";
       }
 
       if (errorMessage.startsWith("64")) {
-        //Error:258: txn-mempool-conflict 
+        //Error:64: 
+        //May mean not enough mining fee was provided or chained trx limit reached 
         returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " .Transaction(s) Still Queued. Waiting for new block, Retry in 60 seconds)");
         await sleep(60000);
         returnObject.updateStatus("Sending Again . . .");
@@ -279,23 +280,25 @@ class TransactionQueue {
         return;
       }
 
-      if (errorMessage.startsWith("1001")) {
-        //1001 No UTXOs 
-        returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " .Transaction(s) Still Queued. Retry in 60 seconds)");
-        await sleep(60000);
-        returnObject.updateStatus("Sending Again . . .");
-        await sleep(1000);
-        returnObject.sendNextTransaction();
-        return;
-      }
-
-
-      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
+      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("1001") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
+        //1001 No UTXOs
         //Error:258: txn-mempool-conflict 
         //2000, all fetched UTXOs already spend
         //2001, insuffiencent funds from unspent UTXOs. Add funds
+
         returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " Transaction(s) Still Queued, Retry in 5 seconds)");
-        await sleep(4000);
+        await sleep(1000);
+        try{
+          //Try refreshing the utxo pool
+          const ECPair = BITBOX.ECPair;
+          let keyPair = new ECPair().fromWIF(this.queue[0].cash.key);
+          let theAddress = keyPair.getAddress();
+          returnObject.utxopools[theAddress].refreshPool();        
+        }catch(err){
+          returnObject.updateStatus(err);  
+          console.log(err);
+        }
+        await sleep(1000);
         returnObject.updateStatus("Sending Again . . .");
         await sleep(1000);
         returnObject.sendNextTransaction();

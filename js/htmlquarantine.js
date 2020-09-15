@@ -113,7 +113,7 @@ function getReplyDiv(txid, page, differentiator) {
         </div>`;
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, repostcount) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, repostcount, repostidtxid) {
 
     var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid = san(txid);
@@ -131,10 +131,16 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         hideuserHTML += `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','` + unicodeEscape(topicHOSTILE) + `','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user for topic)</a>`;
     }
 
+    var remembersActive="remebersactive";
+    var remembersOnclick=` onclick="repostPost('` + santxid + `','` + page + `'); this.class='remebersinactive'; this.onclick='';" href="javascript:;"`;
+    if(repostidtxid!=null && repostidtxid!=''){
+        remembersActive="remebersinactive";
+        remembersOnclick=` `;
+    }
 
     return mapLink + 
         `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
-        <span class="remeberscounttext"><a id="repostlink` + page + santxid + `" onclick="repostPost('` + santxid + `',''); this.onclick='';" href="javascript:;"> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('re-members') + `</a></span>
+        <span class="rememberscounttext"><a class="`+remembersActive+`" id="repostlink` + page + santxid + `" `+remembersOnclick+`> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('re-members') + `</a></span>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <a  id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
@@ -182,7 +188,7 @@ function getPostListItemHTML(postHTML) {
     return `<li>` + postHTML + `</li>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid) {
     if (name == null) { name = address.substring(0, 10); }
 
     repliesroot = Number(repliesroot);
@@ -231,7 +237,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + `</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
         + ` `
-        + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount) +
+        + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid) +
         `</span>
                     </div>`
         + getReplyDiv(txid, page, differentiator) + `
@@ -256,7 +262,7 @@ function dslite(input) {
     return input;
 }
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message = dslite(message);
@@ -293,7 +299,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount) + `</div>
+                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
                             `+ getReplyDiv(txid, page, differentiator) + `
                         </div>
                     </div>
@@ -506,14 +512,14 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     return contents;
 }
 
-function getHTMLForTopicArray(data) {
+function getHTMLForTopicArray(data, elementStem) {
 
-    var ret = getHTMLForTopic(data[0]);
+    var ret = getHTMLForTopic(data[0], elementStem);
 
     //This line so the alternate coloring on table rows still works
     ret += "<tr style='display:none'></tr>";
 
-    ret += `<tr style='display:none' id='modmore` + data[0].mostrecent + `'><td colspan='4'>`;
+    ret += `<tr style='display:none' id='` + elementStem + data[0].mostrecent + `'><td colspan='4'>`;
     if (data[0].topic != "") {
         ret += `<div class="filterprovider">` + clickActionNamedHTML("unsub", data.topicname, "Unsubscribe") + "</div>";
     }
@@ -547,13 +553,13 @@ function getHTMLForTopicArray(data) {
     return ret;
 }
 
-function getHTMLForTopic(data) {
+function getHTMLForTopic(data,elementStem) {
     var ret = "";
     var subscribe = clickActionNamedHTML("sub", data.topicname, "sub");
 
     //Show more button if the user is subscribed or topic is emtpy string
     if (data.address != null || data.topicname == "") {
-        subscribe = `<a id="modmorelink` + data.mostrecent + `" onclick="showMore('modmore` + data.mostrecent + `','modmorelink` + data.mostrecent + `'); jdenticon();" href="javascript:;">more</a>`;
+        subscribe = `<a id="`+elementStem+`link` + data.mostrecent + `" onclick="showMore('` + elementStem + data.mostrecent + `','`+elementStem+`link` + data.mostrecent + `'); jdenticon();" href="javascript:;">more</a>`;
     }
     //Special values for empty topic
     if (data.topicname == "") {
@@ -567,9 +573,9 @@ function getHTMLForTopic(data) {
 
 function getHTMLForTopicHeader(topicNameHOSTILE,contents){
         //todo, move this to htmlquarantine.
-        return "<h1 class='topicheader'>"+capitalizeFirstLetter(ds(topicNameHOSTILE))+"</h1><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>"
+        return "<div class='content'><h1 class='topicheader'>"+capitalizeFirstLetter(ds(topicNameHOSTILE))+"</h1><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>"
         + contents
-        + "</tbody></table>";
+        + "</tbody></table></div>";
 }
 
 function sendEncryptedMessageHTML(address, name, publickey) {

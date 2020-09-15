@@ -36,7 +36,7 @@ async function userSearchChanged(searchbox, targetelement) {
                 + "</div><br/>";
         }
         document.getElementById(targetelement).innerHTML = contents;
-        addDynamicHTMLElements(data, searchbox);
+        addDynamicHTMLElements(data);
 
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);

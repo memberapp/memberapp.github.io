@@ -16,6 +16,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Show loading animation
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
+    if(topicnameHOSTILE==null || topicnameHOSTILE==""){
+        setTopic('');
+    }
+
     //Request content from the server and display it when received
     getJSON(dropdowns.contentserver + '?action=show&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
 
@@ -113,7 +117,7 @@ function getAndPopulateMessages(start, limit) {
 
 
         document.getElementById('messageslist').innerHTML = contents;
-        addDynamicHTMLElements(data, "privatemessages");
+        addDynamicHTMLElements(data);
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
         document.getElementById('messageslist').innerHTML = 'Something is wrong:' + status;
@@ -189,7 +193,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
     });
 }
 
-function getAndPopulateTopic(topicNameHOSTILE){
+function getAndPopulateTopic(topicNameHOSTILE) {
     var page = "topicmeta";
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
     getJSON(dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkey).then(function (data) {
@@ -203,11 +207,11 @@ function getAndPopulateTopic(topicNameHOSTILE){
                 modsArray.push(data[i]);
             }
         }
-        if(modsArray.length>0){
-            contents += getHTMLForTopicArray(modsArray);
+        if (modsArray.length > 0) {
+            contents += getHTMLForTopicArray(modsArray, 'modmoresingle');
         }
 
-        document.getElementById(page).innerHTML = getHTMLForTopicHeader(topicNameHOSTILE,contents);
+        document.getElementById(page).innerHTML = getHTMLForTopicHeader(topicNameHOSTILE, contents);
 
     }, function (status) { //error detection....
         console.log('Something is wrong:' + status);
@@ -232,7 +236,7 @@ function getAndPopulateTopicList(showpage) {
 
 
         var lastValue = "";
-        for (var i = 0; i < 40; i++) {
+        for (var i = 0; i < Math.min(40,data.length); i++) {
             var option = document.createElement("option");
             //Caution, topicname can contain anything
             if (data[i].topicname == null) continue;
@@ -247,18 +251,18 @@ function getAndPopulateTopicList(showpage) {
 
         //group data rows by moderator before displaying
         var modsArray = [];
-        var contents="";
+        var contents = "";
         for (var i = 0; i < data.length; i++) {
             if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
                 modsArray.push(data[i]);
             } else {
-                contents += getHTMLForTopicArray(modsArray);
+                contents += getHTMLForTopicArray(modsArray, 'modmore');
                 modsArray = [];
                 modsArray.push(data[i]);
             }
         }
 
-        document.getElementById(page).innerHTML = getHTMLForTopicHeader("",contents);
+        document.getElementById(page).innerHTML = getHTMLForTopicHeader("", contents);
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         //document.getElementById(page).innerHTML = contents;
@@ -277,34 +281,37 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
     var pageElement = document.getElementById(page);
     pageElement.innerHTML = contents; //display the result in the HTML element
     listenForTwitFrameResizes();
-    addDynamicHTMLElements(data, page);
+    addDynamicHTMLElements(data);
     //window.scrollTo(0, scrollhistory[window.location.hash]);
     //detectMultipleIDS();
     return;
 }
 
 
-function addDynamicHTMLElements(data, page, disable) {
+function addDynamicHTMLElements(data) {
 
-    if (data.length > 0) {
-        updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
+    if (data != null && data != undefined) {
+        if (data.length > 0) {
+            updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
+        }
+        if (followOrBackFlag) {
+            window.scrollTo(0, scrollhistory[window.location.hash]);
+            followOrBackFlag = false;
+        } else {
+            window.scrollTo(0, 0);
+        }
     }
+    //Add ratings, disable controls if the star rating can be updated
+    addStarRatings();
+        
     //Add identicons
     jdenticon();
-    //Add ratings, disable controls if the star rating can be updated
-    addStarRatings(data, page, disable);
-    if(followOrBackFlag){
-        window.scrollTo(0, scrollhistory[window.location.hash]);
-        followOrBackFlag=false;
-    }else{
-        window.scrollTo(0, 0);
-    }
 }
 
-function addStarRatings(data, page, disable) {
+function addStarRatings() {
     var matches = document.querySelectorAll("[id^='rating']");
     for (var i = 0; i < matches.length; i++) {
-        addSingleStarsRating(disable, matches[i]);
+        addSingleStarsRating(matches[i]);
         //var test=matches[i];
     }
 
@@ -354,7 +361,7 @@ function addStarRatings(data, page, disable) {
         }*/
 }
 
-function addSingleStarsRating(disable, theElement) {
+function addSingleStarsRating(theElement) {
     //var theElement = document.querySelector(querySelector);
     if (theElement == undefined) return;
     let name = theElement.dataset.ratingname;
@@ -432,8 +439,10 @@ function memorandumPreview() {
     var time = new Date().getTime() / 1000;
     document.getElementById('memorandumpreview').innerHTML =
         ``
-        + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview', 0)
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value, null, 0);
+        + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview', 0, '')
+        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value, null, 0, '');
+
+    //todo, should update the jdenticon and rating here
 }
 
 function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
@@ -448,9 +457,9 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     var retHTML = "";
     if (data.repost != undefined && data.repost != "" && data.repost != "null") {
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
-        retHTML = "<span class='repost'>" + userHTML(data.address, data.name, repostRatingID, data.rating, 8) + " re-membered</span>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount);
+        retHTML = "<span class='repost'>" + userHTML(data.address, data.name, repostRatingID, data.rating, 8) + " re-membered</span>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid);
     } else {
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount);
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid);
     }
     if (dataReply != null) {
         retHTML += getHTMLForReply(dataReply, 0, page, starindex, null);
@@ -461,7 +470,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -582,7 +591,7 @@ function dislikePost(txid, tipAddress) {
     sendDislike(txid);
 }
 
-function repostPost(txid) {
+function repostPost(txid, page) {
     if (privkey == "") {
         alert("You must login to like posts.");
         return false;

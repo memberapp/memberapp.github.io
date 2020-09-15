@@ -406,6 +406,12 @@ footer {
     display: inline;
     font-size: inherit;
   }
+  .remebersinactive {
+    cursor: default;
+  }
+  .remebersinactive a:hover {
+    text-decoration: none;
+  }
 }
 
 /*Vote buttons*/
