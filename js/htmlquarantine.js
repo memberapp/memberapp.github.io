@@ -648,3 +648,10 @@ function getSafeTranslation(translationKey, xvar) {
 function createiframe(url, elementname) {
     document.getElementById(elementname).innerHTML = `<iframe height="400" width="550" id="alsotweet" border=0 frameborder=0 src="` + url + `"></iframe>`;
 }
+
+function showErrorMessage(status, page, theURL) {
+    console.log(`Error:${status}`);
+    document.getElementById(page).innerHTML = `<span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span>`;
+    updateStatus(`Error:${status}` + ds(theURL));
+    updateStatus(`Error:${status}`);
+}

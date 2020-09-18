@@ -27,7 +27,8 @@ async function userSearchChanged(searchbox, targetelement) {
     }
 
     //Request content from the server and display it when received
-    getJSON(dropdowns.contentserver + '?action=usersearch&address=' + pubkey + '&searchterm=' + encodeURIComponent(searchtermHOSTILE)).then(function (data) {
+    var theURL =dropdowns.contentserver + '?action=usersearch&address=' + pubkey + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
+    getJSON(theURL).then(function (data) {
         var test = data;
         var contents = `<label for="usersearchresults">Results</label>`;
         for (var i = 0; i < data.length; i++) {
@@ -39,14 +40,10 @@ async function userSearchChanged(searchbox, targetelement) {
         addDynamicHTMLElements(data);
 
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        //document.getElementById('usersearch').innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, null, theURL);
     });
-
-
-
 }
+
 
 function createSurrogate() {
     var surrogateName = document.getElementById('surrogatename').value;

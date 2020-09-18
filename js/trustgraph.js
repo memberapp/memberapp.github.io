@@ -2,10 +2,13 @@
 
 function getAndPopulateTrustGraph(member, target) {
 
+    var page='trustgraphdetails';
     //First clear old graph
-    document.getElementById('trustgraphdetails').innerHTML = document.getElementById("loading").innerHTML;
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    getJSON(dropdowns.contentserver + '?action=trustgraph&address=' + member + '&qaddress=' + target).then(function (data) {
+    
+    var theURL =dropdowns.contentserver + '?action=trustgraph&address=' + member + '&qaddress=' + target;
+    getJSON(theURL).then(function (data) {
 
 
         var directrating = 0.0;
@@ -51,7 +54,7 @@ function getAndPopulateTrustGraph(member, target) {
 
         contentsHTML=getTrustRatingTableHTML(contentsHTML,overallRating.toFixed(1));
         
-        document.getElementById('trustgraphdetails').innerHTML = contentsHTML;
+        document.getElementById(page).innerHTML = contentsHTML;
 
 
         var overallStarRating = raterJs({
@@ -135,8 +138,6 @@ function getAndPopulateTrustGraph(member, target) {
         addDynamicHTMLElements();
         
     }, function (status) { //error detection....
-        console.log('Something is wrong:'+status);
-        document.getElementById('trustgraphdetails').innerHTML = 'Something is wrong:'+status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
 }

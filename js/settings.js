@@ -3,75 +3,45 @@
 function getAndPopulateCommunityRatings(qaddress) {
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
-    getJSON(dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    var page='communityratingtable';
+    var theURL=dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReasonHTML(data[i]);
             contents = contents + ratingAndReasonNew(data[i].name, data[i].address, data[i].rateename, data[i].rates, data[i].rating, data[i].reason);
         }
-        document.getElementById('communityratingtable').innerHTML = contents;
+        document.getElementById(page).innerHTML = contents;
 
         addDynamicHTMLElements();
-        /*
-        for (var i = 0; i < data.length; i++) {
-
-            var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
-            var theAddress = san(data[i].address);
-            var starRating1 = raterJs({
-                starSize: 24,
-                rating: Math.round(theRating * 10) / 10,
-                element: document.querySelector("#crating" + theAddress),
-                disableText: rts(data[i].name) + ' rates ' + rts(data[i].rateename) + ' as {rating}/{maxRating}',
-            });
-            starRating1.theAddress = theAddress;
-            starRating1.disable();
-        }*/
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById('communityratingtable').innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
 }
 
 function getAndPopulateRatings(qaddress) {
     document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
-    getJSON(dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    var page='memberratingtable';
+    var theURL=dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReason2HTML(data[i]);
             contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason);
         }
-        document.getElementById('memberratingtable').innerHTML = contents;
-
-        /*
-        for (var i = 0; i < data.length; i++) {
-
-            var theRating = 0; if (data[i].rating != null) { theRating = (parseInt(data[i].rating) / 64) + 1; }
-            var theAddress = san(data[i].rates);
-            var starRating1 = raterJs({
-                starSize: 24,
-                rating: Math.round(theRating * 10) / 10,
-                element: document.querySelector("#mrating" + theAddress),
-                disableText: rts(data[i].ratername) + ' rates ' + rts(data[i].name) + ' as {rating}/{maxRating}',
-            });
-            starRating1.theAddress = theAddress;
-
-            starRating1.disable();
-
-        }*/
+        document.getElementById(page).innerHTML = contents;
         addDynamicHTMLElements();
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById('memberratingtable').innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
 }
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
 
-    getJSON(dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    var theURL =dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
 
 
         //alert('Your Json result is:  ' + data.result); //you can comment this, i used it to debug
@@ -170,10 +140,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
         jdenticon();
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        updateStatus(status);
+        showErrorMessage(status, null, theURL);
     });
 }
+
 
 function getAndPopulateMember(qaddress) {
     document.getElementById('memberlegacyformat').innerHTML = qaddress;

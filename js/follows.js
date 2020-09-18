@@ -4,7 +4,8 @@
 function getAndPopulateFollowers(qaddress) {
     show('followers');
     var page = "followers";
-    getJSON(dropdowns.contentserver + '?action=followers&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    var theURL=dropdowns.contentserver + '?action=followers&qaddress=' + qaddress + '&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getMembersWithRatingHTML(i, page, data[i], "Follows", false);
@@ -17,17 +18,15 @@ function getAndPopulateFollowers(qaddress) {
         }
         addDynamicHTMLElements(data, disable);
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
-
 }
 
 function getAndPopulateFollowing(qaddress) {
     show('following');
     var page = "following";
-    getJSON(dropdowns.contentserver + '?action=following&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    var theURL=dropdowns.contentserver + '?action=following&qaddress=' + qaddress + '&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getMembersWithRatingHTML(i, page, data[i], "Follows", true);
@@ -40,16 +39,15 @@ function getAndPopulateFollowing(qaddress) {
         }
         addDynamicHTMLElements(data, disable);
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
 }
 
 function getAndPopulateBlockers(qaddress) {
     show('blockers');
     var page = "blockers";
-    getJSON(dropdowns.contentserver + '?action=blockers&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    var theURL=dropdowns.contentserver + '?action=blockers&qaddress=' + qaddress + '&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getMembersWithRatingHTML(i, page, data[i], "Mutes", false);
@@ -63,17 +61,15 @@ function getAndPopulateBlockers(qaddress) {
         addDynamicHTMLElements(data, disable);
 
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
-
 }
 
 function getAndPopulateBlocking(qaddress) {
     show('blocking');
     var page = "blocking";
-    getJSON(dropdowns.contentserver + '?action=blocking&qaddress=' + qaddress + '&address=' + pubkey).then(function (data) {
+    var theURL=dropdowns.contentserver + '?action=blocking&qaddress=' + qaddress + '&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getMembersWithRatingHTML(i, page, data[i], "Mutes", true);
@@ -87,8 +83,6 @@ function getAndPopulateBlocking(qaddress) {
         addDynamicHTMLElements(data, disable);
 
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
 }

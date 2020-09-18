@@ -4,7 +4,8 @@ var lastViewOfNotifications = 0;
 var lastViewOfNotificationspm = 0;
 
 function displayNotificationCount() {
-    getJSON(dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm).then(function (data) {
+    var theURL =dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
+    getJSON(theURL).then(function (data) {
 
         if (data[0].count == null) {
             return;
@@ -34,11 +35,10 @@ function displayNotificationCount() {
         document.title = pageTitle + "member.cash";
         setTimeout(displayNotificationCount, 60000);
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        updateStatus(status);
+        showErrorMessage(status, null, theURL);
     });
-
 }
+
 
 function getAndPopulateNotifications(start, limit, page, qaddress) {
     //Clear existing content
@@ -50,7 +50,8 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
 
 
     //Request content from the server and display it when received
-    getJSON(dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+    var theURL=dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
+    getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
         var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
@@ -78,12 +79,10 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         listenForTwitFrameResizes();
         //window.scrollTo(0, scrollhistory[window.location.hash]);
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
-
 }
+
 
 
 
