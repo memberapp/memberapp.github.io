@@ -16,12 +16,13 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Show loading animation
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    if(topicnameHOSTILE==null || topicnameHOSTILE==""){
+    if (topicnameHOSTILE == null || topicnameHOSTILE == "") {
         setTopic('');
     }
 
     //Request content from the server and display it when received
-    getJSON(dropdowns.contentserver + '?action=show&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
+    var theURL = dropdowns.contentserver + '?action=show&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
+    getJSON(theURL).then(function (data) {
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
@@ -48,58 +49,17 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
-
 }
 
-/*function getAndPopulate(start, limit, page, qaddress, type, topicNameHOSTILE) {
-    console.log("deprecated getAndPopulate old called");
-    if (type == "") type = "all";
-    //Clear Topic
-    //currentTopic == "";
-    //document.getElementById('topicdiv').innerHTML = "";
-
-    //Show the relevant html element
-    show(page);
-
-    //Show loading animation
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-
-
-
-    //Request content from the server and display it when received
-    getJSON(dropdowns.contentserver + '?action=' + page + '&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&address=' + pubkey + '&type=' + type + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit).then(function (data) {
-
-        //Show navigation next/back buttons
-        var navbuttons = getNavButtonsHTML(start, limit, page, type, qaddress, topicNameHOSTILE, "getAndPopulate", data.length > 0 ? data[0].unduplicatedlength : 0);
-
-        //Server bug will sometimes return duplicates if a post is liked twice for example,
-        // this is a workaround, better if fixed server side.
-        data = removeDuplicates(data);
-
-        data = mergeRepliesToRepliesBySameAuthor(data, false);
-
-        var contents = "";
-        for (var i = 0; i < data.length; i++) {
-            contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
-        }
-        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
-    }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
-    });
-
-}*/
 
 function getAndPopulateMessages(start, limit) {
 
     document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
 
-    getJSON(dropdowns.contentserver + '?action=messages&address=' + pubkey).then(function (data) {
+    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
 
         lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
@@ -119,9 +79,7 @@ function getAndPopulateMessages(start, limit) {
         document.getElementById('messageslist').innerHTML = contents;
         addDynamicHTMLElements(data);
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById('messageslist').innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, 'messageslist', theURL);
     });
 }
 
@@ -136,7 +94,8 @@ function getAndPopulateThread(roottxid, txid, pageName) {
     //If no post is specified, we'll use it as a top level
     if (txid === undefined || txid == "") { txid = roottxid; }
 
-    getJSON(dropdowns.contentserver + '?action=thread&address=' + pubkey + '&txid=' + txid).then(function (data) {
+    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkey + '&txid=' + txid;
+    getJSON(theURL).then(function (data) {
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
@@ -187,16 +146,15 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         scrollToElement("highlightedcomment");
 
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(pageName).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, pageName, theURL);
     });
 }
 
 function getAndPopulateTopic(topicNameHOSTILE) {
     var page = "topicmeta";
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    getJSON(dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkey).then(function (data) {
+    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkey;
+    getJSON(theURL).then(function (data) {
 
         //todo, move this to htmlquarantine.
         var contents = "";
@@ -214,9 +172,7 @@ function getAndPopulateTopic(topicNameHOSTILE) {
         document.getElementById(page).innerHTML = getHTMLForTopicHeader(topicNameHOSTILE, contents);
 
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
 }
 
@@ -226,7 +182,8 @@ function getAndPopulateTopicList(showpage) {
         show(page);
     }
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    getJSON(dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey).then(function (data) {
+    var theURL=dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey;
+    getJSON(theURL).then(function (data) {
 
         var selectboxIndex = 5;
         var selectbox = document.getElementById('topicselector');
@@ -236,7 +193,7 @@ function getAndPopulateTopicList(showpage) {
 
 
         var lastValue = "";
-        for (var i = 0; i < Math.min(40,data.length); i++) {
+        for (var i = 0; i < Math.min(40, data.length); i++) {
             var option = document.createElement("option");
             //Caution, topicname can contain anything
             if (data[i].topicname == null) continue;
@@ -268,9 +225,7 @@ function getAndPopulateTopicList(showpage) {
         //document.getElementById(page).innerHTML = contents;
         //detectMultipleIDS();
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        document.getElementById(page).innerHTML = 'Something is wrong:' + status;
-        updateStatus(status);
+        showErrorMessage(status, page, theURL);
     });
 }
 
@@ -303,7 +258,7 @@ function addDynamicHTMLElements(data) {
     }
     //Add ratings, disable controls if the star rating can be updated
     addStarRatings();
-        
+
     //Add identicons
     jdenticon();
 }
@@ -314,51 +269,6 @@ function addStarRatings() {
         addSingleStarsRating(matches[i]);
         //var test=matches[i];
     }
-
-
-    /*    for (var i = 0; i < data.length; i++) {
-    
-            //Standard message display
-            //var name = data[i].name;
-            var theAddress = ds(data[i].address);
-            //var rawRating = data[i].rating;
-    
-            if (data[i].type == "reply" || data[i].type == "like" || data[i].type == "follow" || data[i].type == "rating" || data[i].type == "page") {
-                //Notifications, or like, or follow reply
-                theAddress = ds(data[i].origin);
-                //name = ds(data[i].originname);
-            }
-    
-            var querySelector = "#rating" + i + page + theAddress;
-            var theElement = document.querySelector(querySelector);
-            addSingleStarsRating(disable, theElement);
-    
-    
-            //Add second one for reply
-            if (data[i].type == "reply" || data[i].type == "page") {
-                var querySelector = "#rating" + i + page + theAddress + data[i].type;
-                var theElement = document.querySelector(querySelector);
-                addSingleStarsRating(disable, theElement);
-            }
-    
-            //Add second one for like
-            if (data[i].type == "like") {
-                //var rawRating = data[i].selfrating;
-                var theAddress = ds(data[i].address);
-                var querySelector = "#rating" + i + page + theAddress + data[i].type;
-                var theElement = document.querySelector(querySelector);
-                addSingleStarsRating(disable, theElement);
-            }
-    
-            //For reposts
-            if (data[i].repost != null && data[i].repost != "" && data[i].repost != undefined) {
-                var theAddress = ds(data[i].rpaddress);
-                var querySelector = "#rating" + i + "repost" + theAddress;
-                var theElement = document.querySelector(querySelector);
-                addSingleStarsRating(disable, theElement);
-            }
-    
-        }*/
 }
 
 function addSingleStarsRating(theElement) {

@@ -123,7 +123,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     if (article) {
         articleLink = `<a id="articlelink` + page + santxid + `" href="?` + santxid.substring(0, 4) + `#article?post=` + santxid.substring(0, 10) + `">article</a> `;
     }
-    if (geohash!=null && geohash != "") {
+    if (geohash != null && geohash != "") {
         mapLink = ` <a id="maplink` + page + santxid + `" onclick="showMap('` + san(geohash) + `','` + santxid + `');" href="javascript:;">🌍map</a> `;
     }
     var hideuserHTML = hideuserHTML = `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user)</a>`;
@@ -131,21 +131,25 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         hideuserHTML += `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','` + unicodeEscape(topicHOSTILE) + `','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user for topic)</a>`;
     }
 
-    var remembersActive="remebersactive";
-    var remembersOnclick=` onclick="repostPost('` + santxid + `','` + page + `'); this.class='remebersinactive'; this.onclick='';" href="javascript:;"`;
-    if(repostidtxid!=null && repostidtxid!=''){
-        remembersActive="remebersinactive";
-        remembersOnclick=` `;
+    var remembersActive = "remebersactive";
+    var remembersOnclick = ` onclick="repostPost('` + santxid + `','` + page + `'); this.class='remebersinactive'; this.onclick='';" href="javascript:;"`;
+    if (repostidtxid != null && repostidtxid != '') {
+        remembersActive = "remebersinactive";
+        remembersOnclick = ` `;
     }
 
-    return mapLink + 
+    var permalink = `?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10);
+    if (pathpermalinks) {
+        permalink = `p/` + santxid.substring(0, 10);
+    }
+    return mapLink +
         `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
-        <span class="rememberscounttext"><a class="`+remembersActive+`" id="repostlink` + page + santxid + `" `+remembersOnclick+`> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('re-members') + `</a></span>
+        <span class="rememberscounttext"><a class="`+ remembersActive + `" id="repostlink` + page + santxid + `" ` + remembersOnclick + `> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('re-members') + `</a></span>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <a  id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
-            <a class="permalink" id="permalink`+ page + santxid + `" href="?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10) + `">permalink</a> `
-            + articleLink + `
+            <a class="permalink" id="permalink`+ page + santxid + `" href="` + permalink + `">permalink</a> `
+        + articleLink + `
             <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/` + santxid + `">memo</a>
             <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/` + santxid + `">bitcoin.com</a>
             <a rel="noopener noreferrer" target="blockchair" href="https://blockchair.com/bitcoin-cash/transaction/` + santxid + `">blockchair</a>
@@ -458,10 +462,10 @@ function rts(thetext) {
 }
 
 //Settings
-function ratingAndReasonNew(ratername,rateraddress,rateename,rateeaddress,rating,reason){
+function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason) {
     //Careful to ensure disabletext is sanitized
     var disableText = rts(ratername) + ' rates ' + rts(rateename) + ' as {rating}/{maxRating}';
-    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="`+disableText+`" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='rating"` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='rating"` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
 }
 
 /*
@@ -540,10 +544,10 @@ function getHTMLForTopicArray(data, elementStem) {
             if (data[i].existingmodaddress != null) {
                 ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, "Remove Filter ", "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
             } else {
-                var userName=document.getElementById('settingsnametext').value;
-                var userIsGroupFilter=userName.toLowerCase().endsWith("filter") || userName.toLowerCase().endsWith("group");
-                var modIsGroupFilter=data[i].existingmodname.toLowerCase().endsWith("filter") || data[i].existingmodname.toLowerCase().endsWith("group");
-                if(userIsGroupFilter != modIsGroupFilter){ 
+                var userName = document.getElementById('settingsnametext').value;
+                var userIsGroupFilter = userName.toLowerCase().endsWith("filter") || userName.toLowerCase().endsWith("group");
+                var modIsGroupFilter = data[i].existingmodname.toLowerCase().endsWith("filter") || data[i].existingmodname.toLowerCase().endsWith("group");
+                if (userIsGroupFilter != modIsGroupFilter) {
                     ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, "Add Filter ", "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
                 }
             }
@@ -553,13 +557,13 @@ function getHTMLForTopicArray(data, elementStem) {
     return ret;
 }
 
-function getHTMLForTopic(data,elementStem) {
+function getHTMLForTopic(data, elementStem) {
     var ret = "";
     var subscribe = clickActionNamedHTML("sub", data.topicname, "sub");
 
     //Show more button if the user is subscribed or topic is emtpy string
     if (data.address != null || data.topicname == "") {
-        subscribe = `<a id="`+elementStem+`link` + data.mostrecent + `" onclick="showMore('` + elementStem + data.mostrecent + `','`+elementStem+`link` + data.mostrecent + `'); jdenticon();" href="javascript:;">more</a>`;
+        subscribe = `<a id="` + elementStem + `link` + data.mostrecent + `" onclick="showMore('` + elementStem + data.mostrecent + `','` + elementStem + `link` + data.mostrecent + `'); jdenticon();" href="javascript:;">more</a>`;
     }
     //Special values for empty topic
     if (data.topicname == "") {
@@ -571,9 +575,9 @@ function getHTMLForTopic(data,elementStem) {
 
 }
 
-function getHTMLForTopicHeader(topicNameHOSTILE,contents){
-        //todo, move this to htmlquarantine.
-        return "<div class='content'><h1 class='topicheader'>"+capitalizeFirstLetter(ds(topicNameHOSTILE))+"</h1><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>"
+function getHTMLForTopicHeader(topicNameHOSTILE, contents) {
+    //todo, move this to htmlquarantine.
+    return "<div class='content'><h1 class='topicheader'>" + capitalizeFirstLetter(ds(topicNameHOSTILE)) + "</h1><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>"
         + contents
         + "</tbody></table></div>";
 }
@@ -643,4 +647,11 @@ function getSafeTranslation(translationKey, xvar) {
 //nb iframe not allowed by twitter
 function createiframe(url, elementname) {
     document.getElementById(elementname).innerHTML = `<iframe height="400" width="550" id="alsotweet" border=0 frameborder=0 src="` + url + `"></iframe>`;
+}
+
+function showErrorMessage(status, page, theURL) {
+    console.log(`Error:${status}`);
+    document.getElementById(page).innerHTML = `<span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span>`;
+    updateStatus(`Error:${status}` + ds(theURL));
+    updateStatus(`Error:${status}`);
 }

@@ -41,17 +41,7 @@ var getJSON = function (url) {
     xhr.responseType = 'json';
 
     xhr.onerror = function (e) {
-      if (XMLHttpRequest.readyState == 4) {
-        // HTTP error (can be checked by XMLHttpRequest.status and XMLHttpRequest.statusText)
-        reject('Error HTTP: ' + XMLHttpRequest.statusText);
-      }
-      else if (XMLHttpRequest.readyState == 0) {
-        // Network error (i.e. connection refused, access denied due to CORS, etc.)
-        reject('Error:' + XMLHttpRequest.statusText);
-      }
-      else {
-        reject('Error.');
-      }
+      reject(xhr.status);
     };
 
     xhr.onload = function () {
@@ -59,7 +49,7 @@ var getJSON = function (url) {
       if (status == 200) {
         resolve(xhr.response);
       } else {
-        reject(status);
+        reject(xhr.status);
       }
     };
     xhr.send();

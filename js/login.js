@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.4.7";
+var version = "4.4.8";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -15,6 +15,7 @@ let tq = new TransactionQueue(updateStatus);
 var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
+var pathpermalinks=true;
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 //var twitterEmbeds=new Array();
@@ -26,8 +27,8 @@ var settings = {
     "showtwitter": "true"
 };
 var dropdowns = {
-    "contentserver": "https://memberjs.org:8123/member.js",
-    "txbroadcastserver": "https://memberjs.org:8123/v2/",
+    "contentserver": "https://member.cash/v2/member.js",
+    "txbroadcastserver": "https://member.cash/v2/",
     "utxoserver": "https://rest.bitcoin.com/v2/",
     "currencydisplay": "USD"
 };
@@ -61,6 +62,7 @@ window.onbeforeunload = function () {
 };
 
 function init() {
+    document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('version').innerHTML = version;
     setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
@@ -180,6 +182,7 @@ function login(loginkey) {
     document.getElementById('loginkey').value = "";
 
     getAndPopulateSettings();
+
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     //Get latest rate and update balance
     getLatestUSDrate();

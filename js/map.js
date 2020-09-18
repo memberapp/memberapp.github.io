@@ -118,8 +118,8 @@ function onMapClick(e) {
 function loadLocationListFromServerAndPlaceOnMap(event) {
 
     var mapBounds = map.getBounds();
-    var url = dropdowns.contentserver + '?action=map&address=' + pubkey + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
-    getJSON(url).then(function (data) {
+    var theURL = dropdowns.contentserver + '?action=map&address=' + pubkey + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
+    getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var pageName = san(data[i].txid);
@@ -135,8 +135,7 @@ function loadLocationListFromServerAndPlaceOnMap(event) {
             }
         }
     }, function (status) { //error detection....
-        console.log('Something is wrong:' + status);
-        updateStatus(status);
+        showErrorMessage(status, null, theURL);
     });
-
 }
+
