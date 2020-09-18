@@ -1458,7 +1458,8 @@ header {
           header .pagetop nav .navitemsmain .headerbuttons #balance {
             font-weight: bold;
             padding: 0;
-            margin-right: 0.5rem; }
+            margin-right: 0.5rem;
+            cursor: pointer; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
             margin-right: 0.75rem; }
           header .pagetop nav .navitemsmain .headerbuttons #mapbutton {
