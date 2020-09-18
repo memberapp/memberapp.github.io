@@ -40,7 +40,7 @@ function getAndPopulateRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReason2HTML(data[i]);
-            contents = contents + ratingAndReasonNew(data[i].ratername,data[i].rateraddress,data[i].name,data[i].address,data[i].rating,data[i].reason);
+            contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason);
         }
         document.getElementById('memberratingtable').innerHTML = contents;
 
@@ -237,8 +237,8 @@ function getAndPopulateSettings() {
         var theSetting = localStorageGet(localStorageSafe, key);
         if (theSetting != null) {
             dropdowns[key] = theSetting;
-        }else{
-            theSetting=dropdowns[key];
+        } else {
+            theSetting = dropdowns[key];
         }
         var selector = document.getElementById(key);
 
@@ -250,10 +250,16 @@ function getAndPopulateSettings() {
         }
     }
 
+    //Make sure users are not on the old server
+    if (dropdowns.contentserver == "https://memberjs.org:8123/member.js") {
+        dropdowns.contentserver = "https://member.cash/v2/member.js";
+    }
+    if (dropdowns.txbroadcastserver == "https://memberjs.org:8123/member.js") {
+        dropdowns.txbroadcastserver = "https://member.cash/v2/";
+    }
 
 
     getDataCommonToSettingsAndMember(pubkey, "settings");
-
 
 }
 
@@ -266,7 +272,7 @@ function updateSettingsDropdown(settingsName) {
     var selector = document.getElementById(settingsName);
     dropdowns[settingsName] = selector.options[selector.selectedIndex].value;
     localStorageSet(localStorageSafe, settingsName, dropdowns[settingsName]);
-    if(settingsName=="currencydisplay"){
+    if (settingsName == "currencydisplay") {
         tq.updateBalance(pubkey);
     }
 }

@@ -1,19 +1,34 @@
 "use strict";
 
 function displayContentBasedOnURLParameters() {
-  
+
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
+
+    var path = window.location.pathname;
 
     var url = window.location.href;
 
     var action;
 
-    if (url.indexOf('#') == -1) {
+    if (url.indexOf('#') != -1) {
+        action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
         //navigation back to home page, clear topic
+
+    } else if (url.indexOf('/p/') != -1) {
+        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase());
+        showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'thread');
+        return;
+    } else if (url.indexOf('/m/') != -1) {
+        var pagingidHOSTILE = sanitizeAlphanumeric(url.substring(url.indexOf('/m/') + 3).toLowerCase());
+        showMemberPagingID(pagingidHOSTILE);
+        return;
+    } else if (url.indexOf('/t/') != -1) {
+        var topicnameHOSTILE = sanitizeAlphanumeric(url.substring(url.indexOf('/t/') + 3).toLowerCase());
+        showTopic(0,numbers.results,topicnameHOSTILE);
+        return;
+    } else {
         setTopic("");
         action = "";
-    } else {
-        action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
     }
 
     if (action.startsWith("show")) {
@@ -293,7 +308,7 @@ function showTopicList() {
     getAndPopulateTopicList(true);
 }
 
-function resetScroll(){
+function resetScroll() {
     scrollhistory = [];
 }
 
@@ -301,7 +316,7 @@ function postsSelectorChanged() {
 
     //Reset scroll history
     resetScroll();
- 
+
     //get value from the 4 drop downs
     var selector;
 
@@ -324,9 +339,9 @@ function postsSelectorChanged() {
     //These two statements may trigger page load twice on firefox but not on other browsers
 
     //set the document location without triggering the back/forward function
-    suspendPageReload=true;
+    suspendPageReload = true;
     document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
-    setTimeout(function () {suspendPageReload=false;},1000);
+    setTimeout(function () { suspendPageReload = false; }, 1000);
 
     //show the posts
     displayContentBasedOnURLParameters();
@@ -358,9 +373,9 @@ function setTopic(topicNameHOSTILE) {
         return;
     }
 
-    if(topicNameHOSTILE.toLowerCase()=="myfeed" || topicNameHOSTILE.toLowerCase()=="mytopics"){
+    if (topicNameHOSTILE.toLowerCase() == "myfeed" || topicNameHOSTILE.toLowerCase() == "mytopics") {
         hide("topicmeta");
-    }else{
+    } else {
         showOnly("topicmeta");
         getAndPopulateTopic(topicNameHOSTILE);
     }
@@ -423,18 +438,18 @@ var detectBackOrForward = function (onBack, onForward) {
     }
 };
 
-var followOrBackFlag=false;
+var followOrBackFlag = false;
 var backforwardfunction = detectBackOrForward(
-    function () { followOrBackFlag=true; displayContentBasedOnURLParameters(); },
-    function () { followOrBackFlag=true; displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
+    function () { followOrBackFlag = true; displayContentBasedOnURLParameters(); },
+    function () { followOrBackFlag = true; displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
 )
 
-window.onhashchange=backforwardfunction;
+window.onhashchange = backforwardfunction;
 
 var scrollhistory = [];
 
 //record the scroll position
-document.addEventListener("click", function() {
-    scrollhistory[window.location.hash]=window.scrollY;
+document.addEventListener("click", function () {
+    scrollhistory[window.location.hash] = window.scrollY;
     //alert("document capture click");
- }, true)
+}, true)

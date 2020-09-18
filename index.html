@@ -7,6 +7,8 @@
     <meta name="description" content="member.cash is a fully decentralized public platform for discussion">
     <title>member.cash</title>
 
+    <!--INSERTMETADATA-->
+
     <!--  Only scripts from this website, inline script needed for operation -->
     <!--  Call Memberjs for content -->
     <!--  Call localhost for content -->
@@ -17,9 +19,8 @@
     <!--  bitcoin.com for latest price -->
 
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://markets.api.bitcoin.com/live/bitcoin https://memberjs.org https://rest.bitcoin.com/v2/ https://memberjs.org:8123/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/; img-src 'self' https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ data: https://tile.openstreetmap.org/; frame-src 'self' https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
+        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/; img-src 'self' https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ data: https://tile.openstreetmap.org/; frame-src 'self' https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
 
-    <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--  Progressive Web App Service Worker -->
@@ -30,7 +31,6 @@
     <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
 
     <!-- DNS-prefetch resource hints  -->
-    <link rel="preconnect" href="https://memberjs.org:8123">
     <link rel="preconnect" href="https://memberjs.bchd.cash">
     <link rel="preconnect" href="https://i.imgur.com">
     <link rel="preconnect" href="https://twitframe.com">
@@ -69,7 +69,8 @@
 </head>
 
 <body id="mainbody">
-    <!--  Extenal Libraries -->
+    <div id="previewcontent" class="previewcontent"><!--INSERTCONTENT--></div>
+    <!--  External Libraries -->
     <script src="js/lib/buffer.js"></script>
     <script src="js/lib/anchorme.min.js"></script>
     <script src="js/lib/bitboxsdk.js"></script>
@@ -245,10 +246,6 @@
                         href="https://www.reddit.com/user/theamazingnuggets">/u/theamazingnuggets</a><br />
                     Email <a rel='noopener noreferrer'
                         href="mailto:nuggetcoins@gmail.com">nuggetcoins@gmail.com</a><br />
-                    <span class="vavilon" data-vavilon="get some at">You might be able to get some at the</span> <a
-                        rel='noopener noreferrer' target="bitcoincom" href="https://free.bitcoin.com/">Bitcoin.com
-                        Faucet</a> <span class="vavilon" data-vavilon="steps required">(Just steps 2 and 3
-                        required)</span>.
                     <br />
                     <br />
                     <span class="vavilon" data-vavilon="your address is">Your address is</span> <span
@@ -706,15 +703,15 @@
                     <div>
                         <label for="contentserver" data-vavilon="Content Server">Content Server</label>
                         <select id="contentserver" onchange='updateSettingsDropdown("contentserver");'>
-                            <option value="https://memberjs.org:8123/member.js">Memberjs.org</option>
+                            <option value="https://member.cash/v2/member.js">member.cash</option>
                             <option value="https://memberjs.bchd.cash/member.js">memberjs.bchd.cash</option>
-                            <option value="http://127.0.0.1:3123/member.js">Localhost</option>
+                            <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
                         </select>
                     </div>
                     <div>
                         <label for="txbroadcastserver" data-vavilon="TX Broadcast Server">TX Broadcast Server</label>
                         <select id="txbroadcastserver" onchange='updateSettingsDropdown("txbroadcastserver");'>
-                            <option value="https://memberjs.org:8123/v2/">Memberjs.org</option>
+                            <option value="https://member.cash/v2/">member.cash</option>
                             <option value="https://memberjs.bchd.cash/v2/">memberjs.bchd.cash</option>
                             <option value="http://127.0.0.1:3123/v2/">Localhost</option>
                             <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
@@ -727,6 +724,7 @@
                             <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
                             <option value="https://memberjs.bchd.cash/v2/">memberjs.bchd.cash</option>
                             <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+                            <option value="https://member.cash/v2/">member.cash</option>
                         </select>
                     </div>
                 </div>
