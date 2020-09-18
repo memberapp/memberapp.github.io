@@ -354,6 +354,9 @@ img {
   .sats:before {
     content: ","; }
 
+.previewcontent {
+  display: none; }
+
 body {
   background: #f7f7f7;
   position: relative;
