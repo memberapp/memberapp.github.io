@@ -33,6 +33,8 @@ function timeSince(timestamp, compress) {
 }
 
 var getJSON = function (url) {
+  //force a reload by appending time so no cached versions
+  url+="&r=" + (new Date().getTime() % 1000);
   updateStatus("loading " + url);
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
@@ -217,7 +219,7 @@ function localStorageSet(theSO, itemName, theString) {
 //var usdrate = 266.75;
 
 function getLatestUSDrate() {
-  getJSON(`https://markets.api.bitcoin.com/live/bitcoin`).then(function (data) {
+  getJSON(`https://markets.api.bitcoin.com/live/bitcoin?a=1`).then(function (data) {
     document.getElementById("usdrate").value = Number(data.data.BCH);
     updateSettingsNumber('usdrate');
     updateStatus("Got updated exchange rate:" + numbers.usdrate);
