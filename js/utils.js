@@ -34,7 +34,7 @@ function timeSince(timestamp, compress) {
 
 var getJSON = function (url) {
   //force a reload by appending time so no cached versions
-  url+="&r=" + (new Date().getTime() % 1000);
+  url+="&r=" + (new Date().getTime() % 100000);
   updateStatus("loading " + url);
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
