@@ -265,14 +265,14 @@ function addDynamicHTMLElements(data) {
         }
     }
     //Add ratings, disable controls if the star rating can be updated
-    addStarRatings();
+    addStarRatings('rating');
 
     //Add identicons
     jdenticon();
 }
 
-function addStarRatings() {
-    var matches = document.querySelectorAll("[id^='rating']");
+function addStarRatings(stem) {
+    var matches = document.querySelectorAll("[id^='"+stem+"']");
     for (var i = 0; i < matches.length; i++) {
         addSingleStarsRating(matches[i]);
         //var test=matches[i];
