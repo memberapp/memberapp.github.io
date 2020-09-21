@@ -133,7 +133,7 @@ function postRaw(posttext, privkey, topic, newpoststatus, memocompleted) {
         data: ["0x6d02", posttext],
         cash: { key: privkey }
     }
-
+    console.log(posttext.length);
     if (topic != "") {
         tx = {
             data: ["0x6d0c", topic, posttext],

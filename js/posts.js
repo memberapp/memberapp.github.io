@@ -105,7 +105,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Make sure we have id of the top level post
         if (data.length > 0) { roottxid = data[0].roottxid; }
 
-        setTopic(data[0].topic);
+        //setTopic(data[0].topic);
 
         //Find who started the thread
         var threadstarter = null;
@@ -165,9 +165,17 @@ function getAndPopulateTopic(topicNameHOSTILE) {
                 modsArray.push(data[i]);
             }
         }
-        if (modsArray.length > 0) {
-            contents += getHTMLForTopicArray(modsArray, 'modmoresingle');
+        if (modsArray.length == 0) {
+            var newData=[];
+            //These may be out of date, but better than showing NaN
+            newData.mostrecent=0;
+            newData.subscount=0;
+            newData.messagescount=0;
+            newData.topicname=topicNameHOSTILE;
+            modsArray.push(newData);
         }
+        contents += getHTMLForTopicArray(modsArray, 'modmoresingle');
+        
 
         document.getElementById(page).innerHTML = getHTMLForTopicHeader(topicNameHOSTILE, contents);
 
@@ -569,16 +577,22 @@ function showMore(show, hide) {
 }
 
 
-function topictitleChanged(elementName) {
-    if (document.getElementById(elementName + 'topic').value.length == 0) {
-        document.getElementById(elementName + 'title').maxLength = 217;
-        document.getElementById(elementName + 'topic').maxLength = Math.max(0, 214 - document.getElementById(elementName + 'title').value.length);
+function topictitleChanged() {
+    //emojis are of length 4, although treated as length 2, so got to turn into hex to discover real length
+    const titlelength = new Buffer(document.getElementById('memorandumtitle').value).toString('hex').length/2;
+    const topiclength = new Buffer(document.getElementById('memorandumtopic').value).toString('hex').length/2;
+    
+    if (topiclength == 0) {
+        document.getElementById('memorandumtitle').maxLength = 217;
+        document.getElementById('memorandumtopic').maxLength = Math.max(0, 214 - titlelength);
+        document.getElementById('newpostmemorandumbutton').disabled=(titlelength>217);
     } else {
-        document.getElementById(elementName + 'title').maxLength = Math.max(0, 214 - document.getElementById(elementName + 'topic').value.length);
-        document.getElementById(elementName + 'topic').maxLength = Math.max(0, 214 - document.getElementById(elementName + 'title').value.length);
+        document.getElementById('memorandumtitle').maxLength = Math.max(0, 214 - topiclength);
+        document.getElementById('memorandumtopic').maxLength = Math.max(0, 214 - titlelength);
+        document.getElementById('newpostmemorandumbutton').disabled=(topiclength+titlelength>214);
     }
-    document.getElementById(elementName + 'titlelengthadvice').innerHTML = "(" + document.getElementById(elementName + 'title').value.length + "/" + document.getElementById(elementName + 'title').maxLength + ")";
-    document.getElementById(elementName + 'topiclengthadvice').innerHTML = "(" + document.getElementById(elementName + 'topic').value.length + "/" + document.getElementById(elementName + 'topic').maxLength + ")";
+    document.getElementById('memorandumtitlelengthadvice').innerHTML = "(" + titlelength + "/" + document.getElementById('memorandumtitle').maxLength + ")";
+    document.getElementById('memorandumtopiclengthadvice').innerHTML = "(" + topiclength + "/" + document.getElementById('memorandumtopic').maxLength + ")";
 }
 
 function geopost() {

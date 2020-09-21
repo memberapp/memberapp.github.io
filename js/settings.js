@@ -3,8 +3,8 @@
 function getAndPopulateCommunityRatings(qaddress) {
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
-    var page='communityratingtable';
-    var theURL=dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey;
+    var page = 'communityratingtable';
+    var theURL = dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -22,8 +22,8 @@ function getAndPopulateCommunityRatings(qaddress) {
 function getAndPopulateRatings(qaddress) {
     document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
-    var page='memberratingtable';
-    var theURL=dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey;
+    var page = 'memberratingtable';
+    var theURL = dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -40,7 +40,7 @@ function getAndPopulateRatings(qaddress) {
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
 
-    var theURL =dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
 
 
@@ -69,6 +69,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
+            document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at member.cash";
             jdenticonname = data[0].name;
         }
 

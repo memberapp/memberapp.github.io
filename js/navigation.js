@@ -34,7 +34,6 @@ function displayContentBasedOnURLParameters() {
     if (action.startsWith("show")) {
         setOrder('orderselector', getParameterByName("order"));
         setOrder('contentselector', getParameterByName("content"));
-        setTopic(getParameterByName("topicname"));
         setOrder('filterselector', getParameterByName("filter"));
 
         showPostsNew(
@@ -44,7 +43,9 @@ function displayContentBasedOnURLParameters() {
             sanitizeAlphanumeric(getParameterByName("filter")),
             Number(getParameterByName("start")),
             Number(getParameterByName("limit")),
+            sanitizeAlphanumeric(getParameterByName("qaddress"))
         );
+        setTopic(getParameterByName("topicname"));
     } else if (action.startsWith("memberposts")) {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
@@ -136,7 +137,8 @@ function hideAll() {
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
     document.getElementById('messagesanchor').style.display = "none";
-
+    document.getElementById('topicmeta').style.display = "none";
+    
 }
 
 function show(theDiv) {
@@ -283,8 +285,8 @@ function showMyFeed() {
     getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, numbers.results, 'posts', '');
 }
 
-function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit) {
-    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', '');
+function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit, qaddress) {
+    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', qaddress);
 }
 
 
