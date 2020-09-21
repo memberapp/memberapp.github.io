@@ -26,9 +26,9 @@ function getAndPopulateTrustGraph(member, target) {
                 directrating = Number(data[i].memberrating);
             } else {
                 contentsHTML += getIndirectRatingHTML(data[i]);
-                //Try to get at least 6 ratings, or all the ratings if they are not follow based ratings 
-                if (i<6 || Number(data[i].memberrating) > 191) {
-                    oneRemoveRating += Math.min(Number(data[i].memberrating), Number(data[i].interrating));
+                //Try to get at least 10 ratings, or all the ratings if they are not follow based ratings 
+                if ((i<10 && Number(data[i].memberrating) > 190) || Number(data[i].memberrating) > 191) {
+                    oneRemoveRating += Number(data[i].interrating);
                     oneRemoveRatingCount++;
                 }
             }
@@ -52,6 +52,10 @@ function getAndPopulateTrustGraph(member, target) {
 
         overallRating = (overallRating / 64) + 1;
 
+        if(oneRemoveRatingCount==0){
+            overallRating = 0;
+        }
+        
         contentsHTML=getTrustRatingTableHTML(contentsHTML,overallRating.toFixed(1));
         
         document.getElementById(page).innerHTML = contentsHTML;

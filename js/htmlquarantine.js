@@ -453,7 +453,11 @@ function getIndirectRatingHTML(data) {
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {
-    return "<span style='font-size:2em'>Overall Rating:" + Number(rating) + "/5.0</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
+    if(rating==0){
+        return "<span style='font-size:2em'>Overall Rating: No information</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
+    }else{
+        return "<span style='font-size:2em'>Overall Rating:" + Number(rating) + "/5</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
+    }
 }
 
 function rts(thetext) {
@@ -462,10 +466,10 @@ function rts(thetext) {
 }
 
 //Settings
-function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason) {
+function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason, stem) {
     //Careful to ensure disabletext is sanitized
     var disableText = rts(ratername) + ' rates ' + rts(rateename) + ' as {rating}/{maxRating}';
-    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='rating"` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='`+stem+`` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
 }
 
 /*

@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.4.11";
+var version = "4.5.0";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -29,7 +29,7 @@ var settings = {
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",
     "txbroadcastserver": "https://member.cash/v2/",
-    "utxoserver": "https://rest.bitcoin.com/v2/",
+    "utxoserver": "https://member.cash/v2/",
     "currencydisplay": "USD"
 };
 var numbers = {
