@@ -1037,7 +1037,8 @@ img {
       word-wrap: break-word;
       -ms-word-break: break-all;
       word-break: break-all;
-      word-break: break-word; }
+      word-break: break-word;
+      cursor: default; }
       .post .postdetails .title p a {
         color: rgba(0, 0, 0, 0.76); }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {

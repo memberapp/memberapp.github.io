@@ -1,10 +1,19 @@
 "use strict";
 
 function checkForPrivKey() {
-    if (privkey == "") {
+    if (privkey == "" && pubkey!="") {
+        alert("You may be logged in with a public key in read only mode. You must login with a private key to make this action.");
+        return false;
+    }else if (privkey == "") {
         alert("You must login to do this.");
         return false;
     }
+
+    if(tq.getBalance(pubkey)<547){
+        alert("You do not have enough satoshis to do this. You can click on your balance to refresh it.");
+        return false;
+    }
+
     return true;
 }
 

@@ -21,7 +21,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
+    var ret = `<span class="memberfilter"><span class="memberpicsmall" style="display:none;"><img class="memberpicturesmall" width='128' height='128' src='img/`+san(address.substring(0,20))+`128x128.jpg'/></span><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     }
@@ -103,7 +103,7 @@ function getVoteButtons(txid, address, likedtxid, likeordislike, score) {
 function getReplyDiv(txid, page, differentiator) {
     page = page + differentiator;
     return `
-        <div id="reply`+ page + san(txid) + `" style="display:none">
+        <div id="reply` + san(txid) + page + `" style="display:none">
             <br/>
             <textarea id="replytext`+ page + san(txid) + `" rows="3"></textarea>
             <br/>
@@ -143,7 +143,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         permalink = `p/` + santxid.substring(0, 10);
     }
     return mapLink +
-        `<a id="replylink` + page + santxid + `" onclick="showReplyBox('` + page + santxid + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
+        `<a id="replylink` + santxid + page + `" onclick="showReplyBox('` + santxid + page + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
         <span class="rememberscounttext"><a class="`+ remembersActive + `" id="repostlink` + page + santxid + `" ` + remembersOnclick + `> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('re-members') + `</a></span>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <a  id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
@@ -449,7 +449,7 @@ function getDirectRatingHTML(data) {
 }
 
 function getIndirectRatingHTML(data) {
-    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td> <div id='trust" + san(data.member) + san(data.inter) + "'></div> </td>" + "<td align='center'>" + getMemberLink(data.inter, data.intername) + "</td>" + `<td> <div id='trust` + san(data.inter) + san(data.target) + "'> </div> </td>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
+    return "<tr><td><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {
@@ -655,7 +655,7 @@ function createiframe(url, elementname) {
 
 function showErrorMessage(status, page, theURL) {
     console.log(`Error:${status}`);
-    document.getElementById(page).innerHTML = `<span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span>`;
+    document.getElementById(page).innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
     updateStatus(`Error:${status}` + ds(theURL));
     updateStatus(`Error:${status}`);
 }

@@ -13,6 +13,8 @@ const BITBOX = bitboxSdk;
 let extraSatoshis = 5;
 let miningFeeMultiplier = 1;
 
+var resendWait = 2000;
+
 //For BCHDRPC
 //let trxserver = "bchdgrpc";
 //let bchrpcClient = window.bchrpcClient;
@@ -28,7 +30,7 @@ class UTXOPool {
 
     //these two are a bit hacky and break encapsulation
     this.onscreenElementName = onscreenElementName;
-    this.showwarning=true;
+    this.showwarning = true;
 
     //Try to retrieve utxopool from localstorage and set balance
     try {
@@ -80,6 +82,14 @@ class UTXOPool {
     return true;
   }
 
+  getBalance() {
+    var total = 0;
+    for (let i = 0; i < this.utxoPool.length; i++) {
+      total = total + this.utxoPool[i].satoshis;
+    }
+    return total;
+  }
+
   updateBalance() {
 
     try {
@@ -89,26 +99,24 @@ class UTXOPool {
     } catch (err) {
     }
 
-    var total = 0;
-    for (let i = 0; i < this.utxoPool.length; i++) {
-      total = total + this.utxoPool[i].satoshis;
-    }
+    var total = this.getBalance();
+
 
     //var balString=(Math.floor(total/1000)).toLocaleString()+"<span class='sats'>"+(total%1000)+"</span>";
     if (this.onscreenElementName != null) {
       document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
 
       document.getElementById('satoshiamount').innerHTML = total;
-        
-      if (total < 2000 && this.showwarning==true) {
+
+      if (total < 2000 && this.showwarning == true) {
         document.getElementById('lowfundswarning').style.display = 'block';
         showQRCode('lowfundsaddress', 100);
         //only show this message once per app load
-        this.showwarning=false;
+        this.showwarning = false;
       }
-      if(total >= 2000){
-        document.getElementById('lowfundswarning').style.display = 'none';              
-      } 
+      if (total >= 2000) {
+        document.getElementById('lowfundswarning').style.display = 'none';
+      }
     }
 
     return total;
@@ -262,7 +270,7 @@ class TransactionQueue {
 
     returnObject.isSending = false;
     if (err) {
-      console.log(err.code+" "+err.message);
+      console.log(err.code + " " + err.message);
       let errorMessage = err.message;
       returnObject.updateStatus("Error:" + err.code + " " + errorMessage);
       if (errorMessage === undefined) {
@@ -274,31 +282,6 @@ class TransactionQueue {
         //May mean not enough mining fee was provided or chained trx limit reached 
         returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " .Transaction(s) Still Queued. Waiting for new block, Retry in 60 seconds)");
         await sleep(60000);
-        returnObject.updateStatus("Sending Again . . .");
-        await sleep(1000);
-        returnObject.sendNextTransaction();
-        return;
-      }
-
-      if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("1001") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
-        //1001 No UTXOs
-        //Error:258: txn-mempool-conflict 
-        //2000, all fetched UTXOs already spend
-        //2001, insuffiencent funds from unspent UTXOs. Add funds
-
-        returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " Transaction(s) Still Queued, Retry in 5 seconds)");
-        await sleep(1000);
-        try{
-          //Try refreshing the utxo pool
-          const ECPair = BITBOX.ECPair;
-          let keyPair = new ECPair().fromWIF(returnObject.queue[0].cash.key);
-          let theAddress = keyPair.getAddress();
-          returnObject.utxopools[theAddress].refreshPool();        
-        }catch(err){
-          returnObject.updateStatus(err);  
-          console.log(err);
-        }
-        await sleep(1000);
         returnObject.updateStatus("Sending Again . . .");
         await sleep(1000);
         returnObject.sendNextTransaction();
@@ -324,10 +307,36 @@ class TransactionQueue {
           return;
         }
       }
-      alert("There was an error processing the transaction required for this action. Make sure you have sufficient funds in your account and try again. Error:" + errorMessage);
-      return;
-    }
 
+      //if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("1001") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
+      //1001 No UTXOs
+      //Error:258: txn-mempool-conflict 
+      //2000, all fetched UTXOs already spend
+      //2001, insuffiencent funds from unspent UTXOs. Add funds
+
+      returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " Transaction(s) Still Queued, Retry in " + (resendWait / 1000) + " seconds) Try changing UTXO server on settings page.");
+      await sleep(resendWait);
+      resendWait = resendWait * 1.5;
+      try {
+        //Try refreshing the utxo pool
+        const ECPair = BITBOX.ECPair;
+        let keyPair = new ECPair().fromWIF(returnObject.queue[0].cash.key);
+        let theAddress = keyPair.getAddress();
+        returnObject.utxopools[theAddress].refreshPool();
+      } catch (err) {
+        returnObject.updateStatus(err);
+        console.log(err);
+      }
+      await sleep(1000);
+      returnObject.updateStatus("Sending Again . . .");
+      await sleep(1000);
+      returnObject.sendNextTransaction();
+      return;
+      //}
+      //alert("There was an error processing the transaction required for this action. Make sure you have sufficient funds in your account and try again. Error:" + errorMessage);
+      //return;
+    }
+    resendWait = 2000;
     if (res.length > 10) {
       returnObject.updateStatus("<a  rel='noopener noreferrer' target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + res + "'>txid:" + res + "</a>");
       //console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
@@ -612,8 +621,12 @@ class TransactionQueue {
     theUTXOPool.updateBalance();
   }
 
-  updateBalance(address){
+  updateBalance(address) {
     return this.utxopools[address].updateBalance();
+  }
+
+  getBalance(address) {
+    return this.utxopools[address].getBalance();
   }
 
 }

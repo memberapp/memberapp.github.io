@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.5.0";
+var version = "4.5.1";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -181,6 +181,10 @@ function login(loginkey) {
     document.getElementById('newseedphrase').innerText = "";
     document.getElementById('loginkey').value = "";
 
+    if(privkey==""){
+        alert("You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc.");
+    }
+
     getAndPopulateSettings();
 
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
@@ -214,6 +218,16 @@ function createNewAccount() {
 }
 
 function logout() {
+
+    var exitreally=confirm(`Are you sure you want to logout? 
+    Make sure you have written down your 12 word seed phrase or private key to login again. 
+    There is no other way to recover your seed phrase. It is on the settings page.
+    Click 'Cancel' if you need to do that now.
+    Click 'OK' to logout.`);
+    if(!exitreally){
+        return;
+    }
+
     if (localStorageSafe != null) {
         localStorageSafe.clear();
     }
