@@ -139,6 +139,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
         //Threads have no navbuttons
         displayItemListandNavButtonsHTML(contents, "", "thread", data, "", 0);
+        showReplyBox(san(txid)+'thread');
 
         if (popup != undefined) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
@@ -430,7 +431,8 @@ function showReplyBox(txid) {
         alert(getSafeTranslation('log in to reply'));
         return false;
     }
-    var replybox = document.getElementById("reply" + txid);
+    var replybox = document.querySelector("[id^='"+"reply" + txid+"']");
+    //document.getElementById("reply" + txid);
     replybox.style.display = "block";
     //document.getElementById("replylink"+txid).style.display = "none";
     return true;
