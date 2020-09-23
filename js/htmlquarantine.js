@@ -449,7 +449,7 @@ function getDirectRatingHTML(data) {
 }
 
 function getIndirectRatingHTML(data) {
-    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td> <div id='trust" + san(data.member) + san(data.inter) + "'></div> </td>" + "<td align='center'>" + getMemberLink(data.inter, data.intername) + "</td>" + `<td> <div id='trust` + san(data.inter) + san(data.target) + "'> </div> </td>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
+    return "<tr><td><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {
@@ -655,7 +655,7 @@ function createiframe(url, elementname) {
 
 function showErrorMessage(status, page, theURL) {
     console.log(`Error:${status}`);
-    document.getElementById(page).innerHTML = `<span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span>`;
+    document.getElementById(page).innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
     updateStatus(`Error:${status}` + ds(theURL));
     updateStatus(`Error:${status}`);
 }

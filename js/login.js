@@ -181,6 +181,10 @@ function login(loginkey) {
     document.getElementById('newseedphrase').innerText = "";
     document.getElementById('loginkey').value = "";
 
+    if(privkey==""){
+        alert("You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc.");
+    }
+
     getAndPopulateSettings();
 
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");

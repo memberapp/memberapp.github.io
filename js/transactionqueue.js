@@ -286,7 +286,7 @@ class TransactionQueue {
         //2000, all fetched UTXOs already spend
         //2001, insuffiencent funds from unspent UTXOs. Add funds
 
-        returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " Transaction(s) Still Queued, Retry in 5 seconds)");
+        returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " Transaction(s) Still Queued, Retry in 5 seconds) Try changing UTXO server on settings page.");
         await sleep(1000);
         try{
           //Try refreshing the utxo pool
