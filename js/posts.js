@@ -427,10 +427,7 @@ function replySuccessFunction(page, txid) {
 }
 
 function showReplyBox(txid) {
-    if (privkey == "") {
-        alert(getSafeTranslation('log in to reply'));
-        return false;
-    }
+    if (!checkForPrivKey()) return false;
     var replybox = document.querySelector("[id^='"+"reply" + txid+"']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";
@@ -476,10 +473,7 @@ function increaseGUIReposts(txid) {
 }
 
 function likePost(txid, tipAddress) {
-    if (privkey == "") {
-        alert("You must login to like posts.");
-        return false;
-    }
+    if (!checkForPrivKey()) return false;
 
     increaseGUILikes(txid);
 
@@ -497,10 +491,7 @@ function likePost(txid, tipAddress) {
 }
 
 function dislikePost(txid, tipAddress) {
-    if (privkey == "") {
-        alert("You must login to dislike posts.");
-        return false;
-    }
+    if (!checkForPrivKey()) return false;
 
     decreaseGUILikes(txid);
 
@@ -512,10 +503,7 @@ function dislikePost(txid, tipAddress) {
 }
 
 function repostPost(txid, page) {
-    if (privkey == "") {
-        alert("You must login to like posts.");
-        return false;
-    }
+    if (!checkForPrivKey()) return false;
 
     increaseGUIReposts(txid);
 
@@ -559,10 +547,7 @@ function sendTip(txid, tipAddress, page) {
 }
 
 function showTipBox(txid) {
-    if (privkey == "") {
-        alert("You must login to tip.");
-        return false;
-    }
+    if (!checkForPrivKey()) return false;
     if (document.getElementById("tipamount" + txid).value == 0) {
         document.getElementById("tipamount" + txid).value = defaulttip;
     }

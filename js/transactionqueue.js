@@ -80,6 +80,14 @@ class UTXOPool {
     return true;
   }
 
+  getBalance(){
+    var total = 0;
+    for (let i = 0; i < this.utxoPool.length; i++) {
+      total = total + this.utxoPool[i].satoshis;
+    }
+    return total;
+  }
+
   updateBalance() {
 
     try {
@@ -89,10 +97,8 @@ class UTXOPool {
     } catch (err) {
     }
 
-    var total = 0;
-    for (let i = 0; i < this.utxoPool.length; i++) {
-      total = total + this.utxoPool[i].satoshis;
-    }
+    var total=this.getBalance();
+    
 
     //var balString=(Math.floor(total/1000)).toLocaleString()+"<span class='sats'>"+(total%1000)+"</span>";
     if (this.onscreenElementName != null) {
@@ -614,6 +620,10 @@ class TransactionQueue {
 
   updateBalance(address){
     return this.utxopools[address].updateBalance();
+  }
+
+  getBalance(address){
+    return this.utxopools[address].getBalance();
   }
 
 }
