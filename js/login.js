@@ -76,7 +76,7 @@ function init() {
     //Show message if dev version in use
     if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
-        var profilepicbase='https://member.cash/img/profilepics/';
+        profilepicbase='https://member.cash/img/profilepics/';
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
