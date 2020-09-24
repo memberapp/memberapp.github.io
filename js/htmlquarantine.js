@@ -21,7 +21,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<span class="memberfilter"><span class="memberpicsmall" style="display:none;"><img class="memberpicturesmall" width='128' height='128' src='img/`+san(address.substring(0,20))+`128x128.jpg'/></span><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
+    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='`+profilepicbase+san(address)+`.128x128.jpg'/></span><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     }
@@ -209,7 +209,6 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
             replies = repliesroot;
         }
     }
-    //var messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a>`;
     var messageLinksHTML = anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
     messageLinksHTML = DOMPurify.sanitize(messageLinksHTML);
 
@@ -276,11 +275,6 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     //add markdown
     message = ShowdownConverter.makeHtml(message);
     //message=SnuOwnd.getParser().render(message);
-
-    //add links
-    //message=anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
-    //old newline
-    //anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>')
 
     var message = anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
 

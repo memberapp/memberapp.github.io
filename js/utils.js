@@ -272,9 +272,12 @@ function detectMultipleIDS() {
 DOMPurify.addHook('afterSanitizeAttributes', function (node) {
   // set all elements owning target to target=_blank
   if ('target' in node) {
-    node.setAttribute('target', '_blank');
-    // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
-    node.setAttribute('rel', 'noopener noreferrer');
+    //don't set target for internal links, like member profile links
+    if(node.host!='' || node.hostname!=''){
+      node.setAttribute('target', '_blank');
+      // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
+      node.setAttribute('rel', 'noopener noreferrer');
+    }
   }
   // set non-HTML/MathML links to xlink:show=new
   if (!node.hasAttribute('target')

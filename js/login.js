@@ -16,6 +16,7 @@ var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
 var pathpermalinks=true;
+var profilepicbase='img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 //var twitterEmbeds=new Array();
@@ -51,7 +52,12 @@ ShowdownConverter.setFlavor('github');
 ShowdownConverter.setOption('simpleLineBreaks', true);
 ShowdownConverter.setOption('simplifiedAutoLink', true);
 ShowdownConverter.setOption('openLinksInNewWindow', true);
-ShowdownConverter.setOption('ghMentions', false);
+ShowdownConverter.setOption('ghMentions', true);
+ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
+
+
+
+
 
 //literalMidWordUnderscores
 
@@ -70,6 +76,7 @@ function init() {
     //Show message if dev version in use
     if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
+        var profilepicbase='https://member.cash/img/profilepics/';
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");

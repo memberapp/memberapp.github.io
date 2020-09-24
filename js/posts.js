@@ -427,7 +427,7 @@ function replySuccessFunction(page, txid) {
 }
 
 function showReplyBox(txid) {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
     var replybox = document.querySelector("[id^='"+"reply" + txid+"']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";

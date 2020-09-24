@@ -69,7 +69,9 @@
 </head>
 
 <body id="mainbody">
-    <div id="previewcontent" class="previewcontent" style="display: none;"><!--INSERTCONTENT--></div>
+    <div id="previewcontent" class="previewcontent" style="display: none;">
+        <!--INSERTCONTENT-->
+    </div>
     <!--  External Libraries -->
     <script src="js/lib/buffer.js"></script>
     <script src="js/lib/anchorme.min.js"></script>
@@ -80,7 +82,7 @@
     <!-- https://github.com/davidshimjs/qrcodejs -->
     <script src="js/lib/qrcode.min.js"></script>
     <!-- https://github.com/showdownjs/showdown -->
-    <script src="js/lib/showdown.1.9.1.min.js"></script>
+    <script src="js/lib/showdown.1.9.1.min.patched.js"></script>
     <!-- https://github.com/cure53/DOMPurify -->
     <script src="js/lib/purify.min.js"></script>
     <!-- https://github.com/sparksuite/simplemde-markdown-editor -->
@@ -152,8 +154,8 @@
                                 <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
                                     onclick="resetScroll();showNewPost();">📝</a>
                                 <a id="privatemessagesbutton" title="Messages" class="btn privatemessagesbutton"
-                                    href="#messages" onclick="resetScroll();showMessages();">📧<span class="alertcount noselect"
-                                        id="alertcountpm"></span></a>
+                                    href="#messages" onclick="resetScroll();showMessages();">📧<span
+                                        class="alertcount noselect" id="alertcountpm"></span></a>
                                 <a id="settingsbutton" title="Settings" class="btn" href="#settings"
                                     onclick="resetScroll();showSettings();">⚙️</a>
                                 <a id="toolsbutton" title="Tools" class="btn" href="#tools"
@@ -388,6 +390,11 @@
             <div id="member" class="member" style="display: none;">
                 <div class="content">
                     <h2>Member</h2>
+                    <label id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile Picture</label>
+                    <span class="memberpiclarge" style="display:inline;">
+                        <img id="memberpicturelarge" class="memberpicturelarge" width='640' height='640'
+                            src='img/640x640.jpg' />
+                    </span>
                     <label for="membernametext">Handle</label>
                     <div id='membernametext'>
                         <i>loading</i>
@@ -507,9 +514,10 @@
                 <div class="content">
                     <h2 class="vavilon" data-vavilon="settings">Settings</h2>
                     <div>
-                        <label id="memberpiclargelabel" for="settingspic" style="display:none;">Profile Picture</label>
-                        <span class="memberpiclarge" style="display:none;">
-                            <img class="memberpicturelarge" width='640' height='640' src='img/640x640.jpg'/>
+                        <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture</label>
+                        <span class="settingspiclarge" style="display:inline;">
+                            <img id="settingspicturelarge" class="settingspicturelarge" width='640' height='640'
+                                src='img/640x640.jpg' />
                         </span>
                     </div>
                     <div>
@@ -585,7 +593,8 @@
                         </div>
                     </div>
                     <div id="settingsprivatekey">
-                        <label class="vavilon" data-vavilon="Seed Phrase / Private Key / WIF">Seed Phrase / Private Key / WIF</label>
+                        <label class="vavilon" data-vavilon="Seed Phrase / Private Key / WIF">Seed Phrase / Private Key
+                            / WIF</label>
                         <span id="privatekeydisplay" style="display: none;">loading</span>
                         <span id="privatekey"></span>
                         <div id="privatekeydisplaydiv"></div>
