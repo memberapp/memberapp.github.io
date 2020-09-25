@@ -68,9 +68,11 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'blockingnumber').innerHTML = Number(data[0].blocking);
             document.getElementById(pre + 'nametext').value = data[0].name;
             document.getElementById(pre + 'profiletext').value = data[0].profile;
+            document.getElementById(pre + 'pic').value = "https://i.imgur.com/XXXXXXXX.jpg";
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
+
             document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at member.cash";
             jdenticonname = data[0].name;
 
@@ -92,6 +94,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         if (pre == "settings") {
             document.getElementById(pre + 'nametextbutton').disabled = true;
             document.getElementById(pre + 'profiletextbutton').disabled = true;
+            document.getElementById(pre + 'picbutton').disabled = true;
+
             /*if (document.getElementById(pre + 'nametext').value == "") {
                 document.getElementById(pre + 'nametext').disabled = false;
             } else {

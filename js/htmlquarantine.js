@@ -443,7 +443,7 @@ function getDirectRatingHTML(data) {
 }
 
 function getIndirectRatingHTML(data) {
-    return "<tr><td><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
+    return "<tr><td data-label='member'><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td data-label='ratingofintermediate'><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center' data-label='intermediate'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td data-label='intermediaterating'><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td data-label='target'><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {

@@ -514,11 +514,19 @@
                 <div class="content">
                     <h2 class="vavilon" data-vavilon="settings">Settings</h2>
                     <div>
-                        <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture</label>
+                        <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture <span class="profilepicdirections">(Must be imgur link in this format)</span></label>
+                        <div class="formgroup">
+                            <input maxlength="217" size="30" id="settingspic" value="loading..."
+                                onchange="document.getElementById('settingspicbutton').disabled=false;"
+                                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                            <button id="settingspicbutton" type="button" onclick="setPic();" class="vavilon"
+                                data-vavilon="update">update</button>
+                        </div>
                         <span class="settingspiclarge" style="display:inline;">
                             <img id="settingspicturelarge" class="settingspicturelarge" width='640' height='640'
-                                src='img/640x640.jpg' />
+                                src='' />
                         </span>
+
                     </div>
                     <div>
                         <label for="settingsnametext">Handle</label>
