@@ -360,7 +360,8 @@ img {
 .memberpicturelarge,
 .memberpicturesmall,
 .settingspicturelarge {
-  outline: none; }
+  outline: none;
+  border-radius: 0.5rem; }
 
 .memberpicsmall .memberpicturesmall {
   height: 16px;
