@@ -357,6 +357,27 @@ img {
 .previewcontent {
   display: none; }
 
+.memberpicturelarge,
+.memberpicturesmall,
+.settingspicturelarge {
+  outline: none; }
+
+.memberpicsmall .memberpicturesmall {
+  height: 16px;
+  width: 16px;
+  display: inline-block;
+  margin-right: 0.25rem; }
+
+.memberpicturelarge,
+.settingspicturelarge {
+  height: 320px;
+  width: 320px;
+  margin: 0;
+  margin-bottom: 1rem; }
+
+.settingspicturelarge {
+  margin: 0 auto; }
+
 body {
   background: #f7f7f7;
   position: relative;
@@ -991,13 +1012,15 @@ img {
   margin-top: 1rem; }
 
 .memberfilter {
-  display: inline-block;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
   margin-left: 0.25rem; }
   .memberfilter .starrating {
     margin: 0 0.25rem;
     display: inline-block; }
   .memberfilter .hnuser {
-    display: inline-block !important; }
+    display: -ms-inline-flexbox !important;
+    display: inline-flex !important; }
 
 .notificationtitle,
 .repost {
