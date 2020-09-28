@@ -2465,6 +2465,8 @@ tbody tr td .filterprovider {
     padding: 1.75rem; }
     #member .content div {
       margin-bottom: 1rem; }
+    #member .content #memberprofiletext {
+      white-space: break-spaces; }
     @media (max-width: 400px) {
       #member .content {
         margin-left: -15px !important;
