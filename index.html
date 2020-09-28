@@ -393,7 +393,7 @@
                     <label id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile Picture</label>
                     <span class="memberpiclarge" style="display:inline;">
                         <img id="memberpicturelarge" class="memberpicturelarge" width='640' height='640'
-                            src='img/640x640.jpg' />
+                            src='' />
                     </span>
                     <label for="membernametext">Handle</label>
                     <div id='membernametext'>
@@ -516,7 +516,7 @@
                     <div>
                         <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture <span class="profilepicdirections">(Must be imgur link in this format)</span></label>
                         <div class="formgroup">
-                            <input maxlength="217" size="30" id="settingspic" value="loading..."
+                            <input maxlength="217" size="30" id="settingspic" value="https://i.imgur.com/XXXXXXXX.jpg"
                                 onchange="document.getElementById('settingspicbutton').disabled=false;"
                                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                             <button id="settingspicbutton" type="button" onclick="setPic();" class="vavilon"
