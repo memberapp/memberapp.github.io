@@ -1174,12 +1174,10 @@ img {
   .postdetails .subtextbuttons [id^="replylinkposts"]::before,
   .postdetails .subtextbuttons [id^="replylinkmemberposts"]::before,
   .postdetails .subtextbuttons [id^="replylink"]::before,
-  .postdetails .subtextbuttons [id^="replylinkthread"]::before,
   .postdetails .subtextbuttons [id^="replylinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkposts"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkmemberposts"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylink"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="replylinkthread"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinknotifications"]::before {
     background: url(../img/chat-right-fill.svg);
     background-size: 0.875rem 0.875rem;
