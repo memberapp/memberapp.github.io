@@ -314,10 +314,9 @@ img {
   background-position: 0 0, 25px 25px; }
 
 .jdenticon {
-  width: 1rem;
-  height: 1rem;
-  margin-bottom: -3px;
-  margin-right: 2px; }
+  height: 2rem;
+  width: 2rem;
+  margin-right: 0.25rem; }
 
 .jdenticonlarge {
   width: 100px;
@@ -364,13 +363,14 @@ img {
   border-radius: 0.5rem; }
 
 .memberpicsmall {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center; }
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -ms-flex-align: center !important;
+  align-items: center !important; }
   .memberpicsmall .memberpicturesmall {
-    height: 16px;
-    width: 16px;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 100%;
     display: inline-block;
     margin-right: 0.25rem; }
 
@@ -1028,7 +1028,9 @@ img {
     display: inline-block; }
   .memberfilter .hnuser {
     display: -ms-inline-flexbox !important;
-    display: inline-flex !important; }
+    display: inline-flex !important;
+    -ms-flex-align: center;
+    align-items: center; }
 
 .notificationtitle,
 .repost {
@@ -1241,7 +1243,9 @@ img {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center; }
     .subtext .submitter a {
       display: inline-block; }
     .subtext .submitter .age {
