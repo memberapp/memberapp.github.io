@@ -21,7 +21,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='`+profilepicbase+san(address)+`.128x128.jpg'/></span><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
+    var ret = `<span class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='` + profilepicbase + san(address) + `.128x128.jpg'/></span><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     }
@@ -447,9 +447,9 @@ function getIndirectRatingHTML(data) {
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {
-    if(rating==0){
+    if (rating == 0) {
         return "<span style='font-size:2em'>Overall Rating: No information</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
-    }else{
+    } else {
         return "<span style='font-size:2em'>Overall Rating:" + Number(rating) + "/5</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
     }
 }
@@ -463,7 +463,7 @@ function rts(thetext) {
 function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason, stem) {
     //Careful to ensure disabletext is sanitized
     var disableText = rts(ratername) + ' rates ' + rts(rateename) + ' as {rating}/{maxRating}';
-    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='`+stem+`` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='` + stem + `` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
 }
 
 /*
@@ -610,10 +610,16 @@ function uncollapseComment(commentid) {
 function getMessageHTML(data, count) {
     var contents = "";
     // Decrypt the message
-    let ecpair = new BITBOX.ECPair().fromWIF(privkey);
-    var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
-    decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
-    contents += "<li><span class='messagemeta'>" + userHTML(data.address, data.name, count + "privatemessages" + data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>processing</div><br/></li>";
+    if (data.address == pubkey && data.address!=data.toaddress) {
+        //this message was sent by the logged in user.
+        //we can't decrypt it, just make a note of the reply
+        contents += "<li><span class='replymessagemeta'>You sent a message ("+data.message.length+" bytes) to " + userHTML(data.toaddress, data.recipient, count + "privatemessages" + data.toaddress, null, 0) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipient, data.recipientpublickey) + "</span></li>";
+    } else {
+        let ecpair = new BITBOX.ECPair().fromWIF(privkey);
+        var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
+        decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
+        contents += "<li><span class='messagemeta'>" + userHTML(data.address, data.name, count + "privatemessages" + data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>processing</div><br/></li>";
+    }
     return contents;
 }
 
