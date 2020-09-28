@@ -363,11 +363,16 @@ img {
   outline: none;
   border-radius: 0.5rem; }
 
-.memberpicsmall .memberpicturesmall {
-  height: 16px;
-  width: 16px;
-  display: inline-block;
-  margin-right: 0.25rem; }
+.memberpicsmall {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center; }
+  .memberpicsmall .memberpicturesmall {
+    height: 16px;
+    width: 16px;
+    display: inline-block;
+    margin-right: 0.25rem; }
 
 .memberpicturelarge,
 .settingspicturelarge {
@@ -1015,6 +1020,8 @@ img {
 .memberfilter {
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -ms-flex-align: center;
+  align-items: center;
   margin-left: 0.25rem; }
   .memberfilter .starrating {
     margin: 0 0.25rem;
@@ -1164,10 +1171,12 @@ img {
       margin-right: 0.15rem; }
   .postdetails .subtextbuttons [id^="replylinkposts"]::before,
   .postdetails .subtextbuttons [id^="replylinkmemberposts"]::before,
+  .postdetails .subtextbuttons [id^="replylink"]::before,
   .postdetails .subtextbuttons [id^="replylinkthread"]::before,
   .postdetails .subtextbuttons [id^="replylinknotifications"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkposts"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkmemberposts"]::before,
+  .comment-tree ul li .reply div .subtextbuttons [id^="replylink"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinkthread"]::before,
   .comment-tree ul li .reply div .subtextbuttons [id^="replylinknotifications"]::before {
     background: url(../img/chat-right-fill.svg);
@@ -1212,6 +1221,31 @@ img {
   .comment-tree ul li .reply div .subtextbuttons a[id^="hidepostlinknotifications"],
   .comment-tree ul li .reply div .subtextbuttons a[id^="hideuserlinkthread"] {
     color: #c1292e; }
+
+.subtext {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.54);
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  font-weight: bold; }
+  .subtext a {
+    color: rgba(0, 0, 0, 0.54); }
+    .subtext a:hover {
+      color: rgba(0, 0, 0, 0.87); }
+  .subtext .submitter {
+    margin-bottom: 0.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding-bottom: 0.25rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+    .subtext .submitter a {
+      display: inline-block; }
+    .subtext .submitter .age {
+      margin: 0 0.25rem; }
 
 .fatitem .reply div:only-child {
   display: -ms-flexbox;
