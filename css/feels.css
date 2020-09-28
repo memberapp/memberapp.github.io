@@ -720,6 +720,7 @@ blockquote {
 
 table {
   border-spacing: 0;
+  border-collapse: collapse;
   text-align: center;
   margin-bottom: 1rem;
   display: table;
@@ -733,11 +734,14 @@ table {
     background: rgba(0, 0, 0, 0.12);
     padding: 0.5rem;
     font-weight: bold; }
-  table tbody tr td {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    padding: 0.5rem; }
-  table tbody tr:nth-child(even) {
-    background: #e9eef6; }
+  table tbody {
+    width: 100%;
+    display: contents; }
+    table tbody tr td {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      padding: 0.5rem; }
+    table tbody tr:nth-child(even) {
+      background: #e9eef6; }
 
 input[type="submit"],
 button {
@@ -2429,6 +2433,15 @@ tbody tr td .filterprovider {
             opacity: 0.65;
             cursor: not-allowed;
             pointer-events: none; }
+      #messagesanchor .content #messageslist li .replymessagemeta {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap; }
+        #messagesanchor .content #messageslist li .replymessagemeta .memberfilter {
+          margin-right: 0.25rem; }
 
 #member {
   width: 100%;
@@ -2597,12 +2610,36 @@ tbody tr td .filterprovider {
       flex-direction: column;
       -ms-flex-align: center;
       align-items: center; }
-      #trustgraph .content #trustgraphdetails table {
-        width: 100%; }
+      @media (max-width: 767px) {
+        #trustgraph .content #trustgraphdetails table thead {
+          display: none; }
+        #trustgraph .content #trustgraphdetails table tr {
+          display: table;
+          margin-bottom: 1.5rem;
+          width: 100%;
+          border-radius: 0.5rem;
+          background: rgba(0, 0, 0, 0.05); }
+        #trustgraph .content #trustgraphdetails table td {
+          display: table-row; }
+        #trustgraph .content #trustgraphdetails table td:before,
+        #trustgraph .content #trustgraphdetails table td > span {
+          display: table-cell;
+          padding: 0.5rem 1rem; }
+        #trustgraph .content #trustgraphdetails table td:before {
+          content: attr(data-label);
+          font-weight: 400;
+          text-align: left;
+          color: rgba(0, 0, 0, 0.54);
+          width: 50%; }
+        #trustgraph .content #trustgraphdetails table td:not(.align-start) > span {
+          vertical-align: middle;
+          text-align: left; }
+        #trustgraph .content #trustgraphdetails table td:last-of-type {
+          border-bottom: none; } }
+      #trustgraph .content #trustgraphdetails #overall {
+        margin-bottom: 1rem; }
     #trustgraph .content #trustgraphnotes {
       margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
       font-size: 0.875rem;
       color: rgba(0, 0, 0, 0.54); }
 
