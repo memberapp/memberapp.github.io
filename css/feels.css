@@ -2619,6 +2619,8 @@ tbody tr td .filterprovider {
           width: 100%;
           border-radius: 0.5rem;
           background: rgba(0, 0, 0, 0.05); }
+          #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
+            background: #e9eef6; }
         #trustgraph .content #trustgraphdetails table td {
           display: table-row; }
         #trustgraph .content #trustgraphdetails table td:before,
