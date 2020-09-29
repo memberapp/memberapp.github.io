@@ -2756,7 +2756,14 @@ tbody tr td .filterprovider {
       max-width: 540px; } }
   #notifications .notificationtitle,
   #notifications .repost {
-    display: inherit; }
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%; }
+    #notifications .notificationtitle .age,
+    #notifications .repost .age {
+      margin-left: 0.25rem; }
   #notifications ul.notificationslist {
     padding: 0; }
     #notifications ul.notificationslist li {
@@ -2780,6 +2787,8 @@ tbody tr td .filterprovider {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
+      #notifications ul.notificationslist li a {
+        margin: 0 0.25rem; }
 
 #blockers,
 #blocking,
