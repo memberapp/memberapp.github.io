@@ -87,7 +87,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         if (jdenticonname == "" || jdenticonname == null) {
             jdenticonname = qaddress.substring(0, 10);
         }
-        document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + unicodeEscape(jdenticonname) + san(qaddress) + `"></svg>`;
+        document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
 
 
         if (pre == "settings") {

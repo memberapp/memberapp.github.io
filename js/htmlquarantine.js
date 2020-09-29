@@ -22,7 +22,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
         name = address.substring(0, 10);
     }
     var memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='` + profilepicbase + san(address) + `.128x128.jpg'/></span>`;
-    var membericon =`<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>`;
+    var membericon =`<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
 
     //hide memberpic for now
     memberpic='';
