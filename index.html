@@ -390,11 +390,12 @@
             <div id="member" class="member" style="display: none;">
                 <div class="content">
                     <h2>Member</h2>
-                    <label id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile Picture</label>
-                    <span class="memberpiclarge" style="display:inline;">
-                        <img id="memberpicturelarge" class="memberpicturelarge" width='640' height='640'
-                            src='' />
-                    </span>
+                    <div class="memberpiccontainer" style="display:none;">
+                        <label id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile Picture</label>
+                        <span class="memberpiclarge" style="display:inline;">
+                            <img id="memberpicturelarge" class="memberpicturelarge" width='640' height='640' src='' />
+                        </span>
+                    </div>
                     <label for="membernametext">Handle</label>
                     <div id='membernametext'>
                         <i>loading</i>
@@ -513,8 +514,9 @@
             <div id="settingsanchor" style="display: none;">
                 <div class="content">
                     <h2 class="vavilon" data-vavilon="settings">Settings</h2>
-                    <div>
-                        <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture <span class="profilepicdirections">(Must be imgur link in this format)</span></label>
+                    <div class="settingspiccontainer" style="display:none;">
+                        <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture
+                            <span class="profilepicdirections">(Must be imgur link in this format)</span></label>
                         <div class="formgroup">
                             <input maxlength="217" size="30" id="settingspic" value="https://i.imgur.com/XXXXXXXX.jpg"
                                 onchange="document.getElementById('settingspicbutton').disabled=false;"
