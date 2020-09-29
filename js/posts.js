@@ -268,8 +268,22 @@ function addDynamicHTMLElements(data) {
     //Add ratings, disable controls if the star rating can be updated
     addStarRatings('rating');
 
+    //Add mouseoverprofiles
+    //addMouseoverProfiles();
+
     //Add identicons
     jdenticon();
+}
+
+function addMouseoverProfiles() {
+    var matches = document.querySelectorAll("[id^='memberinfo']");
+    for (var i = 0; i < matches.length; i++) {
+        matches[i].id.replace('member','profile');
+        matches[i].onmouseover = function() {
+            var profileelement=this.id.replace('member','profile');
+            document.getElementById(profileelement).style.display = "block";
+        };
+    }
 }
 
 function addStarRatings(stem) {
@@ -427,7 +441,7 @@ function replySuccessFunction(page, txid) {
 }
 
 function showReplyBox(txid) {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
     var replybox = document.querySelector("[id^='"+"reply" + txid+"']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";

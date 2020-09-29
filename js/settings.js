@@ -29,7 +29,7 @@ function getAndPopulateRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReason2HTML(data[i]);
-            contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason,'memrating');
+            contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason, 'memrating');
         }
         document.getElementById(page).innerHTML = contents;
         addDynamicHTMLElements();
@@ -71,10 +71,14 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
+
             document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at member.cash";
             jdenticonname = data[0].name;
+
+            //img/profilepics/`+san(address)+`128x128.jpg
         }
 
+        document.getElementById(pre + 'picturelarge').src = profilepicbase + san(qaddress) + ".640x640.jpg";
         document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
         document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
         document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
@@ -83,17 +87,19 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         if (jdenticonname == "" || jdenticonname == null) {
             jdenticonname = qaddress.substring(0, 10);
         }
-        document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + unicodeEscape(jdenticonname) + san(qaddress) + `"></svg>`;
+        document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
 
 
         if (pre == "settings") {
             document.getElementById(pre + 'nametextbutton').disabled = true;
             document.getElementById(pre + 'profiletextbutton').disabled = true;
-            if (document.getElementById(pre + 'nametext').value == "") {
+            document.getElementById(pre + 'picbutton').disabled = true;
+
+            /*if (document.getElementById(pre + 'nametext').value == "") {
                 document.getElementById(pre + 'nametext').disabled = false;
             } else {
                 document.getElementById(pre + 'nametext').disabled = true;
-            }
+            }*/
         }
 
 

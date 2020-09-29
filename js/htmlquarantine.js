@@ -21,11 +21,19 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
-    var ret = `<span class="memberfilter"><span class="memberpicsmall" style="display:none;"><img class="memberpicturesmall" width='128' height='128' src='img/`+san(address.substring(0,20))+`128x128.jpg'/></span><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser"><svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + unicodeEscape(name) + san(address) + `"></svg>` + ds(name) + `</a> `;
+    var memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='` + profilepicbase + san(address) + `.128x128.jpg'/></span>`;
+    var membericon =`<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
+
+    //hide memberpic for now
+    memberpic='';
+
+    var ret = `<span id="memberinfo` + ratingID + `" class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">`
+    + memberpic
+    + membericon + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
         ret += `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     }
-    ret += "</span>";
+    ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profileinfo">Loading...</span></span>`;
     return ret;
 }
 
@@ -209,7 +217,6 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
             replies = repliesroot;
         }
     }
-    //var messageLinksHTML=`<a href="#thread?root=`+ san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] }) + `</a>`;
     var messageLinksHTML = anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
     messageLinksHTML = DOMPurify.sanitize(messageLinksHTML);
 
@@ -276,11 +283,6 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     //add markdown
     message = ShowdownConverter.makeHtml(message);
     //message=SnuOwnd.getParser().render(message);
-
-    //add links
-    //message=anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
-    //old newline
-    //anchorme(ds(message).replace(/(?:\r\n|\r|\n)/g, '<br>')
 
     var message = anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
 
@@ -449,13 +451,13 @@ function getDirectRatingHTML(data) {
 }
 
 function getIndirectRatingHTML(data) {
-    return "<tr><td><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
+    return "<tr><td data-label='member'><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td data-label='ratingofintermediate'><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center' data-label='intermediate'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td data-label='intermediaterating'><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td data-label='target'><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {
-    if(rating==0){
+    if (rating == 0) {
         return "<span style='font-size:2em'>Overall Rating: No information</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
-    }else{
+    } else {
         return "<span style='font-size:2em'>Overall Rating:" + Number(rating) + "/5</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
     }
 }
@@ -469,7 +471,7 @@ function rts(thetext) {
 function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason, stem) {
     //Careful to ensure disabletext is sanitized
     var disableText = rts(ratername) + ' rates ' + rts(rateename) + ' as {rating}/{maxRating}';
-    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='`+stem+`` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
+    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='` + stem + `` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
 }
 
 /*
@@ -616,10 +618,16 @@ function uncollapseComment(commentid) {
 function getMessageHTML(data, count) {
     var contents = "";
     // Decrypt the message
-    let ecpair = new BITBOX.ECPair().fromWIF(privkey);
-    var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
-    decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
-    contents += "<li><span class='messagemeta'>" + userHTML(data.address, data.name, count + "privatemessages" + data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>processing</div><br/></li>";
+    if (data.address == pubkey && data.address!=data.toaddress) {
+        //this message was sent by the logged in user.
+        //we can't decrypt it, just make a note of the reply
+        contents += "<li><span class='replymessagemeta'>You sent a message ("+data.message.length+" bytes) to " + userHTML(data.toaddress, data.recipient, count + "privatemessages" + data.toaddress, null, 0) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipient, data.recipientpublickey) + "</span></li>";
+    } else {
+        let ecpair = new BITBOX.ECPair().fromWIF(privkey);
+        var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
+        decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
+        contents += "<li><span class='messagemeta'>" + userHTML(data.address, data.name, count + "privatemessages" + data.address, data.rating, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>processing</div><br/></li>";
+    }
     return contents;
 }
 

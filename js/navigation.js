@@ -19,12 +19,12 @@ function displayContentBasedOnURLParameters() {
         showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'thread');
         return;
     } else if (url.indexOf('/m/') != -1) {
-        var pagingidHOSTILE = sanitizeAlphanumeric(url.substring(url.indexOf('/m/') + 3).toLowerCase());
-        showMemberPagingID(pagingidHOSTILE);
+        var pagingidHOSTILE = url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase();
+        showMember('', pagingidHOSTILE);
         return;
     } else if (url.indexOf('/t/') != -1) {
-        var topicnameHOSTILE = sanitizeAlphanumeric(url.substring(url.indexOf('/t/') + 3).toLowerCase());
-        showTopic(0,numbers.results,topicnameHOSTILE);
+        var topicnameHOSTILE = url.substring(url.indexOf('/t/') + 3).toLowerCase();
+        showTopic(0, numbers.results, topicnameHOSTILE);
         return;
     } else {
         setTopic("");
@@ -51,7 +51,7 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("notifications")) {
         showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("member")) {
-        showMember(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showMember(sanitizeAlphanumeric(getParameterByName("qaddress")), getParameterByName("pagingid"));
     } else if (action.startsWith("followers")) {
         showFollowers(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("following")) {
@@ -138,7 +138,7 @@ function hideAll() {
     document.getElementById('toolsanchor').style.display = "none";
     document.getElementById('messagesanchor').style.display = "none";
     document.getElementById('topicmeta').style.display = "none";
-    
+
 }
 
 function show(theDiv) {
@@ -236,7 +236,22 @@ function showSettings() {
     document.getElementById('settingsfollow').style.display = "block";
 }
 
-function showMember(qaddress) {
+function showMember(qaddress, pagingIDHOSTILE) {
+    //if pagingidhostile is not empty - await qaddress
+    if (!typeof headeraddress === 'undefined') {
+        qaddress = headeraddress;
+        headeraddress = undefined;
+    }
+
+    if (qaddress == '' && pagingIDHOSTILE != '') {
+        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingIDHOSTILE) + '&address=' + pubkey;
+        getJSON(theURL).then(function (data) {
+            qaddress = data[0].address;
+            showMember(qaddress);
+            return;
+        });
+        return;
+    }
     getAndPopulateMember(qaddress);
     getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
     //getAndPopulate(0, numbers.results, 'memberposts', qaddress);

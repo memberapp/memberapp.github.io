@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.5.1";
+var version = "4.5.2";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -16,6 +16,7 @@ var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
 var pathpermalinks=true;
+var profilepicbase='img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 
 //var twitterEmbeds=new Array();
@@ -29,7 +30,7 @@ var settings = {
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",
     "txbroadcastserver": "https://member.cash/v2/",
-    "utxoserver": "https://member.cash/v2/",
+    "utxoserver": "https://rest.bitcoin.com/v2/",
     "currencydisplay": "USD"
 };
 var numbers = {
@@ -51,7 +52,12 @@ ShowdownConverter.setFlavor('github');
 ShowdownConverter.setOption('simpleLineBreaks', true);
 ShowdownConverter.setOption('simplifiedAutoLink', true);
 ShowdownConverter.setOption('openLinksInNewWindow', true);
-ShowdownConverter.setOption('ghMentions', false);
+ShowdownConverter.setOption('ghMentions', true);
+ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
+
+
+
+
 
 //literalMidWordUnderscores
 
@@ -70,6 +76,7 @@ function init() {
     //Show message if dev version in use
     if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
+        profilepicbase='https://member.cash/img/profilepics/';
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");

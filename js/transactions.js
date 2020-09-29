@@ -47,6 +47,28 @@ function repost(txid, message) {
     tq.queueTransaction(tx);
 }
 
+function setPic() {
+    if (!checkForPrivKey()) return false;
+
+    document.getElementById('settingspicbutton').disabled = true;
+    document.getElementById('settingspictext').disabled = true;
+
+    var newName = document.getElementById('settingspic').value;
+    if(!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.jpg') ))){
+        alert("Profile pic must of of the format https://i.imgur.com/XXXXXXXX.jpg");
+        return;
+    }
+    const tx = {
+        data: ["0x6d0a", newName],
+        cash: { key: privkey }
+    }
+    updateStatus("Setting Profile Pic");
+
+    //TODO, on error, this should really enable the text field and text button again
+    tq.queueTransaction(tx);
+}
+
+
 function setName() {
     if (!checkForPrivKey()) return false;
 
