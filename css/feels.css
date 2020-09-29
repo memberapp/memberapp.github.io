@@ -2426,7 +2426,9 @@ tbody tr td .filterprovider {
           border: 1px solid #44669c;
           background: transparent;
           padding: 0.5rem 1.5rem;
-          padding: 0.5rem 1rem; }
+          padding: 0.5rem 1rem;
+          font-size: 0.875rem;
+          font-weight: bold; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:hover {
             background: #e9eef6; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:disabled {
@@ -2439,9 +2441,31 @@ tbody tr td .filterprovider {
         -ms-flex-align: center;
         align-items: center;
         -ms-flex-wrap: wrap;
-        flex-wrap: wrap; }
+        flex-wrap: wrap;
+        width: 100%; }
         #messagesanchor .content #messageslist li .replymessagemeta .memberfilter {
           margin-right: 0.25rem; }
+        #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"] {
+          margin-left: auto;
+          line-height: 1.2;
+          cursor: pointer;
+          text-decoration: none;
+          transition: all 0.15s ease-in-out;
+          color: #44669c;
+          text-transform: uppercase;
+          border-radius: 0.25rem;
+          border: 1px solid #44669c;
+          background: transparent;
+          padding: 0.5rem 1.5rem;
+          padding: 0.5rem 1rem;
+          font-size: 0.875rem;
+          font-weight: bold; }
+          #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:hover {
+            background: #e9eef6; }
+          #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            pointer-events: none; }
 
 #member {
   width: 100%;
