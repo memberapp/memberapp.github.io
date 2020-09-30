@@ -54,7 +54,7 @@ function setPic() {
     document.getElementById('settingspictext').disabled = true;
 
     var newName = document.getElementById('settingspic').value;
-    if(!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.jpg') ))){
+    if(!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png') ))){
         alert("Profile pic must of of the format https://i.imgur.com/XXXXXXXX.jpg");
         return;
     }

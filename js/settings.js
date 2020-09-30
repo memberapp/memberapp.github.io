@@ -80,7 +80,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
         document.getElementById(pre + 'picturelarge').src = profilepicbase + san(qaddress) + ".640x640.jpg";
         document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
-        document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
+        //document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
         document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
 
 
@@ -104,13 +104,13 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
 
         document.getElementById(pre + 'followersnumber').href = "#followers?qaddress=" + qaddress;
-        document.getElementById(pre + 'followersnumber').onclick = function () { showFollowers(qaddress); };
+        //document.getElementById(pre + 'followersnumber').onclick = function () { showFollowers(qaddress); };
         document.getElementById(pre + 'followingnumber').href = "#following?qaddress=" + qaddress;
-        document.getElementById(pre + 'followingnumber').onclick = function () { showFollowing(qaddress); };
+        //document.getElementById(pre + 'followingnumber').onclick = function () { showFollowing(qaddress); };
         document.getElementById(pre + 'blockersnumber').href = "#blockers?qaddress=" + qaddress;
-        document.getElementById(pre + 'blockersnumber').onclick = function () { showBlockers(qaddress); };
+        //document.getElementById(pre + 'blockersnumber').onclick = function () { showBlockers(qaddress); };
         document.getElementById(pre + 'blockingnumber').href = "#blocking?qaddress=" + qaddress;
-        document.getElementById(pre + 'blockingnumber').onclick = function () { showBlocking(qaddress); };
+        //document.getElementById(pre + 'blockingnumber').onclick = function () { showBlocking(qaddress); };
 
 
 

@@ -273,7 +273,7 @@ DOMPurify.addHook('afterSanitizeAttributes', function (node) {
   // set all elements owning target to target=_blank
   if ('target' in node) {
     //don't set target for internal links, like member profile links
-    if(node.host!='' || node.hostname!=''){
+    if(!node.outerHTML.startsWith('<a href="#member')){
       node.setAttribute('target', '_blank');
       // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
       node.setAttribute('rel', 'noopener noreferrer');
