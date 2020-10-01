@@ -2838,3 +2838,12 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
+
+
+    .profilepreview {
+        position: absolute;
+        width: 300px;
+        background-color: white;
+        padding: 0px;
+        align-self: baseline;
+    }

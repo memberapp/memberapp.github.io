@@ -276,7 +276,7 @@ function addDynamicHTMLElements(data) {
     addStarRatings('rating');
 
     //Add mouseoverprofiles
-    //addMouseoverProfiles();
+    addMouseoverProfiles();
 
     //Add identicons
     jdenticon();
@@ -285,12 +285,19 @@ function addDynamicHTMLElements(data) {
 function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
     for (var i = 0; i < matches.length; i++) {
-        matches[i].id.replace('member','profile');
-        matches[i].onmouseover = function() {
-            var profileelement=this.id.replace('member','profile');
-            document.getElementById(profileelement).style.display = "block";
-        };
+        var profileElement=matches[i].id.replace('member','profile');
+        document.getElementById(profileElement).onmouseleave=setDisplayNone;
+        matches[i].onmouseover = showPreviewProfile;
     }
+}
+
+function setDisplayNone(){
+    this.style.display="none";
+}
+
+function showPreviewProfile() {
+    var profileelement=this.id.replace('member','profile');
+    document.getElementById(profileelement).style.display = "block";
 }
 
 function addStarRatings(stem) {

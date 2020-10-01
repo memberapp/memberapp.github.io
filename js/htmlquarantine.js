@@ -22,18 +22,31 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
         name = address.substring(0, 10);
     }
     var memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='` + profilepicbase + san(address) + `.128x128.jpg'/></span>`;
-    var membericon =`<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
+    var membericon = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
 
     //hide memberpic for now
-    memberpic='';
+    memberpic = '';
 
-    var ret = `<span id="memberinfo` + ratingID + `" class="memberfilter"><a href="#member?qaddress=` + san(address) + `" class="hnuser">`
-    + memberpic
-    + membericon + ds(name) + `</a> `;
+    var linkStart = `<a href="#member?qaddress=` + san(address) + `" class="hnuser">`;
+    var linkEnd = `</a> `;
+    var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart
+        + memberpic
+        + membericon + ds(name) + linkEnd + `</span>`;
+    var ratingHTML = `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     if (ratingStarSize > 0) {
-        ret += `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
+        ret += ratingHTML;
     }
-    ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profileinfo">Loading...</span></span>`;
+    ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profilepreview">`
+        + linkStart + membericon + linkEnd
+        + linkStart + ds(name) + linkEnd
+        + ratingHTML
+        + linkStart + '@handlegoeshere' + linkEnd
+        + `<span class='profilepreviewtext'>Plus some profile text here, maybe upto 217 characters, maybe with hyperlinks</span> `
+        + `<span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `">100 followers</a></span> `
+        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">100 following</a></span> `
+        + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span> `
+        + `</span></span>`;
+
     return ret;
 }
 
@@ -202,8 +215,8 @@ function getPostListItemHTML(postHTML) {
 
 function replacePageName(match, p1, p2, offset, string) {
     // p1 is nondigits, p2 digits, and p3 non-alphanumerics
-    return p1+`<a href="#member?pagingid=`+encodeURIComponent(p2)+`">@`+ds(p2)+`</a>`;
-  }
+    return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `">@` + ds(p2) + `</a>`;
+}
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid) {
     if (name == null) { name = address.substring(0, 10); }
@@ -217,7 +230,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
 
     //ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
     //Add paging ids
-    messageHTML = messageHTML.replace(/(^|\s)@([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g,replacePageName);
+    messageHTML = messageHTML.replace(/(^|\s)@([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g, replacePageName);
     //messageHTML = messageHTML.replace(/(@[^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g,'<a href="#member?pagingid=$1">$1</a>');
 
     if (!isReply) {
@@ -628,10 +641,10 @@ function uncollapseComment(commentid) {
 function getMessageHTML(data, count) {
     var contents = "";
     // Decrypt the message
-    if (data.address == pubkey && data.address!=data.toaddress) {
+    if (data.address == pubkey && data.address != data.toaddress) {
         //this message was sent by the logged in user.
         //we can't decrypt it, just make a note of the reply
-        contents += "<li><div class='replymessagemeta'>You sent a message ("+data.message.length+" bytes) to " + userHTML(data.toaddress, data.recipient, count + "privatemessages" + data.toaddress, null, 0) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipient, data.recipientpublickey) + "</div></li>";
+        contents += "<li><div class='replymessagemeta'>You sent a message (" + data.message.length + " bytes) to " + userHTML(data.toaddress, data.recipient, count + "privatemessages" + data.toaddress, null, 0) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipient, data.recipientpublickey) + "</div></li>";
     } else {
         let ecpair = new BITBOX.ECPair().fromWIF(privkey);
         var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
