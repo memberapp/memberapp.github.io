@@ -95,7 +95,7 @@ Member is a non profit project. It is free to use and there won't be ads or data
 
 The direct donation address is **bitcoincash:qqlx98vrupdm9gmnenwpcgy2yv4hfzktwv6raa4n3g**
 
-![member.cash donation address](/img/member-donation-qr.svg)
+![member.cash donation address](/img/member-donation-qr.png)
 
 
 Alternatively you can buy some MEMBER tokens at the lowest available market rate here
