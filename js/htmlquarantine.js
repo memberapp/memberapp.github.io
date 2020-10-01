@@ -631,7 +631,7 @@ function getMessageHTML(data, count) {
     if (data.address == pubkey && data.address!=data.toaddress) {
         //this message was sent by the logged in user.
         //we can't decrypt it, just make a note of the reply
-        contents += "<li><span class='replymessagemeta'>You sent a message ("+data.message.length+" bytes) to " + userHTML(data.toaddress, data.recipient, count + "privatemessages" + data.toaddress, null, 0) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipient, data.recipientpublickey) + "</span></li>";
+        contents += "<li><div class='replymessagemeta'>You sent a message ("+data.message.length+" bytes) to " + userHTML(data.toaddress, data.recipient, count + "privatemessages" + data.toaddress, null, 0) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipient, data.recipientpublickey) + "</div></li>";
     } else {
         let ecpair = new BITBOX.ECPair().fromWIF(privkey);
         var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
