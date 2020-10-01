@@ -93,7 +93,7 @@ Projects
 
 Member is a non profit project. It is free to use and there won't be ads or data mining. However it's always helpful to have more funds for development and hosting.
 
-The direct donation address is **[bitcoincash:qqlx98vrupdm9gmnenwpcgy2yv4hfzktwv6raa4n3g](bitcoincash:qqlx98vrupdm9gmnenwpcgy2yv4hfzktwv6raa4n3g)**
+The direct donation address is **bitcoincash:qqlx98vrupdm9gmnenwpcgy2yv4hfzktwv6raa4n3g**
 
 ![member.cash donation address](/img/member-donation-qr.png)
 
