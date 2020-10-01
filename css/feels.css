@@ -1079,7 +1079,8 @@ img {
       .post .postdetails .title p a {
         color: rgba(0, 0, 0, 0.76); }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {
-        color: #44669c; }
+        color: #44669c;
+        margin: 0; }
         .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
     .post .postdetails .subtext {
@@ -2754,6 +2755,8 @@ tbody tr td .filterprovider {
   @media (max-width: 768px) {
     #notifications {
       max-width: 540px; } }
+  #notifications .notificationtitle .memberfilter {
+    margin-left: 0; }
   #notifications .notificationtitle,
   #notifications .repost {
     display: -ms-flexbox;
@@ -2791,6 +2794,9 @@ tbody tr td .filterprovider {
         display: none; }
       #notifications ul.notificationslist li a {
         margin: 0 0.25rem; }
+        #notifications ul.notificationslist li a.hnuser {
+          margin-left: 0;
+          white-space: nowrap; }
 
 #blockers,
 #blocking,
