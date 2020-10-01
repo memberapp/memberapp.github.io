@@ -93,7 +93,10 @@ Projects
 
 Member is a non profit project. It is free to use and there won't be ads or data mining. However it's always helpful to have more funds for development and hosting.
 
-The direct donation address is bitcoincash:qqlx98vrupdm9gmnenwpcgy2yv4hfzktwv6raa4n3g
+The direct donation address is **bitcoincash:qqlx98vrupdm9gmnenwpcgy2yv4hfzktwv6raa4n3g**
+
+![member.cash donation address](/img/member-donation-qr.svg)
+
 
 Alternatively you can buy some MEMBER tokens at the lowest available market rate here
 https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?for-sale
@@ -102,3 +105,5 @@ For either method, you'll appear on the top supporters page, here
 https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances
 
 (The only use of MEMBER tokens is to hold them to appear higher on the top supporters page)
+
+
