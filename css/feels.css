@@ -2426,7 +2426,9 @@ tbody tr td .filterprovider {
           border: 1px solid #44669c;
           background: transparent;
           padding: 0.5rem 1.5rem;
-          padding: 0.5rem 1rem; }
+          padding: 0.5rem 1rem;
+          font-size: 0.875rem;
+          font-weight: bold; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:hover {
             background: #e9eef6; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:disabled {
@@ -2439,9 +2441,31 @@ tbody tr td .filterprovider {
         -ms-flex-align: center;
         align-items: center;
         -ms-flex-wrap: wrap;
-        flex-wrap: wrap; }
+        flex-wrap: wrap;
+        width: 100%; }
         #messagesanchor .content #messageslist li .replymessagemeta .memberfilter {
           margin-right: 0.25rem; }
+        #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"] {
+          margin-left: auto;
+          line-height: 1.2;
+          cursor: pointer;
+          text-decoration: none;
+          transition: all 0.15s ease-in-out;
+          color: #44669c;
+          text-transform: uppercase;
+          border-radius: 0.25rem;
+          border: 1px solid #44669c;
+          background: transparent;
+          padding: 0.5rem 1.5rem;
+          padding: 0.5rem 1rem;
+          font-size: 0.875rem;
+          font-weight: bold; }
+          #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:hover {
+            background: #e9eef6; }
+          #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            pointer-events: none; }
 
 #member {
   width: 100%;
@@ -2732,7 +2756,14 @@ tbody tr td .filterprovider {
       max-width: 540px; } }
   #notifications .notificationtitle,
   #notifications .repost {
-    display: inherit; }
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%; }
+    #notifications .notificationtitle .age,
+    #notifications .repost .age {
+      margin-left: 0.25rem; }
   #notifications ul.notificationslist {
     padding: 0; }
     #notifications ul.notificationslist li {
@@ -2756,6 +2787,8 @@ tbody tr td .filterprovider {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
+      #notifications ul.notificationslist li a {
+        margin: 0 0.25rem; }
 
 #blockers,
 #blocking,
