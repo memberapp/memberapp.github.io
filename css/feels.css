@@ -641,6 +641,14 @@ html :lang(ar) {
     #memberlegacyaddress #memberlegacyformatdiv img {
       outline: none; }
 
+.message {
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem;
+  background: #ffe099;
+  border: 1px solid #ffc94d;
+  border-radius: 0.25rem; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
