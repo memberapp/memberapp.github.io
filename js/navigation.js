@@ -2,6 +2,12 @@
 
 function displayContentBasedOnURLParameters() {
 
+    if (followOrBackFlag) {
+        window.scrollTo(0, scrollhistory[window.location.hash]);
+    } else {
+        window.scrollTo(0, 0);
+    }
+
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
 
     var path = window.location.pathname;
@@ -325,15 +331,8 @@ function showTopicList() {
     getAndPopulateTopicList(true);
 }
 
-function resetScroll() {
-    scrollhistory = [];
-}
-
 function postsSelectorChanged() {
-
-    //Reset scroll history
-    resetScroll();
-
+    
     //get value from the 4 drop downs
     var selector;
 
@@ -356,12 +355,12 @@ function postsSelectorChanged() {
     //These two statements may trigger page load twice on firefox but not on other browsers
 
     //set the document location without triggering the back/forward function
-    suspendPageReload = true;
+    //suspendPageReload = true;
     document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
-    setTimeout(function () { suspendPageReload = false; }, 1000);
+    //setTimeout(function () { suspendPageReload = false; }, 1000);
 
     //show the posts
-    displayContentBasedOnURLParameters();
+    //displayContentBasedOnURLParameters();
 }
 
 /*function exitTopic(){
@@ -430,43 +429,54 @@ function showBlocking(qaddress) {
 //suspend back/forward detection for map panning
 var suspendPageReload = false;
 
-var detectBackOrForward = function (onBack, onForward) {
-    //Note, sometimes onForward is being called even though it a regular navigation click event
-    //Set the suspendPageReload to true before changing the href to stop this from happening
-    let hashHistory = [window.location.hash];
-    let historyLength = window.history.length;
+let hashHistory = [window.location.hash];
+let historyLength = window.history.length;
 
-    return function () {
+var detectBackOrForward = function () {
 
-        var hash = window.location.hash, length = window.history.length;
-        if (hashHistory.length && historyLength == length) {
-            if (hashHistory[hashHistory.length - 2] == hash) {
-                hashHistory = hashHistory.slice(0, -1);
-                if (!suspendPageReload) onBack();
-            } else {
-                hashHistory.push(hash);
-                if (!suspendPageReload) onForward();
-            }
+    var hash = window.location.hash, length = window.history.length;
+    if (!window.innerDocClick) {
+        followOrBackFlag = true;
+        if (hashHistory[hashHistory.length - 2] == hash) {
+            hashHistory = hashHistory.slice(0, -1);
         } else {
             hashHistory.push(hash);
-            historyLength = length;
+        }
+        if (!suspendPageReload) displayContentBasedOnURLParameters();
+        return true;
+    } else {
+        hashHistory.push(hash);
+        historyLength = length;
+        followOrBackFlag = false;
+        if (!suspendPageReload) {
+            displayContentBasedOnURLParameters();
         }
         return true;
     }
-};
+}
+
 
 var followOrBackFlag = false;
-var backforwardfunction = detectBackOrForward(
-    function () { followOrBackFlag = true; displayContentBasedOnURLParameters(); },
-    function () { followOrBackFlag = true; displayContentBasedOnURLParameters(); /*This doesn't seem to work accurately if history is over 50*/ }
-)
 
-window.onhashchange = backforwardfunction;
+//Onhashchange is unreliable - try testing for location change 10 times a second
+var lastdocumentlocation = location.hash;
+setTimeout(testForHashChange, 100);
+function testForHashChange() {
+    if (lastdocumentlocation != location.hash) {
+        lastdocumentlocation = location.hash;
+        detectBackOrForward();
+    }
+    setTimeout(testForHashChange, 100);
+}
+
+
 
 var scrollhistory = [];
-
 //record the scroll position
-document.addEventListener("click", function () {
-    scrollhistory[window.location.hash] = window.scrollY;
-    //alert("document capture click");
-}, true)
+document.addEventListener("click", function () { scrollhistory[window.location.hash] = window.scrollY; }, true);
+
+//User's mouse is inside the page.
+document.getElementsByTagName('body')[0].onmouseover = function() { window.innerDocClick = true;}
+
+//User's mouse has left the page.
+document.getElementsByTagName('body')[0].onmouseleave = function() { window.innerDocClick = false;}

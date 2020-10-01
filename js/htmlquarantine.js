@@ -27,7 +27,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     //hide memberpic for now
     memberpic='';
 
-    var ret = `<span id="memberinfo` + ratingID + `" class="memberfilter"><a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')" class="hnuser">`
+    var ret = `<span id="memberinfo` + ratingID + `" class="memberfilter"><a href="#member?qaddress=` + san(address) + `" class="hnuser">`
     + memberpic
     + membericon + ds(name) + `</a> `;
     if (ratingStarSize > 0) {
@@ -38,7 +38,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
 }
 
 function postlinkHTML(txid, linktext) {
-    return `<a href="#thread?post=` + san(txid) + `" onclick="showThread('` + san(txid) + `')">` + ds(linktext) + `</a>`;
+    return `<a href="#thread?post=` + san(txid) + `">` + ds(linktext) + `</a>`;
 }
 
 function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, functionName, numberOfResults) {
@@ -47,12 +47,12 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#show?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start - numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + getSafeTranslation('prev') + `</a> `; }
+    { navbuttons += `<a class="next" href="#show?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('prev') + `</a> `; }
 
     //Removing this if, because sometimes flagged posts are removed server side, so this condition may be true even where there are more results to return.
     //Proper fix is to have the server return a flag to say if there are more results available.
     if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#show?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" onclick="javascript:` + functionName + `('` + order + `','` + content + `','` + unicodeEscape(topicnameHOSTILE) + `','` + filter + `',` + (start + numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `')">` + getSafeTranslation('next') + `</a>`; }
+    { navbuttons += `<a class="back" href="#show?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('next') + `</a>`; }
     return navbuttons;
 
 }
@@ -64,11 +64,11 @@ function getNavButtonsHTML(start, limit, page, type, qaddress, topicName, functi
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#` + page + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start - numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + getSafeTranslation('prev') + `</a> `; }
+    { navbuttons += `<a class="next" href="#` + page + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `">` + getSafeTranslation('prev') + `</a> `; }
     //Removing this if, because sometimes flagged posts are removed server side, so this condition may be true even where there are more results to return.
     //Proper fix is to have the server return a flag to say if there are more results available.
     if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#` + page + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `" onclick="javascript:` + functionName + `(` + (start + numbers.results) + `,` + limit + `,'` + page + `','` + qaddress + `','` + type + `','` + unicodeEscape(topicName) + `')">` + getSafeTranslation('next') + `</a>`; }
+    { navbuttons += `<a class="back" href="#` + page + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&type=` + type + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicName)) + `">` + getSafeTranslation('next') + `</a>`; }
     return navbuttons;
 
 }
@@ -132,7 +132,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         articleLink = `<a id="articlelink` + page + santxid + `" href="?` + santxid.substring(0, 4) + `#article?post=` + santxid.substring(0, 10) + `">article</a> `;
     }
     if (geohash != null && geohash != "") {
-        mapLink = ` <a id="maplink` + page + santxid + `" onclick="showMap('` + san(geohash) + `','` + santxid + `');" href="javascript:;">🌍map</a> `;
+        mapLink = ` <a id="maplink` + page + santxid + `" href="#map?geohash=` + san(geohash) + `&post=` + santxid + `">🌍map</a> `;
     }
     var hideuserHTML = hideuserHTML = `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user)</a>`;
     if (topicHOSTILE != "") {
@@ -189,7 +189,7 @@ function getTopicHTML(topicHOSTILE, append) {
         displayNameHOSTILE = 'All Topics';
     }
     return ` <span class="topic">` +
-        `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new" onclick="showTopic(0,numbers.results,'` + unicodeEscape(topicHOSTILE) + `','new')">` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
+        `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new">` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
         + `</span>`;
 }
 
@@ -199,6 +199,11 @@ function getPostListItemHTML(postHTML) {
     }
     return `<li>` + postHTML + `</li>`;
 }
+
+function replacePageName(match, p1, p2, offset, string) {
+    // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+    return p1+`<a href="#member?pagingid=`+encodeURIComponent(p2)+`">@`+ds(p2)+`</a>`;
+  }
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid) {
     if (name == null) { name = address.substring(0, 10); }
@@ -210,6 +215,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var messageHTML = ds(message);
     messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
+    //ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
+    //Add paging ids
+    messageHTML = messageHTML.replace(/(^|\s)@([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g,replacePageName);
+    //messageHTML = messageHTML.replace(/(@[^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g,'<a href="#member?pagingid=$1">$1</a>');
 
     if (!isReply) {
         //only if main post
@@ -224,7 +233,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     messageLinksHTML = addImageAndYoutubeMarkdown(messageLinksHTML, differentiator, false);
 
     if (messageLinksHTML.indexOf("<a ") == -1 && messageLinksHTML.indexOf("<iframe ") == -1) {//if no links
-        messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + messageLinksHTML + `</a>`;
+        messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `">` + messageLinksHTML + `</a>`;
     }
 
     //Scan for XSS vulnerabilities
@@ -243,7 +252,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
         + `<span class="subtextbuttons">`
-        + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="showThread('` + san(roottxid) + `','` + san(txid) + `')">` + (Math.max(0, Number(replies))) + `&nbsp;`
+        + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `">` + (Math.max(0, Number(replies))) + `&nbsp;`
         + getSafeTranslation('comments').toLowerCase()
         + `</a> `
         + getScoresHTML(txid, likes, dislikes, tips)
@@ -284,7 +293,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     message = ShowdownConverter.makeHtml(message);
     //message=SnuOwnd.getParser().render(message);
 
-    var message = anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
+    //message = anchorme(message, { attributes: [{ name: "target", value: "_blank" }] });
 
     //check for XSS vulnerabilities
     message = DOMPurify.sanitize(message);
@@ -327,8 +336,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     if (settings["showyoutube"] == "true") {
         //Youtube
         var youtubeRegex = global ?
-            /<a href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*?(?:watch|embed)?(?:.*?v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*?<\/a>/gi :
-            /<a href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*?(?:watch|embed)?(?:.*?v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*?<\/a>/i;
+            /<a.*?href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*?(?:watch|embed)?(?:.*?v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*?<\/a>/gi :
+            /<a.*?href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*?(?:watch|embed)?(?:.*?v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*?<\/a>/i;
         message = message.replace(youtubeRegex,
             `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="makeYoutubeIframe('$1','$4');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" alt="video post" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
         );
@@ -337,8 +346,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     if (settings["showimgur"] == "true") {
         //Imgur
         var imgurRegex = global ?
-            /<a href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*?<\/a>/gi :
-            /<a href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*?<\/a>/i;
+            /<a.*?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*?<\/a>/gi :
+            /<a.*?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*?<\/a>/i;
         message = message.replace(imgurRegex,
             '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg" alt="imgur post $2"></div></a>'
         );
@@ -347,8 +356,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     if (settings["showtwitter"] == "true") {
         //Twitter
         var tweetRegex = global ?
-            /<a href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*?<\/a>/gi :
-            /<a href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*?<\/a>/i;
+            /<a.*?href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*?<\/a>/gi :
+            /<a.*?href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*?<\/a>/i;
         //This works but is ugly
         //Add differentiator so that if a tweet is shown multiple times, it has a different id each time
         message = message.replace(tweetRegex,
@@ -409,11 +418,11 @@ function getMembersWithRatingHTML(i, page, data, action, reverse) {
 
 
 function getMemberLink(address, name) {
-    return `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')">` + ds(name) + `</a>`;
+    return `<a href="#member?qaddress=` + san(address) + `">` + ds(name) + `</a>`;
 }
 
 function getAddressLink(address, name) {
-    return `<a href="#member?qaddress=` + san(address) + `" onclick="showMember('` + san(address) + `')">` + san(address) + `</a>`;
+    return `<a href="#member?qaddress=` + san(address) + `">` + san(address) + `</a>`;
 }
 
 //Temporary function to bootstrap selection of members to rate
@@ -425,7 +434,8 @@ function getBootStrapHTML(pubkey, data, lbstcount) {
 //Map
 
 function getMapCloseButtonHTML() {
-    return `<font size="+3"><a href="#posts?type=all&amp;start=0&amp;limit=` + numbers.results + `" onclick="hideMap();showPosts(0,numbers.results,'all');">X</a></font>`;
+    return `<font size="+3"><a href="#posts?type=all&amp;start=0&amp;limit=` + numbers.results + `">X</a></font>`;
+    //onclick="hideMap();showPosts(0,numbers.results,'all');"
 }
 
 function getOSMattributionHTML() {

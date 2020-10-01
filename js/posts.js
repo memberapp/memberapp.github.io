@@ -47,7 +47,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             }
 
         }
-        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start);
+        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start, true);
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -137,13 +137,19 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             }
         }
 
+        
         //Threads have no navbuttons
-        displayItemListandNavButtonsHTML(contents, "", "thread", data, "", 0);
-        showReplyBox(san(txid)+'thread');
+        displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
 
         if (popup != undefined) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
+            
         }
+        addDynamicHTMLElements(data);
+        
+        showReplyBox(san(txid)+pageName);
+        
+        
         scrollToElement("highlightedcomment");
 
     }, function (status) { //error detection....
@@ -240,12 +246,14 @@ function getAndPopulateTopicList(showpage) {
 
 
 
-function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start) {
+function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start, adddynamic) {
     contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype, start);
     var pageElement = document.getElementById(page);
     pageElement.innerHTML = contents; //display the result in the HTML element
     listenForTwitFrameResizes();
-    addDynamicHTMLElements(data);
+    if(adddynamic){
+        addDynamicHTMLElements(data);
+    }
     //window.scrollTo(0, scrollhistory[window.location.hash]);
     //detectMultipleIDS();
     return;
@@ -260,7 +268,6 @@ function addDynamicHTMLElements(data) {
         }
         if (followOrBackFlag) {
             window.scrollTo(0, scrollhistory[window.location.hash]);
-            followOrBackFlag = false;
         } else {
             window.scrollTo(0, 0);
         }
