@@ -2760,6 +2760,8 @@ tbody tr td .filterprovider {
     display: flex;
     -ms-flex-align: center;
     align-items: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     width: 100%; }
     #notifications .notificationtitle .age,
     #notifications .repost .age {
@@ -2838,12 +2840,3 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
-
-
-    .profilepreview {
-        position: absolute;
-        width: 300px;
-        background-color: white;
-        padding: 0px;
-        align-self: baseline;
-    }
