@@ -641,6 +641,14 @@ html :lang(ar) {
     #memberlegacyaddress #memberlegacyformatdiv img {
       outline: none; }
 
+.message {
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem;
+  background: #ffe099;
+  border: 1px solid #ffc94d;
+  border-radius: 0.25rem; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
@@ -1079,7 +1087,8 @@ img {
       .post .postdetails .title p a {
         color: rgba(0, 0, 0, 0.76); }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {
-        color: #44669c; }
+        color: #44669c;
+        margin: 0; }
         .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
     .post .postdetails .subtext {
@@ -1276,7 +1285,7 @@ img {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;
-  overflow: hidden;
+  overflow: inherit;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.4375rem 0; }
   @media (max-width: 400px) {
@@ -1721,7 +1730,7 @@ footer {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;
-  overflow: hidden;
+  overflow: inherit;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 1.75rem;
   display: -ms-flexbox;
@@ -1736,6 +1745,26 @@ footer {
       border-left: 0;
       border-right: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+
+.memberfilter {
+  position: relative; }
+
+.profilepreview {
+  position: absolute;
+  margin-top: 1rem;
+  display: block;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  top: 0;
+  z-index: 99;
+  width: 300px;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+  .profilepreview .post .postdetails .subtext a {
+    color: rgba(0, 0, 0, 0.87); }
 
 .mainbodywrapper #posts {
   width: 100%;
@@ -1756,7 +1785,7 @@ footer {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
-      overflow: hidden;
+      overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
       @media (max-width: 400px) {
@@ -1789,7 +1818,7 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
     @media (max-width: 400px) {
       #thread .itemlist .fatitem {
@@ -1819,7 +1848,7 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem 0.875rem; }
     @media (max-width: 400px) {
@@ -1919,7 +1948,7 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2000,7 +2029,7 @@ footer {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
-      overflow: hidden;
+      overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
       @media (max-width: 400px) {
         #memberposts .itemlist ol li {
@@ -2075,7 +2104,7 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2107,7 +2136,7 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem;
     display: -ms-flexbox;
@@ -2161,7 +2190,7 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     width: 100%;
     padding: 1.75rem; }
@@ -2197,7 +2226,7 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2283,7 +2312,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2484,7 +2513,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     #member .content div {
@@ -2563,7 +2592,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2614,7 +2643,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2684,7 +2713,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     margin-bottom: 0;
     border: 0;
@@ -2754,12 +2783,16 @@ tbody tr td .filterprovider {
   @media (max-width: 768px) {
     #notifications {
       max-width: 540px; } }
+  #notifications .notificationtitle .memberfilter {
+    margin-left: 0; }
   #notifications .notificationtitle,
   #notifications .repost {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
     align-items: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     width: 100%; }
     #notifications .notificationtitle .age,
     #notifications .repost .age {
@@ -2772,9 +2805,10 @@ tbody tr td .filterprovider {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
-      overflow: hidden;
+      overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: inherit; }
       @media (max-width: 400px) {
         #notifications ul.notificationslist li {
           margin-left: -15px !important;
@@ -2789,6 +2823,9 @@ tbody tr td .filterprovider {
         display: none; }
       #notifications ul.notificationslist li a {
         margin: 0 0.25rem; }
+        #notifications ul.notificationslist li a.hnuser {
+          margin-left: 0;
+          white-space: nowrap; }
 
 #blockers,
 #blocking,
@@ -2819,7 +2856,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2838,12 +2875,3 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
-
-
-    .profilepreview {
-        position: absolute;
-        width: 300px;
-        background-color: white;
-        padding: 0px;
-        align-self: baseline;
-    }
