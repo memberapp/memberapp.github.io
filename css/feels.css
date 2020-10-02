@@ -1152,7 +1152,13 @@ img {
       color: rgba(0, 0, 0, 0.87); }
   .postdetails .subtextbuttons span.score,
   .comment-tree ul li .reply div .subtextbuttons span.score {
-    margin-right: 0.5rem; }
+    margin-right: 0.5rem;
+    cursor: pointer;
+    transition: filter 1s ease-in-out; }
+    .postdetails .subtextbuttons span.score:hover,
+    .comment-tree ul li .reply div .subtextbuttons span.score:hover {
+      transition: filter 1s ease-in-out;
+      color: rgba(0, 0, 0, 0.87); }
     .postdetails .subtextbuttons span.score .likescounttext,
     .comment-tree ul li .reply div .subtextbuttons span.score .likescounttext {
       margin-right: 0.15rem; }
@@ -1785,7 +1791,8 @@ footer {
     font-weight: 400; }
 
 .scoreexpanded {
-  padding: 1rem 0; }
+  padding: 1rem 0;
+  display: none; }
   .scoreexpanded .closebutton {
     display: -ms-flexbox;
     display: flex;
@@ -2839,6 +2846,11 @@ tbody tr td .filterprovider {
       max-width: 540px; } }
   #notifications .notificationtitle .memberfilter {
     margin-left: 0; }
+    #notifications .notificationtitle .memberfilter span[id^=memberinfo0notifications] {
+      display: -ms-flexbox;
+      display: flex; }
+  #notifications .notificationtitle a:last-of-type {
+    margin-right: 0; }
   #notifications .notificationtitle,
   #notifications .repost {
     display: -ms-flexbox;
