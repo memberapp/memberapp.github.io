@@ -24,8 +24,8 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     var memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='` + profilepicbase + san(address) + `.128x128.jpg'/></span>`;
     var membericon = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
 
-    //hide memberpic for now
-    memberpic = '';
+    //hide membericon for now
+    membericon = '';
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" class="hnuser">`;
     var linkEnd = `</a> `;
