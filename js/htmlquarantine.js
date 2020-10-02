@@ -37,13 +37,15 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
         ret += ratingHTML;
     }
     ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profilepreview">`
+        + `<div class='profile-meta'>`;
         + linkStart + membericon + linkEnd
         + linkStart + ds(name) + linkEnd
         + ratingHTML
         + linkStart + '@handlegoeshere' + linkEnd
-        + `<span class='profilepreviewtext'>Plus some profile text here, maybe upto 217 characters, maybe with hyperlinks</span> `
-        + `<span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `">100 followers</a></span> `
-        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">100 following</a></span> `
+        + `</div>`;
+        + `<div class='profile-text'><span class='profilepreviewtext'>Plus some profile text here, maybe upto 217 characters, maybe with hyperlinks</span></div> `
+        + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `">100 followers</a></span> `
+        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">100 following</a></span></div> `
         + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span> `
         + `</span></span>`;
 
