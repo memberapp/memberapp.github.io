@@ -323,3 +323,16 @@ window.onmessage = (oe) => {
   if (oe.data.height && oe.data.element.match(/^tweet_/))
     document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
 }
+
+var delay = function (elem, callback, target) {
+  var timeout = null;
+  elem.onmouseover = function() {
+      // Set timeout to be a timer which will invoke callback after 1s
+      timeout = setTimeout(function(){callback(target)}, 300);
+  };
+
+  elem.onmouseout = function() {
+      // Clear any timers set to timeout
+      clearTimeout(timeout);
+  }
+};
