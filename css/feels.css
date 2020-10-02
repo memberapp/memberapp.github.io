@@ -1751,20 +1751,74 @@ footer {
 
 .profilepreview {
   position: absolute;
-  margin-top: 1rem;
   display: block;
   background: white;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   padding: 1rem;
-  top: 0;
+  top: 1rem;
   z-index: 99;
-  width: 300px;
-  font-size: 1rem;
-  color: rgba(0, 0, 0, 0.87);
+  width: 400px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
   .profilepreview .post .postdetails .subtext a {
     color: rgba(0, 0, 0, 0.87); }
+  .profilepreview .profile-meta {
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.87); }
+    .profilepreview .profile-meta .member-name {
+      font-weight: bold; }
+    .profilepreview .profile-meta .member-handle {
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.54); }
+    .profilepreview .profile-meta a:last-of-type {
+      width: 100%; }
+  .profilepreview .profile-text {
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 400; }
+
+.scoreexpanded {
+  padding: 1rem 0; }
+  .scoreexpanded .closebutton {
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: auto; }
+    .scoreexpanded .closebutton a {
+      line-height: 1.2;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease-in-out;
+      color: #44669c;
+      text-transform: uppercase;
+      border-radius: 0.25rem;
+      border: 1px solid #44669c;
+      background: transparent;
+      padding: 0.5rem 1.5rem;
+      color: #c1292e;
+      border: 1px solid #c1292e;
+      margin-left: auto !important; }
+      .scoreexpanded .closebutton a:hover {
+        background: #e9eef6; }
+      .scoreexpanded .closebutton a:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+        pointer-events: none; }
+      .scoreexpanded .closebutton a:hover {
+        background: #fbeeee; }
+  .scoreexpanded .tipdetails {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin: 0.5rem 0; }
 
 .mainbodywrapper #posts {
   width: 100%;
