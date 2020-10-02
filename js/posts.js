@@ -137,19 +137,19 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             }
         }
 
-        
+
         //Threads have no navbuttons
         displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
 
         if (popup != undefined) {
             popup.setContent("<div id='mapthread'>" + contents + "</div>");
-            
+
         }
         addDynamicHTMLElements(data);
-        
-        showReplyBox(san(txid)+pageName);
-        
-        
+
+        showReplyBox(san(txid) + pageName);
+
+
         scrollToElement("highlightedcomment");
 
     }, function (status) { //error detection....
@@ -173,16 +173,16 @@ function getAndPopulateTopic(topicNameHOSTILE) {
             }
         }
         if (modsArray.length == 0) {
-            var newData=[];
+            var newData = [];
             //These may be out of date, but better than showing NaN
-            newData.mostrecent=0;
-            newData.subscount=0;
-            newData.messagescount=0;
-            newData.topicname=topicNameHOSTILE;
+            newData.mostrecent = 0;
+            newData.subscount = 0;
+            newData.messagescount = 0;
+            newData.topicname = topicNameHOSTILE;
             modsArray.push(newData);
         }
         contents += getHTMLForTopicArray(modsArray, 'modmoresingle');
-        
+
 
         document.getElementById(page).innerHTML = getHTMLForTopicHeader(topicNameHOSTILE, contents);
 
@@ -197,7 +197,7 @@ function getAndPopulateTopicList(showpage) {
         show(page);
     }
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL=dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey;
     getJSON(theURL).then(function (data) {
 
         var selectboxIndex = 5;
@@ -251,7 +251,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
     var pageElement = document.getElementById(page);
     pageElement.innerHTML = contents; //display the result in the HTML element
     listenForTwitFrameResizes();
-    if(adddynamic){
+    if (adddynamic) {
         addDynamicHTMLElements(data);
     }
     //window.scrollTo(0, scrollhistory[window.location.hash]);
@@ -278,30 +278,63 @@ function addDynamicHTMLElements(data) {
     //Add mouseoverprofiles
     addMouseoverProfiles();
 
+    //Add scoremouseovers
+    addClickScores();
+
     //Add identicons
     jdenticon();
+}
+
+
+function addClickScores() {
+    var matches = document.querySelectorAll("[id^='scores']");
+    for (var i = 0; i < matches.length; i++) {
+        var profileElement = matches[i].id.replace('scores', 'scoresexpanded');
+        //document.getElementById(profileElement).onmouseleave=setDisplayNone;
+        matches[i].onclick = showScoresExpanded;
+    }
 }
 
 function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
     for (var i = 0; i < matches.length; i++) {
-        var profileElement=matches[i].id.replace('member','profile');
-        document.getElementById(profileElement).onmouseleave=setDisplayNone;
-        matches[i].onmouseover = showPreviewProfile;
+        var profileElement = matches[i].id.replace('member', 'profile');
+        document.getElementById(profileElement).onmouseleave = setDisplayNone;
+        delay(matches[i],showPreviewProfile,document.getElementById(profileElement));
     }
 }
 
-function setDisplayNone(){
-    this.style.display="none";
+function setDisplayNone() {
+    this.style.display = "none";
 }
 
-function showPreviewProfile() {
-    var profileelement=this.id.replace('member','profile');
+function showScoresExpanded() {
+    var profileelement = this.id.replace('scores', 'scoresexpanded');
+    var retxid = profileelement.substr(14, 64);
+    var closeHTML = `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">close</a></div>`;
+    document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
+    //load scores
+    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + san(pubkey);
+    getJSON(theURL).then(function (data) {
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+            var amount = Number(data[i].amount);
+            contents += `<div class="tipdetails">` + userHTML(data[i].address, data[i].name, i, data[i].rating, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
+        }
+        document.getElementById(profileelement).innerHTML = closeHTML + contents;
+        addDynamicHTMLElements(null);
+    }, function (status) { //error detection....
+        showErrorMessage(status, profileelement, theURL);
+    });
+}
+
+function showPreviewProfile(profileelement) {
+    profileelement.style.display = "block";
 }
 
 function addStarRatings(stem) {
-    var matches = document.querySelectorAll("[id^='"+stem+"']");
+    var matches = document.querySelectorAll("[id^='" + stem + "']");
     for (var i = 0; i < matches.length; i++) {
         addSingleStarsRating(matches[i]);
         //var test=matches[i];
@@ -456,7 +489,7 @@ function replySuccessFunction(page, txid) {
 
 function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
-    var replybox = document.querySelector("[id^='"+"reply" + txid+"']");
+    var replybox = document.querySelector("[id^='" + "reply" + txid + "']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";
     //document.getElementById("replylink"+txid).style.display = "none";
@@ -594,17 +627,17 @@ function showMore(show, hide) {
 
 function topictitleChanged() {
     //emojis are of length 4, although treated as length 2, so got to turn into hex to discover real length
-    const titlelength = new Buffer(document.getElementById('memorandumtitle').value).toString('hex').length/2;
-    const topiclength = new Buffer(document.getElementById('memorandumtopic').value).toString('hex').length/2;
-    
+    const titlelength = new Buffer(document.getElementById('memorandumtitle').value).toString('hex').length / 2;
+    const topiclength = new Buffer(document.getElementById('memorandumtopic').value).toString('hex').length / 2;
+
     if (topiclength == 0) {
         document.getElementById('memorandumtitle').maxLength = 217;
         document.getElementById('memorandumtopic').maxLength = Math.max(0, 214 - titlelength);
-        document.getElementById('newpostmemorandumbutton').disabled=(titlelength>217);
+        document.getElementById('newpostmemorandumbutton').disabled = (titlelength > 217);
     } else {
         document.getElementById('memorandumtitle').maxLength = Math.max(0, 214 - topiclength);
         document.getElementById('memorandumtopic').maxLength = Math.max(0, 214 - titlelength);
-        document.getElementById('newpostmemorandumbutton').disabled=(topiclength+titlelength>214);
+        document.getElementById('newpostmemorandumbutton').disabled = (topiclength + titlelength > 214);
     }
     document.getElementById('memorandumtitlelengthadvice').innerHTML = "(" + titlelength + "/" + document.getElementById('memorandumtitle').maxLength + ")";
     document.getElementById('memorandumtopiclengthadvice').innerHTML = "(" + topiclength + "/" + document.getElementById('memorandumtopic').maxLength + ")";

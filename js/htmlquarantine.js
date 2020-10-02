@@ -24,8 +24,8 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     var memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='` + profilepicbase + san(address) + `.128x128.jpg'/></span>`;
     var membericon = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
 
-    //hide memberpic for now
-    memberpic = '';
+    //hide membericon for now
+    membericon = '';
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" class="hnuser">`;
     var linkEnd = `</a> `;
@@ -37,13 +37,15 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
         ret += ratingHTML;
     }
     ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profilepreview">`
+        + `<div class='profile-meta'>`
         + linkStart + membericon + linkEnd
         + linkStart + ds(name) + linkEnd
         + ratingHTML
         + linkStart + '@handlegoeshere' + linkEnd
-        + `<span class='profilepreviewtext'>Plus some profile text here, maybe upto 217 characters, maybe with hyperlinks</span> `
-        + `<span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `">100 followers</a></span> `
-        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">100 following</a></span> `
+        + `</div>`
+        + `<div class='profile-text'><span class='profilepreviewtext'>Plus some profile text here, maybe upto 217 characters, maybe with hyperlinks</span></div> `
+        + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `">100 followers</a></span> `
+        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">100 following</a></span></div> `
         + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span> `
         + `</span></span>`;
 
@@ -167,7 +169,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         `<a id="replylink` + santxid + page + `" onclick="showReplyBox('` + santxid + page + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
         <span class="rememberscounttext"><a class="`+ remembersActive + `" id="repostlink` + page + santxid + `" ` + remembersOnclick + `> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('re-members') + `</a></span>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
-        <a  id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
+        <a id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
             <a class="permalink" id="permalink`+ page + santxid + `" href="` + permalink + `">permalink</a> `
         + articleLink + `
@@ -186,8 +188,8 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         </span>`;
 }
 
-function getScoresHTML(txid, likes, dislikes, tips) {
-    return ` <span class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `"  data-amount="` + Number(tips) + `">` + balanceString(Number(tips), false) + `</span></span></span>`;
+function getScoresHTML(txid, likes, dislikes, tips, differentiator) {
+    return ` <span id="scores`+san(txid)+differentiator+`" class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `"  data-amount="` + Number(tips) + `">` + balanceString(Number(tips), false) + `</span></span></span>`;
 }
 
 function getAgeHTML(firstseen, compress) {
@@ -268,11 +270,11 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `">` + (Math.max(0, Number(replies))) + `&nbsp;`
         + getSafeTranslation('comments').toLowerCase()
         + `</a> `
-        + getScoresHTML(txid, likes, dislikes, tips)
+        + getScoresHTML(txid, likes, dislikes, tips, differentiator)
         + ` `
         + getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid) +
-        `</span>
-                    </div>`
+        `</span></div>
+        <div id="scoresexpanded`+san(txid)+differentiator+`" class="scoreexpanded"></div>`
         + getReplyDiv(txid, page, differentiator) + `
                 </div>
             </div>`;
@@ -322,7 +324,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                     <div class="commentdetails">
                         <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
         + userHTML(address, name, ratingID, rating, 8)
-        + getScoresHTML(txid, likes, dislikes, tips)
+        + getScoresHTML(txid, likes, dislikes, tips, differentiator)
         + ` ` + getAgeHTML(firstseen) +
         `</div>
                         <div class="comment"><div class="commentbody">
@@ -330,6 +332,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                             </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
                             `+ getReplyDiv(txid, page, differentiator) + `
                         </div>
+                        <div id="scoresexpanded`+san(txid)+differentiator+`" class="scoreexpanded"></div>
                     </div>
                 </div>
             </div>
@@ -536,9 +539,9 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
             contents += `<li style="display:` + (isMuted ? `none` : `block`) + `" id="LI` + san(data[i].txid) + `"` + (data[i].txid.startsWith(highlighttxid) ? `" class="highlightli" ` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
             contents += `<li style="display:` + (isMuted ? `block` : `none`) + `" id="CollapsedLI` + san(data[i].txid) + `" class="collapsed"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
                 + userHTML(data[i].address, data[i].name, data[i].ratingID, data[i].rating, 0)
-                + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips)
+                + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips, i)
                 + ` ` + getAgeHTML(data[i].firstseen)
-                + `</div></li>`;
+                + `</div><div id="scoresexpanded`+san(data[i].txid)+i+`" class="scoreexpanded"></div></li>`;
         }
     }
     contents = contents + "</ul>";
