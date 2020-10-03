@@ -133,7 +133,7 @@ function hideAll() {
     document.getElementById('following').style.display = "none";
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
-    document.getElementById('member').style.display = "none";
+    document.getElementById('memberanchor').style.display = "none";
     document.getElementById('newpost').style.display = "none";
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
@@ -261,7 +261,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
     getAndPopulateMember(qaddress);
     getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
     //getAndPopulate(0, numbers.results, 'memberposts', qaddress);
-    document.getElementById('member').style.display = "block";
+    document.getElementById('memberanchor').style.display = "block";
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
