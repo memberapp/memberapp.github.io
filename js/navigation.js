@@ -315,7 +315,7 @@ function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit, qa
 function showTopic(start, limit, topicnameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
     setTopic(topicnameHOSTILE);
-    if (type == "") type = "new";
+    if (!type) type = "new";
     getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', '');
     //getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }

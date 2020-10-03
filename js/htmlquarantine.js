@@ -38,7 +38,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize) {
     }
     ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profilepreview">`
         + `<div class='profile-meta'>`
-        + linkStart + membericon + linkEnd
+        + linkStart + memberpic + linkEnd
         + linkStart + "<span class='member-handle'>" + ds(name) + "</span>" + linkEnd
         + ratingHTML
         + linkStart + "<span class='member-pagingid'>" + '@pagingidgoeshere' + "</span>" + linkEnd
