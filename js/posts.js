@@ -347,7 +347,9 @@ function addSingleStarsRating(theElement) {
     let name = theElement.dataset.ratingname;
     let theAddress = theElement.dataset.ratingaddress;
     let rawRating = theElement.dataset.ratingraw;
-    let starSize = theElement.dataset.ratingsize;
+    //let starSize = theElement.dataset.ratingsize;
+    let starSize = Number(getComputedStyle(theElement).fontSize);
+
     let disabledtext = theElement.dataset.disabledtext;
 
     var theRating = 0; if (rawRating != null && rawRating != 0) { theRating = (ds(rawRating) / 64) + 1; }
