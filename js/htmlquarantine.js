@@ -473,11 +473,11 @@ function getNotificationsTableHTML(contents, navbuttons) {
 
 //Trust graph
 function getDirectRatingHTML(data) {
-    return "<tr><td>" + getMemberLink(data.member, data.membername) + "</td>" + "<td></td><td></td><td align='center'> <div id='trust" + san(data.member) + san(data.target) + "'></div>  </td><td></td><td></td>" + "<td align='center'>" + "<td>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
+    return "<tr><td data-label='Member'>" + getMemberLink(data.member, data.membername) + "</td>" + "<td></td><td></td><td data-label='Rates as' align='center'> <div id='trust" + san(data.member) + san(data.target) + "'></div>  </td><td></td><td></td>" + "<td align='center'>" + "<td data-label='Member'>" + getMemberLink(data.target, data.targetname) + "</td></tr>";
 }
 
 function getIndirectRatingHTML(data) {
-    return "<tr><td data-label='member'><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td data-label='ratingofintermediate'><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center' data-label='intermediate'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td data-label='intermediaterating'><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td data-label='target'><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
+    return "<tr><td data-label='You'><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td data-label='Rate as'><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center' data-label='Member'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td data-label='Who Rates as'><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td data-label='Member'><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
 }
 
 function getTrustRatingTableHTML(contentsHTML, rating) {
@@ -497,7 +497,7 @@ function rts(thetext) {
 function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason, stem) {
     //Careful to ensure disabletext is sanitized
     var disableText = rts(ratername) + ' rates ' + rts(rateename) + ' as {rating}/{maxRating}';
-    return "<tr><td>" + getMemberLink(rateraddress, ratername) + `</td><td align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='` + stem + `` + san(rateraddress) + "'></div>  </td><td>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td colspan='2'>" + ds(reason) + "</td></tr>";
+    return "<tr><td data-label='Member'>" + getMemberLink(rateraddress, ratername) + `</td><td data-label='Rates As' align='center'> <div data-disabledtext="` + disableText + `" data-ratingsize="24" data-ratingaddress="` + san(rateraddress) + `" data-ratingraw="` + Number(rating) + `" id='` + stem + `` + san(rateraddress) + "'></div>  </td><td data-label='Member'>" + getMemberLink(rateeaddress, rateename) + "</td></tr> <tr><td></td><td data-label='Commenting...' colspan='2'>" + ds(reason) + "</td></tr>";
 }
 
 /*
