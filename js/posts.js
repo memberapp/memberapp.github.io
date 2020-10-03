@@ -491,7 +491,7 @@ function replySuccessFunction(page, txid) {
 
 function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
-    var replybox = document.querySelector("[id^='" + "reply" + txid + "']");
+    var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0,10) + "']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";
     //document.getElementById("replylink"+txid).style.display = "none";
