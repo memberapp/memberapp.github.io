@@ -1291,6 +1291,7 @@ img {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;
+  list-style-type: none;
   overflow: inherit;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.4375rem 0; }
@@ -1736,6 +1737,7 @@ footer {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;
+  list-style-type: none;
   overflow: inherit;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 1.75rem;
@@ -1777,10 +1779,11 @@ footer {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     font-size: 1rem;
+    margin-bottom: 1rem;
     color: rgba(0, 0, 0, 0.87); }
-    .profilepreview .profile-meta .member-name {
-      font-weight: bold; }
     .profilepreview .profile-meta .member-handle {
+      font-weight: bold; }
+    .profilepreview .profile-meta .member-pagingid {
       font-weight: 400;
       color: rgba(0, 0, 0, 0.54); }
     .profilepreview .profile-meta a:last-of-type {
@@ -1788,7 +1791,34 @@ footer {
   .profilepreview .profile-text {
     font-size: 1rem;
     color: rgba(0, 0, 0, 0.87);
-    font-weight: 400; }
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1rem; }
+  .profilepreview .profile-actions {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+    .profilepreview .profile-actions .profilepreviewfollowers {
+      -ms-flex: 1;
+      flex: 1; }
+    .profilepreview .profile-actions .profilepreviewfollowbutton a {
+      line-height: 1.2;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 0.875rem;
+      transition: all 0.15s ease-in-out;
+      color: white;
+      float: right;
+      text-transform: uppercase;
+      border-radius: 0.25rem;
+      border: 1px solid #354f78;
+      background: #44669c;
+      padding: 0.5rem 1.5rem; }
+      .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
+        background: #354f78; }
+      .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
+        opacity: 0.65; }
 
 .scoreexpanded {
   padding: 1rem 0;
@@ -1846,6 +1876,7 @@ footer {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
+      list-style-type: none;
       overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
@@ -1879,6 +1910,7 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
     @media (max-width: 400px) {
@@ -1909,6 +1941,7 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem 0.875rem; }
@@ -2009,6 +2042,7 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
@@ -2090,6 +2124,7 @@ footer {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
+      list-style-type: none;
       overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
       @media (max-width: 400px) {
@@ -2165,6 +2200,7 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
@@ -2197,6 +2233,7 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem;
@@ -2251,6 +2288,7 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     width: 100%;
@@ -2287,6 +2325,7 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
@@ -2373,6 +2412,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
@@ -2574,6 +2614,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
@@ -2653,6 +2694,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
@@ -2704,6 +2746,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
@@ -2774,6 +2817,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     margin-bottom: 0;
@@ -2871,6 +2915,7 @@ tbody tr td .filterprovider {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
+      list-style-type: none;
       overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -2922,6 +2967,7 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
+    list-style-type: none;
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
