@@ -49,8 +49,8 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         + `</div>`
         + `<div class='profile-text'><span class='profilepreviewtext'>`+ds(profile)+`</span></div> `
         + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `">`+Number(followers)+` followers</a></span> `
-        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">`+Number(following)+` following</a></span></div> `
-        + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span> `
+        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">`+Number(following)+` following</a></span> `
+        + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span></div> `
         + `</span></span>`;
     return ret;
 }
