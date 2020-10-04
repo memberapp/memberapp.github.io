@@ -32,7 +32,7 @@ async function userSearchChanged(searchbox, targetelement) {
         var test = data;
         var contents = `<label for="usersearchresults">Results</label>`;
         for (var i = 0; i < data.length; i++) {
-            contents = contents + "<div class='usersearchresult'>" + userHTML(data[i].address, data[i].name, i + searchbox + data[i].address, data[i].rating, 16)
+            contents = contents + "<div class='usersearchresult'>" + userFromDataBasic(data[i], i + searchbox + data[i].address, 16) 
                 + sendEncryptedMessageHTML(data[i].address, data[i].name, data[i].publickey)
                 + "</div><br/>";
         }
