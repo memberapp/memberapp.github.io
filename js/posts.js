@@ -344,6 +344,7 @@ function addStarRatings(stem) {
 function addSingleStarsRating(theElement) {
     //var theElement = document.querySelector(querySelector);
     if (theElement == undefined) return;
+    if (theElement.isdone) return;
     let name = theElement.dataset.ratingname;
     let theAddress = theElement.dataset.ratingaddress;
     let rawRating = theElement.dataset.ratingraw;
@@ -372,6 +373,7 @@ function addSingleStarsRating(theElement) {
     if (disabledtext) {
         starRating1.disable();
     }
+    theElement.isdone=true;
     return starRating1;
 }
 
