@@ -298,9 +298,9 @@ function addClickScores() {
 function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
     for (var i = 0; i < matches.length; i++) {
-        var profileElement = matches[i].id.replace('member', 'profile');
-        document.getElementById(profileElement).onmouseleave = setDisplayNone;
-        delay(matches[i],showPreviewProfile,document.getElementById(profileElement));
+        var profileElement = document.getElementById(matches[i].id.replace('member', 'profile'));
+        profileElement.onmouseleave = setDisplayNone;
+        delay(matches[i],showPreviewProfile,profileElement);
     }
 }
 
@@ -320,7 +320,7 @@ function showScoresExpanded() {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
+            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid)+i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements(null);
