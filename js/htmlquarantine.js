@@ -28,7 +28,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         if (picurl.toLowerCase().endsWith('.png')) {
             pictype = '.png';
         }
-        memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='128' height='128' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/></span>`;
+        memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='15' height='15' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/></span>`;
     }
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" class="hnuser">`;

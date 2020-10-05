@@ -395,6 +395,16 @@ footer {
     float: left;
     font-size: 1px;
   }
+  .memberpicturesmall {
+    width: 15px;
+    height: 15px;
+    margin-bottom: -3px;
+    margin-right: 2px;
+  }
+  .memberpicturelarge {
+    width: 100px;
+    height: 100px;
+  }
   .jdenticon {
     width: 15px;
     height: 15px;
@@ -1072,4 +1082,25 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
 
 .article .permalink {
   display: none;
+}
+
+.profilepreview {
+  position: absolute;
+background: white;
+border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+border-radius: 0.5rem;
+padding: 1rem;
+z-index: 99;
+width: 400px;
+box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.scoreexpanded .tipdetails {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0.5rem 0;
 }
