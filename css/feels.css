@@ -1919,7 +1919,8 @@ footer {
       list-style-type: none;
       overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: hidden; }
       @media (max-width: 400px) {
         .mainbodywrapper #posts .itemlist ol.posts li {
           margin-left: -15px !important;
