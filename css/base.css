@@ -421,13 +421,13 @@ footer {
     display: none;
   }
   .votearrow {
-    background: url("../img/uparrowgrey.svg");
+    background: url("../img/membertheme/uparrowgrey.svg");
   }
   .votearrowactivated {
-    background: url("../img/uparrowgreen.svg");
+    background: url("../img/membertheme/uparrowgreen.svg");
   }
   .votearrowactivateddown {
-    background: url("../img/uparrowblue.svg");
+    background: url("../img/membertheme/uparrowblue.svg");
   }
   .votearrow, .votearrowactivated, .votearrowactivateddown {
     width: 18px;
@@ -773,7 +773,7 @@ footer {
 /*Loading image*/
 
 .loading {
-  background-image: url("../img/loading.gif");
+  background-image: url("../img/membertheme/loading.gif");
   width: 100%;
   /*width of your image*/
   height: 72px;
