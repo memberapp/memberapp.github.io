@@ -270,6 +270,9 @@ select>option {
     font-size: x-small;
     color: #373737;
   }
+
+}
+
   /* Breakline in header for small screen, 720 is about the point where it splits onto a second line
   probably a better way to handle this as topic container is still free floating and unwanted break appears*/
   @media only screen and (max-width: 860px) {
@@ -277,13 +280,16 @@ select>option {
       content: ' ';
       display: block;
     }
+    .memberlogoimagefull {display:none;}
+    .memberlogoimage {display:inline;}
   }
   @media only screen and (min-width: 860px) {
     .separatorwidebreakpoint::before {
       content: " | ";
     }
+    .memberlogoimagefull {display:inline;}
+    .memberlogoimage {display:none;}
   }
-}
 
 /* Footer Stuff */
 
