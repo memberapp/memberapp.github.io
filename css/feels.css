@@ -646,8 +646,8 @@ html :lang(ar) {
   text-align: center;
   font-weight: bold;
   padding: 1rem;
-  background: #EABA6B;
-  border: 1px solid #e09b28;
+  background: #FFE45E;
+  border: 1px solid #ffd712;
   border-radius: 0.25rem; }
 
 body {
@@ -705,7 +705,8 @@ pre {
   line-height: 1.45;
   background-color: #f6f8fa;
   border-radius: 6px;
-  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace; }
+  font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  white-space: break-spaces; }
   pre code {
     display: inline;
     padding: 0;
@@ -980,12 +981,13 @@ img {
     height: 0.875rem;
     border: 0px;
     margin: 3px 2px 2px;
-    background: url(../img/feelstheme/grayuparrow.svg);
+    background: url(../img/feelstheme/arrow-up.svg);
+    filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
     background-size: 0.875rem 0.875rem;
     display: block; }
   .votelinks .votearrowactivated,
   .votelinks .votearrowactivateddown {
-    filter: invert(62%) sepia(82%) saturate(457%) hue-rotate(68deg) brightness(100%) contrast(81%); }
+    filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%); }
   .votelinks .betweenvotesscoredown,
   .votelinks .betweenvotesscore,
   .votelinks .betweenvotesscoreup {
@@ -1347,6 +1349,8 @@ img {
               display: flex;
               -ms-flex-align: center;
               align-items: center; }
+              .comment-tree ul li .reply div:only-child .commentdetails .comhead .score {
+                margin-right: 0.25rem; }
             .comment-tree ul li .reply div:only-child .commentdetails .comment {
               font-size: 1rem; }
               .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody {
@@ -1683,7 +1687,7 @@ footer {
       width: 100%; }
 
 #lowfundswarning {
-  background: #EABA6B;
+  background: #FFE45E;
   padding: 1.75rem 0;
   margin-top: -1rem;
   margin-bottom: 2rem; }
@@ -1795,7 +1799,7 @@ footer {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     font-size: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     color: rgba(0, 0, 0, 0.87); }
     .profilepreview .profile-meta .member-handle {
       font-weight: bold; }
@@ -1809,15 +1813,19 @@ footer {
     color: rgba(0, 0, 0, 0.87);
     font-weight: 400;
     line-height: 1.15;
-    margin-bottom: 1rem; }
+    margin-bottom: 0.5rem;
+    font-size: 0.825rem; }
   .profilepreview .profile-actions {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
     align-items: center; }
     .profilepreview .profile-actions .profilepreviewfollowers {
+      color: rgba(0, 0, 0, 0.87); }
+    .profilepreview .profile-actions .profilepreviewfollowers {
       -ms-flex: 1;
-      flex: 1; }
+      flex: 1;
+      color: rgba(0, 0, 0, 0.87); }
     .profilepreview .profile-actions .profilepreviewfollowbutton a {
       line-height: 1.2;
       cursor: pointer;
@@ -1830,7 +1838,8 @@ footer {
       border-radius: 0.25rem;
       border: 1px solid #0c4879;
       background: #1063A8;
-      padding: 0.5rem 1.5rem; }
+      padding: 0.5rem 1.5rem;
+      margin-bottom: 0; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
         background: #0c4879; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
@@ -2280,7 +2289,7 @@ body.article {
         margin-top: 0.875rem; }
     #loginbox .content #newseedphrase {
       border: 1px solid rgba(0, 0, 0, 0.12);
-      background: #EABA6B;
+      background: #FFE45E;
       border-radius: 0.25rem;
       padding: 0.4375rem 0.875rem;
       margin: 1rem 0; }
