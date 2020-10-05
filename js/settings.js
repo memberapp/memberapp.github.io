@@ -73,25 +73,25 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
 
-            document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at member.cash";
+            document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
             jdenticonname = data[0].name;
 
             //img/profilepics/`+san(address)+`128x128.jpg
         }
 
-        var picurl=data[0].picurl;
+        var picurl = data[0].picurl;
         if (picurl) {
-            var pictype = '.jpg';
+            /*var pictype = '.jpg';
             if (picurl.toLowerCase().endsWith('.png')) {
                 pictype = '.png';
-            }
-            document.getElementById(pre + 'picturelarge').src = profilepicbase + san(qaddress) + ".640x640"+pictype;
-            document.getElementById(pre + 'picturelarge').style.display='block';
-        }else{
-            document.getElementById(pre + 'picturelarge').style.display='none';
+            }*/
+            document.getElementById(pre + 'picturelarge').src = profilepicbase + san(qaddress) + ".640x640.jpg";
+            document.getElementById(pre + 'picturelarge').style.display = 'block';
+        } else {
+            document.getElementById(pre + 'picturelarge').style.display = 'none';
         }
 
-        
+
         document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
         //document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
         document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);

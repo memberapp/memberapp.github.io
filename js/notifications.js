@@ -32,7 +32,7 @@ function displayNotificationCount() {
         if (pageTitleCount > 0) {
             pageTitle = "(" + pageTitleCount + ") ";
         }
-        document.title = pageTitle + "member.cash";
+        document.title = pageTitle + siteTitle;
         setTimeout(displayNotificationCount, 60000);
     }, function (status) { //error detection....
         showErrorMessage(status, null, theURL);
@@ -72,7 +72,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         }
 
         document.getElementById("alertcount").innerHTML = "";
-        document.title = "member.cash";
+        document.title = siteTitle;
 
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data);
