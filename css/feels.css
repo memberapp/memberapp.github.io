@@ -1459,12 +1459,10 @@ header {
           header .pagetop nav .memberlogo a img {
             margin-top: 0;
             outline: none;
-            height: 2.4rem;
-            width: 7.6rem; }
+            height: 2.4rem;}
             @media (min-width: 1025px) {
               header .pagetop nav .memberlogo a img {
-                height: 2rem;
-                width: 6.34rem; } }
+                height: 2rem;} }
       header .pagetop nav .membertext {
         display: none; }
         @media (min-width: 1025px) {
@@ -2987,3 +2985,14 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
+
+
+      @media only screen and (max-width: 1025px) {
+        .memberlogoimagefull {display:none;}
+        .memberlogoimage {display:inline; height: 2rem; width: 2rem; }
+      }
+
+      @media only screen and (min-width: 1025px) {
+        .memberlogoimagefull {display:inline;height: 2rem;width: 10rem;}
+        .memberlogoimage {display:none;}
+      }
