@@ -764,14 +764,14 @@ button {
   float: right;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #0c4879;
+  border: 1px solid #1063A8;
   background: #1063A8;
   padding: 0.5rem 1.5rem;
   float: right;
   margin-bottom: 0.875rem; }
   input[type="submit"]:hover,
   button:hover {
-    background: #0c4879;
+    background: #0e5591;
     color: white; }
   input[type="submit"]:disabled,
   button:disabled {
@@ -1848,12 +1848,12 @@ footer {
       float: right;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #0c4879;
+      border: 1px solid #1063A8;
       background: #1063A8;
       padding: 0.5rem 1.5rem;
       margin-bottom: 0; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
-        background: #0c4879;
+        background: #0e5591;
         color: white; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
         opacity: 0.65; }
@@ -2389,14 +2389,14 @@ tbody tr td a[href^="javascript:;"] {
   float: right;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #0c4879;
+  border: 1px solid #1063A8;
   background: #1063A8;
   padding: 0.5rem 1.5rem;
   width: 100%;
   margin-bottom: 0; }
   tbody tr td a[href^="#modmorelink"]:hover,
   tbody tr td a[href^="javascript:;"]:hover {
-    background: #0c4879;
+    background: #0e5591;
     color: white; }
   tbody tr td a[href^="#modmorelink"]:disabled,
   tbody tr td a[href^="javascript:;"]:disabled {
@@ -2684,12 +2684,12 @@ tbody tr td .filterprovider {
         float: right;
         text-transform: uppercase;
         border-radius: 0.25rem;
-        border: 1px solid #0c4879;
+        border: 1px solid #1063A8;
         background: #1063A8;
         padding: 0.5rem 1.5rem;
         margin-left: auto; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:hover {
-          background: #0c4879;
+          background: #0e5591;
           color: white; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
           opacity: 0.65; }
