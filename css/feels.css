@@ -444,6 +444,7 @@ html :lang(ar) {
 #memberprofilelinks div a {
   margin-right: 1rem;
   line-height: 1.2;
+  font-weight: 400;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.15s ease-in-out;
@@ -768,12 +769,15 @@ button {
   border: 1px solid #1063A8;
   background: #1063A8;
   padding: 0.5rem 1.5rem;
+  border: transparent;
+  font-weight: 400;
   float: right;
   margin-bottom: 0.875rem; }
   input[type="submit"]:hover,
   button:hover {
     background: #0e5591;
-    color: white; }
+    color: white;
+    border: transparent; }
   input[type="submit"]:disabled,
   button:disabled {
     opacity: 0.65; }
@@ -1737,6 +1741,7 @@ footer {
         width: 160px; }
     #lowfundswarning .content a:not([rel~="noreferrer"]) {
       line-height: 1.2;
+      font-weight: 400;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
@@ -1852,10 +1857,13 @@ footer {
       border: 1px solid #1063A8;
       background: #1063A8;
       padding: 0.5rem 1.5rem;
+      border: transparent;
+      font-weight: 400;
       margin-bottom: 0; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
         background: #0e5591;
-        color: white; }
+        color: white;
+        border: transparent; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
         opacity: 0.65; }
 
@@ -1868,6 +1876,7 @@ footer {
     margin-left: auto; }
     .scoreexpanded .closebutton a {
       line-height: 1.2;
+      font-weight: 400;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
@@ -2098,6 +2107,7 @@ footer {
       margin-bottom: 1rem; }
     #settingsanchor .content .logout a {
       line-height: 1.2;
+      font-weight: 400;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
@@ -2117,6 +2127,7 @@ footer {
     #settingsanchor .content #settingsnametextbutton,
     #settingsanchor .content #settingsprofiletextbutton {
       line-height: 1.2;
+      font-weight: 400;
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
@@ -2392,12 +2403,15 @@ tbody tr td a[href^="javascript:;"] {
   border: 1px solid #1063A8;
   background: #1063A8;
   padding: 0.5rem 1.5rem;
+  border: transparent;
+  font-weight: 400;
   width: 100%;
   margin-bottom: 0; }
   tbody tr td a[href^="#modmorelink"]:hover,
   tbody tr td a[href^="javascript:;"]:hover {
     background: #0e5591;
-    color: white; }
+    color: white;
+    border: transparent; }
   tbody tr td a[href^="#modmorelink"]:disabled,
   tbody tr td a[href^="javascript:;"]:disabled {
     opacity: 0.65; }
@@ -2418,19 +2432,19 @@ tbody tr td .filterprovider {
   margin-bottom: 1rem; }
   tbody tr td .filterprovider a.unsub {
     background-color: #CC2936;
-    border: 1px solid #a2202b; }
+    border: transparent; }
     tbody tr td .filterprovider a.unsub:hover {
       background: #a2202b;
-      border: 1px solid #771820; }
+      border: transparent; }
   tbody tr td .filterprovider a[id^="designate"] {
     width: inherit;
     width: 100%;
     text-align: center;
-    background: #0CCE6B;
-    border: none; }
+    background: #157F1F;
+    border: transparent; }
     tbody tr td .filterprovider a[id^="designate"]:hover {
-      background: #099e52;
-      border: none; }
+      background: #0e5314;
+      border: transparent; }
   tbody tr td .filterprovider .mib {
     color: transparent; }
   tbody tr td .filterprovider a[href^="javascript:;"] {
@@ -2484,6 +2498,7 @@ tbody tr td .filterprovider {
         #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type {
           margin-left: auto;
           line-height: 1.2;
+          font-weight: 400;
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
@@ -2588,6 +2603,7 @@ tbody tr td .filterprovider {
         #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"] {
           margin-left: auto;
           line-height: 1.2;
+          font-weight: 400;
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
@@ -2619,6 +2635,7 @@ tbody tr td .filterprovider {
         #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"] {
           margin-left: auto;
           line-height: 1.2;
+          font-weight: 400;
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
@@ -2687,10 +2704,13 @@ tbody tr td .filterprovider {
         border: 1px solid #1063A8;
         background: #1063A8;
         padding: 0.5rem 1.5rem;
+        border: transparent;
+        font-weight: 400;
         margin-left: auto; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:hover {
           background: #0e5591;
-          color: white; }
+          color: white;
+          border: transparent; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
           opacity: 0.65; }
     #memberanchor .content .memberrating {
