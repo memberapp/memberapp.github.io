@@ -21,15 +21,15 @@ function displayContentBasedOnURLParameters() {
         //navigation back to home page, clear topic
 
     } else if (url.indexOf('/p/') != -1) {
-        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase());
+        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
         showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'thread');
         return;
     } else if (url.indexOf('/m/') != -1) {
-        var pagingidHOSTILE = url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase();
+        var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase()).trim();
         showMember('', pagingidHOSTILE);
         return;
     } else if (url.indexOf('/t/') != -1) {
-        var topicnameHOSTILE = url.substring(url.indexOf('/t/') + 3).toLowerCase();
+        var topicnameHOSTILE = decodeURI(url.substring(url.indexOf('/t/') + 3).toLowerCase()).trim();
         showTopic(0, numbers.results, topicnameHOSTILE);
         return;
     } else {
