@@ -57,7 +57,7 @@ pre:hover { overflow:auto }
   height:     10px;
   border:     0px;
   margin:     3px 2px 2px;
-  background: url("../img/grayuparrow.svg");
+  background: url("../img/hntheme/grayuparrow.svg");
   background-size: 10px 10px;
   display: block;
 }
@@ -67,7 +67,7 @@ pre:hover { overflow:auto }
 }
 
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-  .votearrow { background-size: 10px; background-image: url("../img/grayarrow2x.gif"); }
+  .votearrow { background-size: 10px; background-image: url("../img/hntheme/grayarrow2x.gif"); }
 }
 
 .rotate180 {
@@ -93,27 +93,27 @@ and (max-width : 750px) {
   span.pagetop b { display: block; font-size: 15px; }
   table.comment-tree .comment a { display: inline-block; max-width: 200px; overflow: hidden; white-space: nowrap;
     text-overflow: ellipsis; vertical-align:top; }
-  img[src='../img/s.gif'][width='40'] { width: 12px; }
-  img[src='../img/s.gif'][width='80'] { width: 24px; }
-  img[src='../img/s.gif'][width='120'] { width: 36px; }
-  img[src='../img/s.gif'][width='160'] { width: 48px; }
-  img[src='../img/s.gif'][width='200'] { width: 60px; }
-  img[src='../img/s.gif'][width='240'] { width: 72px; }
-  img[src='../img/s.gif'][width='280'] { width: 84px; }
-  img[src='../img/s.gif'][width='320'] { width: 96px; }
-  img[src='../img/s.gif'][width='360'] { width: 108px; }
-  img[src='../img/s.gif'][width='400'] { width: 120px; }
-  img[src='../img/s.gif'][width='440'] { width: 132px; }
-  img[src='../img/s.gif'][width='480'] { width: 144px; }
-  img[src='../img/s.gif'][width='520'] { width: 156px; }
-  img[src='../img/s.gif'][width='560'] { width: 168px; }
-  img[src='../img/s.gif'][width='600'] { width: 180px; }
-  img[src='../img/s.gif'][width='640'] { width: 192px; }
-  img[src='../img/s.gif'][width='680'] { width: 204px; }
-  img[src='../img/s.gif'][width='720'] { width: 216px; }
-  img[src='../img/s.gif'][width='760'] { width: 228px; }
-  img[src='../img/s.gif'][width='800'] { width: 240px; }
-  img[src='../img/s.gif'][width='840'] { width: 252px; }
+  img[src='../img/hntheme/s.gif'][width='40'] { width: 12px; }
+  img[src='../img/hntheme/s.gif'][width='80'] { width: 24px; }
+  img[src='../img/hntheme/s.gif'][width='120'] { width: 36px; }
+  img[src='../img/hntheme/s.gif'][width='160'] { width: 48px; }
+  img[src='../img/hntheme/s.gif'][width='200'] { width: 60px; }
+  img[src='../img/hntheme/s.gif'][width='240'] { width: 72px; }
+  img[src='../img/hntheme/s.gif'][width='280'] { width: 84px; }
+  img[src='../img/hntheme/s.gif'][width='320'] { width: 96px; }
+  img[src='../img/hntheme/s.gif'][width='360'] { width: 108px; }
+  img[src='../img/hntheme/s.gif'][width='400'] { width: 120px; }
+  img[src='../img/hntheme/s.gif'][width='440'] { width: 132px; }
+  img[src='../img/hntheme/s.gif'][width='480'] { width: 144px; }
+  img[src='../img/hntheme/s.gif'][width='520'] { width: 156px; }
+  img[src='../img/hntheme/s.gif'][width='560'] { width: 168px; }
+  img[src='../img/hntheme/s.gif'][width='600'] { width: 180px; }
+  img[src='../img/hntheme/s.gif'][width='640'] { width: 192px; }
+  img[src='../img/hntheme/s.gif'][width='680'] { width: 204px; }
+  img[src='../img/hntheme/s.gif'][width='720'] { width: 216px; }
+  img[src='../img/hntheme/s.gif'][width='760'] { width: 228px; }
+  img[src='../img/hntheme/s.gif'][width='800'] { width: 240px; }
+  img[src='../img/hntheme/s.gif'][width='840'] { width: 252px; }
   .title { font-size: 11pt; line-height: 14pt;  }
   .subtext { font-size: 9pt; }
   .itemlist { padding-right: 5px;}
@@ -217,7 +217,7 @@ pre { max-width: 900px; }
   height:     10px;
   border:     0px;
   margin:     3px 2px 2px;
-  background: url("../img/greenuparrow.svg");
+  background: url("../img/hntheme/greenuparrow.svg");
   background-size: 10px 10px;
   display: block;
 }
@@ -353,7 +353,7 @@ li::before{
   opacity: 0.2;
 }
 .loading {
-  background-image:url("../img/loading.gif");
+  background-image:url("../img/hntheme/loading.gif");
   width:100%; /*width of your image*/
   height:72px; /*height of your image*/
   background-position: center; /* Center the image */

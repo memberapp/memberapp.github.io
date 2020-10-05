@@ -298,9 +298,9 @@ function addClickScores() {
 function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
     for (var i = 0; i < matches.length; i++) {
-        var profileElement = matches[i].id.replace('member', 'profile');
-        document.getElementById(profileElement).onmouseleave = setDisplayNone;
-        delay(matches[i],showPreviewProfile,document.getElementById(profileElement));
+        var profileElement = document.getElementById(matches[i].id.replace('member', 'profile'));
+        profileElement.onmouseleave = setDisplayNone;
+        delay(matches[i],showPreviewProfile,profileElement);
     }
 }
 
@@ -320,7 +320,7 @@ function showScoresExpanded() {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += `<div class="tipdetails">` + userHTML(data[i].address, data[i].name, i, data[i].rating, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
+            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid)+i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements(null);
@@ -344,10 +344,13 @@ function addStarRatings(stem) {
 function addSingleStarsRating(theElement) {
     //var theElement = document.querySelector(querySelector);
     if (theElement == undefined) return;
+    if (theElement.isdone) return;
     let name = theElement.dataset.ratingname;
     let theAddress = theElement.dataset.ratingaddress;
     let rawRating = theElement.dataset.ratingraw;
-    let starSize = theElement.dataset.ratingsize;
+    //let starSize = theElement.dataset.ratingsize;
+    let starSize = Number(getComputedStyle(theElement).fontSize);
+
     let disabledtext = theElement.dataset.disabledtext;
 
     var theRating = 0; if (rawRating != null && rawRating != 0) { theRating = (ds(rawRating) / 64) + 1; }
@@ -370,6 +373,7 @@ function addSingleStarsRating(theElement) {
     if (disabledtext) {
         starRating1.disable();
     }
+    theElement.isdone=true;
     return starRating1;
 }
 
@@ -437,9 +441,10 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     var retHTML = "";
     if (data.repost != undefined && data.repost != "" && data.repost != "null") {
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
-        retHTML = "<span class='repost'>" + userHTML(data.address, data.name, repostRatingID, data.rating, 8) + " re-membered</span>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid);
+        retHTML = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " re-membered</span>" 
+        + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing);
     } else {
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid);
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing);
     }
     if (dataReply != null) {
         retHTML += getHTMLForReply(dataReply, 0, page, starindex, null);
@@ -450,7 +455,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -489,7 +494,7 @@ function replySuccessFunction(page, txid) {
 
 function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
-    var replybox = document.querySelector("[id^='" + "reply" + txid + "']");
+    var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0,10) + "']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";
     //document.getElementById("replylink"+txid).style.display = "none";

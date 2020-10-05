@@ -1459,12 +1459,10 @@ header {
           header .pagetop nav .memberlogo a img {
             margin-top: 0;
             outline: none;
-            height: 2.4rem;
-            width: 2.4rem; }
+            height: 2.4rem;}
             @media (min-width: 1025px) {
               header .pagetop nav .memberlogo a img {
-                height: 2rem;
-                width: 2rem; } }
+                height: 2rem;} }
       header .pagetop nav .membertext {
         display: none; }
         @media (min-width: 1025px) {
@@ -2597,19 +2595,19 @@ tbody tr td .filterprovider {
             cursor: not-allowed;
             pointer-events: none; }
 
-#member {
+#memberanchor {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 769px) {
-    #member {
+    #memberanchor {
       max-width: 800px; } }
   @media (max-width: 768px) {
-    #member {
+    #memberanchor {
       max-width: 540px; } }
-  #member .content {
+  #memberanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
@@ -2618,22 +2616,22 @@ tbody tr td .filterprovider {
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
-    #member .content div {
+    #memberanchor .content div {
       margin-bottom: 1rem; }
-    #member .content #memberprofiletext {
+    #memberanchor .content #memberprofiletext {
       white-space: break-spaces; }
     @media (max-width: 400px) {
-      #member .content {
+      #memberanchor .content {
         margin-left: -15px !important;
         margin-right: -15px !important;
         border-radius: 0;
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
-    #member .content #membernametext {
+    #memberanchor .content #membernametext {
       display: -ms-flexbox;
       display: flex; }
-      #member .content #membernametext a[href^="javascript:;"] {
+      #memberanchor .content #membernametext a[href^="javascript:;"] {
         line-height: 1.2;
         cursor: pointer;
         text-decoration: none;
@@ -2647,14 +2645,14 @@ tbody tr td .filterprovider {
         background: #44669c;
         padding: 0.5rem 1.5rem;
         margin-left: auto; }
-        #member .content #membernametext a[href^="javascript:;"]:hover {
+        #memberanchor .content #membernametext a[href^="javascript:;"]:hover {
           background: #354f78; }
-        #member .content #membernametext a[href^="javascript:;"]:disabled {
+        #memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
           opacity: 0.65; }
-    #member .content .memberrating {
+    #memberanchor .content .memberrating {
       margin: 0 auto;
       display: table; }
-      #member .content .memberrating .starrating {
+      #memberanchor .content .memberrating .starrating {
         display: -ms-inline-flexbox;
         display: inline-flex;
         -ms-flex-align: center;
@@ -2667,7 +2665,7 @@ tbody tr td .filterprovider {
         margin-right: 0.5rem;
         background: rgba(0, 0, 0, 0.03);
         border-radius: 0.25rem; }
-        #member .content .memberrating .starrating div {
+        #memberanchor .content .memberrating .starrating div {
           margin: 0 !important;
           padding: 0 !important;
           border: none !important;
@@ -2987,3 +2985,14 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
+
+
+      @media only screen and (max-width: 1025px) {
+        .memberlogoimagefull {display:none;}
+        .memberlogoimage {display:inline; height: 2rem; width: 2rem; }
+      }
+
+      @media only screen and (min-width: 1025px) {
+        .memberlogoimagefull {display:inline;height: 2rem;width: 10rem;}
+        .memberlogoimage {display:none;}
+      }
