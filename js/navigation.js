@@ -21,15 +21,15 @@ function displayContentBasedOnURLParameters() {
         //navigation back to home page, clear topic
 
     } else if (url.indexOf('/p/') != -1) {
-        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase());
+        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
         showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'thread');
         return;
     } else if (url.indexOf('/m/') != -1) {
-        var pagingidHOSTILE = url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase();
+        var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase()).trim();
         showMember('', pagingidHOSTILE);
         return;
     } else if (url.indexOf('/t/') != -1) {
-        var topicnameHOSTILE = url.substring(url.indexOf('/t/') + 3).toLowerCase();
+        var topicnameHOSTILE = decodeURI(url.substring(url.indexOf('/t/') + 3).toLowerCase()).trim();
         showTopic(0, numbers.results, topicnameHOSTILE);
         return;
     } else {
@@ -133,7 +133,7 @@ function hideAll() {
     document.getElementById('following').style.display = "none";
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
-    document.getElementById('member').style.display = "none";
+    document.getElementById('memberanchor').style.display = "none";
     document.getElementById('newpost').style.display = "none";
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
@@ -261,7 +261,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
     getAndPopulateMember(qaddress);
     getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
     //getAndPopulate(0, numbers.results, 'memberposts', qaddress);
-    document.getElementById('member').style.display = "block";
+    document.getElementById('memberanchor').style.display = "block";
     document.getElementById('memberfollow').style.display = "block";
     document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
@@ -315,7 +315,7 @@ function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit, qa
 function showTopic(start, limit, topicnameHOSTILE, type) {
     //Warning, topicname may contain hostile characters
     setTopic(topicnameHOSTILE);
-    if (type == "") type = "new";
+    if (!type) type = "new";
     getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', '');
     //getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
 }

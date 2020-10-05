@@ -270,6 +270,9 @@ select>option {
     font-size: x-small;
     color: #373737;
   }
+
+}
+
   /* Breakline in header for small screen, 720 is about the point where it splits onto a second line
   probably a better way to handle this as topic container is still free floating and unwanted break appears*/
   @media only screen and (max-width: 860px) {
@@ -277,13 +280,16 @@ select>option {
       content: ' ';
       display: block;
     }
+    .memberlogoimagefull {display:none;}
+    .memberlogoimage {display:inline;}
   }
   @media only screen and (min-width: 860px) {
     .separatorwidebreakpoint::before {
       content: " | ";
     }
+    .memberlogoimagefull {display:inline;}
+    .memberlogoimage {display:none;}
   }
-}
 
 /* Footer Stuff */
 
@@ -389,6 +395,16 @@ footer {
     float: left;
     font-size: 1px;
   }
+  .memberpicturesmall {
+    width: 15px;
+    height: 15px;
+    margin-bottom: -3px;
+    margin-right: 2px;
+  }
+  .memberpicturelarge {
+    width: 100px;
+    height: 100px;
+  }
   .jdenticon {
     width: 15px;
     height: 15px;
@@ -421,13 +437,13 @@ footer {
     display: none;
   }
   .votearrow {
-    background: url("../img/uparrowgrey.svg");
+    background: url("../img/membertheme/uparrowgrey.svg");
   }
   .votearrowactivated {
-    background: url("../img/uparrowgreen.svg");
+    background: url("../img/membertheme/uparrowgreen.svg");
   }
   .votearrowactivateddown {
-    background: url("../img/uparrowblue.svg");
+    background: url("../img/membertheme/uparrowblue.svg");
   }
   .votearrow, .votearrowactivated, .votearrowactivateddown {
     width: 18px;
@@ -773,7 +789,7 @@ footer {
 /*Loading image*/
 
 .loading {
-  background-image: url("../img/loading.gif");
+  background-image: url("../img/membertheme/loading.gif");
   width: 100%;
   /*width of your image*/
   height: 72px;
@@ -1066,4 +1082,25 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
 
 .article .permalink {
   display: none;
+}
+
+.profilepreview {
+  position: absolute;
+background: white;
+border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+border-radius: 0.5rem;
+padding: 1rem;
+z-index: 99;
+width: 400px;
+box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.scoreexpanded .tipdetails {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  margin: 0.5rem 0;
 }

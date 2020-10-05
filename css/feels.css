@@ -641,6 +641,14 @@ html :lang(ar) {
     #memberlegacyaddress #memberlegacyformatdiv img {
       outline: none; }
 
+.message {
+  text-align: center;
+  font-weight: bold;
+  padding: 1rem;
+  background: #ffe099;
+  border: 1px solid #ffc94d;
+  border-radius: 0.25rem; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
@@ -1079,7 +1087,8 @@ img {
       .post .postdetails .title p a {
         color: rgba(0, 0, 0, 0.76); }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {
-        color: #44669c; }
+        color: #44669c;
+        margin: 0; }
         .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
     .post .postdetails .subtext {
@@ -1143,7 +1152,13 @@ img {
       color: rgba(0, 0, 0, 0.87); }
   .postdetails .subtextbuttons span.score,
   .comment-tree ul li .reply div .subtextbuttons span.score {
-    margin-right: 0.5rem; }
+    margin-right: 0.5rem;
+    cursor: pointer;
+    transition: filter 1s ease-in-out; }
+    .postdetails .subtextbuttons span.score:hover,
+    .comment-tree ul li .reply div .subtextbuttons span.score:hover {
+      transition: filter 1s ease-in-out;
+      color: rgba(0, 0, 0, 0.87); }
     .postdetails .subtextbuttons span.score .likescounttext,
     .comment-tree ul li .reply div .subtextbuttons span.score .likescounttext {
       margin-right: 0.15rem; }
@@ -1276,7 +1291,8 @@ img {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;
-  overflow: hidden;
+  list-style-type: none;
+  overflow: inherit;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.4375rem 0; }
   @media (max-width: 400px) {
@@ -1443,12 +1459,10 @@ header {
           header .pagetop nav .memberlogo a img {
             margin-top: 0;
             outline: none;
-            height: 2.4rem;
-            width: 2.4rem; }
+            height: 2.4rem;}
             @media (min-width: 1025px) {
               header .pagetop nav .memberlogo a img {
-                height: 2rem;
-                width: 2rem; } }
+                height: 2rem;} }
       header .pagetop nav .membertext {
         display: none; }
         @media (min-width: 1025px) {
@@ -1721,7 +1735,8 @@ footer {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;
-  overflow: hidden;
+  list-style-type: none;
+  overflow: inherit;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 1.75rem;
   display: -ms-flexbox;
@@ -1736,6 +1751,109 @@ footer {
       border-left: 0;
       border-right: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+
+.memberfilter {
+  position: relative; }
+
+.profilepreview {
+  position: absolute;
+  display: block;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  top: 1rem;
+  z-index: 99;
+  width: 400px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
+  .profilepreview .post .postdetails .subtext a {
+    color: rgba(0, 0, 0, 0.87); }
+  .profilepreview .profile-meta {
+    display: -ms-flexbox;
+    display: flex;
+    width: 100%;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: rgba(0, 0, 0, 0.87); }
+    .profilepreview .profile-meta .member-handle {
+      font-weight: bold; }
+    .profilepreview .profile-meta .member-pagingid {
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.54); }
+    .profilepreview .profile-meta a:last-of-type {
+      width: 100%; }
+  .profilepreview .profile-text {
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.87);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 1rem; }
+  .profilepreview .profile-actions {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+    .profilepreview .profile-actions .profilepreviewfollowers {
+      -ms-flex: 1;
+      flex: 1; }
+    .profilepreview .profile-actions .profilepreviewfollowbutton a {
+      line-height: 1.2;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 0.875rem;
+      transition: all 0.15s ease-in-out;
+      color: white;
+      float: right;
+      text-transform: uppercase;
+      border-radius: 0.25rem;
+      border: 1px solid #354f78;
+      background: #44669c;
+      padding: 0.5rem 1.5rem; }
+      .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
+        background: #354f78; }
+      .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
+        opacity: 0.65; }
+
+.scoreexpanded {
+  padding: 1rem 0;
+  display: none; }
+  .scoreexpanded .closebutton {
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: auto; }
+    .scoreexpanded .closebutton a {
+      line-height: 1.2;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease-in-out;
+      color: #44669c;
+      text-transform: uppercase;
+      border-radius: 0.25rem;
+      border: 1px solid #44669c;
+      background: transparent;
+      padding: 0.5rem 1.5rem;
+      color: #c1292e;
+      border: 1px solid #c1292e;
+      margin-left: auto !important; }
+      .scoreexpanded .closebutton a:hover {
+        background: #e9eef6; }
+      .scoreexpanded .closebutton a:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+        pointer-events: none; }
+      .scoreexpanded .closebutton a:hover {
+        background: #fbeeee; }
+  .scoreexpanded .tipdetails {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    margin: 0.5rem 0; }
 
 .mainbodywrapper #posts {
   width: 100%;
@@ -1756,7 +1874,8 @@ footer {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
-      overflow: hidden;
+      list-style-type: none;
+      overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
       @media (max-width: 400px) {
@@ -1789,7 +1908,8 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
     @media (max-width: 400px) {
       #thread .itemlist .fatitem {
@@ -1819,7 +1939,8 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem 0.875rem; }
     @media (max-width: 400px) {
@@ -1919,7 +2040,8 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2000,7 +2122,8 @@ footer {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
-      overflow: hidden;
+      list-style-type: none;
+      overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
       @media (max-width: 400px) {
         #memberposts .itemlist ol li {
@@ -2075,7 +2198,8 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2107,7 +2231,8 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem;
     display: -ms-flexbox;
@@ -2161,7 +2286,8 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     width: 100%;
     padding: 1.75rem; }
@@ -2197,7 +2323,8 @@ body.article {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2283,7 +2410,8 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2467,42 +2595,43 @@ tbody tr td .filterprovider {
             cursor: not-allowed;
             pointer-events: none; }
 
-#member {
+#memberanchor {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 769px) {
-    #member {
+    #memberanchor {
       max-width: 800px; } }
   @media (max-width: 768px) {
-    #member {
+    #memberanchor {
       max-width: 540px; } }
-  #member .content {
+  #memberanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
-    #member .content div {
+    #memberanchor .content div {
       margin-bottom: 1rem; }
-    #member .content #memberprofiletext {
+    #memberanchor .content #memberprofiletext {
       white-space: break-spaces; }
     @media (max-width: 400px) {
-      #member .content {
+      #memberanchor .content {
         margin-left: -15px !important;
         margin-right: -15px !important;
         border-radius: 0;
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
-    #member .content #membernametext {
+    #memberanchor .content #membernametext {
       display: -ms-flexbox;
       display: flex; }
-      #member .content #membernametext a[href^="javascript:;"] {
+      #memberanchor .content #membernametext a[href^="javascript:;"] {
         line-height: 1.2;
         cursor: pointer;
         text-decoration: none;
@@ -2516,14 +2645,14 @@ tbody tr td .filterprovider {
         background: #44669c;
         padding: 0.5rem 1.5rem;
         margin-left: auto; }
-        #member .content #membernametext a[href^="javascript:;"]:hover {
+        #memberanchor .content #membernametext a[href^="javascript:;"]:hover {
           background: #354f78; }
-        #member .content #membernametext a[href^="javascript:;"]:disabled {
+        #memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
           opacity: 0.65; }
-    #member .content .memberrating {
+    #memberanchor .content .memberrating {
       margin: 0 auto;
       display: table; }
-      #member .content .memberrating .starrating {
+      #memberanchor .content .memberrating .starrating {
         display: -ms-inline-flexbox;
         display: inline-flex;
         -ms-flex-align: center;
@@ -2536,7 +2665,7 @@ tbody tr td .filterprovider {
         margin-right: 0.5rem;
         background: rgba(0, 0, 0, 0.03);
         border-radius: 0.25rem; }
-        #member .content .memberrating .starrating div {
+        #memberanchor .content .memberrating .starrating div {
           margin: 0 !important;
           padding: 0 !important;
           border: none !important;
@@ -2563,7 +2692,8 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2614,7 +2744,8 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2684,7 +2815,8 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     margin-bottom: 0;
     border: 0;
@@ -2754,12 +2886,21 @@ tbody tr td .filterprovider {
   @media (max-width: 768px) {
     #notifications {
       max-width: 540px; } }
+  #notifications .notificationtitle .memberfilter {
+    margin-left: 0; }
+    #notifications .notificationtitle .memberfilter span[id^=memberinfo0notifications] {
+      display: -ms-flexbox;
+      display: flex; }
+  #notifications .notificationtitle a:last-of-type {
+    margin-right: 0; }
   #notifications .notificationtitle,
   #notifications .repost {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
     align-items: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
     width: 100%; }
     #notifications .notificationtitle .age,
     #notifications .repost .age {
@@ -2772,9 +2913,11 @@ tbody tr td .filterprovider {
       border: 1px solid rgba(0, 0, 0, 0.12);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
-      overflow: hidden;
+      list-style-type: none;
+      overflow: inherit;
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: inherit; }
       @media (max-width: 400px) {
         #notifications ul.notificationslist li {
           margin-left: -15px !important;
@@ -2789,6 +2932,9 @@ tbody tr td .filterprovider {
         display: none; }
       #notifications ul.notificationslist li a {
         margin: 0 0.25rem; }
+        #notifications ul.notificationslist li a.hnuser {
+          margin-left: 0;
+          white-space: nowrap; }
 
 #blockers,
 #blocking,
@@ -2819,7 +2965,8 @@ tbody tr td .filterprovider {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    list-style-type: none;
+    overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
     @media (max-width: 400px) {
@@ -2838,3 +2985,14 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
+
+
+      @media only screen and (max-width: 1025px) {
+        .memberlogoimagefull {display:none;}
+        .memberlogoimage {display:inline; height: 2rem; width: 2rem; }
+      }
+
+      @media only screen and (min-width: 1025px) {
+        .memberlogoimagefull {display:inline;height: 2rem;width: 10rem;}
+        .memberlogoimage {display:none;}
+      }

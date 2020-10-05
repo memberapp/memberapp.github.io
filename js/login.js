@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.5.3";
+var version = "4.6.0";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -18,6 +18,7 @@ var maxfee = 5;
 var pathpermalinks=true;
 var profilepicbase='img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+var siteTitle='member.cash';
 
 //var twitterEmbeds=new Array();
 
@@ -72,6 +73,11 @@ function init() {
     document.getElementById('version').innerHTML = version;
     setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
+
+    if(document.location.host!='member.cash'){
+        siteTitle="Member";
+        document.title = siteTitle;
+    }
 
     //Show message if dev version in use
     if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
