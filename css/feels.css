@@ -741,7 +741,8 @@ table {
   table thead tr th,
   table thead tr td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.34);
-    background: rgba(0, 0, 0, 0.12);
+    background: #1063A8;
+    color: white;
     padding: 0.5rem;
     font-weight: bold; }
   table tbody {
@@ -751,7 +752,7 @@ table {
       border-bottom: 1px solid rgba(0, 0, 0, 0.12);
       padding: 0.5rem; }
     table tbody tr:nth-child(even) {
-      background: #bedef9; }
+      background: #edf6fd; }
 
 input[type="submit"],
 button {
@@ -2425,11 +2426,11 @@ tbody tr td .filterprovider {
     width: inherit;
     width: 100%;
     text-align: center;
-    background: #4dc846;
-    border: 1px solid #1276c8; }
+    background: #0CCE6B;
+    border: none; }
     tbody tr td .filterprovider a[id^="designate"]:hover {
-      background: #1276c8;
-      border: 1px solid #0e5b99; }
+      background: #099e52;
+      border: none; }
   tbody tr td .filterprovider .mib {
     color: transparent; }
   tbody tr td .filterprovider a[href^="javascript:;"] {
