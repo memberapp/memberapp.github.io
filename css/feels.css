@@ -1515,7 +1515,11 @@ header {
           user-select: none; }
       header .pagetop nav .membertext,
       header .pagetop nav .memberlogo {
-        transition: all 0.15s ease-in-out; }
+        transition: all 0.15s ease-in-out;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center; }
         header .pagetop nav .membertext:hover,
         header .pagetop nav .memberlogo:hover {
           opacity: 0.8; }
