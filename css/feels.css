@@ -390,7 +390,7 @@ body {
   position: relative;
   scroll-behavior: smooth; }
   body ::selection {
-    background: rgba(134, 217, 129, 0.6); }
+    background: rgba(34, 145, 235, 0.12); }
 
 html:lang(zh),
 html :lang(zh-Hans),
@@ -1328,7 +1328,7 @@ img {
         padding: 0.4375rem 0;
         font-weight: bold; }
       .comment-tree ul li .highlight {
-        background: rgba(77, 200, 70, 0.2); }
+        background-color: #ddeefc; }
       .comment-tree ul li .reply {
         margin-bottom: 0.875rem; }
         .comment-tree ul li .reply div:only-child {
@@ -2954,9 +2954,11 @@ tbody tr td .filterprovider {
     background: #f0f1f3; }
     #notifications .notificationtitle .memberfilter {
       margin-left: 0; }
-      #notifications .notificationtitle .memberfilter span[id^=memberinfo0notifications] {
+      #notifications .notificationtitle .memberfilter span[id^="memberinfo0notifications"] {
         display: -ms-flexbox;
         display: flex; }
+  #notifications .notificationtitle {
+    background-color: #ddeefc; }
   #notifications .notificationtitle,
   #notifications .repost {
     display: -ms-flexbox;
