@@ -51,7 +51,7 @@ function setPic() {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('settingspicbutton').disabled = true;
-    document.getElementById('settingspictext').disabled = true;
+    document.getElementById('settingspic').disabled = true;
 
     var newName = document.getElementById('settingspic').value;
     if(!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png') ))){
