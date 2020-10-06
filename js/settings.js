@@ -51,7 +51,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         //Note, data may not contain any rows, for new or unknown users.
 
         var jdenticonname = "";
-
+        var picurl;
+        
         if (data.length < 1) {
             document.getElementById(pre + 'followersnumber').innerHTML = "0";
             document.getElementById(pre + 'followingnumber').innerHTML = "0";
@@ -77,9 +78,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             jdenticonname = data[0].name;
 
             //img/profilepics/`+san(address)+`128x128.jpg
+            picurl = data[0].picurl;
         }
 
-        var picurl = data[0].picurl;
+         
         if (picurl) {
             /*var pictype = '.jpg';
             if (picurl.toLowerCase().endsWith('.png')) {
