@@ -34,8 +34,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" class="hnuser">`;
     var linkEnd = `</a> `;
     var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart
-        + memberpic
-        + ds(name) + linkEnd + `</span>`;
+        + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`;
     var ratingHTML = `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     if (ratingStarSize > 0) {
         ret += ratingHTML;
