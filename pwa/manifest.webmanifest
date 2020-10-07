@@ -16,7 +16,7 @@
   "start_url": "../index.html",
   "categories": ["social","finance","entertainment"],
   "background_color": "#ffffff",
-  "theme_color": "#cee3f8",
+  "theme_color": "#2291EB",
   "display": "standalone",
   "prefer_related_applications": false
 }
