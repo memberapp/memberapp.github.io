@@ -252,9 +252,17 @@ function showMember(qaddress, pagingIDHOSTILE) {
     if (qaddress == '' && pagingIDHOSTILE != '') {
         var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingIDHOSTILE) + '&address=' + pubkey;
         getJSON(theURL).then(function (data) {
-            qaddress = data[0].address;
-            showMember(qaddress);
-            return;
+            if(data && data.length>0){
+                qaddress = data[0].address;
+                showMember(qaddress);
+                return;
+            }else{
+                show('memberanchor');
+                document.getElementById('memberanchor').innerHTML='This paging id not found.';    
+                return;
+            }
+        }, function (status) { //error detection....
+            showErrorMessage(status, 'messageslist', theURL);
         });
         return;
     }
