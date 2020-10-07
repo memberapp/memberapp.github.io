@@ -390,7 +390,7 @@ body {
   position: relative;
   scroll-behavior: smooth; }
   body ::selection {
-    background: rgba(34, 145, 235, 0.12); }
+    background: rgba(34, 145, 235, 0.6); }
 
 html:lang(zh),
 html :lang(zh-Hans),
@@ -929,6 +929,47 @@ textarea {
       border-radius: 50%;
       transition: transform 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
 
+.memberfilter {
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-left: 0; }
+  .memberfilter span[id^="memberinfo"] {
+    display: contents; }
+  .memberfilter span[id^="memberinfo0notifications"] {
+    display: -ms-flexbox;
+    display: flex; }
+  .memberfilter .starrating {
+    margin: 0 0.25rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
+  .memberfilter .hnuser {
+    display: -ms-inline-flexbox !important;
+    display: inline-flex !important;
+    -ms-flex-align: center;
+    align-items: center; }
+
+.notificationtitle,
+.repost {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 100%; }
+  .notificationtitle .age,
+  .notificationtitle .sats,
+  .repost .age,
+  .repost .sats {
+    margin-right: 0.25rem; }
+  .notificationtitle a[href^="#thread?"],
+  .repost a[href^="#thread?"] {
+    margin-right: 0.25rem; }
+
 a {
   text-decoration: none;
   transition: all 0.15s ease-in-out;
@@ -1037,26 +1078,6 @@ img {
   -ms-flex-pack: center;
   justify-content: center;
   margin-top: 1rem; }
-
-.memberfilter {
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-left: 0.25rem; }
-  .memberfilter span[id^="memberinfo"] {
-    display: contents; }
-  .memberfilter .starrating {
-    margin: 0 0.25rem;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center; }
-  .memberfilter .hnuser {
-    display: -ms-inline-flexbox !important;
-    display: inline-flex !important;
-    -ms-flex-align: center;
-    align-items: center; }
 
 .notificationtitle,
 .repost {
@@ -2633,8 +2654,6 @@ tbody tr td .filterprovider {
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
         width: 100%; }
-        #messagesanchor .content #messageslist li .replymessagemeta .memberfilter {
-          margin-right: 0.25rem; }
         #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"] {
           margin-left: auto;
           line-height: 1.2;
@@ -2955,25 +2974,8 @@ tbody tr td .filterprovider {
       max-width: 540px; } }
   #notifications .notificationtitle {
     background: #f0f1f3; }
-    #notifications .notificationtitle .memberfilter {
-      margin-left: 0; }
-      #notifications .notificationtitle .memberfilter span[id^="memberinfo0notifications"] {
-        display: -ms-flexbox;
-        display: flex; }
   #notifications .notificationtitle {
     background-color: #ddeefc; }
-  #notifications .notificationtitle,
-  #notifications .repost {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    width: 100%; }
-    #notifications .notificationtitle .age,
-    #notifications .repost .age {
-      margin-left: 0.25rem; }
   #notifications ul.notificationslist {
     padding: 0; }
     #notifications ul.notificationslist li {
@@ -2999,11 +3001,6 @@ tbody tr td .filterprovider {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
-      #notifications ul.notificationslist li a {
-        margin: 0 0.25rem; }
-        #notifications ul.notificationslist li a.hnuser {
-          margin-left: 0;
-          white-space: nowrap; }
 
 #blockers,
 #blocking,
