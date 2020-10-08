@@ -463,6 +463,11 @@ var detectBackOrForward = function () {
     }
 }
 
+var navlinkclicked=false;
+function nlc(){
+    //navlinkclicked
+    navlinkclicked=true;
+}
 
 var followOrBackFlag = false;
 
@@ -470,13 +475,13 @@ var followOrBackFlag = false;
 var lastdocumentlocation = location.hash;
 setTimeout(testForHashChange, 100);
 function testForHashChange() {
-    if (lastdocumentlocation != location.hash) {
+    if (lastdocumentlocation != location.hash || navlinkclicked) {
         lastdocumentlocation = location.hash;
+        navlinkclicked=false;
         detectBackOrForward();
     }
     setTimeout(testForHashChange, 100);
 }
-
 
 
 var scrollhistory = [];
