@@ -321,7 +321,7 @@ function showScoresExpanded() {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
+            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + (Number(data[i].type) == -1 ? ` disliked`: ``) + `</div>`;
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements(null);
