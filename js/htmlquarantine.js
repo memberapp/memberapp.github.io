@@ -330,12 +330,11 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                     <div class="commentdetails">
                         <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
         + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing)
-        + getScoresHTML(txid, likes, dislikes, tips, differentiator)
-        + ` ` + getAgeHTML(firstseen) +
-        `</div>
+        + `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
+                            </div><div class="subtextbuttons">`+ getScoresHTML(txid, likes, dislikes, tips, differentiator)
+                            + ` ` + getAgeHTML(firstseen) + ` ` + getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
                             `+ getReplyDiv(txid, page, differentiator) + `
                         </div>
                         <div id="scoresexpanded`+ san(txid) + differentiator + `" class="scoreexpanded"></div>

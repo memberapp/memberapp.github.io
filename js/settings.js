@@ -109,12 +109,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametextbutton').disabled = true;
             document.getElementById(pre + 'profiletextbutton').disabled = true;
             document.getElementById(pre + 'picbutton').disabled = true;
-
-            /*if (document.getElementById(pre + 'nametext').value == "") {
-                document.getElementById(pre + 'nametext').disabled = false;
-            } else {
+            //After 3 ratings, members cannot change their handle
+            if (data.length>0 && data[0].ratingnumber>2){
                 document.getElementById(pre + 'nametext').disabled = true;
-            }*/
+            }
         }
 
 

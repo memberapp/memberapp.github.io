@@ -221,20 +221,21 @@ function getAndPopulateTopicList(showpage) {
             selectboxIndex++;
         }
 
-        //group data rows by moderator before displaying
-        var modsArray = [];
-        var contents = "";
-        for (var i = 0; i < data.length; i++) {
-            if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
-                modsArray.push(data[i]);
-            } else {
-                contents += getHTMLForTopicArray(modsArray, 'modmore');
-                modsArray = [];
-                modsArray.push(data[i]);
+        if (showpage) {
+            //group data rows by moderator before displaying
+            var modsArray = [];
+            var contents = "";
+            for (var i = 0; i < data.length; i++) {
+                if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
+                    modsArray.push(data[i]);
+                } else {
+                    contents += getHTMLForTopicArray(modsArray, 'modmore');
+                    modsArray = [];
+                    modsArray.push(data[i]);
+                }
             }
+            document.getElementById(page).innerHTML = getHTMLForTopicHeader("", contents);
         }
-
-        document.getElementById(page).innerHTML = getHTMLForTopicHeader("", contents);
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         //document.getElementById(page).innerHTML = contents;
@@ -300,7 +301,7 @@ function addMouseoverProfiles() {
     for (var i = 0; i < matches.length; i++) {
         var profileElement = document.getElementById(matches[i].id.replace('member', 'profile'));
         profileElement.onmouseleave = setDisplayNone;
-        delay(matches[i],showPreviewProfile,profileElement);
+        delay(matches[i], showPreviewProfile, profileElement);
     }
 }
 
@@ -320,7 +321,7 @@ function showScoresExpanded() {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid)+i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
+            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements(null);
@@ -373,7 +374,7 @@ function addSingleStarsRating(theElement) {
     if (disabledtext) {
         starRating1.disable();
     }
-    theElement.isdone=true;
+    theElement.isdone = true;
     return starRating1;
 }
 
@@ -441,8 +442,8 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     var retHTML = "";
     if (data.repost != undefined && data.repost != "" && data.repost != "null") {
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
-        retHTML = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " remembered</span>" 
-        + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing);
+        retHTML = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " remembered</span>"
+            + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing);
     } else {
         retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing);
     }
@@ -494,7 +495,7 @@ function replySuccessFunction(page, txid) {
 
 function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
-    var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0,10) + "']");
+    var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0, 10) + "']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";
     //document.getElementById("replylink"+txid).style.display = "none";
