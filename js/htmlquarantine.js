@@ -266,9 +266,9 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                     <div class="title"><p>`+ messageLinksHTML + `</p></div>
                     <div class="subtext">
                         <span class="submitter"> 
-                        submitted `
+                        <span class="plaintext">submitted</span> `
         + ` ` + getAgeHTML(firstseen)
-        + ` ` + getSafeTranslation('by') + ` `
+        + ` <span class="plaintext">` + getSafeTranslation('by') + `</span> `
         + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing)
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
@@ -656,7 +656,7 @@ function getMessageHTML(data, count) {
             data.recipientname = data.recipient;
             //should be possible to remove this after a month or so
         }
-        contents += "<li><div class='replymessagemeta'>You sent a message (" + data.message.length + " bytes) to " + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
+        contents += "<li><div class='replymessagemeta'><span class='plaintext'>You sent a message (" + data.message.length + " bytes) to </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
         let ecpair = new BITBOX.ECPair().fromWIF(privkey);
         var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
