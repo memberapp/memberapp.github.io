@@ -321,7 +321,7 @@ function showScoresExpanded() {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + (Number(data[i].type) == -1 ? ` disliked`: ``) + `</div>`;
+            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + (Number(data[i].type) == -1 ? ` disliked` : ``) + `</div>`;
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements(null);
@@ -800,24 +800,28 @@ function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
                 for (var j = 0; j < data.length; j++) {
                     //replies must be within 6 hours of each other
                     if (data[i].retxid == data[j].txid && Math.abs(data[i].firstseen - data[j].firstseen) < 6 * 60 * 60) {
-                        //Subtract one as each post is automatically liked by its own author
-                        data[j].likes = (Number(data[j].likes) + Number(data[i].likes - 1)).toString();
-                        data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();
-                        data[j].tips = (Number(data[j].tips) + Number(data[i].tips)).toString();
+                        //After 8/11/2020 replies must begin with '|' to be mergeable
+                        if (data[j].firstseen < 1604813359 || data[i].message.startsWith('|')) {
+                            //Subtract one as each post is automatically liked by its own author
+                            data[j].likes = (Number(data[j].likes) + Number(data[i].likes - 1)).toString();
+                            data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();
+                            data[j].tips = (Number(data[j].tips) + Number(data[i].tips)).toString();
 
-                        data[j].message = data[j].message + data[i].message;
+                            //remove the | at the start of the string if it is present
+                            data[j].message = data[j].message + data[i].message.replace(/^\|/, '');
 
-                        //if any other posts reference the child post, have them refence the parent post instead
-                        for (var k = 0; k < data.length; k++) {
-                            if (data[k].retxid == data[i].txid) {
-                                data[k].retxid = data[j].txid;
+                            //if any other posts reference the child post, have them reference the parent post instead
+                            for (var k = 0; k < data.length; k++) {
+                                if (data[k].retxid == data[i].txid) {
+                                    data[k].retxid = data[j].txid;
+                                }
                             }
-                        }
 
-                        //remove the post
-                        data.splice(i, 1);
-                        i--;
-                        break;
+                            //remove the post
+                            data.splice(i, 1);
+                            i--;
+                            break;
+                        }
                     }
                 }
             }
