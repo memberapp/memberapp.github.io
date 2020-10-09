@@ -31,11 +31,10 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='15' height='15' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/></span>`;
     }
 
-    var linkStart = `<a href="#member?qaddress=` + san(address) + `" class="hnuser">`;
+    var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="hnuser">`;
     var linkEnd = `</a> `;
-    var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart
-        + memberpic
-        + ds(name) + linkEnd + `</span>`;
+    var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic 
+        + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`;
     var ratingHTML = `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     if (ratingStarSize > 0) {
         ret += ratingHTML;
@@ -48,8 +47,8 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         + linkStart + "<span class='member-pagingid'>@" + ds(pagingid) + "</span>" + linkEnd
         + `</div>`
         + `<div class='profile-text'><span class='profilepreviewtext'>`+ds(profile)+`</span></div> `
-        + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `">`+Number(followers)+` followers</a></span> `
-        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">`+Number(following)+` following</a></span> `
+        + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `" onclick="nlc();">`+Number(followers)+` followers</a></span> `
+        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `" onclick="nlc();">`+Number(following)+` following</a></span> `
         + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span></div> `
         + `</span></span>`;
     return ret;
@@ -60,7 +59,7 @@ function userFromDataBasic(data, mainRatingID, size) {
 }
 
 function postlinkHTML(txid, linktext) {
-    return `<a href="#thread?post=` + san(txid) + `">` + ds(linktext) + `</a>`;
+    return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + ds(linktext) + `</a>`;
 }
 
 function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, functionName, numberOfResults) {
@@ -174,7 +173,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     }
     return mapLink +
         `<a id="replylink` + santxid + page + `" onclick="showReplyBox('` + santxid + page + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
-        <span class="rememberscounttext"><a class="`+ remembersActive + `" id="repostlink` + page + santxid + `" ` + remembersOnclick + `> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('re-members') + `</a></span>
+        <span class="rememberscounttext"><a class="`+ remembersActive + `" id="repostlink` + page + santxid + `" ` + remembersOnclick + `> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('remembers') + `</a></span>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
         <a id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
@@ -211,7 +210,7 @@ function getTopicHTML(topicHOSTILE, append) {
         displayNameHOSTILE = 'All Topics';
     }
     return ` <span class="topic">` +
-        `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new">` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
+        `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new" onclick="nlc();">` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
         + `</span>`;
 }
 
@@ -224,7 +223,7 @@ function getPostListItemHTML(postHTML) {
 
 function replacePageName(match, p1, p2, offset, string) {
     // p1 is nondigits, p2 digits, and p3 non-alphanumerics
-    return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `">@` + ds(p2) + `</a>`;
+    return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
 }
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing) {
@@ -255,7 +254,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     messageLinksHTML = addImageAndYoutubeMarkdown(messageLinksHTML, differentiator, false);
 
     if (messageLinksHTML.indexOf("<a ") == -1 && messageLinksHTML.indexOf("<iframe ") == -1) {//if no links
-        messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `">` + messageLinksHTML + `</a>`;
+        messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
     }
 
     //Scan for XSS vulnerabilities
@@ -274,7 +273,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
         + `<span class="subtextbuttons">`
-        + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `">` + (Math.max(0, Number(replies))) + `&nbsp;`
+        + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + (Math.max(0, Number(replies))) + `&nbsp;`
         + getSafeTranslation('comments').toLowerCase()
         + `</a> `
         + getScoresHTML(txid, likes, dislikes, tips, differentiator)
@@ -331,12 +330,11 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                     <div class="commentdetails">
                         <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
         + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing)
-        + getScoresHTML(txid, likes, dislikes, tips, differentiator)
-        + ` ` + getAgeHTML(firstseen) +
-        `</div>
+        + `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
+                            </div><div class="subtextbuttons">`+ getScoresHTML(txid, likes, dislikes, tips, differentiator)
+                            + ` ` + getAgeHTML(firstseen) + ` ` + getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
                             `+ getReplyDiv(txid, page, differentiator) + `
                         </div>
                         <div id="scoresexpanded`+ san(txid) + differentiator + `" class="scoreexpanded"></div>
@@ -441,11 +439,11 @@ function getMembersWithRatingHTML(i, page, data, action, reverse) {
 
 
 function getMemberLink(address, name) {
-    return `<a href="#member?qaddress=` + san(address) + `">` + ds(name) + `</a>`;
+    return `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();">` + ds(name) + `</a>`;
 }
 
 function getAddressLink(address, name) {
-    return `<a href="#member?qaddress=` + san(address) + `">` + san(address) + `</a>`;
+    return `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();">` + san(address) + `</a>`;
 }
 
 //Temporary function to bootstrap selection of members to rate

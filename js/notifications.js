@@ -96,6 +96,16 @@ function getHTMLForNotification(data, rank, page, starindex) {
     let postRatingID = "";
 
     switch (type) {
+        case "thread":
+            postRatingID = starindex + page + ds(data.raddress) + type;
+            return notificationItemHTML(
+                "thread",
+                `💬&nbsp;`,
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + ` in a discussion you're in `,
+                timeSince(Number(data.time)),
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing)
+            );
+            break;
         case "page":
             postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
@@ -156,7 +166,7 @@ function getHTMLForNotification(data, rank, page, starindex) {
             return notificationItemHTML(
                 "repost",
                 `🔗&nbsp;`,
-                userFromData(data, mainRatingID) + ` re-membered your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
+                userFromData(data, mainRatingID) + ` remembered your ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing)
             );

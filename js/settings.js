@@ -41,7 +41,10 @@ function getAndPopulateRatings(qaddress) {
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
-    //document.getElementById(pre+'anchor').style.display = "none";
+    
+    if(pre=='member'){
+        document.getElementById(pre+'anchor').style.display = "none";
+    }
 
     var theURL = dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
@@ -51,7 +54,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         //Note, data may not contain any rows, for new or unknown users.
 
         var jdenticonname = "";
-
+        var picurl;
+        
         if (data.length < 1) {
             document.getElementById(pre + 'followersnumber').innerHTML = "0";
             document.getElementById(pre + 'followingnumber').innerHTML = "0";
@@ -77,9 +81,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             jdenticonname = data[0].name;
 
             //img/profilepics/`+san(address)+`128x128.jpg
+            picurl = data[0].picurl;
         }
 
-        var picurl = data[0].picurl;
+         
         if (picurl) {
             /*var pictype = '.jpg';
             if (picurl.toLowerCase().endsWith('.png')) {
@@ -107,12 +112,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametextbutton').disabled = true;
             document.getElementById(pre + 'profiletextbutton').disabled = true;
             document.getElementById(pre + 'picbutton').disabled = true;
-
-            /*if (document.getElementById(pre + 'nametext').value == "") {
-                document.getElementById(pre + 'nametext').disabled = false;
-            } else {
+            //After 3 ratings, members cannot change their handle
+            if (data.length>0 && data[0].ratingnumber>2){
                 document.getElementById(pre + 'nametext').disabled = true;
-            }*/
+            }
         }
 
 
@@ -159,7 +162,9 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             var theElement = document.getElementById(`memberrating` + qaddress);
             var starRating1 = addSingleStarsRating(theElement);
         }
-        //document.getElementById(pre+'anchor').style.display = "block";
+        if(pre=='member'){
+            document.getElementById(pre+'anchor').style.display = "block";
+        }
         jdenticon();
     }, function (status) { //error detection....
         showErrorMessage(status, null, theURL);

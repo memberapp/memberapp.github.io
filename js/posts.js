@@ -221,20 +221,21 @@ function getAndPopulateTopicList(showpage) {
             selectboxIndex++;
         }
 
-        //group data rows by moderator before displaying
-        var modsArray = [];
-        var contents = "";
-        for (var i = 0; i < data.length; i++) {
-            if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
-                modsArray.push(data[i]);
-            } else {
-                contents += getHTMLForTopicArray(modsArray, 'modmore');
-                modsArray = [];
-                modsArray.push(data[i]);
+        if (showpage) {
+            //group data rows by moderator before displaying
+            var modsArray = [];
+            var contents = "";
+            for (var i = 0; i < data.length; i++) {
+                if (i == 0 || (i < data.length && data[i].topicname == data[i - 1].topicname)) {
+                    modsArray.push(data[i]);
+                } else {
+                    contents += getHTMLForTopicArray(modsArray, 'modmore');
+                    modsArray = [];
+                    modsArray.push(data[i]);
+                }
             }
+            document.getElementById(page).innerHTML = getHTMLForTopicHeader("", contents);
         }
-
-        document.getElementById(page).innerHTML = getHTMLForTopicHeader("", contents);
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         //document.getElementById(page).innerHTML = contents;
@@ -300,7 +301,7 @@ function addMouseoverProfiles() {
     for (var i = 0; i < matches.length; i++) {
         var profileElement = document.getElementById(matches[i].id.replace('member', 'profile'));
         profileElement.onmouseleave = setDisplayNone;
-        delay(matches[i],showPreviewProfile,profileElement);
+        delay(matches[i], showPreviewProfile, profileElement);
     }
 }
 
@@ -320,7 +321,7 @@ function showScoresExpanded() {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid)+i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + `</div>`;
+            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + (Number(data[i].type) == -1 ? ` disliked` : ``) + `</div>`;
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements(null);
@@ -373,7 +374,7 @@ function addSingleStarsRating(theElement) {
     if (disabledtext) {
         starRating1.disable();
     }
-    theElement.isdone=true;
+    theElement.isdone = true;
     return starRating1;
 }
 
@@ -441,8 +442,8 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     var retHTML = "";
     if (data.repost != undefined && data.repost != "" && data.repost != "null") {
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
-        retHTML = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " re-membered</span>" 
-        + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing);
+        retHTML = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " remembered</span>"
+            + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing);
     } else {
         retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing);
     }
@@ -494,7 +495,7 @@ function replySuccessFunction(page, txid) {
 
 function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
-    var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0,10) + "']");
+    var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0, 10) + "']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";
     //document.getElementById("replylink"+txid).style.display = "none";
@@ -713,7 +714,7 @@ function memorandumpostcompleted(txid) {
     txid = san(txid);
     var encodedURL = `https://twitter.com/intent/tweet?text=` + encodeURIComponent(document.getElementById('memorandumtitle').value + '\r\n' + ` member.cash/?` + txid.substr(0, 4) + `#thread?post=` + txid.substr(0, 10));
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('`+txid+`')" href="#thread?post=`+txid+`">View It</a> or  <a rel='noopener noreferrer' target="_blank" href="` + encodedURL + `">Also Post To Twitter (opens a new window)</a>`;
-    document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('` + txid + `')" href="#thread?post=` + txid + `">View It</a> or  <a href="" onclick="window.open('` + encodedURL + `', 'twitterwindow', 'width=300,height=250');return false;">Also Post To Twitter (opens a new window)</a>`;
+    document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('` + txid + `')" href="#thread?post=` + txid + `" onclick="nlc();">View It</a> or  <a href="" onclick="window.open('` + encodedURL + `', 'twitterwindow', 'width=300,height=250');return false;">Also Post To Twitter (opens a new window)</a>`;
 
 
 
@@ -799,24 +800,28 @@ function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
                 for (var j = 0; j < data.length; j++) {
                     //replies must be within 6 hours of each other
                     if (data[i].retxid == data[j].txid && Math.abs(data[i].firstseen - data[j].firstseen) < 6 * 60 * 60) {
-                        //Subtract one as each post is automatically liked by its own author
-                        data[j].likes = (Number(data[j].likes) + Number(data[i].likes - 1)).toString();
-                        data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();
-                        data[j].tips = (Number(data[j].tips) + Number(data[i].tips)).toString();
+                        //After 8/11/2020 replies must begin with '|' to be mergeable
+                        if (data[j].firstseen < 1604813359 || data[i].message.startsWith('|')) {
+                            //Subtract one as each post is automatically liked by its own author
+                            data[j].likes = (Number(data[j].likes) + Number(data[i].likes - 1)).toString();
+                            data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();
+                            data[j].tips = (Number(data[j].tips) + Number(data[i].tips)).toString();
 
-                        data[j].message = data[j].message + data[i].message;
+                            //remove the | at the start of the string if it is present
+                            data[j].message = data[j].message + data[i].message.replace(/^\|/, '');
 
-                        //if any other posts reference the child post, have them refence the parent post instead
-                        for (var k = 0; k < data.length; k++) {
-                            if (data[k].retxid == data[i].txid) {
-                                data[k].retxid = data[j].txid;
+                            //if any other posts reference the child post, have them reference the parent post instead
+                            for (var k = 0; k < data.length; k++) {
+                                if (data[k].retxid == data[i].txid) {
+                                    data[k].retxid = data[j].txid;
+                                }
                             }
-                        }
 
-                        //remove the post
-                        data.splice(i, 1);
-                        i--;
-                        break;
+                            //remove the post
+                            data.splice(i, 1);
+                            i--;
+                            break;
+                        }
                     }
                 }
             }

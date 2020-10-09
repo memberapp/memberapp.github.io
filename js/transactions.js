@@ -51,7 +51,7 @@ function setPic() {
     if (!checkForPrivKey()) return false;
 
     document.getElementById('settingspicbutton').disabled = true;
-    document.getElementById('settingspictext').disabled = true;
+    document.getElementById('settingspic').disabled = true;
 
     var newName = document.getElementById('settingspic').value;
     if(!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png') ))){
@@ -234,7 +234,7 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
 
     //If there is still more to send
     if (replyHex.length > 0) {
-        tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privatekey, newtxid, replyHex, 1000, divForStatus, completionFunction); }, null);
+        tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privatekey, newtxid, "7c"+replyHex, 1000, divForStatus, completionFunction); }, null);
     } else {
         //last one
         tq.queueTransaction(tx, completionFunction, null);

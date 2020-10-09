@@ -21,15 +21,15 @@ function displayContentBasedOnURLParameters() {
         //navigation back to home page, clear topic
 
     } else if (url.indexOf('/p/') != -1) {
-        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase());
+        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
         showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'thread');
         return;
     } else if (url.indexOf('/m/') != -1) {
-        var pagingidHOSTILE = url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase();
+        var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase()).trim();
         showMember('', pagingidHOSTILE);
         return;
     } else if (url.indexOf('/t/') != -1) {
-        var topicnameHOSTILE = url.substring(url.indexOf('/t/') + 3).toLowerCase();
+        var topicnameHOSTILE = decodeURI(url.substring(url.indexOf('/t/') + 3).toLowerCase()).trim();
         showTopic(0, numbers.results, topicnameHOSTILE);
         return;
     } else {
@@ -252,9 +252,17 @@ function showMember(qaddress, pagingIDHOSTILE) {
     if (qaddress == '' && pagingIDHOSTILE != '') {
         var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingIDHOSTILE) + '&address=' + pubkey;
         getJSON(theURL).then(function (data) {
-            qaddress = data[0].address;
-            showMember(qaddress);
-            return;
+            if(data && data.length>0){
+                qaddress = data[0].address;
+                showMember(qaddress);
+                return;
+            }else{
+                show('memberanchor');
+                document.getElementById('memberanchor').innerHTML='This paging id not found.';    
+                return;
+            }
+        }, function (status) { //error detection....
+            showErrorMessage(status, 'messageslist', theURL);
         });
         return;
     }
@@ -455,6 +463,11 @@ var detectBackOrForward = function () {
     }
 }
 
+var navlinkclicked=false;
+function nlc(){
+    //navlinkclicked
+    navlinkclicked=true;
+}
 
 var followOrBackFlag = false;
 
@@ -462,18 +475,18 @@ var followOrBackFlag = false;
 var lastdocumentlocation = location.hash;
 setTimeout(testForHashChange, 100);
 function testForHashChange() {
-    if (lastdocumentlocation != location.hash) {
+    if (lastdocumentlocation != location.hash || navlinkclicked) {
         lastdocumentlocation = location.hash;
+        navlinkclicked=false;
         detectBackOrForward();
     }
     setTimeout(testForHashChange, 100);
 }
 
 
-
 var scrollhistory = [];
 //record the scroll position
-document.addEventListener("click", function () { scrollhistory[window.location.hash] = window.scrollY; }, true);
+document.addEventListener("click", function () { updateStatus("scrolly:"+window.scrollY); scrollhistory[window.location.hash] = window.scrollY; }, true);
 
 //User's mouse is inside the page.
 document.getElementsByTagName('body')[0].onmouseover = function() { window.innerDocClick = true;}
