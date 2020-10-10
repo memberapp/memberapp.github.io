@@ -367,7 +367,8 @@ img {
   display: flex !important;
   -ms-flex-align: center !important;
   align-items: center !important;
-  margin-right: 0.25rem; }
+  margin-right: 0.25rem;
+  width: 2rem; }
   .memberpicsmall .memberpicturesmall {
     height: 2rem;
     width: 2rem;
@@ -384,6 +385,17 @@ img {
 
 .settingspicturelarge {
   margin: 0 auto; }
+
+.member-handle,
+.member-pagingid {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 70px; }
+  @media (min-width: 401px) {
+    .member-handle,
+    .member-pagingid {
+      max-width: 200px; } }
 
 body {
   background: #f7f7f7;
@@ -932,6 +944,8 @@ textarea {
 .memberfilter {
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
   -ms-flex-align: center;
   align-items: center;
   margin-left: 0; }
@@ -1378,9 +1392,13 @@ img {
               display: -ms-flexbox;
               display: flex;
               -ms-flex-align: center;
-              align-items: center; }
+              align-items: center;
+              -ms-flex-wrap: wrap;
+              flex-wrap: wrap; }
               .comment-tree ul li .reply div:only-child .commentdetails .comhead .score {
                 margin-right: 0.25rem; }
+              .comment-tree ul li .reply div:only-child .commentdetails .comhead .memberfilter {
+                margin-left: 0.25rem; }
             .comment-tree ul li .reply div:only-child .commentdetails .comment {
               font-size: 1rem; }
               .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody {
@@ -1510,8 +1528,8 @@ header {
               width: auto; } }
         header .pagetop nav .memberlogo .memberlogoimage {
           display: block;
-          height: 3rem;
-          width: 3rem; }
+          height: 2.2rem;
+          width: 2.2rem; }
           @media (min-width: 1025px) {
             header .pagetop nav .memberlogo .memberlogoimage {
               display: none; } }
@@ -1837,17 +1855,10 @@ footer {
     margin-bottom: 0.5rem;
     color: rgba(0, 0, 0, 0.87); }
     .profilepreview .profile-meta .member-handle {
-      font-weight: bold;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 200px; }
+      font-weight: bold; }
     .profilepreview .profile-meta .member-pagingid {
       font-weight: 400;
       color: rgba(0, 0, 0, 0.54);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
       max-width: 100%; }
     .profilepreview .profile-meta a:last-of-type {
       width: 100%; }
