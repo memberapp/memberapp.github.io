@@ -391,7 +391,7 @@ img {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 70px; }
+  max-width: 100px; }
   @media (min-width: 401px) {
     .member-handle,
     .member-pagingid {
@@ -662,6 +662,12 @@ html :lang(ar) {
   background: #FFE45E;
   border: 1px solid #ffd712;
   border-radius: 0.25rem; }
+
+.plaintext, .age {
+  margin-right: 0.25rem; }
+
+a {
+  overflow-wrap: anywhere; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -1134,7 +1140,8 @@ img {
       word-break: break-word;
       cursor: default; }
       .post .postdetails .title p a {
-        color: rgba(0, 0, 0, 0.76); }
+        color: rgba(0, 0, 0, 0.76);
+        overflow-wrap: anywhere; }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {
         color: #1063A8;
         margin: 0; }
@@ -1162,8 +1169,6 @@ img {
         flex-wrap: wrap; }
         .post .postdetails .subtext .submitter a {
           display: inline-block; }
-        .post .postdetails .subtext .submitter .age {
-          margin: 0 0.25rem; }
 
 .postdetails .subtextbuttons,
 .comment-tree ul li .reply div .subtextbuttons {
@@ -1172,6 +1177,7 @@ img {
   display: flex;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
+  color: rgba(0, 0, 0, 0.54);
   font-size: 0.75rem;
   display: flex; }
   .postdetails .subtextbuttons a,
@@ -1181,7 +1187,7 @@ img {
     display: flex;
     margin-right: 1rem;
     transition: all 0.15s ease-in-out;
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
     color: rgba(0, 0, 0, 0.54); }
     .postdetails .subtextbuttons a::before,
     .comment-tree ul li .reply div .subtextbuttons a::before {
@@ -1201,16 +1207,16 @@ img {
       color: rgba(0, 0, 0, 0.87); }
   .postdetails .subtextbuttons span.score,
   .comment-tree ul li .reply div .subtextbuttons span.score {
-    margin-right: 0.5rem;
     cursor: pointer;
     transition: filter 1s ease-in-out; }
     .postdetails .subtextbuttons span.score:hover,
     .comment-tree ul li .reply div .subtextbuttons span.score:hover {
       transition: filter 1s ease-in-out;
       color: rgba(0, 0, 0, 0.87); }
-    .postdetails .subtextbuttons span.score .likescounttext,
-    .comment-tree ul li .reply div .subtextbuttons span.score .likescounttext {
-      margin-right: 0.15rem; }
+    .postdetails .subtextbuttons span.score .likescounttext, .postdetails .subtextbuttons span.score .tipscounttext,
+    .comment-tree ul li .reply div .subtextbuttons span.score .likescounttext,
+    .comment-tree ul li .reply div .subtextbuttons span.score .tipscounttext {
+      margin-right: 0.25rem; }
   .postdetails .subtextbuttons [id^="permalinkposts"]::before,
   .postdetails .subtextbuttons [id^="permalinkthread"]::before,
   .postdetails .subtextbuttons [id^="permalinknotifications"]::before,
@@ -1222,7 +1228,7 @@ img {
     display: inline-block; }
   .postdetails .subtextbuttons .rememberscounttext,
   .comment-tree ul li .reply div .subtextbuttons .rememberscounttext {
-    margin-right: 0.15rem; }
+    margin-right: 0.25rem; }
     .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
     .postdetails .subtextbuttons .rememberscounttext a.remebersactive::before,
     .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before,
@@ -1238,7 +1244,7 @@ img {
         fill: #2291EB; }
     .postdetails .subtextbuttons .rememberscounttext .repostscount,
     .comment-tree ul li .reply div .subtextbuttons .rememberscounttext .repostscount {
-      margin-right: 0.15rem; }
+      margin-right: 0.25rem; }
   .postdetails .subtextbuttons [id^="replylinkposts"]::before,
   .postdetails .subtextbuttons [id^="replylinkmemberposts"]::before,
   .postdetails .subtextbuttons [id^="replylink"]::before,
@@ -1314,8 +1320,6 @@ img {
     align-items: center; }
     .subtext .submitter a {
       display: inline-block; }
-    .subtext .submitter .age {
-      margin: 0 0.25rem; }
 
 .fatitem .reply div:only-child {
   display: -ms-flexbox;
@@ -1357,6 +1361,21 @@ img {
     margin: 0; }
     .comment-tree ul li {
       list-style-type: none; }
+      .comment-tree ul li .comhead {
+        font-size: 0.75rem;
+        color: rgba(0, 0, 0, 0.54);
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap; }
+        .comment-tree ul li .comhead .score {
+          margin-right: 0.25rem; }
+        .comment-tree ul li .comhead .memberfilter {
+          margin-left: 0.25rem; }
       .comment-tree ul li.collapsed {
         margin-left: 2.25rem;
         font-size: 0.75rem;
@@ -1384,21 +1403,6 @@ img {
           .comment-tree ul li .reply div:only-child .commentdetails {
             padding: 0.875rem 0.875rem 0.875rem 0;
             width: 100%; }
-            .comment-tree ul li .reply div:only-child .commentdetails .comhead {
-              font-size: 0.75rem;
-              color: rgba(0, 0, 0, 0.54);
-              margin-bottom: 0.5rem;
-              font-weight: bold;
-              display: -ms-flexbox;
-              display: flex;
-              -ms-flex-align: center;
-              align-items: center;
-              -ms-flex-wrap: wrap;
-              flex-wrap: wrap; }
-              .comment-tree ul li .reply div:only-child .commentdetails .comhead .score {
-                margin-right: 0.25rem; }
-              .comment-tree ul li .reply div:only-child .commentdetails .comhead .memberfilter {
-                margin-left: 0.25rem; }
             .comment-tree ul li .reply div:only-child .commentdetails .comment {
               font-size: 1rem; }
               .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody {
@@ -1407,6 +1411,8 @@ img {
                 -ms-word-break: break-all;
                 word-break: break-all;
                 word-break: break-word; }
+                .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody a {
+                  overflow-wrap: anywhere; }
       .comment-tree ul li ul {
         margin-left: 2.5rem;
         border-left: 1px solid #e6e6e6 !important; }
