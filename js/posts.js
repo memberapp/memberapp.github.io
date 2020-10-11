@@ -129,6 +129,11 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             }
         }
 
+        //Treat entries in polls topic as special
+        if(data.length > 0 && data[0].topic.toLowerCase()=='polls'){
+            var earliestReply = "none";
+        }
+
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {

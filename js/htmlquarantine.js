@@ -698,7 +698,10 @@ function createiframe(url, elementname) {
 
 function showErrorMessage(status, page, theURL) {
     console.log(`Error:${status}`);
-    document.getElementById(page).innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
+    var theElement=document.getElementById(page);
+    if(theElement){
+        theElement.innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
+    }
     updateStatus(`Error:${status}` + ds(theURL));
     updateStatus(`Error:${status}`);
 }
