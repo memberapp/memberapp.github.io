@@ -1713,15 +1713,15 @@ footer {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap; }
     footer .footerlinks .separatorwide {
-      border-right: 1px solid rgba(0, 0, 0, 0.36);
+      border-right: 1px solid rgba(0, 0, 0, 0.12);
       margin-right: 1rem;
       padding-right: 1rem; }
     footer .footerlinks a,
     footer .footerlinks .vavilon {
-      color: rgba(0, 0, 0, 0.76); }
+      color: rgba(0, 0, 0, 0.54); }
       footer .footerlinks a:hover,
       footer .footerlinks .vavilon:hover {
-        color: rgba(0, 0, 0, 0.96); }
+        color: rgba(0, 0, 0, 0.87); }
     footer .footerlinks .vavilon {
       margin-right: 0.25rem; }
 
