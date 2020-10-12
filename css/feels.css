@@ -316,11 +316,14 @@ img {
 .jdenticon {
   height: 2rem;
   width: 2rem;
-  margin-right: 0.25rem; }
+  margin-right: 0.25rem;
+  background: white;
+  border-radius: 100%; }
 
 .jdenticonlarge {
   width: 100px;
-  height: 100px; }
+  height: 100px;
+  background: white; }
 
 /*! Remove newlines for links*/
 .post .postdetails .title a[href]:not([href^="#thread?"]) {
@@ -1032,7 +1035,7 @@ img {
 .votelinks {
   background: #f8f9fa;
   padding: 0.875rem 0.5rem;
-  min-width: 2.25rem;
+  min-width: 3rem;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
