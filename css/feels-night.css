@@ -1510,7 +1510,7 @@ header {
         width: 2rem;
         height: 100%;
         z-index: 2;
-        background: linear-gradient(270deg, white 0%, rgba(255, 255, 255, 0) 100%); }
+        background: linear-gradient(270deg, black 0%, rgba(255, 255, 255, 0) 100%); }
       header .pagetop nav .memberlogo {
         margin-right: 0.5rem;
         display: -ms-flexbox;
