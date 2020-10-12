@@ -677,7 +677,7 @@ body {
   font-size: 1rem;
   font-weight: normal;
   line-height: 1.65;
-  color: rgba(0, 0, 0, 0.87); }
+  color: white; }
 
 p {
   margin-top: 0;
@@ -1180,7 +1180,7 @@ img {
   display: flex;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.75rem;
   display: flex; }
   .postdetails .subtextbuttons a,
@@ -1199,7 +1199,7 @@ img {
       border: 0px;
       margin: 3px 6px 2px 0;
       display: none;
-      filter: opacity(0.5);
+      filter: invert(1);
       transition: filter 1s ease-in-out;
       content: ""; }
     .postdetails .subtextbuttons a:hover:before,
@@ -1673,7 +1673,7 @@ header {
         display: none; }
 
 footer {
-  background-color: #e0e0e0;
+  background-color: black;
   padding-top: 4rem;
   margin-top: 6rem; }
   footer .content {
@@ -1842,7 +1842,7 @@ footer {
 .profilepreview {
   position: absolute;
   display: block;
-  background: white;
+  background: black;
   border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 0.5rem;
   padding: 1rem;
