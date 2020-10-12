@@ -1601,7 +1601,7 @@ header {
             header .pagetop nav .navitemsmain a {
               padding: 0 0.5rem; } }
         header .pagetop nav .navitemsmain a:hover {
-          background-color: #ddeefc; }
+          background-color: #474747; }
         header .pagetop nav .navitemsmain #loggedin {
           height: 100%; }
         header .pagetop nav .navitemsmain #loggedout {
