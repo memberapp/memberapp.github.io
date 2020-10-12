@@ -15,9 +15,8 @@
 "use strict";
 
 
-
 //Get html for a user, given their address and name
-function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing) {
+function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, theObj) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
@@ -33,7 +32,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="hnuser">`;
     var linkEnd = `</a> `;
-    var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic 
+    var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic
         + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`;
     var ratingHTML = `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     if (ratingStarSize > 0) {
@@ -46,11 +45,19 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         + ratingHTML
         + linkStart + "<span class='member-pagingid'>@" + ds(pagingid) + "</span>" + linkEnd
         + `</div>`
-        + `<div class='profile-text'><span class='profilepreviewtext'>`+ds(profile)+`</span></div> `
-        + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `" onclick="nlc();">`+Number(followers)+` followers</a></span> `
-        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `" onclick="nlc();">`+Number(following)+` following</a></span> `
+        + `<div class='profile-text'><span class='profilepreviewtext'>` + ds(profile) + `</span></div> `
+        + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `" onclick="nlc();">` + Number(followers) + ` followers</a></span> `
+        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `" onclick="nlc();">` + Number(following) + ` following</a></span> `
         + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span></div> `
         + `</span></span>`;
+
+    if (theObj) {
+        //These must all be HTML safe.
+        theObj.address = san(address);
+        theObj.profilepic = memberpic;
+        theObj.handle = ds(name);
+        theObj.pagingid = ds(pagingid);
+    }
     return ret;
 }
 
@@ -227,8 +234,9 @@ function replacePageName(match, p1, p2, offset, string) {
 }
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing) {
-    if (name == null) { name = address.substring(0, 10); }
 
+
+    if (name == null) { name = address.substring(0, 10); }
     repliesroot = Number(repliesroot);
     replies = Number(replies);
     //Replies respect newlines, but root posts do not
@@ -248,6 +256,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         }
     }
     var messageLinksHTML = anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
+    
+    //Scan for XSS vulnerabilities
     messageLinksHTML = DOMPurify.sanitize(messageLinksHTML);
 
     //Add youtube etc
@@ -257,10 +267,16 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
     }
 
-    //Scan for XSS vulnerabilities
+    var obj = {
+        //These must all be HTML safe 
+        message: messageLinksHTML, 
+        replies: Number(replies),
+        likes: (Number(likes) - Number(dislikes)),
+        remembers: Number(repostcount),
+        tips: Number(tips)
+    };
 
-
-    return `<div class="post">
+    var retVal = `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
                     <div class="title"><p>`+ messageLinksHTML + `</p></div>
@@ -269,7 +285,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                         <span class="plaintext">submitted</span> `
         + ` ` + getAgeHTML(firstseen)
         + ` <span class="plaintext">` + getSafeTranslation('by') + `</span> `
-        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing)
+        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, obj)
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
         + `<span class="subtextbuttons">`
@@ -284,6 +300,11 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + getReplyDiv(txid, page, differentiator) + `
                 </div>
             </div>`;
+
+    if (theStyle == 'nifty') {
+        return templateReplace(postTemplate, obj);
+    }
+    return retVal;
 }
 
 
@@ -334,7 +355,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                         <div class="comment"><div class="commentbody">
                             `+ message + `
                             </div><div class="subtextbuttons">`+ getScoresHTML(txid, likes, dislikes, tips, differentiator)
-                            + ` ` + getAgeHTML(firstseen) + ` ` + getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
+        + ` ` + getAgeHTML(firstseen) + ` ` + getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
                             `+ getReplyDiv(txid, page, differentiator) + `
                         </div>
                         <div id="scoresexpanded`+ san(txid) + differentiator + `" class="scoreexpanded"></div>
@@ -698,8 +719,8 @@ function createiframe(url, elementname) {
 
 function showErrorMessage(status, page, theURL) {
     console.log(`Error:${status}`);
-    var theElement=document.getElementById(page);
-    if(theElement){
+    var theElement = document.getElementById(page);
+    if (theElement) {
         theElement.innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
     }
     updateStatus(`Error:${status}` + ds(theURL));

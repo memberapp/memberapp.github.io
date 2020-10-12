@@ -19,6 +19,7 @@ var pathpermalinks=true;
 var profilepicbase='img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var siteTitle='member.cash';
+var theStyle='';
 
 //var twitterEmbeds=new Array();
 
@@ -262,6 +263,7 @@ function changeStyle(newStyle, setStorage) {
         //base style will now have value 'base none'
         newStyle = "feels";
     }
+    theStyle=newStyle;
     if (setStorage) {
         localStorageSet(localStorageSafe, "style", newStyle);
     }
