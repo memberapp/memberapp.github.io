@@ -774,7 +774,7 @@ table {
       border-bottom: 1px solid rgba(255, 255, 255, 0.38);
       padding: 0.5rem; }
     table tbody tr:nth-child(even) {
-      background: white; }
+      background: #474747; }
 
 input[type="submit"],
 button {
