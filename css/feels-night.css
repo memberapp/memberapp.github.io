@@ -1646,7 +1646,8 @@ header {
         top: 0.8rem;
         left: 0.8rem;
         position: absolute !important;
-        height: auto !important; }
+        height: auto !important;
+        white-space: nowrap; }
         header .pagetop nav .alertcount:empty {
           display: none !important; }
       header .pagetop nav #notificationsbutton,
