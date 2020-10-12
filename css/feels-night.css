@@ -460,17 +460,17 @@ html :lang(ar) {
   cursor: pointer;
   text-decoration: none;
   transition: all 0.15s ease-in-out;
-  color: #1063A8;
+  color: #2291EB;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
+  border: 1px solid #2291EB;
   background: transparent;
   padding: 0.5rem 1.5rem;
   display: inline-block; }
   .settingsprofilelinks div a:hover,
   #settingsprofilelinks div a:hover,
   #memberprofilelinks div a:hover {
-    background: #3298ec; }
+    background: #80c0f3; }
   .settingsprofilelinks div a:disabled,
   #settingsprofilelinks div a:disabled,
   #memberprofilelinks div a:disabled {
@@ -601,7 +601,7 @@ html :lang(ar) {
       -ms-flex-pack: center;
       justify-content: center;
       margin-bottom: 0;
-      color: #1063A8; }
+      color: #2291EB; }
       #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
       #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
       #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
@@ -627,7 +627,7 @@ html :lang(ar) {
       #memberlegacyaddress #privatekeyformatdiv .qrcodeclick:hover,
       #memberlegacyaddress #membercashaddrformatdiv .qrcodeclick:hover,
       #memberlegacyaddress #memberlegacyformatdiv .qrcodeclick:hover {
-        color: #0c4879; }
+        color: #1276c8; }
     #settingsprofileaddress #cashaddrformatdiv img,
     #settingsprofileaddress #legacyformatdiv img,
     #settingsprofileaddress #privatekeyformatdiv img,
@@ -763,7 +763,7 @@ table {
   table thead tr th,
   table thead tr td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.34);
-    background: #1063A8;
+    background: #2291EB;
     color: white;
     padding: 0.5rem;
     font-weight: bold; }
@@ -774,7 +774,7 @@ table {
       border-bottom: 1px solid rgba(255, 255, 255, 0.38);
       padding: 0.5rem; }
     table tbody tr:nth-child(even) {
-      background: #edf6fd; }
+      background: white; }
 
 input[type="submit"],
 button {
@@ -787,8 +787,8 @@ button {
   float: right;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
-  background: #1063A8;
+  border: 1px solid #2291EB;
+  background: #2291EB;
   padding: 0.5rem 1.5rem;
   border: transparent;
   font-weight: 400;
@@ -796,7 +796,7 @@ button {
   margin-bottom: 0.875rem; }
   input[type="submit"]:hover,
   button:hover {
-    background: #0e5591;
+    background: #1484df;
     color: white;
     border: transparent; }
   input[type="submit"]:disabled,
@@ -829,7 +829,7 @@ input {
   input:focus {
     color: #495057;
     background-color: white;
-    border-color: #147ed7;
+    border-color: #51a8ef;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
   textarea:disabled,
@@ -857,7 +857,7 @@ select {
   select:focus {
     color: #495057;
     background-color: #fff;
-    border-color: #147ed7;
+    border-color: #51a8ef;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
@@ -909,7 +909,7 @@ textarea {
       background-color: #fff;
       transform: translateX(1.7rem); }
     .customcheckbox input:checked ~ label:before {
-      background: #1063A8;
+      background: #2291EB;
       box-shadow: none; }
   .customcheckbox label {
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -996,9 +996,9 @@ textarea {
 a {
   text-decoration: none;
   transition: all 0.15s ease-in-out;
-  color: #1063A8; }
+  color: #2291EB; }
   a:hover {
-    color: #0c4879; }
+    color: #1276c8; }
 
 hr {
   border-top: 1px solid rgba(255, 255, 255, 0.38);
@@ -1107,7 +1107,7 @@ img {
   padding: 0.875rem;
   font-weight: bold;
   font-size: 0.875rem;
-  background: #f8f9fa;
+  background: #474747;
   border-bottom: 1px solid rgba(255, 255, 255, 0.38);
   width: 100%;
   display: -ms-flexbox;
@@ -1146,7 +1146,7 @@ img {
         color: white;
         overflow-wrap: anywhere; }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {
-        color: #1063A8;
+        color: #2291EB;
         margin: 0; }
         .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
@@ -1737,13 +1737,13 @@ footer {
     text-align: center;
     display: block;
     width: 45%;
-    border: 1px solid #0c4879;
+    border: 1px solid #1276c8;
     padding: 0.5rem 1rem;
-    background-color: #1063A8;
+    background-color: #2291EB;
     border-radius: 0.5rem;
     color: white; }
     .navbuttons a:hover {
-      background: #0c4879; }
+      background: #1276c8; }
     .navbuttons a:only-child {
       width: 100%; }
 
@@ -1797,15 +1797,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       display: block; }
       #lowfundswarning .content a:not([rel~="noreferrer"]):hover {
-        background: #3298ec; }
+        background: #80c0f3; }
       #lowfundswarning .content a:not([rel~="noreferrer"]):disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -1899,14 +1899,14 @@ footer {
       float: right;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
-      background: #1063A8;
+      border: 1px solid #2291EB;
+      background: #2291EB;
       padding: 0.5rem 1.5rem;
       border: transparent;
       font-weight: 400;
       margin-bottom: 0; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
-        background: #0e5591;
+        background: #1484df;
         color: white;
         border: transparent; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
@@ -1925,17 +1925,17 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       color: #CC2936;
       border: 1px solid #CC2936;
       margin-left: auto !important; }
       .scoreexpanded .closebutton a:hover {
-        background: #3298ec; }
+        background: #80c0f3; }
       .scoreexpanded .closebutton a:disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -2105,7 +2105,7 @@ footer {
         text-align: center;
         line-height: 1; }
         #newpost #memorandumarea #memorandumpreviewareabutton a:hover {
-          background-color: #1062a6;
+          background-color: #2090eb;
           color: white; }
     #newpost #memorandumarea .switchToRegularMode {
       display: none; }
@@ -2155,15 +2155,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       display: inline-block; }
       #settingsanchor .content .logout a:hover {
-        background: #3298ec; }
+        background: #80c0f3; }
       #settingsanchor .content .logout a:disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -2175,15 +2175,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem; }
       #settingsanchor .content #settingsnametextbutton:hover,
       #settingsanchor .content #settingsprofiletextbutton:hover {
-        background: #3298ec; }
+        background: #80c0f3; }
       #settingsanchor .content #settingsnametextbutton:disabled,
       #settingsanchor .content #settingsprofiletextbutton:disabled {
         opacity: 0.65;
@@ -2444,8 +2444,8 @@ tbody tr td a[href^="javascript:;"] {
   float: right;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
-  background: #1063A8;
+  border: 1px solid #2291EB;
+  background: #2291EB;
   padding: 0.5rem 1.5rem;
   border: transparent;
   font-weight: 400;
@@ -2453,7 +2453,7 @@ tbody tr td a[href^="javascript:;"] {
   margin-bottom: 0; }
   tbody tr td a[href^="#modmorelink"]:hover,
   tbody tr td a[href^="javascript:;"]:hover {
-    background: #0e5591;
+    background: #1484df;
     color: white;
     border: transparent; }
   tbody tr td a[href^="#modmorelink"]:disabled,
@@ -2546,16 +2546,16 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem; }
           #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:hover {
-            background: #3298ec; }
+            background: #80c0f3; }
           #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2651,17 +2651,17 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
           font-weight: bold; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:hover {
-            background: #3298ec; }
+            background: #80c0f3; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2681,17 +2681,17 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
           font-weight: bold; }
           #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:hover {
-            background: #3298ec; }
+            background: #80c0f3; }
           #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2743,14 +2743,14 @@ tbody tr td .filterprovider {
         float: right;
         text-transform: uppercase;
         border-radius: 0.25rem;
-        border: 1px solid #1063A8;
-        background: #1063A8;
+        border: 1px solid #2291EB;
+        background: #2291EB;
         padding: 0.5rem 1.5rem;
         border: transparent;
         font-weight: 400;
         margin-left: auto; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:hover {
-          background: #0e5591;
+          background: #1484df;
           color: white;
           border: transparent; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
@@ -2883,7 +2883,7 @@ tbody tr td .filterprovider {
           border-radius: 0.5rem;
           background: rgba(0, 0, 0, 0.05); }
           #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
-            background: #bedef9; }
+            background: white; }
         #trustgraph .content #trustgraphdetails table td {
           display: table-row; }
         #trustgraph .content #trustgraphdetails table td:before,
@@ -2993,9 +2993,7 @@ tbody tr td .filterprovider {
     #notifications {
       max-width: 540px; } }
   #notifications .notificationtitle {
-    background: #f0f1f3; }
-  #notifications .notificationtitle {
-    background-color: #ddeefc; }
+    background: #474747; }
   #notifications ul.notificationslist {
     padding: 0; }
     #notifications ul.notificationslist li {

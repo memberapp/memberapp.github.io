@@ -2993,9 +2993,7 @@ tbody tr td .filterprovider {
     #notifications {
       max-width: 540px; } }
   #notifications .notificationtitle {
-    background: #f0f1f3; }
-  #notifications .notificationtitle {
-    background-color: #ddeefc; }
+    background: #f8f9fa; }
   #notifications ul.notificationslist {
     padding: 0; }
     #notifications ul.notificationslist li {
