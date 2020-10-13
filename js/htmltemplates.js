@@ -12,6 +12,12 @@ var templatePost = `
                 <span class="author-handle">
                     @{pagingid}
                 </span>
+                <span class="elapsed-time">
+                    {elapsed}
+                </span>
+                <span class="elapsed-time-compressed" style="display:none">
+                    {elapsedcompressed}
+                </span>
             </div>
         </div>
         <div class="post-body">
@@ -19,19 +25,20 @@ var templatePost = `
         </div>
             <div class="btn-actions">
                         <div class="dropdown">
-                            <span><a href="#">Permalink</a></span>
-                            <span><a href="#">Article</a></span>
-                            <span><a href="#">Tweet</a></span>
+                            <a href="#"><span data-vavilon="VVpermalink">Permalink</span></a>
+                            <a href="#"><span data-vavilon="VVarticle"><a href="#">Article</span></a>
+                            <a href="#"><span data-vavilon="VVtweet"><a href="#">Tweet</span></a>
                             <span class="divider"></span>
                             <span class="actions-title">Blockchain</span>
-                            <span><a href="#">Memo</a></span>
-                            <span><a href="#">Bitcoin.com</a></span>
-                            <span><a href="#">BTC.com</a></span>
-                            <span><a href="#">Blockchair</a></span>
+                            <span><a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">Memo</a></span>
+                            <span><a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a></span>
+                            <span><a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/{txid}">BTC.com</a></span>
+                            <span><a rel="noopener noreferrer" target="blockchair" href="https://blockchair.com/bitcoin-cash/transaction/{txid}">Blockchair</a></span>
+                            <span><a rel="noopener noreferrer" target="bitcoinunlimited" href="https://explorer.bitcoinunlimited.info/tx/{txid}">Bitcoin Unlimited</a></span>
                             <span class="divider"></span>
                             <span class="actions-title">Moderate</span>
-                            <span><a class="danger" href="#">Flag post</a></span>
-                            <span><a class="danger" href="#">Flag user</a></span>
+                            <a class="danger" href="#"><span data-vavilon="VVflagpost">Flag post</span></a>
+                            <a class="danger" href="#"><span data-vavilon="VVflaguser">Flag user</span></a>
                         </div>
             </div>
         <div class="post-footer">

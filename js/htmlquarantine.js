@@ -190,6 +190,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
             <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/` + santxid + `">bitcoin.com</a>
             <a rel="noopener noreferrer" target="blockchair" href="https://blockchair.com/bitcoin-cash/transaction/` + santxid + `">blockchair</a>
             <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/` + santxid + `">btc.com</a>
+            <a rel="noopener noreferrer" target="bitcoinunlimited" href="https://explorer.bitcoinunlimited.info/tx/` + santxid + `">bitcoin unlimited</a>
             <a id="hidepostlink`+ page + santxid + `" onclick="sendHidePost('` + santxid + `');" href="javascript:;">flag(post)</a>`
         + hideuserHTML +
         `</span>
@@ -273,7 +274,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         replies: Number(replies),
         likes: (Number(likes) - Number(dislikes)),
         remembers: Number(repostcount),
-        tips: Number(tips)
+        tips: Number(tips),
+        txid: san(txid),
+        elapsed: getAgeHTML(firstseen, false),
+        elapsedcompressed: getAgeHTML(firstseen, true)
     };
 
     var retVal = `<div class="post">
