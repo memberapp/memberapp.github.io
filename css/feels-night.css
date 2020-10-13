@@ -316,11 +316,14 @@ img {
 .jdenticon {
   height: 2rem;
   width: 2rem;
-  margin-right: 0.25rem; }
+  margin-right: 0.25rem;
+  background: white;
+  border-radius: 100%; }
 
 .jdenticonlarge {
   width: 100px;
-  height: 100px; }
+  height: 100px;
+  background: white; }
 
 /*! Remove newlines for links*/
 .post .postdetails .title a[href]:not([href^="#thread?"]) {
@@ -460,17 +463,17 @@ html :lang(ar) {
   cursor: pointer;
   text-decoration: none;
   transition: all 0.15s ease-in-out;
-  color: #1063A8;
+  color: #2291EB;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
+  border: 1px solid #2291EB;
   background: transparent;
   padding: 0.5rem 1.5rem;
   display: inline-block; }
   .settingsprofilelinks div a:hover,
   #settingsprofilelinks div a:hover,
   #memberprofilelinks div a:hover {
-    background: #3298ec; }
+    background: #aed7f8; }
   .settingsprofilelinks div a:disabled,
   #settingsprofilelinks div a:disabled,
   #memberprofilelinks div a:disabled {
@@ -601,7 +604,7 @@ html :lang(ar) {
       -ms-flex-pack: center;
       justify-content: center;
       margin-bottom: 0;
-      color: #1063A8; }
+      color: #2291EB; }
       #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
       #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
       #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
@@ -627,7 +630,7 @@ html :lang(ar) {
       #memberlegacyaddress #privatekeyformatdiv .qrcodeclick:hover,
       #memberlegacyaddress #membercashaddrformatdiv .qrcodeclick:hover,
       #memberlegacyaddress #memberlegacyformatdiv .qrcodeclick:hover {
-        color: #0c4879; }
+        color: #1276c8; }
     #settingsprofileaddress #cashaddrformatdiv img,
     #settingsprofileaddress #legacyformatdiv img,
     #settingsprofileaddress #privatekeyformatdiv img,
@@ -677,7 +680,7 @@ body {
   font-size: 1rem;
   font-weight: normal;
   line-height: 1.65;
-  color: rgba(0, 0, 0, 0.87); }
+  color: white; }
 
 p {
   margin-top: 0;
@@ -763,7 +766,7 @@ table {
   table thead tr th,
   table thead tr td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.34);
-    background: #1063A8;
+    background: #2291EB;
     color: white;
     padding: 0.5rem;
     font-weight: bold; }
@@ -774,7 +777,7 @@ table {
       border-bottom: 1px solid rgba(255, 255, 255, 0.38);
       padding: 0.5rem; }
     table tbody tr:nth-child(even) {
-      background: #edf6fd; }
+      background: #474747; }
 
 input[type="submit"],
 button {
@@ -787,8 +790,8 @@ button {
   float: right;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
-  background: #1063A8;
+  border: 1px solid #2291EB;
+  background: #2291EB;
   padding: 0.5rem 1.5rem;
   border: transparent;
   font-weight: 400;
@@ -796,7 +799,7 @@ button {
   margin-bottom: 0.875rem; }
   input[type="submit"]:hover,
   button:hover {
-    background: #0e5591;
+    background: #1484df;
     color: white;
     border: transparent; }
   input[type="submit"]:disabled,
@@ -818,18 +821,18 @@ input {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
-  background-color: white;
+  color: white;
+  background-color: black;
   background-clip: padding-box;
-  border: 1px solid #ced4da;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   box-sizing: border-box; }
   textarea:focus,
   input:focus {
-    color: #495057;
-    background-color: white;
-    border-color: #147ed7;
+    color: white;
+    background-color: black;
+    border-color: #51a8ef;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
   textarea:disabled,
@@ -848,16 +851,16 @@ select {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
+  color: white;
+  background-color: black;
   background-clip: padding-box;
-  border: 1px solid #ced4da;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   select:focus {
     color: #495057;
-    background-color: #fff;
-    border-color: #147ed7;
+    background-color: black;
+    border-color: #51a8ef;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
@@ -909,7 +912,7 @@ textarea {
       background-color: #fff;
       transform: translateX(1.7rem); }
     .customcheckbox input:checked ~ label:before {
-      background: #1063A8;
+      background: #2291EB;
       box-shadow: none; }
   .customcheckbox label {
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -996,9 +999,9 @@ textarea {
 a {
   text-decoration: none;
   transition: all 0.15s ease-in-out;
-  color: #1063A8; }
+  color: #2291EB; }
   a:hover {
-    color: #0c4879; }
+    color: #1276c8; }
 
 hr {
   border-top: 1px solid rgba(255, 255, 255, 0.38);
@@ -1032,7 +1035,7 @@ img {
 .votelinks {
   background: #474747;
   padding: 0.875rem 0.5rem;
-  min-width: 2.25rem;
+  min-width: 3rem;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
@@ -1107,7 +1110,7 @@ img {
   padding: 0.875rem;
   font-weight: bold;
   font-size: 0.875rem;
-  background: #f8f9fa;
+  background: #474747;
   border-bottom: 1px solid rgba(255, 255, 255, 0.38);
   width: 100%;
   display: -ms-flexbox;
@@ -1146,7 +1149,7 @@ img {
         color: white;
         overflow-wrap: anywhere; }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {
-        color: #1063A8;
+        color: #2291EB;
         margin: 0; }
         .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
@@ -1180,7 +1183,7 @@ img {
   display: flex;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.75rem;
   display: flex; }
   .postdetails .subtextbuttons a,
@@ -1199,7 +1202,7 @@ img {
       border: 0px;
       margin: 3px 6px 2px 0;
       display: none;
-      filter: opacity(0.5);
+      filter: invert(1);
       transition: filter 1s ease-in-out;
       content: ""; }
     .postdetails .subtextbuttons a:hover:before,
@@ -1510,7 +1513,7 @@ header {
         width: 2rem;
         height: 100%;
         z-index: 2;
-        background: linear-gradient(270deg, white 0%, rgba(255, 255, 255, 0) 100%); }
+        background: linear-gradient(270deg, black 0%, rgba(255, 255, 255, 0) 100%); }
       header .pagetop nav .memberlogo {
         margin-right: 0.5rem;
         display: -ms-flexbox;
@@ -1601,7 +1604,7 @@ header {
             header .pagetop nav .navitemsmain a {
               padding: 0 0.5rem; } }
         header .pagetop nav .navitemsmain a:hover {
-          background-color: #ddeefc; }
+          background-color: #474747; }
         header .pagetop nav .navitemsmain #loggedin {
           height: 100%; }
         header .pagetop nav .navitemsmain #loggedout {
@@ -1643,7 +1646,8 @@ header {
         top: 0.8rem;
         left: 0.8rem;
         position: absolute !important;
-        height: auto !important; }
+        height: auto !important;
+        white-space: nowrap; }
         header .pagetop nav .alertcount:empty {
           display: none !important; }
       header .pagetop nav #notificationsbutton,
@@ -1673,7 +1677,7 @@ header {
         display: none; }
 
 footer {
-  background-color: #e0e0e0;
+  background-color: black;
   padding-top: 4rem;
   margin-top: 6rem; }
   footer .content {
@@ -1713,15 +1717,15 @@ footer {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap; }
     footer .footerlinks .separatorwide {
-      border-right: 1px solid rgba(0, 0, 0, 0.36);
+      border-right: 1px solid rgba(255, 255, 255, 0.38);
       margin-right: 1rem;
       padding-right: 1rem; }
     footer .footerlinks a,
     footer .footerlinks .vavilon {
-      color: rgba(0, 0, 0, 0.76); }
+      color: rgba(255, 255, 255, 0.8); }
       footer .footerlinks a:hover,
       footer .footerlinks .vavilon:hover {
-        color: rgba(0, 0, 0, 0.96); }
+        color: white; }
     footer .footerlinks .vavilon {
       margin-right: 0.25rem; }
 
@@ -1737,13 +1741,13 @@ footer {
     text-align: center;
     display: block;
     width: 45%;
-    border: 1px solid #0c4879;
+    border: 1px solid #1276c8;
     padding: 0.5rem 1rem;
-    background-color: #1063A8;
+    background-color: #2291EB;
     border-radius: 0.5rem;
     color: white; }
     .navbuttons a:hover {
-      background: #0c4879; }
+      background: #1276c8; }
     .navbuttons a:only-child {
       width: 100%; }
 
@@ -1797,15 +1801,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       display: block; }
       #lowfundswarning .content a:not([rel~="noreferrer"]):hover {
-        background: #3298ec; }
+        background: #aed7f8; }
       #lowfundswarning .content a:not([rel~="noreferrer"]):disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -1842,7 +1846,7 @@ footer {
 .profilepreview {
   position: absolute;
   display: block;
-  background: white;
+  background: black;
   border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 0.5rem;
   padding: 1rem;
@@ -1899,14 +1903,14 @@ footer {
       float: right;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
-      background: #1063A8;
+      border: 1px solid #2291EB;
+      background: #2291EB;
       padding: 0.5rem 1.5rem;
       border: transparent;
       font-weight: 400;
       margin-bottom: 0; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
-        background: #0e5591;
+        background: #1484df;
         color: white;
         border: transparent; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
@@ -1925,17 +1929,17 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       color: #CC2936;
       border: 1px solid #CC2936;
       margin-left: auto !important; }
       .scoreexpanded .closebutton a:hover {
-        background: #3298ec; }
+        background: #aed7f8; }
       .scoreexpanded .closebutton a:disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -2105,7 +2109,7 @@ footer {
         text-align: center;
         line-height: 1; }
         #newpost #memorandumarea #memorandumpreviewareabutton a:hover {
-          background-color: #1062a6;
+          background-color: #2090eb;
           color: white; }
     #newpost #memorandumarea .switchToRegularMode {
       display: none; }
@@ -2155,15 +2159,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       display: inline-block; }
       #settingsanchor .content .logout a:hover {
-        background: #3298ec; }
+        background: #aed7f8; }
       #settingsanchor .content .logout a:disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -2175,15 +2179,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem; }
       #settingsanchor .content #settingsnametextbutton:hover,
       #settingsanchor .content #settingsprofiletextbutton:hover {
-        background: #3298ec; }
+        background: #aed7f8; }
       #settingsanchor .content #settingsnametextbutton:disabled,
       #settingsanchor .content #settingsprofiletextbutton:disabled {
         opacity: 0.65;
@@ -2444,8 +2448,8 @@ tbody tr td a[href^="javascript:;"] {
   float: right;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
-  background: #1063A8;
+  border: 1px solid #2291EB;
+  background: #2291EB;
   padding: 0.5rem 1.5rem;
   border: transparent;
   font-weight: 400;
@@ -2453,7 +2457,7 @@ tbody tr td a[href^="javascript:;"] {
   margin-bottom: 0; }
   tbody tr td a[href^="#modmorelink"]:hover,
   tbody tr td a[href^="javascript:;"]:hover {
-    background: #0e5591;
+    background: #1484df;
     color: white;
     border: transparent; }
   tbody tr td a[href^="#modmorelink"]:disabled,
@@ -2546,16 +2550,16 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem; }
           #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:hover {
-            background: #3298ec; }
+            background: #aed7f8; }
           #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2651,17 +2655,17 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
           font-weight: bold; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:hover {
-            background: #3298ec; }
+            background: #aed7f8; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2681,17 +2685,17 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
           font-weight: bold; }
           #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:hover {
-            background: #3298ec; }
+            background: #aed7f8; }
           #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2743,14 +2747,14 @@ tbody tr td .filterprovider {
         float: right;
         text-transform: uppercase;
         border-radius: 0.25rem;
-        border: 1px solid #1063A8;
-        background: #1063A8;
+        border: 1px solid #2291EB;
+        background: #2291EB;
         padding: 0.5rem 1.5rem;
         border: transparent;
         font-weight: 400;
         margin-left: auto; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:hover {
-          background: #0e5591;
+          background: #1484df;
           color: white;
           border: transparent; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
@@ -2883,7 +2887,7 @@ tbody tr td .filterprovider {
           border-radius: 0.5rem;
           background: rgba(0, 0, 0, 0.05); }
           #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
-            background: #bedef9; }
+            background: white; }
         #trustgraph .content #trustgraphdetails table td {
           display: table-row; }
         #trustgraph .content #trustgraphdetails table td:before,
@@ -2993,11 +2997,31 @@ tbody tr td .filterprovider {
     #notifications {
       max-width: 540px; } }
   #notifications .notificationtitle {
-    background: #f0f1f3; }
-  #notifications .notificationtitle {
-    background-color: #ddeefc; }
+    background: #474747; }
   #notifications ul.notificationslist {
     padding: 0; }
+    #notifications ul.notificationslist .allownotifications {
+      display: block;
+      text-align: center;
+      margin-bottom: 1.5rem; }
+      #notifications ul.notificationslist .allownotifications a.notificationbutton {
+        line-height: 1.2;
+        font-weight: 400;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.15s ease-in-out;
+        color: #2291EB;
+        text-transform: uppercase;
+        border-radius: 0.25rem;
+        border: 1px solid #2291EB;
+        background: transparent;
+        padding: 0.5rem 1.5rem; }
+        #notifications ul.notificationslist .allownotifications a.notificationbutton:hover {
+          background: #aed7f8; }
+        #notifications ul.notificationslist .allownotifications a.notificationbutton:disabled {
+          opacity: 0.65;
+          cursor: not-allowed;
+          pointer-events: none; }
     #notifications ul.notificationslist li {
       list-style-type: none;
       background: black;
