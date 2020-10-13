@@ -250,8 +250,15 @@ function logout() {
     mnemonic = "";
     document.getElementById('loggedin').style.display = "none";
     document.getElementById('loggedout').style.display = "inline";
-    show('loginbox');
+    
 
+    try{
+        serviceWorkerLogout();
+    }catch(err){
+        console.log(err);
+    }
+
+    show('loginbox');
     //This clears any personal info that might be left in the html document.
     location.reload();
 

@@ -1,4 +1,4 @@
-var postTemplate = `
+var templatePost = `
 <div class="post">
     <div class="post-sidebar">
         {profilepic}
@@ -6,120 +6,70 @@ var postTemplate = `
     <div class="post-content">
         <div class="post-author">
             <div class="author-details">
-                <div class="author-name">
+                <span class="author-name">
                     {handle}
-                </div>
-                <div class="author-handle">
-                    {pagingid}
-                </div>
-            </div>
-            <div class="btn-actions">
-                <ul class="">
-                    <li><a class="btn-icon" href="#">
-                        <div class="icon">
-                            <svg class="icon-container">
-                                <use href="#chevron-down" />
-                            </svg>
-                        </div>
-                    </a>
-                        <ul class="dropdown">
-                            <li><a href="#">
-                                <!--                         <svg class="icon-container">
-                                    <use href="#link" />
-                                </svg> -->
-                        Permalink</a></li>
-                            <li><a href="#">
-                                <!--                       <svg class="icon-container">
-                                    <use href="#link" />
-                                </svg>  -->
-                        Article</a></li>
-                            <li><a href="#">
-                                <!--                       <svg class="icon-container">
-                                    <use href="#link" />
-                                </svg> -->
-                        Tweet</a></li>
-                            <li class="divider"></li>
-                            <li class="actions-title">Blockchain</li>
-                            <li><a href="#">
-                                <!--                       <svg class="icon-container">
-                                    <use href="#share" />
-                                </svg> -->
-                        Memo</a></li>
-                            <li><a href="#">
-                                <!--                       <svg class="icon-container">
-                                    <use href="#share" />
-                                </svg> -->
-                        Bitcoin.com</a></li>
-                            <li><a href="#">
-                                <!--                       <svg class="icon-container">
-                                    <use href="#share" />
-                                </svg> -->
-                        BTC.com</a></li>
-                            <li><a href="#">
-                                <!--                       <svg class="icon-container">
-                                    <use href="#share" />
-                                </svg> -->
-                        Blockchair</a></li>
-                            <li class="divider"></li>
-                            <li class="actions-title">Moderate</li>
-                            <li><a class="danger" href="#">
-                                <!--                       <svg class="icon-container">
-                                    <use href="#flag" />
-                                </svg> -->
-                        Flag post</a></li>
-                            <li><a class="danger" href="#">
-                                <!--                       <svg class="icon-container">
-                                    <use href="#flag" />
-                                </svg> -->
-                        Flag user</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                </span>
+                <span class="author-handle">
+                    @{pagingid}
+                </span>
             </div>
         </div>
         <div class="post-body">
-            {message}
-          </div>
+        {message}
+        </div>
+            <div class="btn-actions">
+                        <div class="dropdown">
+                            <span><a href="#">Permalink</a></span>
+                            <span><a href="#">Article</a></span>
+                            <span><a href="#">Tweet</a></span>
+                            <span class="divider"></span>
+                            <span class="actions-title">Blockchain</span>
+                            <span><a href="#">Memo</a></span>
+                            <span><a href="#">Bitcoin.com</a></span>
+                            <span><a href="#">BTC.com</a></span>
+                            <span><a href="#">Blockchair</a></span>
+                            <span class="divider"></span>
+                            <span class="actions-title">Moderate</span>
+                            <span><a class="danger" href="#">Flag post</a></span>
+                            <span><a class="danger" href="#">Flag user</a></span>
+                        </div>
+            </div>
         <div class="post-footer">
             <a class="btn-icon" data-action="reply">
-                <div class="icon">
-                    <svg class="icon-container">
-                        <use href="#reply" />
-                    </svg>
-                </div>
-                <div class="text">
+                <span class="icon">
+                💬
+                </span>
+                <span class="text">
                     {replies}
-              </div>
+              </span>
+              <span class="text footerlabel" data-vavilon="VVreplies">replies</span>
             </a>
             <a class="btn-icon" data-action="like">
-                <div class="icon">
-                    <svg class="icon-container">
-                        <use href="#like" />
-                    </svg>
-                </div>
-                <div class="text">
+                <span class="icon">
+                💙
+                </span>
+                <span class="text">
                     {likes}
-              </div>
+              </span>
+              <span class="text footerlabel" data-vavilon="VVlikes">likes</span>
             </a>
             <a class="btn-icon" data-action="remember">
-                <div class="icon">
-                    <svg class="icon-container">
-                        <use href="#remember" />
-                    </svg>
-                </div>
-                <div class="text">
+                <span class="icon">
+                ♻
+                </span>
+                <span class="text">
                     {remembers}
-              </div>
+              </span>
+              <span class="text footerlabel" data-vavilon="VVremembers">remembers</span>
             </a>
             <a class="btn-icon" data-action="tip">
-                <div class="icon">
-                    <svg class="icon-container">
-                        <use href="#tip" />
-                    </svg>
-                </div>
-                <div class="text">
+                <span class="icon">
+                💰
+                </span>
+                <span class="text">
                     {tips}
-              </div>
+              </span>
+              <span class="text footerlabel" data-vavilon="VVtips">tips</span>
             </a>
         </div>
     </div>

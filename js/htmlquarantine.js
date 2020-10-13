@@ -301,8 +301,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                 </div>
             </div>`;
 
-    if (theStyle == 'nifty') {
-        return templateReplace(postTemplate, obj);
+    if (theStyle == 'nifty' || theStyle == 'none' ) {
+        return templateReplace(templatePost, obj);
     }
     return retVal;
 }
