@@ -263,6 +263,7 @@ function getAndPopulateSettings() {
 function updateSettingsCheckbox(settingsName) {
     settings[settingsName] = "" + document.getElementById(settingsName).checked;
     localStorageSet(localStorageSafe, settingsName, settings[settingsName]);
+    updateStatus("Updated. "+settings[settingsName]);
 }
 
 function updateSettingsDropdown(settingsName) {
@@ -272,6 +273,7 @@ function updateSettingsDropdown(settingsName) {
     if (settingsName == "currencydisplay") {
         tq.updateBalance(pubkey);
     }
+    updateStatus("Updated. "+dropdowns[settingsName]);
 }
 
 function updateSettingsNumber(settingsName) {
@@ -292,6 +294,7 @@ function updateSettingsNumber(settingsName) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
+    updateStatus("Updated. "+numbers[settingsName]);
 }
 
 function showQRCode(spanid, size) {

@@ -2,7 +2,7 @@
 
 function displayContentBasedOnURLParameters() {
 
-    if (followOrBackFlag) {
+    if (forwardOrBackFlag) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
     } else {
         window.scrollTo(0, 0);
@@ -444,7 +444,7 @@ var detectBackOrForward = function () {
 
     var hash = window.location.hash, length = window.history.length;
     if (!window.innerDocClick) {
-        followOrBackFlag = true;
+        forwardOrBackFlag = true;
         if (hashHistory[hashHistory.length - 2] == hash) {
             hashHistory = hashHistory.slice(0, -1);
         } else {
@@ -455,7 +455,7 @@ var detectBackOrForward = function () {
     } else {
         hashHistory.push(hash);
         historyLength = length;
-        followOrBackFlag = false;
+        forwardOrBackFlag = false;
         if (!suspendPageReload) {
             displayContentBasedOnURLParameters();
         }
@@ -469,7 +469,7 @@ function nlc(){
     navlinkclicked=true;
 }
 
-var followOrBackFlag = false;
+var forwardOrBackFlag = false;
 
 //Onhashchange is unreliable - try testing for location change 10 times a second
 var lastdocumentlocation = location.hash;
@@ -483,6 +483,10 @@ function testForHashChange() {
     setTimeout(testForHashChange, 100);
 }
 
+window.onhashchange = function(){
+    //usually, but not always a result of back/forward click
+    window.innerDocClick = false;
+}
 
 var scrollhistory = [];
 //record the scroll position

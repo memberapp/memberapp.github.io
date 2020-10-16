@@ -73,11 +73,11 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         if (start == 0) {
             lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
             localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
+            document.getElementById("alertcount").innerHTML = "";
+            document.title = siteTitle;    
         }
 
-        document.getElementById("alertcount").innerHTML = "";
-        document.title = siteTitle;
-
+        
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data);
         listenForTwitFrameResizes();

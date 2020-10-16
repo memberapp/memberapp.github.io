@@ -274,7 +274,7 @@ function addDynamicHTMLElements(data) {
         if (data.length > 0) {
             updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
         }
-        if (followOrBackFlag) {
+        if (forwardOrBackFlag) {
             window.scrollTo(0, scrollhistory[window.location.hash]);
         } else {
             window.scrollTo(0, 0);
