@@ -11,7 +11,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '4.9.0';
+const version = '4.12.0';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -60,7 +60,7 @@ self.addEventListener("activate", async function (event) {
     })
   );
 
-  self.onpushsubscriptionchange();
+  //self.onpushsubscriptionchange();
   
 
 });

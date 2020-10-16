@@ -486,7 +486,7 @@ function testForHashChange() {
 
 var scrollhistory = [];
 //record the scroll position
-document.addEventListener("click", function () { updateStatus("scrolly:"+window.scrollY); scrollhistory[window.location.hash] = window.scrollY; }, true);
+document.addEventListener("click", function () { scrollhistory[window.location.hash] = window.scrollY; }, true);
 
 //User's mouse is inside the page.
 document.getElementsByTagName('body')[0].onmouseover = function() { window.innerDocClick = true;}

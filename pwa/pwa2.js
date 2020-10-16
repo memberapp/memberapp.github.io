@@ -36,6 +36,7 @@ const check = () => {
   const requestNotificationPermission = async () => {
     //console.log(navigator.serviceWorker);
     try{
+      updateStatus("Requesting permission");
       const permission = await window.Notification.requestPermission();
       updateStatus("controller:"+navigator.serviceWorker.controller);
       navigator.serviceWorker.controller.postMessage(pubkey);
