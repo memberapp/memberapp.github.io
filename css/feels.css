@@ -763,21 +763,23 @@ table {
   @media (max-width: 1023px) {
     table {
       overflow-x: auto; } }
-  table thead tr th,
-  table thead tr td {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.34);
-    background: #1063A8;
-    color: white;
-    padding: 0.5rem;
-    font-weight: bold; }
+  table thead tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+    table thead tr th,
+    table thead tr td {
+      background: #1063A8;
+      color: white;
+      padding: 0.5rem;
+      font-weight: bold; }
   table tbody {
     width: 100%;
     display: contents; }
-    table tbody tr td {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      padding: 0.5rem; }
-    table tbody tr:nth-child(even) {
-      background: #edf6fd; }
+    table tbody tr {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+      table tbody tr td {
+        padding: 0.5rem; }
+      table tbody tr:nth-child(even) {
+        background: #edf6fd; }
 
 input[type="submit"],
 button {
@@ -2908,7 +2910,7 @@ tbody tr td .filterprovider {
           border-radius: 0.5rem;
           background: rgba(0, 0, 0, 0.05); }
           #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
-            background: #bedef9; }
+            background: rgba(0, 0, 0, 0.12); }
         #trustgraph .content #trustgraphdetails table td {
           display: table-row; }
         #trustgraph .content #trustgraphdetails table td:before,
