@@ -35,16 +35,24 @@ const check = () => {
   
   const requestNotificationPermission = async () => {
     //console.log(navigator.serviceWorker);
-    navigator.serviceWorker.controller.postMessage(pubkey);
-    const permission = await window.Notification.requestPermission();
-    // value of permission can be 'granted', 'default', 'denied'
-    // granted: user has accepted the request
-    // default: user has dismissed the notification permission popup by clicking on x
-    // denied: user has denied the request.
-    if (permission !== 'granted') {
-      throw new Error('Permission not granted for Notification')
-    }else{
+    try{
+      const permission = await window.Notification.requestPermission();
+      updateStatus("controller:"+navigator.serviceWorker.controller);
+      navigator.serviceWorker.controller.postMessage(pubkey);
+      // value of permission can be 'granted', 'default', 'denied'
+      // granted: user has accepted the request
+      // default: user has dismissed the notification permission popup by clicking on x
+      // denied: user has denied the request.
+      if (permission !== 'granted') {
+        updateStatus('Permission not granted for Notification');
+        throw new Error('Permission not granted for Notification')
+      }else{
+        updateStatus('Subscribe');
         navigator.serviceWorker.controller.postMessage('subscribe');
+      }
+    }catch(err){
+      updateStatus(err);
+      //alert(err);
     }
   }
   
@@ -56,5 +64,7 @@ const check = () => {
    main(); 
 
 function serviceWorkerLogout(){
+  try{
     navigator.serviceWorker.controller.postMessage('');
+  }catch(err){}
 }

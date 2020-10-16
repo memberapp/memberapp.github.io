@@ -57,7 +57,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
 
         var contents=``;
         if(window.Notification.permission!='granted'){
-            contents += `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission();">Allow Notifications</a></span>`;
+            contents += `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="this.style.display='none'; requestNotificationPermission();">Allow Notifications</a></span>`;
         }
         
         for (var i = 0; i < data.length; i++) {
