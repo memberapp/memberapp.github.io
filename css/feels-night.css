@@ -448,7 +448,7 @@ html :lang(ar) {
     align-items: center;
     -ms-flex: 1;
     flex: 1;
-    border: 1px solid rgba(0, 0, 0, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.5);
     border-radius: 0.25rem; }
     .profilestats div label,
     .memberstats div label {
