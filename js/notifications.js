@@ -56,9 +56,9 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents=``;
-        //if(window.Notification.permission!='granted'){
+        if(window.Notification.permission!='granted'){
             contents += `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission();">Allow Notifications</a></span>`;
-        //}
+        }
         
         for (var i = 0; i < data.length; i++) {
             contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i);
