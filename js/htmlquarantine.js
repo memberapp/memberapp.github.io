@@ -15,9 +15,8 @@
 "use strict";
 
 
-
 //Get html for a user, given their address and name
-function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing) {
+function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, theObj) {
     if (name == "" || name == null) {
         name = address.substring(0, 10);
     }
@@ -31,9 +30,9 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='15' height='15' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/></span>`;
     }
 
-    var linkStart = `<a href="#member?qaddress=` + san(address) + `" class="hnuser">`;
+    var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="hnuser">`;
     var linkEnd = `</a> `;
-    var ret = `<span class="memberfilter">`+ linkStart + memberpic + linkEnd + `<span id="memberinfo` + ratingID + `">` + linkStart
+    var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic
         + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`;
     var ratingHTML = `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     if (ratingStarSize > 0) {
@@ -46,11 +45,19 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         + ratingHTML
         + linkStart + "<span class='member-pagingid'>@" + ds(pagingid) + "</span>" + linkEnd
         + `</div>`
-        + `<div class='profile-text'><span class='profilepreviewtext'>`+ds(profile)+`</span></div> `
-        + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `">`+Number(followers)+` followers</a></span> `
-        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `">`+Number(following)+` following</a></span> `
+        + `<div class='profile-text'><span class='profilepreviewtext'>` + ds(profile) + `</span></div> `
+        + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `" onclick="nlc();">` + Number(followers) + ` followers</a></span> `
+        + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `" onclick="nlc();">` + Number(following) + ` following</a></span> `
         + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span></div> `
         + `</span></span>`;
+
+    if (theObj) {
+        //These must all be HTML safe.
+        theObj.address = san(address);
+        theObj.profilepic = memberpic;
+        theObj.handle = ds(name);
+        theObj.pagingid = ds(pagingid);
+    }
     return ret;
 }
 
@@ -59,7 +66,7 @@ function userFromDataBasic(data, mainRatingID, size) {
 }
 
 function postlinkHTML(txid, linktext) {
-    return `<a href="#thread?post=` + san(txid) + `">` + ds(linktext) + `</a>`;
+    return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + ds(linktext) + `</a>`;
 }
 
 function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, functionName, numberOfResults) {
@@ -183,6 +190,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
             <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/` + santxid + `">bitcoin.com</a>
             <a rel="noopener noreferrer" target="blockchair" href="https://blockchair.com/bitcoin-cash/transaction/` + santxid + `">blockchair</a>
             <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/` + santxid + `">btc.com</a>
+            <a rel="noopener noreferrer" target="bitcoinunlimited" href="https://explorer.bitcoinunlimited.info/tx/` + santxid + `">bitcoin unlimited</a>
             <a id="hidepostlink`+ page + santxid + `" onclick="sendHidePost('` + santxid + `');" href="javascript:;">flag(post)</a>`
         + hideuserHTML +
         `</span>
@@ -210,7 +218,7 @@ function getTopicHTML(topicHOSTILE, append) {
         displayNameHOSTILE = 'All Topics';
     }
     return ` <span class="topic">` +
-        `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new">` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
+        `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new" onclick="nlc();">` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
         + `</span>`;
 }
 
@@ -223,12 +231,13 @@ function getPostListItemHTML(postHTML) {
 
 function replacePageName(match, p1, p2, offset, string) {
     // p1 is nondigits, p2 digits, and p3 non-alphanumerics
-    return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `">@` + ds(p2) + `</a>`;
+    return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
 }
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing) {
-    if (name == null) { name = address.substring(0, 10); }
 
+
+    if (name == null) { name = address.substring(0, 10); }
     repliesroot = Number(repliesroot);
     replies = Number(replies);
     //Replies respect newlines, but root posts do not
@@ -248,32 +257,43 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         }
     }
     var messageLinksHTML = anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
+    
+    //Scan for XSS vulnerabilities
     messageLinksHTML = DOMPurify.sanitize(messageLinksHTML);
 
     //Add youtube etc
     messageLinksHTML = addImageAndYoutubeMarkdown(messageLinksHTML, differentiator, false);
 
     if (messageLinksHTML.indexOf("<a ") == -1 && messageLinksHTML.indexOf("<iframe ") == -1) {//if no links
-        messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `">` + messageLinksHTML + `</a>`;
+        messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
     }
 
-    //Scan for XSS vulnerabilities
+    var obj = {
+        //These must all be HTML safe 
+        message: messageLinksHTML, 
+        replies: Number(replies),
+        likes: (Number(likes) - Number(dislikes)),
+        remembers: Number(repostcount),
+        tips: Number(tips),
+        txid: san(txid),
+        elapsed: getAgeHTML(firstseen, false),
+        elapsedcompressed: getAgeHTML(firstseen, true)
+    };
 
-
-    return `<div class="post">
+    var retVal = `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
                     <div class="title"><p>`+ messageLinksHTML + `</p></div>
                     <div class="subtext">
                         <span class="submitter"> 
-                        submitted `
+                        <span class="plaintext">submitted</span> `
         + ` ` + getAgeHTML(firstseen)
-        + ` ` + getSafeTranslation('by') + ` `
-        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing)
+        + ` <span class="plaintext">` + getSafeTranslation('by') + `</span> `
+        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, obj)
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
         + `<span class="subtextbuttons">`
-        + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `">` + (Math.max(0, Number(replies))) + `&nbsp;`
+        + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + (Math.max(0, Number(replies))) + `&nbsp;`
         + getSafeTranslation('comments').toLowerCase()
         + `</a> `
         + getScoresHTML(txid, likes, dislikes, tips, differentiator)
@@ -284,6 +304,11 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + getReplyDiv(txid, page, differentiator) + `
                 </div>
             </div>`;
+
+    if (theStyle == 'nifty' || theStyle == 'none' ) {
+        return templateReplace(templatePost, obj);
+    }
+    return retVal;
 }
 
 
@@ -330,12 +355,11 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                     <div class="commentdetails">
                         <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
         + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing)
-        + getScoresHTML(txid, likes, dislikes, tips, differentiator)
-        + ` ` + getAgeHTML(firstseen) +
-        `</div>
+        + `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
-                            </div><div class="subtextbuttons">`+ getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
+                            </div><div class="subtextbuttons">`+ getScoresHTML(txid, likes, dislikes, tips, differentiator)
+        + ` ` + getAgeHTML(firstseen) + ` ` + getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid) + `</div>
                             `+ getReplyDiv(txid, page, differentiator) + `
                         </div>
                         <div id="scoresexpanded`+ san(txid) + differentiator + `" class="scoreexpanded"></div>
@@ -440,11 +464,11 @@ function getMembersWithRatingHTML(i, page, data, action, reverse) {
 
 
 function getMemberLink(address, name) {
-    return `<a href="#member?qaddress=` + san(address) + `">` + ds(name) + `</a>`;
+    return `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();">` + ds(name) + `</a>`;
 }
 
 function getAddressLink(address, name) {
-    return `<a href="#member?qaddress=` + san(address) + `">` + san(address) + `</a>`;
+    return `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();">` + san(address) + `</a>`;
 }
 
 //Temporary function to bootstrap selection of members to rate
@@ -657,7 +681,7 @@ function getMessageHTML(data, count) {
             data.recipientname = data.recipient;
             //should be possible to remove this after a month or so
         }
-        contents += "<li><div class='replymessagemeta'>You sent a message (" + data.message.length + " bytes) to " + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
+        contents += "<li><div class='replymessagemeta'><span class='plaintext'>You sent a message (" + data.message.length + " bytes) to </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
         let ecpair = new BITBOX.ECPair().fromWIF(privkey);
         var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
@@ -699,7 +723,10 @@ function createiframe(url, elementname) {
 
 function showErrorMessage(status, page, theURL) {
     console.log(`Error:${status}`);
-    document.getElementById(page).innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
+    var theElement = document.getElementById(page);
+    if (theElement) {
+        theElement.innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
+    }
     updateStatus(`Error:${status}` + ds(theURL));
     updateStatus(`Error:${status}`);
 }

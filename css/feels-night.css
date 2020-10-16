@@ -401,7 +401,7 @@ img {
       max-width: 200px; } }
 
 body {
-  background: #f7f7f7;
+  background: #1F1F1F;
   position: relative;
   scroll-behavior: smooth; }
   body ::selection {
@@ -463,17 +463,17 @@ html :lang(ar) {
   cursor: pointer;
   text-decoration: none;
   transition: all 0.15s ease-in-out;
-  color: #1063A8;
+  color: #2291EB;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
+  border: 1px solid #2291EB;
   background: transparent;
   padding: 0.5rem 1.5rem;
   display: inline-block; }
   .settingsprofilelinks div a:hover,
   #settingsprofilelinks div a:hover,
   #memberprofilelinks div a:hover {
-    background: #61aff0; }
+    background: #aed7f8; }
   .settingsprofilelinks div a:disabled,
   #settingsprofilelinks div a:disabled,
   #memberprofilelinks div a:disabled {
@@ -541,7 +541,7 @@ html :lang(ar) {
     display: inline-block;
     /* margin: 0 auto; */
     padding: 0.75rem;
-    border: 2px solid rgba(0, 0, 0, 0.87);
+    border: 2px solid white;
     border-radius: 0.25rem;
     background: white; }
     #settingsprofileaddress #cashaddrformatdiv img,
@@ -604,7 +604,7 @@ html :lang(ar) {
       -ms-flex-pack: center;
       justify-content: center;
       margin-bottom: 0;
-      color: #1063A8; }
+      color: #2291EB; }
       #settingsprofileaddress #cashaddrformatdiv .qrcodeclick:hover,
       #settingsprofileaddress #legacyformatdiv .qrcodeclick:hover,
       #settingsprofileaddress #privatekeyformatdiv .qrcodeclick:hover,
@@ -630,7 +630,7 @@ html :lang(ar) {
       #memberlegacyaddress #privatekeyformatdiv .qrcodeclick:hover,
       #memberlegacyaddress #membercashaddrformatdiv .qrcodeclick:hover,
       #memberlegacyaddress #memberlegacyformatdiv .qrcodeclick:hover {
-        color: #0c4879; }
+        color: #1276c8; }
     #settingsprofileaddress #cashaddrformatdiv img,
     #settingsprofileaddress #legacyformatdiv img,
     #settingsprofileaddress #privatekeyformatdiv img,
@@ -680,7 +680,7 @@ body {
   font-size: 1rem;
   font-weight: normal;
   line-height: 1.65;
-  color: rgba(0, 0, 0, 0.87); }
+  color: white; }
 
 p {
   margin-top: 0;
@@ -766,7 +766,7 @@ table {
   table thead tr th,
   table thead tr td {
     border-bottom: 1px solid rgba(0, 0, 0, 0.34);
-    background: #1063A8;
+    background: #2291EB;
     color: white;
     padding: 0.5rem;
     font-weight: bold; }
@@ -774,10 +774,10 @@ table {
     width: 100%;
     display: contents; }
     table tbody tr td {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.38);
       padding: 0.5rem; }
     table tbody tr:nth-child(even) {
-      background: #edf6fd; }
+      background: #474747; }
 
 input[type="submit"],
 button {
@@ -790,8 +790,8 @@ button {
   float: right;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
-  background: #1063A8;
+  border: 1px solid #2291EB;
+  background: #2291EB;
   padding: 0.5rem 1.5rem;
   border: transparent;
   font-weight: 400;
@@ -799,7 +799,7 @@ button {
   margin-bottom: 0.875rem; }
   input[type="submit"]:hover,
   button:hover {
-    background: #0e5591;
+    background: #1484df;
     color: white;
     border: transparent; }
   input[type="submit"]:disabled,
@@ -821,25 +821,25 @@ input {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: white;
+  color: white;
+  background-color: black;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   box-sizing: border-box; }
   textarea:focus,
   input:focus {
-    color: rgba(0, 0, 0, 0.87);
-    background-color: white;
-    border-color: #147ed7;
+    color: white;
+    background-color: black;
+    border-color: #51a8ef;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
   textarea:disabled,
   input:disabled {
-    background-color: rgba(0, 0, 0, 0.38);
-    border: 1px solid rgba(0, 0, 0, 0.54);
-    color: rgba(0, 0, 0, 0.54);
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.8);
     opacity: 1;
     cursor: not-allowed;
     pointer-events: none; }
@@ -851,16 +851,16 @@ select {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: rgba(0, 0, 0, 0.87);
-  background-color: white;
+  color: white;
+  background-color: black;
   background-clip: padding-box;
-  border: 1px solid rgba(0, 0, 0, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
   select:focus {
     color: #495057;
-    background-color: white;
-    border-color: #147ed7;
+    background-color: black;
+    border-color: #51a8ef;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
@@ -912,7 +912,7 @@ textarea {
       background-color: #fff;
       transform: translateX(1.7rem); }
     .customcheckbox input:checked ~ label:before {
-      background: #1063A8;
+      background: #2291EB;
       box-shadow: none; }
   .customcheckbox label {
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -999,12 +999,12 @@ textarea {
 a {
   text-decoration: none;
   transition: all 0.15s ease-in-out;
-  color: #1063A8; }
+  color: #2291EB; }
   a:hover {
-    color: #0c4879; }
+    color: #1276c8; }
 
 hr {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-top: 1px solid rgba(255, 255, 255, 0.38);
   border-bottom: 0; }
 
 img {
@@ -1030,10 +1030,10 @@ img {
 
 .assistivetext {
   font-size: 0.875rem;
-  color: rgba(0, 0, 0, 0.54); }
+  color: rgba(255, 255, 255, 0.8); }
 
 .votelinks {
-  background: #f8f9fa;
+  background: #474747;
   padding: 0.875rem 0.5rem;
   min-width: 3rem;
   display: -ms-flexbox;
@@ -1110,8 +1110,8 @@ img {
   padding: 0.875rem;
   font-weight: bold;
   font-size: 0.875rem;
-  background: #f8f9fa;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  background: #474747;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.38);
   width: 100%;
   display: -ms-flexbox;
   display: flex;
@@ -1146,28 +1146,28 @@ img {
       word-break: break-word;
       cursor: default; }
       .post .postdetails .title p a {
-        color: rgba(0, 0, 0, 0.87);
+        color: white;
         overflow-wrap: anywhere; }
       .post .postdetails .title p a[href]:not([href^="#thread?"]) {
-        color: #1063A8;
+        color: #2291EB;
         margin: 0; }
         .post .postdetails .title p a[href]:not([href^="#thread?"]):hover {
           color: #354f78; }
     .post .postdetails .subtext {
       font-size: 0.75rem;
-      color: rgba(0, 0, 0, 0.54);
+      color: rgba(255, 255, 255, 0.8);
       display: -ms-flexbox;
       display: flex;
       -ms-flex-direction: column;
       flex-direction: column;
       font-weight: bold; }
       .post .postdetails .subtext a {
-        color: rgba(0, 0, 0, 0.54); }
+        color: rgba(255, 255, 255, 0.8); }
         .post .postdetails .subtext a:hover {
-          color: rgba(0, 0, 0, 0.87); }
+          color: white; }
       .post .postdetails .subtext .submitter {
         margin-bottom: 0.25rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38);
         padding-bottom: 0.25rem;
         display: -ms-flexbox;
         display: flex;
@@ -1183,7 +1183,7 @@ img {
   display: flex;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.75rem;
   display: flex; }
   .postdetails .subtextbuttons a,
@@ -1194,7 +1194,7 @@ img {
     margin-right: 1rem;
     transition: all 0.15s ease-in-out;
     margin-right: 0.25rem;
-    color: rgba(0, 0, 0, 0.54); }
+    color: rgba(255, 255, 255, 0.8); }
     .postdetails .subtextbuttons a::before,
     .comment-tree ul li .reply div .subtextbuttons a::before {
       width: 0.875rem;
@@ -1202,7 +1202,7 @@ img {
       border: 0px;
       margin: 3px 6px 2px 0;
       display: none;
-      filter: opacity(0.5);
+      filter: invert(1);
       transition: filter 1s ease-in-out;
       content: ""; }
     .postdetails .subtextbuttons a:hover:before,
@@ -1210,7 +1210,7 @@ img {
       transition: filter 1s ease-in-out; }
     .postdetails .subtextbuttons a:hover,
     .comment-tree ul li .reply div .subtextbuttons a:hover {
-      color: rgba(0, 0, 0, 0.87); }
+      color: white; }
   .postdetails .subtextbuttons span.score,
   .comment-tree ul li .reply div .subtextbuttons span.score {
     cursor: pointer;
@@ -1218,7 +1218,7 @@ img {
     .postdetails .subtextbuttons span.score:hover,
     .comment-tree ul li .reply div .subtextbuttons span.score:hover {
       transition: filter 1s ease-in-out;
-      color: rgba(0, 0, 0, 0.87); }
+      color: white; }
     .postdetails .subtextbuttons span.score .likescounttext, .postdetails .subtextbuttons span.score .tipscounttext,
     .comment-tree ul li .reply div .subtextbuttons span.score .likescounttext,
     .comment-tree ul li .reply div .subtextbuttons span.score .tipscounttext {
@@ -1304,19 +1304,19 @@ img {
 
 .subtext {
   font-size: 0.75rem;
-  color: rgba(0, 0, 0, 0.54);
+  color: rgba(255, 255, 255, 0.8);
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
   font-weight: bold; }
   .subtext a {
-    color: rgba(0, 0, 0, 0.54); }
+    color: rgba(255, 255, 255, 0.8); }
     .subtext a:hover {
-      color: rgba(0, 0, 0, 0.87); }
+      color: white; }
   .subtext .submitter {
     margin-bottom: 0.25rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.38);
     padding-bottom: 0.25rem;
     display: -ms-flexbox;
     display: flex;
@@ -1346,8 +1346,8 @@ img {
   width: 100%; }
 
 .comment-tree {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: black;
+  border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;
   list-style-type: none;
@@ -1361,7 +1361,7 @@ img {
       border-radius: 0;
       border-left: 0;
       border-right: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+      border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
   .comment-tree ul {
     padding: 0;
     margin: 0; }
@@ -1465,9 +1465,9 @@ div#status {
       filter: opacity(0.5); }
 
 header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.38);
   width: 100%;
-  background: white;
+  background: black;
   box-shadow: 0px 1px 5px -3px rgba(0, 0, 0, 0.5);
   position: sticky;
   top: 0;
@@ -1513,7 +1513,7 @@ header {
         width: 2rem;
         height: 100%;
         z-index: 2;
-        background: linear-gradient(270deg, white 0%, rgba(255, 255, 255, 0) 100%); }
+        background: linear-gradient(270deg, black 0%, rgba(255, 255, 255, 0) 100%); }
       header .pagetop nav .memberlogo {
         margin-right: 0.5rem;
         display: -ms-flexbox;
@@ -1604,7 +1604,7 @@ header {
             header .pagetop nav .navitemsmain a {
               padding: 0 0.5rem; } }
         header .pagetop nav .navitemsmain a:hover {
-          background-color: #ddeefc; }
+          background-color: #474747; }
         header .pagetop nav .navitemsmain #loggedin {
           height: 100%; }
         header .pagetop nav .navitemsmain #loggedout {
@@ -1677,7 +1677,7 @@ header {
         display: none; }
 
 footer {
-  background-color: #e0e0e0;
+  background-color: black;
   padding-top: 4rem;
   margin-top: 6rem; }
   footer .content {
@@ -1717,15 +1717,15 @@ footer {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap; }
     footer .footerlinks .separatorwide {
-      border-right: 1px solid rgba(0, 0, 0, 0.12);
+      border-right: 1px solid rgba(255, 255, 255, 0.38);
       margin-right: 1rem;
       padding-right: 1rem; }
     footer .footerlinks a,
     footer .footerlinks .vavilon {
-      color: rgba(0, 0, 0, 0.54); }
+      color: rgba(255, 255, 255, 0.8); }
       footer .footerlinks a:hover,
       footer .footerlinks .vavilon:hover {
-        color: rgba(0, 0, 0, 0.87); }
+        color: white; }
     footer .footerlinks .vavilon {
       margin-right: 0.25rem; }
 
@@ -1741,13 +1741,13 @@ footer {
     text-align: center;
     display: block;
     width: 45%;
-    border: 1px solid #0c4879;
+    border: 1px solid #1276c8;
     padding: 0.5rem 1rem;
-    background-color: #1063A8;
+    background-color: #2291EB;
     border-radius: 0.5rem;
     color: white; }
     .navbuttons a:hover {
-      background: #0c4879; }
+      background: #1276c8; }
     .navbuttons a:only-child {
       width: 100%; }
 
@@ -1786,7 +1786,7 @@ footer {
       display: inline-block;
       /* margin: 0 auto; */
       padding: 0.75rem;
-      border: 2px solid rgba(0, 0, 0, 0.87);
+      border: 2px solid white;
       border-radius: 0.25rem;
       background: white;
       margin: 0 auto;
@@ -1801,15 +1801,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       display: block; }
       #lowfundswarning .content a:not([rel~="noreferrer"]):hover {
-        background: #61aff0; }
+        background: #aed7f8; }
       #lowfundswarning .content a:not([rel~="noreferrer"]):disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -1819,8 +1819,8 @@ footer {
           display: inline-block; } }
 
 .connectionerror {
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: black;
+  border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;
   list-style-type: none;
@@ -1838,7 +1838,7 @@ footer {
       border-radius: 0;
       border-left: 0;
       border-right: 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+      border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
 
 .memberfilter {
   position: relative; }
@@ -1846,8 +1846,8 @@ footer {
 .profilepreview {
   position: absolute;
   display: block;
-  background: white;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: black;
+  border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 0.5rem;
   padding: 1rem;
   top: 0;
@@ -1855,7 +1855,7 @@ footer {
   width: 400px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
   .profilepreview .post .postdetails .subtext a {
-    color: rgba(0, 0, 0, 0.87); }
+    color: white; }
   .profilepreview .profile-meta {
     display: -ms-flexbox;
     display: flex;
@@ -1866,18 +1866,18 @@ footer {
     flex-wrap: wrap;
     font-size: 1rem;
     margin-bottom: 0.5rem;
-    color: rgba(0, 0, 0, 0.87); }
+    color: white; }
     .profilepreview .profile-meta .member-handle {
       font-weight: bold; }
     .profilepreview .profile-meta .member-pagingid {
       font-weight: 400;
-      color: rgba(0, 0, 0, 0.54);
+      color: rgba(255, 255, 255, 0.8);
       max-width: 100%; }
     .profilepreview .profile-meta a:last-of-type {
       width: 100%; }
   .profilepreview .profile-text {
     font-size: 1rem;
-    color: rgba(0, 0, 0, 0.87);
+    color: white;
     font-weight: 400;
     line-height: 1.15;
     margin-bottom: 0.5rem;
@@ -1888,11 +1888,11 @@ footer {
     -ms-flex-align: center;
     align-items: center; }
     .profilepreview .profile-actions .profilepreviewfollowers {
-      color: rgba(0, 0, 0, 0.87); }
+      color: white; }
     .profilepreview .profile-actions .profilepreviewfollowers {
       -ms-flex: 1;
       flex: 1;
-      color: rgba(0, 0, 0, 0.87); }
+      color: white; }
     .profilepreview .profile-actions .profilepreviewfollowbutton a {
       line-height: 1.2;
       cursor: pointer;
@@ -1903,14 +1903,14 @@ footer {
       float: right;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
-      background: #1063A8;
+      border: 1px solid #2291EB;
+      background: #2291EB;
       padding: 0.5rem 1.5rem;
       border: transparent;
       font-weight: 400;
       margin-bottom: 0; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
-        background: #0e5591;
+        background: #1484df;
         color: white;
         border: transparent; }
       .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
@@ -1929,17 +1929,17 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       color: #CC2936;
       border: 1px solid #CC2936;
       margin-left: auto !important; }
       .scoreexpanded .closebutton a:hover {
-        background: #61aff0; }
+        background: #aed7f8; }
       .scoreexpanded .closebutton a:disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -1971,8 +1971,8 @@ footer {
   .mainbodywrapper #posts .itemlist ol.posts {
     padding: 0; }
     .mainbodywrapper #posts .itemlist ol.posts li {
-      background: white;
-      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: black;
+      border: 1px solid rgba(255, 255, 255, 0.38);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
       list-style-type: none;
@@ -1986,7 +1986,7 @@ footer {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
 
 #thread {
   width: 100%;
@@ -2003,8 +2003,8 @@ footer {
   #thread .title {
     font-weight: bold; }
   #thread .itemlist .fatitem {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2017,7 +2017,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
 
 #newpost {
   width: 100%;
@@ -2034,8 +2034,8 @@ footer {
   #newpost br {
     display: none; }
   #newpost #memorandumarea {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2049,7 +2049,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #newpost #memorandumarea #memorandumtopicbutton {
       margin-bottom: 0.875rem;
       font-weight: bold; }
@@ -2065,7 +2065,7 @@ footer {
         text-transform: capitalize; }
         #newpost #memorandumarea #memorandumtopicarea label span {
           font-size: 0.875rem;
-          color: rgba(0, 0, 0, 0.54);
+          color: rgba(255, 255, 255, 0.8);
           font-weight: normal; }
       #newpost #memorandumarea #memorandumtopicarea input {
         width: 100%; }
@@ -2086,7 +2086,7 @@ footer {
         text-transform: capitalize; }
         #newpost #memorandumarea .titlecontainer label span:last-of-type {
           font-size: 0.875rem;
-          color: rgba(0, 0, 0, 0.54);
+          color: rgba(255, 255, 255, 0.8);
           font-weight: normal; }
       #newpost #memorandumarea .titlecontainer .memorandumtitle {
         height: 80px; }
@@ -2109,7 +2109,7 @@ footer {
         text-align: center;
         line-height: 1; }
         #newpost #memorandumarea #memorandumpreviewareabutton a:hover {
-          background-color: #1062a6;
+          background-color: #2090eb;
           color: white; }
     #newpost #memorandumarea .switchToRegularMode {
       display: none; }
@@ -2135,8 +2135,8 @@ footer {
     #settingsanchor {
       max-width: 540px; } }
   #settingsanchor .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2150,7 +2150,7 @@ footer {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #settingsanchor .content div {
       margin-bottom: 1rem; }
     #settingsanchor .content .logout a {
@@ -2159,15 +2159,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem;
       display: inline-block; }
       #settingsanchor .content .logout a:hover {
-        background: #61aff0; }
+        background: #aed7f8; }
       #settingsanchor .content .logout a:disabled {
         opacity: 0.65;
         cursor: not-allowed;
@@ -2179,15 +2179,15 @@ footer {
       cursor: pointer;
       text-decoration: none;
       transition: all 0.15s ease-in-out;
-      color: #1063A8;
+      color: #2291EB;
       text-transform: uppercase;
       border-radius: 0.25rem;
-      border: 1px solid #1063A8;
+      border: 1px solid #2291EB;
       background: transparent;
       padding: 0.5rem 1.5rem; }
       #settingsanchor .content #settingsnametextbutton:hover,
       #settingsanchor .content #settingsprofiletextbutton:hover {
-        background: #61aff0; }
+        background: #aed7f8; }
       #settingsanchor .content #settingsnametextbutton:disabled,
       #settingsanchor .content #settingsprofiletextbutton:disabled {
         opacity: 0.65;
@@ -2219,8 +2219,8 @@ footer {
     margin: 0; }
     #memberposts .itemlist ol li {
       list-style-type: none;
-      background: white;
-      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: black;
+      border: 1px solid rgba(255, 255, 255, 0.38);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
       list-style-type: none;
@@ -2233,7 +2233,7 @@ footer {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
 
 body.article {
   background: white; }
@@ -2295,8 +2295,8 @@ body.article {
     #toolsanchor {
       max-width: 540px; } }
   #toolsanchor .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2310,7 +2310,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #toolsanchor .content a {
       text-align: center;
       display: block; }
@@ -2328,8 +2328,8 @@ body.article {
     #loginbox {
       max-width: 540px; } }
   #loginbox .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2350,17 +2350,17 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #loginbox .content br {
       display: none; }
     #loginbox .content .loginnotes {
       font-size: 0.875rem;
-      color: rgba(0, 0, 0, 0.54); }
+      color: rgba(255, 255, 255, 0.8); }
       #loginbox .content .loginnotes a {
         display: block;
         margin-top: 0.875rem; }
     #loginbox .content #newseedphrase {
-      border: 1px solid rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.38);
       background: #FFE45E;
       border-radius: 0.25rem;
       padding: 0.4375rem 0.875rem;
@@ -2383,8 +2383,8 @@ body.article {
   #topiclistanchor br {
     display: none; }
   #topiclistanchor table {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2399,7 +2399,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     @media (max-width: 399px) {
       #topiclistanchor table td.tltopicname {
         max-width: 200px;
@@ -2420,8 +2420,8 @@ body.article {
     #topicmeta {
       max-width: 540px; } }
   #topicmeta .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2435,7 +2435,7 @@ body.article {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
 
 tbody tr td a[href^="#modmorelink"],
 tbody tr td a[href^="javascript:;"] {
@@ -2448,8 +2448,8 @@ tbody tr td a[href^="javascript:;"] {
   float: right;
   text-transform: uppercase;
   border-radius: 0.25rem;
-  border: 1px solid #1063A8;
-  background: #1063A8;
+  border: 1px solid #2291EB;
+  background: #2291EB;
   padding: 0.5rem 1.5rem;
   border: transparent;
   font-weight: 400;
@@ -2457,7 +2457,7 @@ tbody tr td a[href^="javascript:;"] {
   margin-bottom: 0; }
   tbody tr td a[href^="#modmorelink"]:hover,
   tbody tr td a[href^="javascript:;"]:hover {
-    background: #0e5591;
+    background: #1484df;
     color: white;
     border: transparent; }
   tbody tr td a[href^="#modmorelink"]:disabled,
@@ -2511,8 +2511,8 @@ tbody tr td .filterprovider {
     #messagesanchor {
       max-width: 540px; } }
   #messagesanchor .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2526,9 +2526,9 @@ tbody tr td .filterprovider {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #messagesanchor .content p {
-      color: rgba(0, 0, 0, 0.54);
+      color: rgba(255, 255, 255, 0.8);
       font-size: 0.875rem; }
     #messagesanchor .content #usersearchresults {
       margin-bottom: 2rem; }
@@ -2539,7 +2539,7 @@ tbody tr td .filterprovider {
         display: flex;
         -ms-flex-align: center;
         align-items: center;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38);
         padding: 0.5rem 0; }
         #messagesanchor .content #usersearchresults .usersearchresult .hnuser {
           margin-right: 0.5rem; }
@@ -2550,16 +2550,16 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem; }
           #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:hover {
-            background: #61aff0; }
+            background: #aed7f8; }
           #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2572,9 +2572,9 @@ tbody tr td .filterprovider {
     #messagesanchor .content #sendmessagecontainer .messagerecipient {
       font-weight: bold; }
     #messagesanchor .content #sendmessagecontainer .messageaddress {
-      color: rgba(0, 0, 0, 0.54); }
+      color: rgba(255, 255, 255, 0.8); }
     #messagesanchor .content #sendmessagecontainer .messagepublickey {
-      color: rgba(0, 0, 0, 0.54); }
+      color: rgba(255, 255, 255, 0.8); }
     #messagesanchor .content #sendmessagecontainer #sendmessagebox {
       margin-top: 1rem; }
       #messagesanchor .content #sendmessagecontainer #sendmessagebox label:first-of-type {
@@ -2593,7 +2593,7 @@ tbody tr td .filterprovider {
       border-radius: 0.25rem;
       font-weight: bold; }
     #messagesanchor .content #messageslist li {
-      border: 1px solid rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.38);
       border-radius: 0.25rem;
       padding: 0.4375rem 0.875rem;
       display: -ms-flexbox;
@@ -2611,7 +2611,7 @@ tbody tr td .filterprovider {
         display: block; }
       #messagesanchor .content #messageslist li .messagemeta {
         width: 100%;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38);
         margin-bottom: 0.5rem;
         padding-bottom: 0.5rem;
         -ms-flex-wrap: wrap-reverse;
@@ -2637,7 +2637,7 @@ tbody tr td .filterprovider {
         #messagesanchor .content #messageslist li .messagemeta [data-ratingsize],
         #messagesanchor .content #messageslist li .messagemeta .hnuser,
         #messagesanchor .content #messageslist li .messagemeta .age {
-          color: rgba(0, 0, 0, 0.54);
+          color: rgba(255, 255, 255, 0.8);
           margin-right: 0.5rem; }
         #messagesanchor .content #messageslist li .messagemeta .star-value {
           margin: 0 !important;
@@ -2655,17 +2655,17 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
           font-weight: bold; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:hover {
-            background: #61aff0; }
+            background: #aed7f8; }
           #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2685,17 +2685,17 @@ tbody tr td .filterprovider {
           cursor: pointer;
           text-decoration: none;
           transition: all 0.15s ease-in-out;
-          color: #1063A8;
+          color: #2291EB;
           text-transform: uppercase;
           border-radius: 0.25rem;
-          border: 1px solid #1063A8;
+          border: 1px solid #2291EB;
           background: transparent;
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem;
           font-weight: bold; }
           #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:hover {
-            background: #61aff0; }
+            background: #aed7f8; }
           #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:disabled {
             opacity: 0.65;
             cursor: not-allowed;
@@ -2714,8 +2714,8 @@ tbody tr td .filterprovider {
     #memberanchor {
       max-width: 540px; } }
   #memberanchor .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2733,7 +2733,7 @@ tbody tr td .filterprovider {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #memberanchor .content #membernametext {
       display: -ms-flexbox;
       display: flex; }
@@ -2747,14 +2747,14 @@ tbody tr td .filterprovider {
         float: right;
         text-transform: uppercase;
         border-radius: 0.25rem;
-        border: 1px solid #1063A8;
-        background: #1063A8;
+        border: 1px solid #2291EB;
+        background: #2291EB;
         padding: 0.5rem 1.5rem;
         border: transparent;
         font-weight: 400;
         margin-left: auto; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:hover {
-          background: #0e5591;
+          background: #1484df;
           color: white;
           border: transparent; }
         #memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
@@ -2798,8 +2798,8 @@ tbody tr td .filterprovider {
       max-width: 540px; } }
   #anchorratings .content,
   #community .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2814,7 +2814,7 @@ tbody tr td .filterprovider {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #anchorratings .content br,
     #community .content br {
       display: none; }
@@ -2850,8 +2850,8 @@ tbody tr td .filterprovider {
     #trustgraph {
       max-width: 540px; } }
   #trustgraph .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2865,7 +2865,7 @@ tbody tr td .filterprovider {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #trustgraph .content br {
       display: none; }
     #trustgraph .content table {
@@ -2887,7 +2887,7 @@ tbody tr td .filterprovider {
           border-radius: 0.5rem;
           background: rgba(0, 0, 0, 0.05); }
           #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
-            background: #bedef9; }
+            background: white; }
         #trustgraph .content #trustgraphdetails table td {
           display: table-row; }
         #trustgraph .content #trustgraphdetails table td:before,
@@ -2898,7 +2898,7 @@ tbody tr td .filterprovider {
           content: attr(data-label);
           font-weight: 400;
           text-align: left;
-          color: rgba(0, 0, 0, 0.54);
+          color: rgba(255, 255, 255, 0.8);
           width: 50%; }
         #trustgraph .content #trustgraphdetails table td:not(.align-start) > span {
           vertical-align: middle;
@@ -2910,7 +2910,7 @@ tbody tr td .filterprovider {
     #trustgraph .content #trustgraphnotes {
       margin-top: 1rem;
       font-size: 0.875rem;
-      color: rgba(0, 0, 0, 0.54); }
+      color: rgba(255, 255, 255, 0.8); }
 
 #map {
   position: absolute !important;
@@ -2921,8 +2921,8 @@ tbody tr td .filterprovider {
   #map .leaflet-control {
     display: none; }
   #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -2938,7 +2938,7 @@ tbody tr td .filterprovider {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
       max-height: 400px;
       overflow: scroll;
@@ -2947,7 +2947,7 @@ tbody tr td .filterprovider {
         font-weight: bold; }
       #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content .comment-tree {
         border: none;
-        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        border-top: 1px solid rgba(255, 255, 255, 0.38);
         border-radius: 0;
         margin-bottom: 0; }
         @media (max-width: 399px) {
@@ -2969,7 +2969,7 @@ tbody tr td .filterprovider {
     width: 2rem;
     height: 2rem;
     font-size: 1.4rem;
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-weight: normal;
     display: -ms-flexbox;
@@ -2979,7 +2979,7 @@ tbody tr td .filterprovider {
     -ms-flex-pack: center;
     justify-content: center; }
     #map .leaflet-popup-pane .leaflet-popup a.leaflet-popup-close-button:hover {
-      color: rgba(0, 0, 0, 0.87); }
+      color: white; }
     @media (max-width: 399px) {
       #map .leaflet-popup-pane .leaflet-popup a.leaflet-popup-close-button {
         right: -1rem; } }
@@ -2997,7 +2997,7 @@ tbody tr td .filterprovider {
     #notifications {
       max-width: 540px; } }
   #notifications .notificationtitle {
-    background: #f8f9fa; }
+    background: #474747; }
   #notifications ul.notificationslist {
     padding: 0; }
     #notifications ul.notificationslist .allownotifications {
@@ -3010,22 +3010,22 @@ tbody tr td .filterprovider {
         cursor: pointer;
         text-decoration: none;
         transition: all 0.15s ease-in-out;
-        color: #1063A8;
+        color: #2291EB;
         text-transform: uppercase;
         border-radius: 0.25rem;
-        border: 1px solid #1063A8;
+        border: 1px solid #2291EB;
         background: transparent;
         padding: 0.5rem 1.5rem; }
         #notifications ul.notificationslist .allownotifications a.notificationbutton:hover {
-          background: #61aff0; }
+          background: #aed7f8; }
         #notifications ul.notificationslist .allownotifications a.notificationbutton:disabled {
           opacity: 0.65;
           cursor: not-allowed;
           pointer-events: none; }
     #notifications ul.notificationslist li {
       list-style-type: none;
-      background: white;
-      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: black;
+      border: 1px solid rgba(255, 255, 255, 0.38);
       border-radius: 0.25rem;
       margin-bottom: 1.5rem;
       list-style-type: none;
@@ -3040,9 +3040,9 @@ tbody tr td .filterprovider {
           border-radius: 0;
           border-left: 0;
           border-right: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+          border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
       #notifications ul.notificationslist li:hover {
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
+        box-shadow: 0 1px 3px rgba(255, 255, 255, 0.38), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
 
@@ -3071,8 +3071,8 @@ tbody tr td .filterprovider {
   #blocking .content,
   #following .content,
   #followers .content {
-    background: white;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: black;
+    border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
@@ -3089,7 +3089,7 @@ tbody tr td .filterprovider {
         border-radius: 0;
         border-left: 0;
         border-right: 0;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
+        border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
     #blockers .content br,
     #blocking .content br,
     #following .content br,

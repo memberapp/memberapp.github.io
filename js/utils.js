@@ -324,6 +324,7 @@ window.onmessage = (oe) => {
     document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
 }
 
+//short delay showing profile card
 var delay = function (elem, callback, target) {
   var timeout = null;
   elem.onmouseover = function() {
@@ -336,3 +337,11 @@ var delay = function (elem, callback, target) {
       clearTimeout(timeout);
   }
 };
+
+//replace items in a template (for nifty theme)
+function templateReplace(templateString,obj){
+  //var templateString=document.getElementById(template).innerHTML;
+  return templateString.replace(/\{(\w+)\}/g, function (_, k) {
+      return obj[k];
+  });
+}

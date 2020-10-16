@@ -41,7 +41,10 @@ function getAndPopulateRatings(qaddress) {
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
-    //document.getElementById(pre+'anchor').style.display = "none";
+    
+    if(pre=='member'){
+        document.getElementById(pre+'anchor').style.display = "none";
+    }
 
     var theURL = dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
@@ -109,12 +112,10 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             document.getElementById(pre + 'nametextbutton').disabled = true;
             document.getElementById(pre + 'profiletextbutton').disabled = true;
             document.getElementById(pre + 'picbutton').disabled = true;
-
-            /*if (document.getElementById(pre + 'nametext').value == "") {
-                document.getElementById(pre + 'nametext').disabled = false;
-            } else {
+            //After 3 ratings, members cannot change their handle
+            if (data.length>0 && data[0].ratingnumber>2){
                 document.getElementById(pre + 'nametext').disabled = true;
-            }*/
+            }
         }
 
 
@@ -161,7 +162,9 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             var theElement = document.getElementById(`memberrating` + qaddress);
             var starRating1 = addSingleStarsRating(theElement);
         }
-        //document.getElementById(pre+'anchor').style.display = "block";
+        if(pre=='member'){
+            document.getElementById(pre+'anchor').style.display = "block";
+        }
         jdenticon();
     }, function (status) { //error detection....
         showErrorMessage(status, null, theURL);

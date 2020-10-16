@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.6.2";
+var version = "4.12.0";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -19,6 +19,7 @@ var pathpermalinks=true;
 var profilepicbase='img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var siteTitle='member.cash';
+var theStyle='';
 
 //var twitterEmbeds=new Array();
 
@@ -249,8 +250,15 @@ function logout() {
     mnemonic = "";
     document.getElementById('loggedin').style.display = "none";
     document.getElementById('loggedout').style.display = "inline";
-    show('loginbox');
+    
 
+    try{
+        serviceWorkerLogout();
+    }catch(err){
+        console.log(err);
+    }
+
+    show('loginbox');
     //This clears any personal info that might be left in the html document.
     location.reload();
 
@@ -262,6 +270,7 @@ function changeStyle(newStyle, setStorage) {
         //base style will now have value 'base none'
         newStyle = "feels";
     }
+    theStyle=newStyle;
     if (setStorage) {
         localStorageSet(localStorageSafe, "style", newStyle);
     }
