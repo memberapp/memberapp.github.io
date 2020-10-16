@@ -2908,7 +2908,8 @@ tbody tr td .filterprovider {
           margin-bottom: 1.5rem;
           width: 100%;
           border-radius: 0.5rem;
-          background: rgba(0, 0, 0, 0.05); }
+          background: rgba(0, 0, 0, 0.05);
+          border-bottom: 0; }
           #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
             background: rgba(255, 255, 255, 0.38); }
         #trustgraph .content #trustgraphdetails table td {
