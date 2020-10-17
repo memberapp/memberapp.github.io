@@ -363,9 +363,9 @@ function postsSelectorChanged() {
     //These two statements may trigger page load twice on firefox but not on other browsers
 
     //set the document location without triggering the back/forward function
-    //suspendPageReload = true;
+    notBackForwardEvent = true;
     document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
-    //setTimeout(function () { suspendPageReload = false; }, 1000);
+    setTimeout(function () { notBackForwardEvent = false; }, 100);
 
     //show the posts
     //displayContentBasedOnURLParameters();
@@ -393,14 +393,13 @@ function setTopic(topicNameHOSTILE) {
 
     if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
         selector.selectedIndex = 0;
-        hide("topicmeta");
+        //hide("topicmeta");
         return;
     }
 
     if (topicNameHOSTILE.toLowerCase() == "myfeed" || topicNameHOSTILE.toLowerCase() == "mytopics") {
-        hide("topicmeta");
+        //hide("topicmeta");
     } else {
-        showOnly("topicmeta");
         getAndPopulateTopic(topicNameHOSTILE);
     }
 
@@ -483,9 +482,13 @@ function testForHashChange() {
     setTimeout(testForHashChange, 100);
 }
 
+var notBackForwardEvent = false;
 window.onhashchange = function(){
-    //usually, but not always a result of back/forward click
-    window.innerDocClick = false;
+    if(!notBackForwardEvent){
+        //usually, but not always a result of back/forward click
+        window.innerDocClick = false;
+    }
+    notBackForwardEvent = false
 }
 
 var scrollhistory = [];

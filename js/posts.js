@@ -47,6 +47,12 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             }
 
         }
+        if (topicnameHOSTILE != null && topicnameHOSTILE != "" && topicnameHOSTILE.toLowerCase() != "myfeed" && topicnameHOSTILE.toLowerCase() != "mypeeps") {
+            showOnly("topicmeta");
+        }
+    
+        
+
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start, true);
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
