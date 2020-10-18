@@ -11,7 +11,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '4.12.0';
+const version = '4.12.1';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -177,7 +177,23 @@ self.addEventListener("push", function (event) {
 const showLocalNotification = (body, swRegistration) => {
   //swRegistration.showNotification(title, {});
   //showLocalNotification("Push Event", "Error", swRegistration);
+  
+  var payload;
+  var txid;
+  var name;
+  var picurl;
+  var pagingid;
 
+  try{
+    payload=JSON.parse(body);
+    body=payload.type;
+    txid=payload.txid;
+    name = payload.name;
+    picurl = payload.picurl;
+    pagingid = payload.pagingid;
+  }catch(err){
+    //Probably the old type where the action is the whole body
+  }
   var title = "Error";
   var renotify = false;
   var text = "";
@@ -242,6 +258,7 @@ const showLocalNotification = (body, swRegistration) => {
     tag: title,
     renotify: true,
     icon: icon,
+    txid: txid,
     data: {
       time: new Date(Date.now()).toString()
     }
@@ -254,7 +271,7 @@ const showLocalNotification = (body, swRegistration) => {
 self.addEventListener('notificationclick', function (event) {
   const clickedNotification = event.notification;
   
-  const page = '/index.html#notifications';
+  const page = '/index.html#notifications?txid='+event.notification.txid;
   //const promiseChain = clients.openWindow(page);
   //event.waitUntil(promiseChain);
 
