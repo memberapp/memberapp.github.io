@@ -93,7 +93,7 @@ function displayContentBasedOnURLParameters() {
         showMessages();
     }
     else if (action.startsWith("new")) {
-        showNewPost();
+        showNewPost(sanitizeAlphanumeric(getParameterByName("txid")));
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
     } else if (action.startsWith("myfeed")) {
@@ -191,7 +191,7 @@ function showBootstrap(qaddress) {
     getAndPopulateBootstrap(qaddress);
 }
 
-function showNewPost() {
+function showNewPost(txid) {
     show("newpost");
     document.getElementById('memorandumpreview').innerHTML = "";
     let topicNameHOSTILE = getCurrentTopicHOSTILE();
@@ -209,11 +209,24 @@ function showNewPost() {
     //topictitleChanged("memo");
     //document.getElementById('newpostbutton').style.display = "block";
 
-    //Markdown editor doesn't seem to work well on Android
-    var ua = navigator.userAgent.toLowerCase();
-    var isAndroid = ua.indexOf("android") > -1;
-    if (!isAndroid) {
-        initMarkdownEditor();
+    if (txid) {
+        getAndPopulateQuoteBox(txid);
+        document.getElementById('quotetxid').value = txid;
+        document.getElementById('memorandumtextarea').style.display = 'none';
+        document.getElementById('memorandumtextbutton').style.display = 'none';
+
+    } else {
+        document.getElementById('quotetxid').value = '';
+        document.getElementById('quotepost').style.display = 'none';
+        document.getElementById('memorandumtextarea').style.display = 'none';
+        document.getElementById('memorandumtextbutton').style.display = 'block';
+
+        //Markdown editor doesn't seem to work well on Android
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid = ua.indexOf("android") > -1;
+        if (!isAndroid) {
+            initMarkdownEditor();
+        }
     }
 }
 
@@ -252,13 +265,13 @@ function showMember(qaddress, pagingIDHOSTILE) {
     if (qaddress == '' && pagingIDHOSTILE != '') {
         var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingIDHOSTILE) + '&address=' + pubkey;
         getJSON(theURL).then(function (data) {
-            if(data && data.length>0){
+            if (data && data.length > 0) {
                 qaddress = data[0].address;
                 showMember(qaddress);
                 return;
-            }else{
+            } else {
                 show('memberanchor');
-                document.getElementById('memberanchor').innerHTML='This paging id not found.';    
+                document.getElementById('memberanchor').innerHTML = 'This paging id not found.';
                 return;
             }
         }, function (status) { //error detection....
@@ -340,7 +353,7 @@ function showTopicList() {
 }
 
 function postsSelectorChanged() {
-    
+
     //get value from the 4 drop downs
     var selector;
 
@@ -462,10 +475,10 @@ var detectBackOrForward = function () {
     }
 }
 
-var navlinkclicked=false;
-function nlc(){
+var navlinkclicked = false;
+function nlc() {
     //navlinkclicked
-    navlinkclicked=true;
+    navlinkclicked = true;
 }
 
 var forwardOrBackFlag = false;
@@ -476,15 +489,15 @@ setTimeout(testForHashChange, 100);
 function testForHashChange() {
     if (lastdocumentlocation != location.hash || navlinkclicked) {
         lastdocumentlocation = location.hash;
-        navlinkclicked=false;
+        navlinkclicked = false;
         detectBackOrForward();
     }
     setTimeout(testForHashChange, 100);
 }
 
 var notBackForwardEvent = false;
-window.onhashchange = function(){
-    if(!notBackForwardEvent){
+window.onhashchange = function () {
+    if (!notBackForwardEvent) {
         //usually, but not always a result of back/forward click
         window.innerDocClick = false;
     }
@@ -496,7 +509,7 @@ var scrollhistory = [];
 document.addEventListener("click", function () { scrollhistory[window.location.hash] = window.scrollY; }, true);
 
 //User's mouse is inside the page.
-document.getElementsByTagName('body')[0].onmouseover = function() { window.innerDocClick = true;}
+document.getElementsByTagName('body')[0].onmouseover = function () { window.innerDocClick = true; }
 
 //User's mouse has left the page.
-document.getElementsByTagName('body')[0].onmouseleave = function() { window.innerDocClick = false;}
+document.getElementsByTagName('body')[0].onmouseleave = function () { window.innerDocClick = false; }

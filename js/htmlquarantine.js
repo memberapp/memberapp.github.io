@@ -182,6 +182,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         `<a id="replylink` + santxid + page + `" onclick="showReplyBox('` + santxid + page + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
         <span class="rememberscounttext"><a class="`+ remembersActive + `" id="repostlink` + page + santxid + `" ` + remembersOnclick + `> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('remembers') + `</a></span>
         <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
+        <a id="quotelink`+ page + santxid + `" href="#new?txid=` + santxid + `">quote</a>
         <a id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
             <a class="permalink" id="permalink`+ page + santxid + `" href="` + permalink + `">permalink</a> `
@@ -234,7 +235,7 @@ function replacePageName(match, p1, p2, offset, string) {
     return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, repostedHTML) {
 
 
     if (name == null) { name = address.substring(0, 10); }
@@ -292,6 +293,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, obj)
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
+        + repostedHTML
         + `<span class="subtextbuttons">`
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + (Math.max(0, Number(replies))) + `&nbsp;`
         + getSafeTranslation('comments').toLowerCase()

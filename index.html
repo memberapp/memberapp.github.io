@@ -115,7 +115,8 @@
     <!--  Can be mininfied and amalgamated for releases -->
 
     <script src="js/utils.js"></script>
-    <script src="js/posts.js"></script>
+    <script src="js/showposts.js"></script>
+    <script src="js/composition.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/follows.js"></script>
     <script src="js/navigation.js"></script>
@@ -321,6 +322,8 @@
             <div id="newpost" class="applicationpage newpost" style="display: none;">
                 <br />
                 <div id="memorandumarea">
+                    <input type="hidden" name="quotetxid" value="" id="quotetxid">
+                    <div id="quotepost" class="quotepost"></div>
                     <div id="memorandumtopicbutton">
                         <a href=""
                             onclick="document.getElementById('memorandumtopicarea').style.display = 'block';document.getElementById('memorandumtopicbutton').style.display = 'none'; return false;">+add
@@ -334,13 +337,11 @@
                             onpaste="this.onchange();" oninput="this.onchange();">
                     </div>
                     <div>
-                        <label for="memorandumtitle"><span class="vavilon" data-vavilon="title">memo</span> <span
-                                id="memorandumtitlelengthadvice">(0/217)</span></label>
                         <textarea class="memorandumtitle" id="memorandumtitle" maxlength="217" rows="4" cols="60"
                             onchange="topictitleChanged('memorandum'); memorandumPreview();"
                             onkeypress="this.onchange();" onpaste="this.onchange();"
                             oninput="this.onchange();"></textarea>
-
+                            <label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>
                     </div>
                     <div id="memorandumtextbutton">
                         <br />
