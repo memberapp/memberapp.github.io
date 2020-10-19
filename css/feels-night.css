@@ -348,7 +348,7 @@ img {
 
 /*! grey out muted users or filtered users/posts in threads*/
 .blocked {
-  opacity: 0.2; }
+  opacity: 0.5; }
 
 .sats {
   padding: 0;
@@ -663,6 +663,7 @@ html :lang(ar) {
   font-weight: bold;
   padding: 1rem;
   background: #FFE45E;
+  color: #453900;
   border: 1px solid #ffd712;
   border-radius: 0.25rem; }
 
@@ -834,7 +835,7 @@ input {
   input:focus {
     color: white;
     background-color: black;
-    border-color: #51a8ef;
+    border-color: #2291EB;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
   textarea:disabled,
@@ -873,7 +874,7 @@ select {
   select:focus {
     color: #495057;
     background-color: black;
-    border-color: #51a8ef;
+    border-color: #2291EB;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
@@ -1213,9 +1214,8 @@ img {
     position: relative;
     display: -ms-flexbox;
     display: flex;
-    margin-right: 1rem;
+    margin-right: 0.725rem;
     transition: all 0.15s ease-in-out;
-    margin-right: 0.25rem;
     color: rgba(255, 255, 255, 0.8); }
     .postdetails .subtextbuttons a::before,
     .comment-tree ul li .reply div .subtextbuttons a::before {
@@ -1235,6 +1235,7 @@ img {
       color: white; }
   .postdetails .subtextbuttons span.score,
   .comment-tree ul li .reply div .subtextbuttons span.score {
+    margin-right: 0.725rem;
     cursor: pointer;
     transition: filter 1s ease-in-out; }
     .postdetails .subtextbuttons span.score:hover,
@@ -1287,6 +1288,13 @@ img {
   .postdetails .subtextbuttons a[href^="#thread?"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[href^="#thread?"]::before {
     background: url(../img/feelstheme/chat-left-fill.svg);
+    background-size: 0.875rem 0.875rem;
+    display: inline-block; }
+  .postdetails .subtextbuttons a[id^="quotelinkthread"]::before,
+  .postdetails .subtextbuttons a[id^="quotelinkposts"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="quotelinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="quotelinkposts"]::before {
+    background: url(../img/feelstheme/quote.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
   .postdetails .subtextbuttons a[id^="tiplinkposts"]::before,
@@ -1408,7 +1416,10 @@ img {
         margin-left: 2.25rem;
         font-size: 0.75rem;
         padding: 0.4375rem 0;
-        font-weight: bold; }
+        font-weight: bold;
+        left: 0.85em;
+        position: relative;
+        top: 0.65em; }
       .comment-tree ul li .highlight {
         background-color: rgba(255, 255, 255, 0.38); }
       .comment-tree ul li .reply {
@@ -1443,7 +1454,7 @@ img {
                   overflow-wrap: anywhere; }
       .comment-tree ul li ul {
         margin-left: 2.5rem;
-        border-left: 1px solid #e6e6e6 !important; }
+        border-left: 1px solid rgba(255, 255, 255, 0.38) !important; }
         .comment-tree ul li ul ul {
           margin-left: .5rem; }
           .comment-tree ul li ul ul ul {
@@ -1487,7 +1498,6 @@ div#status {
       filter: opacity(0.5); }
 
 header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.38);
   width: 100%;
   background: black;
   box-shadow: 0px 1px 5px -3px rgba(0, 0, 0, 0.5);
@@ -1563,7 +1573,8 @@ header {
         header .pagetop nav .memberlogo .memberlogoimage {
           display: block;
           height: 2.2rem;
-          width: 2.2rem; }
+          width: 2.2rem;
+          margin-right: 1rem; }
           @media (min-width: 1025px) {
             header .pagetop nav .memberlogo .memberlogoimage {
               display: none; } }
@@ -1978,6 +1989,40 @@ footer {
     margin: 0.5rem 0; }
     .scoreexpanded .tipdetails .sats {
       margin-right: 0.25rem; }
+
+.CodeMirror {
+  background: black;
+  color: white; }
+
+.editor-toolbar {
+  padding: 0;
+  opacity: 1;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row; }
+  .editor-toolbar:hover {
+    opacity: 1; }
+  .editor-toolbar a {
+    color: white !important;
+    height: 2.5rem;
+    width: 2.5rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0; }
+    @media (min-width: 769px) {
+      .editor-toolbar a {
+        -ms-flex: 1;
+        flex: 1; } }
+    .editor-toolbar a:hover {
+      background-color: #474747; }
+    .editor-toolbar a.active {
+      background-color: #474747; }
 
 .mainbodywrapper #posts {
   width: 100%;
@@ -2566,7 +2611,7 @@ tbody tr td .filterprovider {
         padding: 0.5rem 0; }
         #messagesanchor .content #usersearchresults .usersearchresult .hnuser {
           margin-right: 0.5rem; }
-        #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type {
+        #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message {
           margin-left: auto;
           line-height: 1.2;
           font-weight: 400;
@@ -2581,9 +2626,9 @@ tbody tr td .filterprovider {
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem; }
-          #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:hover {
+          #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message:hover {
             background: #aed7f8; }
-          #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:disabled {
+          #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message:disabled {
             opacity: 0.65;
             cursor: not-allowed;
             pointer-events: none; }
@@ -2889,10 +2934,6 @@ tbody tr td .filterprovider {
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
-    #trustgraph .content br {
-      display: none; }
-    #trustgraph .content table {
-      width: 100%; }
     #trustgraph .content #trustgraphdetails {
       display: -ms-flexbox;
       display: flex;
@@ -2900,41 +2941,50 @@ tbody tr td .filterprovider {
       flex-direction: column;
       -ms-flex-align: center;
       align-items: center; }
-      @media (max-width: 767px) {
-        #trustgraph .content #trustgraphdetails table thead {
-          display: none; }
-        #trustgraph .content #trustgraphdetails table tr {
-          display: table;
-          margin-bottom: 1.5rem;
-          width: 100%;
-          border-radius: 0.5rem;
-          background: rgba(0, 0, 0, 0.05);
-          border-bottom: 0; }
-          #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
-            background: rgba(255, 255, 255, 0.38); }
-        #trustgraph .content #trustgraphdetails table td {
-          display: table-row; }
-        #trustgraph .content #trustgraphdetails table td:before,
-        #trustgraph .content #trustgraphdetails table td > span {
-          display: table-cell;
-          padding: 0.5rem 1rem; }
-        #trustgraph .content #trustgraphdetails table td:before {
-          content: attr(data-label);
-          font-weight: 400;
-          text-align: left;
-          color: rgba(255, 255, 255, 0.8);
-          width: 50%; }
-        #trustgraph .content #trustgraphdetails table td:not(.align-start) > span {
-          vertical-align: middle;
-          text-align: left; }
-        #trustgraph .content #trustgraphdetails table td:last-of-type {
-          border-bottom: none; } }
-      #trustgraph .content #trustgraphdetails #overall {
-        margin-bottom: 1rem; }
+    #trustgraph .content br {
+      display: none; }
+    #trustgraph .content table {
+      width: 100%; }
     #trustgraph .content #trustgraphnotes {
       margin-top: 1rem;
+      text-align: center;
       font-size: 0.875rem;
       color: rgba(255, 255, 255, 0.8); }
+
+@media (max-width: 767px) {
+  #trustgraphdetails table thead, #anchorratings table thead, #community table thead {
+    display: none; }
+  #trustgraphdetails table tr, #anchorratings table tr, #community table tr {
+    display: table;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    background: rgba(0, 0, 0, 0.05);
+    border-bottom: 0; }
+    #trustgraphdetails table tr:nth-child(even), #anchorratings table tr:nth-child(even), #community table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.38); }
+  #trustgraphdetails table td, #anchorratings table td, #community table td {
+    display: table-row; }
+  #trustgraphdetails table td:before,
+  #trustgraphdetails table td > span, #anchorratings table td:before,
+  #anchorratings table td > span, #community table td:before,
+  #community table td > span {
+    display: table-cell;
+    padding: 0.5rem 1rem; }
+  #trustgraphdetails table td:before, #anchorratings table td:before, #community table td:before {
+    content: attr(data-label);
+    font-weight: 400;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.8);
+    width: 50%; }
+  #trustgraphdetails table td:not(.align-start) > span, #anchorratings table td:not(.align-start) > span, #community table td:not(.align-start) > span {
+    vertical-align: middle;
+    text-align: left; }
+  #trustgraphdetails table td:last-of-type, #anchorratings table td:last-of-type, #community table td:last-of-type {
+    border-bottom: none; } }
+
+#trustgraphdetails #overall, #anchorratings #overall, #community #overall {
+  margin-bottom: 1rem; }
 
 #map {
   position: absolute !important;
