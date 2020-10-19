@@ -1,17 +1,21 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!--  These must stay above the insert tag, they will be replaced with custom values for permalinks -->
-    <meta name="description" content="member.cash is a fully decentralized public platform for discussion and reputation">
+    <meta name="description"
+        content="member.cash is a fully decentralized public platform for discussion and reputation">
     <title>member.cash</title>
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="member.cash">
-    <meta name="twitter:description" content="member.cash is a fully decentralized public platform for discussion and reputation">
+    <meta name="twitter:description"
+        content="member.cash is a fully decentralized public platform for discussion and reputation">
     <meta name="twitter:image" content="img/logos/logowide.png">
     <meta property="og:title" content="member.cash">
-    <meta property="og:description" content="member.cash is a fully decentralized public platform for discussion and reputation">
+    <meta property="og:description"
+        content="member.cash is a fully decentralized public platform for discussion and reputation">
     <meta property="og:image" content="img/logos/logowide.png">
     <!--INSERTMETADATA-->
 
@@ -25,13 +29,13 @@
     <!--  bitcoin.com for latest price -->
 
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ https://memberjs.org/ https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/; img-src 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ data: https://tile.openstreetmap.org/; frame-src 'self' https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
+        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ https://memberjs.org/ https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/ http://localhost:3123/; img-src 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ data: https://tile.openstreetmap.org/; frame-src 'self' https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--  Progressive Web App Service Worker -->
     <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
-    <script src="pwa/pwa.js"></script>
+    <script src="pwa/pwa2.js"></script>
 
     <!-- Large Script Files -->
     <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
@@ -53,7 +57,6 @@
     <link rel="icon" type="image/png" sizes="16x16" href="img/logos/favicon-16x16.png">
     <meta name="theme-color" content="#2291EB" />
     <link rel="preload" href="js/lib/vavilon.min.js" as="script">
-    <link rel="preload" href="img/loading.gif" as="image">
 
     <!--  Load Translations -->
 
@@ -75,7 +78,7 @@
 </head>
 
 <body id="mainbody">
-    <div id="previewcontent" class="previewcontent" style="display: none;">
+    <div id="previewcontent" class="previewcontent">
         <!--INSERTCONTENT-->
     </div>
     <!--  External Libraries -->
@@ -112,7 +115,8 @@
     <!--  Can be mininfied and amalgamated for releases -->
 
     <script src="js/utils.js"></script>
-    <script src="js/posts.js"></script>
+    <script src="js/showposts.js"></script>
+    <script src="js/composition.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/follows.js"></script>
     <script src="js/navigation.js"></script>
@@ -125,6 +129,7 @@
     <script src="js/notifications.js"></script>
     <script src="js/htmlquarantine.js"></script>
     <script src="js/tools.js"></script>
+    <script src="js/htmltemplates.js"></script>
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
 
@@ -140,7 +145,7 @@
                             <img class="memberlogoimagefull" src="img/logos/logowide.svg" width="130" height="26"
                                 alt="Site Logo Full" />
                             <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26"
-                                alt="Site Logo Icon"/>
+                                alt="Site Logo Icon" />
                         </a>
                     </span>
                     <span class="navitemsmain">
@@ -153,22 +158,27 @@
                                 <a id="notificationsbutton" title="Notifications" class="btn"
                                     href="#notifications?start=0" onclick="nlc();">🔔<span class="alertcount noselect"
                                         id="alertcount"></span></a>
-                                <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new" onclick="nlc();">🖊️</a>
+                                <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
+                                    onclick="nlc();">🖊️</a>
                                 <a id="privatemessagesbutton" title="Messages" class="btn privatemessagesbutton"
-                                    href="#messages" onclick="nlc();">📧<span class="alertcount noselect" id="alertcountpm"></span></a>
-                                <a id="settingsbutton" title="Settings" class="btn" href="#settings" onclick="nlc();">⚙️</a>
+                                    href="#messages" onclick="nlc();">📧<span class="alertcount noselect"
+                                        id="alertcountpm"></span></a>
+                                <a id="settingsbutton" title="Settings" class="btn" href="#settings"
+                                    onclick="nlc();">⚙️</a>
                                 <a id="toolsbutton" title="Tools" class="btn" href="#tools" onclick="nlc();">🛠️</a>
                             </span>
                         </span>
                         <span class="headerbuttons">
-                            <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist" onclick="nlc();">📚</a>
+                            <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
+                                onclick="nlc();">📚</a>
                             <a id="mapbutton" title="Map" class="btn" href="#map" onclick="nlc();">🌍</a>
                         </span>
                         <span id="loggedout" class="loggedout">
-                            <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login" onclick="nlc();">login</a>
+                            <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login"
+                                onclick="nlc();">login</a>
                             <span class="separatorwide"></span>
-                            <a id="loginbutton" class="btn vavilon" data-vavilon="new account" href="#login" onclick="nlc();">new
-                                account</a>
+                            <a id="loginbutton" class="btn vavilon" data-vavilon="new account" href="#login"
+                                onclick="nlc();">start</a>
                         </span>
                         <span class="separatorwidebreakpoint"></span>
                         <span id="topiccontainer" class="topiccontainer">
@@ -237,6 +247,10 @@
                         requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.</span>
                     <br />
                     <br />
+                    <span class="vavilon" data-vavilon="your address is">Your address is</span> <span
+                        id="lowfundsaddress"></span>
+                    <br />
+                    <br />
                     <span class="vavilon" data-vavilon="ask nuggets">Send Nuggets your address for a few cents if you're
                         finding it difficult to get some.</span>
                     <br />
@@ -246,10 +260,6 @@
                         href="https://www.reddit.com/user/theamazingnuggets">/u/theamazingnuggets</a><br />
                     Email <a rel='noopener noreferrer'
                         href="mailto:nuggetcoins@gmail.com">nuggetcoins@gmail.com</a><br />
-                    <br />
-                    <br />
-                    <span class="vavilon" data-vavilon="your address is">Your address is</span> <span
-                        id="lowfundsaddress"></span>
                     <br />
                     <br />
                     <a href="" onclick="refreshPool();return false;"><span class="vavilon"
@@ -294,7 +304,7 @@
                                 onchange="userSearchChanged('surrogatename','surrogatesearchresults');"
                                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                             <button id="createsurrogatebutton" type="button" onclick="createSurrogate();"
-                                class="vavilon" data-vavilon="Create Surrogate">Create Surrogate Account</button>
+                                class="vavilon" data-vavilon="Create Surrogate">Create</button>
                         </div>
                         <br />
                         <div id="surrogatelink"></div>
@@ -312,6 +322,7 @@
             <div id="newpost" class="applicationpage newpost" style="display: none;">
                 <br />
                 <div id="memorandumarea">
+                    <input type="hidden" name="quotetxid" value="" id="quotetxid">
                     <div id="memorandumtopicbutton">
                         <a href=""
                             onclick="document.getElementById('memorandumtopicarea').style.display = 'block';document.getElementById('memorandumtopicbutton').style.display = 'none'; return false;">+add
@@ -325,13 +336,11 @@
                             onpaste="this.onchange();" oninput="this.onchange();">
                     </div>
                     <div>
-                        <label for="memorandumtitle"><span class="vavilon" data-vavilon="title">memo</span> <span
-                                id="memorandumtitlelengthadvice">(0/217)</span></label>
                         <textarea class="memorandumtitle" id="memorandumtitle" maxlength="217" rows="4" cols="60"
                             onchange="topictitleChanged('memorandum'); memorandumPreview();"
                             onkeypress="this.onchange();" onpaste="this.onchange();"
                             oninput="this.onchange();"></textarea>
-
+                        <label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>
                     </div>
                     <div id="memorandumtextbutton">
                         <br />
@@ -345,6 +354,8 @@
                             onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
                             oninput="this.onchange();"></textarea>
                     </div>
+                    <br />
+                    <div id="quotepost" class="quotepost"></div>
                     <br />
                     <div>
                         <input id="newpostmemorandumbutton" class="vavilon" data-vavilon="post" value="Post"
@@ -428,6 +439,17 @@
                                 </svg> Click to enlarge QR code
                             </span>
                         </div>
+                    </div>
+                    <label for="memberblockexplorer">Block Explorers</label>
+                    <div id='memberblockexplorer'>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="memberbitcoincom"
+                            href="#">bitcoin.com</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="memberblockchair"
+                            href="#">blockchair</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="memberbtccom"
+                            href="#">btc.com</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
+                            id="memberbitcoinunlimited" href="#">bitcoin unlimited</a>
                     </div>
                     <div id="memberlegacyaddress">
                         <label>Legacy Address</label>
@@ -555,6 +577,14 @@
                         <a title="Logout" id="settingsprofilelogout" class="btn vavilon" data-vavilon="log out"
                             href="#logout" onclick="logout();">Logout</a>
                     </div>
+                    <div>
+                        <label for="notificationbutton" class="vavilon"
+                            data-vavilon="notifications">Notifications</label>
+                        <span class="allownotifications"><a id="notificationbutton" class="notificationbutton"
+                                href="javascript:;"
+                                onclick="requestNotificationPermission(); this.style.display='none';">Allow
+                                Notifications</a></span>
+                    </div>
 
                     <div class="settingsprofilelinks">
                         <label>Profile Links</label>
@@ -581,6 +611,17 @@
                                 </svg> Click to enlarge QR code
                             </span>
                         </div>
+                    </div>
+                    <label for="settingsblockexplorer">Block Explorers</label>
+                    <div id='settingsblockexplorer'>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom"
+                            id="settingsbitcoincom" href="#">bitcoin.com</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair"
+                            id="settingsblockchair" href="#">blockchair</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
+                            href="#">btc.com</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
+                            id="settingsbitcoinunlimited" href="#">bitcoin unlimited</a>
                     </div>
                     <div id="settingslegacyprofileaddress">
                         <label>Legacy Address</label>
@@ -623,11 +664,13 @@
                         <select id="cssselector"
                             onchange='changeStyle(document.getElementById("cssselector").value, true);'>
                             <option class="vavilon" data-vavilon="change theme" value="feels">Choose Theme</option>
-                            <option value="base none">Member</option>
                             <option value="feels">Feels</option>
+                            <option value="feels-night">Feels Night Mode</option>
+                            <option value="base none">Member</option>
                             <option value="base nightmode none">Member Night Mode</option>
                             <option value="base hackernews">Hacker News</option>
                             <option value="base hackernews hnnightmode">Hacker News Night Mode</option>
+                            <option value="nifty">Nifty (Under Development)</option>
                             <option class="vavilon" data-vavilon="none" value="none">None</option>
                         </select>
                     </div>
@@ -951,8 +994,8 @@
                     <br />
                     <br />
                     <br />
-                    <button class="loginbutton" type="button" href="#settings" onclick="createNewAccount();">Create A
-                        New Account</button>
+                    <button class="loginbutton" type="button" href="#settings" onclick="createNewAccount();">Make New
+                        Phrase</button>
                     <br />
                     <div id="newseedphrasedescription" style="display: none;">
                         <br />Here is your password. It is a phrase. Write it down.<br /><br /><label>12 Word Seed
@@ -963,7 +1006,7 @@
                     <hr />
                     <br />
                     <br />
-                    <br /><span class="vavilon" data-vavilon="seed phrase">Seed Phrase (12 words)</span>
+                    <br /><span class="vavilon" data-vavilon="seed phrase">Phrase (12 words)</span>
                     <br />
                     <div class="formgroup">
                         <input size="64" id="loginkey">
@@ -1026,7 +1069,7 @@
     <div id="status"></div>
     <div id="tweet-container"></div>
     <script>
-        init();
+        init();    
     </script>
 </body>
 

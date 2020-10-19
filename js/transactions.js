@@ -43,7 +43,7 @@ function repost(txid, message) {
         }
     }
 
-    updateStatus("Reposting");
+    updateStatus("Remembering");
     tq.queueTransaction(tx);
 }
 
@@ -157,8 +157,28 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
     tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); }, null);
 }
 
+function quotepostRaw(posttext, privkey, topic, newpoststatus, memocompleted, txid) {
 
-function postRaw(posttext, privkey, topic, newpoststatus, memocompleted) {
+    var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
+    var tx = {
+        data: ["0x6d0b", "0x" + reversetx, posttext],
+        cash: { key: privkey }
+    }
+    
+    if (topic != "") {
+        tx = {
+            data: ["0x6d0f", "0x" + reversetx, topic, posttext],
+            cash: { key: privkey }
+        }
+    }
+
+    updateStatus("Quoting");
+    
+    tq.queueTransaction(tx, memocompleted, null);
+}
+
+
+function postRaw(posttext, privkey, topic, newpoststatus, memocompleted, txid) {
 
     var tx = {
         data: ["0x6d02", posttext],

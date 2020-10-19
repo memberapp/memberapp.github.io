@@ -9,7 +9,7 @@ function getAndPopulateCommunityRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReasonHTML(data[i]);
-            contents = contents + ratingAndReasonNew(data[i].name, data[i].address, data[i].rateename, data[i].rates, data[i].rating, data[i].reason, 'comrating');
+            contents = contents + ratingAndReasonNew(data[i].name, data[i].address, data[i].rateename, data[i].rates, data[i].rating, data[i].reason, 'comrating', data[i].trxid);
         }
         document.getElementById(page).innerHTML = contents;
 
@@ -29,7 +29,7 @@ function getAndPopulateRatings(qaddress) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReason2HTML(data[i]);
-            contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason, 'memrating');
+            contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason, 'memrating', data[i].trxid);
         }
         document.getElementById(page).innerHTML = contents;
         addDynamicHTMLElements();
@@ -100,12 +100,17 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
         //document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
         document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
-
-
+        
+        document.getElementById(pre + 'bitcoincom').href = "https://explorer.bitcoin.com/bch/address/" + san(qaddress);
+        document.getElementById(pre + 'blockchair').href = "https://blockchair.com/bitcoin-cash/address/" + san(qaddress);
+        document.getElementById(pre + 'btccom').href = "https://bch.btc.com/" + san(qaddress);
+        document.getElementById(pre + 'bitcoinunlimited').href = "https://explorer.bitcoinunlimited.info/address/" + san(qaddress);
+    
         if (jdenticonname == "" || jdenticonname == null) {
             jdenticonname = qaddress.substring(0, 10);
         }
         document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
+
 
 
         if (pre == "settings") {
@@ -263,6 +268,7 @@ function getAndPopulateSettings() {
 function updateSettingsCheckbox(settingsName) {
     settings[settingsName] = "" + document.getElementById(settingsName).checked;
     localStorageSet(localStorageSafe, settingsName, settings[settingsName]);
+    updateStatus("Updated. "+settings[settingsName]);
 }
 
 function updateSettingsDropdown(settingsName) {
@@ -272,6 +278,7 @@ function updateSettingsDropdown(settingsName) {
     if (settingsName == "currencydisplay") {
         tq.updateBalance(pubkey);
     }
+    updateStatus("Updated. "+dropdowns[settingsName]);
 }
 
 function updateSettingsNumber(settingsName) {
@@ -292,6 +299,7 @@ function updateSettingsNumber(settingsName) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
+    updateStatus("Updated. "+numbers[settingsName]);
 }
 
 function showQRCode(spanid, size) {
