@@ -348,7 +348,7 @@ img {
 
 /*! grey out muted users or filtered users/posts in threads*/
 .blocked {
-  opacity: 0.2; }
+  opacity: 0.5; }
 
 .sats {
   padding: 0;
@@ -663,6 +663,7 @@ html :lang(ar) {
   font-weight: bold;
   padding: 1rem;
   background: #FFE45E;
+  color: #453900;
   border: 1px solid #ffd712;
   border-radius: 0.25rem; }
 
@@ -1213,9 +1214,8 @@ img {
     position: relative;
     display: -ms-flexbox;
     display: flex;
-    margin-right: 1rem;
+    margin-right: 0.725rem;
     transition: all 0.15s ease-in-out;
-    margin-right: 0.25rem;
     color: rgba(0, 0, 0, 0.54); }
     .postdetails .subtextbuttons a::before,
     .comment-tree ul li .reply div .subtextbuttons a::before {
@@ -1235,6 +1235,7 @@ img {
       color: rgba(0, 0, 0, 0.87); }
   .postdetails .subtextbuttons span.score,
   .comment-tree ul li .reply div .subtextbuttons span.score {
+    margin-right: 0.725rem;
     cursor: pointer;
     transition: filter 1s ease-in-out; }
     .postdetails .subtextbuttons span.score:hover,
@@ -1287,6 +1288,13 @@ img {
   .postdetails .subtextbuttons a[href^="#thread?"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[href^="#thread?"]::before {
     background: url(../img/feelstheme/chat-left-fill.svg);
+    background-size: 0.875rem 0.875rem;
+    display: inline-block; }
+  .postdetails .subtextbuttons a[id^="quotelinkthread"]::before,
+  .postdetails .subtextbuttons a[id^="quotelinkposts"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="quotelinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="quotelinkposts"]::before {
+    background: url(../img/feelstheme/quote.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
   .postdetails .subtextbuttons a[id^="tiplinkposts"]::before,
@@ -1408,7 +1416,10 @@ img {
         margin-left: 2.25rem;
         font-size: 0.75rem;
         padding: 0.4375rem 0;
-        font-weight: bold; }
+        font-weight: bold;
+        left: 0.85em;
+        position: relative;
+        top: 0.65em; }
       .comment-tree ul li .highlight {
         background-color: #ddeefc; }
       .comment-tree ul li .reply {
@@ -1562,7 +1573,8 @@ header {
         header .pagetop nav .memberlogo .memberlogoimage {
           display: block;
           height: 2.2rem;
-          width: 2.2rem; }
+          width: 2.2rem;
+          margin-right: 1rem; }
           @media (min-width: 1025px) {
             header .pagetop nav .memberlogo .memberlogoimage {
               display: none; } }
@@ -1977,6 +1989,40 @@ footer {
     margin: 0.5rem 0; }
     .scoreexpanded .tipdetails .sats {
       margin-right: 0.25rem; }
+
+.CodeMirror {
+  background: white;
+  color: rgba(0, 0, 0, 0.87); }
+
+.editor-toolbar {
+  padding: 0;
+  opacity: 1;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row; }
+  .editor-toolbar:hover {
+    opacity: 1; }
+  .editor-toolbar a {
+    color: rgba(0, 0, 0, 0.87) !important;
+    height: 2.5rem;
+    width: 2.5rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0; }
+    @media (min-width: 769px) {
+      .editor-toolbar a {
+        -ms-flex: 1;
+        flex: 1; } }
+    .editor-toolbar a:hover {
+      background-color: #ddeefc; }
+    .editor-toolbar a.active {
+      background-color: #ddeefc; }
 
 .mainbodywrapper #posts {
   width: 100%;
@@ -2565,7 +2611,7 @@ tbody tr td .filterprovider {
         padding: 0.5rem 0; }
         #messagesanchor .content #usersearchresults .usersearchresult .hnuser {
           margin-right: 0.5rem; }
-        #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type {
+        #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message {
           margin-left: auto;
           line-height: 1.2;
           font-weight: 400;
@@ -2580,9 +2626,9 @@ tbody tr td .filterprovider {
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem; }
-          #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:hover {
+          #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message:hover {
             background: #61aff0; }
-          #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:disabled {
+          #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message:disabled {
             opacity: 0.65;
             cursor: not-allowed;
             pointer-events: none; }
