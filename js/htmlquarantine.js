@@ -237,7 +237,7 @@ function replacePageName(match, p1, p2, offset, string) {
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, repostedHTML) {
 
-
+    if (!address) {return "";}
     if (name == null) { name = address.substring(0, 10); }
     repliesroot = Number(repliesroot);
     replies = Number(replies);
