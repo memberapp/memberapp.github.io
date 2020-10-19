@@ -340,7 +340,7 @@
                             onchange="topictitleChanged('memorandum'); memorandumPreview();"
                             onkeypress="this.onchange();" onpaste="this.onchange();"
                             oninput="this.onchange();"></textarea>
-                            <label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>
+                        <label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>
                     </div>
                     <div id="memorandumtextbutton">
                         <br />
@@ -439,6 +439,17 @@
                                 </svg> Click to enlarge QR code
                             </span>
                         </div>
+                    </div>
+                    <label for="memberblockexplorer">Block Explorers</label>
+                    <div id='memberblockexplorer'>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="memberbitcoincom"
+                            href="#">bitcoin.com</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="memberblockchair"
+                            href="#">blockchair</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="memberbtccom"
+                            href="#">btc.com</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
+                            id="memberbitcoinunlimited" href="#">bitcoin unlimited</a>
                     </div>
                     <div id="memberlegacyaddress">
                         <label>Legacy Address</label>
@@ -567,8 +578,12 @@
                             href="#logout" onclick="logout();">Logout</a>
                     </div>
                     <div>
-                        <label for="notificationbutton" class="vavilon" data-vavilon="notifications">Notifications</label>
-                        <span class="allownotifications"><a id="notificationbutton" class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>
+                        <label for="notificationbutton" class="vavilon"
+                            data-vavilon="notifications">Notifications</label>
+                        <span class="allownotifications"><a id="notificationbutton" class="notificationbutton"
+                                href="javascript:;"
+                                onclick="requestNotificationPermission(); this.style.display='none';">Allow
+                                Notifications</a></span>
                     </div>
 
                     <div class="settingsprofilelinks">
@@ -596,6 +611,17 @@
                                 </svg> Click to enlarge QR code
                             </span>
                         </div>
+                    </div>
+                    <label for="settingsblockexplorer">Block Explorers</label>
+                    <div id='settingsblockexplorer'>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom"
+                            id="settingsbitcoincom" href="#">bitcoin.com</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair"
+                            id="settingsblockchair" href="#">blockchair</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
+                            href="#">btc.com</a>
+                        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
+                            id="settingsbitcoinunlimited" href="#">bitcoin unlimited</a>
                     </div>
                     <div id="settingslegacyprofileaddress">
                         <label>Legacy Address</label>
@@ -638,9 +664,9 @@
                         <select id="cssselector"
                             onchange='changeStyle(document.getElementById("cssselector").value, true);'>
                             <option class="vavilon" data-vavilon="change theme" value="feels">Choose Theme</option>
-                            <option value="base none">Member</option>
                             <option value="feels">Feels</option>
                             <option value="feels-night">Feels Night Mode</option>
+                            <option value="base none">Member</option>
                             <option value="base nightmode none">Member Night Mode</option>
                             <option value="base hackernews">Hacker News</option>
                             <option value="base hackernews hnnightmode">Hacker News Night Mode</option>

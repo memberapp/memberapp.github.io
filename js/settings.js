@@ -100,12 +100,17 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         document.getElementById(pre + 'profilelink').href = "#member?qaddress=" + san(qaddress);
         //document.getElementById(pre + 'profilelink').onclick = function () { showMember(qaddress); };
         document.getElementById(pre + 'memoprofilelink').href = "https://memo.cash/profile/" + san(qaddress);
-
-
+        
+        document.getElementById(pre + 'bitcoincom').href = "https://explorer.bitcoin.com/bch/address/" + san(qaddress);
+        document.getElementById(pre + 'blockchair').href = "https://blockchair.com/bitcoin-cash/address/" + san(qaddress);
+        document.getElementById(pre + 'btccom').href = "https://bch.btc.com/" + san(qaddress);
+        document.getElementById(pre + 'bitcoinunlimited').href = "https://explorer.bitcoinunlimited.info/address/" + san(qaddress);
+    
         if (jdenticonname == "" || jdenticonname == null) {
             jdenticonname = qaddress.substring(0, 10);
         }
         document.getElementById(pre + 'identicon').innerHTML = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
+
 
 
         if (pre == "settings") {
