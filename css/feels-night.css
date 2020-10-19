@@ -2934,10 +2934,6 @@ tbody tr td .filterprovider {
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
-    #trustgraph .content br {
-      display: none; }
-    #trustgraph .content table {
-      width: 100%; }
     #trustgraph .content #trustgraphdetails {
       display: -ms-flexbox;
       display: flex;
@@ -2945,41 +2941,50 @@ tbody tr td .filterprovider {
       flex-direction: column;
       -ms-flex-align: center;
       align-items: center; }
-      @media (max-width: 767px) {
-        #trustgraph .content #trustgraphdetails table thead {
-          display: none; }
-        #trustgraph .content #trustgraphdetails table tr {
-          display: table;
-          margin-bottom: 1.5rem;
-          width: 100%;
-          border-radius: 0.5rem;
-          background: rgba(0, 0, 0, 0.05);
-          border-bottom: 0; }
-          #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
-            background: rgba(255, 255, 255, 0.38); }
-        #trustgraph .content #trustgraphdetails table td {
-          display: table-row; }
-        #trustgraph .content #trustgraphdetails table td:before,
-        #trustgraph .content #trustgraphdetails table td > span {
-          display: table-cell;
-          padding: 0.5rem 1rem; }
-        #trustgraph .content #trustgraphdetails table td:before {
-          content: attr(data-label);
-          font-weight: 400;
-          text-align: left;
-          color: rgba(255, 255, 255, 0.8);
-          width: 50%; }
-        #trustgraph .content #trustgraphdetails table td:not(.align-start) > span {
-          vertical-align: middle;
-          text-align: left; }
-        #trustgraph .content #trustgraphdetails table td:last-of-type {
-          border-bottom: none; } }
-      #trustgraph .content #trustgraphdetails #overall {
-        margin-bottom: 1rem; }
+    #trustgraph .content br {
+      display: none; }
+    #trustgraph .content table {
+      width: 100%; }
     #trustgraph .content #trustgraphnotes {
       margin-top: 1rem;
+      text-align: center;
       font-size: 0.875rem;
       color: rgba(255, 255, 255, 0.8); }
+
+@media (max-width: 767px) {
+  #trustgraphdetails table thead, #anchorratings table thead, #community table thead {
+    display: none; }
+  #trustgraphdetails table tr, #anchorratings table tr, #community table tr {
+    display: table;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    background: rgba(0, 0, 0, 0.05);
+    border-bottom: 0; }
+    #trustgraphdetails table tr:nth-child(even), #anchorratings table tr:nth-child(even), #community table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.38); }
+  #trustgraphdetails table td, #anchorratings table td, #community table td {
+    display: table-row; }
+  #trustgraphdetails table td:before,
+  #trustgraphdetails table td > span, #anchorratings table td:before,
+  #anchorratings table td > span, #community table td:before,
+  #community table td > span {
+    display: table-cell;
+    padding: 0.5rem 1rem; }
+  #trustgraphdetails table td:before, #anchorratings table td:before, #community table td:before {
+    content: attr(data-label);
+    font-weight: 400;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.8);
+    width: 50%; }
+  #trustgraphdetails table td:not(.align-start) > span, #anchorratings table td:not(.align-start) > span, #community table td:not(.align-start) > span {
+    vertical-align: middle;
+    text-align: left; }
+  #trustgraphdetails table td:last-of-type, #anchorratings table td:last-of-type, #community table td:last-of-type {
+    border-bottom: none; } }
+
+#trustgraphdetails #overall, #anchorratings #overall, #community #overall {
+  margin-bottom: 1rem; }
 
 #map {
   position: absolute !important;
