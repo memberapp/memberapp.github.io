@@ -1,0 +1,435 @@
+var pages = {};
+pages.member = `
+<div class="content">
+    <h2>Member</h2>
+    <div class="memberpiccontainer">
+        <label id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile Picture</label>
+        <span class="memberpiclarge" style="display:inline;">
+            {profilepiclargehtml}
+        </span>
+    </div>
+    <label for="membernametext">Handle</label>
+    <div id="membernametext">{handle}<a class="populate-send-message" onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');" href="javascript:;">Send Message</a></div>
+    <label for="memberpagingid">Paging ID</label>
+    <div id="memberpagingid">@{pagingid}</div>
+    <label for="memberprofiletext">Profile</label>
+    <div id="memberprofiletext">{profile}</div>
+    <div id="memberprofilelinks">
+        <label>Profile Links</label>
+        <div>
+            <a href="#member?qaddress={address}" id="memberprofilelink">Member</a><span class="separatorwide"></span><a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}" id="membermemoprofilelink">Memo</a>
+        </div>
+    </div>
+    <label for="memberidenticon">Identicon</label>
+    <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}" viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet"><path fill="#d6bae8" d="M6.7 4a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M10.7 4a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M10.7 16a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M6.7 16a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M2.7 8a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M14.7 8a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M14.7 12a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M2.7 12a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0"></path><path fill="#7c38a8" d="M2 2L6 2L6 6ZM18 2L18 6L14 6ZM18 18L14 18L14 14ZM2 18L2 14L6 14Z"></path><path fill="#ad75d1" d="M8 9a1,1 0 1,1 2,0a1,1 0 1,1 -2,0M10 9a1,1 0 1,1 2,0a1,1 0 1,1 -2,0M10 11a1,1 0 1,1 2,0a1,1 0 1,1 -2,0M8 11a1,1 0 1,1 2,0a1,1 0 1,1 -2,0"></path></svg></div>
+    <label>Address</label>
+    <div id="membercashaddress">
+        <span id="membercashaddrformat">{cashaddress}</span>
+        <div id="membercashaddrformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('membercashaddrformat',200);">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                          11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
+                          19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
+                          15H9V21H3V15M5,17V19H7V17H5Z"></path>
+                </svg> Click to enlarge QR code
+            </span>
+        </div>
+    </div>
+    <label for="memberblockexplorer">Block Explorers</label>
+    <div id="memberblockexplorer">
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="memberbitcoincom" href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="memberblockchair" href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="memberbtccom" href="https://bch.btc.com/{address}">btc.com</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited" id="memberbitcoinunlimited" href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin unlimited</a>
+    </div>
+    <div id="memberlegacyaddress">
+        <label>Legacy Address</label>
+        <div>
+            <span id="memberlegacyformat">{address}</span>
+            <div id="memberlegacyformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                              11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
+                              19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
+                              15H9V21H3V15M5,17V19H7V17H5Z"></path>
+                    </svg> Click to enlarge QR code
+                </span></div>
+        </div>
+    </div>
+    <div class="memberstats">
+        <div class="follow">
+            <label data-vavilon="mute">Follow</label>
+            {followbuttonhtml}
+        </div>
+        <div class="mute">
+            <label data-vavilon="mute">Mute</label>
+            {mutebuttonhtml}
+        </div>
+        <div class="followers">
+            <label>Followers</label>
+            <a id="memberfollowersnumber" href="#followers?qaddress={address}">{followers}</a>
+        </div>
+        <div class="following">
+            <label>Following</label>
+            <a id="memberfollowingnumber" href="#following?qaddress={address}">{following}</a>
+        </div>
+        <div class="muters">
+            <label>Muters</label>
+            <a id="memberblockersnumber" href="#blockers?qaddress={address}">{blockers}</a>
+        </div>
+        <div class="muting">
+            <label>Muting</label>
+            <a id="memberblockingnumber" href="#blocking?qaddress={address}">{blocking}</a>
+        </div>
+    </div>
+    <div id="memberratinggroup" style="display: none;">
+        <label for="memberratingcomment">You Rate</label>
+        <div class="memberratinggroup">
+            <div class="memberratingcomment" id="memberratingcomment"></div>
+            <div class="memberrating" id="memberrating"></div>
+        </div>
+    </div>
+</div>`;
+
+pages.settings = `
+<div class="content">
+    <h2 class="vavilon" data-vavilon="settings">Settings</h2>
+    <div class="settingspiccontainer">
+        <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture
+            <span class="profilepicdirections">(Must be imgur link in this format)</span></label>
+        <div class="formgroup">
+            <input maxlength="217" size="30" id="settingspic" value="https://i.imgur.com/XXXXXXXX.jpg"
+                onchange="document.getElementById('settingspicbutton').disabled=false;" onkeypress="this.onchange();"
+                onpaste="this.onchange();" oninput="this.onchange();">
+            <button id="settingspicbutton" type="button" onclick="setPic();" class="vavilon" data-vavilon="update"
+                disabled="">update</button>
+        </div>
+        <span class="settingspiclarge" style="display:inline;">
+            {profilepiclargehtml}
+        </span>
+
+    </div>
+    <div>
+        <label for="settingsnametext">Handle</label>
+        <div class="formgroup">
+            <input maxlength="217" size="30" id="settingsnametext" value="{handle}"
+                onchange="document.getElementById('settingsnametextbutton').disabled=false;"
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" disabled="">
+            <button id="settingsnametextbutton" type="button" onclick="setName();" class="vavilon" data-vavilon="update"
+                disabled="">update</button>
+        </div>
+    </div>
+    <label for="settingspagingid">Paging ID</label>
+    <div id="settingspagingid">@{pagingid}</div>
+    <div>
+        <label for="settingsprofiletext">Profile</label>
+        <div class="formgroup">
+            <input maxlength="217" size="30" id="settingsprofiletext" value="{profile}"
+                onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            <button id="settingsprofiletextbutton" type="button" onclick="setProfile();" class="vavilon"
+                data-vavilon="update" disabled="">update</button>
+        </div>
+    </div>
+    <div>
+        <label for="settingsprofilelogout" class="vavilon" data-vavilon="log out">Logout</label>
+        <a title="Logout" id="settingsprofilelogout" class="btn vavilon" data-vavilon="log out" href="#logout"
+            onclick="logout();">Logout</a>
+    </div>
+    <div>
+        <label for="notificationbutton" class="vavilon" data-vavilon="notifications">Notifications</label>
+        <span class="allownotifications"><a id="notificationbutton" class="notificationbutton" href="javascript:;"
+                onclick="requestNotificationPermission(); this.style.display='none';">Allow
+                Notifications</a></span>
+    </div>
+
+    <div class="settingsprofilelinks">
+        <label>Profile Links</label>
+        <div>
+            <a href="#member?qaddress={address}" id="settingsprofilelink">Member</a><span
+                class="separatorwide"></span><a rel="noopener noreferrer" target="memo"
+                href="https://memo.cash/profile/{address}" id="settingsmemoprofilelink">Memo</a>
+        </div>
+    </div>
+    <label for="settingsidenticon">Identicon</label>
+    <div id="settingsidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"
+            viewBox="0 0 20 20" preserveAspectRatio="xMidYMid meet">
+            <path fill="#d6bae8"
+                d="M6.7 4a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M10.7 4a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M10.7 16a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M6.7 16a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M2.7 8a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M14.7 8a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M14.7 12a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0M2.7 12a1.3,1.3 0 1,1 2.7,0a1.3,1.3 0 1,1 -2.7,0">
+            </path>
+            <path fill="#7c38a8" d="M2 2L6 2L6 6ZM18 2L18 6L14 6ZM18 18L14 18L14 14ZM2 18L2 14L6 14Z"></path>
+            <path fill="#ad75d1"
+                d="M8 9a1,1 0 1,1 2,0a1,1 0 1,1 -2,0M10 9a1,1 0 1,1 2,0a1,1 0 1,1 -2,0M10 11a1,1 0 1,1 2,0a1,1 0 1,1 -2,0M8 11a1,1 0 1,1 2,0a1,1 0 1,1 -2,0">
+            </path>
+        </svg></div>
+    <div id="settingsprofileaddress">
+
+        <label class="vavilon" data-vavilon="address">Address</label>
+        <span id="cashaddrformat">{cashaddress}</span>
+        <div id="cashaddrformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                    width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                          11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
+                                          19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
+                                          15H9V21H3V15M5,17V19H7V17H5Z"></path>
+                </svg> Click to enlarge QR code
+            </span>
+        </div>
+    </div>
+    <label for="settingsblockexplorer">Block Explorers</label>
+    <div id="settingsblockexplorer">
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
+            href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="settingsblockchair"
+            href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
+            href="https://bch.btc.com/{address}">btc.com</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited" id="settingsbitcoinunlimited"
+            href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
+            unlimited</a>
+    </div>
+    <div id="settingslegacyprofileaddress">
+        <label>Legacy Address</label>
+        <span id="legacyformat">{address}</span>
+        <div id="legacyformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                    width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                          11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
+                                          19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
+                                          15H9V21H3V15M5,17V19H7V17H5Z"></path>
+                </svg> Click to enlarge QR code
+            </span>
+        </div>
+    </div>
+    <div id="settingsprivatekey">
+        <label class="vavilon" data-vavilon="Seed Phrase / Private Key / WIF">Seed Phrase / Private Key
+            / WIF</label>
+        <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
+        <span id="privatekey"><a id="privatekeyclicktoshow"
+                onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
+        <div id="privatekeydisplaydiv"></div>
+        <span id="privatekeyformat" style="display: none;">{privatekey}</span>
+        <div id="privatekeyformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                    width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M3,11H5V13H3V11M11,5H13V9H11V5M9,11H13V15H11V13H9V11M15,
+                                          11H17V13H19V11H21V13H19V15H21V19H19V21H17V19H13V21H11V17H15V15H17V13H15V11M19,
+                                          19V15H17V19H19M15,3H21V9H15V3M17,5V7H19V5H17M3,3H9V9H3V3M5,5V7H7V5H5M3,
+                                          15H9V21H3V15M5,17V19H7V17H5Z"></path>
+                </svg> Click to enlarge QR code
+            </span>
+        </div>
+    </div>
+    <div>
+        <label for="cssselector" class="vavilon" data-vavilon="themes">Theme</label>
+        <select id="cssselector" onchange="changeStyle(document.getElementById('cssselector').value, true);">
+            <option class="vavilon" data-vavilon="change theme" value="feels">Choose Theme</option>
+            <option value="feels">Feels</option>
+            <option value="feels-night">Feels Night Mode</option>
+            <option value="base none">Member</option>
+            <option value="base nightmode none">Member Night Mode</option>
+            <option value="base hackernews">Hacker News</option>
+            <option value="base hackernews hnnightmode">Hacker News Night Mode</option>
+            <option value="nifty">Nifty (Under Development)</option>
+            <option class="vavilon" data-vavilon="none" value="none">None</option>
+        </select>
+    </div>
+    <div class="profilestats">
+        <div class="follow">
+            <label data-vavilon="mute">Follow</label>
+            {followbuttonhtml}
+        </div>
+        <div class="mute">
+            <label data-vavilon="mute">Mute</label>
+            {mutebuttonhtml}
+        </div>
+        <div class="followers">
+            <label>Followers</label>
+            <a id="settingsfollowersnumber" href="#followers?qaddress={address}">{followers}</a>
+        </div>
+        <div class="following">
+            <label>Following</label>
+            <a id="settingsfollowingnumber" href="#following?qaddress={address}">{following}</a>
+        </div>
+        <div class="muters">
+            <label>Muters</label>
+            <a id="settingsblockersnumber" href="#blockers?qaddress={address}">{muters}</a>
+        </div>
+        <div class="muting">
+            <label>Muting</label>
+            <a id="settingsblockingnumber" href="#blocking?qaddress={address}">{muting}</a>
+        </div>
+    </div>
+    <div>
+        <label for="oneclicktip">One-Click Tip Amount</label>
+        <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
+            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+        (Amount to tip when clicking up arrow. Minimum 547)
+    </div>
+    <div>
+        <label for="maxfee">Max Fee</label>
+        <input id="maxfee" size="3" type="number" step="1" onchange="updateSettingsNumber('maxfee');"
+            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+        (Max
+        satoshis per byte to pay during network congestion. Minimum 2)
+    </div>
+    <div>
+        <label for="results">Number Of Results To Show</label>
+        <input id="results" size="3" type="number" step="1" onchange="updateSettingsNumber('results');"
+            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+        (Max results to show per page. Maximum 100)
+    </div>
+    <div>
+        <label for="currencydisplay" data-vavilon="Currency Display">Currency Display</label>
+        <select id="currencydisplay" onchange="updateSettingsDropdown('currencydisplay');">
+            <option value="USD">USD</option>
+            <option value="BCH">BCH</option>
+        </select>
+    </div>
+    <div>
+        <label for="mutedwords">Muted Words (Comma Separate)</label>
+        <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60" onchange="updatemutedwords();"
+            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
+    </div>
+    <div>
+        <label for="mediasettings" class="labelheader vavilon" data-vavilon="Media Settings">Media
+            Settings</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="showyoutube" onchange="updateSettingsCheckbox('showyoutube');">
+        <label for="showyoutube" class="checkboxlabel vavilon" data-vavilon="Show YouTube Preview Images">Show
+            YouTube Preview Images</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="showimgur" onchange="updateSettingsCheckbox('showimgur');">
+        <label for="showimgur" class="checkboxlabel vavilon" data-vavilon="Show Imgur Images">Show Imgur
+            Images</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
+        <label for="showtwitter" class="checkboxlabel vavilon" data-vavilon="Show Tweets">Show
+            Tweets</label>
+    </div>
+    <div>
+        <label for="contentserver" data-vavilon="Content Server">Content Server</label>
+        <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
+            <option value="https://member.cash/v2/member.js">member.cash</option>
+            <option value="https://memberjs.bchd.cash/member.js">memberjs.bchd.cash</option>
+            <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
+        </select>
+    </div>
+    <div>
+        <label for="txbroadcastserver" data-vavilon="TX Broadcast Server">TX Broadcast Server</label>
+        <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
+            <option value="https://member.cash/v2/">member.cash</option>
+            <option value="https://memberjs.bchd.cash/v2/">memberjs.bchd.cash</option>
+            <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+            <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
+        </select>
+    </div>
+
+    <div>
+        <label for="utxoserver" data-vavilon="UTXO Server">UTXO Server</label>
+        <select id="utxoserver" onchange="updateSettingsDropdown('utxoserver');">
+            <option value="https://member.cash/v2/">member.cash</option>
+            <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
+            <option value="https://memberjs.bchd.cash/v2/">memberjs.bchd.cash</option>
+            <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+        </select>
+    </div>
+</div>`;
+
+
+var templatePost = `
+<div class="post">
+    <div class="post-sidebar">
+        {profilepic}
+    </div>
+    <div class="post-content">
+        <div class="post-author">
+            <div class="author-details">
+                <span class="author-name">
+                    {handle}
+                </span>
+                <span class="author-handle">
+                    @{pagingid}
+                </span>
+                <span class="elapsed-time">
+                    {elapsed}
+                </span>
+                <span class="elapsed-time-compressed" style="display:none">
+                    {elapsedcompressed}
+                </span>
+            </div>
+        </div>
+        <div class="post-body">
+            {message}
+        </div>
+        <div class="btn-actions">
+            <div class="dropdown">
+                <a href="#"><span data-vavilon="VVpermalink">Permalink</span></a>
+                <a href="#"><span data-vavilon="VVarticle"><a href="#">Article</span></a>
+                <a href="#"><span data-vavilon="VVtweet"><a href="#">Tweet</span></a>
+                <span class="divider"></span>
+                <span class="actions-title">Blockchain</span>
+                <span><a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">Memo</a></span>
+                <span><a rel="noopener noreferrer" target="bitcoincom"
+                        href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a></span>
+                <span><a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/{txid}">BTC.com</a></span>
+                <span><a rel="noopener noreferrer" target="blockchair"
+                        href="https://blockchair.com/bitcoin-cash/transaction/{txid}">Blockchair</a></span>
+                <span><a rel="noopener noreferrer" target="bitcoinunlimited"
+                        href="https://explorer.bitcoinunlimited.info/tx/{txid}">Bitcoin Unlimited</a></span>
+                <span class="divider"></span>
+                <span class="actions-title">Moderate</span>
+                <a class="danger" href="#"><span data-vavilon="VVflagpost">Flag post</span></a>
+                <a class="danger" href="#"><span data-vavilon="VVflaguser">Flag user</span></a>
+            </div>
+        </div>
+        <div class="post-footer">
+            <a class="btn-icon" data-action="reply">
+                <span class="icon">
+                    💬
+                </span>
+                <span class="text">
+                    {replies}
+                </span>
+                <span class="text footerlabel" data-vavilon="VVreplies">replies</span>
+            </a>
+            <a class="btn-icon" data-action="like">
+                <span class="icon">
+                    💙
+                </span>
+                <span class="text">
+                    {likes}
+                </span>
+                <span class="text footerlabel" data-vavilon="VVlikes">likes</span>
+            </a>
+            <a class="btn-icon" data-action="remember">
+                <span class="icon">
+                    ♻
+                </span>
+                <span class="text">
+                    {remembers}
+                </span>
+                <span class="text footerlabel" data-vavilon="VVremembers">remembers</span>
+            </a>
+            <a class="btn-icon" data-action="tip">
+                <span class="icon">
+                    💰
+                </span>
+                <span class="text">
+                    {tips}
+                </span>
+                <span class="text footerlabel" data-vavilon="VVtips">tips</span>
+            </a>
+        </div>
+    </div>
+</div>`;

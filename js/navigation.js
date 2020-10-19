@@ -249,10 +249,10 @@ function showSettings() {
         return;
     }
     hideAll();
+    show('settingsanchor');
     getAndPopulateSettings();
     //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
-    document.getElementById('settingsanchor').style.display = "block";
-    document.getElementById('settingsfollow').style.display = "block";
+
 }
 
 function showMember(qaddress, pagingIDHOSTILE) {
@@ -279,12 +279,11 @@ function showMember(qaddress, pagingIDHOSTILE) {
         });
         return;
     }
+
+    show('memberanchor');
     getAndPopulateMember(qaddress);
     getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
-    //getAndPopulate(0, numbers.results, 'memberposts', qaddress);
     document.getElementById('memberanchor').style.display = "block";
-    document.getElementById('memberfollow').style.display = "block";
-    document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
     document.getElementById('anchorratings').style.display = "block";
     document.getElementById('trustgraph').style.display = "block";
