@@ -427,11 +427,11 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     if (data.repost) {
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " remembered</span>";
-        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, '');
+        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '');
     }
 
     if(data.message){
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, repostHTML2);
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2);
     }else {
         retHTML = repostHTML1+repostHTML2;
     }
@@ -446,7 +446,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime);
 }
 
 function showReplyButton(txid, page, divForStatus) {

@@ -16,9 +16,22 @@
 
 
 //Get html for a user, given their address and name
-function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, theObj) {
+function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, theObj) {
+    if(!address){
+        return "error:no address for user";
+    }
     if (name == "" || name == null) {
         name = address.substring(0, 10);
+    }
+
+    var userclass="hnuser";
+    var profilemeta="profile-meta";
+    var curTime = new Date().getTime()/1000;
+
+    if(!nametime || curTime-nametime<60*60*24*7*2){
+        //if the user has changed name in the past two weeks
+        userclass="hnuser newuser";
+        profilemeta="profile-meta newuser";
     }
 
     var memberpic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
@@ -30,7 +43,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='15' height='15' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/></span>`;
     }
 
-    var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="hnuser">`;
+    var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="`+userclass+`">`;
     var linkEnd = `</a> `;
     var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic
         + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`;
@@ -38,8 +51,12 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     if (ratingStarSize > 0) {
         ret += ratingHTML;
     }
+    var followButton=`<a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `'); this.style.display='none';">follow</a>`;
+    if(isfollowing){
+        followButton=`<a class="unfollow" href="javascript:;" onclick="unfollow('` + unicodeEscape(address) + `'); this.style.display='none';">unfollow</a>`;
+    }
     ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profilepreview">`
-        + `<div class='profile-meta'>`
+        + `<div class='`+profilemeta+`'>`
         + linkStart + memberpic + linkEnd
         + linkStart + "<span class='member-handle'>" + ds(name) + "</span>" + linkEnd
         + ratingHTML
@@ -48,7 +65,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         + `<div class='profile-text'><span class='profilepreviewtext'>` + ds(profile) + `</span></div> `
         + `<div class='profile-actions'><span class='profilepreviewfollowers'><a href="#followers?qaddress=` + san(address) + `" onclick="nlc();">` + Number(followers) + ` followers</a></span> `
         + `<span class='profilepreviewfollowers'><a href="#following?qaddress=` + san(address) + `" onclick="nlc();">` + Number(following) + ` following</a></span> `
-        + `<span class='profilepreviewfollowbutton'><a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `');">follow</a></span></div> `
+        + `<span class='profilepreviewfollowbutton'>`+followButton+`</span></div> `
         + `</span></span>`;
 
     if (theObj) {
@@ -62,7 +79,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 }
 
 function userFromDataBasic(data, mainRatingID, size) {
-    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing);
+    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime);
 }
 
 function postlinkHTML(txid, linktext) {
@@ -235,7 +252,7 @@ function replacePageName(match, p1, p2, offset, string) {
     return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, repostedHTML) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML) {
 
     if (!address) { return ""; }
     if (!name) { name = address.substring(0, 10); }
@@ -284,16 +301,16 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var retVal = `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
-                    <div class="title"><p>`+ messageLinksHTML + `</p></div>
-                    <div class="subtext">
+                    <div class="title"><p>`+ messageLinksHTML + `</p></div>`
+                    + repostedHTML
+                    +`<div class="subtext">
                         <span class="submitter"> 
                         <span class="plaintext">submitted</span> `
         + ` ` + getAgeHTML(firstseen)
         + ` <span class="plaintext">` + getSafeTranslation('by') + `</span> `
-        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, obj)
+        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, obj)
         + getTopicHTML(topic, 'to topic/')
         + `</span>`
-        + repostedHTML
         + `<span class="subtextbuttons">`
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + (Math.max(0, Number(replies))) + `&nbsp;`
         + getSafeTranslation('comments').toLowerCase()
@@ -330,7 +347,7 @@ function dslite(input) {
     return input;
 }
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message = dslite(message);
@@ -356,7 +373,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
                     <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                     <div class="commentdetails">
                         <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
-        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing)
+        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime)
         + `</div>
                         <div class="comment"><div class="commentbody">
                             `+ message + `
@@ -677,7 +694,7 @@ function getMessageHTML(data, count) {
             data.recipientname = data.recipient;
             //should be possible to remove this after a month or so
         }
-        contents += "<li><div class='replymessagemeta'><span class='plaintext'>You sent a message (" + data.message.length + " bytes) to </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
+        contents += "<li><div class='replymessagemeta'><span class='plaintext'>You sent a message (" + data.message.length + " bytes) to </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
         let ecpair = new BITBOX.ECPair().fromWIF(privkey);
         var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
