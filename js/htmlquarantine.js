@@ -284,17 +284,17 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var retVal = `<div class="post">
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
-                    <div class="title"><p>`+ messageLinksHTML + `</p></div>
-                    <div class="subtext">
+                    <div class="title"><p>`+ messageLinksHTML + `</p></div>`
+                    + repostedHTML
+        + `<div class="subtext">
                         <span class="submitter"> 
                         <span class="plaintext">submitted</span> `
         + ` ` + getAgeHTML(firstseen)
         + ` <span class="plaintext">` + getSafeTranslation('by') + `</span> `
         + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, obj)
         + getTopicHTML(topic, 'to topic/')
-        + `</span>`
-        + repostedHTML
-        + `<span class="subtextbuttons">`
+        + `</span>
+            <span class="subtextbuttons">`
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + (Math.max(0, Number(replies))) + `&nbsp;`
         + getSafeTranslation('comments').toLowerCase()
         + `</a> `
