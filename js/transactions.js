@@ -338,7 +338,7 @@ function unsub(topicHOSTILE) {
 function addressTransaction(removeElementID, qaddress, actionCode, statusMessage) {
     if (!checkForPrivKey()) return false;
 
-    document.getElementById(removeElementID).style.display = "none";
+    //document.getElementById(removeElementID).style.display = "none";
     var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
     const tx = {
         data: [actionCode, "0x" + addressraw],

@@ -71,6 +71,8 @@ window.onbeforeunload = function () {
 
 function init() {
     document.getElementById('previewcontent').style.display = 'none';
+    document.getElementById('header').innerHTML = headerHTML;
+    document.getElementById('footer').innerHTML = footerHTML;
     document.getElementById('version').innerHTML = version;
     setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
@@ -89,6 +91,8 @@ function init() {
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
+    document.getElementById('loginbox').innerHTML=loginboxHTML;
+
     if (loginmnemonic != "null" && loginmnemonic != null && loginmnemonic != "") {
         trylogin(loginmnemonic);
         return;
@@ -99,6 +103,7 @@ function init() {
         trylogin(loginpubkey);
         return;
     }
+    
     displayContentBasedOnURLParameters();
 }
 
@@ -206,6 +211,11 @@ function login(loginkey) {
     getLatestUSDrate();
     loadStyle();
 
+    document.getElementById('messagesanchor').innerHTML=messagesanchorHTML;
+    document.getElementById('newpost').innerHTML=newpostHTML;
+    document.getElementById('toolsanchor').innerHTML=toolsanchorHTML;
+    document.getElementById('lowfundswarning').innerHTML=lowfundswarningHTML;
+   
     return;
 
 }

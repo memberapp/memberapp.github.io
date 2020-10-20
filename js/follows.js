@@ -2,6 +2,7 @@
 
 //These 4 functions could be refactored into a single functions
 function getAndPopulateFollowers(qaddress) {
+    document.getElementById('followers').innerHTML = followersHTML;
     show('followers');
     var page = "followers";
     var theURL=dropdowns.contentserver + '?action=followers&qaddress=' + qaddress + '&address=' + pubkey;
@@ -23,6 +24,7 @@ function getAndPopulateFollowers(qaddress) {
 }
 
 function getAndPopulateFollowing(qaddress) {
+    document.getElementById('following').innerHTML = followingHTML;
     show('following');
     var page = "following";
     var theURL=dropdowns.contentserver + '?action=following&qaddress=' + qaddress + '&address=' + pubkey;
@@ -44,6 +46,7 @@ function getAndPopulateFollowing(qaddress) {
 }
 
 function getAndPopulateBlockers(qaddress) {
+    document.getElementById('blockers').innerHTML = blockersHTML;
     show('blockers');
     var page = "blockers";
     var theURL=dropdowns.contentserver + '?action=blockers&qaddress=' + qaddress + '&address=' + pubkey;
@@ -66,6 +69,7 @@ function getAndPopulateBlockers(qaddress) {
 }
 
 function getAndPopulateBlocking(qaddress) {
+    document.getElementById('blocking').innerHTML = blockingHTML;
     show('blocking');
     var page = "blocking";
     var theURL=dropdowns.contentserver + '?action=blocking&qaddress=' + qaddress + '&address=' + pubkey;

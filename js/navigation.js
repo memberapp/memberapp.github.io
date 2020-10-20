@@ -68,8 +68,6 @@ function displayContentBasedOnURLParameters() {
         showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("ratings")) {
         showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("bootstrap")) {
-        showBootstrap(sanitizeAlphanumeric(pubkey));
     } else if (action.startsWith("posts")) {
         showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("feed")) {
@@ -138,7 +136,6 @@ function hideAll() {
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('trustgraph').style.display = "none";
-    document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
@@ -184,11 +181,6 @@ function showRatings(qaddress) {
     show('anchorratings');
     getAndPopulateRatings(qaddress);
     document.getElementById('anchorratings').style.display = "block";
-}
-
-function showBootstrap(qaddress) {
-    show("bootstrap");
-    getAndPopulateBootstrap(qaddress);
 }
 
 function showNewPost(txid) {

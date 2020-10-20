@@ -473,12 +473,6 @@ function getAddressLink(address, name) {
     return `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();">` + san(address) + `</a>`;
 }
 
-//Temporary function to bootstrap selection of members to rate
-function getBootStrapHTML(pubkey, data, lbstcount) {
-    return "<tr><td>" + getMemberLink(pubkey, data.ratername) + "</td>"
-        + "<td></td><td></td><td align='center'> <div id='rating" + lbstcount + san(data.testaddress) + "'></div>  </td><td></td><td></td>" + "" + "<td>" + getMemberLink(data.testaddress, data.name) + "</td><td>" + `<a href='#trustgraph?member=` + san(pubkey) + `&amp;target=` + san(data.testaddress) + `' onclick='showTrustGraph("` + san(pubkey) + `","` + san(data.testaddress) + `");'>Full Trust Graph</a>` + "</td></tr>";
-}
-
 //Map
 
 function getMapCloseButtonHTML() {
@@ -548,7 +542,7 @@ function ratingAndReason2HTML(data) {
 
 
 function clickActionNamedHTML(action, qaddress, name) {
-    return `<a class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `");'>` + ds(name) + `</a>`;
+    return `<a class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `"); self.style.display="none";'>` + ds(name) + `</a>`;
 }
 
 function clickActionTopicHTML(action, qaddress, topicHOSTILE, buttonText, elementid) {

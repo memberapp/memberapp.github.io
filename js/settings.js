@@ -1,6 +1,8 @@
 "use strict";
 
 function getAndPopulateCommunityRatings(qaddress) {
+
+    document.getElementById('community').innerHTML=communityHTML;
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'communityratingtable';
@@ -21,6 +23,7 @@ function getAndPopulateCommunityRatings(qaddress) {
 }
 
 function getAndPopulateRatings(qaddress) {
+    document.getElementById('anchorratings').innerHTML=anchorratingsHTML;
     document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'memberratingtable';
@@ -56,8 +59,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             cashaddress:new BITBOX.Address().toCashAddress(qaddress),
             followers:0,
             following:0,
-            blockers:0,
-            blocking:0,
+            muters:0,
+            muting:0,
             handle:"",
             profile:"",
             pagingid:"",
@@ -67,8 +70,8 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         if (data[0]) {
             obj.followers = Number(data[0].followers);
             obj.following = Number(data[0].following);
-            obj.blockers = Number(data[0].blockers);
-            obj.blocking = Number(data[0].blocking);
+            obj.muters = Number(data[0].blockers);
+            obj.muting = Number(data[0].blocking);
             obj.handle = ds(data[0].name);
             obj.handlefunction = unicodeEscape(data[0].name);
             obj.profile = ds(data[0].profile);
