@@ -327,6 +327,22 @@ function updatemutedwords() {
 
 }
 
+function getAndPopulateFB(page,qaddress){
+    document.getElementById(page).innerHTML = fbHTML[page];
+    show(page);
+    var theURL=dropdowns.contentserver + '?action='+page+'&qaddress=' + qaddress + '&address=' + pubkey;
+    getJSON(theURL).then(function (data) {
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+            contents = contents + getMembersWithRatingHTML(i, page, data[i], '', false);
+        }
+
+        document.getElementById(page+'table').innerHTML = contents;
+        addDynamicHTMLElements(data);
+    }, function (status) { //error detection....
+        showErrorMessage(status, page, theURL);
+    });
+}
 
 
 

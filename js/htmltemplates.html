@@ -224,7 +224,8 @@ var messagesanchorHTML=`
 </div>
 `;
 
-var followersHTML=`
+var fbHTML={};
+fbHTML.followers=`
 <div class="content">
     <h2>Followers</h2>
     <br />
@@ -236,13 +237,13 @@ var followersHTML=`
                 <th>Member</th>
             </tr>
         </thead>
-        <tbody id="follows">
+        <tbody id="followerstable">
         </tbody>
     </table>
 </div>
 `;
 
-var followingHTML=`
+fbHTML.following=`
 <div class="content">
     <h2>Following</h2>
     <br />
@@ -260,7 +261,7 @@ var followingHTML=`
 </div>
 `;
 
-var blockersHTML=`
+fbHTML.blockers=`
 <div class="content">
     <h2>Muters</h2>
     <br />
@@ -272,13 +273,13 @@ var blockersHTML=`
                 <th>Member</th>
             </tr>
         </thead>
-        <tbody id="blocks">
+        <tbody id="blockerstable">
         </tbody>
     </table>
 </div>
 `;
 
-var blockingHTML=`
+fbHTML.blocking=`
 <div class="content">
     <h2>Muting</h2>
     <br />

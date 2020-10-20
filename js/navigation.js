@@ -421,19 +421,20 @@ function showThread(roottxid, txid, articleStyle) {
 }
 
 function showFollowers(qaddress) {
-    getAndPopulateFollowers(qaddress);
+    getAndPopulateFB('followers',qaddress);
 }
 
 function showFollowing(qaddress) {
-    getAndPopulateFollowing(qaddress);
+    getAndPopulateFB('following',qaddress);
 }
 
 function showBlockers(qaddress) {
-    getAndPopulateBlockers(qaddress);
+    getAndPopulateFB('blockers',qaddress);
 }
 
 function showBlocking(qaddress) {
-    getAndPopulateBlocking(qaddress);
+    getAndPopulateFB('blocking',qaddress);
+
 }
 
 

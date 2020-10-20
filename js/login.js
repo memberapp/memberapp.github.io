@@ -204,6 +204,8 @@ function login(loginkey) {
         alert("You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc.");
     }
 
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {});
+    updateSettings();
     getAndPopulateSettings();
 
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
