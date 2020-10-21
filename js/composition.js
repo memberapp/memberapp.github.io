@@ -159,7 +159,7 @@ function sendRepostNotification(txid,divForStatus, topic, newtxid){
     replytext+=" https://member.cash/p/"+newtxid.substr(0,10);
     var replyHex = new Buffer(replytext).toString('hex');
 
-    sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, memorandumpostcompleted);
+    sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, function(txidnew){memorandumpostcompleted(newtxid);});
 }
 
 function memorandumpostcompleted(txid) {
@@ -168,12 +168,8 @@ function memorandumpostcompleted(txid) {
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('`+txid+`')" href="#thread?post=`+txid+`">View It</a> or  <a rel='noopener noreferrer' target="_blank" href="` + encodedURL + `">Also Post To Twitter (opens a new window)</a>`;
     document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('` + txid + `')" href="#thread?post=` + txid + `" onclick="nlc();">View It</a> or  <a href="" onclick="window.open('` + encodedURL + `', 'twitterwindow', 'width=300,height=250');return false;">Also Post To Twitter (opens a new window)</a>`;
 
-
-
     //iframe not allowed by twitter
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a rel='noopener noreferrer' onclick="createiframe('`+encodedURL+`','posttotwitter');return false;" href="">Also Post To Twitter</a><div id="posttotwitter"></div>`;
-
-
 
     document.getElementById('memorandumtitle').value = "";
     document.getElementById('newposttamemorandum').value = "";
