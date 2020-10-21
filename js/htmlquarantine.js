@@ -254,6 +254,7 @@ function replacePageName(match, p1, p2, offset, string) {
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML) {
 
+
     if (!address) { return ""; }
     if (!name) { name = address.substring(0, 10); }
     repliesroot = Number(repliesroot);
@@ -303,15 +304,15 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                 <div class="postdetails">
                     <div class="title"><p>`+ messageLinksHTML + `</p></div>`
                     + repostedHTML
-                    +`<div class="subtext">
+        + `<div class="subtext">
                         <span class="submitter"> 
                         <span class="plaintext">submitted</span> `
         + ` ` + getAgeHTML(firstseen)
         + ` <span class="plaintext">` + getSafeTranslation('by') + `</span> `
         + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, obj)
         + getTopicHTML(topic, 'to topic/')
-        + `</span>`
-        + `<span class="subtextbuttons">`
+        + `</span>
+            <span class="subtextbuttons">`
         + `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + (Math.max(0, Number(replies))) + `&nbsp;`
         + getSafeTranslation('comments').toLowerCase()
         + `</a> `

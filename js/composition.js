@@ -136,7 +136,7 @@ function postmemorandum() {
     document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
 
     if(txid){
-        quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted, txid);
+        quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function(txidnew){sendRepostNotification(txid,"newpostmemorandumstatus",topic, txidnew);}, txid);
     }
     else if (postbody.length == 0 || document.getElementById('memorandumtextarea').style.display == 'none') {
         //post a regular memo
@@ -145,11 +145,21 @@ function postmemorandum() {
         postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
     }
 
-
-
     //if (typeof popupOverlay !== "undefined") {
     //    popupOverlay.hide();
     //}
+}
+
+function sendRepostNotification(txid,divForStatus, topic, newtxid){
+
+    var replytext="Your post was remembered";
+    if(topic){
+        replytext+=" in topic "+topic;
+    }
+    replytext+=" https://member.cash/p/"+newtxid.substr(0,10);
+    var replyHex = new Buffer(replytext).toString('hex');
+
+    sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, memorandumpostcompleted);
 }
 
 function memorandumpostcompleted(txid) {
