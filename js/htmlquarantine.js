@@ -237,7 +237,7 @@ function replacePageName(match, p1, p2, offset, string) {
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, repostedHTML) {
 
-    if (!address) {return "";}
+    if (!address) { return ""; }
     if (name == null) { name = address.substring(0, 10); }
     repliesroot = Number(repliesroot);
     replies = Number(replies);
@@ -258,7 +258,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         }
     }
     var messageLinksHTML = anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
-    
+
     //Scan for XSS vulnerabilities
     messageLinksHTML = DOMPurify.sanitize(messageLinksHTML);
 
@@ -271,7 +271,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
 
     var obj = {
         //These must all be HTML safe 
-        message: messageLinksHTML, 
+        message: messageLinksHTML,
         replies: Number(replies),
         likes: (Number(likes) - Number(dislikes)),
         remembers: Number(repostcount),
@@ -285,7 +285,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
                     <div class="title"><p>`+ messageLinksHTML + `</p></div>`
-                    + repostedHTML
+        + repostedHTML
         + `<div class="subtext">
                         <span class="submitter"> 
                         <span class="plaintext">submitted</span> `
@@ -307,7 +307,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                 </div>
             </div>`;
 
-    if (theStyle == 'nifty' || theStyle == 'none' ) {
+    if (theStyle == 'nifty' || theStyle == 'none') {
         return templateReplace(templatePost, obj);
     }
     return retVal;
@@ -396,7 +396,7 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         var imgurRegex = global ?
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3})*.*?<\/a>/gi :
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3})*.*?<\/a>/i;
-        message = message.replace(imgurRegex,replaceImgur);
+        message = message.replace(imgurRegex, replaceImgur);
     }
 
     if (settings["showtwitter"] == "true") {
@@ -417,20 +417,19 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
 function replaceImgur(match, p1, p2, p3, p4, offset, string) {
     // p1 is nondigits, p2 digits, and p3 non-alphanumerics
     //return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
-    if(!p4){p4='.jpg';}
-    if(p4.toLowerCase()=='.mp4'){
-        return `<a href='javascript:;'><video onclick='if(this.paused){this.play();}else{this.pause();};' class="imgurimage" draggable="false" playsinline="" autoplay="" loop="" class=""><source type="video/mp4" src="https://i.imgur.com`+p2+p3+p4+`" alt="imgur post `+p2+`"></video></a>`;
+    if (!p4) { p4 = '.jpg'; }
+    if (p4.toLowerCase() == '.mp4') {
+        return `<a href='javascript:;'><video onclick='if(this.paused){this.play();}else{this.pause();};' class="imgurimage" draggable="false" playsinline="" autoplay="" loop="" class=""><source type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
     }
-    
-    return `<a href="https://i.imgur.com`+p2+p3+`" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage" src="https://i.imgur.com`+p2+p3+p4+`" alt="imgur post `+p2+`"></img></div></a>`;
-    return imageOrVideo;
+
+    return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
 }
 
-function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML) {
+function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML, txid, highlighted) {
     //icon, mainbody and subtext should already be escaped and HTML formatted
     return `
     <li class="notificationitem notification`+ notificationtype + `">
-        <div class="notificationdetails">
+        <div class="`+(highlighted?'highlighted ':'')+`notificationdetails" id='notification` + san(txid) + `'>
         <div class="notificationminheight">
             <div class="notificationtitle">`+
         mainbodyHTML + `
