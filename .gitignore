@@ -7,3 +7,4 @@ scratch/*
 package-lock.json
 .idea
 
+pwa/manifest.webmanifest
