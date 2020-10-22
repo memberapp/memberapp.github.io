@@ -2,7 +2,7 @@
 
 function displayContentBasedOnURLParameters() {
 
-    if (followOrBackFlag) {
+    if (forwardOrBackFlag) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
     } else {
         window.scrollTo(0, 0);
@@ -55,7 +55,7 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("memberposts")) {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
-        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")));
     } else if (action.startsWith("member")) {
         showMember(sanitizeAlphanumeric(getParameterByName("qaddress")), getParameterByName("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -68,8 +68,6 @@ function displayContentBasedOnURLParameters() {
         showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("ratings")) {
         showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("bootstrap")) {
-        showBootstrap(sanitizeAlphanumeric(pubkey));
     } else if (action.startsWith("posts")) {
         showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("feed")) {
@@ -93,7 +91,7 @@ function displayContentBasedOnURLParameters() {
         showMessages();
     }
     else if (action.startsWith("new")) {
-        showNewPost();
+        showNewPost(sanitizeAlphanumeric(getParameterByName("txid")));
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
     } else if (action.startsWith("myfeed")) {
@@ -138,7 +136,6 @@ function hideAll() {
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('trustgraph').style.display = "none";
-    document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
@@ -186,12 +183,7 @@ function showRatings(qaddress) {
     document.getElementById('anchorratings').style.display = "block";
 }
 
-function showBootstrap(qaddress) {
-    show("bootstrap");
-    getAndPopulateBootstrap(qaddress);
-}
-
-function showNewPost() {
+function showNewPost(txid) {
     show("newpost");
     document.getElementById('memorandumpreview').innerHTML = "";
     let topicNameHOSTILE = getCurrentTopicHOSTILE();
@@ -209,23 +201,37 @@ function showNewPost() {
     //topictitleChanged("memo");
     //document.getElementById('newpostbutton').style.display = "block";
 
-    //Markdown editor doesn't seem to work well on Android
-    var ua = navigator.userAgent.toLowerCase();
-    var isAndroid = ua.indexOf("android") > -1;
-    if (!isAndroid) {
-        initMarkdownEditor();
+    if (txid) {
+        getAndPopulateQuoteBox(txid);
+        
+        document.getElementById('quotetxid').value = txid;
+        document.getElementById('memorandumtextarea').style.display = 'none';
+        document.getElementById('memorandumtextbutton').style.display = 'none';
+
+    } else {
+        document.getElementById('quotetxid').value = '';
+        document.getElementById('quotepost').style.display = 'none';
+        document.getElementById('memorandumtextarea').style.display = 'none';
+        document.getElementById('memorandumtextbutton').style.display = 'block';
+
+        //Markdown editor doesn't seem to work well on Android
+        var ua = navigator.userAgent.toLowerCase();
+        var isAndroid = ua.indexOf("android") > -1;
+        if (!isAndroid) {
+            initMarkdownEditor();
+        }
     }
 }
 
 
-function showNotifications(start, limit) {
+function showNotifications(start, limit, qaddress, txid) {
 
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPosts(0, numbers.results, 'all');
         return;
     }
 
-    getAndPopulateNotifications(start, limit, "notifications", pubkey);
+    getAndPopulateNotifications(start, limit, "notifications", pubkey, txid);
 
 }
 
@@ -236,10 +242,10 @@ function showSettings() {
         return;
     }
     hideAll();
+    show('settingsanchor');
     getAndPopulateSettings();
     //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
-    document.getElementById('settingsanchor').style.display = "block";
-    document.getElementById('settingsfollow').style.display = "block";
+
 }
 
 function showMember(qaddress, pagingIDHOSTILE) {
@@ -252,13 +258,13 @@ function showMember(qaddress, pagingIDHOSTILE) {
     if (qaddress == '' && pagingIDHOSTILE != '') {
         var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingIDHOSTILE) + '&address=' + pubkey;
         getJSON(theURL).then(function (data) {
-            if(data && data.length>0){
+            if (data && data.length > 0) {
                 qaddress = data[0].address;
                 showMember(qaddress);
                 return;
-            }else{
+            } else {
                 show('memberanchor');
-                document.getElementById('memberanchor').innerHTML='This paging id not found.';    
+                document.getElementById('memberanchor').innerHTML = 'This paging id not found.';
                 return;
             }
         }, function (status) { //error detection....
@@ -266,12 +272,11 @@ function showMember(qaddress, pagingIDHOSTILE) {
         });
         return;
     }
+
+    show('memberanchor');
     getAndPopulateMember(qaddress);
     getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
-    //getAndPopulate(0, numbers.results, 'memberposts', qaddress);
     document.getElementById('memberanchor').style.display = "block";
-    document.getElementById('memberfollow').style.display = "block";
-    document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
     document.getElementById('anchorratings').style.display = "block";
     document.getElementById('trustgraph').style.display = "block";
@@ -340,7 +345,7 @@ function showTopicList() {
 }
 
 function postsSelectorChanged() {
-    
+
     //get value from the 4 drop downs
     var selector;
 
@@ -363,9 +368,9 @@ function postsSelectorChanged() {
     //These two statements may trigger page load twice on firefox but not on other browsers
 
     //set the document location without triggering the back/forward function
-    //suspendPageReload = true;
+    notBackForwardEvent = true;
     document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
-    //setTimeout(function () { suspendPageReload = false; }, 1000);
+    setTimeout(function () { notBackForwardEvent = false; }, 100);
 
     //show the posts
     //displayContentBasedOnURLParameters();
@@ -393,14 +398,13 @@ function setTopic(topicNameHOSTILE) {
 
     if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
         selector.selectedIndex = 0;
-        hide("topicmeta");
+        //hide("topicmeta");
         return;
     }
 
     if (topicNameHOSTILE.toLowerCase() == "myfeed" || topicNameHOSTILE.toLowerCase() == "mytopics") {
-        hide("topicmeta");
+        //hide("topicmeta");
     } else {
-        showOnly("topicmeta");
         getAndPopulateTopic(topicNameHOSTILE);
     }
 
@@ -418,19 +422,20 @@ function showThread(roottxid, txid, articleStyle) {
 }
 
 function showFollowers(qaddress) {
-    getAndPopulateFollowers(qaddress);
+    getAndPopulateFB('followers',qaddress);
 }
 
 function showFollowing(qaddress) {
-    getAndPopulateFollowing(qaddress);
+    getAndPopulateFB('following',qaddress);
 }
 
 function showBlockers(qaddress) {
-    getAndPopulateBlockers(qaddress);
+    getAndPopulateFB('blockers',qaddress);
 }
 
 function showBlocking(qaddress) {
-    getAndPopulateBlocking(qaddress);
+    getAndPopulateFB('blocking',qaddress);
+
 }
 
 
@@ -444,7 +449,7 @@ var detectBackOrForward = function () {
 
     var hash = window.location.hash, length = window.history.length;
     if (!window.innerDocClick) {
-        followOrBackFlag = true;
+        forwardOrBackFlag = true;
         if (hashHistory[hashHistory.length - 2] == hash) {
             hashHistory = hashHistory.slice(0, -1);
         } else {
@@ -455,7 +460,7 @@ var detectBackOrForward = function () {
     } else {
         hashHistory.push(hash);
         historyLength = length;
-        followOrBackFlag = false;
+        forwardOrBackFlag = false;
         if (!suspendPageReload) {
             displayContentBasedOnURLParameters();
         }
@@ -463,13 +468,13 @@ var detectBackOrForward = function () {
     }
 }
 
-var navlinkclicked=false;
-function nlc(){
+var navlinkclicked = false;
+function nlc() {
     //navlinkclicked
-    navlinkclicked=true;
+    navlinkclicked = true;
 }
 
-var followOrBackFlag = false;
+var forwardOrBackFlag = false;
 
 //Onhashchange is unreliable - try testing for location change 10 times a second
 var lastdocumentlocation = location.hash;
@@ -477,19 +482,27 @@ setTimeout(testForHashChange, 100);
 function testForHashChange() {
     if (lastdocumentlocation != location.hash || navlinkclicked) {
         lastdocumentlocation = location.hash;
-        navlinkclicked=false;
+        navlinkclicked = false;
         detectBackOrForward();
     }
     setTimeout(testForHashChange, 100);
 }
 
+var notBackForwardEvent = false;
+window.onhashchange = function () {
+    if (!notBackForwardEvent) {
+        //usually, but not always a result of back/forward click
+        window.innerDocClick = false;
+    }
+    notBackForwardEvent = false
+}
 
 var scrollhistory = [];
 //record the scroll position
 document.addEventListener("click", function () { scrollhistory[window.location.hash] = window.scrollY; }, true);
 
 //User's mouse is inside the page.
-document.getElementsByTagName('body')[0].onmouseover = function() { window.innerDocClick = true;}
+document.getElementsByTagName('body')[0].onmouseover = function () { window.innerDocClick = true; }
 
 //User's mouse has left the page.
-document.getElementsByTagName('body')[0].onmouseleave = function() { window.innerDocClick = false;}
+document.getElementsByTagName('body')[0].onmouseleave = function () { window.innerDocClick = false; }

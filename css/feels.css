@@ -348,7 +348,7 @@ img {
 
 /*! grey out muted users or filtered users/posts in threads*/
 .blocked {
-  opacity: 0.2; }
+  opacity: 0.5; }
 
 .sats {
   padding: 0;
@@ -448,7 +448,7 @@ html :lang(ar) {
     align-items: center;
     -ms-flex: 1;
     flex: 1;
-    border: 1px solid rgba(0, 0, 0, 0.37);
+    border: 1px solid rgba(0, 0, 0, 0.38);
     border-radius: 0.25rem; }
     .profilestats div label,
     .memberstats div label {
@@ -663,6 +663,7 @@ html :lang(ar) {
   font-weight: bold;
   padding: 1rem;
   background: #FFE45E;
+  color: #453900;
   border: 1px solid #ffd712;
   border-radius: 0.25rem; }
 
@@ -763,21 +764,23 @@ table {
   @media (max-width: 1023px) {
     table {
       overflow-x: auto; } }
-  table thead tr th,
-  table thead tr td {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.34);
-    background: #1063A8;
-    color: white;
-    padding: 0.5rem;
-    font-weight: bold; }
+  table thead tr {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+    table thead tr th,
+    table thead tr td {
+      background: #1063A8;
+      color: white;
+      padding: 0.5rem;
+      font-weight: bold; }
   table tbody {
     width: 100%;
     display: contents; }
-    table tbody tr td {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-      padding: 0.5rem; }
-    table tbody tr:nth-child(even) {
-      background: #edf6fd; }
+    table tbody tr {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12); }
+      table tbody tr td {
+        padding: 0.5rem; }
+      table tbody tr:nth-child(even) {
+        background: #edf6fd; }
 
 input[type="submit"],
 button {
@@ -832,7 +835,7 @@ input {
   input:focus {
     color: rgba(0, 0, 0, 0.87);
     background-color: white;
-    border-color: #147ed7;
+    border-color: #2291EB;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
   textarea:disabled,
@@ -848,19 +851,30 @@ select {
   height: calc(1.5em + 0.75rem + 2px);
   min-width: 3rem;
   padding: 0.375rem 0.75rem;
+  padding-right: 1.5rem !important;
   font-size: 1rem;
   font-weight: 400;
-  line-height: 1.5;
   color: rgba(0, 0, 0, 0.87);
   background-color: white;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.38);
   border-radius: 0.25rem;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; }
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  /* inline SVG */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20448%22%20enable-background%3D%22new%200%200%20256%20448%22%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E.arrow%7Bfill%3A%23424242%3B%7D%3C%2Fstyle%3E%3Cpath%20class%3D%22arrow%22%20d%3D%22M255.9%20168c0-4.2-1.6-7.9-4.8-11.2-3.2-3.2-6.9-4.8-11.2-4.8H16c-4.2%200-7.9%201.6-11.2%204.8S0%20163.8%200%20168c0%204.4%201.6%208.2%204.8%2011.4l112%20112c3.1%203.1%206.8%204.6%2011.2%204.6%204.4%200%208.2-1.5%2011.4-4.6l112-112c3-3.2%204.5-7%204.5-11.4z%22%2F%3E%3C%2Fsvg%3E%0A");
+  background-position: right 10px center;
+  background-repeat: no-repeat;
+  background-size: auto 50%;
+  outline: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none; }
+  select::-ms-expand {
+    display: none; }
   select:focus {
     color: #495057;
     background-color: white;
-    border-color: #147ed7;
+    border-color: #2291EB;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
@@ -1088,11 +1102,13 @@ img {
   -ms-flex-pack: center;
   justify-content: center; }
   .youtubepreview .youtubepreviewimage {
-    height: 220px;
+    width: 288px;
+    height: 162px;
     object-fit: cover; }
-    @media (min-width: 1025px) {
+    @media (min-width: 769px) {
       .youtubepreview .youtubepreviewimage {
-        height: 300px; } }
+        width: 480px;
+        height: 270px; } }
   .youtubepreview .play-icon {
     position: absolute;
     width: 100px;
@@ -1104,6 +1120,13 @@ img {
   -ms-flex-pack: center;
   justify-content: center;
   margin-top: 1rem; }
+  .youtubecontainer iframe {
+    width: 288px;
+    height: 162px; }
+    @media (min-width: 769px) {
+      .youtubecontainer iframe {
+        width: 480px;
+        height: 270px; } }
 
 .notificationtitle,
 .repost {
@@ -1191,9 +1214,8 @@ img {
     position: relative;
     display: -ms-flexbox;
     display: flex;
-    margin-right: 1rem;
+    margin-right: 0.725rem;
     transition: all 0.15s ease-in-out;
-    margin-right: 0.25rem;
     color: rgba(0, 0, 0, 0.54); }
     .postdetails .subtextbuttons a::before,
     .comment-tree ul li .reply div .subtextbuttons a::before {
@@ -1213,6 +1235,7 @@ img {
       color: rgba(0, 0, 0, 0.87); }
   .postdetails .subtextbuttons span.score,
   .comment-tree ul li .reply div .subtextbuttons span.score {
+    margin-right: 0.725rem;
     cursor: pointer;
     transition: filter 1s ease-in-out; }
     .postdetails .subtextbuttons span.score:hover,
@@ -1265,6 +1288,13 @@ img {
   .postdetails .subtextbuttons a[href^="#thread?"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[href^="#thread?"]::before {
     background: url(../img/feelstheme/chat-left-fill.svg);
+    background-size: 0.875rem 0.875rem;
+    display: inline-block; }
+  .postdetails .subtextbuttons a[id^="quotelinkthread"]::before,
+  .postdetails .subtextbuttons a[id^="quotelinkposts"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="quotelinkthread"]::before,
+  .comment-tree ul li .reply div .subtextbuttons a[id^="quotelinkposts"]::before {
+    background: url(../img/feelstheme/quote.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
   .postdetails .subtextbuttons a[id^="tiplinkposts"]::before,
@@ -1386,7 +1416,10 @@ img {
         margin-left: 2.25rem;
         font-size: 0.75rem;
         padding: 0.4375rem 0;
-        font-weight: bold; }
+        font-weight: bold;
+        left: 0.85em;
+        position: relative;
+        top: 0.65em; }
       .comment-tree ul li .highlight {
         background-color: #ddeefc; }
       .comment-tree ul li .reply {
@@ -1421,7 +1454,7 @@ img {
                   overflow-wrap: anywhere; }
       .comment-tree ul li ul {
         margin-left: 2.5rem;
-        border-left: 1px solid #e6e6e6 !important; }
+        border-left: 1px solid rgba(0, 0, 0, 0.12) !important; }
         .comment-tree ul li ul ul {
           margin-left: .5rem; }
           .comment-tree ul li ul ul ul {
@@ -1465,7 +1498,6 @@ div#status {
       filter: opacity(0.5); }
 
 header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   width: 100%;
   background: white;
   box-shadow: 0px 1px 5px -3px rgba(0, 0, 0, 0.5);
@@ -1541,7 +1573,8 @@ header {
         header .pagetop nav .memberlogo .memberlogoimage {
           display: block;
           height: 2.2rem;
-          width: 2.2rem; }
+          width: 2.2rem;
+          margin-right: 1rem; }
           @media (min-width: 1025px) {
             header .pagetop nav .memberlogo .memberlogoimage {
               display: none; } }
@@ -1850,8 +1883,9 @@ footer {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   padding: 1rem;
-  top: 0;
-  z-index: 99;
+  top: -1rem;
+  left: -1rem;
+  z-index: 999;
   width: 400px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22); }
   .profilepreview .post .postdetails .subtext a {
@@ -1955,6 +1989,40 @@ footer {
     margin: 0.5rem 0; }
     .scoreexpanded .tipdetails .sats {
       margin-right: 0.25rem; }
+
+.CodeMirror {
+  background: white;
+  color: rgba(0, 0, 0, 0.87); }
+
+.editor-toolbar {
+  padding: 0;
+  opacity: 1;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row; }
+  .editor-toolbar:hover {
+    opacity: 1; }
+  .editor-toolbar a {
+    color: rgba(0, 0, 0, 0.87) !important;
+    height: 2.5rem;
+    width: 2.5rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 0; }
+    @media (min-width: 769px) {
+      .editor-toolbar a {
+        -ms-flex: 1;
+        flex: 1; } }
+    .editor-toolbar a:hover {
+      background-color: #ddeefc; }
+    .editor-toolbar a.active {
+      background-color: #ddeefc; }
 
 .mainbodywrapper #posts {
   width: 100%;
@@ -2543,7 +2611,7 @@ tbody tr td .filterprovider {
         padding: 0.5rem 0; }
         #messagesanchor .content #usersearchresults .usersearchresult .hnuser {
           margin-right: 0.5rem; }
-        #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type {
+        #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message {
           margin-left: auto;
           line-height: 1.2;
           font-weight: 400;
@@ -2558,9 +2626,9 @@ tbody tr td .filterprovider {
           padding: 0.5rem 1.5rem;
           padding: 0.5rem 1rem;
           font-size: 0.875rem; }
-          #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:hover {
+          #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message:hover {
             background: #61aff0; }
-          #messagesanchor .content #usersearchresults .usersearchresult a:last-of-type:disabled {
+          #messagesanchor .content #usersearchresults .usersearchresult .populate-send-message:disabled {
             opacity: 0.65;
             cursor: not-allowed;
             pointer-events: none; }
@@ -2866,10 +2934,6 @@ tbody tr td .filterprovider {
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
-    #trustgraph .content br {
-      display: none; }
-    #trustgraph .content table {
-      width: 100%; }
     #trustgraph .content #trustgraphdetails {
       display: -ms-flexbox;
       display: flex;
@@ -2877,40 +2941,50 @@ tbody tr td .filterprovider {
       flex-direction: column;
       -ms-flex-align: center;
       align-items: center; }
-      @media (max-width: 767px) {
-        #trustgraph .content #trustgraphdetails table thead {
-          display: none; }
-        #trustgraph .content #trustgraphdetails table tr {
-          display: table;
-          margin-bottom: 1.5rem;
-          width: 100%;
-          border-radius: 0.5rem;
-          background: rgba(0, 0, 0, 0.05); }
-          #trustgraph .content #trustgraphdetails table tr:nth-child(even) {
-            background: #bedef9; }
-        #trustgraph .content #trustgraphdetails table td {
-          display: table-row; }
-        #trustgraph .content #trustgraphdetails table td:before,
-        #trustgraph .content #trustgraphdetails table td > span {
-          display: table-cell;
-          padding: 0.5rem 1rem; }
-        #trustgraph .content #trustgraphdetails table td:before {
-          content: attr(data-label);
-          font-weight: 400;
-          text-align: left;
-          color: rgba(0, 0, 0, 0.54);
-          width: 50%; }
-        #trustgraph .content #trustgraphdetails table td:not(.align-start) > span {
-          vertical-align: middle;
-          text-align: left; }
-        #trustgraph .content #trustgraphdetails table td:last-of-type {
-          border-bottom: none; } }
-      #trustgraph .content #trustgraphdetails #overall {
-        margin-bottom: 1rem; }
+    #trustgraph .content br {
+      display: none; }
+    #trustgraph .content table {
+      width: 100%; }
     #trustgraph .content #trustgraphnotes {
       margin-top: 1rem;
+      text-align: center;
       font-size: 0.875rem;
       color: rgba(0, 0, 0, 0.54); }
+
+@media (max-width: 767px) {
+  #trustgraphdetails table thead, #anchorratings table thead, #community table thead {
+    display: none; }
+  #trustgraphdetails table tr, #anchorratings table tr, #community table tr {
+    display: table;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    background: rgba(0, 0, 0, 0.05);
+    border-bottom: 0; }
+    #trustgraphdetails table tr:nth-child(even), #anchorratings table tr:nth-child(even), #community table tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.12); }
+  #trustgraphdetails table td, #anchorratings table td, #community table td {
+    display: table-row; }
+  #trustgraphdetails table td:before,
+  #trustgraphdetails table td > span, #anchorratings table td:before,
+  #anchorratings table td > span, #community table td:before,
+  #community table td > span {
+    display: table-cell;
+    padding: 0.5rem 1rem; }
+  #trustgraphdetails table td:before, #anchorratings table td:before, #community table td:before {
+    content: attr(data-label);
+    font-weight: 400;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.54);
+    width: 50%; }
+  #trustgraphdetails table td:not(.align-start) > span, #anchorratings table td:not(.align-start) > span, #community table td:not(.align-start) > span {
+    vertical-align: middle;
+    text-align: left; }
+  #trustgraphdetails table td:last-of-type, #anchorratings table td:last-of-type, #community table td:last-of-type {
+    border-bottom: none; } }
+
+#trustgraphdetails #overall, #anchorratings #overall, #community #overall {
+  margin-bottom: 1rem; }
 
 #map {
   position: absolute !important;
@@ -2941,7 +3015,8 @@ tbody tr td .filterprovider {
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
     #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
       max-height: 400px;
-      overflow: scroll;
+      overflow-x: hidden;
+      overflow-y: scroll;
       margin: 0; }
       #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content .postdetails {
         font-weight: bold; }
@@ -2962,7 +3037,7 @@ tbody tr td .filterprovider {
   #map .leaflet-popup-pane .leaflet-popup a.leaflet-popup-close-button {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 0.5rem;
     padding: 0.5rem;
     border: none;
     text-align: center;
@@ -3095,3 +3170,10 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
+
+      .quotepost{
+        border: 1px solid  rgba(0, 0, 0, 0.12);
+        border-radius: 10px;
+        padding: 10px;
+        margin: 5px;
+      }

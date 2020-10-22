@@ -11,7 +11,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '4.12.0';
+const version = '4.13.1';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -164,8 +164,8 @@ self.addEventListener("push", function (event) {
   //showLocalNotification("Yolo", "test", self.registration);
 
   if (event.data) {
-    console.log("Push event!! ", event.data.text());
-    showLocalNotification(event.data.text(), self.registration);
+    console.log("Push event!! ", event.data.json());
+    showLocalNotification(event.data.json(), self.registration);
   } else {
     console.log("Push event but no data");
     showLocalNotification("Error", self.registration);
@@ -174,10 +174,25 @@ self.addEventListener("push", function (event) {
 
 
 
-const showLocalNotification = (body, swRegistration) => {
+const showLocalNotification = (payload, swRegistration) => {
   //swRegistration.showNotification(title, {});
   //showLocalNotification("Push Event", "Error", swRegistration);
+  
+  var txid;
+  var name;
+  var picurl;
+  var pagingid;
+  var icon;
 
+  try{
+    body=payload.type;
+    txid=payload.txid;
+    name = payload.name;
+    picurl = payload.picurl;
+    pagingid = payload.pagingid;
+  }catch(err){
+    //Probably the old type where the action is the whole body
+  }
   var title = "Error";
   var renotify = false;
   var text = "";
@@ -243,7 +258,8 @@ const showLocalNotification = (body, swRegistration) => {
     renotify: true,
     icon: icon,
     data: {
-      time: new Date(Date.now()).toString()
+      time: new Date(Date.now()).toString(),
+      txid: txid
     }
   };
   swRegistration.showNotification(title, options);
@@ -254,7 +270,7 @@ const showLocalNotification = (body, swRegistration) => {
 self.addEventListener('notificationclick', function (event) {
   const clickedNotification = event.notification;
   
-  const page = '/index.html#notifications';
+  const page = '/index.html#notifications?txid='+event.notification.data.txid;
   //const promiseChain = clients.openWindow(page);
   //event.waitUntil(promiseChain);
 

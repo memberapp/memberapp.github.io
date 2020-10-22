@@ -4,6 +4,8 @@ var lastViewOfNotifications = 0;
 var lastViewOfNotificationspm = 0;
 
 function displayNotificationCount() {
+    lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
+    lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
     var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
     getJSON(theURL).then(function (data) {
 
@@ -40,7 +42,7 @@ function displayNotificationCount() {
 }
 
 
-function getAndPopulateNotifications(start, limit, page, qaddress) {
+function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
     //Clear existing content
     show(page);
 
@@ -56,30 +58,37 @@ function getAndPopulateNotifications(start, limit, page, qaddress) {
         var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents=``;
-        if(window.Notification.permission!='granted'){
-            contents += `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>`;
-        }
-        
+                
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i);
+            try{
+                contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i, (data[i].txid==txid));
+            }catch(err){
+                console.log(err);
+            }
         }
         //console.log(contents);
         if (contents == "") {
             contents = getNothingFoundMessageHTML("No notifications yet");
         }
+
+        if(window.Notification.permission!='granted'){
+            contents = `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>` + contents;
+        }
+
         contents = getNotificationsTableHTML(contents, navbuttons);
 
         //Update last view of notifications iff the user is looking at the first page of notifications.
         if (start == 0) {
             lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
             localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
+            document.getElementById("alertcount").innerHTML = "";
+            document.title = siteTitle;    
         }
 
-        document.getElementById("alertcount").innerHTML = "";
-        document.title = siteTitle;
-
+        
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data);
+        scrollToElement('notification'+san(txid));
         listenForTwitFrameResizes();
         //window.scrollTo(0, scrollhistory[window.location.hash]);
     }, function (status) { //error detection....
@@ -93,7 +102,7 @@ function userFromData(data, mainRatingID) {
 }
 
 
-function getHTMLForNotification(data, rank, page, starindex) {
+function getHTMLForNotification(data, rank, page, starindex, highlighted) {
     if (checkForMutedWords(data)) return "";
     let type = ds(data.type);
     let mainRatingID = starindex + page + ds(data.origin);
@@ -107,7 +116,8 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `💬&nbsp;`,
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + ` <span class="plaintext">in a discussion you're in</span> `,
                 timeSince(Number(data.time)),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing)
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
+                data.txid, highlighted
             );
             break;
         case "page":
@@ -117,7 +127,8 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `📣&nbsp;`,
                 userFromData(data, mainRatingID) + ` <span class="plaintext">mentioned you in a</span> ` + postlinkHTML(data.txid, `post`),
                 timeSince(Number(data.time)),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing)
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
+                data.txid, highlighted
             );
             break;
         case "reply":
@@ -127,7 +138,8 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `💬&nbsp;`,
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + ` <span class="plaintext">to your</span> ` + postlinkHTML(data.rretxid, "post"),
                 timeSince(Number(data.time)),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing)
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
+                data.txid, highlighted
             );
             break;
         case "rating":
@@ -139,7 +151,8 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `⭐&nbsp;`,
                 userFromData(data, mainRatingID) + ` <span class="plaintext">rated you as</span> ` + theRating + ` <span class="plaintext">stars, commenting ... ` + escapeHTML(data.reason) + `</span>`,
                 timeSince(Number(data.time)),
-                ""
+                "",
+                data.txid, highlighted
             );
             break;
         case "follow":
@@ -148,7 +161,8 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `👩&nbsp;`,
                 userFromData(data, mainRatingID) + ` <span class="plaintext">followed you</span> `,
                 timeSince(Number(data.time)),
-                ""
+                "",
+                data.txid, highlighted
             );
             break;
         case "like":
@@ -162,7 +176,8 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `💗&nbsp;`,
                 userFromData(data, mainRatingID) + ` <span class="plaintext">liked your</span> ` + postlinkHTML(data.likeretxid, "post") + ` <span class="plaintext">` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : "") + `</span>`,
                 timeSince(Number(data.time)),
-                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing)
+                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, ''),
+                data.txid, highlighted
             );
             break;
         case "repost":
@@ -172,7 +187,8 @@ function getHTMLForNotification(data, rank, page, starindex) {
                 `🔗&nbsp;`,
                 userFromData(data, mainRatingID) + ` <span class="plaintext">remembered your</span> ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
                 timeSince(Number(data.time)),
-                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing)
+                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, ''),
+                data.txid, highlighted
             );
             break;
 
