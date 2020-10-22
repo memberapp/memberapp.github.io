@@ -428,8 +428,8 @@ function replaceImgur(match, p1, p2, p3, p4, offset, string) {
 function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML, txid, highlighted) {
     //icon, mainbody and subtext should already be escaped and HTML formatted
     return `
-    <li class="notificationitem notification`+ notificationtype + `">
-        <div class="`+(highlighted?'highlighted ':'')+`notificationdetails" id='notification` + san(txid) + `'>
+    <li class="`+(highlighted?'highlighted ':'')+`notificationitem notification`+ notificationtype + `" id='notification` + san(txid) + `'>
+        <div class="notificationdetails">
         <div class="notificationminheight">
             <div class="notificationtitle">`+
         mainbodyHTML + `
