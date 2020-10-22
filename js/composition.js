@@ -41,15 +41,39 @@ function switchToRegularMode() {
 }
 
 function memorandumPreview() {
-    var name = document.getElementById('settingsnametext').value;
+    if(document.getElementById('memorandumpreviewarea').style.display=='none'){
+        //Only run the preview if the preview area is visible
+        return;
+    }
     var time = new Date().getTime() / 1000;
-    document.getElementById('memorandumpreview').innerHTML =
-        ``
-        + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview', 0, '')
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value, null, 0, '');
 
-    //todo, should update the jdenticon and rating here
-}
+    //Grab needed values from settings page
+    var name = document.getElementById('settingsnametext').value;
+    var followers = document.getElementById('settingsfollowersnumber').innerHTML;
+    var following = document.getElementById('settingsfollowingnumber').innerHTML; 
+    var blockers = document.getElementById('settingsblockersnumber').innerHTML; 
+    var blocking = document.getElementById('settingsblockingnumber').innerHTML; 
+
+    var pagingid = document.getElementById('settingspagingid').value;
+    var profile = document.getElementById('settingsprofiletext').value;
+    var publickey = document.getElementById('settingspublickey').value;
+    var picurl = document.getElementById('settingspicurl').value;
+    var tokens = document.getElementById('settingstokens').value;
+    var nametime = document.getElementById('settingsnametime').value;
+    var rating = document.getElementById('settingsrating').value;
+
+    var isfollowing = true;
+
+    var repostedHTML = document.getElementById('quotepost').innerHTML;
+    
+
+
+    document.getElementById('memorandumpreview').innerHTML =
+        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML)
+        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', document.getElementById('memorandumtopic').value, null, 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime);
+
+        addDynamicHTMLElements();
+    }
 
 
 function topictitleChanged() {

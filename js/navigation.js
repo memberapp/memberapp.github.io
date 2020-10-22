@@ -203,6 +203,7 @@ function showNewPost(txid) {
 
     if (txid) {
         getAndPopulateQuoteBox(txid);
+        
         document.getElementById('quotetxid').value = txid;
         document.getElementById('memorandumtextarea').style.display = 'none';
         document.getElementById('memorandumtextbutton').style.display = 'none';

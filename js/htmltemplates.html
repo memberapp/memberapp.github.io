@@ -158,18 +158,14 @@ var newpostHTML=`
     <div id="memorandumpreviewareabutton">
         <br />
         <a href=""
-            onclick="document.getElementById('memorandumpreviewarea').style.display = 'block';document.getElementById('memorandumpreviewareabutton').style.display = 'none'; return false;">+see
+            onclick="document.getElementById('memorandumpreviewarea').style.display = 'block';document.getElementById('memorandumpreviewareabutton').style.display = 'none'; memorandumPreview(); return false;">+see
             preview</a>
     </div>
     <div id="memorandumpreviewarea" style="display: none;">
 
         <label for="memorandumpreview">Preview
-            <a href='switchToArticleMode();'>
-                <div id="switchToArticleMode" class="switchToArticleMode">(Switch to Article Mode)</div>
-            </a>
-            <a href='switchToRegularMode();'>
-                <div id="switchToRegularMode" class="switchToRegularMode">(Switch to Regular Mode)</div>
-            </a>
+            <div id="switchToArticleMode" class="switchToArticleMode"><a href='javascript:;' onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
+            <div id="switchToRegularMode" class="switchToRegularMode"><a href='javascript:;' onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
         </label>
         <div id="memorandumpreview" class="fatitem">
         </div>
@@ -461,6 +457,14 @@ pages.member = `
 
 pages.settings = `
 <div class="content">
+    <input id="settingspagingid" value="{pagingid}" style="display:none;">
+    <input id="settingspublickey" value="{publickey}" style="display:none;">
+    <input id="settingspicurl" value="{picurl}" style="display:none;">
+    <input id="settingstokens" value="{tokens}" style="display:none;">
+    <input id="settingsnametime" value="{nametime}" style="display:none;">
+    <input id="settingsrating" value="{rating}" style="display:none;">
+    
+    
     <h2 class="vavilon" data-vavilon="settings">Settings</h2>
     <div class="settingspiccontainer">
         <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture

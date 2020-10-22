@@ -16,6 +16,7 @@ function getAndPopulateQuoteBox(txid) {
         } else {
             throw error('no result returned');
         }
+        addDynamicHTMLElements();
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });

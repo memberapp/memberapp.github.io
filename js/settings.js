@@ -51,8 +51,6 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
     getJSON(theURL).then(function (data) {
 
         //Note, data may not contain any rows, for new or unknown users.
-        var jdenticonname = "";
-        var picurl;
         
         var obj = {
             address:qaddress,
@@ -77,7 +75,11 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
             obj.profile = ds(data[0].profile);
             obj.publickey = san(data[0].publickey);
             obj.pagingid=ds(data[0].pagingid);
-            picurl=data[0].picurl;
+            obj.picurl=ds(data[0].picurl);
+            obj.tokens=Number(data[0].tokens);
+            obj.nametime=Number(data[0].nametime);
+            obj.rating=Number(data[0].rating);
+            
             //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
             //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
             //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
@@ -99,7 +101,7 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
         }
 
          
-        if (picurl) {
+        if (obj.picurl) {
             obj.profilepiclargehtml=`<img id="settingspicturelarge" class="settingspicturelarge" src="`+profilepicbase + san(qaddress) + `.640x640.jpg" style="display: block;" width="640" height="640">`;
         }
 
