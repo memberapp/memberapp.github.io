@@ -68,8 +68,6 @@ function displayContentBasedOnURLParameters() {
         showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("ratings")) {
         showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("bootstrap")) {
-        showBootstrap(sanitizeAlphanumeric(pubkey));
     } else if (action.startsWith("posts")) {
         showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("feed")) {
@@ -138,7 +136,6 @@ function hideAll() {
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('trustgraph').style.display = "none";
-    document.getElementById('bootstrap').style.display = "none";
     document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
@@ -184,11 +181,6 @@ function showRatings(qaddress) {
     show('anchorratings');
     getAndPopulateRatings(qaddress);
     document.getElementById('anchorratings').style.display = "block";
-}
-
-function showBootstrap(qaddress) {
-    show("bootstrap");
-    getAndPopulateBootstrap(qaddress);
 }
 
 function showNewPost(txid) {
@@ -249,10 +241,10 @@ function showSettings() {
         return;
     }
     hideAll();
+    show('settingsanchor');
     getAndPopulateSettings();
     //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
-    document.getElementById('settingsanchor').style.display = "block";
-    document.getElementById('settingsfollow').style.display = "block";
+
 }
 
 function showMember(qaddress, pagingIDHOSTILE) {
@@ -279,12 +271,11 @@ function showMember(qaddress, pagingIDHOSTILE) {
         });
         return;
     }
+
+    show('memberanchor');
     getAndPopulateMember(qaddress);
     getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
-    //getAndPopulate(0, numbers.results, 'memberposts', qaddress);
     document.getElementById('memberanchor').style.display = "block";
-    document.getElementById('memberfollow').style.display = "block";
-    document.getElementById('memberblock').style.display = "block";
     document.getElementById('community').style.display = "block";
     document.getElementById('anchorratings').style.display = "block";
     document.getElementById('trustgraph').style.display = "block";
@@ -430,19 +421,20 @@ function showThread(roottxid, txid, articleStyle) {
 }
 
 function showFollowers(qaddress) {
-    getAndPopulateFollowers(qaddress);
+    getAndPopulateFB('followers',qaddress);
 }
 
 function showFollowing(qaddress) {
-    getAndPopulateFollowing(qaddress);
+    getAndPopulateFB('following',qaddress);
 }
 
 function showBlockers(qaddress) {
-    getAndPopulateBlockers(qaddress);
+    getAndPopulateFB('blockers',qaddress);
 }
 
 function showBlocking(qaddress) {
-    getAndPopulateBlocking(qaddress);
+    getAndPopulateFB('blocking',qaddress);
+
 }
 
 
