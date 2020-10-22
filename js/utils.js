@@ -186,7 +186,7 @@ function scrollToElement(name) {
 }
 
 function ScrollToResolver(elem) {
-  var jump = parseInt(elem.getBoundingClientRect().top * .2);
+  var jump = parseInt((elem.getBoundingClientRect().top-50) * .2);
   document.body.scrollTop += jump;
   document.documentElement.scrollTop += jump;
   if (!elem.lastjump || elem.lastjump > Math.abs(jump)) {

@@ -254,7 +254,6 @@ function replacePageName(match, p1, p2, offset, string) {
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML) {
 
-
     if (!address) { return ""; }
     if (!name) { name = address.substring(0, 10); }
     repliesroot = Number(repliesroot);
@@ -303,7 +302,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                 <div class="votelinks">` + getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes))) + `</div>
                 <div class="postdetails">
                     <div class="title"><p>`+ messageLinksHTML + `</p></div>`
-                    + repostedHTML
+        + repostedHTML
         + `<div class="subtext">
                         <span class="submitter"> 
                         <span class="plaintext">submitted</span> `
@@ -412,18 +411,16 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     if (settings["showimgur"] == "true") {
         //Imgur
         var imgurRegex = global ?
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*?<\/a>/gi :
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z]{3})*.*?<\/a>/i;
-        message = message.replace(imgurRegex,
-            '<a href="https://i.imgur.com$2$3" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage"  src="https://i.imgur.com$2$3.jpg" alt="imgur post $2"></div></a>'
-        );
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
+        message = message.replace(imgurRegex, replaceImgur);
     }
 
     if (settings["showtwitter"] == "true") {
         //Twitter
         var tweetRegex = global ?
-            /<a (?:rel="noopener noreferrer" )?href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*?<\/a>/gi :
-            /<a (?:rel="noopener noreferrer" )?href="https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*?<\/a>/i;
+            /<a (?:rel="noopener noreferrer" )?href="https?:\/\/(?:mobile\.)?twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="https?:\/\/(?:mobile\.)?twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/([0-9]{19})*.*?<\/a>/i;
         //This works but is ugly
         //Add differentiator so that if a tweet is shown multiple times, it has a different id each time
         message = message.replace(tweetRegex,
@@ -434,10 +431,21 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     return message;
 }
 
-function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML) {
+function replaceImgur(match, p1, p2, p3, p4, offset, string) {
+    // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+    //return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
+    if (!p4) { p4 = '.jpg'; }
+    if (p4.toLowerCase() == '.mp4') {
+        return `<a href='javascript:;'><video onclick='if(this.paused){this.play();}else{this.pause();};' class="imgurimage" draggable="false" playsinline="" autoplay="" loop="" class=""><source type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
+    }
+
+    return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
+}
+
+function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML, txid, highlighted) {
     //icon, mainbody and subtext should already be escaped and HTML formatted
     return `
-    <li class="notificationitem notification`+ notificationtype + `">
+    <li class="`+(highlighted?'highlighted ':'')+`notificationitem notification`+ notificationtype + `" id='notification` + san(txid) + `'>
         <div class="notificationdetails">
         <div class="notificationminheight">
             <div class="notificationtitle">`+

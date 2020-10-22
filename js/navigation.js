@@ -55,7 +55,7 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("memberposts")) {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
-        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")));
     } else if (action.startsWith("member")) {
         showMember(sanitizeAlphanumeric(getParameterByName("qaddress")), getParameterByName("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -223,14 +223,14 @@ function showNewPost(txid) {
 }
 
 
-function showNotifications(start, limit) {
+function showNotifications(start, limit, qaddress, txid) {
 
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPosts(0, numbers.results, 'all');
         return;
     }
 
-    getAndPopulateNotifications(start, limit, "notifications", pubkey);
+    getAndPopulateNotifications(start, limit, "notifications", pubkey, txid);
 
 }
 

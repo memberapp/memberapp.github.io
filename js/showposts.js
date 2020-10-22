@@ -165,7 +165,15 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
                 contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true));
-                contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID));
+                var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID)
+
+                if (commentTree == '<ul></ul>') {
+                    commentTree = `<p class='nocommentsyet'>No comments yet . . . reply to start a conversation</p>`;
+                }else{
+                    commentTree = getDivClassHTML("comment-tree", commentTree);
+                }
+
+                contents += commentTree;
             }
         }
 
@@ -428,7 +436,10 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " remembered</span>";
-        repostHTML2 = "<div class='quotepost'>" + getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID+"qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, '') + "</div>";
+        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, '');
+        if (repostHTML2) {
+            repostHTML2 = "<div class='quotepost'>" + repostHTML2 + "</div>";
+        }
     }
 
     if (data.message) {
