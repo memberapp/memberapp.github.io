@@ -45,8 +45,12 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="`+userclass+`">`;
     var linkEnd = `</a> `;
+    var flair="";
+    if(tokens>0){
+        flair = ` <span class="flair">`+ordinal_suffix_of(Number(tokens))+`</span> `;
+    }
     var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic
-        + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`;
+        + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`+flair;
     var ratingHTML = `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     if (ratingStarSize > 0) {
         ret += ratingHTML;
@@ -58,7 +62,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profilepreview">`
         + `<div class='`+profilemeta+`'>`
         + linkStart + memberpic + linkEnd
-        + linkStart + "<span class='member-handle'>" + ds(name) + "</span>" + linkEnd
+        + linkStart + "<span class='member-handle'>" + ds(name) + "</span>" + linkEnd + flair
         + ratingHTML
         + linkStart + "<span class='member-pagingid'>@" + ds(pagingid) + "</span>" + linkEnd
         + `</div>`
