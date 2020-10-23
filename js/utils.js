@@ -335,8 +335,13 @@ function listenForTwitFrameResizes() {
 window.onmessage = (oe) => {
   if (oe.origin != "https://twitframe.com")
     return;
-  if (oe.data.height && oe.data.element.match(/^tweet_/))
-    document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
+  if (oe.data.height && oe.data.element.match(/^tweet_/)){
+    try{
+      document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
+    }catch(err){
+      console.log("Tweet frame resize error: Probably due to running from filesystem: "+err);
+    }
+  }
 }
 
 //short delay showing profile card
