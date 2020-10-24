@@ -316,7 +316,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         txid: san(txid),
         elapsed: getAgeHTML(firstseen, false),
         elapsedcompressed: getAgeHTML(firstseen, true),
-        topic:topic?"t/"+ds(topic):"",
+        topic:topic?getTopicHTML(topic, 't/'):"",
         quote:repostedHTML
     };
 
@@ -466,12 +466,27 @@ function replaceImgur(match, p1, p2, p3, p4, offset, string) {
 
 function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML, txid, highlighted) {
     //icon, mainbody and subtext should already be escaped and HTML formatted
+
+    var obj = {
+        //These must all be HTML safe.
+        highlighted:(highlighted?'highlighted ':''),
+        type:san(notificationtype),
+        txid:san(txid),
+        title:mainbodyHTML,
+        age:subtextHTML,
+        post:addendumHTML
+    }
+
+    if (theStyle == 'nifty' || theStyle == 'none') {
+        return templateReplace(notificationTemplate, obj);
+    }
+
     return `
-    <li class="`+(highlighted?'highlighted ':'')+`notificationitem notification`+ notificationtype + `" id='notification` + san(txid) + `'>
+    <li class="`+(highlighted?'highlighted ':'')+`notificationitem notification`+ san(notificationtype) + `" id='notification` + san(txid) + `'>
         <div class="notificationdetails">
         <div class="notificationminheight">
             <div class="notificationtitle">`+
-        mainbodyHTML + `
+            mainbodyHTML + `
                 <span class="age">` + subtextHTML + `</span>
             </div>`+
         addendumHTML +

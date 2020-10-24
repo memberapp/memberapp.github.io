@@ -152,7 +152,8 @@ var templatePost = `
                         <a href="#"><span data-vavilon="VVtweet"><a href="#">Tweet</span></a>
                         <span class="divider"></span>
                         <span class="actions-title">Blockchain</span>
-                        <span><a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">Memo</a></span>
+                        <span><a rel="noopener noreferrer" target="memo"
+                                href="https://memo.cash/a/{txid}">Memo</a></span>
                         <span><a rel="noopener noreferrer" target="bitcoincom"
                                 href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a></span>
                         <span><a rel="noopener noreferrer" target="btccom"
@@ -163,11 +164,11 @@ var templatePost = `
                                 href="https://explorer.bitcoinunlimited.info/tx/{txid}">Bitcoin Unlimited</a></span>
                         <span class="divider"></span>
                         <span class="actions-title" data-vavilon="VVmoderate">Moderate</span>
-                        <a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');" href="javascript:;"><span
-                                data-vavilon="VVflagpost">Flag post</span></a>
+                        <a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
+                            href="javascript:;"><span data-vavilon="VVflagpost">Flag post</span></a>
                         <a id="hideuserlinkposts{diff}{txid}"
-                            onclick="hideuser('{address}','','hideuserlinkposts{diff}{txid}');" href="javascript:;"><span
-                                data-vavilon="VVflaguser">Flag user</span></a>
+                            onclick="hideuser('{address}','','hideuserlinkposts{diff}{txid}');"
+                            href="javascript:;"><span data-vavilon="VVflaguser">Flag user</span></a>
                     </div>
                 </span>
             </div>
@@ -191,4 +192,19 @@ var templatePost = `
         </div>
     </div>
 </div>
+`;
+
+var notificationTemplate=`
+<li class="{highlighted}notificationitem notification{type}" id='notification{txid}'>
+    <div class="notificationdetails">
+        <div class="notificationminheight">
+            <div class="notificationtitle">
+                {title}
+                <span class="age">{age}</span>
+            </div>
+            {post}
+        </div>
+        <hr class="notificationhr" />
+    </div>
+</li>
 `;
