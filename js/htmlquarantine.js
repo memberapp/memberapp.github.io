@@ -16,7 +16,7 @@
 
 
 //Get html for a user, given their address and name
-function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, theObj) {
+function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime) {
     if(!address){
         return "error:no address for user";
     }
@@ -72,13 +72,25 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         + `<span class='profilepreviewfollowbutton'>`+followButton+`</span></div> `
         + `</span></span>`;
 
-    if (theObj) {
+     var obj = {
         //These must all be HTML safe.
-        theObj.address = san(address);
-        theObj.profilepic = memberpic;
-        theObj.handle = ds(name);
-        theObj.pagingid = ds(pagingid);
+        address:san(address),
+        profilepicsmall:memberpic,
+        handle:ds(name),
+        pagingid:ds(pagingid),
+        flair:flair,
+        rating:Number(ratingRawScore),
+        followbutton:followButton,
+        following:Number(following),
+        followers:Number(followers),
+        profile:ds(profile),
+        diff:ratingID
     }
+
+    if (theStyle == 'nifty' || theStyle == 'none') {
+        return templateReplace(userTemplate, obj);
+    }
+
     return ret;
 }
 
@@ -290,16 +302,22 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
     }
 
+    var theAuthorHTML=userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, obj);
     var obj = {
         //These must all be HTML safe 
+        author: theAuthorHTML,
         message: messageLinksHTML,
         replies: Number(replies),
-        likes: (Number(likes) - Number(dislikes)),
+        likesbalance: (Number(likes) - Number(dislikes)),
+        likes: Number(likes),
+        dislikes: Number(dislikes),
         remembers: Number(repostcount),
         tips: Number(tips),
         txid: san(txid),
         elapsed: getAgeHTML(firstseen, false),
-        elapsedcompressed: getAgeHTML(firstseen, true)
+        elapsedcompressed: getAgeHTML(firstseen, true),
+        topic:topic?"t/"+ds(topic):"",
+        quote:repostedHTML
     };
 
     var retVal = `<div class="post">
@@ -312,7 +330,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                         <span class="plaintext">submitted</span> `
         + ` ` + getAgeHTML(firstseen)
         + ` <span class="plaintext">` + getSafeTranslation('by') + `</span> `
-        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, obj)
+        + theAuthorHTML
         + getTopicHTML(topic, 'to topic/')
         + `</span>
             <span class="subtextbuttons">`

@@ -49,110 +49,117 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
 
     var theURL = dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
-
-        //Note, data may not contain any rows, for new or unknown users.
-        
-        var obj = {
-            address:qaddress,
-            cashaddress:new BITBOX.Address().toCashAddress(qaddress),
-            followers:0,
-            following:0,
-            muters:0,
-            muting:0,
-            handle:"",
-            profile:"",
-            pagingid:"",
-            profilepiclargehtml:"",
-        };
-        
-        if (data[0]) {
-            obj.followers = Number(data[0].followers);
-            obj.following = Number(data[0].following);
-            obj.muters = Number(data[0].blockers);
-            obj.muting = Number(data[0].blocking);
-            obj.handle = ds(data[0].name);
-            obj.handlefunction = unicodeEscape(data[0].name);
-            obj.profile = ds(data[0].profile);
-            obj.publickey = san(data[0].publickey);
-            obj.pagingid=ds(data[0].pagingid);
-            obj.picurl=ds(data[0].picurl);
-            obj.tokens=Number(data[0].tokens);
-            obj.nametime=Number(data[0].nametime);
-            obj.rating=Number(data[0].rating);
-            
-            //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
-            //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
-            //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
-            document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
-            //jdenticonname = data[0].name;
-            //img/profilepics/`+san(address)+`128x128.jpg
-        }
-
-        if (data.length < 1 || Number(data[0].isfollowing) == 0) {
-            obj.followbuttonhtml = clickActionNamedHTML("follow", qaddress, "follow");
-        } else {
-            obj.followbuttonhtml = clickActionNamedHTML("unfollow", qaddress, "unfollow");
-        }
-        
-        if (data.length < 1 || Number(data[0].isblocked) == 0) {
-            obj.mutebuttonhtml = clickActionNamedHTML("mute", qaddress, "mute");
-        } else {
-            obj.mutebuttonhtml = clickActionNamedHTML("unmute", qaddress, "unmute");
-        }
-
-         
-        if (obj.picurl) {
-            obj.profilepiclargehtml=`<img id="settingspicturelarge" class="settingspicturelarge" src="`+profilepicbase + san(qaddress) + `.640x640.jpg" style="display: block;" width="640" height="640">`;
-        }
-
-        //var jdenticon = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
-
-        if (pre == "settings") {
-            obj.privatekey = privkey;
-            obj.seedphrase = (mnemonic == "" ? "" : "Seed Phrase: " + mnemonic + "<br/>") + "Compressed Private Key: " + privkey;
-        }
-
-        document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);
-    
-        
-        if (pre == "settings") {
-            
-            //try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
-        
-            updateSettings();
-            document.getElementById(pre + 'nametextbutton').disabled = true;
-            document.getElementById(pre + 'profiletextbutton').disabled = true;
-            document.getElementById(pre + 'picbutton').disabled = true;
-            //After 3 ratings, members cannot change their handle
-            if (data.length>0 && data[0].ratingnumber>2){
-                document.getElementById(pre + 'nametext').disabled = true;
-            }
-        }
-
-
-
-        //This condition checks that the user being viewed is not the logged in user
-        if (pre == "member" && qaddress == pubkey) {
-            document.getElementById(pre + 'ratinggroup').style.display = "none";
-        } else if (pre == "member") {
-
-            document.getElementById(pre + 'ratinggroup').style.display = "block";
-            document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress, data);
-            document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
-
-            var ratingScore = 0;
-            if (data.length > 0) {
-                ratingScore = Number(data[0].rating);
-            }
-            document.getElementById('memberrating').innerHTML = `<div class="starrating"><div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + ratingScore + `" id="memberrating` + qaddress + `"></div></div>`;
-            var theElement = document.getElementById(`memberrating` + qaddress);
-            var starRating1 = addSingleStarsRating(theElement);
-        }
-        
-        jdenticon();
+        getDataCommonToSettingsAndMemberFinally(qaddress, pre, data);
     }, function (status) { //error detection....
+        //If this fails, we still want to show settings page, so user can change server etc
+        getDataCommonToSettingsAndMemberFinally(qaddress, pre, null);
         showErrorMessage(status, null, theURL);
     });
+}
+
+function getDataCommonToSettingsAndMemberFinally(qaddress, pre, data){
+
+    //Note, data may not contain any rows, for new or unknown users.
+        
+    var obj = {
+        address:qaddress,
+        cashaddress:new BITBOX.Address().toCashAddress(qaddress),
+        followers:0,
+        following:0,
+        muters:0,
+        muting:0,
+        handle:"",
+        profile:"",
+        pagingid:"",
+        profilepiclargehtml:"",
+    };
+    
+    if (data && data[0]) {
+        obj.followers = Number(data[0].followers);
+        obj.following = Number(data[0].following);
+        obj.muters = Number(data[0].blockers);
+        obj.muting = Number(data[0].blocking);
+        obj.handle = ds(data[0].name);
+        obj.handlefunction = unicodeEscape(data[0].name);
+        obj.profile = ds(data[0].profile);
+        obj.publickey = san(data[0].publickey);
+        obj.pagingid=ds(data[0].pagingid);
+        obj.picurl=ds(data[0].picurl);
+        obj.tokens=Number(data[0].tokens);
+        obj.nametime=Number(data[0].nametime);
+        obj.rating=Number(data[0].rating);
+        
+        //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
+        //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
+        //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
+        document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
+        //jdenticonname = data[0].name;
+        //img/profilepics/`+san(address)+`128x128.jpg
+    }
+
+    if (data && (data.length < 1 || Number(data[0].isfollowing) == 0)) {
+        obj.followbuttonhtml = clickActionNamedHTML("follow", qaddress, "follow");
+    } else {
+        obj.followbuttonhtml = clickActionNamedHTML("unfollow", qaddress, "unfollow");
+    }
+    
+    if (data && (data.length < 1 || Number(data[0].isblocked) == 0)) {
+        obj.mutebuttonhtml = clickActionNamedHTML("mute", qaddress, "mute");
+    } else {
+        obj.mutebuttonhtml = clickActionNamedHTML("unmute", qaddress, "unmute");
+    }
+
+     
+    if (obj.picurl) {
+        obj.profilepiclargehtml=`<img id="settingspicturelarge" class="settingspicturelarge" src="`+profilepicbase + san(qaddress) + `.640x640.jpg" style="display: block;" width="640" height="640">`;
+    }
+
+    //var jdenticon = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
+
+    if (pre == "settings") {
+        obj.privatekey = privkey;
+        obj.seedphrase = (mnemonic == "" ? "" : "Seed Phrase: " + mnemonic + "<br/>") + "Compressed Private Key: " + privkey;
+    }
+
+    document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);
+
+    
+    if (pre == "settings") {
+        
+        //try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
+    
+        updateSettings();
+        document.getElementById(pre + 'nametextbutton').disabled = true;
+        document.getElementById(pre + 'profiletextbutton').disabled = true;
+        document.getElementById(pre + 'picbutton').disabled = true;
+        //After 3 ratings, members cannot change their handle
+        if (data && data[0] && data[0].ratingnumber>2){
+            document.getElementById(pre + 'nametext').disabled = true;
+        }
+    }
+
+
+
+    //This condition checks that the user being viewed is not the logged in user
+    if (pre == "member" && qaddress == pubkey) {
+        document.getElementById(pre + 'ratinggroup').style.display = "none";
+    } else if (pre == "member") {
+
+        document.getElementById(pre + 'ratinggroup').style.display = "block";
+        document.getElementById(pre + 'ratingcomment').innerHTML = getRatingComment(qaddress, data);
+        document.getElementById(pre + 'ratingcommentinputbox' + qaddress).onchange = function () { starRating1.setRating(0); };
+
+        var ratingScore = 0;
+        if (data.length > 0) {
+            ratingScore = Number(data[0].rating);
+        }
+        document.getElementById('memberrating').innerHTML = `<div class="starrating"><div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + ratingScore + `" id="memberrating` + qaddress + `"></div></div>`;
+        var theElement = document.getElementById(`memberrating` + qaddress);
+        var starRating1 = addSingleStarsRating(theElement);
+    }
+    
+    jdenticon();
+
 }
 
 

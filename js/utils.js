@@ -19,17 +19,17 @@ function timeSince(timestamp, compress) {
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%s d" : "%s days ago", interval);
+    return getSafeTranslation(compress ? "%sd" : "%s days ago", interval);
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%s h" : "%s hours ago", interval);
+    return getSafeTranslation(compress ? "%sh" : "%s hours ago", interval);
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%s m" : "%s minutes ago", interval);
+    return getSafeTranslation(compress ? "%sm" : "%s minutes ago", interval);
   }
-  return getSafeTranslation(compress ? "%s s" : "%s seconds ago", Math.floor(seconds));
+  return getSafeTranslation(compress ? "%ss" : "%s seconds ago", Math.floor(seconds));
 }
 
 var ordinal_suffix_of = function(i) {
