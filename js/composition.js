@@ -41,15 +41,39 @@ function switchToRegularMode() {
 }
 
 function memorandumPreview() {
-    var name = document.getElementById('settingsnametext').value;
+    if(document.getElementById('memorandumpreviewarea').style.display=='none'){
+        //Only run the preview if the preview area is visible
+        return;
+    }
     var time = new Date().getTime() / 1000;
-    document.getElementById('memorandumpreview').innerHTML =
-        ``
-        + getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, null, 'preview', 0, '')
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, null, 'preview', document.getElementById('memorandumtopic').value, null, 0, '');
 
-    //todo, should update the jdenticon and rating here
-}
+    //Grab needed values from settings page
+    var name = document.getElementById('settingsnametext').value;
+    var followers = document.getElementById('settingsfollowersnumber').innerHTML;
+    var following = document.getElementById('settingsfollowingnumber').innerHTML; 
+    var blockers = document.getElementById('settingsblockersnumber').innerHTML; 
+    var blocking = document.getElementById('settingsblockingnumber').innerHTML; 
+
+    var pagingid = document.getElementById('settingspagingid').value;
+    var profile = document.getElementById('settingsprofiletext').value;
+    var publickey = document.getElementById('settingspublickey').value;
+    var picurl = document.getElementById('settingspicurl').value;
+    var tokens = document.getElementById('settingstokens').value;
+    var nametime = document.getElementById('settingsnametime').value;
+    var rating = document.getElementById('settingsrating').value;
+
+    var isfollowing = true;
+
+    var repostedHTML = document.getElementById('quotepost').innerHTML;
+    
+
+
+    document.getElementById('memorandumpreview').innerHTML =
+        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML)
+        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', document.getElementById('memorandumtopic').value, null, 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime);
+
+        addDynamicHTMLElements();
+    }
 
 
 function topictitleChanged() {
@@ -136,7 +160,7 @@ function postmemorandum() {
     document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
 
     if(txid){
-        quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted, txid);
+        quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function(txidnew){sendRepostNotification(txid,"newpostmemorandumstatus",topic, txidnew);}, txid);
     }
     else if (postbody.length == 0 || document.getElementById('memorandumtextarea').style.display == 'none') {
         //post a regular memo
@@ -145,25 +169,31 @@ function postmemorandum() {
         postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
     }
 
-
-
     //if (typeof popupOverlay !== "undefined") {
     //    popupOverlay.hide();
     //}
 }
 
+function sendRepostNotification(txid,divForStatus, topic, newtxid){
+
+    var replytext="Your post was remembered";
+    if(topic){
+        replytext+=" in topic "+topic;
+    }
+    replytext+=" https://member.cash/p/"+newtxid.substr(0,10);
+    var replyHex = new Buffer(replytext).toString('hex');
+
+    sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, function(txidnew){memorandumpostcompleted(newtxid);});
+}
+
 function memorandumpostcompleted(txid) {
     txid = san(txid);
-    var encodedURL = `https://twitter.com/intent/tweet?text=` + encodeURIComponent(document.getElementById('memorandumtitle').value + '\r\n' + ` member.cash/?` + txid.substr(0, 4) + `#thread?post=` + txid.substr(0, 10));
+    var encodedURL = `https://twitter.com/intent/tweet?text=` + encodeURIComponent(document.getElementById('memorandumtitle').value + '\r\n' + ` member.cash/p/` + txid.substr(0, 10));
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('`+txid+`')" href="#thread?post=`+txid+`">View It</a> or  <a rel='noopener noreferrer' target="_blank" href="` + encodedURL + `">Also Post To Twitter (opens a new window)</a>`;
     document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('` + txid + `')" href="#thread?post=` + txid + `" onclick="nlc();">View It</a> or  <a href="" onclick="window.open('` + encodedURL + `', 'twitterwindow', 'width=300,height=250');return false;">Also Post To Twitter (opens a new window)</a>`;
 
-
-
     //iframe not allowed by twitter
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a rel='noopener noreferrer' onclick="createiframe('`+encodedURL+`','posttotwitter');return false;" href="">Also Post To Twitter</a><div id="posttotwitter"></div>`;
-
-
 
     document.getElementById('memorandumtitle').value = "";
     document.getElementById('newposttamemorandum').value = "";

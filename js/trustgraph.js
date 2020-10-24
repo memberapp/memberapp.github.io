@@ -4,6 +4,7 @@ function getAndPopulateTrustGraph(member, target) {
 
     var page='trustgraphdetails';
     //First clear old graph
+    document.getElementById('trustgraph').innerHTML=trustgraphHTML;
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
     

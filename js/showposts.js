@@ -2,20 +2,21 @@
 
 "use strict";
 
-function getAndPopulateQuoteBox(txid){
-    var page='quotepost';
+function getAndPopulateQuoteBox(txid) {
+    var page = 'quotepost';
     showOnly(page);
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
     var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkey + '&txid=' + txid;
     getJSON(theURL).then(function (data) {
         var contents = "";
-        if(data[0]){
+        if (data[0]) {
             contents = getHTMLForPost(data[0], 1, page, 0, null, true);
-            document.getElementById(page).innerHTML=contents;    
-        }else{
+            document.getElementById(page).innerHTML = contents;
+        } else {
             throw error('no result returned');
         }
+        addDynamicHTMLElements();
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -55,7 +56,11 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
+            try{
+                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
+            }catch(err){
+                console.log(err);
+            }
         }
 
         if (contents == "") {
@@ -69,8 +74,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         if (topicnameHOSTILE != null && topicnameHOSTILE != "" && topicnameHOSTILE.toLowerCase() != "myfeed" && topicnameHOSTILE.toLowerCase() != "mypeeps") {
             showOnly("topicmeta");
         }
-    
-        
+
+
 
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start, true);
     }, function (status) { //error detection....
@@ -155,7 +160,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         }
 
         //Treat entries in polls topic as special
-        if(data.length > 0 && data[0].topic.toLowerCase()=='polls'){
+        if (data.length > 0 && data[0].topic.toLowerCase() == 'polls') {
             earliestReply = "none";
             earliestReplyTXID = "none";
             earliestReplyTime = 9999999999;
@@ -165,7 +170,15 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
                 contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true));
-                contents += getDivClassHTML("comment-tree", getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID));
+                var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID)
+
+                if (commentTree == '<ul></ul>') {
+                    commentTree = `<p class='nocommentsyet'>No comments yet . . . reply to start a conversation</p>`;
+                }else{
+                    commentTree = getDivClassHTML("comment-tree", commentTree);
+                }
+
+                contents += commentTree;
             }
         }
 
@@ -341,9 +354,11 @@ function setDisplayNone() {
     this.style.display = "none";
 }
 
-function showScoresExpanded() {
-    var profileelement = this.id.replace('scores', 'scoresexpanded');
-    var retxid = profileelement.substr(14, 64);
+function showScoresExpanded(retxid,profileelement) {
+    if(this){
+        var profileelement = this.id.replace('scores', 'scoresexpanded');
+        var retxid = profileelement.substr(14, 64);
+    }
     var closeHTML = `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">close</a></div>`;
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
@@ -421,19 +436,25 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
 
     let mainRatingID = starindex + page + ds(data.address);
     var retHTML = "";
-    var repostHTML1="";
-    var repostHTML2="";
+    var repostHTML1 = "";
+    var repostHTML2 = "";
 
     if (data.repost) {
+        //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " remembered</span>";
-        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID, data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, '');
+        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.nametime, '');
+        if (repostHTML2) {
+            repostHTML2 = "<div class='quotepost'>" + repostHTML2 + "</div>";
+        }
     }
 
-    if(data.message){
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, repostHTML2);
-    }else {
-        retHTML = repostHTML1+repostHTML2;
+    if (data.message) {
+        //post with message
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing,  data.nametime, repostHTML2);
+    } else {
+        //repost with no message
+        retHTML = repostHTML1 + repostHTML2;
     }
 
 
@@ -446,7 +467,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime);
 }
 
 function showReplyButton(txid, page, divForStatus) {
