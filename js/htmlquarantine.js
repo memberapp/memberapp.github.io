@@ -454,11 +454,10 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
 }
 
 function replaceImgur(match, p1, p2, p3, p4, offset, string) {
-    // p1 is nondigits, p2 digits, and p3 non-alphanumerics
     //return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
     if (!p4) { p4 = '.jpg'; }
     if (p4.toLowerCase() == '.mp4') {
-        return `<a href='javascript:;'><video onclick='if(this.paused){this.play();}else{this.pause();};' class="imgurimage" draggable="false" playsinline="" autoplay="" loop="" class=""><source type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
+        return `<a href='javascript:;'><video controls class="imgurimage" draggable="false" playsinline="true" autoplay="false" loop="true"><source type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
     }
 
     return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
