@@ -354,9 +354,11 @@ function setDisplayNone() {
     this.style.display = "none";
 }
 
-function showScoresExpanded() {
-    var profileelement = this.id.replace('scores', 'scoresexpanded');
-    var retxid = profileelement.substr(14, 64);
+function showScoresExpanded(retxid,profileelement) {
+    if(this){
+        var profileelement = this.id.replace('scores', 'scoresexpanded');
+        var retxid = profileelement.substr(14, 64);
+    }
     var closeHTML = `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">close</a></div>`;
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";

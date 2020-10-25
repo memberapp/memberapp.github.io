@@ -16,7 +16,7 @@
 
 
 //Get html for a user, given their address and name
-function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, theObj) {
+function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime) {
     if(!address){
         return "error:no address for user";
     }
@@ -45,8 +45,12 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="`+userclass+`">`;
     var linkEnd = `</a> `;
+    var flair="";
+    if(tokens>0){
+        flair = ` <span class="flair">`+ordinal_suffix_of(Number(tokens))+`</span> `;
+    }
     var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic
-        + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`;
+        + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`+flair;
     var ratingHTML = `<div class="starrating"><div data-ratingsize="` + Number(ratingStarSize) + `" data-ratingaddress="` + san(address) + `" data-ratingraw="` + Number(ratingRawScore) + `" id="rating` + ratingID + `"></div></div>`;
     if (ratingStarSize > 0) {
         ret += ratingHTML;
@@ -58,7 +62,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     ret += `<span style="display:none;" id="profileinfo` + ratingID + `" data-profileaddress="` + san(address) + `" class="profilepreview">`
         + `<div class='`+profilemeta+`'>`
         + linkStart + memberpic + linkEnd
-        + linkStart + "<span class='member-handle'>" + ds(name) + "</span>" + linkEnd
+        + linkStart + "<span class='member-handle'>" + ds(name) + "</span>" + linkEnd + flair
         + ratingHTML
         + linkStart + "<span class='member-pagingid'>@" + ds(pagingid) + "</span>" + linkEnd
         + `</div>`
@@ -68,13 +72,25 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         + `<span class='profilepreviewfollowbutton'>`+followButton+`</span></div> `
         + `</span></span>`;
 
-    if (theObj) {
+     var obj = {
         //These must all be HTML safe.
-        theObj.address = san(address);
-        theObj.profilepic = memberpic;
-        theObj.handle = ds(name);
-        theObj.pagingid = ds(pagingid);
+        address:san(address),
+        profilepicsmall:memberpic,
+        handle:ds(name),
+        pagingid:ds(pagingid),
+        flair:flair,
+        rating:Number(ratingRawScore),
+        followbutton:followButton,
+        following:Number(following),
+        followers:Number(followers),
+        profile:ds(profile),
+        diff:ratingID
     }
+
+    if (theStyle == 'nifty' || theStyle == 'none') {
+        return templateReplace(userTemplate, obj);
+    }
+
     return ret;
 }
 
@@ -286,16 +302,22 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
     }
 
+    var theAuthorHTML=userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, obj);
     var obj = {
         //These must all be HTML safe 
+        author: theAuthorHTML,
         message: messageLinksHTML,
         replies: Number(replies),
-        likes: (Number(likes) - Number(dislikes)),
+        likesbalance: (Number(likes) - Number(dislikes)),
+        likes: Number(likes),
+        dislikes: Number(dislikes),
         remembers: Number(repostcount),
         tips: Number(tips),
         txid: san(txid),
         elapsed: getAgeHTML(firstseen, false),
-        elapsedcompressed: getAgeHTML(firstseen, true)
+        elapsedcompressed: getAgeHTML(firstseen, true),
+        topic:topic?getTopicHTML(topic, 't/'):"",
+        quote:repostedHTML
     };
 
     var retVal = `<div class="post">
@@ -308,7 +330,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
                         <span class="plaintext">submitted</span> `
         + ` ` + getAgeHTML(firstseen)
         + ` <span class="plaintext">` + getSafeTranslation('by') + `</span> `
-        + userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, obj)
+        + theAuthorHTML
         + getTopicHTML(topic, 'to topic/')
         + `</span>
             <span class="subtextbuttons">`
@@ -432,11 +454,10 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
 }
 
 function replaceImgur(match, p1, p2, p3, p4, offset, string) {
-    // p1 is nondigits, p2 digits, and p3 non-alphanumerics
     //return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
     if (!p4) { p4 = '.jpg'; }
     if (p4.toLowerCase() == '.mp4') {
-        return `<a href='javascript:;'><video onclick='if(this.paused){this.play();}else{this.pause();};' class="imgurimage" draggable="false" playsinline="" autoplay="" loop="" class=""><source type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
+        return `<a href='javascript:;'><video controls class="imgurimage" draggable="false" playsinline="true" autoplay="false" loop="true"><source type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
     }
 
     return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
@@ -444,12 +465,27 @@ function replaceImgur(match, p1, p2, p3, p4, offset, string) {
 
 function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML, txid, highlighted) {
     //icon, mainbody and subtext should already be escaped and HTML formatted
+
+    var obj = {
+        //These must all be HTML safe.
+        highlighted:(highlighted?'highlighted ':''),
+        type:san(notificationtype),
+        txid:san(txid),
+        title:mainbodyHTML,
+        age:subtextHTML,
+        post:addendumHTML
+    }
+
+    if (theStyle == 'nifty' || theStyle == 'none') {
+        return templateReplace(notificationTemplate, obj);
+    }
+
     return `
-    <li class="`+(highlighted?'highlighted ':'')+`notificationitem notification`+ notificationtype + `" id='notification` + san(txid) + `'>
+    <li class="`+(highlighted?'highlighted ':'')+`notificationitem notification`+ san(notificationtype) + `" id='notification` + san(txid) + `'>
         <div class="notificationdetails">
         <div class="notificationminheight">
             <div class="notificationtitle">`+
-        mainbodyHTML + `
+            mainbodyHTML + `
                 <span class="age">` + subtextHTML + `</span>
             </div>`+
         addendumHTML +

@@ -108,6 +108,15 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
     let mainRatingID = starindex + page + ds(data.origin);
     let postRatingID = "";
 
+    //For root posts, we show number of replies as total
+    //For comments, just the number of direct replies
+    if(data.ltxid==data.lroottxid){
+        data.lreplies=data.lrepliesroot;
+    }
+    if(data.rtxid==data.rroottxid){
+        data.rreplies=data.rrepliesroot;
+    }
+
     switch (type) {
         case "thread":
             postRatingID = starindex + page + ds(data.raddress) + type;

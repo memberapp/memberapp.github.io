@@ -19,17 +19,32 @@ function timeSince(timestamp, compress) {
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%s d" : "%s days ago", interval);
+    return getSafeTranslation(compress ? "%sd" : "%s days ago", interval);
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%s h" : "%s hours ago", interval);
+    return getSafeTranslation(compress ? "%sh" : "%s hours ago", interval);
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%s m" : "%s minutes ago", interval);
+    return getSafeTranslation(compress ? "%sm" : "%s minutes ago", interval);
   }
-  return getSafeTranslation(compress ? "%s s" : "%s seconds ago", Math.floor(seconds));
+  return getSafeTranslation(compress ? "%ss" : "%s seconds ago", Math.floor(seconds));
+}
+
+var ordinal_suffix_of = function(i) {
+  var j = i % 10,
+      k = i % 100;
+  if (j == 1 && k != 11) {
+      return i + "st";
+  }
+  if (j == 2 && k != 12) {
+      return i + "nd";
+  }
+  if (j == 3 && k != 13) {
+      return i + "rd";
+  }
+  return i + "th";
 }
 
 var getJSON = function (url) {
@@ -320,8 +335,13 @@ function listenForTwitFrameResizes() {
 window.onmessage = (oe) => {
   if (oe.origin != "https://twitframe.com")
     return;
-  if (oe.data.height && oe.data.element.match(/^tweet_/))
-    document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
+  if (oe.data.height && oe.data.element.match(/^tweet_/)){
+    try{
+      document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
+    }catch(err){
+      console.log("Tweet frame resize error: Probably due to running from filesystem: "+err);
+    }
+  }
 }
 
 //short delay showing profile card
