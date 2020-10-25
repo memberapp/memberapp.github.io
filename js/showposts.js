@@ -409,7 +409,7 @@ function addSingleStarsRating(theElement) {
         disableText: disabledtext ? disabledtext : 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
-            if (ratingText != null && ratingText !== undefined) {
+            if (ratingText) {
                 rateCallbackAction(rating, this, ratingText.value);
             } else {
                 rateCallbackAction(rating, this);

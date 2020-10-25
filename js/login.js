@@ -71,6 +71,7 @@ window.onbeforeunload = function () {
 
 function init() {
     document.getElementById('previewcontent').style.display = 'none';
+    document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
     document.getElementById('header').innerHTML = headerHTML;
     document.getElementById('footer').innerHTML = footerHTML;
     document.getElementById('version').innerHTML = version;
@@ -207,6 +208,12 @@ function login(loginkey) {
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {});
     updateSettings();
     getAndPopulateSettings();
+
+    //Register public key with utxo server so that utxos can be cached
+    let ecpair = new BITBOX.ECPair().fromWIF(privkey);
+    var pubkeyHex = ecpair.getPublicKeyBuffer().toString('hex');
+    getJSON(dropdowns.utxoserver + 'reg/'+pubkeyHex+'?a=1').then(function (data) {}, function (status) {});
+    
 
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     //Get latest rate and update balance
