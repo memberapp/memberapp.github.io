@@ -11,7 +11,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '4.14.2';
+const version = '4.14.3';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -290,6 +290,7 @@ self.addEventListener('notificationclick', function (event) {
     }
 
     if (matchingClient) {
+      matchingClient.url="https://member.cash"+page;
       return matchingClient.focus();
     } else {
       return clients.openWindow(page).then(windowClient => windowClient ? windowClient.focus() : null);
