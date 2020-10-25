@@ -683,6 +683,9 @@ a {
   padding: 0px;
   margin: 0.25rem; }
 
+[id^=replycompletedthread] {
+  text-align: center; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 1rem;
@@ -1003,7 +1006,11 @@ textarea {
     background: #2291EB;
     color: white;
     border-radius: 0.25rem;
-    margin-left: 0.25rem; }
+    margin-left: 0.25rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
 
 a {
   text-decoration: none;
@@ -1470,6 +1477,10 @@ video {
                 word-break: break-word; }
                 .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody a {
                   overflow-wrap: anywhere; }
+                .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody ul li {
+                  list-style-type: disc; }
+                .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody ol li {
+                  list-style-type: decimal; }
       .comment-tree ul li ul {
         margin-left: 2.5rem;
         border-left: 1px solid rgba(0, 0, 0, 0.12) !important; }
@@ -2183,6 +2194,9 @@ footer {
     #newpost #memorandumarea #memorandumtextbutton {
       margin-bottom: 0.875rem;
       font-weight: bold; }
+    #newpost #memorandumarea #newpostmemorandumcompleted {
+      text-align: center;
+      margin: 1rem 0; }
     #newpost #memorandumarea #memorandumpreviewarea br {
       display: block; }
     #newpost #memorandumarea #memorandumpreviewareabutton {
@@ -3142,6 +3156,8 @@ tbody tr td .filterprovider {
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
+  #notifications .highlighted {
+    background-color: #ddeefc; }
 
 #blockers,
 #blocking,

@@ -1,3 +1,55 @@
+var mainbodyHTML=`
+<header id="header"></header>
+<div class="mainbody">
+    <div id="loading" class="applicationpage loading" style="display: none;">
+        <div class="loading"></div>
+    </div>
+
+    <div id="lowfundswarning" class="alert" style="display: none;"></div>
+
+    <div id="toolsanchor" class="applicationpage" style="display: none;"></div>
+
+    <div id="newpost" class="applicationpage newpost" style="display: none;"></div>
+
+    <div id="feed" style="display: none;"></div>
+
+    <div id="notifications" style="display: none;"></div>
+
+    <div id="memberanchor" class="member" style="display: none;"></div>
+
+    <div id="trustgraph" class="trustgraph" style="display:none;"></div>
+
+    <div id="settingsanchor" style="display: none;"></div>
+
+    <div id="anchorratings" class="ratings" style="display: none;"></div>
+
+    <div id="community" class="community" style="display: none;"></div>
+
+    <div id="memberposts" style="display: none;"></div>
+
+    <div id="followers" class="followers" style="display: none;"></div>
+
+    <div id="following" class="following" style="display: none;"></div>
+
+    <div id="blockers" class="blockers" style="display: none;"></div>
+
+    <div id="blocking" class="blocking" style="display: none;"></div>
+
+    <div id="messagesanchor" class="applicationpage" style="display: none;"></div>
+
+    <div id="topicmeta" class="applicationpage" style="display: none;"></div>
+
+    <div id="posts" style="display: none;"></div>
+
+    <div id="comments" style="display: none;"></div>
+
+    <div id="thread" style="display: none;"></div>
+
+    <div id="loginbox" class="applicationpage loginbox" style="display: none;"></div>
+
+    <div id="topiclistanchor" style="display: none;"></div>
+</div>`;
+
 var loginboxHTML=`
 <div class="content">
     <br />
@@ -164,8 +216,10 @@ var newpostHTML=`
     <div id="memorandumpreviewarea" style="display: none;">
 
         <label for="memorandumpreview">Preview
-            <div id="switchToArticleMode" class="switchToArticleMode"><a href='javascript:;' onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
-            <div id="switchToRegularMode" class="switchToRegularMode"><a href='javascript:;' onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
+            <div id="switchToArticleMode" class="switchToArticleMode"><a href='javascript:;'
+                    onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
+            <div id="switchToRegularMode" class="switchToRegularMode"><a href='javascript:;'
+                    onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
         </label>
         <div id="memorandumpreview" class="fatitem">
         </div>
@@ -463,8 +517,8 @@ pages.settings = `
     <input id="settingstokens" value="{tokens}" style="display:none;">
     <input id="settingsnametime" value="{nametime}" style="display:none;">
     <input id="settingsrating" value="{rating}" style="display:none;">
-    
-    
+
+
     <h2 class="vavilon" data-vavilon="settings">Settings</h2>
     <div class="settingspiccontainer">
         <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture
@@ -733,29 +787,23 @@ var headerHTML = `
                 <span class="headerbuttons">
                     <span onclick="refreshPool();return false;" title="Refresh Balance" id="balancedetails"
                         class="balancedetails"><span id="balance">0</span></span>
-                    <a id="myfeedbutton" title="My Feed (Latest posts from your topics or peeps)"
-                        class="btn" href="#myfeed" onclick="nlc();">📰</a>
-                    <a id="notificationsbutton" title="Notifications" class="btn"
-                        href="#notifications?start=0" onclick="nlc();">🔔<span class="alertcount noselect"
-                            id="alertcount"></span></a>
-                    <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
-                        onclick="nlc();">🖊️</a>
-                    <a id="privatemessagesbutton" title="Messages" class="btn privatemessagesbutton"
-                        href="#messages" onclick="nlc();">📧<span class="alertcount noselect"
-                            id="alertcountpm"></span></a>
-                    <a id="settingsbutton" title="Settings" class="btn" href="#settings"
-                        onclick="nlc();">⚙️</a>
+                    <a id="myfeedbutton" title="My Feed (Latest posts from your topics or peeps)" class="btn"
+                        href="#myfeed" onclick="nlc();">📰</a>
+                    <a id="notificationsbutton" title="Notifications" class="btn" href="#notifications?start=0"
+                        onclick="nlc();">🔔<span class="alertcount noselect" id="alertcount"></span></a>
+                    <a id="newbutton" title="New Post" class="btn newpostbutton" href="#new" onclick="nlc();">🖊️</a>
+                    <a id="privatemessagesbutton" title="Messages" class="btn privatemessagesbutton" href="#messages"
+                        onclick="nlc();">📧<span class="alertcount noselect" id="alertcountpm"></span></a>
+                    <a id="settingsbutton" title="Settings" class="btn" href="#settings" onclick="nlc();">⚙️</a>
                     <a id="toolsbutton" title="Tools" class="btn" href="#tools" onclick="nlc();">🛠️</a>
                 </span>
             </span>
             <span class="headerbuttons">
-                <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
-                    onclick="nlc();">📚</a>
+                <a id="topiclistbutton" title="Topic List" class="btn" href="#topiclist" onclick="nlc();">📚</a>
                 <a id="mapbutton" title="Map" class="btn" href="#map" onclick="nlc();">🌍</a>
             </span>
             <span id="loggedout" class="loggedout">
-                <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login"
-                    onclick="nlc();">login</a>
+                <a id="loginbutton" class="btn vavilon" data-vavilon="log in" href="#login" onclick="nlc();">login</a>
                 <span class="separatorwide"></span>
                 <a id="loginbutton" class="btn vavilon" data-vavilon="new account" href="#login"
                     onclick="nlc();">start</a>
@@ -763,21 +811,21 @@ var headerHTML = `
             <span class="separatorwidebreakpoint"></span>
             <span id="topiccontainer" class="topiccontainer">
                 <select id="orderselector" onchange="postsSelectorChanged();">
-                    <option value="hot" title="Hottest posts" class="vavilon" data-vavilon="hot"
-                        selected="selected">Hot</option>
+                    <option value="hot" title="Hottest posts" class="vavilon" data-vavilon="hot" selected="selected">Hot
+                    </option>
                     <option value="new" title="Latest posts" class="vavilon" data-vavilon="new">New</option>
-                    <option value="topd" title="Top posts from the past Day" class="vavilon"
-                        data-vavilon="today">Day</option>
-                    <option value="top48" title="Top posts from the past 48 Hours" class="vavilon"
-                        data-vavilon="top48">48hrs</option>
-                    <option value="topw" title="Top posts from the past Week" class="vavilon"
-                        data-vavilon="this week">Week</option>
+                    <option value="topd" title="Top posts from the past Day" class="vavilon" data-vavilon="today">Day
+                    </option>
+                    <option value="top48" title="Top posts from the past 48 Hours" class="vavilon" data-vavilon="top48">
+                        48hrs</option>
+                    <option value="topw" title="Top posts from the past Week" class="vavilon" data-vavilon="this week">
+                        Week</option>
                     <option value="topm" title="Top posts from the past Month" class="vavilon"
                         data-vavilon="this month">Month</option>
-                    <option value="topy" title="Top posts from the past Year" class="vavilon"
-                        data-vavilon="this year">Year</option>
-                    <option value="topa" title="Top posts from all time" class="vavilon"
-                        data-vavilon="all dates">All</option>
+                    <option value="topy" title="Top posts from the past Year" class="vavilon" data-vavilon="this year">
+                        Year</option>
+                    <option value="topa" title="Top posts from all time" class="vavilon" data-vavilon="all dates">All
+                    </option>
                 </select>
                 <select id="contentselector" label="content" onchange="postsSelectorChanged();">
                     <option value="posts" class="vavilon" data-vavilon="posts" selected="selected">Posts
@@ -836,8 +884,7 @@ var footerHTML = `
         <a rel='noopener noreferrer' target="member"
             href="https://member.cash/#member?qaddress=16gs2oeLVJJT3YTL8uHLoRyLQtaWfEDxh1">Donate</a>
         <span class="separatorwide"></span>
-        <a rel='noopener noreferrer' target="github"
-            href="https://github.com/memberapp/memberapp.github.io">Github</a>
+        <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/memberapp.github.io">Github</a>
         <span class="separatorwide"></span>
         <a class="vavilon" data-vavilon="bitcoin" rel='noopener noreferrer' target="bitcoin"
             href="https://www.bitcoin.com">Bitcoin</a>
