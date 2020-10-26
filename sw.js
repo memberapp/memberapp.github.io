@@ -11,7 +11,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '4.14.3';
+const version = '4.14.4';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -19,7 +19,7 @@ const INSTALL = 'install-' + version;
 
 const pushNotificationsPublicKey = 'BFG-5VUdKBFXFOOLxD5Jqmjbzw0lJaThIyVlx6QzsE70T_9_v0vgIn2IxYbKcgrXGLaiPmapddgAYFtdKe00q5A';
 const SERVER_URL = '/pn/sub';
-var swpubkey="";
+var swpubkey = "";
 
 self.addEventListener('install', (event) => {
   self.skipWaiting()
@@ -61,7 +61,7 @@ self.addEventListener("activate", async function (event) {
   );
 
   //self.onpushsubscriptionchange();
-  
+
 
 });
 
@@ -103,10 +103,10 @@ self.addEventListener('message', function (event) {
   //Message received from client
   console.log(event.data);
 
-  if(event.data=='subscribe'){
+  if (event.data == 'subscribe') {
     self.onpushsubscriptionchange();
-  }else{
-    swpubkey=event.data;
+  } else {
+    swpubkey = event.data;
   }
   //Send response to client using the port that was sent with the message
   //event.ports[0].postMessage("world");
@@ -149,8 +149,8 @@ self.onpushsubscriptionchange = async function () {
 // saveSubscription saves the subscription to the backend
 const saveSubscription = async subscription => {
   console.log(subscription);
-  console.log(SERVER_URL+swpubkey);
-  const response = await fetch(SERVER_URL+'?'+new URLSearchParams({subscription: JSON.stringify(subscription),address:swpubkey}), { method: 'get', headers: { 'Content-Type': 'application/json' } });
+  console.log(SERVER_URL + swpubkey);
+  const response = await fetch(SERVER_URL + '?' + new URLSearchParams({ subscription: JSON.stringify(subscription), address: swpubkey }), { method: 'get', headers: { 'Content-Type': 'application/json' } });
   console.log(response);
   return response;
 }
@@ -177,31 +177,37 @@ self.addEventListener("push", function (event) {
 const showLocalNotification = (payload, swRegistration) => {
   //swRegistration.showNotification(title, {});
   //showLocalNotification("Push Event", "Error", swRegistration);
-  
+
   var txid;
   var name;
   var picurl;
   var pagingid;
   var icon;
 
-  try{
-    body=payload.type;
-    txid=payload.txid;
+  try {
+    body = payload.type;
+    txid = payload.txid;
     name = payload.name;
     picurl = payload.picurl;
     pagingid = payload.pagingid;
-  }catch(err){
+  } catch (err) {
     //Probably the old type where the action is the whole body
   }
   var title = "Error";
   var renotify = false;
   var text = "";
-  
+
   switch (body) {
     case "rating":
       title = "Rated";
       text = "You received a rating";
       icon = "/img/notificationicons/rating.svg";
+      renotify = true;
+      break;
+    case "message":
+      title = "Message";
+      text = "You received a private message";
+      icon = "/img/notificationicons/message.svg";
       renotify = true;
       break;
     case "follow":
@@ -263,14 +269,14 @@ const showLocalNotification = (payload, swRegistration) => {
     }
   };
   swRegistration.showNotification(title, options);
-  
+
 };
 
 
 self.addEventListener('notificationclick', function (event) {
   const clickedNotification = event.notification;
-  
-  const page = '/index.html#notifications?txid='+event.notification.data.txid;
+
+  const page = '/index.html#notifications?txid=' + event.notification.data.txid;
   //const promiseChain = clients.openWindow(page);
   //event.waitUntil(promiseChain);
 
@@ -290,7 +296,7 @@ self.addEventListener('notificationclick', function (event) {
     }
 
     if (matchingClient) {
-      matchingClient.url="https://member.cash"+page;
+      matchingClient.url = "https://member.cash" + page;
       return matchingClient.focus();
     } else {
       return clients.openWindow(page).then(windowClient => windowClient ? windowClient.focus() : null);

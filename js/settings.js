@@ -258,6 +258,9 @@ function updateSettingsDropdown(settingsName) {
     if (settingsName == "currencydisplay") {
         tq.updateBalance(pubkey);
     }
+    if (settingsName == "utxoserver") {
+        refreshPool();
+    }
     updateStatus("Updated. "+dropdowns[settingsName]);
 }
 

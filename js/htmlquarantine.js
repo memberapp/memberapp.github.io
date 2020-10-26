@@ -47,7 +47,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     var linkEnd = `</a> `;
     var flair="";
     if(tokens>0){
-        flair = ` <span class="flair">`+ordinal_suffix_of(Number(tokens))+`</span> `;
+        flair = ` <span class="flair" title="Top MEMBER Token Holder">`+ordinal_suffix_of(Number(tokens))+`</span> `;
     }
     var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic
         + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>`+flair;
@@ -707,7 +707,9 @@ function sendEncryptedMessageHTML(address, name, publickey) {
 }
 
 function populateSendMessage(address, name, publickey) {
-    show('messagesanchor');
+    //show('messagesanchor');
+    location.href = "#messages";
+
     if (publickey == null || publickey == "") {
         alert("Public key is not available - maybe the user hasn't set their name/handle.");
         return;

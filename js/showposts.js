@@ -454,7 +454,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
         retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing,  data.nametime, repostHTML2);
     } else {
         //repost with no message
-        retHTML = repostHTML1 + repostHTML2;
+        retHTML = "<div class='repostnoquote'>" + repostHTML1 + repostHTML2  + "</div>";
     }
 
 
