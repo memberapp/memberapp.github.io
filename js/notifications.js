@@ -57,12 +57,12 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
         var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
-        var contents=``;
-                
+        var contents = ``;
+
         for (var i = 0; i < data.length; i++) {
-            try{
-                contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i, (data[i].txid==txid));
-            }catch(err){
+            try {
+                contents = contents + getHTMLForNotification(data[i], i + 1 + start, page, i, (data[i].txid == txid));
+            } catch (err) {
                 console.log(err);
             }
         }
@@ -71,7 +71,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
             contents = getNothingFoundMessageHTML("No notifications yet");
         }
 
-        if(window.Notification.permission!='granted'){
+        if (window.Notification.permission != 'granted') {
             contents = `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>` + contents;
         }
 
@@ -82,13 +82,13 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
             lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
             localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
             document.getElementById("alertcount").innerHTML = "";
-            document.title = siteTitle;    
+            document.title = siteTitle;
         }
 
-        
+
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data);
-        scrollToElement('notification'+san(txid));
+        scrollToElement('notification' + san(txid));
         listenForTwitFrameResizes();
         //window.scrollTo(0, scrollhistory[window.location.hash]);
     }, function (status) { //error detection....
@@ -110,11 +110,11 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
 
     //For root posts, we show number of replies as total
     //For comments, just the number of direct replies
-    if(data.ltxid==data.lroottxid){
-        data.lreplies=data.lrepliesroot;
+    if (data.ltxid == data.lroottxid) {
+        data.lreplies = data.lrepliesroot;
     }
-    if(data.rtxid==data.rroottxid){
-        data.rreplies=data.rrepliesroot;
+    if (data.rtxid == data.rroottxid) {
+        data.rreplies = data.rrepliesroot;
     }
 
     switch (type) {
@@ -124,6 +124,17 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 "thread",
                 `💬&nbsp;`,
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + ` <span class="plaintext">in a discussion you're in</span> `,
+                timeSince(Number(data.time)),
+                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
+                data.txid, highlighted
+            );
+            break;
+        case "topic":
+            postRatingID = starindex + page + ds(data.raddress) + type;
+            return notificationItemHTML(
+                "topic",
+                `📰&nbsp;`,
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + ` <span class="plaintext">in a topic you're subscribed to</span> `,
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
                 data.txid, highlighted
