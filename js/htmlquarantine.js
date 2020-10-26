@@ -186,11 +186,19 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 
     var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid = san(txid);
-    var articleLink = "";
+    var articleLink2 = "";
     var mapLink = "";
 
+    var permalink = `?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10);
+    var articlelink = `?` + santxid.substring(0, 4) + `#article?post=` + santxid.substring(0, 10);
+    
+    if (pathpermalinks) {
+        permalink = `p/` + santxid.substring(0, 10);
+        articlelink = `a/` + santxid.substring(0, 10);
+    }
+
     if (article) {
-        articleLink = `<a id="articlelink` + page + santxid + `" href="?` + santxid.substring(0, 4) + `#article?post=` + santxid.substring(0, 10) + `">article</a> `;
+        articleLink2 = `<a id="articlelink` + page + santxid + `" href="` + articlelink + `">article</a> `;
     }
     if (geohash != null && geohash != "") {
         mapLink = ` <a id="maplink` + page + santxid + `" href="#map?geohash=` + san(geohash) + `&post=` + santxid + `">🌍map</a> `;
@@ -207,10 +215,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         remembersOnclick = ` `;
     }
 
-    var permalink = `?` + santxid.substring(0, 4) + `#thread?post=` + santxid.substring(0, 10);
-    if (pathpermalinks) {
-        permalink = `p/` + santxid.substring(0, 10);
-    }
+
     return mapLink +
         `<a id="replylink` + santxid + page + `" onclick="showReplyBox('` + santxid + page + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
         <span class="rememberscounttext"><a class="`+ remembersActive + `" id="repostlink` + page + santxid + `" ` + remembersOnclick + `> <span class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " </span>" + getSafeTranslation('remembers') + `</a></span>
@@ -219,7 +224,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         <a id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
         <span id="more`+ page + santxid + `" style="display:none">
             <a class="permalink" id="permalink`+ page + santxid + `" href="` + permalink + `">permalink</a> `
-        + articleLink + `
+        + articleLink2 + `
             <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/` + santxid + `">memo</a>
             <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/` + santxid + `">bitcoin.com</a>
             <a rel="noopener noreferrer" target="blockchair" href="https://blockchair.com/bitcoin-cash/transaction/` + santxid + `">blockchair</a>

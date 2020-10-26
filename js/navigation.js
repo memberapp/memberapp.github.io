@@ -24,6 +24,10 @@ function displayContentBasedOnURLParameters() {
         var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
         showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'thread');
         return;
+    } else if (url.indexOf('/a/') != -1) {
+        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
+        showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'article');
+        return;
     } else if (url.indexOf('/m/') != -1) {
         var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase()).trim();
         showMember('', pagingidHOSTILE);
