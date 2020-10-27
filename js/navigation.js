@@ -510,3 +510,14 @@ document.getElementsByTagName('body')[0].onmouseover = function () { window.inne
 
 //User's mouse has left the page.
 document.getElementsByTagName('body')[0].onmouseleave = function () { window.innerDocClick = false; }
+
+function scrollToPosition(theElement) {
+    if (forwardOrBackFlag) {
+        window.scrollTo(0, scrollhistory[window.location.hash]);
+    } else if (theElement) {
+        scrollToElement(theElement);
+    }
+    else {
+        window.scrollTo(0, 0);
+    }
+}

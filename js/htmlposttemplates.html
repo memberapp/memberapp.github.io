@@ -175,11 +175,11 @@ var templatePost = `
             <span id="tipboxposts{diff}{txid}" style="display:none">
                 <input id="tipamountposts{diff}{txid}" type="number" value="0" min="0" style="width: 6em;" step="1000">
                 <input id="tipbuttonposts{diff}{txid}" value="tip" type="submit"
-                    onclick="sendTip('{txid}','1Kjvmr2QJmNcLgSuHVxR6otah9eHcx6L1E','posts{diff}');">
+                    onclick="sendTip('{txid}','{address}','posts{diff}');">
                 <input id="tipstatusposts{diff}{txid}" value="sending" type="submit" style="display:none" disabled="">
             </span>
-
             <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
+            <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
         </div>
         <div id="reply{txid}posts{diff}" style="display:none">
             <br>

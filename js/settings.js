@@ -351,6 +351,7 @@ function getAndPopulateFB(page,qaddress){
 
         document.getElementById(page+'table').innerHTML = contents;
         addDynamicHTMLElements(data);
+        scrollToPosition();
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });

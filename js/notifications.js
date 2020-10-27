@@ -91,7 +91,8 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
 
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data);
-        scrollToElement('notification' + san(txid));
+        scrollToPosition('notification' + san(txid));
+        
         listenForTwitFrameResizes();
         //window.scrollTo(0, scrollhistory[window.location.hash]);
     }, function (status) { //error detection....

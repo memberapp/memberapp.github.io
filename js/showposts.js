@@ -56,9 +56,9 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            try{
+            try {
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
-            }catch(err){
+            } catch (err) {
                 console.log(err);
             }
         }
@@ -108,6 +108,7 @@ function getAndPopulateMessages(start, limit) {
 
         document.getElementById('messageslist').innerHTML = contents;
         addDynamicHTMLElements(data);
+        scrollToPosition();
     }, function (status) { //error detection....
         showErrorMessage(status, 'messageslist', theURL);
     });
@@ -174,7 +175,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
                 if (commentTree == '<ul></ul>') {
                     commentTree = `<p class='nocommentsyet'>No comments yet . . . reply to start a conversation</p>`;
-                }else{
+                } else {
                     commentTree = getDivClassHTML("comment-tree", commentTree);
                 }
 
@@ -191,6 +192,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
         }
         addDynamicHTMLElements(data);
+        scrollToPosition();
 
         showReplyBox(san(txid) + pageName);
 
@@ -299,6 +301,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
     listenForTwitFrameResizes();
     if (adddynamic) {
         addDynamicHTMLElements(data);
+        scrollToPosition();
     }
     //window.scrollTo(0, scrollhistory[window.location.hash]);
     //detectMultipleIDS();
@@ -306,16 +309,12 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 }
 
 
+
 function addDynamicHTMLElements(data) {
 
     if (data != null && data != undefined) {
         if (data.length > 0) {
             updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
-        }
-        if (forwardOrBackFlag) {
-            window.scrollTo(0, scrollhistory[window.location.hash]);
-        } else {
-            window.scrollTo(0, 0);
         }
     }
     //Add ratings, disable controls if the star rating can be updated
@@ -325,13 +324,13 @@ function addDynamicHTMLElements(data) {
     addMouseoverProfiles();
 
     //Add scoremouseovers
-    addClickScores();
+    //addClickScores();
 
     //Add identicons
     jdenticon();
 }
 
-
+/*
 function addClickScores() {
     var matches = document.querySelectorAll("[id^='scores']");
     for (var i = 0; i < matches.length; i++) {
@@ -339,7 +338,7 @@ function addClickScores() {
         //document.getElementById(profileElement).onmouseleave=setDisplayNone;
         matches[i].onclick = showScoresExpanded;
     }
-}
+}*/
 
 function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
@@ -354,8 +353,8 @@ function setDisplayNone() {
     this.style.display = "none";
 }
 
-function showScoresExpanded(retxid,profileelement) {
-    if(this){
+function showScoresExpanded(retxid, profileelement) {
+    if (this) {
         var profileelement = this.id.replace('scores', 'scoresexpanded');
         var retxid = profileelement.substr(14, 64);
     }
@@ -371,11 +370,33 @@ function showScoresExpanded(retxid,profileelement) {
             contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + (Number(data[i].type) == -1 ? ` disliked` : ``) + `</div>`;
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
-        addDynamicHTMLElements(null);
+        addDynamicHTMLElements();
     }, function (status) { //error detection....
         showErrorMessage(status, profileelement, theURL);
     });
 }
+
+function showRemembersExpanded(retxid, profileelement) {
+
+    var closeHTML = `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">close</a></div>`;
+    document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
+    document.getElementById(profileelement).style.display = "block";
+    //load scores
+    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + san(pubkey);
+    getJSON(theURL).then(function (data) {
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+            var amount = Number(data[i].amount);
+            contents += `<div class="rememberdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + `</div>`;
+        }
+        document.getElementById(profileelement).innerHTML = closeHTML + contents;
+        addDynamicHTMLElements();
+    }, function (status) { //error detection....
+        showErrorMessage(status, profileelement, theURL);
+    });
+}
+
+
 
 function showPreviewProfile(profileelement) {
     profileelement.style.display = "block";
@@ -451,10 +472,10 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
 
     if (data.message) {
         //post with message
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing,  data.nametime, repostHTML2);
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2);
     } else {
         //repost with no message
-        retHTML = "<div class='repostnoquote'>" + repostHTML1 + repostHTML2  + "</div>";
+        retHTML = "<div class='repostnoquote'>" + repostHTML1 + repostHTML2 + "</div>";
     }
 
 
