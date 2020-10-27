@@ -73,6 +73,9 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
 
         if (window.Notification.permission != 'granted') {
             contents = `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>` + contents;
+        }else{
+            //notification subscriptions seem to get cancelled a lot - keep requesting subscription if granted to ensure continuity
+            requestNotificationPermission();
         }
 
         contents = getNotificationsTableHTML(contents, navbuttons);
