@@ -102,7 +102,6 @@ class UTXOPool {
     var total = this.getBalance();
 
 
-    //var balString=(Math.floor(total/1000)).toLocaleString()+"<span class='sats'>"+(total%1000)+"</span>";
     if (this.onscreenElementName != null) {
       document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
 
@@ -338,7 +337,7 @@ class TransactionQueue {
     }
     resendWait = 2000;
     if (res.length > 10) {
-      returnObject.updateStatus("<a  rel='noopener noreferrer' target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + res + "'>txid:" + res + "</a>");
+      returnObject.updateStatus("<a  rel='noopener noreferrer' target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + san(res) + "'>txid:" + san(res) + "</a>");
       //console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
       let successCallback = returnObject.onSuccessFunctionQueue.shift();
       returnObject.queue.shift();

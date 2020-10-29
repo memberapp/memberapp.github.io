@@ -11,25 +11,25 @@ function timeSince(timestamp, compress) {
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return getSafeTranslation("%s years ago", interval);
+    return getSafeTranslation("%s years ago", null, interval);
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return getSafeTranslation("%s months ago", interval);
+    return getSafeTranslation("%s months ago", null, interval);
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%sd" : "%s days ago", interval);
+    return getSafeTranslation(compress ? "%sd" : "%s days ago", null, interval);
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%sh" : "%s hours ago", interval);
+    return getSafeTranslation(compress ? "%sh" : "%s hours ago", null, interval);
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%sm" : "%s minutes ago", interval);
+    return getSafeTranslation(compress ? "%sm" : "%s minutes ago", null, interval);
   }
-  return getSafeTranslation(compress ? "%ss" : "%s seconds ago", Math.floor(seconds));
+  return getSafeTranslation(compress ? "%ss" : "%s seconds ago", null, Math.floor(seconds));
 }
 
 var ordinal_suffix_of = function(i) {
@@ -98,6 +98,22 @@ function ds(input) {
   } catch (e) {
     //Anything funky goes on, we'll return safe empty string
     return "";
+  }
+  return input;
+}
+
+function dslite(input) {
+  //if (input === undefined) { return ""; };
+  try {
+      //If this error out 'input.replace not a number' probably input is not a string type
+      input = input.replace(/&/g, '&amp;');
+      //input = input.replace(/</g, '&lt;');
+      //input = input.replace(/>/g, '&gt;');
+      input = input.replace(/"/g, '&quot;');
+      input = input.replace(/'/g, '&#x27;');
+  } catch (e) {
+      //Anything funky goes on, we'll return safe empty string
+      return "";
   }
   return input;
 }
@@ -362,6 +378,10 @@ var delay = function (elem, callback, target) {
 function templateReplace(templateString,obj){
   //var templateString=document.getElementById(template).innerHTML;
   return templateString.replace(/\{(\w+)\}/g, function (_, k) {
+      if(obj[k]==undefined){
+        console.log("missing template value:"+k);
+        //console.log(templateString);
+      }
       return obj[k];
   });
 }

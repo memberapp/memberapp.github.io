@@ -1,3 +1,96 @@
+var errorTemplate=`
+<p>
+    <span class='connectionerror'>
+        Oops. This request failed.
+        <br />There may be a problem with your internet connection, or the server may be having problems.
+        <br />The error code is {status}
+        <br />The resource was {url}
+    </span>
+</p>
+`;
+
+var topicHeaderHTML=`
+<div class='content'>
+    <h1 class='topicheader'>{topic}</h1>
+    <table>
+        <thead>
+            <tr>
+                <td class='tltopicname'>Topic</td>
+                <td class='tlmessagescount'>Posts</td>
+                <td class='tlsubscount'>Subs</td>
+                <td class='tlaction'>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            {tablecontents}
+        </tbody>
+    </table>
+</div>
+`;
+
+var ratingAndReasonHTML=`
+<tr>
+    <td data-label='Member'>{rater}</td>
+    <td data-label='Rates As' align='center'>
+        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingaddress="{rateraddress}"
+            data-ratingraw="{rating}" id='{stem}{rateraddress}'></div>
+    </td>
+    <td data-label='Member'>{ratee}</td>
+</tr>
+<tr>
+    <td></td>
+    <td data-label='Commenting...' colspan='2'>
+        <a href='#thread?root={txid}'>{reason}</a>
+    </td>
+</tr>
+`;
+
+var trustRatingTableHTML=`
+<span style='font-size:2em'>Overall Rating: {rating}</span>
+<div id='overall'></div>
+<br />
+<br />
+<table>{tablecontents}</table>
+`;
+
+var indirectRatingHTML=`
+<tr>
+    <td data-label='You'>
+        <span class='ratermember'>{member}</span>
+    </td>
+    <td data-label='Rate as'>
+        <span class='trustratingintermediate'>
+            <div id='trust{memberid}{interid}'></div>
+        </span>
+    </td>
+    <td align='center' data-label='Member'>
+        <span class='intermediatemember'>{inter}</span>
+    </td>
+    <td data-label='Who Rates as'>
+        <span class='trustratingbyintermediate'>
+            <div id='trust{interid}{targetid}'></div>
+        </span>
+    </td>
+    <td data-label='Member'>
+        <span class='ratedmember'>{target}</span>
+    </td>
+</tr>
+`;
+
+var directRatingHTML=`
+<tr>
+    <td data-label='Member'>{member}</td>
+    <td></td>
+    <td></td>
+    <td data-label='Rates as' align='center'>
+        <div id='trust{memberid}{targetid}'></div>
+    </td>
+    <td></td>
+    <td></td>
+    <td align='center'>
+    <td data-label='Member'>{target}</td>
+</tr>`;
+
 var mainbodyHTML=`
 <header id="header"></header>
 <div class="mainbody">
@@ -67,11 +160,11 @@ var loginboxHTML=`
     <hr />
     <br />
     <br />
-    <br /><span class="vavilon" data-vavilon="seed phrase">Phrase (12 words)</span>
+    <br /><span data-vavilon="seed phrase">Phrase (12 words)</span>
     <br />
     <div class="formgroup">
         <input size="64" id="loginkey">
-        <button class="loginbutton" type="button" href="#feed" class="vavilon" data-vavilon="log in"
+        <button class="loginbutton" type="button" href="#feed" data-vavilon="log in"
             onclick="trylogin(document.getElementById('loginkey').value);">login</button>
     </div>
     <br />
@@ -92,16 +185,16 @@ var loginboxHTML=`
 var lowfundswarningHTML=`
 <div class="content">
     <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span><br />
-    <span id="satoshiamount">0</span> <span class="vavilon" data-vavilon="satoshiamounttext">satoshis
+    <span id="satoshiamount">0</span> <span data-vavilon="satoshiamounttext">satoshis
         exist in your member.cash account - each
         action (posting, liking, subscribing, following, messaging etc)
         requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.</span>
     <br />
     <br />
-    <span class="vavilon" data-vavilon="your address is">Your address is</span> <span id="lowfundsaddress"></span>
+    <span data-vavilon="your address is">Your address is</span> <span id="lowfundsaddress"></span>
     <br />
     <br />
-    <span class="vavilon" data-vavilon="ask nuggets">Send Nuggets your address for a few cents if you're
+    <span data-vavilon="ask nuggets">Send Nuggets your address for a few cents if you're
         finding it difficult to get some.</span>
     <br />
     Twitter <a rel='noopener noreferrer' href="https://twitter.com/chickenorgold">@chickenorgold</a><br />
@@ -110,17 +203,17 @@ var lowfundswarningHTML=`
     Email <a rel='noopener noreferrer' href="mailto:nuggetcoins@gmail.com">nuggetcoins@gmail.com</a><br />
     <br />
     <br />
-    <a href="" onclick="refreshPool();return false;"><span class="vavilon" data-vavilon="refresh balance">Refresh
+    <a href="" onclick="refreshPool();return false;"><span data-vavilon="refresh balance">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
-            class="vavilon" data-vavilon="dismiss message">Dismiss
+            data-vavilon="dismiss message">Dismiss
             this message</span></a>
 </div>
 `;
 
 var toolsanchorHTML=`
 <div class="content">
-    <h2 class="vavilon" data-vavilon="Tools">Tools</h2>
+    <h2 data-vavilon="Tools">Tools</h2>
     <div id="sendfunds">
         <label for="sendfundsname">Send Funds To Another Address</label>
         <p>You can send funds to another Bitcoin Cash address.</p>
@@ -130,7 +223,7 @@ var toolsanchorHTML=`
 
         <label for="fundsamount">Bitcoin Cash Address (Any format)</label>
         <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
-        <button id="sendfundsbutton" type="button" onclick="sendfunds();" class="vavilon" data-vavilon="Send Funds">Send
+        <button id="sendfundsbutton" type="button" onclick="sendfunds();" data-vavilon="Send Funds">Send
             Funds</button>
         <br />
     </div>
@@ -150,7 +243,7 @@ var toolsanchorHTML=`
             <input class="surrogatename" id="surrogatename" maxlength="200"
                 onchange="userSearchChanged('surrogatename','surrogatesearchresults');" onkeypress="this.onchange();"
                 onpaste="this.onchange();" oninput="this.onchange();">
-            <button id="createsurrogatebutton" type="button" onclick="createSurrogate();" class="vavilon"
+            <button id="createsurrogatebutton" type="button" onclick="createSurrogate();"
                 data-vavilon="Create Surrogate">Create</button>
         </div>
         <br />
@@ -201,8 +294,7 @@ var newpostHTML=`
     <div id="quotepost" class="quotepost"></div>
     <br />
     <div>
-        <input id="newpostmemorandumbutton" class="vavilon" data-vavilon="post" value="Post" type="submit"
-            onclick="postmemorandum();">
+        <input id="newpostmemorandumbutton" data-vavilon="post" value="Post" type="submit" onclick="postmemorandum();">
         <input id="newpostmemorandumstatus" style="display: none;" value="Sending . . ." type="submit" disabled>
         <div id="newpostmemorandumcompleted"></div>
     </div>
@@ -249,7 +341,7 @@ var messagesanchorHTML=`
     </div>
     <div id="sendmessagecontainer">
         <label>Send Encrypted Message</label>
-        <label for="messageto"><span class="vavilon" data-vavilon="to">To</span></label>
+        <label for="messageto"><span data-vavilon="to">To</span></label>
         <span id="messagerecipient" class="messagerecipient">(Search for user above)</span>
         (<span id="messageaddress" class="messageaddress"></span>)
         (<span id="messagepublickey" class="messagepublickey"></span>)
@@ -261,7 +353,7 @@ var messagesanchorHTML=`
                 <textarea id="newposttamessage" name="text" rows="20" cols="80"></textarea>
             </div>
             <div>
-                <input id="newpostmessagebutton" class="vavilon" data-vavilon="send" value="Send Message" type="submit"
+                <input id="newpostmessagebutton" data-vavilon="send" value="Send Message" type="submit"
                     onclick="postprivatemessage();">
                 <input id="newpostmessagestatus" style="display: none;" value="Sending . . ." type="submit" disabled>
                 <div id="newpostmessagecompleted"></div>
@@ -422,7 +514,8 @@ pages.member = `
         </div>
     </div>
     <label for="memberidenticon">Identicon</label>
-    <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg></div>
+    <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg>
+    </div>
     <label>Address</label>
     <div id="membercashaddress">
         <span id="membercashaddrformat">{cashaddress}</span>
@@ -498,7 +591,7 @@ pages.settings = `
     <input id="settingsrating" value="{rating}" style="display:none;">
 
 
-    <h2 class="vavilon" data-vavilon="settings">Settings</h2>
+    <h2 data-vavilon="settings">Settings</h2>
     <div class="settingspiccontainer">
         <label id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile Picture
             <span class="profilepicdirections">(Must be imgur link in this format or .png format)</span></label>
@@ -506,7 +599,7 @@ pages.settings = `
             <input maxlength="217" size="30" id="settingspic" value="https://i.imgur.com/XXXXXXXX.jpg"
                 onchange="document.getElementById('settingspicbutton').disabled=false;" onkeypress="this.onchange();"
                 onpaste="this.onchange();" oninput="this.onchange();">
-            <button id="settingspicbutton" type="button" onclick="setPic();" class="vavilon" data-vavilon="update"
+            <button id="settingspicbutton" type="button" onclick="setPic();" data-vavilon="update"
                 disabled="">update</button>
         </div>
         <span class="settingspiclarge" style="display:inline;">
@@ -520,7 +613,7 @@ pages.settings = `
             <input maxlength="217" size="30" id="settingsnametext" value="{handle}"
                 onchange="document.getElementById('settingsnametextbutton').disabled=false;"
                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" disabled="">
-            <button id="settingsnametextbutton" type="button" onclick="setName();" class="vavilon" data-vavilon="update"
+            <button id="settingsnametextbutton" type="button" onclick="setName();" data-vavilon="update"
                 disabled="">update</button>
         </div>
     </div>
@@ -532,17 +625,17 @@ pages.settings = `
             <input maxlength="217" size="30" id="settingsprofiletext" value="{profile}"
                 onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-            <button id="settingsprofiletextbutton" type="button" onclick="setProfile();" class="vavilon"
-                data-vavilon="update" disabled="">update</button>
+            <button id="settingsprofiletextbutton" type="button" onclick="setProfile();" data-vavilon="update"
+                disabled="">update</button>
         </div>
     </div>
     <div>
-        <label for="settingsprofilelogout" class="vavilon" data-vavilon="log out">Logout</label>
+        <label for="settingsprofilelogout" data-vavilon="log out">Logout</label>
         <a title="Logout" id="settingsprofilelogout" class="btn vavilon" data-vavilon="log out" href="#logout"
             onclick="logout();">Logout</a>
     </div>
     <div>
-        <label for="notificationbutton" class="vavilon" data-vavilon="notifications">Notifications</label>
+        <label for="notificationbutton" data-vavilon="notifications">Notifications</label>
         <span class="allownotifications"><a id="notificationbutton" class="notificationbutton" href="javascript:;"
                 onclick="requestNotificationPermission(); this.style.display='none';">Allow
                 Notifications</a></span>
@@ -557,10 +650,11 @@ pages.settings = `
         </div>
     </div>
     <label for="settingsidenticon">Identicon</label>
-    <div id="settingsidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg></div>
+    <div id="settingsidenticon"><svg width="20" height="20" class="jdenticonlarge"
+            data-jdenticon-value="{address}"></svg></div>
     <div id="settingsprofileaddress">
 
-        <label class="vavilon" data-vavilon="address">Address</label>
+        <label data-vavilon="address">Address</label>
         <span id="cashaddrformat">{cashaddress}</span>
         <div id="cashaddrformatdiv">
             <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
@@ -590,7 +684,7 @@ pages.settings = `
         </div>
     </div>
     <div id="settingsprivatekey">
-        <label class="vavilon" data-vavilon="Seed Phrase / Private Key / WIF">Seed Phrase / Private Key
+        <label data-vavilon="Seed Phrase / Private Key / WIF">Seed Phrase / Private Key
             / WIF</label>
         <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
         <span id="privatekey"><a id="privatekeyclicktoshow"
@@ -604,9 +698,9 @@ pages.settings = `
         </div>
     </div>
     <div>
-        <label for="cssselector" class="vavilon" data-vavilon="themes">Theme</label>
+        <label for="cssselector" data-vavilon="themes">Theme</label>
         <select id="cssselector" onchange="changeStyle(document.getElementById('cssselector').value, true);">
-            <option class="vavilon" data-vavilon="change theme" value="feels">Choose Theme</option>
+            <option data-vavilon="change theme" value="feels">Choose Theme</option>
             <option value="feels">Feels</option>
             <option value="feels-night">Feels Night Mode</option>
             <option value="base none">Member</option>
@@ -614,7 +708,7 @@ pages.settings = `
             <option value="base hackernews">Hacker News</option>
             <option value="base hackernews hnnightmode">Hacker News Night Mode</option>
             <option value="nifty">Nifty (Under Development)</option>
-            <option class="vavilon" data-vavilon="none" value="none">None</option>
+            <option data-vavilon="none" value="none">None</option>
         </select>
     </div>
     <div class="profilestats">
@@ -763,30 +857,29 @@ var headerHTML = `
             <span class="separatorwidebreakpoint"></span>
             <span id="topiccontainer" class="topiccontainer">
                 <select id="orderselector" onchange="postsSelectorChanged();">
-                    <option value="hot" title="Hottest posts" class="vavilon" data-vavilon="hot" selected="selected">Hot
+                    <option value="hot" title="Hottest posts" data-vavilon="hot" selected="selected">Hot
                     </option>
-                    <option value="new" title="Latest posts" class="vavilon" data-vavilon="new">New</option>
-                    <option value="topd" title="Top posts from the past Day" class="vavilon" data-vavilon="today">Day
+                    <option value="new" title="Latest posts" data-vavilon="new">New</option>
+                    <option value="topd" title="Top posts from the past Day" data-vavilon="today">Day
                     </option>
-                    <option value="top48" title="Top posts from the past 48 Hours" class="vavilon" data-vavilon="top48">
+                    <option value="top48" title="Top posts from the past 48 Hours" data-vavilon="top48">
                         48hrs</option>
-                    <option value="topw" title="Top posts from the past Week" class="vavilon" data-vavilon="this week">
+                    <option value="topw" title="Top posts from the past Week" data-vavilon="this week">
                         Week</option>
-                    <option value="topm" title="Top posts from the past Month" class="vavilon"
-                        data-vavilon="this month">Month</option>
-                    <option value="topy" title="Top posts from the past Year" class="vavilon" data-vavilon="this year">
+                    <option value="topm" title="Top posts from the past Month" data-vavilon="this month">Month</option>
+                    <option value="topy" title="Top posts from the past Year" data-vavilon="this year">
                         Year</option>
-                    <option value="topa" title="Top posts from all time" class="vavilon" data-vavilon="all dates">All
+                    <option value="topa" title="Top posts from all time" data-vavilon="all dates">All
                     </option>
                 </select>
                 <select id="contentselector" label="content" onchange="postsSelectorChanged();">
-                    <option value="posts" class="vavilon" data-vavilon="posts" selected="selected">Posts
+                    <option value="posts" data-vavilon="posts" selected="selected">Posts
                     </option>
-                    <option value="replies" class="vavilon" data-vavilon="comments">Replies</option>
-                    <option value="both" class="vavilon" data-vavilon="all">In Both</option>
+                    <option value="replies" data-vavilon="comments">Replies</option>
+                    <option value="both" data-vavilon="all">In Both</option>
                 </select>
                 <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
-                    <option value="" class="vavilon" data-vavilon="all topics" selected="selected">All
+                    <option value="" data-vavilon="all topics" selected="selected">All
                         Topics</option>
                     <option value=""></option>
                     <option value="">---------------</option>
@@ -806,9 +899,9 @@ var headerHTML = `
                     <option value="#911Truth">#911Truth</option>
                 </select>
                 <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
-                    <option value="everyone" class="vavilon" data-vavilon="everyone" selected="selected">
+                    <option value="everyone" data-vavilon="everyone" selected="selected">
                         Everyone</option>
-                    <option value="mypeeps" class="vavilon" data-vavilon="mypeople">My Peeps</option>
+                    <option value="mypeeps" data-vavilon="mypeople">My Peeps</option>
                 </select>
             </span>
         </span>
@@ -838,14 +931,13 @@ var footerHTML = `
         <span class="separatorwide"></span>
         <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/memberapp.github.io">Github</a>
         <span class="separatorwide"></span>
-        <a class="vavilon" data-vavilon="bitcoin" rel='noopener noreferrer' target="bitcoin"
-            href="https://www.bitcoin.com">Bitcoin</a>
+        <a data-vavilon="bitcoin" rel='noopener noreferrer' target="bitcoin" href="https://www.bitcoin.com">Bitcoin</a>
         <span class="separatorwide"></span>
         <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/protocol">Protocol</a>
         <span class="separatorwide"></span>
-        <a href="mailto:freetrade.mc@gmail.com" class="vavilon" data-vavilon="contact">Contact</a>
+        <a href="mailto:freetrade.mc@gmail.com" data-vavilon="contact">Contact</a>
         <span class="separatorwide"></span>
-        <span class="vavilon" data-vavilon="version">version</span> <span id="version">loading</span>.<u>9</u>
+        <span data-vavilon="version">version</span> <span id="version">loading</span>.<u>9</u>
     </span>
     <br />
     <br />

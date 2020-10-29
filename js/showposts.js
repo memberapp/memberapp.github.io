@@ -46,7 +46,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -64,10 +64,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         if (contents == "") {
-            contents = getNothingFoundMessageHTML("Nothing here yet");
+            contents = getNothingFoundMessageHTML("nothinghere","Nothing here yet");
 
             if (filter == "mypeeps" || filter == "myfeed" || topicnameHOSTILE == "MyFeed" || topicnameHOSTILE == "MyTopics") {
-                contents = getNothingFoundMessageHTML("Nothing in your feed");
+                contents = getNothingFoundMessageHTML("nothinginfeed","Nothing in your feed");
             }
 
         }
@@ -188,7 +188,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
 
         if (popup != undefined) {
-            popup.setContent("<div id='mapthread'>" + contents + "</div>");
+            popup.setContent(getDivClassHTML('mapthread',contents));
 
         }
         addDynamicHTMLElements(data);
@@ -358,7 +358,7 @@ function showScoresExpanded(retxid, profileelement) {
         var profileelement = this.id.replace('scores', 'scoresexpanded');
         var retxid = profileelement.substr(14, 64);
     }
-    var closeHTML = `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">close</a></div>`;
+    var closeHTML = getCloseButtonHTML(profileelement);
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
@@ -367,7 +367,7 @@ function showScoresExpanded(retxid, profileelement) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + (Number(data[i].type) == -1 ? ` disliked` : ``) + `</div>`;
+            contents += getTipDetailsHTML(userFromDataBasic(data[i], san(retxid) + i, 16), amount, data[i].type);
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements();
@@ -378,7 +378,7 @@ function showScoresExpanded(retxid, profileelement) {
 
 function showRemembersExpanded(retxid, profileelement) {
 
-    var closeHTML = `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">close</a></div>`;
+    var closeHTML = getCloseButtonHTML(profileelement);
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
@@ -386,8 +386,7 @@ function showRemembersExpanded(retxid, profileelement) {
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            var amount = Number(data[i].amount);
-            contents += `<div class="rememberdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + `</div>`;
+            contents += getDivClassHTML("rememberdetails", userFromDataBasic(data[i], san(retxid) + i, 16));
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements();
@@ -463,10 +462,10 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     if (data.repost) {
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
-        repostHTML1 = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " remembered</span>";
+        repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID, 8));
         repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.nametime, '');
         if (repostHTML2) {
-            repostHTML2 = "<div class='quotepost'>" + repostHTML2 + "</div>";
+            repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         }
     }
 
@@ -475,7 +474,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
         retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2);
     } else {
         //repost with no message
-        retHTML = "<div class='repostnoquote'>" + repostHTML1 + repostHTML2 + "</div>";
+        retHTML = getDivClassHTML("repostnoquote", repostHTML1 + repostHTML2);
     }
 
 
@@ -739,5 +738,15 @@ function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
         }
     }
     return data;
+}
+
+function collapseComment(commentid) {
+    document.getElementById('LI' + commentid).style.display = 'none';
+    document.getElementById('CollapsedLI' + commentid).style.display = 'block';
+}
+
+function uncollapseComment(commentid) {
+    document.getElementById('LI' + commentid).style.display = 'block';
+    document.getElementById('CollapsedLI' + commentid).style.display = 'none';
 }
 

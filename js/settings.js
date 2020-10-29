@@ -153,7 +153,8 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, pre, data){
         if (data.length > 0) {
             ratingScore = Number(data[0].rating);
         }
-        document.getElementById('memberrating').innerHTML = `<div class="starrating"><div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + ratingScore + `" id="memberrating` + qaddress + `"></div></div>`;
+        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(qaddress,ratingScore);
+        
         var theElement = document.getElementById(`memberrating` + qaddress);
         var starRating1 = addSingleStarsRating(theElement);
     }

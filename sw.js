@@ -6,12 +6,12 @@ const PRECACHE_URLS = [
   'pwa/manifest.webmanifest',
   'css/feels.css',
   'css/base.css',
-  'js/leaflet/leaflet.js',
+  'js/lib/leaflet/leaflet.js',
   'locale/en.json'
 ];
 
 //If updating version here, also update version in login.js
-const version = '4.14.4';
+const version = '4.15.4';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;

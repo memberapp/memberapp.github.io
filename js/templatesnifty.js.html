@@ -1,56 +1,4 @@
-var userTemplate=`
-<span class="memberfilter">
-    <span id="memberinfo{diff}posts{address}">
-        <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-            <span class="memberpicsmall" style="display:inline;">
-                {profilepicsmall}
-            </span>
-            <span class="member-handle">{handle}</span>
-        </a>
-    </span>
-    <span class="starrating">
-        <span data-ratingsize="8" data-ratingaddress="{address}" data-ratingraw="{rating}"
-            id="rating{diff}posts{address}" class="star-rating"></span>
-    </span>
-    <span class="flair" title="Top MEMBER Token Holder">{flair}</span>
-    <span style="display: none;" id="profileinfo{diff}posts{address}" data-profileaddress="{address}"
-        class="profilepreview">
-        <div class="profile-meta">
-            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="memberpicsmall" style="display:inline;">
-                    {profilepicsmall}
-                </span>
-            </a>
-            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="member-handle">{handle}</span>
-            </a>
-            <span class="starrating">
-                <span data-ratingsize="8" data-ratingaddress="{address}" data-ratingraw="{rating}"
-                    id="rating2posts{address}" class="star-rating"></span>
-            </span>
-            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="member-pagingid">@{pagingid}</span>
-            </a>
-        </div>
-        <div class="profile-text">
-            <span class="profilepreviewtext">{profile}</span>
-        </div>
-        <div class="profile-actions">
-            <span class="profilepreviewfollowers">
-                <a href="#followers?qaddress={address}" onclick="nlc();">{followers} followers</a>
-            </span>
-            <span class="profilepreviewfollowers">
-                <a href="#following?qaddress={address}" onclick="nlc();">{following} following</a>
-            </span>
-            <span class="profilepreviewfollowbutton">
-                {followbutton}
-            </span>
-        </div>
-    </span>
-</span>
-`;
-
-var templatePost = `
+var templateNiftyPost = `
 <div class="post">
     <div class="post-content">
         <div class="post-header">
@@ -147,8 +95,8 @@ var templatePost = `
                     <div class="dropdown-content">
                         <a class="permalink" id="permalinkposts{diff}{txid}" href="p/{txidshort}"><span
                                 data-vavilon="VVpermalink">Permalink</span></a>
-                        <a id="articlelinkposts{diff}{txid}" href="a/{txidshort}"><span
-                                data-vavilon="VVarticle"><a href="#">Article</span></a>
+                        <a id="articlelinkposts{diff}{txid}" href="a/{txidshort}"><span data-vavilon="VVarticle"><a
+                                    href="#">Article</span></a>
                         <a href="#"><span data-vavilon="VVtweet"><a href="#">Tweet</span></a>
                         <span class="divider"></span>
                         <span class="actions-title">Blockchain</span>
@@ -180,31 +128,10 @@ var templatePost = `
             </span>
             <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
             <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
+            {replydiv}
         </div>
-        <div id="reply{txid}posts{diff}" style="display:none">
-            <br>
-            <textarea id="replytextposts{diff}{txid}" rows="3"></textarea>
-            <br>
-            <input id="replybuttonposts{diff}{txid}" value="reply" type="submit"
-                onclick="sendReply('{txid}','posts{diff}','replystatusposts{diff}{txid}');">
-            <input id="replystatusposts{diff}{txid}" value="sending..." type="submit" style="display:none" disabled="">
-            <div id="replycompletedposts{diff}{txid}" value=""></div>
-        </div>
+        
     </div>
 </div>
 `;
 
-var notificationTemplate=`
-<li class="{highlighted}notificationitem notification{type}" id='notification{txid}'>
-    <div class="notificationdetails">
-        <div class="notificationminheight">
-            <div class="notificationtitle">
-                {title}
-                <span class="age">{age}</span>
-            </div>
-            {post}
-        </div>
-        <hr class="notificationhr" />
-    </div>
-</li>
-`;

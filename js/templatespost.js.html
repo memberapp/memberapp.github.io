@@ -1,0 +1,206 @@
+var completedPostTemplate=`
+Sent.
+<a onclick="showThread('{txid}')" href="#thread?post={txid}" onclick="nlc();">View It</a> or
+<a href="javascript;" onclick="window.open('{encodedurl}', 'twitterwindow', 'width=300,height=250');return false;">Also
+    Post To Twitter (opens a new window)</a>
+`;
+
+
+var scoresTemplate=`
+<span onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')" id="scores{txid}{diff}" class="score">
+    <span class="likescounttext">
+        <span id="likescount{txid}">{likesbalance}</span>
+        likes and
+    </span>
+    <span class="tipscounttext">
+        <span id="tipscount{txid}" data-amount="{tips}">{balancestring}</span>
+    </span>
+</span>`;
+
+var userTemplate=`
+<span class="memberfilter">
+    <span id="memberinfo{diff}posts{address}">
+        <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+            <span class="memberpicsmall" style="display:inline;">
+                {profilepicsmall}
+            </span>
+            <span class="member-handle">{handle}</span>
+        </a>
+    </span>
+    <span class="starrating">
+        <span data-ratingsize="8" data-ratingaddress="{address}" data-ratingraw="{rating}"
+            id="rating{diff}posts{address}" class="star-rating"></span>
+    </span>
+    <span class="flair" title="Top MEMBER Token Holder">{flair}</span>
+    <span style="display: none;" id="profileinfo{diff}posts{address}" data-profileaddress="{address}"
+        class="profilepreview">
+        <div class="profile-meta">
+            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+                <span class="memberpicsmall" style="display:inline;">
+                    {profilepicsmall}
+                </span>
+            </a>
+            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+                <span class="member-handle">{handle}</span>
+            </a>
+            <span class="starrating">
+                <span data-ratingsize="8" data-ratingaddress="{address}" data-ratingraw="{rating}"
+                    id="rating2posts{address}" class="star-rating"></span>
+            </span>
+            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+                <span class="member-pagingid">@{pagingid}</span>
+            </a>
+        </div>
+        <div class="profile-text">
+            <span class="profilepreviewtext">{profile}</span>
+        </div>
+        <div class="profile-actions">
+            <span class="profilepreviewfollowers">
+                <a href="#followers?qaddress={address}" onclick="nlc();">{followers} followers</a>
+            </span>
+            <span class="profilepreviewfollowers">
+                <a href="#following?qaddress={address}" onclick="nlc();">{following} following</a>
+            </span>
+            <span class="profilepreviewfollowbutton">
+                {followbutton}
+            </span>
+        </div>
+    </span>
+</span>
+`;
+
+var nestedPostTemplate= `
+<li style="display:{unmuteddisplay};" id="LI{txid}" class="{hightlightedclass}">{replyHTML}{nestedPostHTML}</li>
+<li style="display:{muteddisplay};" id="CollapsedLI{txid}" class="collapsed">
+    <div class="comhead">
+        <a onclick="uncollapseComment('{txid}');" href="javascript:;">[+] </a>
+        {user}
+        {scores}
+        {age}
+    </div>
+    <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
+    <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
+</li>`;
+
+
+var postTemplate = `
+<div class="post">
+    <div class="votelinks">{votelinks}</div>
+    <div class="postdetails">
+        <div class="title">
+            <p>{message}</p>
+        </div>
+        {quote}
+        <div class="subtext">
+            <span class="submitter">
+                <span class="plaintext">submitted</span>
+                {age}
+                <span class="plaintext">by</span>
+                {author}
+                {topic}
+            </span>
+            <span class="subtextbuttons">
+                <a href="#thread?root={roottxid}&post={txid}" onclick="nlc();">{replies} comments</a>
+                {scores}
+                {tipsandlinks}
+            </span>
+        </div>
+        <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
+        <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
+        {replydiv}
+    </div>
+</div>
+`;
+
+var notificationTemplate=`
+<li class="{highlighted}notificationitem notification{type}" id='notification{txid}'>
+    <div class="notificationdetails">
+        <div class="notificationminheight">
+            <div class="notificationtitle">
+                {title}
+                <span class="age">{age}</span>
+            </div>
+            {post}
+        </div>
+        <hr class="notificationhr" />
+    </div>
+</li>
+`;
+
+var replyTemplate=`
+<div class="reply{highlighted}" id="{id}">
+    <div class="{blocked}">
+        <div class="votelinks">{votebuttons}</div>
+        <div class="commentdetails">
+            <div class="comhead"> <a onclick="collapseComment('{txid}');" href="javascript:;">[-]</a>
+                {author}
+            </div>
+            <div class="comment">
+                <div class="commentbody">
+                    {message}
+                </div>
+                <div class="subtextbuttons">{scores} {age} {replyandtips}</div>
+                {replydiv}
+            </div>
+            <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
+            <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
+        </div>
+    </div>
+</div>
+`;
+
+var replyDivTemplate = `
+<div id="reply{txid}{page}" style="display:none">
+    <br />
+    <textarea id="replytext{page}{txid}" rows="3"></textarea>
+    <br />
+    <input id="replybutton{page}{txid}" value="reply" type="submit"
+        onclick="sendReply('{txid}','{page}','replystatus{page}{txid}');" />
+    <input id="replystatus{page}{txid}" value="sending..." type="submit" style="display:none" disabled />
+    <div id="replycompleted{page}{txid}" value=""></div>
+</div>`;
+
+var replyAndTipsTemplate = `
+{maplink}
+<a id="replylink{txid}{page}" onclick="showReplyBox('{txid}{page}');" href="javascript:;">reply</a>
+<span class="rememberscounttext">
+    <a class="{remembersactive}" id="repostlink{page}{txid}" {remembersonclick}>
+        <span onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" class="repostscount"
+            id="repostscount{txid}"> {repostcount} remembers </span>
+    </a>
+</span>
+<a id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>
+<a id="quotelink{page}{txid}" href="#new?txid={txid}">quote</a>
+<a id="morelink{page}{txid}" onclick="showMore('more{page}{txid}','morelink{page}{txid}');"
+    href="javascript:;">+more</a>
+<span id="more{page}{txid}" style="display:none">
+    <a class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
+    {articlelink2}
+    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">memo</a>
+    <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/{txid}">bitcoin.com</a>
+    <a rel="noopener noreferrer" target="blockchair"
+        href="https://blockchair.com/bitcoin-cash/transaction/{txid}">blockchair</a>
+    <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/{txid}">btc.com</a>
+    <a rel="noopener noreferrer" target="bitcoinunlimited"
+        href="https://explorer.bitcoinunlimited.info/tx/{txid}">bitcoin unlimited</a>
+    <a id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');" href="javascript:;">flag(post)</a>
+    {hideuser}
+</span>
+
+<span id="tipbox{page}{txid}" style="display:none">
+    <input id="tipamount{page}{txid}" type="number" value="0" min="0" style="width: 6em;" step="1000" />
+    <input id="tipbutton{page}{txid}" value="tip" type="submit" onclick="sendTip('{txid}','{address}','{page}');" />
+    <input id="tipstatus{page}{txid}" value="sending" type="submit" style="display:none" disabled />
+</span>`;
+
+
+var mapPostTemplate=`
+<div id="newgeopost" class="bgcolor">
+    <input id="lat" size="10" type="hidden" value="{lat}">
+    <input id="lon" size="10" type="hidden" value="{lng}">
+    <input id="geohash" size="15" type="hidden">
+    <textarea class="geoposttextarea" id="newgeopostta" maxlength="217" name="text" rows="4"></textarea><br />
+    <input id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
+    <input id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit" disabled>
+    <div id="newpostgeocompleted"></div>
+</div>`;

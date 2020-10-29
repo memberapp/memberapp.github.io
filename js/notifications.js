@@ -55,7 +55,8 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
     var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
-        var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML('new', page, '', '', start, limit, page, qaddress, "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
+        //var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents = ``;
 
@@ -68,11 +69,11 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         }
         //console.log(contents);
         if (contents == "") {
-            contents = getNothingFoundMessageHTML("No notifications yet");
+            contents = getNothingFoundMessageHTML("nonotifications","No notifications yet");
         }
 
         if (window.Notification.permission != 'granted') {
-            contents = `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>` + contents;
+            contents = allowNotificationButtonHTML()+ contents;
         }else{
             //notification subscriptions seem to get cancelled a lot - keep requesting subscription if granted to ensure continuity
             requestNotificationPermission();
@@ -91,7 +92,11 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
 
         document.getElementById(page).innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data);
-        scrollToPosition('notification' + san(txid));
+        if(txid){
+            scrollToPosition('notification' + san(txid));
+        }else{
+            scrollToPosition();
+        }
         
         listenForTwitFrameResizes();
         //window.scrollTo(0, scrollhistory[window.location.hash]);
@@ -127,7 +132,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "thread",
                 `💬&nbsp;`,
-                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + ` <span class="plaintext">in a discussion you're in</span> `,
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext','discussion',`in a discussion you're in'`),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
                 data.txid, highlighted
@@ -138,7 +143,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "topic",
                 `📰&nbsp;`,
-                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + ` <span class="plaintext">in a topic you're subscribed to</span> `,
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + getSpanHTML('plaintext','inatopic',`in a topic you're subscribed to`),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
                 data.txid, highlighted
@@ -149,7 +154,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "page",
                 `📣&nbsp;`,
-                userFromData(data, mainRatingID) + ` <span class="plaintext">mentioned you in a</span> ` + postlinkHTML(data.txid, `post`),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext','mentionedyou','mentioned you in a') + postlinkHTML(data.txid, `post`),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
                 data.txid, highlighted
@@ -160,7 +165,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "reply",
                 `💬&nbsp;`,
-                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + ` <span class="plaintext">to your</span> ` + postlinkHTML(data.rretxid, "post"),
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext','toyour','to your') + postlinkHTML(data.rretxid, "post"),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, ''),
                 data.txid, highlighted
@@ -173,7 +178,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "rating",
                 `⭐&nbsp;`,
-                userFromData(data, mainRatingID) + ` <span class="plaintext">rated you as</span> ` + theRating + ` <span class="plaintext">stars, commenting ... ` + escapeHTML(data.reason) + `</span>`,
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext','ratedyou','rated you as') + theRating + getSpanHTML('plaintext','starscommenting','stars, commenting ... ') + getSpanClassHTML("plaintext",escapeHTML(data.reason)),
                 timeSince(Number(data.time)),
                 "",
                 data.txid, highlighted
@@ -183,7 +188,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "follow",
                 `👩&nbsp;`,
-                userFromData(data, mainRatingID) + ` <span class="plaintext">followed you</span> `,
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext','followedyou','followed you'),
                 timeSince(Number(data.time)),
                 "",
                 data.txid, highlighted
@@ -198,7 +203,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "like",
                 `💗&nbsp;`,
-                userFromData(data, mainRatingID) + ` <span class="plaintext">liked your</span> ` + postlinkHTML(data.likeretxid, "post") + ` <span class="plaintext">` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : "") + `</span>`,
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext','likedyour','liked your') + postlinkHTML(data.likeretxid, "post") + getSpanClassHTML("plaintext",(Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : "")),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, ''),
                 data.txid, highlighted
@@ -209,7 +214,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "repost",
                 `🔗&nbsp;`,
-                userFromData(data, mainRatingID) + ` <span class="plaintext">remembered your</span> ` + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext','rememberedyour','remembered your') + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, ''),
                 data.txid, highlighted
