@@ -55,7 +55,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
     var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
-        var navbuttons = getNavButtonsNewHTML('new', page, '', '', start, limit, page, qaddress, "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML('new', page, '', '', start, limit, page, qaddress, "getAndPopulateNotifications", data.unduplicatedlength);
         //var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents = ``;

@@ -164,10 +164,9 @@ var replyAndTipsTemplate = `
 {maplink}
 <a id="replylink{txid}{page}" onclick="showReplyBox('{txid}{page}');" href="javascript:;">reply</a>
 <span class="rememberscounttext">
-    <a class="{remembersactive}" id="repostlink{page}{txid}" {remembersonclick}>
-        <span onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" class="repostscount"
+    <a class="{remembersactive}" id="repostlink{page}{txid}" {remembersonclick}></a>
+    <span onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" class="repostscount"
             id="repostscount{txid}"> {repostcount} remembers </span>
-    </a>
 </span>
 <a id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>
 <a id="quotelink{page}{txid}" href="#new?txid={txid}">quote</a>

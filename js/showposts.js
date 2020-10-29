@@ -46,7 +46,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.unduplicatedlength);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -313,9 +313,9 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 function addDynamicHTMLElements(data) {
 
     if (data != null && data != undefined) {
-        if (data.length > 0) {
-            updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
-        }
+        //if (data.length > 0) {
+            updateStatus("QT:" + (Math.round(data.msc * 100) / 100).toFixed(2));
+        //}
     }
     //Add ratings, disable controls if the star rating can be updated
     addStarRatings('rating');
@@ -386,7 +386,7 @@ function showRemembersExpanded(retxid, profileelement) {
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents += getDivClassHTML("rememberdetails", userFromDataBasic(data[i], san(retxid) + i, 16));
+            contents += getRememberDetailsHTML(userFromDataBasic(data[i], san(retxid) + i, 16), data[i].message, data[i].topic, data[i].txid);
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements();

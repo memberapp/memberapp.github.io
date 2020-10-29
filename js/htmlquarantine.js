@@ -442,12 +442,12 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
     var navbuttons = `<div class="navbuttons">`;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('prev','back') + `</a> `; }
+    { navbuttons += `<a class="next" href="#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('prev', 'back') + `</a> `; }
 
     //Removing this if, because sometimes flagged posts are removed server side, so this condition may be true even where there are more results to return.
     //Proper fix is to have the server return a flag to say if there are more results available.
     if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
-    { navbuttons += `<a class="back" href="#` + action + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('next','next') + `</a>`; }
+    { navbuttons += `<a class="back" href="#` + action + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('next', 'next') + `</a>`; }
 
     navbuttons += "</div>";
     return navbuttons;
@@ -473,14 +473,14 @@ function getVoteButtons(txid, address, likedtxid, likeordislike, score) {
         upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="upvote"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a>`;
         scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
     } else {
-        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;" onclick="likePost('` + san(txid) + `','` + san(address) + `')"><span id="upvote` + san(txid) + `" class="votearrow" title="upvote"></span><span class="votetext">` + getSafeTranslation('up','up') + `</span></a>`;
+        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;" onclick="likePost('` + san(txid) + `','` + san(address) + `')"><span id="upvote` + san(txid) + `" class="votearrow" title="upvote"></span><span class="votetext">` + getSafeTranslation('up', 'up') + `</span></a>`;
     }
 
     if (likeordislike == "-1") {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;"><span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="downvote"><span class="votetext">` + getSafeTranslation('down','down') + `</span></span></a>`;
+        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;"><span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="downvote"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
         scoreHTML = `<span class="betweenvotesscoredown" id="score` + san(txid) + `">` + Number(score) + `</span>`;
     } else {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="downvote"><span class="votetext">` + getSafeTranslation('down','down') + `</span></span></a>`;
+        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="downvote"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
     }
 
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
@@ -505,15 +505,19 @@ function completedPostHTML(txid, titleHOSTILE) {
 }
 
 function getCloseButtonHTML(profileelement) {
-    return `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">` + getSafeTranslation('close','close') + `</a></div>`;
+    return `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">` + getSafeTranslation('close', 'close') + `</a></div>`;
 }
 
 function getTipDetailsHTML(user, amount, type) {
-    return `<div class="tipdetails">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped','tipped') + ` ` + balanceString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked','disliked') : ``) + `</div>`;
+    return `<div class="tipdetails">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + balanceString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
+}
+
+function getRememberDetailsHTML(user, message, topic, txid) {
+    return `<div class="rememberdetails">` + user + `<span class="plaintext"><a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + (message ? getSafeTranslation('quoteremembered', 'quote remembered') : getSafeTranslation('remembered', 'remembered')) + "</a></span> " + getTopicHTML(topic, getSafeTranslation('totopic', ' to t/')) + `</div>`;
 }
 
 function getRepostHeaderHTML(user) {
-    return `<span class='repost'>` + user + ` ` + getSafeTranslation('remembered','remembered') + `</span>`;
+    return `<span class='repost'>` + user + ` ` + getSafeTranslation('remembered', 'remembered') + `</span>`;
 }
 
 
@@ -654,7 +658,7 @@ function getOSMattributionHTML() {
 }
 
 function mapThreadLoadingHTML(previewHTML) {
-    return `<div id='mapthread'>` + getSafeTranslation('loading','loading ') + previewHTML + "</div>";
+    return `<div id='mapthread'>` + getSafeTranslation('loading', 'loading ') + previewHTML + "</div>";
 }
 
 //Trust graph and Rating
@@ -759,7 +763,7 @@ function clickActionNamedHTML(action, qaddress, name) {
 }
 
 function privatekeyClickToShowHTML() {
-    return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">` + getSafeTranslation('showpriv','Show private key') + `</a>`;
+    return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">` + getSafeTranslation('showpriv', 'Show private key') + `</a>`;
 }
 
 //Topics
@@ -788,30 +792,30 @@ function getHTMLForTopicArray(data, elementStem) {
 
     ret += `<tr style='display:none' id='` + elementStem + data[0].mostrecent + `'><td colspan='4'>`;
     if (data[0].topic != "") {
-        ret += `<div class="filterprovider">` + clickActionNamedHTML("unsub", data[0].topic, getSafeTranslation('unsubscribe','unsubscribe')) + "</div>";
+        ret += `<div class="filterprovider">` + clickActionNamedHTML("unsub", data[0].topic, getSafeTranslation('unsubscribe', 'unsubscribe')) + "</div>";
     }
     var alreadymod = false;
     for (var i = 0; i < data.length; i++) {
         if (data[i].existingmod == pubkey) {
-            ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", pubkey, data[i].topicname, getSafeTranslation('resign','resign as moderator'), "dismiss" + Number(data[i].mostrecent)) + "</div>";
+            ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", pubkey, data[i].topicname, getSafeTranslation('resign', 'resign as moderator'), "dismiss" + Number(data[i].mostrecent)) + "</div>";
             alreadymod = true;
         }
     }
     if (!alreadymod) {
-        ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", pubkey, data[0].topicname, getSafeTranslation('volunteer','volunteer as moderator'), "designate" + Number(data[0].mostrecent)) + "</div>";
+        ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", pubkey, data[0].topicname, getSafeTranslation('volunteer', 'volunteer as moderator'), "designate" + Number(data[0].mostrecent)) + "</div>";
     }
 
     for (var i = 0; i < data.length; i++) {
         if (data[i].existingmod == pubkey) continue;
         if (data[i].existingmod != null) {
             if (data[i].existingmodaddress != null) {
-                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, getSafeTranslation('removefilter','remove filter'), "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, getSafeTranslation('removefilter', 'remove filter'), "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
             } else {
                 var userName = document.getElementById('settingsnametext').value;
                 var userIsGroupFilter = userName.toLowerCase().endsWith("filter") || userName.toLowerCase().endsWith("group");
                 var modIsGroupFilter = data[i].existingmodname.toLowerCase().endsWith("filter") || data[i].existingmodname.toLowerCase().endsWith("group");
                 if (userIsGroupFilter != modIsGroupFilter) {
-                    ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, getSafeTranslation('addfilter','add filter'), "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
+                    ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, getSafeTranslation('addfilter', 'add filter'), "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
                 }
             }
         }
@@ -826,7 +830,7 @@ function getHTMLForTopic(data, elementStem) {
 
     //Show more button if the user is subscribed or topic is emtpy string
     if (data.address != null || data.topicname == "") {
-        subscribe = `<a id="` + elementStem + `link` + data.mostrecent + `" onclick="showMore('` + elementStem + data.mostrecent + `','` + elementStem + `link` + data.mostrecent + `'); jdenticon();" href="javascript:;">` + getSafeTranslation('more','more') + `</a>`;
+        subscribe = `<a id="` + elementStem + `link` + data.mostrecent + `" onclick="showMore('` + elementStem + data.mostrecent + `','` + elementStem + `link` + data.mostrecent + `'); jdenticon();" href="javascript:;">` + getSafeTranslation('more', 'more') + `</a>`;
     }
     //Special values for empty topic
     if (data.topicname == "") {
@@ -856,7 +860,7 @@ function getHTMLForTopicHeader(topicNameHOSTILE, contents) {
 
 //Private Messages
 function sendEncryptedMessageHTML(address, name, publickey) {
-    return ` <a class="populate-send-message" onclick="populateSendMessage('` + san(address) + `','` + unicodeEscape(name) + `','` + san(publickey) + `');" href='javascript:;'>` + getSafeTranslation('sendmessage','send message') + `</a>`;
+    return ` <a class="populate-send-message" onclick="populateSendMessage('` + san(address) + `','` + unicodeEscape(name) + `','` + san(publickey) + `');" href='javascript:;'>` + getSafeTranslation('sendmessage', 'send message') + `</a>`;
 }
 
 function populateSendMessage(address, name, publickey) {
@@ -864,7 +868,7 @@ function populateSendMessage(address, name, publickey) {
     location.href = "#messages";
 
     if (publickey == null || publickey == "") {
-        alert(getSafeTranslation('publickeynotavailable',"Public key is not available - maybe the user hasn't set their name/handle."));
+        alert(getSafeTranslation('publickeynotavailable', "Public key is not available - maybe the user hasn't set their name/handle."));
         return;
     }
     document.getElementById('sendmessagebox').style.display = 'block';
@@ -885,12 +889,12 @@ function getMessageHTML(data, count) {
             //should be possible to remove this after a month or so
         }
         //You sent a message
-        contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent','you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
+        contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
         let ecpair = new BITBOX.ECPair().fromWIF(privkey);
         var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
         decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
-        contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing','processing') + "</div><br/></li>";
+        contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }
     return contents;
 }
@@ -899,7 +903,7 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
     //const privateKeyBuf5 = wif.decode(privkey).privateKey;
 
     //"Try again later: Unable to decrypt message: "
-    var decryptedMessage = getSafeTranslation('unabledecrypt',"Try again later: Unable to decrypt message: ");
+    var decryptedMessage = getSafeTranslation('unabledecrypt', "Try again later: Unable to decrypt message: ");
     try {
         const encrypted = eccryptoJs.deserialize(Buffer.from(message, 'hex'));
         const structuredEj = await eccryptoJs.decrypt(privateKeyBuf, encrypted);
@@ -919,9 +923,9 @@ function getNothingFoundMessageHTML(tk, def) {
 }
 
 function getSafeTranslation(translationKey, fallback, xvar) {
-    var translated=___i18n(translationKey, xvar);
-    if(translated=translationKey){
-        translated=fallback;
+    var translated = ___i18n(translationKey, xvar);
+    if (translated = translationKey) {
+        translated = fallback;
     }
     return ds(translated);
 }
