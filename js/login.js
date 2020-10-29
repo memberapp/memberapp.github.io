@@ -213,7 +213,8 @@ function login(loginkey) {
         //Register public key with utxo server so that utxos can be cached
         let ecpair = new BITBOX.ECPair().fromWIF(privkey);
         var pubkeyHex = ecpair.getPublicKeyBuffer().toString('hex');
-        getJSON(dropdowns.utxoserver + 'reg/'+pubkeyHex+'?a=1').then(function (data) {}, function (status) {});
+        getJSON("https://member.cash/v2/" + 'reg/'+pubkeyHex+'?a=1').then(function (data) {}, function (status) {});
+        //dropdowns.utxoserver
     }
     
 
