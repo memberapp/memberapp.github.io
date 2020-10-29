@@ -924,7 +924,7 @@ function getNothingFoundMessageHTML(tk, def) {
 
 function getSafeTranslation(translationKey, fallback, xvar) {
     var translated = ___i18n(translationKey, xvar);
-    if (translated = translationKey) {
+    if (translated == translationKey) {
         translated = fallback;
     }
     return ds(translated);
