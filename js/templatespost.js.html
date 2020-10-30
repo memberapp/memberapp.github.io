@@ -171,8 +171,10 @@ var replyAndTipsTemplate = `
     href="javascript:;">reply</a>
 <span class="rememberscounttext">
     <a class="{remembersactive}" id="repostlink{page}{txid}" {remembersonclick}></a>
-    <span onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" class="repostscount"
-        id="repostscount{txid}"> {repostcount} <span data-vavilon="VV0156">remembers</span></span>
+    <span onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" class="repostscount">
+        <span id="repostscount{txid}">{repostcount}</span>
+        <span data-vavilon="VV0156">remembers</span>
+    </span>
 </span>
 <a data-vavilon="VV0157" id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>
 <a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={txid}">quote</a>

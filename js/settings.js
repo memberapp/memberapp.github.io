@@ -15,8 +15,8 @@ function getAndPopulateCommunityRatings(qaddress) {
         }
         document.getElementById(page).innerHTML = contents;
 
-        addDynamicHTMLElements();
         addStarRatings('comrating');
+        addDynamicHTMLElements();
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -35,8 +35,8 @@ function getAndPopulateRatings(qaddress) {
             contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason, 'memrating', data[i].trxid);
         }
         document.getElementById(page).innerHTML = contents;
-        addDynamicHTMLElements();
         addStarRatings('memrating');
+        addDynamicHTMLElements();
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });

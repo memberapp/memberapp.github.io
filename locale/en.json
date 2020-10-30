@@ -279,10 +279,17 @@
   "minutesago": "minutes ago",
   "s": "s",
   "secondsago": "seconds ago",
-  "VV0180":"Language",
-  "refreshbalance":"Refresh Balance",
-  "post":"post",
-  "posted":"posted",
-  "replied":"replied",
-  "replytostart":"No comments yet . . . reply to start a conversation"
+  "VV0180": "Language",
+  "refreshbalance": "Refresh Balance",
+  "post": "post",
+  "posted": "posted",
+  "replied": "replied",
+  "replytostart": "No comments yet . . . reply to start a conversation",
+  "VV0008": "Rates As",
+  "VV0009": "Commenting...",
+  "VV0011": "You",
+  "VV0012": "Rate as",
+  "VV0013": "Member",
+  "VV0014": "Who Rates as",
+  "VV0015": "Rates as"
 }

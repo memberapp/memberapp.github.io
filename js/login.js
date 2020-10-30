@@ -15,7 +15,7 @@ let tq = new TransactionQueue(updateStatus);
 var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 5;
-var pathpermalinks = true;
+var pathpermalinks = 'https://member.cash/';
 var profilepicbase = 'img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var siteTitle = 'member.cash';
@@ -211,7 +211,7 @@ function login(loginkey) {
         alert(getSafeTranslation('publickeymode',"You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
     }
 
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {});
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
     updateSettings();
     getAndPopulateSettings();
 

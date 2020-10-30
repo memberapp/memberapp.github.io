@@ -375,10 +375,10 @@ var delay = function (elem, callback, target) {
 };
 
 //replace items in a template (for nifty theme)
-function templateReplace(templateString, obj) {
+function templateReplace(templateString, obj, skipdebug) {
   //var templateString=document.getElementById(template).innerHTML;
   return templateString.replace(/\{(\w+)\}/g, function (_, k) {
-    if (obj[k] == undefined) {
+    if (obj[k] == undefined && !skipdebug) {
       console.log("missing template value:" + k);
       //console.log(templateString);
     }

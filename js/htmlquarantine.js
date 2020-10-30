@@ -121,8 +121,8 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     var articlelink = `?` + santxid.substring(0, 4) + `#article?post=` + santxid.substring(0, 10);
 
     if (pathpermalinks) {
-        permalink = `p/` + santxid.substring(0, 10);
-        articlelink = `a/` + santxid.substring(0, 10);
+        permalink = pathpermalinks + `p/` + santxid.substring(0, 10);
+        articlelink = pathpermalinks + `a/` + santxid.substring(0, 10);
     }
 
     if (article) {

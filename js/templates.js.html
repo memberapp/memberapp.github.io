@@ -40,7 +40,7 @@ var ratingAndReasonHTML=`
 </tr>
 <tr>
     <td></td>
-    <td data-vavilon="VV0009" data-label='Commenting...' colspan='2'>
+    <td data-vavilon_data_label="VV0009" data-label='Commenting...' colspan='2'>
         <a href='#thread?root={txid}'>{reason}</a>
     </td>
 </tr>
@@ -50,6 +50,7 @@ var trustRatingTableHTML=`
 <span data-vavilon="VV0010" class="overallrating">Overall Rating:</span>
 <span class="overallrating">{rating}</span>
 <br />
+<div id="overall"></div>
 <br />
 <table>{tablecontents}</table>
 `;
@@ -348,10 +349,10 @@ var messagesanchorHTML=`
     </div>
     <div id="sendmessagecontainer">
         <label data-vavilon="VV0050">Send Encrypted Message</label>
-        <label for="messageto"><span data-vavilon="VV0051">To</span></label>
-        <span data-vavilon="VV0052" id="messagerecipient" class="messagerecipient">(Search for user above)</span>
-        (<span id="messageaddress" class="messageaddress"></span>)
-        (<span id="messagepublickey" class="messagepublickey"></span>)
+        <label for="messageto"><span data-vavilon="VV0052">(Search for user above)</span></label>
+        <span id="messagerecipient" class="messagerecipient"></span>
+        <span id="messageaddress" class="messageaddress"></span>
+        <span id="messagepublickey" class="messagepublickey"></span>
         <div id="sendmessagebox" style="display: none;">
             <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum 547)</label>
             <input id="stampamount" size="8" type="number" value="547">
@@ -626,9 +627,8 @@ pages.settings = `
         <div class="formgroup">
             <input maxlength="217" size="30" id="settingsnametext" value="{handle}"
                 onchange="document.getElementById('settingsnametextbutton').disabled=false;"
-                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();" disabled="">
-            <button data-vavilon="VV0077" id="settingsnametextbutton" type="button" onclick="setName();"
-                disabled="">update</button>
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            <button data-vavilon="VV0077" id="settingsnametextbutton" type="button" onclick="setName();">update</button>
         </div>
     </div>
     <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
@@ -851,8 +851,9 @@ var headerHTML = `
         <span class="navitemsmain">
             <span id="loggedin" style="display:none;">
                 <span class="headerbuttons">
-                    <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance" id="balancedetails"
-                        class="balancedetails"><span id="balance">0</span></span>
+                    <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;"
+                        title="Refresh Balance" id="balancedetails" class="balancedetails"><span
+                            id="balance">0</span></span>
                     <a data-vavilon_title="VV0094" id="myfeedbutton"
                         title="My Feed (Latest posts from your topics or peeps)" class="btn" href="#myfeed"
                         onclick="nlc();">📰</a>
