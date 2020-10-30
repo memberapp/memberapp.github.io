@@ -14,7 +14,7 @@ function getAndPopulateQuoteBox(txid) {
             contents = getHTMLForPost(data[0], 1, page, 0, null, true);
             document.getElementById(page).innerHTML = contents;
         } else {
-            throw error('no result returned');
+            throw error(getSafeTranslation('noresult', 'no result returned'));
         }
         addDynamicHTMLElements();
     }, function (status) { //error detection....
@@ -46,7 +46,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.unduplicatedlength);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -64,10 +64,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         if (contents == "") {
-            contents = getNothingFoundMessageHTML("nothinghere","Nothing here yet");
+            contents = getDivClassHTML('message', getSafeTranslation("nothinghere", "Nothing here yet"));
 
             if (filter == "mypeeps" || filter == "myfeed" || topicnameHOSTILE == "MyFeed" || topicnameHOSTILE == "MyTopics") {
-                contents = getNothingFoundMessageHTML("nothinginfeed","Nothing in your feed");
+                contents = getDivClassHTML('message', getSafeTranslation("nothinginfeed", "Nothing in your feed"));
             }
 
         }
@@ -103,7 +103,7 @@ function getAndPopulateMessages(start, limit) {
             data[i].address = data[i].senderaddress;
             contents += getMessageHTML(data[i], i);
         }
-        if (contents == "") { contents = "No messages found."; }
+        if (contents == "") { contents = getSafeTranslation('nomessagesfound', "No messages found."); }
 
 
         document.getElementById('messageslist').innerHTML = contents;
@@ -174,7 +174,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
                 var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID)
 
                 if (commentTree == '<ul></ul>') {
-                    commentTree = `<p class='nocommentsyet'>No comments yet . . . reply to start a conversation</p>`;
+                    commentTree = getNoCommentsYetHTML();
                 } else {
                     commentTree = getDivClassHTML("comment-tree", commentTree);
                 }
@@ -188,7 +188,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
 
         if (popup != undefined) {
-            popup.setContent(getDivClassHTML('mapthread',contents));
+            popup.setContent(getDivClassHTML('mapthread', contents));
 
         }
         addDynamicHTMLElements(data);
@@ -287,6 +287,7 @@ function getAndPopulateTopicList(showpage) {
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         //document.getElementById(page).innerHTML = contents;
         //detectMultipleIDS();
+        addDynamicHTMLElements();
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -312,9 +313,9 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 
 function addDynamicHTMLElements(data) {
 
-    if (data != null && data != undefined) {
+    if (data != null && data != undefined && data[0]) {
         //if (data.length > 0) {
-            updateStatus("QT:" + (Math.round(data.msc * 100) / 100).toFixed(2));
+        updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
         //}
     }
     //Add ratings, disable controls if the star rating can be updated
@@ -325,6 +326,7 @@ function addDynamicHTMLElements(data) {
 
     //Add scoremouseovers
     //addClickScores();
+    translatePage();
 
     //Add identicons
     jdenticon();
@@ -426,7 +428,7 @@ function addSingleStarsRating(theElement) {
         starSize: starSize,
         rating: Math.round(theRating * 10) / 10,
         element: theElement,
-        disableText: disabledtext ? disabledtext : 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
+        disableText: disabledtext ? disabledtext : getSafeTranslation('thisuserrates', 'This user rates ') + ds(name) + ' {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
             if (ratingText) {
@@ -624,12 +626,12 @@ function sendTip(txid, tipAddress, page) {
 
     var tipAmount = parseInt(document.getElementById("tipamount" + page + txid).value);
     if (tipAmount < 547) {
-        alert("547 (dust+1) is the minimum tip possible");
+        alert(getSafeTranslation('547min', "547 (dust+1) is the minimum tip possible"));
         return false;
     }
     defaulttip = tipAmount;
 
-    document.getElementById('tipstatus' + page + txid).value = "Sending Tip . . " + tipAmount;
+    document.getElementById('tipstatus' + page + txid).value = getSafeTranslation('sendingtip', "Sending Tip . .") + ' ' + tipAmount;
     var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
     document.getElementById('tipscount' + txid).dataset.amount = tipscount + tipAmount;
     document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + tipAmount, false);

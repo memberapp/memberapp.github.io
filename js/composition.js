@@ -109,7 +109,7 @@ function geopost() {
     var txtarea = document.getElementById('newgeopostta');
     var posttext = txtarea.value;
     if (posttext.length == 0) {
-        alert("No Message Body");
+        alert(getSafeTranslation('nomessagebody',"No Message Body"));
         return false;
     }
     var lat = Number(document.getElementById("lat").value);
@@ -128,7 +128,7 @@ function geopost() {
     document.getElementById('newpostgeocompleted').innerText = "";
     document.getElementById('newpostgeobutton').style.display = "none";
     document.getElementById('newpostgeostatus').style.display = "block";
-    document.getElementById('newpostgeostatus').value = "Posting...";
+    document.getElementById('newpostgeostatus').value = getSafeTranslation('posting',"Posting...");
 
     postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", geocompleted);
 
@@ -143,12 +143,12 @@ function postmemorandum() {
     
     if(!txid){
         if (posttext.length == 0) {
-            alert("No Memo - Try adding something in the memo box");
+            alert(getSafeTranslation('nomemo',"No Memo - Try adding something in the memo box"));
             return false;
         }
     }else{
         if (posttext.length == 0 && topic.length == 0) {
-            alert("No post or topic. Try a regular remember instead.");
+            alert(getSafeTranslation('nopost',"No post or topic. Try a regular remember instead."));
             return false;
         }
     }
@@ -157,7 +157,7 @@ function postmemorandum() {
     document.getElementById('newpostmemorandumcompleted').innerText = "";
     document.getElementById('newpostmemorandumbutton').style.display = "none";
     document.getElementById('newpostmemorandumstatus').style.display = "block";
-    document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
+    document.getElementById('newpostmemorandumstatus').value = getSafeTranslation('sendingtitle',"Sending Title...");
 
     if(txid){
         quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function(txidnew){sendRepostNotification(txid,"newpostmemorandumstatus",topic, txidnew);}, txid);
@@ -176,9 +176,9 @@ function postmemorandum() {
 
 function sendRepostNotification(txid,divForStatus, topic, newtxid){
 
-    var replytext="Your post was remembered";
+    var replytext=getSafeTranslation('postremembered',"Your post was remembered");
     if(topic){
-        replytext+=" in topic "+topic;
+        replytext+=" "+getSafeTranslation('intopic',"in topic")+" "+topic;
     }
     replytext+=" https://member.cash/p/"+newtxid.substr(0,10);
     var replyHex = new Buffer(replytext).toString('hex');
@@ -212,12 +212,12 @@ function memocompleted() {
     document.getElementById('memotitle').value = "";
     document.getElementById('newpoststatus').style.display = "none";
     document.getElementById('newpostbutton').style.display = "block";
-    document.getElementById('newpostcompleted').innerHTML = "Message Sent. ";
+    document.getElementById('newpostcompleted').innerHTML = getSafeTranslation('messagesent',"Message Sent.");
 }
 
 function geocompleted() {
     document.getElementById('newgeopostta').value = "";
     document.getElementById('newpostgeostatus').style.display = "none";
     document.getElementById('newpostgeobutton').style.display = "block";
-    document.getElementById('newpostgeocompleted').innerHTML = "Message Sent. ";
+    document.getElementById('newpostgeocompleted').innerHTML = getSafeTranslation('messagesent',"Message Sent.");
 }

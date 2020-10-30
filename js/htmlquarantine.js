@@ -48,7 +48,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     var linkEnd = `</a> `;
     var flair = " ";
     if (tokens > 0) {
-        flair = ` <span class="flair" title="Top MEMBER Token Holder">` + ordinal_suffix_of(Number(tokens)) + `</span> `;
+        flair = ` <span class="flair" title="Top MEMBER Token Holder">` + ordinal_suffix_of(Number(tokens)) + ` </span> `;
     }
     var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic
         + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>` + flair;
@@ -433,7 +433,7 @@ function getPostListItemHTML(postHTML) {
 }
 
 function postlinkHTML(txid, linktext) {
-    return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + ds(linktext) + `</a>`;
+    return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + getSafeTranslation(linktext,linktext) + `</a>`;
 }
 
 function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
@@ -520,6 +520,13 @@ function getRepostHeaderHTML(user) {
     return `<span class='repost'>` + user + ` ` + getSafeTranslation('remembered', 'remembered') + `</span>`;
 }
 
+function getProfilePicLargeHTML(theURL) {
+    return `<img id="settingspicturelarge" class="settingspicturelarge" src="` + theURL + `" style="display: block;" width="640" height="640">`;
+}
+
+function getNoCommentsYetHTML() {
+    return `<p data-vavilon="replytostart" class='nocommentsyet'>No comments yet . . . reply to start a conversation</p>`;
+}
 
 //Media replacement
 function makeYoutubeIframe(youtubeid, starttime) {
@@ -762,9 +769,10 @@ function clickActionNamedHTML(action, qaddress, name) {
     return `<a class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `"); self.style.display="none";'>` + ds(name) + `</a>`;
 }
 
+/*
 function privatekeyClickToShowHTML() {
     return `<a id="privatekeyclicktoshow" onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">` + getSafeTranslation('showpriv', 'Show private key') + `</a>`;
-}
+}*/
 
 //Topics
 function clickActionTopicHTML(action, qaddress, topicHOSTILE, buttonText, elementid) {
@@ -813,6 +821,7 @@ function getHTMLForTopicArray(data, elementStem) {
             } else {
                 var userName = document.getElementById('settingsnametext').value;
                 var userIsGroupFilter = userName.toLowerCase().endsWith("filter") || userName.toLowerCase().endsWith("group");
+                if(!data[i].existingmodname)data[i].existingmodname="";
                 var modIsGroupFilter = data[i].existingmodname.toLowerCase().endsWith("filter") || data[i].existingmodname.toLowerCase().endsWith("group");
                 if (userIsGroupFilter != modIsGroupFilter) {
                     ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, getSafeTranslation('addfilter', 'add filter'), "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
@@ -918,16 +927,42 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
     document.getElementById(roottxid).innerText = decryptedMessage;
 }
 
-function getNothingFoundMessageHTML(tk, def) {
+/*function getNothingFoundMessageHTML(tk, def) {
     return "<div class='message'>" + getSafeTranslation(tk, def) + "</div>";
+}*/
+
+function ___i18n(translationKey) {
+    if (dictionary.live[translationKey]) {
+        return dictionary.live[translationKey];
+    } else if (dictionary.fallback[translationKey]) {
+        return dictionary.fallback[translationKey];
+    } else {
+        return translationKey;
+    }
 }
 
-function getSafeTranslation(translationKey, fallback, xvar) {
-    var translated = ___i18n(translationKey, xvar);
+function getSafeTranslation(translationKey, fallback) {
+    var translated = ___i18n(translationKey);
     if (translated == translationKey) {
         translated = fallback;
     }
     return ds(translated);
+}
+
+function translatePage() {
+    var matches = document.getElementsByTagName("*");
+    for (var j = 0; j < matches.length; j++) {
+        if (matches[j].dataset.vavilon || matches[j].dataset.vavilon_title || matches[j].dataset.vavilon_value || matches[j].dataset.vavilon_data_label) {
+            if (matches[j].dataset.vavilon) 
+                matches[j].innerHTML=getSafeTranslation(matches[j].dataset.vavilon,matches[j].dataset.vavilon);
+            if (matches[j].dataset.vavilon_title) 
+                matches[j].title=getSafeTranslation(matches[j].dataset.vavilon_title,matches[j].dataset.vavilon_title);
+            if (matches[j].dataset.vavilon_value)
+                matches[j].value=getSafeTranslation(matches[j].dataset.vavilon_value,matches[j].dataset.vavilon_value);
+            if (matches[j].dataset.vavilon_data_label) 
+                matches[j].dataset.label=getSafeTranslation(matches[j].dataset.vavilon_data_label,matches[j].dataset.vavilon_data_label);
+        }
+    }
 }
 
 //nb iframe not allowed by twitter

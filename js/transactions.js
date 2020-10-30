@@ -1,16 +1,16 @@
 "use strict";
 
 function checkForPrivKey() {
-    if (privkey == "" && pubkey!="") {
-        alert("You may be logged in with a public key in read only mode. You must login with a private key to make this action.");
+    if (privkey == "" && pubkey != "") {
+        alert(getSafeTranslation('readonlymode', "You may be logged in with a public key in read only mode. You must login with a private key to make this action."));
         return false;
-    }else if (privkey == "") {
-        alert("You must login to do this.");
+    } else if (privkey == "") {
+        alert(getSafeTranslation('mustlogin', "You must login to do this."));
         return false;
     }
 
-    if(tq.getBalance(pubkey)<547){
-        alert("You do not have enough satoshis to do this. You can click on your balance to refresh it.");
+    if (tq.getBalance(pubkey) < 547) {
+        alert(getSafeTranslation('notenough', "You do not have enough satoshis to do this. You can click on your balance to refresh it."));
         return false;
     }
 
@@ -26,7 +26,7 @@ function sendTransaction(tx) {
 }
 
 function repost(txid, message) {
-    
+
     //Repost memo 	0x6d0b 	txhash(32), message(184)
 
     if (!checkForPrivKey()) return false;
@@ -36,14 +36,14 @@ function repost(txid, message) {
         cash: { key: privkey }
     }
 
-    if(message!=null && message!=''){
+    if (message != null && message != '') {
         tx = {
             data: ["0x6d0b", "0x" + reversetx, message],
             cash: { key: privkey }
         }
     }
 
-    updateStatus("Remembering");
+    updateStatus(getSafeTranslation('remembering', "Remembering"));
     tq.queueTransaction(tx);
 }
 
@@ -54,15 +54,15 @@ function setPic() {
     document.getElementById('settingspic').disabled = true;
 
     var newName = document.getElementById('settingspic').value;
-    if(!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png') ))){
-        alert("Profile pic must of of the format https://i.imgur.com/XXXXXXXX.jpg");
+    if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
+        alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
         return;
     }
     const tx = {
         data: ["0x6d0a", newName],
         cash: { key: privkey }
     }
-    updateStatus("Setting Profile Pic");
+    updateStatus(getSafeTranslation('settingpic', "Setting Profile Pic"));
 
     //TODO, on error, this should really enable the text field and text button again
     tq.queueTransaction(tx);
@@ -82,7 +82,7 @@ function setName() {
         data: ["0x6d01", newName],
         cash: { key: privkey }
     }
-    updateStatus("Setting Name");
+    updateStatus(getSafeTranslation('settingname', "Setting Name"));
 
     //TODO, on error, this should really enable the text field and text button again
     tq.queueTransaction(tx);
@@ -92,7 +92,7 @@ function setName() {
 
 async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction, messageRecipient, stampAmount) {
 
-    document.getElementById(divForStatus).value = "Sending Message . . . " + replyHex.length / 2 + " bytes remaining.";
+    document.getElementById(divForStatus).value = getSafeTranslation('bytesremaining', "Sending Message . . . bytes remaining . .") + replyHex.length / 2;
 
     var sendHex = "";
     if (replyHex.length > 368) {
@@ -123,7 +123,7 @@ async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, 
 
     //await sleep(500); // Wait a little to show message
     if (waitTimeMilliseconds > 0) {
-        updateStatus("Waiting " + (waitTimeMilliseconds / 1000) + " Seconds");
+        updateStatus(getSafeTranslation('waiting', "Seconds to wait") + " " + (waitTimeMilliseconds / 1000));
         await sleep(waitTimeMilliseconds);
     }
 
@@ -164,7 +164,7 @@ function quotepostRaw(posttext, privkey, topic, newpoststatus, memocompleted, tx
         data: ["0x6d0b", "0x" + reversetx, posttext],
         cash: { key: privkey }
     }
-    
+
     if (topic != "") {
         tx = {
             data: ["0x6d0f", "0x" + reversetx, topic, posttext],
@@ -172,8 +172,8 @@ function quotepostRaw(posttext, privkey, topic, newpoststatus, memocompleted, tx
         }
     }
 
-    updateStatus("Quoting");
-    
+    updateStatus(getSafeTranslation('quoting', "Quoting"));
+
     tq.queueTransaction(tx, memocompleted, null);
 }
 
@@ -201,7 +201,7 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) 
         data: ["0x6da8", geohash, posttext],
         cash: { key: privkey }
     }
-    updateStatus("Sending Geotagged Post");
+    updateStatus(getSafeTranslation('sendinggeotag', "Sending Geotagged Post"));
     tq.queueTransaction(tx, geocompleted, null);
 }
 
@@ -209,7 +209,7 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) 
 
 async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {
 
-    document.getElementById(divForStatus).value = "Sending Reply . . . " + replyHex.length / 2 + " bytes remaining.";
+    document.getElementById(divForStatus).value = getSafeTranslation('bytesremaining', "Sending Reply . . . bytes remaining . . ") + replyHex.length / 2;
 
     var sendHex = "";
     if (replyHex.length > 368) {
@@ -248,13 +248,13 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
 
     //await sleep(500); // Wait a little to show message
     if (waitTimeMilliseconds > 0) {
-        updateStatus("Waiting " + (waitTimeMilliseconds / 1000) + " Seconds");
+        updateStatus(getSafeTranslation('waiting', "Seconds to wait")) + " " + (waitTimeMilliseconds / 1000);
         await sleep(waitTimeMilliseconds);
     }
 
     //If there is still more to send
     if (replyHex.length > 0) {
-        tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privatekey, newtxid, "7c"+replyHex, 1000, divForStatus, completionFunction); }, null);
+        tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privatekey, newtxid, "7c" + replyHex, 1000, divForStatus, completionFunction); }, null);
     } else {
         //last one
         tq.queueTransaction(tx, completionFunction, null);
@@ -274,7 +274,7 @@ function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
             to: [{ address: tipAddress, value: Number(tipAmount) }]
         }
     }
-    updateStatus("Sending Tip");
+    updateStatus(getSafeTranslation('sendingtip', "Sending Tip"));
     tq.queueTransaction(tx, successFunction, null);
 }
 
@@ -286,7 +286,7 @@ function sendLike(txid) {
         data: ["0x6d04", "0x" + reversetx],
         cash: { key: privkey }
     }
-    updateStatus("Sending Like");
+    updateStatus(getSafeTranslation('sendinglike', "Sending Like"));
     tq.queueTransaction(tx);
 }
 
@@ -301,7 +301,7 @@ function setProfile() {
         data: ["0x6d05", newProfile],
         cash: { key: privkey }
     }
-    updateStatus("Setting Profile");
+    updateStatus(getSafeTranslation('settingprofile', "Setting Profile"));
     tq.queueTransaction(tx);
 }
 
@@ -317,7 +317,7 @@ function sub(topicHOSTILE) {
         data: ["0x6d0d", topicHOSTILE],
         cash: { key: privkey }
     }
-    updateStatus("Sending Subscribe");
+    updateStatus(getSafeTranslation('sendingsub', "Sending Subscribe"));
     tq.queueTransaction(tx);
 }
 
@@ -331,7 +331,7 @@ function unsub(topicHOSTILE) {
         data: ["0x6d0e", topicHOSTILE],
         cash: { key: privkey }
     }
-    updateStatus("Sending Unsubscribe");
+    updateStatus(getSafeTranslation('sendingunsub', "Sending Unsubscribe"));
     tq.queueTransaction(tx);
 }
 
@@ -349,31 +349,31 @@ function addressTransaction(removeElementID, qaddress, actionCode, statusMessage
 }
 
 function follow(qaddress) {
-    addressTransaction('memberfollow', qaddress, "0x6d06", "Sending Follow");
+    addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
 }
 
 function unfollow(qaddress) {
-    addressTransaction('memberfollow', qaddress, "0x6d07", "Sending Unfollow");
+    addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
 }
 
 function mute(qaddress) {
-    addressTransaction('memberblock', qaddress, "0x6d16", "Sending Mute");
+    addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
 }
 
 function unmute(qaddress) {
-    addressTransaction('memberblock', qaddress, "0x6d17", "Sending Unmute");
+    addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
 }
 
 function sendDislike(txid) {
-    txidTransaction(txid, "0x6db4", "Sending Dislike");
+    txidTransaction(txid, "0x6db4", getSafeTranslation('sendingdislike', "Sending Dislike"));
 }
 
 function sendHidePost(txid) {
-    txidTransaction(txid, "0x6dc5", "Sending Hide Post");
+    txidTransaction(txid, "0x6dc5", getSafeTranslation('sendinghidepost', "Sending Hide Post"));
 }
 
 function sendSendUnhidePost(txid) {
-    txidTransaction(txid, "0x6dc6", "Sending Unhide Post");
+    txidTransaction(txid, "0x6dc6", getSafeTranslation('sendingunhidepost', "Sending Unhide Post"));
 }
 
 function txidTransaction(txid, actionCode, statusMessage) {
@@ -402,25 +402,25 @@ function rateUser(qaddress, rating, ratingcomment) {
         data: ["0x6da5", "0x" + addressraw, hexRating, ratingcomment],
         cash: { key: privkey }
     }
-    updateStatus("Sending Rating");
+    updateStatus(getSafeTranslation('sendingrating', "Sending Rating"));
     tq.queueTransaction(tx);
     return true;
 }
 
 function designate(qaddress, topicHOSTILE, elementid) {
-    addressTopicTransaction(elementid, qaddress, '0x6dc1', "Sending Add Filter", topicHOSTILE);
+    addressTopicTransaction(elementid, qaddress, '0x6dc1', getSafeTranslation('sendingaddfilter', "Sending Add Filter"), topicHOSTILE);
 }
 
 function dismiss(qaddress, topicHOSTILE, elementid) {
-    addressTopicTransaction(elementid, qaddress, '0x6dc2', "Sending Remove Filter", topicHOSTILE);
+    addressTopicTransaction(elementid, qaddress, '0x6dc2', getSafeTranslation('sendingremovefilter', "Sending Remove Filter"), topicHOSTILE);
 }
 
 function hideuser(qaddress, topicHOSTILE, elementid) {
-    addressTopicTransaction(elementid, qaddress, '0x6dc3', "Sending Hide Member", topicHOSTILE);
+    addressTopicTransaction(elementid, qaddress, '0x6dc3', getSafeTranslation('sendinghidemember', "Sending Hide Member"), topicHOSTILE);
 }
 
 function unhideuser(qaddress, topicHOSTILE, elementid) {
-    addressTopicTransaction(elementid, qaddress, '0x6dc4', "Sending Unhide Member", topicHOSTILE);
+    addressTopicTransaction(elementid, qaddress, '0x6dc4', getSafeTranslation('sendingunhidemember', "Sending Unhide Member"), topicHOSTILE);
 }
 
 
@@ -446,7 +446,7 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
     //Disable button
     var buttonElement = document.getElementById(buttonElement);
     buttonElement.disabled = true;
-    buttonElement.innerText = "Creating Private Key";
+    buttonElement.innerText = getSafeTranslation('creatingprivatekey', "Creating Private Key");
 
     //Send sufficient funds to new account to create name
 
@@ -467,14 +467,14 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
     tq.queueTransaction(tx);
 
     //Wait a while for tx to enter mempool
-    buttonElement.innerText = "Wait a few seconds for funds to arrive";
+    buttonElement.innerText = getSafeTranslation('waitafew', "Wait a few seconds for funds to arrive");
     await sleep(3 * 1000);
 
     //Try to set new name 
     let newName = name + " (Surrogate)";
-    buttonElement.innerText = "Try to set surrogate name - " + newName;
+    buttonElement.innerText = getSafeTranslation('trytoset', "Try to set surrogate name -") + " " + newName;
 
-    buttonElement.innerText = "Fetch UTXOs";
+    buttonElement.innerText = getSafeTranslation('fetchutxos', "Fetch UTXOs");
     tq.addUTXOPool(publicaddress);
     await sleep(3 * 1000);
 
@@ -484,11 +484,9 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
         cash: { key: sprivkey }
     }
 
-    buttonElement.innerText = "Fetch UTXOs";
-
     tq.queueTransaction(tx2,
         function () {
-            buttonElement.innerText = "Create Surrogate Account";
+            buttonElement.innerText = getSafeTranslation('createsurrogate', "Create Surrogate Account");
             buttonElement.disabled = false;
             surrogateLinkElement.innerHTML = userHTML(publicaddress, newName, "none", 0, 16);
         }

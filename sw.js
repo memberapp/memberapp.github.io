@@ -11,7 +11,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '4.16.0';
+const version = '4.17.0';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;

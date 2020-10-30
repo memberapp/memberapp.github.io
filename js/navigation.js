@@ -269,7 +269,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
                 return;
             } else {
                 show('memberanchor');
-                document.getElementById('memberanchor').innerHTML = 'This paging id not found.';
+                document.getElementById('memberanchor').innerHTML =  getSafeTranslation('pagingidnotfount','This paging id not found.');
                 return;
             }
         }, function (status) { //error detection....

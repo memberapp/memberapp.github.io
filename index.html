@@ -57,11 +57,17 @@
     <link rel="icon" type="image/png" sizes="16x16" href="img/logos/favicon-16x16.png">
     <meta name="theme-color" content="#2291EB" />
 
-    <!--  Load Translations -->
+    <script>var dictionary = [];</script>
+    <script src="locale/en.js"></script>
+    <script src="locale/es.js"></script>
+    <script src="locale/zh.js"></script>
+    <script src="locale/fil.js"></script>
 
+    <!--  Load Translations
     <script src="locale/en.json" type="application/json" data-vavilon-dict="en"></script>
     <script src="js/loadlocale.js"></script>
     <link rel="preload" href="js/lib/vavilon.min.js" as="script" />
+ -->
 
     <!--  Leaflet (Map) -->
     <link rel="stylesheet" href="js/lib/leaflet/leaflet.css" />
@@ -104,8 +110,8 @@
 
     <!-- https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites -->
     <!-- <script src="js/lib/twitterwidgets.js"></script> -->
-    <!-- i18n internationalization https://github.com/vavilon-js/vavilon.js-->
-    <script src="js/lib/vavilon.min.js"></script>
+    <!-- i18n internationalization https://github.com/vavilon-js/vavilon.js
+    <script src="js/lib/vavilon.min.js"></script>-->
 
     <!--  Member Minified Code. 
     <script src="js/lib/member.min.js"></script>-->
@@ -133,9 +139,7 @@
 
     <div id="map" style="width:100%; height:100%;display:none;"></div>
     <input id="usdrate" type="number" style="display:none;">
-    <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
+    <!--[if lte IE 9]><p data-vavilon="VV0001" class="browserupgrade">You are using an outdated browser. Please upgrade your browser to improve your experience and security.</p><![endif]-->
     <div class="mainbodywrapper" id="mainbodywrapper"></div>
     <footer id="footer"></footer>
     <div id="status"></div>

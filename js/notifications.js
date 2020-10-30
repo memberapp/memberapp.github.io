@@ -55,7 +55,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
     var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
-        var navbuttons = getNavButtonsNewHTML('new', page, '', '', start, limit, page, qaddress, "getAndPopulateNotifications", data.unduplicatedlength);
+        var navbuttons = getNavButtonsNewHTML('new', page, '', '', start, limit, page, qaddress, "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
         //var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents = ``;
@@ -69,7 +69,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         }
         //console.log(contents);
         if (contents == "") {
-            contents = getNothingFoundMessageHTML("nonotifications","No notifications yet");
+            contents =  getDivClassHTML("message",getSafeTranslation("nonotifications","No notifications yet"));
         }
 
         if (window.Notification.permission != 'granted') {

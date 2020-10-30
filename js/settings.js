@@ -2,7 +2,7 @@
 
 function getAndPopulateCommunityRatings(qaddress) {
 
-    document.getElementById('community').innerHTML=communityHTML;
+    document.getElementById('community').innerHTML = communityHTML;
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'communityratingtable';
@@ -23,7 +23,7 @@ function getAndPopulateCommunityRatings(qaddress) {
 }
 
 function getAndPopulateRatings(qaddress) {
-    document.getElementById('anchorratings').innerHTML=anchorratingsHTML;
+    document.getElementById('anchorratings').innerHTML = anchorratingsHTML;
     document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'memberratingtable';
@@ -44,8 +44,8 @@ function getAndPopulateRatings(qaddress) {
 
 
 function getDataCommonToSettingsAndMember(qaddress, pre) {
-    
-    document.getElementById(pre+'anchor').innerHTML = document.getElementById("loading").innerHTML;
+
+    document.getElementById(pre + 'anchor').innerHTML = document.getElementById("loading").innerHTML;
 
     var theURL = dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
@@ -57,23 +57,23 @@ function getDataCommonToSettingsAndMember(qaddress, pre) {
     });
 }
 
-function getDataCommonToSettingsAndMemberFinally(qaddress, pre, data){
+function getDataCommonToSettingsAndMemberFinally(qaddress, pre, data) {
 
     //Note, data may not contain any rows, for new or unknown users.
-        
+
     var obj = {
-        address:qaddress,
-        cashaddress:new BITBOX.Address().toCashAddress(qaddress),
-        followers:0,
-        following:0,
-        muters:0,
-        muting:0,
-        handle:"",
-        profile:"",
-        pagingid:"",
-        profilepiclargehtml:"",
+        address: qaddress,
+        cashaddress: new BITBOX.Address().toCashAddress(qaddress),
+        followers: 0,
+        following: 0,
+        muters: 0,
+        muting: 0,
+        handle: "",
+        profile: "",
+        pagingid: "",
+        profilepiclargehtml: "",
     };
-    
+
     if (data && data[0]) {
         obj.followers = Number(data[0].followers);
         obj.following = Number(data[0].following);
@@ -83,12 +83,12 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, pre, data){
         obj.handlefunction = unicodeEscape(data[0].name);
         obj.profile = ds(data[0].profile);
         obj.publickey = san(data[0].publickey);
-        obj.pagingid=ds(data[0].pagingid);
-        obj.picurl=ds(data[0].picurl);
-        obj.tokens=Number(data[0].tokens);
-        obj.nametime=Number(data[0].nametime);
-        obj.rating=Number(data[0].rating);
-        
+        obj.pagingid = ds(data[0].pagingid);
+        obj.picurl = ds(data[0].picurl);
+        obj.tokens = Number(data[0].tokens);
+        obj.nametime = Number(data[0].nametime);
+        obj.rating = Number(data[0].rating);
+
         //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
         //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
         //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
@@ -102,38 +102,34 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, pre, data){
     } else {
         obj.followbuttonhtml = clickActionNamedHTML("unfollow", qaddress, "unfollow");
     }
-    
+
     if (data && (data.length < 1 || Number(data[0].isblocked) == 0)) {
         obj.mutebuttonhtml = clickActionNamedHTML("mute", qaddress, "mute");
     } else {
         obj.mutebuttonhtml = clickActionNamedHTML("unmute", qaddress, "unmute");
     }
 
-     
-    if (obj.picurl) {
-        obj.profilepiclargehtml=`<img id="settingspicturelarge" class="settingspicturelarge" src="`+profilepicbase + san(qaddress) + `.640x640.jpg" style="display: block;" width="640" height="640">`;
-    }
 
-    //var jdenticon = `<svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
+    if (obj.picurl) {
+        obj.profilepiclargehtml = getProfilePicLargeHTML(profilepicbase + san(qaddress) + `.640x640.jpg`);
+    }
 
     if (pre == "settings") {
         obj.privatekey = privkey;
-        obj.seedphrase = (mnemonic == "" ? "" : "Seed Phrase: " + mnemonic + "<br/>") + "Compressed Private Key: " + privkey;
+        obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
     }
 
     document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);
 
-    
+
     if (pre == "settings") {
         
-        //try { document.getElementById('privatekey').innerHTML = privatekeyClickToShowHTML(); } catch (err) { }
-    
         updateSettings();
         document.getElementById(pre + 'nametextbutton').disabled = true;
         document.getElementById(pre + 'profiletextbutton').disabled = true;
         document.getElementById(pre + 'picbutton').disabled = true;
         //After 3 ratings, members cannot change their handle
-        if (data && data[0] && data[0].ratingnumber>2){
+        if (data && data[0] && data[0].ratingnumber > 2) {
             document.getElementById(pre + 'nametext').disabled = true;
         }
     }
@@ -153,14 +149,14 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, pre, data){
         if (data.length > 0) {
             ratingScore = Number(data[0].rating);
         }
-        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(qaddress,ratingScore);
-        
+        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(qaddress, ratingScore);
+
         var theElement = document.getElementById(`memberrating` + qaddress);
         var starRating1 = addSingleStarsRating(theElement);
     }
-    
-    jdenticon();
 
+    jdenticon();
+    addDynamicHTMLElements();
 }
 
 
@@ -183,12 +179,12 @@ function getAndPopulateSettings() {
     getDataCommonToSettingsAndMember(pubkey, "settings");
 }
 
-function updateSettings(){
+function updateSettings() {
 
     //These may already be switched to qrcodes, so try/catch necessary
     //try { document.getElementById('legacyformat').innerHTML = pubkey; } catch (err) { }
     try { document.getElementById('lowfundsaddress').innerHTML = qpubkey; } catch (err) { }
-    
+
     var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");
     if (storedmutedwords != undefined && storedmutedwords != null) {
         document.getElementById('mutedwords').value = storedmutedwords;
@@ -249,7 +245,7 @@ function updateSettings(){
 function updateSettingsCheckbox(settingsName) {
     settings[settingsName] = "" + document.getElementById(settingsName).checked;
     localStorageSet(localStorageSafe, settingsName, settings[settingsName]);
-    updateStatus("Updated. "+settings[settingsName]);
+    updateStatus(getSafeTranslation('updated', "Updated.") + " " + settings[settingsName]);
 }
 
 function updateSettingsDropdown(settingsName) {
@@ -262,7 +258,10 @@ function updateSettingsDropdown(settingsName) {
     if (settingsName == "utxoserver") {
         refreshPool();
     }
-    updateStatus("Updated. "+dropdowns[settingsName]);
+    if (settingsName == "languageselector"){
+        dictionary.live=dictionary[dropdowns[settingsName]];
+    }
+    updateStatus(getSafeTranslation('updated', "Updated.") + " " + dropdowns[settingsName]);
 }
 
 function updateSettingsNumber(settingsName) {
@@ -283,7 +282,7 @@ function updateSettingsNumber(settingsName) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
-    updateStatus("Updated. "+numbers[settingsName]);
+    updateStatus(getSafeTranslation('updated', "Updated.") + " " + numbers[settingsName]);
 }
 
 function showQRCode(spanid, size) {
@@ -340,17 +339,17 @@ function updatemutedwords() {
 
 }
 
-function getAndPopulateFB(page,qaddress){
+function getAndPopulateFB(page, qaddress) {
     document.getElementById(page).innerHTML = fbHTML[page];
     show(page);
-    var theURL=dropdowns.contentserver + '?action='+page+'&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=' + page + '&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             contents = contents + getMembersWithRatingHTML(i, page, data[i], '', false);
         }
 
-        document.getElementById(page+'table').innerHTML = contents;
+        document.getElementById(page + 'table').innerHTML = contents;
         addDynamicHTMLElements(data);
         scrollToPosition();
     }, function (status) { //error detection....
