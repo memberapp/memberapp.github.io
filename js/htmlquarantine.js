@@ -264,6 +264,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         tips: balanceString(Number(tips), true),
         tipsinsatoshis:Number(tips),
         txid: san(txid),
+        txidshort:san(txid).substring(0, 10),
         elapsed: getAgeHTML(firstseen, false),
         elapsedcompressed: getAgeHTML(firstseen, true),
         topic: topic ? getTopicHTML(topic, getSafeTranslation('totopic', ' to t/')) : "",
@@ -275,7 +276,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         scores: scores,
         tipsandlinks: tipsandlinks,
         replydiv: replydiv,
-        diff: differentiator
+        diff: differentiator,
+        likeactivated:likeordislike == "1"?"-activated":"",
+        dislikeactivated:likeordislike == "-1"?"-activated":"",
+        rememberactivated:repostidtxid?"-activated":""
     };
 
     /*var retVal = `<div class="post">
