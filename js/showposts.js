@@ -543,62 +543,53 @@ function showReplyBox(txid) {
 }
 
 function decreaseGUILikes(txid) {
-    try {
-
+    
         var downarrow = document.getElementById('downvote' + txid);
-        downarrow.className = "votearrowactivateddown rotate180";
         var downarrowAction = document.getElementById('downvoteaction' + txid);
         downarrowAction.onclick = null;
-
         var uparrow = document.getElementById('upvote' + txid);
-        uparrow.className = "votearrow";
-
         var likescount = Number(document.getElementById('likescount' + txid).innerText);
-        document.getElementById('likescount' + txid).innerText = likescount - 1;
         document.getElementById('score' + txid).innerText = likescount - 1;
-    } catch (err) {
-    }
-
-    try {
-        var ndislikescount = Number(document.getElementById('ndislikescount' + txid).innerText);
-        document.getElementById('ndislikescount' + txid).innerText = ndislikescount + 1;
-        var scorecount = Number(document.getElementById('nscore' + txid).innerText);
-        document.getElementById('nscore' + txid).innerText = scorecount - 1;
-    } catch (err) {
-    }
-
+        
+        //Change classes
+        downarrow.className = "votearrowactivateddown rotate180";
+        uparrow.className = "votearrow";
+        document.getElementById('score' + txid).className = "betweenvotesscoredown";
+    
+        if (theStyle == 'nifty' || theStyle == 'none') {
+            var dislikescount = Number(document.getElementById('dislikescount' + txid).innerText);
+            document.getElementById('dislikescount' + txid).innerText = dislikescount + 1;
+            uparrow.className = "post-footer-upvote";
+            downarrow.className = "post-footer-downvote-activated";
+        }
 
 }
 
 function increaseGUILikes(txid) {
 
 
-    try {
         //increase number of likes, original themes
         var likescount = Number(document.getElementById('likescount' + txid).innerText);
         var uparrow = document.getElementById('upvote' + txid);
-        uparrow.className = "votearrowactivated";
         var uparrowAction = document.getElementById('upvoteaction' + txid);
         uparrowAction.onclick = null;
         var downarrow = document.getElementById('downvote' + txid);
-        downarrow.className = "votearrow rotate180";
         //Change counts
         document.getElementById('likescount' + txid).innerText = likescount + 1;
         document.getElementById('score' + txid).innerText = likescount + 1;
-    } catch (err) {
-    }
 
-    //Nifty
-    try {
-        //increase number of likes, original themes
-        var likescount = Number(document.getElementById('nlikescount' + txid).innerText);
-        document.getElementById('nlikescount' + txid).innerText = likescount + 1;
-        var scorecount = Number(document.getElementById('nscore' + txid).innerText);
-        document.getElementById('nscore' + txid).innerText = scorecount + 1;
-        
-    } catch (err) {
-    }
-
+        //Change classes
+        uparrow.className = "votearrowactivated";
+        downarrow.className = "votearrow rotate180";
+        //Change class
+        document.getElementById('score' + txid).className = "betweenvotesscoreup";
+    
+        //Nifty
+        if (theStyle == 'nifty' || theStyle == 'none') {
+            //Change classes
+            uparrow.className = "post-footer-upvote-activated";
+            downarrow.className = "post-footer-downvote";
+        }
 
 }
 
@@ -612,9 +603,6 @@ function likePost(txid, tipAddress) {
     if (!checkForPrivKey()) return false;
 
     increaseGUILikes(txid);
-
-    //Change class
-    document.getElementById('score' + txid).className = "betweenvotesscoreup";
 
     if (numbers.oneclicktip >= 547) {
         var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
@@ -630,10 +618,6 @@ function dislikePost(txid, tipAddress) {
     if (!checkForPrivKey()) return false;
 
     decreaseGUILikes(txid);
-
-
-    //Change class
-    document.getElementById('score' + txid).className = "betweenvotesscoredown";
 
     sendDislike(txid);
 }

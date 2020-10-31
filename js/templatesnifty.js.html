@@ -44,10 +44,10 @@ var postNiftyTemplate = `
                         </span>
                     </a>
                     <a href="javascript:;" onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')">
-                        <span class="text likestext" id="nlikescount{txid}">
+                        <span class="text likestext" id="likescount{txid}">
                             {likes}
                         </span>
-                        <span class="text likesbalance" id="nscore{txid}">
+                        <span class="text likesbalance" id="score{txid}">
                             {likesbalance}
                         </span>
                         <span data-vavilon="likes" class="text footerlabel">likes</span>
@@ -61,7 +61,7 @@ var postNiftyTemplate = `
                         </span></a>
 
                     <a href="javascript:;" onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')">
-                        <span class="text" id="ndislikescount{txid}">
+                        <span class="text" id="dislikescount{txid}">
                             {dislikes}
                         </span>
                         <span data-vavilon="dislikes" class="text footerlabel">dislikes</span>
@@ -86,7 +86,7 @@ var postNiftyTemplate = `
                             💰
                         </span></a>
                     <a href="javascript:;" onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')">
-                        <span class="text" data-amount="{tipsinsatoshis}">{tips}</span>
+                        <span id="tipscount{txid}" class="text" data-amount="{tipsinsatoshis}">{tips}</span>
                         <span data-vavilon="tips" class="text footerlabel">tips</span>
                     </a>
                 </span>
