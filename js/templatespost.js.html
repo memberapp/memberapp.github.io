@@ -32,7 +32,7 @@ var userTemplate=`
         <span data-ratingsize="16" data-ratingaddress="{address}" data-ratingraw="{rating}"
             id="rating{diff}posts{address}" class="star-rating"></span>
     </span>
-    <span data-vavilon_title="VV0148" class="flair" title="Top MEMBER Token Holder">{flair}</span>
+    {flair}
     <span style="display: none;" id="profileinfo{diff}posts{address}" data-profileaddress="{address}"
         class="profilepreview">
         <div class="profile-meta">
@@ -48,6 +48,7 @@ var userTemplate=`
                 <span data-ratingsize="16" data-ratingaddress="{address}" data-ratingraw="{rating}"
                     id="rating2posts{address}" class="star-rating"></span>
             </span>
+            {flair}
             <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
                 <span class="member-pagingid">@{pagingid}</span>
             </a>

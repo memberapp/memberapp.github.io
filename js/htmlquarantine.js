@@ -48,7 +48,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     var linkEnd = `</a> `;
     var flair = " ";
     if (tokens > 0) {
-        flair = ` <span>` + ordinal_suffix_of(Number(tokens)) + ` </span> `;
+        flair = ` <span data-vavilon_title="VV0148" class="flair" title="Top MEMBER Token Holder">` + ordinal_suffix_of(Number(tokens)) + ` </span> `;
     }
     var ret = `<span class="memberfilter"><span id="memberinfo` + ratingID + `">` + linkStart + memberpic
         + `<span class="member-handle">` + ds(name) + `</span>` + linkEnd + `</span>` + flair;
