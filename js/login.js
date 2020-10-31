@@ -261,12 +261,15 @@ async function login(loginkey) {
 
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     //Get latest rate and update balance
-    getLatestUSDrate();
     loadStyle();
 
     if (theStyle == 'nifty' || theStyle == 'none') {
         document.getElementById('header').innerHTML = niftyHeaderHTML;
     }
+    document.getElementById('loggedin').style.display = "inline";
+    document.getElementById('loggedout').style.display = "none";
+    getLatestUSDrate();
+    
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
