@@ -27,7 +27,7 @@ function timeSince(timestamp, compress) {
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation( "s", "s") : " " + getSafeTranslation( "secondsago", "seconds ago"));
+    return interval + (compress ? getSafeTranslation( "m", "m") : " " + getSafeTranslation( "minutesago", "minutes ago"));
   }
   return Math.floor(seconds) + (compress ? getSafeTranslation( "s", "s") : " " + getSafeTranslation( "secondsago", "seconds ago"));
 }
