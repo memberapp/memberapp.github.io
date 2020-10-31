@@ -264,6 +264,10 @@ async function login(loginkey) {
     getLatestUSDrate();
     loadStyle();
 
+    if (theStyle == 'nifty' || theStyle == 'none') {
+        document.getElementById('header').innerHTML = niftyHeaderHTML;
+    }
+
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
     document.getElementById('toolsanchor').innerHTML = toolsanchorHTML;

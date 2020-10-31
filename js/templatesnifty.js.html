@@ -135,3 +135,112 @@ var postNiftyTemplate = `
 </div>
 `;
 
+var niftyHeaderHTML = `
+<div class="pagetop">
+    <nav>
+        <span class="memberlogo">
+            I'm nifty<a href="./index.html" aria-label="Refresh">
+                <img class="memberlogoimagefull" src="img/logos/logowide.svg" width="130" height="26"
+                    alt="Site Logo Full" />
+                <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26"
+                    alt="Site Logo Icon" />
+            </a>
+        </span>
+        <span class="navitemsmain">
+            <span id="loggedin" style="display:none;">
+                <span class="headerbuttons">
+                    <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;"
+                        title="Refresh Balance" id="balancedetails" class="balancedetails"><span
+                            id="balance">0</span></span>
+                    <a data-vavilon_title="VV0094" id="myfeedbutton"
+                        title="My Feed (Latest posts from your topics or peeps)" class="btn" href="#myfeed"
+                        onclick="nlc();">📰</a>
+                    <a data-vavilon_title="VV0095" id="notificationsbutton" title="Notifications" class="btn"
+                        href="#notifications?start=0" onclick="nlc();">🔔<span class="alertcount noselect"
+                            id="alertcount"></span></a>
+                    <a data-vavilon_title="VV0096" id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
+                        onclick="nlc();">🖊️</a>
+                    <a data-vavilon_title="VV0097" id="privatemessagesbutton" title="Messages"
+                        class="btn privatemessagesbutton" href="#messages" onclick="nlc();">📧<span
+                            class="alertcount noselect" id="alertcountpm"></span></a>
+                    <a data-vavilon_title="VV0098" id="settingsbutton" title="Settings" class="btn" href="#settings"
+                        onclick="nlc();">⚙️</a>
+                    <a data-vavilon_title="VV0099" id="toolsbutton" title="Tools" class="btn" href="#tools"
+                        onclick="nlc();">🛠️</a>
+                </span>
+            </span>
+            <span class="headerbuttons">
+                <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
+                    onclick="nlc();">📚</a>
+                <a data-vavilon_title="VV0101" id="mapbutton" title="Map" class="btn" href="#map"
+                    onclick="nlc();">🌍</a>
+            </span>
+            <span id="loggedout" class="loggedout">
+                <a data-vavilon="VV0102" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">login</a>
+                <span class="separatorwide"></span>
+                <a data-vavilon="VV0103" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">start</a>
+            </span>
+            <span class="separatorwidebreakpoint"></span>
+            <span id="topiccontainer" class="topiccontainer">
+                <select id="orderselector" onchange="postsSelectorChanged();">
+                    <option data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts"
+                        selected="selected">Hot</option>
+                    <option data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts">New
+                    </option>
+                    <option data-vavilon="VV0108" data-vavilon_title="VV0109" value="topd"
+                        title="Top posts from the past Day">Day</option>
+                    <option data-vavilon="VV0110" data-vavilon_title="VV0111" value="top48"
+                        title="Top posts from the past 48 Hours">48hrs</option>
+                    <option data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw"
+                        title="Top posts from the past Week">Week</option>
+                    <option data-vavilon="VV0114" data-vavilon_title="VV0115" value="topm"
+                        title="Top posts from the past Month">Month</option>
+                    <option data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy"
+                        title="Top posts from the past Year">Year</option>
+                    <option data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa"
+                        title="Top posts from all time">All</option>
+                </select>
+                <select id="contentselector" label="content" onchange="postsSelectorChanged();">
+                    <option data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" value="posts"
+                        selected="selected">Posts</option>
+                    <option data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" value="replies">
+                        Replies</option>
+                    <option data-vavilon="VV0124" data-vavilon_title="VV0125" title="See both posts and replies"
+                        value="both">In Both</option>
+                </select>
+                <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
+                    <option data-vavilon="VV0126" data-vavilon_title="VV0127" value="" title="From all topics"
+                        selected="selected">All Topics</option>
+                    <option value=""></option>
+                    <option value="">---------------</option>
+                    <option data-vavilon="VV0128" data-vavilon_title="VV0129" value="MyTopics"
+                        title="From topics you are subscribed to">My Topics</option>
+                    <option data-vavilon="VV0130" data-vavilon_title="VV0131" value="MyFeed"
+                        title="From topics you are subscribed to or people you follow">My Feed</option>
+                    <option value="Member">Member</option>
+                    <option value="Bitcoin Cash">Bitcoin Cash</option>
+                    <option value="Poker">Poker</option>
+                    <option value="Memo">Memo</option>
+                    <option value="SLPTokens">SLPTokens</option>
+                    <option value="Tokens">Tokens</option>
+                    <option value="Philippines">Philippines</option>
+                    <option value="Capitalism">Capitalism</option>
+                    <option value="US Politics/Trump">US Politics</option>
+                    <option value="Favorite Quotes">Quotes</option>
+                    <option value="Ideas to improve our lives">Improvement</option>
+                    <option value="#911Truth">#911Truth</option>
+                </select>
+                <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
+                    <option data-vavilon="VV0132" data-vavilon_title="VV0133" value="everyone" title="From everyone"
+                        selected="selected">Everyone</option>
+                    <option data-vavilon="VV0134" data-vavilon_title="VV0135" value="mypeeps"
+                        title="From people you follow">My Peeps</option>
+                </select>
+            </span>
+        </span>
+        <a data-vavilon_title="VV0136" id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href=""
+            onclick="postsSelectorChanged();return false;">🔄</a>
+    </nav>
+</div>
+`;
+
