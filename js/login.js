@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.18.0";
+var version = "4.19.0";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -114,6 +114,7 @@ function init() {
         return;
     }
 
+    loadBigLibs();
     displayContentBasedOnURLParameters();
 }
 
@@ -137,18 +138,22 @@ function trylogin(loginkey) {
         document.getElementById('loginerror').innerHTML = error.message;
         console.log(error);
         updateStatus(error.message);
+        loadBigLibs();
         return;
     }
     getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
+    loadBigLibs();
+}
 
+async function loadBigLibs() {
     //Load big libraries that may not be immediately needed.
     if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
     if (!L) loadScript("js/lib/leaflet/leaflet.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
-    
 }
+
 
 async function login(loginkey) {
 

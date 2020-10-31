@@ -131,9 +131,9 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     if (geohash != null && geohash != "") {
         mapLink = ` <a id="maplink` + page + santxid + `" href="#map?geohash=` + san(geohash) + `&post=` + santxid + `">🌍map</a> `;
     }
-    var hideuserHTML = hideuserHTML = `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user)</a>`;
+    var hideuserHTML = hideuserHTML = `<a data-vavilon="flaguser" id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user)</a>`;
     if (topicHOSTILE != "") {
-        hideuserHTML += `<a id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','` + unicodeEscape(topicHOSTILE) + `','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user for topic)</a>`;
+        hideuserHTML += `<a data-vavilon="flagusertopic" id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','` + unicodeEscape(topicHOSTILE) + `','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user for topic)</a>`;
     }
 
     var remembersActive = "remebersactive";
@@ -261,7 +261,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         likes: Number(likes),
         dislikes: Number(dislikes),
         remembers: Number(repostcount),
-        tips: Number(tips),
+        tips: balanceString(Number(tips), true),
+        tipsinsatoshis:Number(tips),
         txid: san(txid),
         elapsed: getAgeHTML(firstseen, false),
         elapsedcompressed: getAgeHTML(firstseen, true),
@@ -934,11 +935,14 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
 function ___i18n(translationKey) {
     if (dictionary.live[translationKey]) {
         return dictionary.live[translationKey];
-    } else if (dictionary.fallback[translationKey]) {
-        return dictionary.fallback[translationKey];
-    } else {
-        return translationKey;
     }
+    console.log("No translation for "+translationKey);
+    if (dictionary.fallback[translationKey]) {
+        return dictionary.fallback[translationKey];
+    }
+    console.log("No fallback translation for "+translationKey);
+    return translationKey;
+    
 }
 
 function getSafeTranslation(translationKey, fallback) {

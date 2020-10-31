@@ -297,5 +297,13 @@ dictionary.en={
     "mute":"mute",
     "unmute":"unmute",
     "maxfee":"Max Fee",
-    "resultsnumber":"Number Of Results To Show"
+    "resultsnumber":"Number Of Results To Show",
+    "likes":"likes",
+    "dislikes":"dislikes",
+    "tips":"tips",
+    "permalink":"Permalink",
+    "article":"Article",
+    "moderate":"Moderate",
+    "flaguser":"flag(user)"
+
   };

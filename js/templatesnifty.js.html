@@ -1,9 +1,9 @@
-var templateNiftyPost = `
+var postNiftyTemplate = `
 <div class="post">
     <div class="post-content">
         <div class="post-header">
             {author}
-            <span class="fulltext">submitted</span>
+            <span data-vavilon="VV0151" class="fulltext">submitted</span>
             <span class="elapsed-time">
                 {elapsed}
             </span>
@@ -33,27 +33,27 @@ var templateNiftyPost = `
                         <span class="text">
                             {replies}
                         </span>
-                        <span class="text footerlabel" data-vavilon="VVreplies">replies</span>
+                        <span data-vavilon="VV0153" class="text footerlabel">replies</span>
                     </a>
                 </span>
-                <span class="post-footer-upvote">
+                <span class="post-footer-upvote{likeactivated}" id="upvote{txid}">
                     <a id="upvoteaction{txid}" href="javascript:;" onclick="likePost('{txid}','{address}')"
                         class="btn-icon" data-action="like">
                         <span class="icon">
                             💙
-                        </span></a>
-
+                        </span>
+                    </a>
                     <a href="javascript:;" onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')">
-                        <span class="text likestext">
+                        <span class="text likestext" id="nlikescount{txid}">
                             {likes}
                         </span>
-                        <span class="text likesbalance">
+                        <span class="text likesbalance" id="nscore{txid}">
                             {likesbalance}
                         </span>
-                        <span class="text footerlabel" data-vavilon="VVlikes">likes</span>
+                        <span data-vavilon="likes" class="text footerlabel">likes</span>
                     </a>
                 </span>
-                <span class="post-footer-downvote">
+                <span class="post-footer-downvote{dislikeactivated}" id="downvote{txid}">
                     <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{address}')"
                         class="btn-icon" data-action="dislike">
                         <span class="icon">
@@ -61,22 +61,22 @@ var templateNiftyPost = `
                         </span></a>
 
                     <a href="javascript:;" onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')">
-                        <span class="text">
+                        <span class="text" id="ndislikescount{txid}">
                             {dislikes}
                         </span>
-                        <span class="text footerlabel" data-vavilon="VVdislikes">dislikes</span>
+                        <span data-vavilon="dislikes" class="text footerlabel">dislikes</span>
                     </a>
                 </span>
-                <span class="post-footer-remembers">
+                <span class="post-footer-remembers{remembersactivated}" id="remembers{txid}">
                     <a id="quotelinkposts{diff}{txid}" href="#new?txid={txid}" class="btn-icon" data-action="remember">
                         <span class="icon">
                             ♻
                         </span></a>
                     <a href="javascript:;" onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')">
-                        <span class="text">
+                        <span class="text" id="repostscount{txid}">
                             {remembers}
                         </span>
-                        <span class="text footerlabel" data-vavilon="VVremembers">remembers</span>
+                        <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
                     </a>
                 </span>
                 <span class="post-footer-tips">
@@ -87,17 +87,16 @@ var templateNiftyPost = `
                         </span></a>
                     <a href="javascript:;" onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')">
                         <span class="text" data-amount="{tipsinsatoshis}">{tips}</span>
-                        <span class="text footerlabel" data-vavilon="VVtips">tips</span>
+                        <span data-vavilon="tips" class="text footerlabel">tips</span>
                     </a>
                 </span>
                 <span class="dropdown">
                     <button class="dropbtn">☰</button>
                     <div class="dropdown-content">
                         <a class="permalink" id="permalinkposts{diff}{txid}" href="p/{txidshort}"><span
-                                data-vavilon="VVpermalink">Permalink</span></a>
-                        <a id="articlelinkposts{diff}{txid}" href="a/{txidshort}"><span data-vavilon="VVarticle"><a
+                                data-vavilon="permalink">Permalink</span></a>
+                        <a id="articlelinkposts{diff}{txid}" href="a/{txidshort}"><span data-vavilon="article"><a
                                     href="#">Article</span></a>
-                        <a href="#"><span data-vavilon="VVtweet"><a href="#">Tweet</span></a>
                         <span class="divider"></span>
                         <span class="actions-title">Blockchain</span>
                         <span><a rel="noopener noreferrer" target="memo"
@@ -111,12 +110,13 @@ var templateNiftyPost = `
                         <span><a rel="noopener noreferrer" target="bitcoinunlimited"
                                 href="https://explorer.bitcoinunlimited.info/tx/{txid}">Bitcoin Unlimited</a></span>
                         <span class="divider"></span>
-                        <span class="actions-title" data-vavilon="VVmoderate">Moderate</span>
+                        <span data-vavilon="moderate" class="actions-title">Moderate</span>
                         <a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
-                            href="javascript:;"><span data-vavilon="VVflagpost">Flag post</span></a>
+                            href="javascript:;"><span data-vavilon="VV0161">Flag post</span></a>
                         <a id="hideuserlinkposts{diff}{txid}"
                             onclick="hideuser('{address}','','hideuserlinkposts{diff}{txid}');"
-                            href="javascript:;"><span data-vavilon="VVflaguser">Flag user</span></a>
+                            href="javascript:;"><span data-vavilon="flaguser">Flag user</span></a>
+                        {hideuser}
                     </div>
                 </span>
             </div>

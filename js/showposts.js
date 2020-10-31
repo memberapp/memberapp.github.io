@@ -2,7 +2,7 @@
 
 "use strict";
 
-var eccryptoJs=null;
+var eccryptoJs = null;
 
 function getAndPopulateQuoteBox(txid) {
     var page = 'quotepost';
@@ -92,8 +92,8 @@ function getAndPopulateMessages(start, limit) {
 
     var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey;
     getJSON(theURL).then(async function (data) {
-        
-        if(!eccryptoJs){
+
+        if (!eccryptoJs) {
             await loadScript("js/lib/eccrypto-js.js");
         }
 
@@ -543,34 +543,63 @@ function showReplyBox(txid) {
 }
 
 function decreaseGUILikes(txid) {
-    var downarrow = document.getElementById('downvote' + txid);
-    downarrow.className = "votearrowactivateddown rotate180";
-    var downarrowAction = document.getElementById('downvoteaction' + txid);
-    downarrowAction.onclick = null;
+    try {
 
-    var uparrow = document.getElementById('upvote' + txid);
-    uparrow.className = "votearrow";
+        var downarrow = document.getElementById('downvote' + txid);
+        downarrow.className = "votearrowactivateddown rotate180";
+        var downarrowAction = document.getElementById('downvoteaction' + txid);
+        downarrowAction.onclick = null;
 
-    var likescount = Number(document.getElementById('likescount' + txid).innerHTML);
-    document.getElementById('likescount' + txid).innerHTML = likescount - 1;
-    document.getElementById('score' + txid).innerHTML = likescount - 1;
+        var uparrow = document.getElementById('upvote' + txid);
+        uparrow.className = "votearrow";
+
+        var likescount = Number(document.getElementById('likescount' + txid).innerText);
+        document.getElementById('likescount' + txid).innerText = likescount - 1;
+        document.getElementById('score' + txid).innerText = likescount - 1;
+    } catch (err) {
+    }
+
+    try {
+        var ndislikescount = Number(document.getElementById('ndislikescount' + txid).innerText);
+        document.getElementById('ndislikescount' + txid).innerText = ndislikescount + 1;
+        var scorecount = Number(document.getElementById('nscore' + txid).innerText);
+        document.getElementById('nscore' + txid).innerText = scorecount - 1;
+    } catch (err) {
+    }
+
 
 }
 
 function increaseGUILikes(txid) {
-    //increase number of likes,
-    var uparrow = document.getElementById('upvote' + txid);
-    uparrow.className = "votearrowactivated";
-    var uparrowAction = document.getElementById('upvoteaction' + txid);
-    uparrowAction.onclick = null;
 
-    var downarrow = document.getElementById('downvote' + txid);
-    downarrow.className = "votearrow rotate180";
 
-    //Change counts
-    var likescount = Number(document.getElementById('likescount' + txid).innerHTML);
-    document.getElementById('likescount' + txid).innerHTML = likescount + 1;
-    document.getElementById('score' + txid).innerHTML = likescount + 1;
+    try {
+        //increase number of likes, original themes
+        var likescount = Number(document.getElementById('likescount' + txid).innerText);
+        var uparrow = document.getElementById('upvote' + txid);
+        uparrow.className = "votearrowactivated";
+        var uparrowAction = document.getElementById('upvoteaction' + txid);
+        uparrowAction.onclick = null;
+        var downarrow = document.getElementById('downvote' + txid);
+        downarrow.className = "votearrow rotate180";
+        //Change counts
+        document.getElementById('likescount' + txid).innerText = likescount + 1;
+        document.getElementById('score' + txid).innerText = likescount + 1;
+    } catch (err) {
+    }
+
+    //Nifty
+    try {
+        //increase number of likes, original themes
+        var likescount = Number(document.getElementById('nlikescount' + txid).innerText);
+        document.getElementById('nlikescount' + txid).innerText = likescount + 1;
+        var scorecount = Number(document.getElementById('nscore' + txid).innerText);
+        document.getElementById('nscore' + txid).innerText = scorecount + 1;
+        
+    } catch (err) {
+    }
+
+
 }
 
 function increaseGUIReposts(txid) {
