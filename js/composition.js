@@ -1,5 +1,6 @@
 
 //markdown editor
+var SimpleMDE=null;
 var simplemde;
 
 function initMarkdownEditor() {

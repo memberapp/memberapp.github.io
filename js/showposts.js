@@ -2,6 +2,8 @@
 
 "use strict";
 
+var eccryptoJs=null;
+
 function getAndPopulateQuoteBox(txid) {
     var page = 'quotepost';
     showOnly(page);
@@ -89,7 +91,11 @@ function getAndPopulateMessages(start, limit) {
     document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
 
     var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey;
-    getJSON(theURL).then(function (data) {
+    getJSON(theURL).then(async function (data) {
+        
+        if(!eccryptoJs){
+            await loadScript("js/lib/eccrypto-js.js");
+        }
 
         lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
@@ -418,8 +424,9 @@ function addSingleStarsRating(theElement) {
     let name = theElement.dataset.ratingname;
     let theAddress = theElement.dataset.ratingaddress;
     let rawRating = theElement.dataset.ratingraw;
-    //let starSize = theElement.dataset.ratingsize;
-    let starSize = Number(getComputedStyle(theElement).fontSize);
+    let starSize = theElement.dataset.ratingsize;
+    //this is very slow
+    //let starSize = Number(getComputedStyle(theElement).fontSize);
 
     let disabledtext = theElement.dataset.disabledtext;
 

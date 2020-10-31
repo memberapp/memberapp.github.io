@@ -38,7 +38,14 @@
     <script src="pwa/pwa2.js"></script>
 
     <!-- Large Script Files -->
-    <link rel="preload" href="js/lib/bitboxsdk.js" as="script">
+    <!--
+    We can load these later.
+    <link rel="preload" href="js/lib/bitboxsdk.js" as="script"/>
+    <link rel="preload" href="js/lib/leaflet/leaflet.js" as="script"/>
+    <link rel="preload" href="js/lib/eccrypto-js.js" as="script"/>
+     -->
+    <!-- https://github.com/sparksuite/simplemde-markdown-editor -->
+    <!-- <script src="js/lib/mde/simplemde.1.11.2.min.js"></script> -->
 
     <!-- DNS-prefetch resource hints  -->
     <link rel="preconnect" href="https://memberjs.bchd.cash">
@@ -68,10 +75,11 @@
     <script src="js/loadlocale.js"></script>
     <link rel="preload" href="js/lib/vavilon.min.js" as="script" />
  -->
-
-    <!--  Leaflet (Map) -->
+ 
     <link rel="stylesheet" href="js/lib/leaflet/leaflet.css" />
-    <script src="js/lib/leaflet/leaflet.js"></script>
+    <!--  Leaflet (Map) 
+    <script async src="js/lib/leaflet/leaflet.js"></script>
+    -->
 
     <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
     <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
@@ -89,7 +97,7 @@
     <!--  External Libraries -->
     <script src="js/lib/buffer.js"></script>
     <script src="js/lib/anchorme.min.js"></script>
-    <script src="js/lib/bitboxsdk.js"></script>
+    <!--<script src="js/lib/bitboxsdk.js"></script>-->
     <!-- https://github.com/fredolss/rater-js  -->
     <script src='js/lib/rater/rating.js'></script>
     <script src='js/lib/geohash.js'></script>
@@ -99,10 +107,9 @@
     <script src="js/lib/showdown.1.9.1.min.patched.js"></script>
     <!-- https://github.com/cure53/DOMPurify -->
     <script src="js/lib/purify.min.js"></script>
-    <!-- https://github.com/sparksuite/simplemde-markdown-editor -->
-    <script src="js/lib/mde/simplemde.1.11.2.min.js"></script>
-    <!-- https://www.npmjs.com/package/eccrypto-js -->
-    <script src="js/lib/eccrypto-js.js"></script>
+
+    <!-- https://www.npmjs.com/package/eccrypto-js 
+    <script async src="js/lib/eccrypto-js.js"></script>-->
     <!-- https://github.com/dmester/jdenticon -->
     <script src="js/lib/jdenticon.min.js"></script>
 

@@ -291,5 +291,11 @@
   "VV0012": "Rate as",
   "VV0013": "Member",
   "VV0014": "Who Rates as",
-  "VV0015": "Rates as"
+  "VV0015": "Rates as",
+  "follow":"follow",
+  "unfollow":"unfollow",
+  "mute":"mute",
+  "unmute":"unmute",
+  "maxfee":"Max Fee",
+  "resultsnumber":"Number Of Results To Show"
 }

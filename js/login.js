@@ -9,6 +9,8 @@ var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
 var qpubkey = ""; //Public Key (q style address)
+var pubkeyhex = ""; //Public Key, full hex
+
 var mutedwords = new Array();
 let tq = new TransactionQueue(updateStatus);
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
@@ -20,6 +22,7 @@ var profilepicbase = 'img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var siteTitle = 'member.cash';
 var theStyle = '';
+var bitboxSdk = null;
 
 //var twitterEmbeds=new Array();
 
@@ -68,12 +71,12 @@ window.onbeforeunload = function () {
 
 function replaceName(match, p1, p2, p3, offset, string) {
     // p1 is nondigits, p2 digits, and p3 non-alphanumerics
-    return '"'+p2+'" : '+p3+',';
+    return '"' + p2 + '" : ' + p3 + ',';
 }
 
 function init() {
-    dictionary.live=dictionary.en;
-    dictionary.fallback=dictionary.en;
+    dictionary.live = dictionary.en;
+    dictionary.fallback = dictionary.en;
     //guesslanguage
 
     document.getElementById('previewcontent').style.display = 'none';
@@ -138,91 +141,118 @@ function trylogin(loginkey) {
     }
     getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
+
+    //Load big libraries that may not be immediately needed.
+    if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
+    if (!L) loadScript("js/lib/leaflet/leaflet.js");
+    if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
+    if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
+    
 }
 
-function login(loginkey) {
+async function login(loginkey) {
 
-    loginkey = loginkey.trim();
-    //check valid private or public key
-    var publicaddress = "";
+    mnemonic = localStorageGet(localStorageSafe, "mnemonic");
+    privkey = localStorageGet(localStorageSafe, "privkey");
+    pubkey = localStorageGet(localStorageSafe, "pubkey");
+    qpubkey = localStorageGet(localStorageSafe, "qpubkey");
+    pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
 
-    if (new BITBOX.Mnemonic().validate(loginkey) == "Valid mnemonic") {
+    if (!(pubkey && qpubkey)) {
+        //slow login.
+        //note, mnemonic not available to all users for fast login
+        //note, user may be logged in in public key mode
+        //note, pubkeyhex won't be available in public key mode
 
-        /* Not sure why this isn't working, but gives different results to read.cash
-        // Will change the bitbox method instead
-        // create seed buffer from mnemonic
-        let seedBuffer = new BITBOX.Mnemonic().toSeed(loginkey);
-        // create HDNode from seed buffer
-        let hdNode = new BITBOX.HDNode().fromSeed(seedBuffer);
-        hdNode = new BITBOX.HDNode().derivePath(hdNode, "m/44'/0'/0'/0");
-        // to legacy address
-        var newloginkey = new BITBOX.HDNode().toWIF(hdNode);
-        */
+        loginkey = loginkey.trim();
+        //check valid private or public key
+        var publicaddress = "";
 
-        var newloginkey = new BITBOX.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
-        localStorageSet(localStorageSafe, "mnemonic", loginkey);
-        mnemonic = loginkey;
-        loginkey = newloginkey;
-    }
-
-
-    if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
-
-
-        let ecpair = new BITBOX.ECPair().fromWIF(loginkey);
-        publicaddress = new BITBOX.ECPair().toLegacyAddress(ecpair);
-
-
-        privkey = loginkey;
-        document.getElementById('loginkey').value = "";
-        localStorageSet(localStorageSafe, "privkey", privkey);
-    } else if (loginkey.startsWith("5")) {
-        document.getElementById('loginkey').value = "";
-        alert(getSafeTranslation('uncompressed', "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')"));
-        return;
-    } else if (loginkey.startsWith("q")) {
-        publicaddress = new BITBOX.Address().toLegacyAddress(loginkey);
-    } else if (loginkey.startsWith("b")) {
-        publicaddress = new BITBOX.Address().toLegacyAddress(loginkey);
-    } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
-        if (new BITBOX.Address().isLegacyAddress(loginkey)) {
-            publicaddress = loginkey;
+        if (!bitboxSdk) {
+            await loadScript("js/lib/bitboxsdk.js");
         }
-    } else {
-        alert(getSafeTranslation('keynotrecognized',"Key not recognized, use a valid 12 word BIP39 seed phrase, or a compressed WIF (starts with 'L' or 'K')"));
-        return;
+
+        if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
+
+            /* Not sure why this isn't working, but gives different results to read.cash
+            // Will change the bitbox method instead
+            // create seed buffer from mnemonic
+            let seedBuffer = new bitboxSdk.Mnemonic().toSeed(loginkey);
+            // create HDNode from seed buffer
+            let hdNode = new bitboxSdk.HDNode().fromSeed(seedBuffer);
+            hdNode = new bitboxSdk.HDNode().derivePath(hdNode, "m/44'/0'/0'/0");
+            // to legacy address
+            var newloginkey = new bitboxSdk.HDNode().toWIF(hdNode);
+            */
+
+            var newloginkey = new bitboxSdk.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
+            localStorageSet(localStorageSafe, "mnemonic", loginkey);
+            mnemonic = loginkey;
+            loginkey = newloginkey;
+        }
+
+
+        if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
+
+            let ecpair = new bitboxSdk.ECPair().fromWIF(loginkey);
+            publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+
+            privkey = loginkey;
+            document.getElementById('loginkey').value = "";
+            
+        } else if (loginkey.startsWith("5")) {
+            document.getElementById('loginkey').value = "";
+            alert(getSafeTranslation('uncompressed', "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')"));
+            return;
+        } else if (loginkey.startsWith("q")) {
+            publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
+        } else if (loginkey.startsWith("b")) {
+            publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
+        } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
+            if (new bitboxSdk.Address().isLegacyAddress(loginkey)) {
+                publicaddress = loginkey;
+            }
+        } else {
+            alert(getSafeTranslation('keynotrecognized', "Key not recognized, use a valid 12 word BIP39 seed phrase, or a compressed WIF (starts with 'L' or 'K')"));
+            return;
+        }
+
+        pubkey = publicaddress.toString();
+        qpubkey = new bitboxSdk.Address().toCashAddress(pubkey);
+        localStorageSet(localStorageSafe, "pubkey", pubkey);
+        localStorageSet(localStorageSafe, "qpubkey", qpubkey);
+            
+        if (privkey) {
+            let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
+            pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
+            localStorageSet(localStorageSafe, "privkey", privkey);
+            localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
+            //dropdowns.utxoserver
+        }
+
+        
     }
 
-    pubkey = publicaddress.toString();
-    qpubkey = new BITBOX.Address().toCashAddress(pubkey);
+
+    //Register public key with utxo server so that utxos can be cached    
+    getJSON("https://member.cash/v2/" + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
 
-    localStorageSet(localStorageSafe, "pubkey", pubkey);
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
-
     document.getElementById('newseedphrasedescription').style.display = "none";
     document.getElementById('newseedphrase').innerText = "";
     document.getElementById('loginkey').value = "";
 
     if (privkey == "") {
-        alert(getSafeTranslation('publickeymode',"You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
+        alert(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
     }
 
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
     updateSettings();
     getAndPopulateSettings();
-
-    if (privkey) {
-        //Register public key with utxo server so that utxos can be cached
-        let ecpair = new BITBOX.ECPair().fromWIF(privkey);
-        var pubkeyHex = ecpair.getPublicKeyBuffer().toString('hex');
-        getJSON("https://member.cash/v2/" + 'reg/' + pubkeyHex + '?a=1').then(function (data) { }, function (status) { });
-        //dropdowns.utxoserver
-    }
-
 
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
     //Get latest rate and update balance
@@ -247,8 +277,8 @@ function loadStyle() {
 }
 
 function createNewAccount() {
-    mnemonic = new BITBOX.Mnemonic().generate(128);
-    //var loginkey = new BITBOX.Mnemonic().toKeypairs(mnemonic, 1)[0].privateKeyWIF;
+    mnemonic = new bitboxSdk.Mnemonic().generate(128);
+    //var loginkey = new bitboxSdk.Mnemonic().toKeypairs(mnemonic, 1)[0].privateKeyWIF;
     //login(mnemonic);
     //show('settingsanchor');
     //alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
@@ -261,7 +291,7 @@ function createNewAccount() {
 
 function logout() {
 
-    var exitreally = confirm(getSafeTranslation('areyousure',`Are you sure you want to logout? 
+    var exitreally = confirm(getSafeTranslation('areyousure', `Are you sure you want to logout? 
     Make sure you have written down your 12 word seed phrase or private key to login again. 
     There is no other way to recover your seed phrase. It is on the settings page.
     Click 'Cancel' if you need to do that now.

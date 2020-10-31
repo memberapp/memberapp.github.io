@@ -56,9 +56,9 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     if (ratingStarSize > 0) {
         ret += ratingHTML;
     }
-    var followButton = `<a class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `'); this.style.display='none';">follow</a>`;
+    var followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `'); this.style.display='none';">follow</a>`;
     if (isfollowing) {
-        followButton = `<a class="unfollow" href="javascript:;" onclick="unfollow('` + unicodeEscape(address) + `'); this.style.display='none';">unfollow</a>`;
+        followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('` + unicodeEscape(address) + `'); this.style.display='none';">unfollow</a>`;
     }
 
     if (ratingID == undefined) {
@@ -470,17 +470,17 @@ function getVoteButtons(txid, address, likedtxid, likeordislike, score) {
     var downvoteHTML;
 
     if (likeordislike == "1") {
-        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="upvote"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a>`;
+        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a>`;
         scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
     } else {
-        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;" onclick="likePost('` + san(txid) + `','` + san(address) + `')"><span id="upvote` + san(txid) + `" class="votearrow" title="upvote"></span><span class="votetext">` + getSafeTranslation('up', 'up') + `</span></a>`;
+        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;" onclick="likePost('` + san(txid) + `','` + san(address) + `')"><span id="upvote` + san(txid) + `" class="votearrow" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up', 'up') + `</span></a>`;
     }
 
     if (likeordislike == "-1") {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;"><span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="downvote"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
+        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;"><span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
         scoreHTML = `<span class="betweenvotesscoredown" id="score` + san(txid) + `">` + Number(score) + `</span>`;
     } else {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="downvote"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
+        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('up') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
     }
 
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
@@ -585,7 +585,7 @@ function replaceImgur(match, p1, p2, p3, p4, offset, string) {
 //Notifications
 
 function allowNotificationButtonHTML() {
-    return `<span class="allownotifications"><a class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>`;
+    return `<span class="allownotifications"><a data-vavilon="VV0080" class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>`;
 }
 
 function getNotificationsTableHTML(contents, navbuttons) {
@@ -766,7 +766,7 @@ function getMemberRatingHTML(qaddress, ratingScore) {
 
 //Settings
 function clickActionNamedHTML(action, qaddress, name) {
-    return `<a class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `"); self.style.display="none";'>` + ds(name) + `</a>`;
+    return `<a data-vavilon='`+action+`' class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `"); self.style.display="none";'>` + ds(name) + `</a>`;
 }
 
 /*
@@ -900,7 +900,7 @@ function getMessageHTML(data, count) {
         //You sent a message
         contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
-        let ecpair = new BITBOX.ECPair().fromWIF(privkey);
+        let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
         var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
         decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
         contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
@@ -942,27 +942,42 @@ function ___i18n(translationKey) {
 }
 
 function getSafeTranslation(translationKey, fallback) {
+    //return 'x';
     var translated = ___i18n(translationKey);
-    if (translated == translationKey) {
+    if (translated == translationKey && fallback) {
         translated = fallback;
     }
     return ds(translated);
 }
 
-function translatePage() {
-    var matches = document.getElementsByTagName("*");
-    for (var j = 0; j < matches.length; j++) {
-        if (matches[j].dataset.vavilon || matches[j].dataset.vavilon_title || matches[j].dataset.vavilon_value || matches[j].dataset.vavilon_data_label) {
-            if (matches[j].dataset.vavilon) 
-                matches[j].innerHTML=getSafeTranslation(matches[j].dataset.vavilon,matches[j].dataset.vavilon);
-            if (matches[j].dataset.vavilon_title) 
-                matches[j].title=getSafeTranslation(matches[j].dataset.vavilon_title,matches[j].dataset.vavilon_title);
-            if (matches[j].dataset.vavilon_value)
-                matches[j].value=getSafeTranslation(matches[j].dataset.vavilon_value,matches[j].dataset.vavilon_value);
-            if (matches[j].dataset.vavilon_data_label) 
-                matches[j].dataset.label=getSafeTranslation(matches[j].dataset.vavilon_data_label,matches[j].dataset.vavilon_data_label);
-        }
+function getUnSafeTranslation(translationKey, fallback) {
+    //return 'x';
+    var translated = ___i18n(translationKey);
+    if (translated == translationKey && fallback) {
+        translated = fallback;
     }
+    return (translated);
+}
+
+function translatePage() {
+    //var matches = document.getElementsByTagName("*");
+    var matches = document.querySelectorAll('[data-vavilon],[data-vavilon_title],[data-vavilon_value],[data-vavilon_data_label]');
+    //document.body.style.display='none';
+    for (var j = 0; j < matches.length; j++) {
+        var fds=matches[j].dataset;
+        //if (fds.vavilon || fds.vavilon_title || fds.vavilon_value || fds.vavilon_data_label) {
+            if (fds.vavilon) 
+                //matches[j].innerHTML=getSafeTranslation(fds.vavilon,fds.vavilon); //nb setting innerText is *a lot* faster
+                matches[j].innerText=getUnSafeTranslation(fds.vavilon,fds.vavilon);
+            if (fds.vavilon_title) 
+                matches[j].title=getSafeTranslation(fds.vavilon_title,fds.vavilon_title);
+            if (fds.vavilon_value)
+                matches[j].value=getSafeTranslation(fds.vavilon_value,fds.vavilon_value);
+            if (fds.vavilon_data_label) 
+                fds.label=getSafeTranslation(fds.vavilon_data_label,fds.vavilon_data_label);
+        //}
+    }
+    //document.body.style.display='block';
 }
 
 //nb iframe not allowed by twitter

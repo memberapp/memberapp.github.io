@@ -6,13 +6,18 @@ var postpopup;
 var markersDict = {};
 var firstload = true;
 var mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+var L=null;
 
-function getAndPopulateMap(geohash, posttrxid) {
+async function getAndPopulateMap(geohash, posttrxid) {
 
     geohash = san(geohash);
     posttrxid = san(posttrxid);
 
     if (map == null) {
+
+        if(!L){
+            await loadScript("js/lib/leaflet/leaflet.js");
+        }
 
         map = L.map('map', { attributionControl: false });
 

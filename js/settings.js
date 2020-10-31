@@ -43,27 +43,27 @@ function getAndPopulateRatings(qaddress) {
 }
 
 
-function getDataCommonToSettingsAndMember(qaddress, pre) {
+function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
 
     document.getElementById(pre + 'anchor').innerHTML = document.getElementById("loading").innerHTML;
 
     var theURL = dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
-        getDataCommonToSettingsAndMemberFinally(qaddress, pre, data);
+        getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data);
     }, function (status) { //error detection....
         //If this fails, we still want to show settings page, so user can change server etc
-        getDataCommonToSettingsAndMemberFinally(qaddress, pre, null);
+        getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, null);
         showErrorMessage(status, null, theURL);
     });
 }
 
-function getDataCommonToSettingsAndMemberFinally(qaddress, pre, data) {
+function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
 
     //Note, data may not contain any rows, for new or unknown users.
 
     var obj = {
         address: qaddress,
-        cashaddress: new BITBOX.Address().toCashAddress(qaddress),
+        cashaddress: cashaddress,
         followers: 0,
         following: 0,
         muters: 0,
@@ -164,7 +164,7 @@ function getAndPopulateMember(qaddress) {
     //document.getElementById('memberlegacyformat').innerHTML = qaddress;
     //document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
 
-    getDataCommonToSettingsAndMember(qaddress, "member");
+    getDataCommonToSettingsAndMember(qaddress, null, "member");
     getAndPopulateCommunityRatings(qaddress);
     getAndPopulateRatings(qaddress);
     if (pubkey) {
@@ -176,7 +176,7 @@ function getAndPopulateMember(qaddress) {
 
 function getAndPopulateSettings() {
 
-    getDataCommonToSettingsAndMember(pubkey, "settings");
+    getDataCommonToSettingsAndMember(pubkey, qpubkey, "settings");
 }
 
 function updateSettings() {

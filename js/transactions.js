@@ -339,7 +339,7 @@ function addressTransaction(removeElementID, qaddress, actionCode, statusMessage
     if (!checkForPrivKey()) return false;
 
     //document.getElementById(removeElementID).style.display = "none";
-    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
+    var addressraw = new bitboxSdk.Address().legacyToHash160(qaddress);
     const tx = {
         data: [actionCode, "0x" + addressraw],
         cash: { key: privkey }
@@ -395,7 +395,7 @@ function rateUser(qaddress, rating, ratingcomment) {
         ratingcomment = "";
     }
 
-    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
+    var addressraw = new bitboxSdk.Address().legacyToHash160(qaddress);
 
     var hexRating = "0x" + toHexString([rating]);
     const tx = {
@@ -428,7 +428,7 @@ function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMe
     if (!checkForPrivKey()) return false;
 
     document.getElementById(removeElementID).style.display = "none";
-    var addressraw = new BITBOX.Address().legacyToHash160(qaddress);
+    var addressraw = new bitboxSdk.Address().legacyToHash160(qaddress);
     const tx = {
         data: [actionCode, "0x" + addressraw, topicHOSTILE],
         cash: { key: privkey }
@@ -451,10 +451,10 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
     //Send sufficient funds to new account to create name
 
     //create new random private key
-    let smnemonic = new BITBOX.Mnemonic().generate(128);
-    var sprivkey = new BITBOX.Mnemonic().toKeypairs(smnemonic, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
-    let ecpair = new BITBOX.ECPair().fromWIF(sprivkey);
-    let publicaddress = new BITBOX.ECPair().toLegacyAddress(ecpair);
+    let smnemonic = new bitboxSdk.Mnemonic().generate(128);
+    var sprivkey = new bitboxSdk.Mnemonic().toKeypairs(smnemonic, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
+    let ecpair = new bitboxSdk.ECPair().fromWIF(sprivkey);
+    let publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
     console.log(publicaddress);
 
     const tx = {

@@ -3,7 +3,7 @@
 const DUSTLIMIT = 546;
 const MAXPOSSNUMBEROFINPUTS = 10;
 const Buffer = buffer.Buffer;
-const BITBOX = bitboxSdk;
+//const BITBOX = bitboxSdk;
 
 //Note, these can be overwritten in config.js
 //let utxoServer = "https://rest.bitcoin.com/v2/";
@@ -126,9 +126,9 @@ class UTXOPool {
     let outputInfo = new Array();
 
     //Create Keypair
-    //const ECPair = BITBOX.ECPair;
+    //const ECPair = bitboxSdk.ECPair;
     //let keyPair = new ECPair().fromWIF(options.cash.key);
-    //let thePublicKey = keyPair.getAddress();// BITBOX.ECPair.toLegacyAddress(keyPair);
+    //let thePublicKey = keyPair.getAddress();// bitboxSdk.ECPair.toLegacyAddress(keyPair);
     //
     //
 
@@ -137,9 +137,9 @@ class UTXOPool {
     //Get the cashAddr format
     //const Address2 = bch.Address;
     //let thePublicKeyQFormat = new Address2(this.theAddress).toString(bch.Address.CashAddrFormat);
-    let thePublicKeyQFormat = new BITBOX.Address().toCashAddress(this.theAddress);
+    let thePublicKeyQFormat = new bitboxSdk.Address().toCashAddress(this.theAddress);
 
-    const Address = BITBOX.Address;
+    const Address = bitboxSdk.Address;
     let address = new Address();
     address.restURL = dropdowns.utxoserver;
 
@@ -318,7 +318,7 @@ class TransactionQueue {
       resendWait = resendWait * 1.5;
       try {
         //Try refreshing the utxo pool
-        const ECPair = BITBOX.ECPair;
+        const ECPair = bitboxSdk.ECPair;
         let keyPair = new ECPair().fromWIF(returnObject.queue[0].cash.key);
         let theAddress = keyPair.getAddress();
         returnObject.utxopools[theAddress].refreshPool();
@@ -385,12 +385,12 @@ class TransactionQueue {
 
   selectUTXOs(options) {
     // return new Promise(resolve => {
-    /*const ECPair = BITBOX.ECPair;
-    const Address = BITBOX.Address;
+    /*const ECPair = bitboxSdk.ECPair;
+    const Address = bitboxSdk.Address;
 
     //Create Keypair
     let keyPair = new ECPair().fromWIF(options.cash.key);
-    let thePublicKey = keyPair.getAddress();// BITBOX.ECPair.toLegacyAddress(keyPair);
+    let thePublicKey = keyPair.getAddress();// bitboxSdk.ECPair.toLegacyAddress(keyPair);
     const Address2 = bch.Address;
     let thePublicKeyQFormat = new Address2(thePublicKey).toString(bch.Address.CashAddrFormat);
 
@@ -400,7 +400,7 @@ class TransactionQueue {
     //(async () => {
     //address.restURL = utxoServer;
     //outputInfo = await address.utxo(thePublicKeyQFormat);
-    const ECPair = BITBOX.ECPair;
+    const ECPair = bitboxSdk.ECPair;
     let keyPair = new ECPair().fromWIF(options.cash.key);
     let theAddress = keyPair.getAddress();
 
@@ -485,15 +485,15 @@ class TransactionQueue {
 
   constructTransaction(utxos, fees, options) {
 
-    const TransactionBuilder = BITBOX.TransactionBuilder;
-    const Script = BITBOX.Script;
+    const TransactionBuilder = bitboxSdk.TransactionBuilder;
+    const Script = bitboxSdk.Script;
 
-    const ECPair = BITBOX.ECPair;
+    const ECPair = bitboxSdk.ECPair;
     let keyPair = new ECPair().fromWIF(options.cash.key);
     let changeAddress = keyPair.getAddress();
 
     //let keyPair = new ECPair().fromWIF(options.cash.key);
-    //let thePublicKey = keyPair.getAddress();// BITBOX.ECPair.toLegacyAddress(keyPair);
+    //let thePublicKey = keyPair.getAddress();// bitboxSdk.ECPair.toLegacyAddress(keyPair);
 
     //let maxNumberOfInputs = utxos.length < MAXPOSSNUMBEROFINPUTS ? utxos.length : MAXPOSSNUMBEROFINPUTS;
 
@@ -576,7 +576,7 @@ class TransactionQueue {
     let hash = tx.getHash().toString('hex');
     let id = tx.getId();
 
-    const RawTransactions = BITBOX.RawTransactions;
+    const RawTransactions = bitboxSdk.RawTransactions;
     let rawtransactions = new RawTransactions();
     rawtransactions.restURL = dropdowns.txbroadcastserver;
     rawtransactions.sendRawTransaction(hex).then((result) => {
@@ -598,7 +598,7 @@ class TransactionQueue {
   }
 
   updateTransactionPool(utxos, options, tx) {
-    const ECPair = BITBOX.ECPair;
+    const ECPair = bitboxSdk.ECPair;
     let keyPair = new ECPair().fromWIF(options.cash.key);
     let changeAddress = keyPair.getAddress();
 

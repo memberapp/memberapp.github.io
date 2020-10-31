@@ -769,13 +769,13 @@ pages.settings = `
         <p data-vavilon="VV0177">(Amount to tip when clicking up arrow. Minimum 547)</p>
     </div>
     <div>
-        <label for="maxfee">Max Fee</label>
+        <label data-vavilon="maxfee" for="maxfee">Max Fee</label>
         <input id="maxfee" size="3" type="number" step="1" onchange="updateSettingsNumber('maxfee');"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
         <p data-vavilon="VV0083">(Max satoshis per byte to pay during network congestion. Minimum 2)</p>
     </div>
     <div>
-        <label for="results">Number Of Results To Show</label>
+        <label data-vavilon="resultsnumber" for="results">Number Of Results To Show</label>
         <input id="results" size="3" type="number" step="1" onchange="updateSettingsNumber('results');"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
         <p data-vavilon="VV0084">(Max results to show per page. Maximum 100)</p>

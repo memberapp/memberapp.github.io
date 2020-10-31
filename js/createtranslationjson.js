@@ -37,7 +37,7 @@ function createTranslationJSON() {
 
     var vvitems = [];
     for (var i = 0; i < templateVars.length; i++) {
-        document.getElementById('previewcontent').innerHTML = templateVars[i];
+        //document.getElementById('previewcontent').innerHTML = templateVars[i];
         var matches = document.getElementsByTagName("*");
         //document.querySelectorAll("[id^='" + stem + "']");
         for (var j = 0; j < matches.length; j++) {
