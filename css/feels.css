@@ -366,8 +366,8 @@ img {
   border-radius: 0.5rem; }
 
 .memberpicsmall {
-  display: -ms-flexbox !important;
-  display: flex !important;
+  display: -ms-grid !important;
+  display: grid !important;
   -ms-flex-align: center !important;
   align-items: center !important;
   margin-right: 0.25rem;
@@ -544,33 +544,6 @@ html :lang(ar) {
     border: 2px solid rgba(0, 0, 0, 0.87);
     border-radius: 0.25rem;
     background: white; }
-    #settingsprofileaddress #cashaddrformatdiv img,
-    #settingsprofileaddress #legacyformatdiv img,
-    #settingsprofileaddress #privatekeyformatdiv img,
-    #settingsprofileaddress #membercashaddrformatdiv img,
-    #settingsprofileaddress #memberlegacyformatdiv img,
-    #settingslegacyprofileaddress #cashaddrformatdiv img,
-    #settingslegacyprofileaddress #legacyformatdiv img,
-    #settingslegacyprofileaddress #privatekeyformatdiv img,
-    #settingslegacyprofileaddress #membercashaddrformatdiv img,
-    #settingslegacyprofileaddress #memberlegacyformatdiv img,
-    #settingsprivatekey #cashaddrformatdiv img,
-    #settingsprivatekey #legacyformatdiv img,
-    #settingsprivatekey #privatekeyformatdiv img,
-    #settingsprivatekey #membercashaddrformatdiv img,
-    #settingsprivatekey #memberlegacyformatdiv img,
-    #membercashaddress #cashaddrformatdiv img,
-    #membercashaddress #legacyformatdiv img,
-    #membercashaddress #privatekeyformatdiv img,
-    #membercashaddress #membercashaddrformatdiv img,
-    #membercashaddress #memberlegacyformatdiv img,
-    #memberlegacyaddress #cashaddrformatdiv img,
-    #memberlegacyaddress #legacyformatdiv img,
-    #memberlegacyaddress #privatekeyformatdiv img,
-    #memberlegacyaddress #membercashaddrformatdiv img,
-    #memberlegacyaddress #memberlegacyformatdiv img {
-      height: 160px;
-      width: 160px; }
     #settingsprofileaddress #cashaddrformatdiv .qrcodeclick,
     #settingsprofileaddress #legacyformatdiv .qrcodeclick,
     #settingsprofileaddress #privatekeyformatdiv .qrcodeclick,
@@ -631,6 +604,32 @@ html :lang(ar) {
       #memberlegacyaddress #membercashaddrformatdiv .qrcodeclick:hover,
       #memberlegacyaddress #memberlegacyformatdiv .qrcodeclick:hover {
         color: #0c4879; }
+      #settingsprofileaddress #cashaddrformatdiv .qrcodeclick span,
+      #settingsprofileaddress #legacyformatdiv .qrcodeclick span,
+      #settingsprofileaddress #privatekeyformatdiv .qrcodeclick span,
+      #settingsprofileaddress #membercashaddrformatdiv .qrcodeclick span,
+      #settingsprofileaddress #memberlegacyformatdiv .qrcodeclick span,
+      #settingslegacyprofileaddress #cashaddrformatdiv .qrcodeclick span,
+      #settingslegacyprofileaddress #legacyformatdiv .qrcodeclick span,
+      #settingslegacyprofileaddress #privatekeyformatdiv .qrcodeclick span,
+      #settingslegacyprofileaddress #membercashaddrformatdiv .qrcodeclick span,
+      #settingslegacyprofileaddress #memberlegacyformatdiv .qrcodeclick span,
+      #settingsprivatekey #cashaddrformatdiv .qrcodeclick span,
+      #settingsprivatekey #legacyformatdiv .qrcodeclick span,
+      #settingsprivatekey #privatekeyformatdiv .qrcodeclick span,
+      #settingsprivatekey #membercashaddrformatdiv .qrcodeclick span,
+      #settingsprivatekey #memberlegacyformatdiv .qrcodeclick span,
+      #membercashaddress #cashaddrformatdiv .qrcodeclick span,
+      #membercashaddress #legacyformatdiv .qrcodeclick span,
+      #membercashaddress #privatekeyformatdiv .qrcodeclick span,
+      #membercashaddress #membercashaddrformatdiv .qrcodeclick span,
+      #membercashaddress #memberlegacyformatdiv .qrcodeclick span,
+      #memberlegacyaddress #cashaddrformatdiv .qrcodeclick span,
+      #memberlegacyaddress #legacyformatdiv .qrcodeclick span,
+      #memberlegacyaddress #privatekeyformatdiv .qrcodeclick span,
+      #memberlegacyaddress #membercashaddrformatdiv .qrcodeclick span,
+      #memberlegacyaddress #memberlegacyformatdiv .qrcodeclick span {
+        margin-bottom: 0; }
     #settingsprofileaddress #cashaddrformatdiv img,
     #settingsprofileaddress #legacyformatdiv img,
     #settingsprofileaddress #privatekeyformatdiv img,
@@ -679,9 +678,14 @@ a {
 .quotepost {
   border: 1px solid rgba(0, 0, 0, 0.38);
   border-radius: 10px;
-  overflow: hidden;
   padding: 0px;
   margin: 0.25rem; }
+
+.repostnoquote .quotepost {
+  border: 0;
+  border-radius: 0;
+  padding: 0px;
+  margin: 0; }
 
 [id^=replycompletedthread] {
   text-align: center; }
@@ -1223,6 +1227,8 @@ video {
         flex-wrap: wrap; }
         .post .postdetails .subtext .submitter a {
           display: inline-block; }
+        .post .postdetails .subtext .submitter .topic {
+          margin-left: 0.5rem; }
 
 .postdetails .subtextbuttons,
 .comment-tree ul li .reply div .subtextbuttons {
@@ -1241,7 +1247,8 @@ video {
     display: flex;
     margin-right: 0.725rem;
     transition: all 0.15s ease-in-out;
-    color: rgba(0, 0, 0, 0.54); }
+    color: rgba(0, 0, 0, 0.54);
+    white-space: break-spaces; }
     .postdetails .subtextbuttons a::before,
     .comment-tree ul li .reply div .subtextbuttons a::before {
       width: 0.875rem;
@@ -1258,18 +1265,22 @@ video {
     .postdetails .subtextbuttons a:hover,
     .comment-tree ul li .reply div .subtextbuttons a:hover {
       color: rgba(0, 0, 0, 0.87); }
-  .postdetails .subtextbuttons span.score,
-  .comment-tree ul li .reply div .subtextbuttons span.score {
+  .postdetails .subtextbuttons span.score, .postdetails .subtextbuttons span.rememberscounttext,
+  .comment-tree ul li .reply div .subtextbuttons span.score,
+  .comment-tree ul li .reply div .subtextbuttons span.rememberscounttext {
     margin-right: 0.725rem;
     cursor: pointer;
     transition: filter 1s ease-in-out; }
-    .postdetails .subtextbuttons span.score:hover,
-    .comment-tree ul li .reply div .subtextbuttons span.score:hover {
+    .postdetails .subtextbuttons span.score:hover, .postdetails .subtextbuttons span.rememberscounttext:hover,
+    .comment-tree ul li .reply div .subtextbuttons span.score:hover,
+    .comment-tree ul li .reply div .subtextbuttons span.rememberscounttext:hover {
       transition: filter 1s ease-in-out;
       color: rgba(0, 0, 0, 0.87); }
-    .postdetails .subtextbuttons span.score .likescounttext, .postdetails .subtextbuttons span.score .tipscounttext,
+    .postdetails .subtextbuttons span.score .likescounttext, .postdetails .subtextbuttons span.score .tipscounttext, .postdetails .subtextbuttons span.rememberscounttext .likescounttext, .postdetails .subtextbuttons span.rememberscounttext .tipscounttext,
     .comment-tree ul li .reply div .subtextbuttons span.score .likescounttext,
-    .comment-tree ul li .reply div .subtextbuttons span.score .tipscounttext {
+    .comment-tree ul li .reply div .subtextbuttons span.score .tipscounttext,
+    .comment-tree ul li .reply div .subtextbuttons span.rememberscounttext .likescounttext,
+    .comment-tree ul li .reply div .subtextbuttons span.rememberscounttext .tipscounttext {
       margin-right: 0.25rem; }
   .postdetails .subtextbuttons [id^="permalinkposts"]::before,
   .postdetails .subtextbuttons [id^="permalinkthread"]::before,
@@ -1282,14 +1293,23 @@ video {
     display: inline-block; }
   .postdetails .subtextbuttons .rememberscounttext,
   .comment-tree ul li .reply div .subtextbuttons .rememberscounttext {
-    margin-right: 0.25rem; }
-    .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
-    .postdetails .subtextbuttons .rememberscounttext a.remebersactive::before,
-    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before,
-    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersactive::before {
-      background: url(../img/feelstheme/re-member.svg);
-      background-size: 0.875rem 0.875rem;
-      display: inline-block; }
+    margin-right: 0.25rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row; }
+    .postdetails .subtextbuttons .rememberscounttext a.remebersinactive,
+    .postdetails .subtextbuttons .rememberscounttext a.remebersactive,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersactive {
+      margin-right: 0; }
+      .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
+      .postdetails .subtextbuttons .rememberscounttext a.remebersactive::before,
+      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before,
+      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersactive::before {
+        background: url(../img/feelstheme/re-member.svg);
+        background-size: 0.875rem 0.875rem;
+        display: inline-block; }
     .postdetails .subtextbuttons .rememberscounttext a.remebersinactive,
     .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive {
       color: #2291EB; }
@@ -1772,16 +1792,20 @@ footer {
   footer hr {
     display: none; }
   footer .footerlinks {
+    text-transform: capitalize;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: center;
     justify-content: center;
     -ms-flex-wrap: wrap;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    color: rgba(0, 0, 0, 0.54); }
     footer .footerlinks .separatorwide {
       border-right: 1px solid rgba(0, 0, 0, 0.12);
       margin-right: 1rem;
       padding-right: 1rem; }
+    footer .footerlinks #version {
+      margin-left: 0.25rem; }
     footer .footerlinks a,
     footer .footerlinks .vavilon {
       color: rgba(0, 0, 0, 0.54); }
@@ -1854,9 +1878,6 @@ footer {
       margin: 0 auto;
       margin-bottom: 0.5rem;
       display: table; }
-      #lowfundswarning .content .lowfundsaddressdiv img {
-        height: 160px;
-        width: 160px; }
     #lowfundswarning .content a:not([rel~="noreferrer"]) {
       line-height: 1.2;
       font-weight: 400;
@@ -1979,14 +2000,14 @@ footer {
       .profilepreview .profile-actions .profilepreviewfollowbutton a:disabled {
         opacity: 0.65; }
 
-.scoreexpanded {
+.scoreexpanded, .remembersexpanded {
   padding: 1rem 0;
   display: none; }
-  .scoreexpanded .closebutton {
+  .scoreexpanded .closebutton, .remembersexpanded .closebutton {
     display: -ms-flexbox;
     display: flex;
     margin-left: auto; }
-    .scoreexpanded .closebutton a {
+    .scoreexpanded .closebutton a, .remembersexpanded .closebutton a {
       line-height: 1.2;
       font-weight: 400;
       cursor: pointer;
@@ -2001,22 +2022,22 @@ footer {
       color: #CC2936;
       border: 1px solid #CC2936;
       margin-left: auto !important; }
-      .scoreexpanded .closebutton a:hover {
+      .scoreexpanded .closebutton a:hover, .remembersexpanded .closebutton a:hover {
         background: #61aff0; }
-      .scoreexpanded .closebutton a:disabled {
+      .scoreexpanded .closebutton a:disabled, .remembersexpanded .closebutton a:disabled {
         opacity: 0.65;
         cursor: not-allowed;
         pointer-events: none; }
-      .scoreexpanded .closebutton a:hover {
+      .scoreexpanded .closebutton a:hover, .remembersexpanded .closebutton a:hover {
         background: #fdf7f7; }
-  .scoreexpanded .tipdetails {
+  .scoreexpanded .tipdetails, .scoreexpanded .rememberdetails, .remembersexpanded .tipdetails, .remembersexpanded .rememberdetails {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-align: center;
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    margin: 0.5rem 0; }
-    .scoreexpanded .tipdetails .sats {
+    padding: 0.5rem 0; }
+    .scoreexpanded .tipdetails .sats, .scoreexpanded .tipdetails .flair, .scoreexpanded .rememberdetails .sats, .scoreexpanded .rememberdetails .flair, .remembersexpanded .tipdetails .sats, .remembersexpanded .tipdetails .flair, .remembersexpanded .rememberdetails .sats, .remembersexpanded .rememberdetails .flair {
       margin-right: 0.25rem; }
 
 .CodeMirror {
