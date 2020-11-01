@@ -318,9 +318,6 @@ dictionary.en={
     "rememberedyour":"remembered your",
     "flagusertopic":"flag(user for topic)",
     "toyour":"to your",
-    "areyousure": `Are you sure you want to logout? 
-    Make sure you have written down your 12 word seed phrase or private key to login again. 
-    There is no other way to recover your seed phrase. It is on the settings page.
-    Click Cancel if you need to do that now.
-    Click OK to logout.`,
+    "prev":"prev",
+    "areyousure": `Are you sure you want to logout?\nMake sure you have written down your 12 word seed phrase or private key to login again.\nThere is no other way to recover your seed phrase. It is on the settings page.\nClick Cancel if you need to do that now.\nClick OK to logout.`,
   };
