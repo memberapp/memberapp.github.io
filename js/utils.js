@@ -121,7 +121,7 @@ function dslite(input) {
 
 
 function updateStatus(message) {
-  //document.getElementById("status").innerHTML = message;
+  document.getElementById("status").innerHTML = message;
 }
 
 function toHexString(byteArray) {

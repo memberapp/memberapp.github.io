@@ -304,6 +304,18 @@ dictionary.en={
     "permalink":"Permalink",
     "article":"Article",
     "moderate":"Moderate",
-    "flaguser":"flag(user)"
-
+    "flaguser":"flag(user)",
+    "sub":"sub",
+    "unsub":"unsub",
+    "next":"next",
+    "inatopic":"in a topic you're subscribed to",
+    "discussion":"in a discussion you're in",
+    "mentionedyou":"mentioned you in a",
+    "followedyou":"followed you",
+    "ratedyou":"rated you as",
+    "starscommenting":"stars, commenting ...",
+    "likedyour":"liked your",
+    "rememberedyour":"remembered your",
+    "flagusertopic":"flag(user for topic)",
+    "toyour":"to your",
   };

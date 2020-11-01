@@ -178,7 +178,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "rating",
                 `⭐&nbsp;`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext','ratedyou','rated you as') + theRating + getSpanHTML('plaintext','starscommenting','stars, commenting ... ') + getSpanClassHTML("plaintext",escapeHTML(data.reason)),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext','ratedyou','rated you as') + theRating + getSpanHTML('plaintext','starscommenting','stars, commenting ...') + getSpanClassHTML("plaintext",escapeHTML(data.reason)),
                 timeSince(Number(data.time)),
                 "",
                 data.txid, highlighted
