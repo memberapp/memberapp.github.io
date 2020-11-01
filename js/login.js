@@ -10,43 +10,10 @@ var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
 var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
-
-var mutedwords = new Array();
 let tq = new TransactionQueue(updateStatus);
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
-var defaulttip = 1000;
-var oneclicktip = 0;
-var maxfee = 5;
-var pathpermalinks = 'https://member.cash/';
-var profilepicbase = 'img/profilepics/';
-mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-var siteTitle = 'member.cash';
-var theStyle = '';
 var bitboxSdk = null;
-
 //var twitterEmbeds=new Array();
-
-//These should probably all go in a single config object
-var settings = {
-    "showyoutube": "true",
-    "showimgur": "true",
-    "showtwitter": "true"
-};
-var dropdowns = {
-    "contentserver": "https://member.cash/v2/member.js",
-    "txbroadcastserver": "https://member.cash/v2/",
-    "utxoserver": "https://rest.bitcoin.com/v2/",
-    "currencydisplay": "USD",
-    "languageselector": "en"
-};
-var numbers = {
-    "defaulttip": 1000,
-    "oneclicktip": 0,
-    "maxfee": 2,
-    "results": 25,
-    "usdrate": 0
-}
-
 
 
 var localStorageSafe = null;
@@ -240,7 +207,7 @@ async function login(loginkey) {
 
 
     //Register public key with utxo server so that utxos can be cached    
-    getJSON("https://member.cash/v2/" + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
+    getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
@@ -306,8 +273,8 @@ function logout() {
     var exitreally = confirm(getSafeTranslation('areyousure', `Are you sure you want to logout? 
     Make sure you have written down your 12 word seed phrase or private key to login again. 
     There is no other way to recover your seed phrase. It is on the settings page.
-    Click 'Cancel' if you need to do that now.
-    Click 'OK' to logout.`));
+    Click Cancel if you need to do that now.
+    Click OK to logout.`));
     if (!exitreally) {
         return;
     }
