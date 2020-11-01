@@ -824,7 +824,10 @@ function getHTMLForTopicArray(data, elementStem) {
             if (data[i].existingmodaddress != null) {
                 ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, getSafeTranslation('removefilter', 'remove filter'), "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
             } else {
-                var userName = document.getElementById('settingsnametext').value;
+                var userName="";
+                try{
+                    userName = document.getElementById('settingsnametext').value;
+                }catch(err){}//means user is not logged in
                 var userIsGroupFilter = userName.toLowerCase().endsWith("filter") || userName.toLowerCase().endsWith("group");
                 if(!data[i].existingmodname)data[i].existingmodname="";
                 var modIsGroupFilter = data[i].existingmodname.toLowerCase().endsWith("filter") || data[i].existingmodname.toLowerCase().endsWith("group");

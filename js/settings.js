@@ -231,6 +231,10 @@ function updateSettings() {
                 selector.selectedIndex = i;
             }
         }
+
+        if (key == "languageselector"){
+            dictionary.live=dictionary[theSetting];
+        }
     }
 
     //Make sure users are not on the old server
