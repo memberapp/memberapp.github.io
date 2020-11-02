@@ -1,11 +1,12 @@
 var errorTemplate=`
 <p>
-    <span class='connectionerror'>
-        <span data-vavilon="VV0169">Oops. This request failed.</span>
+    <span class='connectionerror'><p>
+        <span data-vavilon="VV0169">Oops. This request failed.</span><br/>
         <span data-vavilon="VV0170">There may be a problem with your internet connection, or the server may be having
-            problems.</span>
-        <span data-vavilon="VV0171">The error code is</span> <span>{status}</span>
-        <span data-vavilon="VV0172">The resource was</span> <span>{url}</span>
+            problems.</span><br/>
+        <span data-vavilon="VV0171">The error code is</span> <span>{status}</span><br/>
+        <span data-vavilon="VV0172">The resource was</span> <span>{url}</span><br/>
+    </p>
     </span>
 </p>
 `;
@@ -884,7 +885,7 @@ var headerHTML = `
             </span>
             <span class="separatorwidebreakpoint"></span>
             <span id="topiccontainer" class="topiccontainer">
-                <select id="orderselector" onchange="postsSelectorChanged();">
+                <select id="orderselector" onchange="postsSelectorChanged();" style="width:100%;max-width:100px">
                     <option data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts"
                         selected="selected">Hot</option>
                     <option data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts">New
@@ -902,7 +903,7 @@ var headerHTML = `
                     <option data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa"
                         title="Top posts from all time">All</option>
                 </select>
-                <select id="contentselector" label="content" onchange="postsSelectorChanged();">
+                <select id="contentselector" label="content" onchange="postsSelectorChanged();" style="width:100%;max-width:100px">
                     <option data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" value="posts"
                         selected="selected">Posts</option>
                     <option data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" value="replies">
@@ -910,7 +911,7 @@ var headerHTML = `
                     <option data-vavilon="VV0124" data-vavilon_title="VV0125" title="See both posts and replies"
                         value="both">In Both</option>
                 </select>
-                <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
+                <select id="topicselector" label="topic" onchange="postsSelectorChanged();" style="width:100%;max-width:200px">
                     <option data-vavilon="VV0126" data-vavilon_title="VV0127" value="" title="From all topics"
                         selected="selected">All Topics</option>
                     <option value=""></option>
@@ -932,7 +933,7 @@ var headerHTML = `
                     <option value="Ideas to improve our lives">Improvement</option>
                     <option value="#911Truth">#911Truth</option>
                 </select>
-                <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
+                <select id="filterselector" label="filter" onchange="postsSelectorChanged();" style="width:100%;max-width:200px">
                     <option data-vavilon="VV0132" data-vavilon_title="VV0133" value="everyone" title="From everyone"
                         selected="selected">Everyone</option>
                     <option data-vavilon="VV0134" data-vavilon_title="VV0135" value="mypeeps"
