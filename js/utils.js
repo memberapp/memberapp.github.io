@@ -387,6 +387,7 @@ function templateReplace(templateString, obj, skipdebug) {
 }
 
 function loadScript(src) {
+  console.log("background loading "+src);
   return new Promise(function (resolve, reject) {
       var s;
       s = document.createElement('script');
@@ -395,4 +396,11 @@ function loadScript(src) {
       s.onerror = reject;
       document.head.appendChild(s);
   });
+}
+
+function getLegacyToHash160(qaddress){
+  if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
+  //don't want to make the above await, but want to load library
+  //the next function will fail if sdk is not loaded for some reason, but will work on retry
+  return new bitboxSdk.Address().legacyToHash160(qaddress);
 }

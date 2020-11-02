@@ -339,7 +339,7 @@ function addressTransaction(removeElementID, qaddress, actionCode, statusMessage
     if (!checkForPrivKey()) return false;
 
     //document.getElementById(removeElementID).style.display = "none";
-    var addressraw = new bitboxSdk.Address().legacyToHash160(qaddress);
+    var addressraw = getLegacyToHash160(qaddress);
     const tx = {
         data: [actionCode, "0x" + addressraw],
         cash: { key: privkey }
@@ -395,7 +395,7 @@ function rateUser(qaddress, rating, ratingcomment) {
         ratingcomment = "";
     }
 
-    var addressraw = new bitboxSdk.Address().legacyToHash160(qaddress);
+    var addressraw = getLegacyToHash160(qaddress);
 
     var hexRating = "0x" + toHexString([rating]);
     const tx = {
@@ -428,7 +428,7 @@ function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMe
     if (!checkForPrivKey()) return false;
 
     document.getElementById(removeElementID).style.display = "none";
-    var addressraw = new bitboxSdk.Address().legacyToHash160(qaddress);
+    var addressraw = getLegacyToHash160(qaddress);
     const tx = {
         data: [actionCode, "0x" + addressraw, topicHOSTILE],
         cash: { key: privkey }
@@ -449,6 +449,8 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
     buttonElement.innerText = getSafeTranslation('creatingprivatekey', "Creating Private Key");
 
     //Send sufficient funds to new account to create name
+
+    if (!bitboxSdk) {await loadScript("js/lib/bitboxsdk.js");}
 
     //create new random private key
     let smnemonic = new bitboxSdk.Mnemonic().generate(128);
@@ -475,7 +477,9 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
     buttonElement.innerText = getSafeTranslation('trytoset', "Try to set surrogate name -") + " " + newName;
 
     buttonElement.innerText = getSafeTranslation('fetchutxos', "Fetch UTXOs");
-    tq.addUTXOPool(publicaddress);
+
+    var theQAddress = new bitboxSdk.Address().toCashAddress(publicaddress);
+    tq.addUTXOPool(publicaddress,theQAddress);
     await sleep(3 * 1000);
 
 

@@ -156,7 +156,7 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, dat
     }
 
     jdenticon();
-    addDynamicHTMLElements();
+    //addDynamicHTMLElements();
 }
 
 
@@ -264,6 +264,7 @@ function updateSettingsDropdown(settingsName) {
     }
     if (settingsName == "languageselector"){
         dictionary.live=dictionary[dropdowns[settingsName]];
+        location.reload();
     }
     updateStatus(getSafeTranslation('updated', "Updated.") + " " + dropdowns[settingsName]);
 }

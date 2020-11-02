@@ -288,12 +288,13 @@ function getAndPopulateTopicList(showpage) {
                 }
             }
             document.getElementById(page).innerHTML = getHTMLForTopicHeader("", contents);
+            addDynamicHTMLElements();
         }
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         //document.getElementById(page).innerHTML = contents;
         //detectMultipleIDS();
-        addDynamicHTMLElements();
+        
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -336,6 +337,8 @@ function addDynamicHTMLElements(data) {
 
     //Add identicons
     jdenticon();
+
+    loadBigLibs();
 }
 
 /*

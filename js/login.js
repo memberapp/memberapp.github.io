@@ -110,7 +110,9 @@ function trylogin(loginkey) {
     }
     getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
-    loadBigLibs();
+    //make sure these get loaded
+    setTimeout(loadBigLibs,10000);
+    
 }
 
 async function loadBigLibs() {
@@ -140,9 +142,7 @@ async function login(loginkey) {
         //check valid private or public key
         var publicaddress = "";
 
-        if (!bitboxSdk) {
-            await loadScript("js/lib/bitboxsdk.js");
-        }
+        if (!bitboxSdk) {await loadScript("js/lib/bitboxsdk.js");}
 
         if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
 
@@ -226,7 +226,7 @@ async function login(loginkey) {
     updateSettings();
     getAndPopulateSettings();
 
-    tq.addUTXOPool(pubkey, localStorageSafe, "balance");
+    tq.addUTXOPool(pubkey, qpubkey, localStorageSafe, "balance");
     //Get latest rate and update balance
     loadStyle();
 

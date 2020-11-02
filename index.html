@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <!--  These must stay above the insert tag, they will be replaced with custom values for permalinks -->
     <meta name="description"
         content="member.cash is a fully decentralized public platform for discussion and reputation">
     <title>member.cash</title>
@@ -17,7 +16,6 @@
     <meta property="og:description"
         content="member.cash is a fully decentralized public platform for discussion and reputation">
     <meta property="og:image" content="img/logos/logowide.png">
-    <!--INSERTMETADATA-->
 
     <!--  Only scripts from this website, inline script needed for operation -->
     <!--  Call Memberjs for content -->
@@ -28,8 +26,11 @@
     <!--  Youtube/Imgur for content -->
     <!--  bitcoin.com for latest price -->
 
+    <!--  Anything above this line will not be reproduced automatically if the page is loaded from the server -->
+    <!--INSERTMETADATA-->
+
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ https://memberjs.org/ https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/ http://localhost:3123/; media-src https://imgur.com https://i.imgur.com/; img-src 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ data: https://tile.openstreetmap.org/; frame-src 'self' https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
+        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/ http://localhost:3123/; media-src https://imgur.com https://i.imgur.com/; img-src 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ data: https://tile.openstreetmap.org/; frame-src 'self' https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -37,20 +38,20 @@
     <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
     <script src="pwa/pwa2.js"></script>
 
-    <!-- Large Script Files -->
-    <!--
-    We can load these later.
-    <link rel="preload" href="js/lib/bitboxsdk.js" as="script"/>
-    <link rel="preload" href="js/lib/leaflet/leaflet.js" as="script"/>
-    <link rel="preload" href="js/lib/eccrypto-js.js" as="script"/>
-     -->
-    <!-- https://github.com/sparksuite/simplemde-markdown-editor -->
-    <!-- <script src="js/lib/mde/simplemde.1.11.2.min.js"></script> -->
-
     <!-- DNS-prefetch resource hints  -->
-    <link rel="preconnect" href="https://memberjs.bchd.cash">
-    <link rel="preconnect" href="https://i.imgur.com">
-    <link rel="preconnect" href="https://twitframe.com">
+    <link rel="preconnect" href="https://memberjs.bchd.cash" />
+    <link rel="preconnect" href="https://i.imgur.com" />
+    <link rel="preconnect" href="https://twitframe.com" />
+    <link rel="preconnect" href="https://member.cash" />
+    <link rel="preconnect" href="https://bitcoin.com" />
+    <link rel="preconnect" href="https://markets.api.bitcoin.com" />
+    <link rel="preconnect" href="https://rest.bitcoin.com" />
+    <link rel="preconnect" href="https://imgur.com" />
+    <link rel="preconnect" href="https://i.imgur.com" />
+    <link rel="preconnect" href="https://img.youtube.com" />
+    <link rel="preconnect" href="https://tile.openstreetmap.org" />
+    <link rel="preconnect" href="https://www.youtube.com" />
+    <link rel="preconnect" href="https://img.youtube.com" />
 
     <!--  Progressive Web App -->
     <meta name="msapplication-config" content="pwa/browserconfig.xml" />
@@ -63,24 +64,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="img/logos/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/logos/favicon-16x16.png">
     <meta name="theme-color" content="#2291EB" />
-
-    <script>var dictionary = [];</script>
-    <script src="locale/en.js"></script>
-    <script src="locale/es.js"></script>
-    <script src="locale/zh.js"></script>
-    <script src="locale/fil.js"></script>
-
-    <!--  Load Translations
-    <script src="locale/en.json" type="application/json" data-vavilon-dict="en"></script>
-    <script src="js/loadlocale.js"></script>
-    <link rel="preload" href="js/lib/vavilon.min.js" as="script" />
- -->
- 
     <link rel="stylesheet" href="js/lib/leaflet/leaflet.css" />
-    <!--  Leaflet (Map) 
-    <script async src="js/lib/leaflet/leaflet.js"></script>
-    -->
-
     <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
     <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
 
@@ -94,10 +78,10 @@
     <div id="previewcontent" class="previewcontent">
         <!--INSERTCONTENT-->
     </div>
+
     <!--  External Libraries -->
     <script src="js/lib/buffer.js"></script>
     <script src="js/lib/anchorme.min.js"></script>
-    <!--<script src="js/lib/bitboxsdk.js"></script>-->
     <!-- https://github.com/fredolss/rater-js  -->
     <script src='js/lib/rater/rating.js'></script>
     <script src='js/lib/geohash.js'></script>
@@ -107,23 +91,21 @@
     <script src="js/lib/showdown.1.9.1.min.patched.js"></script>
     <!-- https://github.com/cure53/DOMPurify -->
     <script src="js/lib/purify.min.js"></script>
-
-    <!-- https://www.npmjs.com/package/eccrypto-js 
-    <script async src="js/lib/eccrypto-js.js"></script>-->
     <!-- https://github.com/dmester/jdenticon -->
     <script src="js/lib/jdenticon.min.js"></script>
-
-    <!-- https://developer.twitter.com/en/docs/twitter-for-websites/javascript-api/guides/set-up-twitter-for-websites -->
-    <!-- <script src="js/lib/twitterwidgets.js"></script> -->
-    <!-- i18n internationalization https://github.com/vavilon-js/vavilon.js
-    <script src="js/lib/vavilon.min.js"></script>-->
 
     <!--  Member Minified Code. 
     <script src="js/lib/member.min.js"></script>-->
 
     <!--  Member Code. In separate files for development convenience -->
     <!--  Can be mininfied and amalgamated for releases -->
-
+    <!--  Load Translations -->
+    <script>var dictionary = [];</script>
+    <script src="locale/en.js"></script>
+    <script src="locale/es.js"></script>
+    <script src="locale/zh.js"></script>
+    <script src="locale/fil.js"></script>
+    <script src="config.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/showposts.js"></script>
     <script src="js/composition.js"></script>
@@ -133,7 +115,6 @@
     <script src="js/transactionqueue.js"></script>
     <script src='js/map.js'></script>
     <script src='js/trustgraph.js'></script>
-    <script src="js/config.js"></script>
     <script src="js/login.js"></script>
     <script src="js/notifications.js"></script>
     <script src="js/htmlquarantine.js"></script>
