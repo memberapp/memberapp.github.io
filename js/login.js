@@ -208,10 +208,7 @@ async function login(loginkey) {
         
     }
 
-
-    //Register public key with utxo server so that utxos can be cached    
-    getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
-
+    
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
 
@@ -228,6 +225,10 @@ async function login(loginkey) {
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
     updateSettings();
     getAndPopulateSettings();
+
+    //Register public key with utxo server so that utxos can be cached    
+    getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
+
 
     tq.addUTXOPool(pubkey, qpubkey, localStorageSafe, "balance");
     //Get latest rate and update balance
