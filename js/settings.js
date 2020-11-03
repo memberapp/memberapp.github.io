@@ -161,8 +161,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         var starRating1 = addSingleStarsRating(theElement);
     }
 
-    jdenticon();
-    //addDynamicHTMLElements();
+    addDynamicHTMLElements();
 }
 
 
