@@ -57,7 +57,13 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
     });
 }
 
-function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
+async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
+    
+    if(!cashaddress){
+        //On a member page, the cashaddress won't be available so we have to calculate
+        if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
+        cashaddress=new bitboxSdk.Address().toCashAddress(qaddress);
+    }
 
     //Note, data may not contain any rows, for new or unknown users.
 
@@ -163,7 +169,6 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, dat
 function getAndPopulateMember(qaddress) {
     //document.getElementById('memberlegacyformat').innerHTML = qaddress;
     //document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
-
     getDataCommonToSettingsAndMember(qaddress, null, "member");
     getAndPopulateCommunityRatings(qaddress);
     getAndPopulateRatings(qaddress);

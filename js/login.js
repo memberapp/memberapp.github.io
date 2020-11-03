@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.19.0";
+var version = "4.20.0";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -115,7 +115,10 @@ function trylogin(loginkey) {
     
 }
 
+var loadBigLibsStarted=false;
 async function loadBigLibs() {
+    if(loadBigLibsStarted)return;
+    loadBigLibsStarted=true;
     //Load big libraries that may not be immediately needed.
     if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
     if (!L) loadScript("js/lib/leaflet/leaflet.js");
