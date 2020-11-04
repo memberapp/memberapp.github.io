@@ -2,11 +2,12 @@
 
 function displayContentBasedOnURLParameters() {
 
-    if (forwardOrBackFlag) {
+    /*
+    if (backForwardEvent) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
     } else {
         window.scrollTo(0, 0);
-    }
+    }*/
 
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
 
@@ -23,6 +24,10 @@ function displayContentBasedOnURLParameters() {
     } else if (url.indexOf('/p/') != -1) {
         var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
         showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'thread');
+        return;
+    } else if (url.indexOf('/a/') != -1) {
+        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
+        showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'article');
         return;
     } else if (url.indexOf('/m/') != -1) {
         var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase()).trim();
@@ -264,7 +269,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
                 return;
             } else {
                 show('memberanchor');
-                document.getElementById('memberanchor').innerHTML = 'This paging id not found.';
+                document.getElementById('memberanchor').innerHTML =  getSafeTranslation('pagingidnotfount','This paging id not found.');
                 return;
             }
         }, function (status) { //error detection....
@@ -368,9 +373,10 @@ function postsSelectorChanged() {
     //These two statements may trigger page load twice on firefox but not on other browsers
 
     //set the document location without triggering the back/forward function
-    notBackForwardEvent = true;
+    //assumeBackForwardEvent = false;
+    nlc();
     document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
-    setTimeout(function () { notBackForwardEvent = false; }, 100);
+    //setTimeout(function () { assumeBackForwardEvent = true; }, 100);
 
     //show the posts
     //displayContentBasedOnURLParameters();
@@ -448,25 +454,33 @@ let historyLength = window.history.length;
 var detectBackOrForward = function () {
 
     var hash = window.location.hash, length = window.history.length;
-    if (!window.innerDocClick) {
-        forwardOrBackFlag = true;
-        if (hashHistory[hashHistory.length - 2] == hash) {
-            hashHistory = hashHistory.slice(0, -1);
-        } else {
-            hashHistory.push(hash);
-        }
-        if (!suspendPageReload) displayContentBasedOnURLParameters();
-        return true;
-    } else {
+    if (navlinkclicked) {
+        navlinkclicked = false;
+        //not a back/foward nav event
         hashHistory.push(hash);
         historyLength = length;
-        forwardOrBackFlag = false;
+        backForwardEvent = false;
         if (!suspendPageReload) {
             displayContentBasedOnURLParameters();
         }
         return true;
     }
+    else{
+        //this is a back/foward nav event
+        backForwardEvent = true;
+        if (hashHistory[hashHistory.length - 2] == hash) {
+            hashHistory = hashHistory.slice(0, -1);
+        } else {
+            hashHistory.push(hash);
+        }
+        if (!suspendPageReload){
+            displayContentBasedOnURLParameters();
+        }
+        return true;
+    } 
 }
+
+var scrollhistory = [];
 
 var navlinkclicked = false;
 function nlc() {
@@ -474,35 +488,51 @@ function nlc() {
     navlinkclicked = true;
 }
 
-var forwardOrBackFlag = false;
 
 //Onhashchange is unreliable - try testing for location change 10 times a second
 var lastdocumentlocation = location.hash;
+
 setTimeout(testForHashChange, 100);
 function testForHashChange() {
+
     if (lastdocumentlocation != location.hash || navlinkclicked) {
         lastdocumentlocation = location.hash;
-        navlinkclicked = false;
         detectBackOrForward();
     }
     setTimeout(testForHashChange, 100);
 }
+var backForwardEvent=false;
 
-var notBackForwardEvent = false;
+document.addEventListener("click", function () { scrollhistory[window.location.hash] = window.scrollY; }, true);
+document.getElementsByTagName('body')[0].onmouseleave = function () { scrollhistory[window.location.hash] = window.scrollY; }
+
+/*
+var assumeBackForwardEvent = true;
 window.onhashchange = function () {
-    if (!notBackForwardEvent) {
+    if (assumeBackForwardEvent) {
         //usually, but not always a result of back/forward click
         window.innerDocClick = false;
     }
-    notBackForwardEvent = false
+    assumeBackForwardEvent = true;
 }
-
-var scrollhistory = [];
 //record the scroll position
-document.addEventListener("click", function () { scrollhistory[window.location.hash] = window.scrollY; }, true);
+
 
 //User's mouse is inside the page.
 document.getElementsByTagName('body')[0].onmouseover = function () { window.innerDocClick = true; }
 
 //User's mouse has left the page.
 document.getElementsByTagName('body')[0].onmouseleave = function () { window.innerDocClick = false; }
+*/
+
+function scrollToPosition(theElement) {
+    if (backForwardEvent) {
+        window.scrollTo(0, scrollhistory[window.location.hash]);
+    } else if (theElement) {
+        scrollToElement(theElement);
+    }
+    else {
+        window.scrollTo(0, 0);
+    }
+    backForwardEvent=false;
+}

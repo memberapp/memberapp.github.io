@@ -422,10 +422,10 @@ footer {
     display: inline;
     font-size: inherit;
   }
-  .remebersinactive {
+  .remembersinactive {
     cursor: default;
   }
-  .remebersinactive a:hover {
+  .remembersinactive a:hover {
     text-decoration: none;
   }
 }

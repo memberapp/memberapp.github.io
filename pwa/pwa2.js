@@ -36,7 +36,7 @@ const check = () => {
   const requestNotificationPermission = async () => {
     //console.log(navigator.serviceWorker);
     try{
-      updateStatus("Requesting permission");
+      updateStatus(getSafeTranslation('requestingpermission',"Requesting permission"));
       const permission = await window.Notification.requestPermission();
       updateStatus("controller:"+navigator.serviceWorker.controller);
       navigator.serviceWorker.controller.postMessage(pubkey);
@@ -45,10 +45,10 @@ const check = () => {
       // default: user has dismissed the notification permission popup by clicking on x
       // denied: user has denied the request.
       if (permission !== 'granted') {
-        updateStatus('Permission not granted for Notification');
+        updateStatus(getSafeTranslation('permissionnotgranted','Permission not granted for Notification'));
         throw new Error('Permission not granted for Notification')
       }else{
-        updateStatus('Subscribe');
+        updateStatus(getSafeTranslation('subscribing','Subscribing'));
         navigator.serviceWorker.controller.postMessage('subscribe');
       }
     }catch(err){

@@ -2,6 +2,8 @@
 
 "use strict";
 
+var eccryptoJs = null;
+
 function getAndPopulateQuoteBox(txid) {
     var page = 'quotepost';
     showOnly(page);
@@ -14,7 +16,7 @@ function getAndPopulateQuoteBox(txid) {
             contents = getHTMLForPost(data[0], 1, page, 0, null, true);
             document.getElementById(page).innerHTML = contents;
         } else {
-            throw error('no result returned');
+            throw error(getSafeTranslation('noresult', 'no result returned'));
         }
         addDynamicHTMLElements();
     }, function (status) { //error detection....
@@ -46,7 +48,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -56,22 +58,22 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            try{
+            try {
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
-            }catch(err){
+            } catch (err) {
                 console.log(err);
             }
         }
 
         if (contents == "") {
-            contents = getNothingFoundMessageHTML("Nothing here yet");
+            contents = getDivClassHTML('message', getSafeTranslation("nothinghere", "Nothing here yet"));
 
             if (filter == "mypeeps" || filter == "myfeed" || topicnameHOSTILE == "MyFeed" || topicnameHOSTILE == "MyTopics") {
-                contents = getNothingFoundMessageHTML("Nothing in your feed");
+                contents = getDivClassHTML('message', getSafeTranslation("nothinginfeed", "Nothing in your feed"));
             }
 
         }
-        if (topicnameHOSTILE != null && topicnameHOSTILE != "" && topicnameHOSTILE.toLowerCase() != "myfeed" && topicnameHOSTILE.toLowerCase() != "mypeeps") {
+        if (topicnameHOSTILE != null && topicnameHOSTILE != "" && topicnameHOSTILE.toLowerCase() != "mytopics" && topicnameHOSTILE.toLowerCase() != "myfeed" && topicnameHOSTILE.toLowerCase() != "mypeeps") {
             showOnly("topicmeta");
         }
 
@@ -89,7 +91,11 @@ function getAndPopulateMessages(start, limit) {
     document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
 
     var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey;
-    getJSON(theURL).then(function (data) {
+    getJSON(theURL).then(async function (data) {
+
+        if (!eccryptoJs) {
+            await loadScript("js/lib/eccrypto-js.js");
+        }
 
         lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
@@ -103,11 +109,12 @@ function getAndPopulateMessages(start, limit) {
             data[i].address = data[i].senderaddress;
             contents += getMessageHTML(data[i], i);
         }
-        if (contents == "") { contents = "No messages found."; }
+        if (contents == "") { contents = getSafeTranslation('nomessagesfound', "No messages found."); }
 
 
         document.getElementById('messageslist').innerHTML = contents;
         addDynamicHTMLElements(data);
+        scrollToPosition();
     }, function (status) { //error detection....
         showErrorMessage(status, 'messageslist', theURL);
     });
@@ -173,8 +180,8 @@ function getAndPopulateThread(roottxid, txid, pageName) {
                 var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID)
 
                 if (commentTree == '<ul></ul>') {
-                    commentTree = `<p class='nocommentsyet'>No comments yet . . . reply to start a conversation</p>`;
-                }else{
+                    commentTree = getNoCommentsYetHTML();
+                } else {
                     commentTree = getDivClassHTML("comment-tree", commentTree);
                 }
 
@@ -187,10 +194,11 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
 
         if (popup != undefined) {
-            popup.setContent("<div id='mapthread'>" + contents + "</div>");
+            popup.setContent(getDivClassHTML('mapthread', contents));
 
         }
         addDynamicHTMLElements(data);
+        scrollToPosition();
 
         showReplyBox(san(txid) + pageName);
 
@@ -280,11 +288,13 @@ function getAndPopulateTopicList(showpage) {
                 }
             }
             document.getElementById(page).innerHTML = getHTMLForTopicHeader("", contents);
+            addDynamicHTMLElements();
         }
         //Threads have no navbuttons
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         //document.getElementById(page).innerHTML = contents;
         //detectMultipleIDS();
+        
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -299,6 +309,7 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
     listenForTwitFrameResizes();
     if (adddynamic) {
         addDynamicHTMLElements(data);
+        scrollToPosition();
     }
     //window.scrollTo(0, scrollhistory[window.location.hash]);
     //detectMultipleIDS();
@@ -306,17 +317,13 @@ function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styl
 }
 
 
+
 function addDynamicHTMLElements(data) {
 
-    if (data != null && data != undefined) {
-        if (data.length > 0) {
-            updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
-        }
-        if (forwardOrBackFlag) {
-            window.scrollTo(0, scrollhistory[window.location.hash]);
-        } else {
-            window.scrollTo(0, 0);
-        }
+    if (data != null && data != undefined && data[0]) {
+        //if (data.length > 0) {
+        updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
+        //}
     }
     //Add ratings, disable controls if the star rating can be updated
     addStarRatings('rating');
@@ -325,13 +332,16 @@ function addDynamicHTMLElements(data) {
     addMouseoverProfiles();
 
     //Add scoremouseovers
-    addClickScores();
+    //addClickScores();
+    translatePage();
 
     //Add identicons
     jdenticon();
+
+    loadBigLibs();
 }
 
-
+/*
 function addClickScores() {
     var matches = document.querySelectorAll("[id^='scores']");
     for (var i = 0; i < matches.length; i++) {
@@ -339,7 +349,7 @@ function addClickScores() {
         //document.getElementById(profileElement).onmouseleave=setDisplayNone;
         matches[i].onclick = showScoresExpanded;
     }
-}
+}*/
 
 function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
@@ -354,12 +364,12 @@ function setDisplayNone() {
     this.style.display = "none";
 }
 
-function showScoresExpanded(retxid,profileelement) {
-    if(this){
+function showScoresExpanded(retxid, profileelement) {
+    if (this) {
         var profileelement = this.id.replace('scores', 'scoresexpanded');
         var retxid = profileelement.substr(14, 64);
     }
-    var closeHTML = `<div class='closebutton'><a onclick="document.getElementById('` + profileelement + `').style.display='none';">close</a></div>`;
+    var closeHTML = getCloseButtonHTML(profileelement);
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
@@ -368,14 +378,35 @@ function showScoresExpanded(retxid,profileelement) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += `<div class="tipdetails">` + userFromDataBasic(data[i], san(retxid) + i, 16) + (amount > 0 ? ` tipped ` + balanceString(amount) : ``) + (Number(data[i].type) == -1 ? ` disliked` : ``) + `</div>`;
+            contents += getTipDetailsHTML(userFromDataBasic(data[i], san(retxid) + i, 16), amount, data[i].type);
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
-        addDynamicHTMLElements(null);
+        addDynamicHTMLElements();
     }, function (status) { //error detection....
         showErrorMessage(status, profileelement, theURL);
     });
 }
+
+function showRemembersExpanded(retxid, profileelement) {
+
+    var closeHTML = getCloseButtonHTML(profileelement);
+    document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
+    document.getElementById(profileelement).style.display = "block";
+    //load scores
+    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + san(pubkey);
+    getJSON(theURL).then(function (data) {
+        var contents = "";
+        for (var i = 0; i < data.length; i++) {
+            contents += getRememberDetailsHTML(userFromDataBasic(data[i], san(retxid) + i, 16), data[i].message, data[i].topic, data[i].txid);
+        }
+        document.getElementById(profileelement).innerHTML = closeHTML + contents;
+        addDynamicHTMLElements();
+    }, function (status) { //error detection....
+        showErrorMessage(status, profileelement, theURL);
+    });
+}
+
+
 
 function showPreviewProfile(profileelement) {
     profileelement.style.display = "block";
@@ -396,8 +427,9 @@ function addSingleStarsRating(theElement) {
     let name = theElement.dataset.ratingname;
     let theAddress = theElement.dataset.ratingaddress;
     let rawRating = theElement.dataset.ratingraw;
-    //let starSize = theElement.dataset.ratingsize;
-    let starSize = Number(getComputedStyle(theElement).fontSize);
+    let starSize = theElement.dataset.ratingsize;
+    //this is very slow
+    //let starSize = Number(getComputedStyle(theElement).fontSize);
 
     let disabledtext = theElement.dataset.disabledtext;
 
@@ -406,7 +438,7 @@ function addSingleStarsRating(theElement) {
         starSize: starSize,
         rating: Math.round(theRating * 10) / 10,
         element: theElement,
-        disableText: disabledtext ? disabledtext : 'This user rates ' + ds(name) + ' as {rating}/{maxRating}',
+        disableText: disabledtext ? disabledtext : getSafeTranslation('thisuserrates', 'This user rates ') + ds(name) + ' {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
             if (ratingText) {
@@ -442,19 +474,19 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
     if (data.repost) {
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
-        repostHTML1 = "<span class='repost'>" + userFromDataBasic(data, repostRatingID, 8) + " remembered</span>";
+        repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID, 8));
         repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.nametime, '');
         if (repostHTML2) {
-            repostHTML2 = "<div class='quotepost'>" + repostHTML2 + "</div>";
+            repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         }
     }
 
     if (data.message) {
         //post with message
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing,  data.nametime, repostHTML2);
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2);
     } else {
         //repost with no message
-        retHTML = repostHTML1 + repostHTML2;
+        retHTML = getDivClassHTML("repostnoquote", repostHTML1 + repostHTML2);
     }
 
 
@@ -514,34 +546,54 @@ function showReplyBox(txid) {
 }
 
 function decreaseGUILikes(txid) {
-    var downarrow = document.getElementById('downvote' + txid);
-    downarrow.className = "votearrowactivateddown rotate180";
-    var downarrowAction = document.getElementById('downvoteaction' + txid);
-    downarrowAction.onclick = null;
-
-    var uparrow = document.getElementById('upvote' + txid);
-    uparrow.className = "votearrow";
-
-    var likescount = Number(document.getElementById('likescount' + txid).innerHTML);
-    document.getElementById('likescount' + txid).innerHTML = likescount - 1;
-    document.getElementById('score' + txid).innerHTML = likescount - 1;
+    
+        var downarrow = document.getElementById('downvote' + txid);
+        var downarrowAction = document.getElementById('downvoteaction' + txid);
+        downarrowAction.onclick = null;
+        var uparrow = document.getElementById('upvote' + txid);
+        var likescount = Number(document.getElementById('likescount' + txid).innerText);
+        document.getElementById('score' + txid).innerText = likescount - 1;
+        
+        //Change classes
+        downarrow.className = "votearrowactivateddown rotate180";
+        uparrow.className = "votearrow";
+        document.getElementById('score' + txid).className = "betweenvotesscoredown";
+    
+        if (theStyle == 'nifty' || theStyle == 'none') {
+            var dislikescount = Number(document.getElementById('dislikescount' + txid).innerText);
+            document.getElementById('dislikescount' + txid).innerText = dislikescount + 1;
+            uparrow.className = "post-footer-upvote";
+            downarrow.className = "post-footer-downvote-activated";
+        }
 
 }
 
 function increaseGUILikes(txid) {
-    //increase number of likes,
-    var uparrow = document.getElementById('upvote' + txid);
-    uparrow.className = "votearrowactivated";
-    var uparrowAction = document.getElementById('upvoteaction' + txid);
-    uparrowAction.onclick = null;
 
-    var downarrow = document.getElementById('downvote' + txid);
-    downarrow.className = "votearrow rotate180";
 
-    //Change counts
-    var likescount = Number(document.getElementById('likescount' + txid).innerHTML);
-    document.getElementById('likescount' + txid).innerHTML = likescount + 1;
-    document.getElementById('score' + txid).innerHTML = likescount + 1;
+        //increase number of likes, original themes
+        var likescount = Number(document.getElementById('likescount' + txid).innerText);
+        var uparrow = document.getElementById('upvote' + txid);
+        var uparrowAction = document.getElementById('upvoteaction' + txid);
+        uparrowAction.onclick = null;
+        var downarrow = document.getElementById('downvote' + txid);
+        //Change counts
+        document.getElementById('likescount' + txid).innerText = likescount + 1;
+        document.getElementById('score' + txid).innerText = likescount + 1;
+
+        //Change classes
+        uparrow.className = "votearrowactivated";
+        downarrow.className = "votearrow rotate180";
+        //Change class
+        document.getElementById('score' + txid).className = "betweenvotesscoreup";
+    
+        //Nifty
+        if (theStyle == 'nifty' || theStyle == 'none') {
+            //Change classes
+            uparrow.className = "post-footer-upvote-activated";
+            downarrow.className = "post-footer-downvote";
+        }
+
 }
 
 function increaseGUIReposts(txid) {
@@ -554,9 +606,6 @@ function likePost(txid, tipAddress) {
     if (!checkForPrivKey()) return false;
 
     increaseGUILikes(txid);
-
-    //Change class
-    document.getElementById('score' + txid).className = "betweenvotesscoreup";
 
     if (numbers.oneclicktip >= 547) {
         var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
@@ -572,10 +621,6 @@ function dislikePost(txid, tipAddress) {
     if (!checkForPrivKey()) return false;
 
     decreaseGUILikes(txid);
-
-
-    //Change class
-    document.getElementById('score' + txid).className = "betweenvotesscoredown";
 
     sendDislike(txid);
 }
@@ -604,12 +649,12 @@ function sendTip(txid, tipAddress, page) {
 
     var tipAmount = parseInt(document.getElementById("tipamount" + page + txid).value);
     if (tipAmount < 547) {
-        alert("547 (dust+1) is the minimum tip possible");
+        alert(getSafeTranslation('547min', "547 (dust+1) is the minimum tip possible"));
         return false;
     }
     defaulttip = tipAmount;
 
-    document.getElementById('tipstatus' + page + txid).value = "Sending Tip . . " + tipAmount;
+    document.getElementById('tipstatus' + page + txid).value = getSafeTranslation('sendingtip', "Sending Tip . .") + ' ' + tipAmount;
     var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
     document.getElementById('tipscount' + txid).dataset.amount = tipscount + tipAmount;
     document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + tipAmount, false);
@@ -718,5 +763,15 @@ function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
         }
     }
     return data;
+}
+
+function collapseComment(commentid) {
+    document.getElementById('LI' + commentid).style.display = 'none';
+    document.getElementById('CollapsedLI' + commentid).style.display = 'block';
+}
+
+function uncollapseComment(commentid) {
+    document.getElementById('LI' + commentid).style.display = 'block';
+    document.getElementById('CollapsedLI' + commentid).style.display = 'none';
 }
 

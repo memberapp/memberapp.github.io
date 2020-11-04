@@ -1,8 +1,13 @@
 
 //markdown editor
+var SimpleMDE=null;
 var simplemde;
 
-function initMarkdownEditor() {
+async function initMarkdownEditor() {
+    if(!SimpleMDE){
+        await loadScript("js/lib/mde/simplemde.1.11.2.min.js");
+    }
+
     if (simplemde == null) {
         simplemde = new SimpleMDE({
             element: document.getElementById("newposttamemorandum"),
@@ -109,7 +114,7 @@ function geopost() {
     var txtarea = document.getElementById('newgeopostta');
     var posttext = txtarea.value;
     if (posttext.length == 0) {
-        alert("No Message Body");
+        alert(getSafeTranslation('nomessagebody',"No Message Body"));
         return false;
     }
     var lat = Number(document.getElementById("lat").value);
@@ -128,7 +133,7 @@ function geopost() {
     document.getElementById('newpostgeocompleted').innerText = "";
     document.getElementById('newpostgeobutton').style.display = "none";
     document.getElementById('newpostgeostatus').style.display = "block";
-    document.getElementById('newpostgeostatus').value = "Posting...";
+    document.getElementById('newpostgeostatus').value = getSafeTranslation('posting',"Posting...");
 
     postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", geocompleted);
 
@@ -143,12 +148,12 @@ function postmemorandum() {
     
     if(!txid){
         if (posttext.length == 0) {
-            alert("No Memo - Try adding something in the memo box");
+            alert(getSafeTranslation('nomemo',"No Memo - Try adding something in the memo box"));
             return false;
         }
     }else{
         if (posttext.length == 0 && topic.length == 0) {
-            alert("No post or topic. Try a regular remember instead.");
+            alert(getSafeTranslation('nopost',"No post or topic. Try a regular remember instead."));
             return false;
         }
     }
@@ -157,7 +162,7 @@ function postmemorandum() {
     document.getElementById('newpostmemorandumcompleted').innerText = "";
     document.getElementById('newpostmemorandumbutton').style.display = "none";
     document.getElementById('newpostmemorandumstatus').style.display = "block";
-    document.getElementById('newpostmemorandumstatus').value = "Sending Title...";
+    document.getElementById('newpostmemorandumstatus').value = getSafeTranslation('sendingtitle',"Sending Title...");
 
     if(txid){
         quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function(txidnew){sendRepostNotification(txid,"newpostmemorandumstatus",topic, txidnew);}, txid);
@@ -176,9 +181,9 @@ function postmemorandum() {
 
 function sendRepostNotification(txid,divForStatus, topic, newtxid){
 
-    var replytext="Your post was remembered";
+    var replytext=getSafeTranslation('postremembered',"Your post was remembered");
     if(topic){
-        replytext+=" in topic "+topic;
+        replytext+=" "+getSafeTranslation('intopic',"in topic")+" "+topic;
     }
     replytext+=" https://member.cash/p/"+newtxid.substr(0,10);
     var replyHex = new Buffer(replytext).toString('hex');
@@ -188,10 +193,13 @@ function sendRepostNotification(txid,divForStatus, topic, newtxid){
 
 function memorandumpostcompleted(txid) {
     txid = san(txid);
-    var encodedURL = `https://twitter.com/intent/tweet?text=` + encodeURIComponent(document.getElementById('memorandumtitle').value + '\r\n' + ` member.cash/p/` + txid.substr(0, 10));
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('`+txid+`')" href="#thread?post=`+txid+`">View It</a> or  <a rel='noopener noreferrer' target="_blank" href="` + encodedURL + `">Also Post To Twitter (opens a new window)</a>`;
-    document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('` + txid + `')" href="#thread?post=` + txid + `" onclick="nlc();">View It</a> or  <a href="" onclick="window.open('` + encodedURL + `', 'twitterwindow', 'width=300,height=250');return false;">Also Post To Twitter (opens a new window)</a>`;
+    document.getElementById('newpostmemorandumcompleted').innerHTML = completedPostHTML(txid,document.getElementById('memorandumtitle').value);
 
+    /*
+    var encodedURL = `https://twitter.com/intent/tweet?text=` + encodeURIComponent(document.getElementById('memorandumtitle').value + '\r\n' + ` member.cash/p/` + txid.substr(0, 10));
+    `Sent. <a onclick="showThread('` + txid + `')" href="#thread?post=` + txid + `" onclick="nlc();">View It</a> or  <a href="" onclick="window.open('` + encodedURL + `', 'twitterwindow', 'width=300,height=250');return false;">Also Post To Twitter (opens a new window)</a>`;
+    */
     //iframe not allowed by twitter
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a rel='noopener noreferrer' onclick="createiframe('`+encodedURL+`','posttotwitter');return false;" href="">Also Post To Twitter</a><div id="posttotwitter"></div>`;
 
@@ -209,12 +217,12 @@ function memocompleted() {
     document.getElementById('memotitle').value = "";
     document.getElementById('newpoststatus').style.display = "none";
     document.getElementById('newpostbutton').style.display = "block";
-    document.getElementById('newpostcompleted').innerHTML = "Message Sent. ";
+    document.getElementById('newpostcompleted').innerHTML = getSafeTranslation('messagesent',"Message Sent.");
 }
 
 function geocompleted() {
     document.getElementById('newgeopostta').value = "";
     document.getElementById('newpostgeostatus').style.display = "none";
     document.getElementById('newpostgeobutton').style.display = "block";
-    document.getElementById('newpostgeocompleted').innerHTML = "Message Sent. ";
+    document.getElementById('newpostgeocompleted').innerHTML = getSafeTranslation('messagesent',"Message Sent.");
 }

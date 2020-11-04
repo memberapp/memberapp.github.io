@@ -11,46 +11,46 @@ function timeSince(timestamp, compress) {
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return getSafeTranslation("%s years ago", interval);
+    return interval + (compress ? getSafeTranslation( "y", "y") : " " + getSafeTranslation( "yearsago", "years ago"));
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return getSafeTranslation("%s months ago", interval);
+    return interval + (compress ? getSafeTranslation( "m", "m") : " " + getSafeTranslation( "monthsago", "months ago"));
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%sd" : "%s days ago", interval);
+    return interval + (compress ? getSafeTranslation( "d", "d") : " " + getSafeTranslation( "daysago", "days ago"));
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%sh" : "%s hours ago", interval);
+    return interval + (compress ? getSafeTranslation( "h", "h") : " " + getSafeTranslation( "hoursago", "hours ago"));
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return getSafeTranslation(compress ? "%sm" : "%s minutes ago", interval);
+    return interval + (compress ? getSafeTranslation( "m", "m") : " " + getSafeTranslation( "minutesago", "minutes ago"));
   }
-  return getSafeTranslation(compress ? "%ss" : "%s seconds ago", Math.floor(seconds));
+  return Math.floor(seconds) + (compress ? getSafeTranslation( "s", "s") : " " + getSafeTranslation( "secondsago", "seconds ago"));
 }
 
-var ordinal_suffix_of = function(i) {
+var ordinal_suffix_of = function (i) {
   var j = i % 10,
-      k = i % 100;
+    k = i % 100;
   if (j == 1 && k != 11) {
-      return i + "st";
+    return i + "st";
   }
   if (j == 2 && k != 12) {
-      return i + "nd";
+    return i + "nd";
   }
   if (j == 3 && k != 13) {
-      return i + "rd";
+    return i + "rd";
   }
   return i + "th";
 }
 
 var getJSON = function (url) {
   //force a reload by appending time so no cached versions
-  url+="&r=" + (new Date().getTime() % 100000);
-  updateStatus("loading " + url);
+  url += "&r=" + (new Date().getTime() % 100000);
+  updateStatus(getSafeTranslation('loading',"loading")+ " " + url);
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     addListeners(xhr);
@@ -83,7 +83,7 @@ function addListeners(xhr) {
 }
 
 function handleEvent(e) {
-  updateStatus(`${e.type}: ${e.loaded} bytes transferred\n`);
+  updateStatus(`${e.type}: ${e.loaded} ` + getSafeTranslation('bytestransferred',`bytes transferred`));
 }
 
 function ds(input) {
@@ -93,6 +93,22 @@ function ds(input) {
     input = input.replace(/&/g, '&amp;');
     input = input.replace(/</g, '&lt;');
     input = input.replace(/>/g, '&gt;');
+    input = input.replace(/"/g, '&quot;');
+    input = input.replace(/'/g, '&#x27;');
+  } catch (e) {
+    //Anything funky goes on, we'll return safe empty string
+    return "";
+  }
+  return input;
+}
+
+function dslite(input) {
+  //if (input === undefined) { return ""; };
+  try {
+    //If this error out 'input.replace not a number' probably input is not a string type
+    input = input.replace(/&/g, '&amp;');
+    //input = input.replace(/</g, '&lt;');
+    //input = input.replace(/>/g, '&gt;');
     input = input.replace(/"/g, '&quot;');
     input = input.replace(/'/g, '&#x27;');
   } catch (e) {
@@ -201,7 +217,7 @@ function scrollToElement(name) {
 }
 
 function ScrollToResolver(elem) {
-  var jump = parseInt((elem.getBoundingClientRect().top-50) * .2);
+  var jump = parseInt((elem.getBoundingClientRect().top - 50) * .2);
   document.body.scrollTop += jump;
   document.documentElement.scrollTop += jump;
   if (!elem.lastjump || elem.lastjump > Math.abs(jump)) {
@@ -237,18 +253,18 @@ function getLatestUSDrate() {
   getJSON(`https://markets.api.bitcoin.com/live/bitcoin?a=1`).then(function (data) {
     document.getElementById("usdrate").value = Number(data.data.BCH);
     updateSettingsNumber('usdrate');
-    updateStatus("Got updated exchange rate:" + numbers.usdrate);
-    try{
+    updateStatus(getSafeTranslation('updatedforex',"Got updated exchange rate:") + numbers.usdrate);
+    try {
       tq.updateBalance(pubkey);
-    }catch(err){}
+    } catch (err) { }
   }, function (status) { //error detection....
-    console.log('Failed to get usd rate:' + status);
+    console.log(getSafeTranslation('failedforex','Failed to get usd rate:') + status);
     updateStatus(status);
   });
 }
 
 function balanceString(total, includeSymbol) {
-  if (dropdowns.currencydisplay == "BCH" || numbers.usdrate===undefined|| numbers.usdrate===0) {
+  if (dropdowns.currencydisplay == "BCH" || numbers.usdrate === undefined || numbers.usdrate === 0) {
     var balString = (Number(total) / 1000).toFixed(3);
     balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
     if (includeSymbol) {
@@ -288,7 +304,7 @@ DOMPurify.addHook('afterSanitizeAttributes', function (node) {
   // set all elements owning target to target=_blank
   if ('target' in node) {
     //don't set target for internal links, like member profile links
-    if(!node.outerHTML.startsWith('<a href="#member')){
+    if (!node.outerHTML.startsWith('<a href="#member')) {
       node.setAttribute('target', '_blank');
       // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
       node.setAttribute('rel', 'noopener noreferrer');
@@ -335,11 +351,11 @@ function listenForTwitFrameResizes() {
 window.onmessage = (oe) => {
   if (oe.origin != "https://twitframe.com")
     return;
-  if (oe.data.height && oe.data.element.match(/^tweet_/)){
-    try{
+  if (oe.data.height && oe.data.element.match(/^tweet_/)) {
+    try {
       document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
-    }catch(err){
-      console.log("Tweet frame resize error: Probably due to running from filesystem: "+err);
+    } catch (err) {
+      console.log("Tweet frame resize error: Probably due to running from filesystem: " + err);
     }
   }
 }
@@ -347,21 +363,44 @@ window.onmessage = (oe) => {
 //short delay showing profile card
 var delay = function (elem, callback, target) {
   var timeout = null;
-  elem.onmouseover = function() {
-      // Set timeout to be a timer which will invoke callback after 1s
-      timeout = setTimeout(function(){callback(target)}, 300);
+  elem.onmouseover = function () {
+    // Set timeout to be a timer which will invoke callback after 1s
+    timeout = setTimeout(function () { callback(target) }, 300);
   };
 
-  elem.onmouseout = function() {
-      // Clear any timers set to timeout
-      clearTimeout(timeout);
+  elem.onmouseout = function () {
+    // Clear any timers set to timeout
+    clearTimeout(timeout);
   }
 };
 
 //replace items in a template (for nifty theme)
-function templateReplace(templateString,obj){
+function templateReplace(templateString, obj, skipdebug) {
   //var templateString=document.getElementById(template).innerHTML;
   return templateString.replace(/\{(\w+)\}/g, function (_, k) {
-      return obj[k];
+    if (obj[k] == undefined && !skipdebug) {
+      console.log("missing template value:" + k);
+      //console.log(templateString);
+    }
+    return obj[k];
   });
+}
+
+function loadScript(src) {
+  console.log("background loading "+src);
+  return new Promise(function (resolve, reject) {
+      var s;
+      s = document.createElement('script');
+      s.src = src;
+      s.onload = resolve;
+      s.onerror = reject;
+      document.head.appendChild(s);
+  });
+}
+
+function getLegacyToHash160(qaddress){
+  if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
+  //don't want to make the above await, but want to load library
+  //the next function will fail if sdk is not loaded for some reason, but will work on retry
+  return new bitboxSdk.Address().legacyToHash160(qaddress);
 }

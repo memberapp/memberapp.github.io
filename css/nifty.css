@@ -5,7 +5,7 @@
  * 1. Correct the line height in all browsers.
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
-html {
+ html {
   line-height: 1.15;
   /* 1 */
   -webkit-text-size-adjust: 100%;
@@ -662,9 +662,9 @@ html :lang(ar) {
   text-align: center;
   font-weight: bold;
   padding: 1rem;
-  background: #FFE45E;
-  color: #453900;
-  border: 1px solid #ffd712;
+  background: #3D3300;
+  color: black;
+  border: 1px solid black;
   border-radius: 0.25rem; }
 
 .plaintext, .age {
@@ -675,6 +675,16 @@ a {
 
 .star-rating .star-value {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%); }
+
+.quotepost {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0.25rem; }
+
+[id^=replycompletedthread] {
+  text-align: center; }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -991,24 +1001,16 @@ textarea {
     display: inline-flex !important;
     -ms-flex-align: center;
     align-items: center; }
-
-.notificationtitle,
-.repost {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  width: 100%; }
-  .notificationtitle .age,
-  .notificationtitle .sats,
-  .repost .age,
-  .repost .sats {
-    margin-right: 0.25rem; }
-  .notificationtitle a[href^="#thread?"],
-  .repost a[href^="#thread?"] {
-    margin-right: 0.25rem; }
+  .memberfilter .flair {
+    padding: 0 0.375rem;
+    background: #2291EB;
+    color: white;
+    border-radius: 0.25rem;
+    margin-left: 0.25rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center; }
 
 a {
   text-decoration: none;
@@ -1093,6 +1095,16 @@ img {
     width: 100%;
     max-width: 550px; }
 
+video {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  margin: 0 auto;
+  display: block; }
+  video.imgurimage {
+    background-color: black;
+    background-image: unset; }
+
 .youtubepreview {
   position: relative;
   display: -ms-flexbox;
@@ -1130,16 +1142,29 @@ img {
 
 .notificationtitle,
 .repost {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 100%;
   padding: 0.875rem;
   font-weight: bold;
   font-size: 0.875rem;
   background: #474747;
   border-bottom: 1px solid rgba(255, 255, 255, 0.38);
   width: 100%;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: center;
   align-items: center; }
+  .notificationtitle .age,
+  .notificationtitle .sats,
+  .repost .age,
+  .repost .sats {
+    margin-right: 0.25rem; }
+  .notificationtitle a[href^="#thread?"],
+  .repost a[href^="#thread?"] {
+    margin-right: 0.25rem; }
   .notificationtitle .hnuser,
   .notificationtitle .star-rating,
   .repost .hnuser,
@@ -1452,6 +1477,10 @@ img {
                 word-break: break-word; }
                 .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody a {
                   overflow-wrap: anywhere; }
+                .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody ul li {
+                  list-style-type: disc; }
+                .comment-tree ul li .reply div:only-child .commentdetails .comment .commentbody ol li {
+                  list-style-type: decimal; }
       .comment-tree ul li ul {
         margin-left: 2.5rem;
         border-left: 1px solid rgba(255, 255, 255, 0.38) !important; }
@@ -1785,7 +1814,7 @@ footer {
       width: 100%; }
 
 #lowfundswarning {
-  background: #FFE45E;
+  background: #3D3300;
   padding: 1.75rem 0;
   margin-top: -1rem;
   margin-bottom: 2rem; }
@@ -1800,7 +1829,7 @@ footer {
     margin-right: auto;
     margin-left: auto;
     text-align: center;
-    color: black; }
+    color: white; }
     @media (min-width: 769px) {
       #lowfundswarning .content {
         max-width: 800px; } }
@@ -2086,6 +2115,10 @@ footer {
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
+  #thread .itemlist .nocommentsyet {
+    text-align: center;
+    font-style: italic;
+    color: white; }
 
 #newpost {
   width: 100%;
@@ -2161,6 +2194,9 @@ footer {
     #newpost #memorandumarea #memorandumtextbutton {
       margin-bottom: 0.875rem;
       font-weight: bold; }
+    #newpost #memorandumarea #newpostmemorandumcompleted {
+      text-align: center;
+      margin: 1rem 0; }
     #newpost #memorandumarea #memorandumpreviewarea br {
       display: block; }
     #newpost #memorandumarea #memorandumpreviewareabutton {
@@ -2429,7 +2465,7 @@ body.article {
         margin-top: 0.875rem; }
     #loginbox .content #newseedphrase {
       border: 1px solid rgba(255, 255, 255, 0.38);
-      background: #FFE45E;
+      background: #3D3300;
       border-radius: 0.25rem;
       padding: 0.4375rem 0.875rem;
       margin: 1rem 0; }
@@ -3120,6 +3156,8 @@ tbody tr td .filterprovider {
         box-shadow: 0 1px 3px rgba(255, 255, 255, 0.38), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
+  #notifications .highlighted {
+    background-color: rgba(255, 255, 255, 0.38); }
 
 #blockers,
 #blocking,
