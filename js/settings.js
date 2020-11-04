@@ -237,7 +237,9 @@ function updateSettings() {
         }
 
         if (key == "languageselector"){
-            dictionary.live=dictionary[theSetting];
+            if(dictionary[theSetting]){
+                dictionary.live=dictionary[theSetting];
+            }
         }
     }
 
@@ -267,8 +269,10 @@ function updateSettingsDropdown(settingsName) {
         refreshPool();
     }
     if (settingsName == "languageselector"){
-        dictionary.live=dictionary[dropdowns[settingsName]];
-        location.reload();
+        if(dictionary[settingsName]){
+            dictionary.live=dictionary[dropdowns[settingsName]];
+            location.reload();
+        }
     }
     updateStatus(getSafeTranslation('updated', "Updated.") + " " + dropdowns[settingsName]);
 }

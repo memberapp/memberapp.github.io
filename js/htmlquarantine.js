@@ -136,10 +136,11 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         hideuserHTML += `<a data-vavilon="flagusertopic" id="hideuserlink` + page + santxid + `" onclick="hideuser('` + san(address) + `','` + unicodeEscape(topicHOSTILE) + `','hideuserlink` + page + santxid + `');" href="javascript:;">flag(user for topic)</a>`;
     }
 
-    var remembersActive = "remebersactive";
-    var remembersOnclick = ` onclick="repostPost('` + santxid + `','` + page + `'); this.class='remebersinactive'; this.onclick='';" href="javascript:;"`;
+    //Can remove mispelling 'remebers' when css files are updated
+    var remembersActive = "remebersactive remembersactive";
+    var remembersOnclick = ` onclick="repostPost('` + santxid + `','` + page + `'); this.class='remebersinactive remembersinactive'; this.onclick='';" href="javascript:;"`;
     if (repostidtxid != null && repostidtxid != '') {
-        remembersActive = "remebersinactive";
+        remembersActive = "remebersinactive remembersinactive";
         remembersOnclick = ` `;
     }
 
