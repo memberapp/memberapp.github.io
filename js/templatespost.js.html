@@ -1,3 +1,135 @@
+var postCompactTemplate = `
+<div class="post">
+    <div class="post-content">
+        <div class="post-header">
+            {author}
+            <span data-vavilon="VV0151" class="fulltext">submitted</span>
+            <span class="post-metadata">
+                <span class="elapsed-time">
+                    {elapsed}
+                </span>
+                <span class="elapsed-time-compressed">
+                    {elapsedcompressed}
+                </span>
+                <span class="topic">
+                    {topic}
+                </span>
+            </span>
+        </div>
+        <div class="post-body-wrapper">
+            <div class="post-body"
+                onclick="if(document.getSelection().type === 'Range'){return;}else{location.href='#thread?root={roottxid}&amp;post={txid}'};">
+                {message}
+            </div>
+            <div class="post-quote">
+                {quote}
+            </div>
+            <div class="post-footer">
+                <span class="post-footer-reply">
+                    <a id="replylink{txid}posts{diff}" onclick="showReplyBox('{txid}posts{diff}');" href="javascript:;"
+                        class="btn-icon" data-action="reply">
+                        <span class="replyicon">
+                            <span class="emojiicon">💬</span>
+                        </span>
+                        <span class="text">
+                            {replies}
+                        </span>
+                        <span data-vavilon="VV0153" class="text footerlabel">replies</span>
+                    </a>
+                </span>
+                <span class="post-footer-upvote{likeactivated}" id="upvote{txid}">
+                    <a id="upvoteaction{txid}" href="javascript:;" onclick="likePost('{txid}','{address}')"
+                        class="btn-icon" data-action="like">
+                        <span class="likeicon">
+                            <span class="emojiicon">💙</span>
+                        </span>
+                        <span class="text likestext" id="likescount{txid}">
+                            {likes}
+                        </span>
+                        <span class="text likesbalance" id="score{txid}">
+                            {likesbalance}
+                        </span>
+                        <span data-vavilon="likes" class="text footerlabel">likes</span>
+                    </a>
+                </span>
+                <span class="post-footer-downvote{dislikeactivated}" id="downvote{txid}">
+                    <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{address}')"
+                        class="btn-icon" data-action="dislike">
+                        <span class="dislikeicon">
+                            <span class="emojiicon">👎</span>
+                        </span>
+                        <span class="text" id="dislikescount{txid}">
+                            {dislikes}
+                        </span>
+                        <span data-vavilon="dislikes" class="text footerlabel">dislikes</span>
+                    </a>
+                </span>
+                <span class="post-footer-remembers{rememberactivated}" id="remembers{txid}">
+                    <a id="quotelinkposts{diff}{txid}" href="#new?txid={txid}" class="btn-icon" data-action="remember">
+                        <span class="remembersicon">
+                            <span class="emojiicon">♻</span>
+                        </span>
+                        <span class="rememberscount" id="repostscount{txid}">
+                            {remembers}
+                        </span>
+                        <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
+                    </a>
+                </span>
+                <span class="post-footer-tips">
+                    <a id="tiplinkposts{diff}{txid}" onclick="showTipBox('posts{diff}{txid}');" href="javascript:;"
+                        class="btn-icon" data-action="tip">
+                        <span class="tipicon">
+                            <span class="emojiicon">💰</span>
+                        </span>
+                        <span id="tipscount{txid}" class="text" data-amount="{tipsinsatoshis}">{tips}</span>
+                        <span data-vavilon="tips" class="text footerlabel">tips</span>
+                    </a>
+                </span>
+                <span class="dropdown">
+                    <button class="dropbtn">☰</button>
+                    <div class="dropdown-content">
+                        <a class="permalink" id="permalinkposts{diff}{txid}" href="p/{txidshort}"><span
+                                data-vavilon="permalink">Permalink</span></a>
+                        <a id="articlelinkposts{diff}{txid}" href="a/{txidshort}"><span data-vavilon="article"><a
+                                    href="#">Article</span></a>
+                        <span class="divider"></span>
+                        <span class="actions-title">Blockchain</span>
+                        <span><a rel="noopener noreferrer" target="memo"
+                                href="https://memo.cash/a/{txid}">Memo</a></span>
+                        <span><a rel="noopener noreferrer" target="bitcoincom"
+                                href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a></span>
+                        <span><a rel="noopener noreferrer" target="btccom"
+                                href="https://bch.btc.com/{txid}">BTC.com</a></span>
+                        <span><a rel="noopener noreferrer" target="blockchair"
+                                href="https://blockchair.com/bitcoin-cash/transaction/{txid}">Blockchair</a></span>
+                        <span><a rel="noopener noreferrer" target="bitcoinunlimited"
+                                href="https://explorer.bitcoinunlimited.info/tx/{txid}">Bitcoin Unlimited</a></span>
+                        <span class="divider"></span>
+                        <span data-vavilon="moderate" class="actions-title">Moderate</span>
+                        <a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
+                            href="javascript:;"><span data-vavilon="VV0161">Flag post</span></a>
+                        <a id="hideuserlinkposts{diff}{txid}"
+                            onclick="hideuser('{address}','','hideuserlinkposts{diff}{txid}');"
+                            href="javascript:;"><span data-vavilon="flaguser">Flag user</span></a>
+                        {hideuser}
+                    </div>
+                </span>
+            </div>
+            <span id="tipboxposts{diff}{txid}" style="display:none">
+                <input id="tipamountposts{diff}{txid}" type="number" value="0" min="0" style="width: 6em;" step="1000">
+                <input id="tipbuttonposts{diff}{txid}" value="tip" type="submit"
+                    onclick="sendTip('{txid}','{address}','posts{diff}');">
+                <input id="tipstatusposts{diff}{txid}" value="sending" type="submit" style="display:none" disabled="">
+            </span>
+            <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
+            <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
+            {replydiv}
+        </div>
+
+    </div>
+</div>
+`;
+
 var completedPostTemplate=`
 Sent.
 <a data-vavilon="VV0145" onclick="showThread('{txid}')" href="#thread?post={txid}" onclick="nlc();">View It</a> or
@@ -22,9 +154,7 @@ var userTemplate=`
 <span class="memberfilter">
     <span id="memberinfo{diff}posts{address}">
         <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-            <span class="memberpicsmall" style="display:inline;">
                 {profilepicsmall}
-            </span>
             <span class="member-handle">{handle}</span>
         </a>
     </span>
@@ -37,9 +167,7 @@ var userTemplate=`
         class="profilepreview">
         <div class="profile-meta">
             <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="memberpicsmall" style="display:inline;">
                     {profilepicsmall}
-                </span>
             </a>
             <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
                 <span class="member-handle">{handle}</span>
@@ -91,7 +219,8 @@ var postTemplate = `
 <div class="post">
     <div class="votelinks">{votelinks}</div>
     <div class="postdetails">
-        <div class="title">
+        <div class="title"
+            onclick="if(document.getSelection().type === 'Range'){return;}else{location.href='#thread?root={roottxid}&amp;post={txid}'};">
             <p>{message}</p>
         </div>
         {quote}

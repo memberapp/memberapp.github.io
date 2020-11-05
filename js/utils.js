@@ -308,6 +308,7 @@ DOMPurify.addHook('afterSanitizeAttributes', function (node) {
       node.setAttribute('target', '_blank');
       // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
       node.setAttribute('rel', 'noopener noreferrer');
+      node.setAttribute('click', 'event.stopPropoagation();');
     }
   }
   // set non-HTML/MathML links to xlink:show=new
@@ -374,7 +375,7 @@ var delay = function (elem, callback, target) {
   }
 };
 
-//replace items in a template (for nifty theme)
+//replace items in a template
 function templateReplace(templateString, obj, skipdebug) {
   //var templateString=document.getElementById(template).innerHTML;
   return templateString.replace(/\{(\w+)\}/g, function (_, k) {

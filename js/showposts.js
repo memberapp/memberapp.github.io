@@ -541,6 +541,8 @@ function showReplyBox(txid) {
     var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0, 10) + "']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";
+
+    //set focus here .focus()
     //document.getElementById("replylink"+txid).style.display = "none";
     return true;
 }
@@ -559,7 +561,7 @@ function decreaseGUILikes(txid) {
         uparrow.className = "votearrow";
         document.getElementById('score' + txid).className = "betweenvotesscoredown";
     
-        if (theStyle == 'nifty' || theStyle == 'none') {
+        if (theStyle.contains('compact')) {
             var dislikescount = Number(document.getElementById('dislikescount' + txid).innerText);
             document.getElementById('dislikescount' + txid).innerText = dislikescount + 1;
             uparrow.className = "post-footer-upvote";
@@ -588,7 +590,7 @@ function increaseGUILikes(txid) {
         document.getElementById('score' + txid).className = "betweenvotesscoreup";
     
         //Nifty
-        if (theStyle == 'nifty' || theStyle == 'none') {
+        if (theStyle.contains('compact')) {
             //Change classes
             uparrow.className = "post-footer-upvote-activated";
             downarrow.className = "post-footer-downvote";

@@ -1,13 +1,14 @@
 
 "use strict";
 
-//Preferable to grab this from sw.js, but don't know how.
-//So must be entered in two places
-var version = "4.20.1";
+
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
+var privkeyhex = "";
+var privateKeyBuf;
+
 var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
 let tq = new TransactionQueue(updateStatus);
@@ -134,8 +135,10 @@ async function login(loginkey) {
     pubkey = localStorageGet(localStorageSafe, "pubkey");
     qpubkey = localStorageGet(localStorageSafe, "qpubkey");
     pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
+    privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
 
-    if (!(pubkey && qpubkey)) {
+
+    if (!(pubkey && qpubkey) || (privkey && !privkeyhex) ) {
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
@@ -200,8 +203,13 @@ async function login(loginkey) {
         if (privkey) {
             let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
             pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
+            privkeyhex = ecpair.d.toHex();
+            privateKeyBuf = Buffer.from(privkeyhex, 'hex');
+    
+
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
+            localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
         }
 
@@ -234,8 +242,8 @@ async function login(loginkey) {
     //Get latest rate and update balance
     loadStyle();
 
-    if (theStyle == 'nifty' || theStyle == 'none') {
-        document.getElementById('header').innerHTML = niftyHeaderHTML;
+    if (theStyle == 'nifty') {
+        //document.getElementById('header').innerHTML = niftyHeaderHTML;
     }
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";

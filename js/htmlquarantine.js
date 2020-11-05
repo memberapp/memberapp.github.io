@@ -80,7 +80,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         diff: ratingID
     }
 
-    if (theStyle == 'nifty' || theStyle == 'none') {
+    if (theStyle == 'nifty') {
         return templateReplace(userTemplate, obj);
     } else {
         return templateReplace(userTemplate, obj);
@@ -89,6 +89,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 }
 
 function userFromDataBasic(data, mainRatingID, size) {
+    if(!data.raterrating){data.raterrating=data.rating;}//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
     return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime);
 }
 
@@ -102,7 +103,7 @@ function getReplyDiv(txid, page, differentiator) {
         txid: san(txid)
     }
 
-    if (theStyle == 'nifty' || theStyle == 'none') {
+    if (theStyle == 'nifty') {
         return templateReplace(replyDivTemplate, obj);
     } else {
         return templateReplace(replyDivTemplate, obj);
@@ -159,7 +160,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         maplink: mapLink,
     }
 
-    if (theStyle == 'nifty' || theStyle == 'none') {
+    if (theStyle == 'nifty') {
         return templateReplace(replyAndTipsTemplate, obj);
     } else {
         return templateReplace(replyAndTipsTemplate, obj);
@@ -242,9 +243,9 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     //Add youtube etc
     messageLinksHTML = addImageAndYoutubeMarkdown(messageLinksHTML, differentiator, false);
 
-    if (messageLinksHTML.indexOf("<a ") == -1 && messageLinksHTML.indexOf("<iframe ") == -1) {//if no links
-        messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
-    }
+    //if (messageLinksHTML.indexOf("<a ") == -1 && messageLinksHTML.indexOf("<iframe ") == -1) {//if no links
+    //    messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
+    //}
 
     var theAuthorHTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, obj);
     var votelinks = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)));
@@ -312,8 +313,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         return retVal;        
         */
 
-    if (theStyle == 'nifty' || theStyle == 'none') {
-        return templateReplace(postNiftyTemplate, obj);
+    if (theStyle.contains('compact') || theStyle == 'none') {
+        return templateReplace(postCompactTemplate, obj);
     } else {
         return templateReplace(postTemplate, obj);
     }
@@ -365,7 +366,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         diff: differentiator
     };
 
-    if (theStyle == 'nifty' || theStyle == 'none') {
+    if (theStyle == 'nifty') {
         return templateReplace(replyTemplate, obj);
     } else {
         return templateReplace(replyTemplate, obj);
@@ -551,7 +552,7 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*?(?:watch|embed)?(?:.*?v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*?<\/a>/gi :
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*?(?:watch|embed)?(?:.*?v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*?<\/a>/i;
         message = message.replace(youtubeRegex,
-            `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="makeYoutubeIframe('$1','$4');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" alt="video post" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
+            `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="event.stopPropagation();makeYoutubeIframe('$1','$4');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" alt="video post" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
         );
     }
 
@@ -611,7 +612,7 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
         post: addendumHTML
     }
 
-    if (theStyle == 'nifty' || theStyle == 'none') {
+    if (theStyle == 'nifty') {
         return templateReplace(notificationTemplate, obj);
     } else {
         return templateReplace(notificationTemplate, obj);
@@ -643,7 +644,7 @@ function getMapPostHTML(lat, lng, requireLogin) {
         lng: Number(lng)
     }
 
-    if (theStyle == 'nifty' || theStyle == 'none') {
+    if (theStyle == 'nifty') {
         return templateReplace(mapPostTemplate, obj);
     } else {
         return templateReplace(mapPostTemplate, obj);
@@ -909,8 +910,6 @@ function getMessageHTML(data, count) {
         //You sent a message
         contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
-        let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
-        var privateKeyBuf = Buffer.from(ecpair.d.toHex(), 'hex');
         decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
         contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }
