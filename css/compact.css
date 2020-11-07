@@ -1,4 +1,8 @@
 
+      body {
+        background: #FFF;
+    }
+      
       .quotepost{
         border-radius: 10px;
       }
@@ -111,7 +115,7 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
-  background-color: black;
+  background-color:  #1063A8;
 }
 
 .emojiicon{
@@ -473,11 +477,10 @@ img {
 .imgurimage {
 outline-offset: -1px;
 outline: 1px solid rgba(0, 0, 0, 0.05);
-margin-top: 1rem;
 max-height: 640px;
 width: auto;
 max-width: 100%;
-margin: 0 auto;
+margin: 1rem auto 0 auto;
 display: block;
 }
 

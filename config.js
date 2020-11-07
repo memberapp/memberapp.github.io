@@ -1,6 +1,6 @@
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.21.0";
+var version = "4.22.0";
 
 var mutedwords = new Array();
 var defaulttip = 1000;
