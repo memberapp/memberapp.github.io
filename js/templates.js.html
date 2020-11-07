@@ -1,11 +1,14 @@
 var errorTemplate=`
 <p>
     <span class='connectionerror'>
-        <span data-vavilon="VV0169">Oops. This request failed.</span>
-        <span data-vavilon="VV0170">There may be a problem with your internet connection, or the server may be having
-            problems.</span>
-        <span data-vavilon="VV0171">The error code is</span> <span>{status}</span>
-        <span data-vavilon="VV0172">The resource was</span> <span>{url}</span>
+        <p>
+            <span data-vavilon="VV0169">Oops. This request failed.</span><br />
+            <span data-vavilon="VV0170">There may be a problem with your internet connection, or the server may be
+                having
+                problems.</span><br />
+            <span data-vavilon="VV0171">The error code is</span> <span>{status}</span><br />
+            <span data-vavilon="VV0172">The resource was</span> <span>{url}</span><br />
+        </p>
     </span>
 </p>
 `;
@@ -371,7 +374,7 @@ var messagesanchorHTML=`
         <br />
         <br />
     </div>
-    <div id="messageslist"></div>
+    <div id="messageslist" class="messageslist"></div>
 </div>
 `;
 
@@ -602,177 +605,180 @@ pages.settings = `
     <input id="settingsnametime" value="{nametime}" style="display:none;">
     <input id="settingsrating" value="{rating}" style="display:none;">
 
-
     <h2 data-vavilon="VV0166">Settings</h2>
-    <div class="settingspiccontainer">
-        <label data-vavilon="VV0059" id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile
-            Picture</label>
-        <label id="settingspiclargelabel" for="settingspic" style="display:inline;">
-            <span data-vavilon="VV0076" class="profilepicdirections">(Must be imgur link in this format or .png
-                format)</span></label>
-        <div class="formgroup">
-            <input maxlength="217" size="30" id="settingspic" value="https://i.imgur.com/XXXXXXXX.jpg"
-                onchange="document.getElementById('settingspicbutton').disabled=false;" onkeypress="this.onchange();"
-                onpaste="this.onchange();" oninput="this.onchange();">
-            <button data-vavilon="VV0077" id="settingspicbutton" type="button" onclick="setPic();"
-                disabled="">update</button>
-        </div>
-        <span class="settingspiclarge" style="display:inline;">
-            {profilepiclargehtml}
-        </span>
+    <div id="settingsloggedin">
+        <div class="settingspiccontainer">
+            <label data-vavilon="VV0059" id="settingspiclargelabel" for="settingspic" style="display:inline;">Profile
+                Picture</label>
+            <label id="settingspiclargelabel" for="settingspic" style="display:inline;">
+                <span data-vavilon="VV0076" class="profilepicdirections">(Must be imgur link in this format or .png
+                    format)</span></label>
+            <div class="formgroup">
+                <input maxlength="217" size="30" id="settingspic" value="https://i.imgur.com/XXXXXXXX.jpg"
+                    onchange="document.getElementById('settingspicbutton').disabled=false;"
+                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                <button data-vavilon="VV0077" id="settingspicbutton" type="button" onclick="setPic();"
+                    disabled="">update</button>
+            </div>
+            <span class="settingspiclarge" style="display:inline;">
+                {profilepiclargehtml}
+            </span>
 
-    </div>
-    <div>
-        <label data-vavilon="VV0060" for="settingsnametext">Handle</label>
-        <div class="formgroup">
-            <input maxlength="217" size="30" id="settingsnametext" value="{handle}"
-                onchange="document.getElementById('settingsnametextbutton').disabled=false;"
-                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-            <button data-vavilon="VV0077" id="settingsnametextbutton" type="button" onclick="setName();">update</button>
         </div>
-    </div>
-    <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
-    <div id="settingspagingid">@{pagingid}</div>
-    <div>
-        <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
-        <div class="formgroup">
-            <input maxlength="217" size="30" id="settingsprofiletext" value="{profile}"
-                onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
-                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-            <button data-vavilon="VV0077" id="settingsprofiletextbutton" type="button" onclick="setProfile();"
-                data-vavilon="update" disabled="">update</button>
-        </div>
-    </div>
-    <div>
-        <label data-vavilon="VV0078" for="settingsprofilelogout">Logout</label>
-        <a data-vavilon="VV0078" title="Logout" id="settingsprofilelogout" class="btn vavilon" href="#logout"
-            onclick="logout();">Logout</a>
-    </div>
-    <div>
-        <label data-vavilon="VV0079" for="notificationbutton">Notifications</label>
-        <span class="allownotifications"><a data-vavilon="VV0080" id="notificationbutton" class="notificationbutton"
-                href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow
-                Notifications</a></span>
-    </div>
-
-    <div class="settingsprofilelinks">
-        <label data-vavilon="VV0064">Profile Links</label>
         <div>
-            <a href="#member?qaddress={address}" id="settingsprofilelink">Member</a><span
-                class="separatorwide"></span><a rel="noopener noreferrer" target="memo"
-                href="https://memo.cash/profile/{address}" id="settingsmemoprofilelink">Memo</a>
+            <label data-vavilon="VV0060" for="settingsnametext">Handle</label>
+            <div class="formgroup">
+                <input maxlength="217" size="30" id="settingsnametext" value="{handle}"
+                    onchange="document.getElementById('settingsnametextbutton').disabled=false;"
+                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                <button data-vavilon="VV0077" id="settingsnametextbutton" type="button"
+                    onclick="setName();">update</button>
+            </div>
         </div>
-    </div>
-    <label for="settingsidenticon">Identicon</label>
-    <div id="settingsidenticon"><svg width="20" height="20" class="jdenticonlarge"
-            data-jdenticon-value="{address}"></svg></div>
-    <div id="settingsprofileaddress">
+        <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
+        <div id="settingspagingid">@{pagingid}</div>
+        <div>
+            <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
+            <div class="formgroup">
+                <input maxlength="217" size="30" id="settingsprofiletext" value="{profile}"
+                    onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
+                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                <button data-vavilon="VV0077" id="settingsprofiletextbutton" type="button" onclick="setProfile();"
+                    data-vavilon="update" disabled="">update</button>
+            </div>
+        </div>
+        <div>
+            <label data-vavilon="VV0078" for="settingsprofilelogout">Logout</label>
+            <a data-vavilon="VV0078" title="Logout" id="settingsprofilelogout" class="btn vavilon" href="#logout"
+                onclick="logout();">Logout</a>
+        </div>
+        <div>
+            <label data-vavilon="VV0079" for="notificationbutton">Notifications</label>
+            <span class="allownotifications"><a data-vavilon="VV0080" id="notificationbutton" class="notificationbutton"
+                    href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow
+                    Notifications</a></span>
+        </div>
 
-        <label data-vavilon="VV0065" data-vavilon="address">Address</label>
-        <span id="cashaddrformat">{cashaddress}</span>
-        <div id="cashaddrformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
+        <div class="settingsprofilelinks">
+            <label data-vavilon="VV0064">Profile Links</label>
+            <div>
+                <a href="#member?qaddress={address}" id="settingsprofilelink">Member</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="memo"
+                    href="https://memo.cash/profile/{address}" id="settingsmemoprofilelink">Memo</a>
+            </div>
+        </div>
+        <label for="settingsidenticon">Identicon</label>
+        <div id="settingsidenticon"><svg width="20" height="20" class="jdenticonlarge"
+                data-jdenticon-value="{address}"></svg></div>
+        <div id="settingsprofileaddress">
+
+            <label data-vavilon="VV0065" data-vavilon="address">Address</label>
+            <span id="cashaddrformat">{cashaddress}</span>
+            <div id="cashaddrformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
+        </div>
+        <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
+        <div id="settingsblockexplorer">
+            <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
+                href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
+            <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="settingsblockchair"
+                href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
+            <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
+                href="https://bch.btc.com/{address}">btc.com</a>
+            <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
+                id="settingsbitcoinunlimited" href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
+                unlimited</a>
+        </div>
+        <div id="settingslegacyprofileaddress">
+            <label data-vavilon="VV0068">Legacy Address</label>
+            <span id="legacyformat">{address}</span>
+            <div id="legacyformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
+        </div>
+        <div id="settingsprivatekey">
+            <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
+            <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
+            <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
+                    onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
+            <div id="privatekeydisplaydiv"></div>
+            <span id="privatekeyformat" style="display: none;">{privatekey}</span>
+            <div id="privatekeyformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
+        </div>
+        <div class="profilestats">
+            <div class="follow">
+                <label data-vavilon="VV0069">Follow</label>
+                {followbuttonhtml}
+            </div>
+            <div class="mute">
+                <label data-vavilon="VV0070">Mute</label>
+                {mutebuttonhtml}
+            </div>
+            <div class="followers">
+                <label data-vavilon="VV0071">Followers</label>
+                <a id="settingsfollowersnumber" href="#followers?qaddress={address}">{followers}</a>
+            </div>
+            <div class="following">
+                <label data-vavilon="VV0072">Following</label>
+                <a id="settingsfollowingnumber" href="#following?qaddress={address}">{following}</a>
+            </div>
+            <div class="muters">
+                <label data-vavilon="VV0073">Muters</label>
+                <a id="settingsblockersnumber" href="#blockers?qaddress={address}">{muters}</a>
+            </div>
+            <div class="muting">
+                <label data-vavilon="VV0074">Muting</label>
+                <a id="settingsblockingnumber" href="#blocking?qaddress={address}">{muting}</a>
+            </div>
+        </div>
+        <div>
+            <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
+            <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            <p data-vavilon="VV0177">(Amount to tip when clicking up arrow. Minimum 547)</p>
+        </div>
+        <div>
+            <label data-vavilon="maxfee" for="maxfee">Max Fee</label>
+            <input id="maxfee" size="3" type="number" step="1" onchange="updateSettingsNumber('maxfee');"
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            <p data-vavilon="VV0083">(Max satoshis per byte to pay during network congestion. Minimum 2)</p>
         </div>
     </div>
-    <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
-    <div id="settingsblockexplorer">
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
-            href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="settingsblockchair"
-            href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
-            href="https://bch.btc.com/{address}">btc.com</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited" id="settingsbitcoinunlimited"
-            href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
-            unlimited</a>
-    </div>
-    <div id="settingslegacyprofileaddress">
-        <label data-vavilon="VV0068">Legacy Address</label>
-        <span id="legacyformat">{address}</span>
-        <div id="legacyformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
-        </div>
-    </div>
-    <div id="settingsprivatekey">
-        <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
-        <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
-        <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
-                onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
-        <div id="privatekeydisplaydiv"></div>
-        <span id="privatekeyformat" style="display: none;">{privatekey}</span>
-        <div id="privatekeyformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
-        </div>
+    <div>
+        <label for="languageselector">Language / 语言 / Idioma / Lengguwahe</label>
+        <select id="languageselector" onchange="updateSettingsDropdown('languageselector');">
+            <option value="en">English</option>
+            <option value="zh">中文</option>
+            <option value="es">Español</option>
+            <option value="fil">Filipino</option>
+        </select>
     </div>
     <div>
         <label data-vavilon="VV0081" for="cssselector">Theme</label>
         <select id="cssselector" onchange="changeStyle(document.getElementById('cssselector').value, true);">
-            <option data-vavilon="VV0167" value="feels">Choose Theme</option>
+            <option data-vavilon="VV0167" value="feels compact">Choose Theme</option>
+            <option value="feels compact">Feels Compact</option>
+            <option value="feels-night compact compactnight">Feels Compact Night Mode</option>
             <option value="feels">Feels</option>
             <option value="feels-night">Feels Night Mode</option>
             <option value="base none">Member</option>
             <option value="base nightmode none">Member Night Mode</option>
             <option value="base hackernews">Hacker News</option>
             <option value="base hackernews hnnightmode">Hacker News Night Mode</option>
-            <option value="nifty">Nifty (Under Development)</option>
             <option data-vavilon="VV0168" value="none">None</option>
         </select>
-    </div>
-    <div>
-        <label data-vavilon="VV0180" for="languageselector">Language</label>
-        <select id="languageselector" onchange="updateSettingsDropdown('languageselector');">
-            <option value="en">English</option>
-            <option value="zh">中文</option>
-            <option value="es">Español</option>
-            <option value="fil">Pilipino</option>
-        </select>
-    </div>
-    <div class="profilestats">
-        <div class="follow">
-            <label data-vavilon="VV0069">Follow</label>
-            {followbuttonhtml}
-        </div>
-        <div class="mute">
-            <label data-vavilon="VV0070">Mute</label>
-            {mutebuttonhtml}
-        </div>
-        <div class="followers">
-            <label data-vavilon="VV0071">Followers</label>
-            <a id="settingsfollowersnumber" href="#followers?qaddress={address}">{followers}</a>
-        </div>
-        <div class="following">
-            <label data-vavilon="VV0072">Following</label>
-            <a id="settingsfollowingnumber" href="#following?qaddress={address}">{following}</a>
-        </div>
-        <div class="muters">
-            <label data-vavilon="VV0073">Muters</label>
-            <a id="settingsblockersnumber" href="#blockers?qaddress={address}">{muters}</a>
-        </div>
-        <div class="muting">
-            <label data-vavilon="VV0074">Muting</label>
-            <a id="settingsblockingnumber" href="#blocking?qaddress={address}">{muting}</a>
-        </div>
-    </div>
-    <div>
-        <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
-        <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
-            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-        <p data-vavilon="VV0177">(Amount to tip when clicking up arrow. Minimum 547)</p>
-    </div>
-    <div>
-        <label data-vavilon="maxfee" for="maxfee">Max Fee</label>
-        <input id="maxfee" size="3" type="number" step="1" onchange="updateSettingsNumber('maxfee');"
-            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-        <p data-vavilon="VV0083">(Max satoshis per byte to pay during network congestion. Minimum 2)</p>
     </div>
     <div>
         <label data-vavilon="resultsnumber" for="results">Number Of Results To Show</label>
@@ -865,13 +871,13 @@ var headerHTML = `
                     <a data-vavilon_title="VV0097" id="privatemessagesbutton" title="Messages"
                         class="btn privatemessagesbutton" href="#messages" onclick="nlc();">📧<span
                             class="alertcount noselect" id="alertcountpm"></span></a>
-                    <a data-vavilon_title="VV0098" id="settingsbutton" title="Settings" class="btn" href="#settings"
-                        onclick="nlc();">⚙️</a>
                     <a data-vavilon_title="VV0099" id="toolsbutton" title="Tools" class="btn" href="#tools"
                         onclick="nlc();">🛠️</a>
                 </span>
             </span>
             <span class="headerbuttons">
+                <a data-vavilon_title="VV0098" id="settingsbutton" title="Settings" class="btn" href="#settings"
+                    onclick="nlc();">⚙️</a>
                 <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
                     onclick="nlc();">📚</a>
                 <a data-vavilon_title="VV0101" id="mapbutton" title="Map" class="btn" href="#map"
@@ -884,7 +890,7 @@ var headerHTML = `
             </span>
             <span class="separatorwidebreakpoint"></span>
             <span id="topiccontainer" class="topiccontainer">
-                <select id="orderselector" onchange="postsSelectorChanged();">
+                <select id="orderselector" onchange="postsSelectorChanged();" style="width:100%;max-width:100px">
                     <option data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts"
                         selected="selected">Hot</option>
                     <option data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts">New
@@ -902,7 +908,8 @@ var headerHTML = `
                     <option data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa"
                         title="Top posts from all time">All</option>
                 </select>
-                <select id="contentselector" label="content" onchange="postsSelectorChanged();">
+                <select id="contentselector" label="content" onchange="postsSelectorChanged();"
+                    style="width:100%;max-width:100px">
                     <option data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" value="posts"
                         selected="selected">Posts</option>
                     <option data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" value="replies">
@@ -910,7 +917,8 @@ var headerHTML = `
                     <option data-vavilon="VV0124" data-vavilon_title="VV0125" title="See both posts and replies"
                         value="both">In Both</option>
                 </select>
-                <select id="topicselector" label="topic" onchange="postsSelectorChanged();">
+                <select id="topicselector" label="topic" onchange="postsSelectorChanged();"
+                    style="width:100%;max-width:200px">
                     <option data-vavilon="VV0126" data-vavilon_title="VV0127" value="" title="From all topics"
                         selected="selected">All Topics</option>
                     <option value=""></option>
@@ -932,7 +940,8 @@ var headerHTML = `
                     <option value="Ideas to improve our lives">Improvement</option>
                     <option value="#911Truth">#911Truth</option>
                 </select>
-                <select id="filterselector" label="filter" onchange="postsSelectorChanged();">
+                <select id="filterselector" label="filter" onchange="postsSelectorChanged();"
+                    style="width:100%;max-width:200px">
                     <option data-vavilon="VV0132" data-vavilon_title="VV0133" value="everyone" title="From everyone"
                         selected="selected">Everyone</option>
                     <option data-vavilon="VV0134" data-vavilon_title="VV0135" value="mypeeps"

@@ -3244,3 +3244,22 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
+
+      .quotepost {
+        margin: 0rem;
+        margin-bottom: 1rem;
+
+    }
+    
+    .repostnoquote .memberpicturesmall {
+        height: 1rem;
+        width: 1rem;
+    }
+
+    .repostnoquote .repost {
+      padding: 0.3rem
+      }
+
+      #settingsanchor .content #languageselector {
+        width: 100%;
+    }

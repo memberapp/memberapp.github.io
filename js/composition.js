@@ -3,7 +3,11 @@
 var SimpleMDE=null;
 var simplemde;
 
-function initMarkdownEditor() {
+async function initMarkdownEditor() {
+    if(!SimpleMDE){
+        await loadScript("js/lib/mde/simplemde.1.11.2.min.js");
+    }
+
     if (simplemde == null) {
         simplemde = new SimpleMDE({
             element: document.getElementById("newposttamemorandum"),

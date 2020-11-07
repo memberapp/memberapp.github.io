@@ -3,7 +3,6 @@
 const DUSTLIMIT = 546;
 const MAXPOSSNUMBEROFINPUTS = 10;
 const Buffer = buffer.Buffer;
-//const BITBOX = bitboxSdk;
 
 //Note, these can be overwritten in config.js
 //let utxoServer = "https://rest.bitcoin.com/v2/";
@@ -21,9 +20,11 @@ var resendWait = 2000;
 
 class UTXOPool {
 
-  constructor(address, statusMessageFunction, storageObject, onscreenElementName) {
+  constructor(address, qaddress, statusMessageFunction, storageObject, onscreenElementName) {
     //This takes legacy address format
     this.theAddress = address;
+    this.theQAddress = qaddress;
+
     this.utxoPool = {};
     this.statusMessageFunction = statusMessageFunction;
     this.storageObject = storageObject;
@@ -124,27 +125,13 @@ class UTXOPool {
   refreshPool() {
 
     let outputInfo = new Array();
-
-    //Create Keypair
-    //const ECPair = bitboxSdk.ECPair;
-    //let keyPair = new ECPair().fromWIF(options.cash.key);
-    //let thePublicKey = keyPair.getAddress();// bitboxSdk.ECPair.toLegacyAddress(keyPair);
-    //
-    //
-
-
-
-    //Get the cashAddr format
-    //const Address2 = bch.Address;
-    //let thePublicKeyQFormat = new Address2(this.theAddress).toString(bch.Address.CashAddrFormat);
-    let thePublicKeyQFormat = new bitboxSdk.Address().toCashAddress(this.theAddress);
-
+    
     const Address = bitboxSdk.Address;
     let address = new Address();
     address.restURL = dropdowns.utxoserver;
 
     (async () => {
-      outputInfo = await address.utxo(thePublicKeyQFormat);
+      outputInfo = await address.utxo(this.theQAddress);
 
 
       //console.log(outputInfo);
@@ -211,8 +198,8 @@ class TransactionQueue {
     this.utxopools = {};
   }
 
-  addUTXOPool(address, storageObject, onscreenElementName) {
-    this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject, onscreenElementName);
+  addUTXOPool(address, qaddress, storageObject, onscreenElementName) {
+    this.utxopools[address] = new UTXOPool(address, qaddress, this.statusMessageFunction, storageObject, onscreenElementName);
     //This is used to display this UTXOPool balance on screen
     /*if(onscreenElementName!=null){
       this.utxopools[address].onscreenElementName=onscreenElementName;
@@ -384,54 +371,20 @@ class TransactionQueue {
   }
 
   selectUTXOs(options) {
-    // return new Promise(resolve => {
-    /*const ECPair = bitboxSdk.ECPair;
-    const Address = bitboxSdk.Address;
-
-    //Create Keypair
-    let keyPair = new ECPair().fromWIF(options.cash.key);
-    let thePublicKey = keyPair.getAddress();// bitboxSdk.ECPair.toLegacyAddress(keyPair);
-    const Address2 = bch.Address;
-    let thePublicKeyQFormat = new Address2(thePublicKey).toString(bch.Address.CashAddrFormat);
-
-    let outputInfo = new Array();
-    let address = new Address();*/
-
-    //(async () => {
-    //address.restURL = utxoServer;
-    //outputInfo = await address.utxo(thePublicKeyQFormat);
+    
     const ECPair = bitboxSdk.ECPair;
     let keyPair = new ECPair().fromWIF(options.cash.key);
     let theAddress = keyPair.getAddress();
 
     //If we're not maintaining a utxopool, create one
     if (this.utxopools[theAddress] == null) {
+      var theQAddress = new bitboxSdk.Address().toCashAddress(theAddress);
       //This makes a server request so may take some time to return
-      this.addUTXOPool(theAddress);
+      this.addUTXOPool(theAddress,theQAddress);
     }
 
     let utxos = this.utxopools[theAddress].getUTXOs();
 
-    /*
-    //console.log(outputInfo);
-    //let utxos = outputInfo.utxos;
-    let utxosOriginalNumber = utxos.length;
-
-    //Check no unexpected data in the fields we care about
-    for (let i = 0; i < utxos.length; i++) {
-      utxos[i].satoshis = Number(utxos[i].satoshis);
-      utxos[i].vout = Number(utxos[i].vout);
-      utxos[i].txid = sanitizeAlphanumeric(utxos[i].txid);
-    }
-
-    //Remove any utxos with less or equal to dust limit, they may be SLP tokens
-    for (let i = 0; i < utxos.length; i++) {
-      if (utxos[i].satoshis <= DUSTLIMIT) {
-        utxos.splice(i, 1);
-        i--;
-      }
-    }
-*/
     if (utxos.length == 0) {
       throw new Error(getSafeTranslation('insufficientfunds', "1001:Insufficient Funds (No Suitable UTXOs)"));
     }
@@ -492,18 +445,9 @@ class TransactionQueue {
     let keyPair = new ECPair().fromWIF(options.cash.key);
     let changeAddress = keyPair.getAddress();
 
-    //let keyPair = new ECPair().fromWIF(options.cash.key);
-    //let thePublicKey = keyPair.getAddress();// bitboxSdk.ECPair.toLegacyAddress(keyPair);
-
-    //let maxNumberOfInputs = utxos.length < MAXPOSSNUMBEROFINPUTS ? utxos.length : MAXPOSSNUMBEROFINPUTS;
-
-
     let script = new Script();
     let scriptArray = this._script(script.opcodes.OP_RETURN, options);
     let script2 = script.encode(scriptArray);
-    //[script.opcodes.OP_RETURN, Buffer.from(options.data[0], 'hex'), Buffer.from(options.data[1])]);
-
-
 
     //ESTIMATE TRX FEE REQUIRED
     let changeAmount = 0;

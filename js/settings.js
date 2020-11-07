@@ -57,8 +57,16 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
     });
 }
 
-function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
-
+async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
+    
+    if(qaddress){
+        if(!cashaddress){
+            //On a member page, the cashaddress won't be available so we have to calculate
+            if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
+            cashaddress=new bitboxSdk.Address().toCashAddress(qaddress);
+        }
+    }
+    
     //Note, data may not contain any rows, for new or unknown users.
 
     var obj = {
@@ -132,6 +140,13 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, dat
         if (data && data[0] && data[0].ratingnumber > 2) {
             document.getElementById(pre + 'nametext').disabled = true;
         }
+
+        if(qaddress){
+            document.getElementById('settingsloggedin').style.display = "block";
+        }else{
+            document.getElementById('settingsloggedin').style.display = "none";
+        }
+
     }
 
 
@@ -155,7 +170,6 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, dat
         var starRating1 = addSingleStarsRating(theElement);
     }
 
-    jdenticon();
     addDynamicHTMLElements();
 }
 
@@ -163,7 +177,6 @@ function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, dat
 function getAndPopulateMember(qaddress) {
     //document.getElementById('memberlegacyformat').innerHTML = qaddress;
     //document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
-
     getDataCommonToSettingsAndMember(qaddress, null, "member");
     getAndPopulateCommunityRatings(qaddress);
     getAndPopulateRatings(qaddress);
@@ -231,6 +244,12 @@ function updateSettings() {
                 selector.selectedIndex = i;
             }
         }
+
+        if (key == "languageselector"){
+            if(dictionary[theSetting]){
+                dictionary.live=dictionary[theSetting];
+            }
+        }
     }
 
     //Make sure users are not on the old server
@@ -259,7 +278,11 @@ function updateSettingsDropdown(settingsName) {
         refreshPool();
     }
     if (settingsName == "languageselector"){
-        dictionary.live=dictionary[dropdowns[settingsName]];
+        if(dictionary[dropdowns[settingsName]]){
+            dictionary.live=dictionary[dropdowns[settingsName]];
+            //location.reload();
+            translatePage();
+        }
     }
     updateStatus(getSafeTranslation('updated', "Updated.") + " " + dropdowns[settingsName]);
 }

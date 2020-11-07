@@ -1,52 +1,20 @@
 
 "use strict";
 
-//Preferable to grab this from sw.js, but don't know how.
-//So must be entered in two places
-var version = "4.18.0";
+
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
+var privkeyhex = "";
+var privateKeyBuf;
+
 var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
-
-var mutedwords = new Array();
 let tq = new TransactionQueue(updateStatus);
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
-var defaulttip = 1000;
-var oneclicktip = 0;
-var maxfee = 5;
-var pathpermalinks = 'https://member.cash/';
-var profilepicbase = 'img/profilepics/';
-mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-var siteTitle = 'member.cash';
-var theStyle = '';
 var bitboxSdk = null;
-
 //var twitterEmbeds=new Array();
-
-//These should probably all go in a single config object
-var settings = {
-    "showyoutube": "true",
-    "showimgur": "true",
-    "showtwitter": "true"
-};
-var dropdowns = {
-    "contentserver": "https://member.cash/v2/member.js",
-    "txbroadcastserver": "https://member.cash/v2/",
-    "utxoserver": "https://rest.bitcoin.com/v2/",
-    "currencydisplay": "USD",
-    "languageselector": "en"
-};
-var numbers = {
-    "defaulttip": 1000,
-    "oneclicktip": 0,
-    "maxfee": 2,
-    "results": 25,
-    "usdrate": 0
-}
-
 
 
 var localStorageSafe = null;
@@ -74,10 +42,25 @@ function replaceName(match, p1, p2, p3, offset, string) {
     return '"' + p2 + '" : ' + p3 + ',';
 }
 
-function init() {
+function setLanguage() {
     dictionary.live = dictionary.en;
     dictionary.fallback = dictionary.en;
-    //guesslanguage
+
+    var storedLanguage = localStorageGet(localStorageSafe, "languageselector");
+    if (storedLanguage && dictionary[storedLanguage]) {
+        dictionary.live = dictionary[storedLanguage];
+    } else {
+        //guesslanguage
+        var langcode = getBrowserLanguageCode();
+        if (dictionary[langcode]) {
+            dictionary.live = dictionary[langcode];
+        }
+    }
+}
+
+function init() {
+
+    setLanguage();
 
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
@@ -114,6 +97,7 @@ function init() {
         return;
     }
 
+    loadBigLibs();
     displayContentBasedOnURLParameters();
 }
 
@@ -137,18 +121,27 @@ function trylogin(loginkey) {
         document.getElementById('loginerror').innerHTML = error.message;
         console.log(error);
         updateStatus(error.message);
+        loadBigLibs();
         return;
     }
     getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
+    //make sure these get loaded
+    setTimeout(loadBigLibs, 10000);
 
+}
+
+var loadBigLibsStarted = false;
+async function loadBigLibs() {
+    if (loadBigLibsStarted) return;
+    loadBigLibsStarted = true;
     //Load big libraries that may not be immediately needed.
     if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
     if (!L) loadScript("js/lib/leaflet/leaflet.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
-    
 }
+
 
 async function login(loginkey) {
 
@@ -157,8 +150,10 @@ async function login(loginkey) {
     pubkey = localStorageGet(localStorageSafe, "pubkey");
     qpubkey = localStorageGet(localStorageSafe, "qpubkey");
     pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
+    privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
 
-    if (!(pubkey && qpubkey)) {
+
+    if (!(pubkey && qpubkey) || (privkey && !privkeyhex)) {
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
@@ -168,9 +163,7 @@ async function login(loginkey) {
         //check valid private or public key
         var publicaddress = "";
 
-        if (!bitboxSdk) {
-            await loadScript("js/lib/bitboxsdk.js");
-        }
+        if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }
 
         if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
 
@@ -199,7 +192,7 @@ async function login(loginkey) {
 
             privkey = loginkey;
             document.getElementById('loginkey').value = "";
-            
+
         } else if (loginkey.startsWith("5")) {
             document.getElementById('loginkey').value = "";
             alert(getSafeTranslation('uncompressed', "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')"));
@@ -221,21 +214,27 @@ async function login(loginkey) {
         qpubkey = new bitboxSdk.Address().toCashAddress(pubkey);
         localStorageSet(localStorageSafe, "pubkey", pubkey);
         localStorageSet(localStorageSafe, "qpubkey", qpubkey);
-            
+
         if (privkey) {
             let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
             pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
+            privkeyhex = ecpair.d.toHex();
+
+
+
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
+            localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
         }
 
-        
+
     }
 
+    if (privkey) {
+        privateKeyBuf = Buffer.from(privkeyhex, 'hex');
+    }
 
-    //Register public key with utxo server so that utxos can be cached    
-    getJSON("https://member.cash/v2/" + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
@@ -254,10 +253,21 @@ async function login(loginkey) {
     updateSettings();
     getAndPopulateSettings();
 
-    tq.addUTXOPool(pubkey, localStorageSafe, "balance");
+    //Register public key with utxo server so that utxos can be cached    
+    getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
+
+
+    tq.addUTXOPool(pubkey, qpubkey, localStorageSafe, "balance");
     //Get latest rate and update balance
-    getLatestUSDrate();
     loadStyle();
+
+    if (theStyle == 'nifty') {
+        //document.getElementById('header').innerHTML = niftyHeaderHTML;
+    }
+    document.getElementById('loggedin').style.display = "inline";
+    document.getElementById('loggedout').style.display = "none";
+    getLatestUSDrate();
+
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
@@ -270,7 +280,7 @@ async function login(loginkey) {
 
 function loadStyle() {
     //Set the saved style if available
-    let style = localStorageGet(localStorageSafe, "style");
+    let style = localStorageGet(localStorageSafe, "style2");
     if (style != undefined && style != null) {
         changeStyle(style, true);
     }
@@ -294,8 +304,8 @@ function logout() {
     var exitreally = confirm(getSafeTranslation('areyousure', `Are you sure you want to logout? 
     Make sure you have written down your 12 word seed phrase or private key to login again. 
     There is no other way to recover your seed phrase. It is on the settings page.
-    Click 'Cancel' if you need to do that now.
-    Click 'OK' to logout.`));
+    Click Cancel if you need to do that now.
+    Click OK to logout.`));
     if (!exitreally) {
         return;
     }
@@ -323,14 +333,9 @@ function logout() {
 }
 
 function changeStyle(newStyle, setStorage) {
-    if (newStyle.indexOf(".css") != -1 || newStyle == "base" || newStyle == "base nightmode") {
-        //old style, update
-        //base style will now have value 'base none'
-        newStyle = "feels";
-    }
     theStyle = newStyle;
     if (setStorage) {
-        localStorageSet(localStorageSafe, "style", newStyle);
+        localStorageSet(localStorageSafe, "style2", newStyle);
     }
     var cssArray = newStyle.split(" ");
     if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css"); }

@@ -6,19 +6,18 @@ const PRECACHE_URLS = [
   'pwa/manifest.webmanifest',
   'css/feels.css',
   'css/base.css',
-  'js/lib/leaflet/leaflet.js',
   'locale/en.json'
 ];
 
 //If updating version here, also update version in login.js
-const version = '4.18.0';
+const version = '4.22.0';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
 
 
 const pushNotificationsPublicKey = 'BFG-5VUdKBFXFOOLxD5Jqmjbzw0lJaThIyVlx6QzsE70T_9_v0vgIn2IxYbKcgrXGLaiPmapddgAYFtdKe00q5A';
-const SERVER_URL = '/pn/sub';
+const SERVER_URL = '/v2/pn/sub';
 var swpubkey = "";
 
 self.addEventListener('install', (event) => {
@@ -68,14 +67,14 @@ self.addEventListener("activate", async function (event) {
 
 
 self.addEventListener('fetch', function (event) {
-  if (event.request.url.includes('/version')) {
+  if (event.request.url.includes('/versionmember')) {
     event.respondWith(new Response(version, {
       headers: {
         'content-type': 'text/plain'
       }
     }));
   }
-  else if (event.request.url.startsWith(self.location.origin)) {
+  else if (event.request.url.startsWith(self.location.origin) && !event.request.url.includes('/v2/') ) {
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
         if (cachedResponse) {
