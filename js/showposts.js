@@ -355,8 +355,10 @@ function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
     for (var i = 0; i < matches.length; i++) {
         var profileElement = document.getElementById(matches[i].id.replace('member', 'profile'));
-        profileElement.onmouseleave = setDisplayNone;
-        delay(matches[i], showPreviewProfile, profileElement);
+        if(profileElement){
+            profileElement.onmouseleave = setDisplayNone;
+            delay(matches[i], showPreviewProfile, profileElement);
+        }
     }
 }
 

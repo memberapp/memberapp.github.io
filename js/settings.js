@@ -59,12 +59,14 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
 
 async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
     
-    if(!cashaddress){
-        //On a member page, the cashaddress won't be available so we have to calculate
-        if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
-        cashaddress=new bitboxSdk.Address().toCashAddress(qaddress);
+    if(qaddress){
+        if(!cashaddress){
+            //On a member page, the cashaddress won't be available so we have to calculate
+            if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
+            cashaddress=new bitboxSdk.Address().toCashAddress(qaddress);
+        }
     }
-
+    
     //Note, data may not contain any rows, for new or unknown users.
 
     var obj = {
@@ -138,6 +140,13 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         if (data && data[0] && data[0].ratingnumber > 2) {
             document.getElementById(pre + 'nametext').disabled = true;
         }
+
+        if(qaddress){
+            document.getElementById('settingsloggedin').style.display = "block";
+        }else{
+            document.getElementById('settingsloggedin').style.display = "none";
+        }
+
     }
 
 
@@ -269,9 +278,10 @@ function updateSettingsDropdown(settingsName) {
         refreshPool();
     }
     if (settingsName == "languageselector"){
-        if(dictionary[settingsName]){
+        if(dictionary[dropdowns[settingsName]]){
             dictionary.live=dictionary[dropdowns[settingsName]];
-            location.reload();
+            //location.reload();
+            translatePage();
         }
     }
     updateStatus(getSafeTranslation('updated', "Updated.") + " " + dropdowns[settingsName]);

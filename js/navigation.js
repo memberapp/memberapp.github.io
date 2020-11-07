@@ -242,10 +242,10 @@ function showNotifications(start, limit, qaddress, txid) {
 
 function showSettings() {
     //Need to be logged in
-    if (pubkey == "" || pubkey == null || pubkey == undefined) {
+    /*if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPosts(0, numbers.results, 'all');
         return;
-    }
+    }*/
     hideAll();
     show('settingsanchor');
     getAndPopulateSettings();

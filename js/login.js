@@ -42,10 +42,25 @@ function replaceName(match, p1, p2, p3, offset, string) {
     return '"' + p2 + '" : ' + p3 + ',';
 }
 
-function init() {
+function setLanguage() {
     dictionary.live = dictionary.en;
     dictionary.fallback = dictionary.en;
-    //guesslanguage
+
+    var storedLanguage = localStorageGet(localStorageSafe, "languageselector");
+    if (storedLanguage && dictionary[storedLanguage]) {
+        dictionary.live = dictionary[storedLanguage];
+    } else {
+        //guesslanguage
+        var langcode = getBrowserLanguageCode();
+        if (dictionary[langcode]) {
+            dictionary.live = dictionary[langcode];
+        }
+    }
+}
+
+function init() {
+
+    setLanguage();
 
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
@@ -112,14 +127,14 @@ function trylogin(loginkey) {
     getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
     //make sure these get loaded
-    setTimeout(loadBigLibs,10000);
-    
+    setTimeout(loadBigLibs, 10000);
+
 }
 
-var loadBigLibsStarted=false;
+var loadBigLibsStarted = false;
 async function loadBigLibs() {
-    if(loadBigLibsStarted)return;
-    loadBigLibsStarted=true;
+    if (loadBigLibsStarted) return;
+    loadBigLibsStarted = true;
     //Load big libraries that may not be immediately needed.
     if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
     if (!L) loadScript("js/lib/leaflet/leaflet.js");
@@ -138,7 +153,7 @@ async function login(loginkey) {
     privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
 
 
-    if (!(pubkey && qpubkey) || (privkey && !privkeyhex) ) {
+    if (!(pubkey && qpubkey) || (privkey && !privkeyhex)) {
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
@@ -148,7 +163,7 @@ async function login(loginkey) {
         //check valid private or public key
         var publicaddress = "";
 
-        if (!bitboxSdk) {await loadScript("js/lib/bitboxsdk.js");}
+        if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }
 
         if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
 
@@ -177,7 +192,7 @@ async function login(loginkey) {
 
             privkey = loginkey;
             document.getElementById('loginkey').value = "";
-            
+
         } else if (loginkey.startsWith("5")) {
             document.getElementById('loginkey').value = "";
             alert(getSafeTranslation('uncompressed', "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')"));
@@ -199,13 +214,13 @@ async function login(loginkey) {
         qpubkey = new bitboxSdk.Address().toCashAddress(pubkey);
         localStorageSet(localStorageSafe, "pubkey", pubkey);
         localStorageSet(localStorageSafe, "qpubkey", qpubkey);
-            
+
         if (privkey) {
             let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
             pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
             privkeyhex = ecpair.d.toHex();
-            privateKeyBuf = Buffer.from(privkeyhex, 'hex');
-    
+
+
 
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
@@ -213,10 +228,14 @@ async function login(loginkey) {
             //dropdowns.utxoserver
         }
 
-        
+
     }
 
-    
+    if (privkey) {
+        privateKeyBuf = Buffer.from(privkeyhex, 'hex');
+    }
+
+
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
 
@@ -248,7 +267,7 @@ async function login(loginkey) {
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
     getLatestUSDrate();
-    
+
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
@@ -261,7 +280,7 @@ async function login(loginkey) {
 
 function loadStyle() {
     //Set the saved style if available
-    let style = localStorageGet(localStorageSafe, "style");
+    let style = localStorageGet(localStorageSafe, "style2");
     if (style != undefined && style != null) {
         changeStyle(style, true);
     }
@@ -314,14 +333,9 @@ function logout() {
 }
 
 function changeStyle(newStyle, setStorage) {
-    if (newStyle.indexOf(".css") != -1 || newStyle == "base" || newStyle == "base nightmode") {
-        //old style, update
-        //base style will now have value 'base none'
-        newStyle = "feels";
-    }
     theStyle = newStyle;
     if (setStorage) {
-        localStorageSet(localStorageSafe, "style", newStyle);
+        localStorageSet(localStorageSafe, "style2", newStyle);
     }
     var cssArray = newStyle.split(" ");
     if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css"); }

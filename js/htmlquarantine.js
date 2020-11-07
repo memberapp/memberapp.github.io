@@ -17,7 +17,7 @@
 //Members
 
 //Get html for a user, given their address and name
-function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime) {
+function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, includeProfile) {
     if (!address) {
         return "error:no address for user";
     }
@@ -41,7 +41,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         if (picurl.toLowerCase().endsWith('.png')) {
             pictype = '.png';
         }
-        memberpic = `<span class="memberpicsmall" style="display:inline;"><img class="memberpicturesmall" width='15' height='15' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/></span>`;
+        memberpic = `<img class="memberpicturesmall" width='15' height='15' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/>`;    
     }
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="` + userclass + `">`;
@@ -80,8 +80,13 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         diff: ratingID
     }
 
-    if (theStyle == 'nifty') {
-        return templateReplace(userTemplate, obj);
+    if (theStyle.contains('compact')) {
+        obj.profilecard="";
+        if(includeProfile){
+            obj.authorsidebar="";
+            obj.profilecard=templateReplace(userProfileCompactTemplate, obj);
+        }
+        return templateReplace(userCompactTemplate, obj);
     } else {
         return templateReplace(userTemplate, obj);
     }
@@ -90,7 +95,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 
 function userFromDataBasic(data, mainRatingID, size) {
     if(!data.raterrating){data.raterrating=data.rating;}//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime);
+    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, true);
 }
 
 //Posts and Replies
@@ -247,7 +252,9 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     //    messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
     //}
 
-    var theAuthorHTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, obj);
+    var theAuthorHTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true);
+    var theAuthor2HTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, false);
+    
     var votelinks = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)));
     var age = getAgeHTML(firstseen);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
@@ -257,8 +264,9 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var obj = {
         //These must all be HTML safe 
         author: theAuthorHTML,
+        authorsidebar: theAuthor2HTML,
         message: messageLinksHTML,
-        replies: Number(replies),
+        replies: Number(replies)<0?0:Number(replies),
         likesbalance: (Number(likes) - Number(dislikes)),
         likes: Number(likes),
         dislikes: Number(dislikes),
@@ -270,6 +278,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         elapsed: getAgeHTML(firstseen, false),
         elapsedcompressed: getAgeHTML(firstseen, true),
         topic: topic ? getTopicHTML(topic, getSafeTranslation('totopic', ' to t/')) : "",
+        topicescaped: unicodeEscape(topic),
         quote: repostedHTML,
         address: address,
         votelinks: votelinks,
@@ -343,7 +352,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     message = addImageAndYoutubeMarkdown(message, differentiator, true);
 
     var voteButtons = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)));
-    var author = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime);
+    var author = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var age = getAgeHTML(firstseen);
     var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid);
@@ -586,7 +595,7 @@ function replaceImgur(match, p1, p2, p3, p4, offset, string) {
         return `<a href='javascript:;'><video controls class="imgurimage" draggable="false" playsinline="true" loop="true"><source type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
     }
 
-    return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur"><div class="imgurcontainer"><img class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
+    return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur" onclick="event.stopPropagation();"><div class="imgurcontainer"><img class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
 }
 
 //Notifications
@@ -612,8 +621,8 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
         post: addendumHTML
     }
 
-    if (theStyle == 'nifty') {
-        return templateReplace(notificationTemplate, obj);
+    if (theStyle.contains('compact')) {
+        return templateReplace(notificationCompactTemplate, obj);
     } else {
         return templateReplace(notificationTemplate, obj);
     }
@@ -908,7 +917,7 @@ function getMessageHTML(data, count) {
             //should be possible to remove this after a month or so
         }
         //You sent a message
-        contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
+        contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
         decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
         contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";

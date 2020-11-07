@@ -3251,3 +3251,7 @@ tbody tr td .filterprovider {
     .repostnoquote .repost {
       padding: 0.3rem
       }
+
+      #settingsanchor .content #languageselector {
+        width: 100%;
+    }
