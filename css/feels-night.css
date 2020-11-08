@@ -400,6 +400,9 @@ img {
     .member-pagingid {
       max-width: 200px; } }
 
+.post-body {
+  word-break: break-word; }
+
 body {
   background: #1F1F1F;
   position: relative;
@@ -2538,7 +2541,7 @@ body.article {
     width: 100%;
     margin-bottom: 0;
     padding: 1.75rem; }
-    @media (max-width: 399px) {
+    @media (max-width: 767px) {
       #topiclistanchor table td.tltopicname {
         max-width: 200px;
         white-space: pre-wrap; }
@@ -3244,22 +3247,3 @@ tbody tr td .filterprovider {
     #following .content br,
     #followers .content br {
       display: none; }
-
-      .quotepost {
-        margin: 0rem;
-        margin-bottom: 1rem;
-
-    }
-    
-    .repostnoquote .memberpicturesmall {
-        height: 1rem;
-        width: 1rem;
-    }
-
-    .repostnoquote .repost {
-      padding: 0.3rem
-      }
-
-      #settingsanchor .content #languageselector {
-        width: 100%;
-    }
