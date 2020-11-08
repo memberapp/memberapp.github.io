@@ -70,7 +70,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-remembers{rememberactivated} post-footer-relative" id="remembers{txid}">
-                        <a id="quotelinkposts{diff}{txid}" href="#new?txid={txid}" class="btn-icon"
+                        <a id="quotelinkposts{diff}{txid}" onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';" class="btn-icon"
                             data-action="remember">
                             <span class="remembersicon">
                                 <span class="emojiicon">♻</span>

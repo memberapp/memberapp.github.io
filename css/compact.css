@@ -170,6 +170,7 @@ a {
 
 .post-footer-relative{
   position: relative;
+  cursor: pointer;
 }
 
 /*
@@ -287,12 +288,12 @@ a {
 
 /*move the stars up a little*/
 .post-side-bar .star-rating{
-  top: -0.8em;
+  top: -0.7em;
 }
 
 /*move the flair up a little, ensure it is left aligned*/
 .post-side-bar .flair{
-top: 2.1em;
+top: 2.2em;
 position: absolute;
 left: 0;
 }
@@ -302,7 +303,11 @@ left: 0;
 
 
 .age::before {
-  content: "\00a0 • ";
+  content: "\00a0• ";
+}
+
+.age::after {
+  content: "\00a0";
 }
 
 .member-handle{
@@ -492,6 +497,11 @@ display: block;
 
 .post-body{
   word-break: break-word;
+}
+
+
+.repost .star-rating {
+  display: inline-block;
 }
 
 

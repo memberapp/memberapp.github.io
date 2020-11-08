@@ -1,6 +1,6 @@
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "4.22.0";
+var version = "5.0.0";
 
 var mutedwords = new Array();
 var defaulttip = 1000;
@@ -10,7 +10,7 @@ var pathpermalinks = 'https://member.cash/';
 var profilepicbase = 'img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var siteTitle = 'member.cash';
-var theStyle = '';
+var theStyle = 'feels compact';
 
 //These should probably all go in a single config object
 var settings = {

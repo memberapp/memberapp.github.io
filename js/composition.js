@@ -35,14 +35,19 @@ function getMemorandumText() {
     return simplemde?simplemde.value():'';
 }
 
+var articlemode=false;
 function switchToArticleMode() {
     changeStyle('base none', false);
     setBodyStyle("article");
+    articlemode=true;
 }
 
 function switchToRegularMode() {
-    loadStyle();
-    setBodyStyle("none");
+    if(articlemode){
+        loadStyle();
+        setBodyStyle("none");
+        articlemode=false;
+    }
 }
 
 function memorandumPreview() {
