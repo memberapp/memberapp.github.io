@@ -682,12 +682,19 @@ a {
   margin: 1.5rem;
   border-bottom-left-radius: 0.2rem;
   border-top-left-radius: 0.2rem; }
+  @media (max-width: 399px) {
+    .quotepost {
+      margin: 0.5rem;
+      margin-bottom: 1rem; } }
 
 .repostnoquote .quotepost {
   border: 0;
   border-radius: 0;
   padding: 0px;
   margin: 0; }
+
+.repostnoquote .repost {
+  padding: 0.5rem; }
 
 [id^=replycompletedthread] {
   text-align: center; }
@@ -1302,23 +1309,19 @@ video {
     display: flex;
     -ms-flex-direction: row;
     flex-direction: row; }
-    .postdetails .subtextbuttons .rememberscounttext a.remebersinactive,
-    .postdetails .subtextbuttons .rememberscounttext a.remebersactive,
-    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive,
-    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersactive {
+    .postdetails .subtextbuttons .rememberscounttext a.remembersactive,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersactive {
       margin-right: 0; }
-      .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
-      .postdetails .subtextbuttons .rememberscounttext a.remebersactive::before,
-      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before,
-      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersactive::before {
+      .postdetails .subtextbuttons .rememberscounttext a.remembersactive::before,
+      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersactive::before {
         background: url(../img/feelstheme/re-member.svg);
         background-size: 0.875rem 0.875rem;
         display: inline-block; }
-    .postdetails .subtextbuttons .rememberscounttext a.remebersinactive,
-    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive {
+    .postdetails .subtextbuttons .rememberscounttext a.remembersinactive,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersinactive {
       color: #2291EB; }
-      .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
-      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before {
+      .postdetails .subtextbuttons .rememberscounttext a.remembersinactive::before,
+      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersinactive::before {
         fill: #2291EB; }
     .postdetails .subtextbuttons .rememberscounttext .repostscount,
     .comment-tree ul li .reply div .subtextbuttons .rememberscounttext .repostscount {
@@ -2511,30 +2514,36 @@ body.article {
   @media (max-width: 768px) {
     #topiclistanchor {
       max-width: 540px; } }
-  #topiclistanchor br {
-    display: none; }
-  #topiclistanchor table {
+  #topiclistanchor .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
     overflow: inherit;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    width: 100%;
-    padding: 1.75rem; }
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
     @media (max-width: 400px) {
-      #topiclistanchor table {
+      #topiclistanchor .content {
         margin-left: -15px !important;
         margin-right: -15px !important;
         border-radius: 0;
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
+  #topiclistanchor br {
+    display: none; }
+  #topiclistanchor .topicheader {
+    display: none; }
+  #topiclistanchor table {
+    width: 100%;
+    margin-bottom: 0;
+    padding: 1.75rem; }
     @media (max-width: 399px) {
       #topiclistanchor table td.tltopicname {
         max-width: 200px;
-        white-space: pre-wrap; } }
+        white-space: pre-wrap; }
+      #topiclistanchor table .tlmessagescount, #topiclistanchor table .tlsubscount, #topiclistanchor table .tlmessagecount {
+        display: none; } }
     #topiclistanchor table .tltopicname {
       text-align: left; }
 
@@ -3183,8 +3192,8 @@ tbody tr td .filterprovider {
         box-shadow: 0 1px 3px rgba(255, 255, 255, 0.38), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
-  #notifications .highlighted {
-    background-color: rgba(255, 255, 255, 0.38); }
+      #notifications ul.notificationslist li.highlighted .notificationtitle {
+        background-color: rgba(255, 255, 255, 0.38); }
 
 #blockers,
 #blocking,
