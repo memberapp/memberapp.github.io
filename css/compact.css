@@ -84,13 +84,14 @@
   min-width: 12em;
   z-index: 1;
   font-size: 1em;
-  left:-100px;
+  right:-1em;
   top:-3em;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   padding: 1rem;
   z-index: 999;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  text-transform: capitalize;
 }
 
 /* Links inside the dropdown */
@@ -504,4 +505,15 @@ display: block;
   display: inline-block;
 }
 
+.tipdetailscompact .star-rating, .tipdetailscompact .flair, .tipdetailscompact .memberpicturesmall, .tipdetailscompact .jdenticon{
+  display: inline-block;
+}
 
+
+.rememberdetailscompact .star-rating, .rememberdetailscompact .flair, .rememberdetailscompact .memberpicturesmall, .rememberdetailscompact .jdenticon {
+  display: inline-block;
+}
+
+.tipdetailscompact, .rememberdetailscompact{
+line-height: 1.85;
+}

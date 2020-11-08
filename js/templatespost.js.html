@@ -1,8 +1,7 @@
 var postCompactTemplate = `
 <div class="post">
     <div class="post-content">
-        <div class="post-side-bar"
-            onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
+        <div class="post-side-bar" onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
         </div>
         <div class="post-right-contents">
@@ -70,8 +69,9 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-remembers{rememberactivated} post-footer-relative" id="remembers{txid}">
-                        <a id="quotelinkposts{diff}{txid}" onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';" class="btn-icon"
-                            data-action="remember">
+                        <a id="quotelinkposts{diff}{txid}"
+                            onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"
+                            class="btn-icon" data-action="remember">
                             <span class="remembersicon">
                                 <span class="emojiicon">♻</span>
                             </span>
@@ -93,12 +93,19 @@ var postCompactTemplate = `
                     </span>
                     <span class="dropdown">
                         <button
-                            onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content'); ddmenu.style.display='block'; ddmenu.onmouseleave = function () { ddmenu.style.display='none'; }"
+                            onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content');
+                                        ddmenu.style.display='block'; 
+                                        setTimeout(function(){document.body.onclick = function () {ddmenu.style.display='none';document.body.onclick =null}},500);"
                             class="dropbtn">☰</button>
                         <div class="dropdown-content" id="dropdown-content">
-                            <a class="permalink" id="permalinkposts{diff}{txid}" href="p/{txidshort}"><span
+                            <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
+                                href="javascript:;"><span data-vavilon="VV0147">Likes and</span> <span
+                                    data-vavilon="tips">Tips</span></a>
+                            <a onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')"
+                                href="javascript:;"><span data-vavilon="VV0156">Remembers</span></a>
+                            <a class="permalink" id="permalinkposts{diff}{txid}" href="{permalink}"><span
                                     data-vavilon="permalink">Permalink</span></a>
-                            <a id="articlelinkposts{diff}{txid}" href="a/{txidshort}"><span
+                            <a id="articlelinkposts{diff}{txid}" href="{articlelink}"><span
                                     data-vavilon="article">Article</span></a>
                             <a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
                                 href="javascript:;"><span data-vavilon="VV0161">Flag post</span></a>
