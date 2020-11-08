@@ -3264,3 +3264,7 @@ tbody tr td .filterprovider {
       #settingsanchor .content #languageselector {
         width: 100%;
     }
+
+    .post-body{
+      word-break: break-word;
+    }

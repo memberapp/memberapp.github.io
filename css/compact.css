@@ -290,10 +290,11 @@ a {
   top: -0.8em;
 }
 
-/*move the flair up a little*/
+/*move the flair up a little, ensure it is left aligned*/
 .post-side-bar .flair{
 top: 2.1em;
 position: absolute;
+left: 0;
 }
 
 
@@ -487,6 +488,10 @@ display: block;
 /* make the number links grey*/
 .post-footer-relative a {
   color: #aaa;
+}
+
+.post-body{
+  word-break: break-word;
 }
 
 

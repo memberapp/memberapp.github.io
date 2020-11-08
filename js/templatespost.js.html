@@ -1,7 +1,8 @@
 var postCompactTemplate = `
 <div class="post">
     <div class="post-content">
-        <div class="post-side-bar">
+        <div class="post-side-bar"
+            onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
         </div>
         <div class="post-right-contents">
@@ -22,7 +23,7 @@ var postCompactTemplate = `
             </div>
             <div class="post-body-wrapper">
                 <div class="post-body"
-                    onclick="if(document.getSelection().type === 'Range'){return;}else{location.href='#thread?root={roottxid}&amp;post={txid}'};">
+                    onclick="if(document.getSelection().type === 'Range'){return;}else{nlc();location.href='#thread?root={roottxid}&amp;post={txid}'};">
                     {message}
                 </div>
                 <div class="post-quote">
@@ -91,7 +92,8 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="dropdown">
-                        <button onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content'); ddmenu.style.display='block'; ddmenu.onmouseleave = function () { ddmenu.style.display='none'; }"
+                        <button
+                            onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content'); ddmenu.style.display='block'; ddmenu.onmouseleave = function () { ddmenu.style.display='none'; }"
                             class="dropbtn">☰</button>
                         <div class="dropdown-content" id="dropdown-content">
                             <a class="permalink" id="permalinkposts{diff}{txid}" href="p/{txidshort}"><span
@@ -132,7 +134,7 @@ var postCompactTemplate = `
 `;
 
 var completedPostTemplate=`
-Sent.
+<span data-vavilon="messagesent">Sent.</span>
 <a data-vavilon="VV0145" onclick="showThread('{txid}')" href="#thread?post={txid}" onclick="nlc();">View It</a> or
 <a data-vavilon="VV0146" href="javascript;"
     onclick="window.open('{encodedurl}', 'twitterwindow', 'width=300,height=250');return false;">Also
@@ -152,7 +154,7 @@ var scoresTemplate=`
 </span>`;
 
 var userCompactTemplate=`
-<span class="membercompact">
+<span class="membercompact" onclick="event.stopPropagation();">
     <span id="memberinfo{diff}posts{address}">
         <a href="#member?qaddress={address}" onclick="nlc();" class="memberdetails">
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
