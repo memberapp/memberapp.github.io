@@ -313,8 +313,12 @@ left: 0;
 
 .member-handle{
   font-weight: bold;
+  display: inline-flex;
 }
 
+.member-pagingid{
+display: inline-flex;
+}
 
 
 /*Getting Two columns, 3em on left, 100% on right*/
@@ -433,9 +437,7 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   display: inline;
 }
 
-.profile-card-meta .member-handle{
-  display: inline;
-}
+
 
 .profile-card-meta{
   display: flex;
