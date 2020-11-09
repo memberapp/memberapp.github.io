@@ -82,7 +82,7 @@
   display: none;
   position: absolute;
   min-width: 12em;
-  z-index: 1;
+  z-index: 101;
   font-size: 1em;
   right:-1em;
   top:-3em;

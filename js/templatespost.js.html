@@ -94,8 +94,10 @@ var postCompactTemplate = `
                     <span class="dropdown">
                         <button
                             onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content');
-                                        ddmenu.style.display='block'; 
-                                        setTimeout(function(){document.body.onclick = document.body.ontouchend = function () {ddmenu.style.display='none';document.body.onclick = document.body.ontouchend =null}},500);"
+                                        ddmenu.style.display='block';
+                                    var ddcover=document.getElementById('ddcover');
+                                        ddcover.style.display='block';
+                                        ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
                             class="dropbtn">☰</button>
                         <div class="dropdown-content" id="dropdown-content">
                             <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
@@ -119,7 +121,6 @@ var postCompactTemplate = `
                             <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">Memo</a>
                             <a rel="noopener noreferrer" target="bitcoincom"
                                 href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>
-
                         </div>
                     </span>
                 </div>
