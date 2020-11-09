@@ -355,8 +355,10 @@ function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
     for (var i = 0; i < matches.length; i++) {
         var profileElement = document.getElementById(matches[i].id.replace('member', 'profile'));
-        profileElement.onmouseleave = setDisplayNone;
-        delay(matches[i], showPreviewProfile, profileElement);
+        if(profileElement){
+            profileElement.onmouseleave = setDisplayNone;
+            delay(matches[i], showPreviewProfile, profileElement);
+        }
     }
 }
 
@@ -541,6 +543,8 @@ function showReplyBox(txid) {
     var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0, 10) + "']");
     //document.getElementById("reply" + txid);
     replybox.style.display = "block";
+
+    //set focus here .focus()
     //document.getElementById("replylink"+txid).style.display = "none";
     return true;
 }
@@ -557,13 +561,14 @@ function decreaseGUILikes(txid) {
         //Change classes
         downarrow.className = "votearrowactivateddown rotate180";
         uparrow.className = "votearrow";
-        document.getElementById('score' + txid).className = "betweenvotesscoredown";
-    
-        if (theStyle == 'nifty' || theStyle == 'none') {
+        
+        if (theStyle.contains('compact')) {
             var dislikescount = Number(document.getElementById('dislikescount' + txid).innerText);
             document.getElementById('dislikescount' + txid).innerText = dislikescount + 1;
-            uparrow.className = "post-footer-upvote";
-            downarrow.className = "post-footer-downvote-activated";
+            uparrow.className = "votearrowactivateddown rotate180 post-footer-upvote";
+            downarrow.className = "votearrow post-footer-downvote-activated";
+        }else{
+            document.getElementById('score' + txid).className = "betweenvotesscoredown";
         }
 
 }
@@ -582,16 +587,25 @@ function increaseGUILikes(txid) {
         document.getElementById('score' + txid).innerText = likescount + 1;
 
         //Change classes
+        if(uparrow)
         uparrow.className = "votearrowactivated";
+        if(downarrow)
         downarrow.className = "votearrow rotate180";
-        //Change class
-        document.getElementById('score' + txid).className = "betweenvotesscoreup";
-    
+        
         //Nifty
-        if (theStyle == 'nifty' || theStyle == 'none') {
+        if (theStyle.contains('compact')) {
             //Change classes
-            uparrow.className = "post-footer-upvote-activated";
-            downarrow.className = "post-footer-downvote";
+            if(uparrow)
+            uparrow.className = "votearrowactivated post-footer-upvote-activated";
+            if(downarrow)
+            downarrow.className = "votearrow rotate180 post-footer-downvote";
+            var upvotecontainer=document.getElementById('upvotecontainer' + txid)
+            if(upvotecontainer)
+            upvotecontainer.className = "post-footer-upvote-activated post-footer-relative";
+        
+        }else{
+            //Change class
+            document.getElementById('score' + txid).className = "betweenvotesscoreup";
         }
 
 }
@@ -736,7 +750,7 @@ function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
                     //replies must be within 6 hours of each other
                     if (data[i].retxid == data[j].txid && Math.abs(data[i].firstseen - data[j].firstseen) < 6 * 60 * 60) {
                         //After 8/11/2020 replies must begin with '|' to be mergeable
-                        if (data[j].firstseen < 1604813359 || data[i].message.startsWith('|')) {
+                        if (data[j].firstseen < 1604813359 || data[i].message.startsWith('|') || data[i].stamp) {
                             //Subtract one as each post is automatically liked by its own author
                             data[j].likes = (Number(data[j].likes) + Number(data[i].likes - 1)).toString();
                             data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();

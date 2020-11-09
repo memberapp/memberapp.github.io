@@ -1,0 +1,521 @@
+
+      body {
+        background: #FFF;
+    }
+      
+      .quotepost{
+        border-radius: 10px;
+      }
+
+      .post-content{
+        width: 100%;
+        padding: .5em;
+      }
+
+      
+      .post-body {
+            padding-bottom: .5em;
+      }
+
+      .footerlabel{
+        display: none;
+      }
+
+      .elapsed-time{
+        display: none;
+      }
+
+      .elapsed-time-compressed{
+        display: inline;
+      }
+
+      .fulltext{
+        display: none;
+      }
+
+      .likestext{
+        display: none;
+      }
+      
+      .likesbalance{
+        display: inline;
+      }
+
+      .post-footer-downvote{
+        display: none;
+      }
+
+      
+
+      .post-footer {
+        width:100%;
+        font-size:1em;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.5em;
+      }
+
+
+ /* Style The Dropdown Button */
+.dropbtn {
+  color: black;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  padding-top: .15em;
+}
+
+.dropdown input[type="submit"], .dropdown button {
+    padding: 0rem 0rem;
+}
+
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  background-color: white;
+  display: none;
+  position: absolute;
+  min-width: 12em;
+  z-index: 101;
+  font-size: 1em;
+  right:-1em;
+  top:-3em;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  z-index: 999;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  text-transform: capitalize;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  text-decoration: none;
+  display: block;
+  font-size: 1em;
+  padding-bottom:1em;
+}
+
+.dropdownmenuitem{
+  padding-bottom:1em;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover 
+.dropdown:hover .dropdown-content {
+  display: block;
+}*/
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color:  #1063A8;
+}
+
+.emojiicon{
+    display: none;
+}
+
+.replyicon{  
+    width: 1rem;
+    height: 1rem;
+    background: url(../img/feelstheme/compact-speech.svg);
+    filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
+    background-size: 1rem 1rem;
+    display: inline-block;
+}
+
+.remembersicon{  
+        width: 1rem;
+        height: 1rem;
+        background: url(../img/feelstheme/compact-remember.svg);
+        filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
+        background-size: 1rem 1rem;
+        display: inline-block;
+}
+
+.likeicon{  
+    width: 1rem;
+    height: 1rem;
+    background: url(../img/feelstheme/compact-heart.svg);
+    filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
+    background-size: 1rem 1rem;
+    display: inline-block;
+}
+
+.tipicon{  
+    width: 1rem;
+    height: 1rem;
+    background: url(../img/feelstheme/compact-tip.svg);
+    filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
+    background-size: 1rem 1rem;
+    display: inline-block;
+}
+
+.iconcount{
+  position: absolute;
+  top: -0.2rem;
+  left: 1.5rem;
+}
+
+a {
+  overflow-wrap: normal;
+}
+
+.post-footer-relative{
+  position: relative;
+  cursor: pointer;
+}
+
+/*
+.post-metadata {
+    top: -1.15em;
+    position: relative;
+}
+
+.quotepost .post-metadata {
+    top: -.25em;
+    position: relative;
+}
+
+
+.post-body-wrapper {
+    padding-left: 3.3em;
+    top: -1.55em;
+    position: relative;
+}
+
+.post-header {
+    top: -.5em;
+    position: relative;
+}
+
+
+.quotepost .post-body-wrapper {
+    padding-left: 0em;
+    top: 0em;
+    position: relative;
+}
+
+.quotepost .post-header {
+    top: 0em;
+    position: relative;
+}*/
+
+.quotepost .post-footer {
+    display: none;
+}
+
+.post-footer-upvote-activated, .post-footer-downvote-activated, .post-footer-remembers-activated {
+  filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%);
+}
+
+
+/*
+.mainbodywrapper #posts .itemlist ol.posts li {
+    border: 0px solid rgba(0, 0, 0, 0.12);
+    margin-bottom: 0px;
+}
+
+
+.memberpicsmall .memberpicturesmall {
+    height: 1.25rem;
+    width: 1.25rem;
+}
+
+.jdenticon, .memberpicturesmall, .memberpicsmall{
+    height: 1.25rem;
+    width: 1.25rem;
+    top: 0em;
+    position: relative;
+}
+
+.post .memberpicsmall .memberpicturesmall {
+    height: 3rem;
+    width: 3rem;
+    z-index: 1;
+}
+
+.post .memberpicturesmall, .post .memberpicsmall{
+    height: 3rem;
+    width: 3rem;
+    top: .5em;
+    position: relative;
+}
+
+.post .jdenticon{
+    height: 3rem;
+    width: 3rem;
+    top: 1em;
+    position: relative;
+}
+
+.quotepost .memberpicsmall .memberpicturesmall {
+    height: 1.25rem;
+    width: 1.25rem;
+}
+
+.quotepost .jdenticon, .quotepost .memberpicturesmall, .quotepost .memberpicsmall{
+    height: 1.25rem;
+    width: 1.25rem;
+    top: 0em;
+    position: relative;
+}
+
+
+.profile-meta .memberpicsmall .memberpicturesmall {
+    height: 5rem;
+    width: 5rem;
+}
+
+.profile-meta .jdenticon, .profile-meta .memberpicturesmall, .profile-meta .memberpicsmall{
+    height: 5rem;
+    width: 5rem;
+    top: 0em;
+    position: relative;
+}*/
+
+
+.post-side-bar .member-handle{
+  display: none;
+}
+
+/*move the stars up a little*/
+.post-side-bar .star-rating{
+  top: -0.7em;
+}
+
+/*move the flair up a little, ensure it is left aligned*/
+.post-side-bar .flair{
+top: 2.2em;
+position: absolute;
+left: 0;
+}
+
+
+
+
+
+.age::before {
+  content: "\00a0• ";
+}
+
+.age::after {
+  content: "\00a0";
+}
+
+.member-handle{
+  font-weight: bold;
+  display: inline-flex;
+}
+
+.member-pagingid{
+display: inline-flex;
+}
+
+
+/*Getting Two columns, 3em on left, 100% on right*/
+.post-content{
+  display: flex;
+  width: 100%;
+}
+
+.post-side-bar {
+  flex: 0 0 3em;
+}
+
+.post-right-contents {
+  flex: 100%;
+  margin-left: 1em;
+}
+
+/*Getting Two columns, 5em on left, 100% on right*/
+.profile-side-bar {
+  flex: 0 0 5em;
+}
+
+.profile-right-contents {
+  flex: 100%;
+  margin-left: 1em;
+}
+
+.memberpicturesmall, .memberpicsmallcompact, .jdenticon {
+  height: 1.25rem;
+  width: 1.25rem;
+  border-radius: 100%;
+  top: 0.125rem;
+  position: relative;
+}
+
+
+/*Side bar, profile pic and jdenticon side and profile pic in circle*/
+.post-side-bar .memberpicturesmall, .post-side-bar .memberpicsmallcompact, .post-side-bar .jdenticon{
+  height: 3rem;
+  width: 3rem;
+  border-radius: 100%;
+}
+
+/*Profile card, profile pic and jdenticon side and profile pic in circle
+Use important, because we always want profile card pics to be this size*/
+.profile-card-meta .memberpicturesmall, .profile-card-meta .memberpicsmallcompact, .profile-card-meta .jdenticon{
+  height: 5rem !important;
+  width: 5rem !important;
+  border-radius: 100% !important;
+}
+
+
+
+
+.notificationtitlecompact{
+padding:1rem;
+border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/*flair*/
+.flair {
+  background: #2291EB;
+  color: white;
+  border-radius: 0.25rem;
+  width: 3em;
+  display: inline-block;
+  text-align: center;
+  height: 1.65em;
+}
+
+/*Container that profile can be absolutely positioned against*/
+.membercompact{
+  position:relative;
+}
+
+/*Position absolutely*/
+.profilecard {
+  top: -4.25rem;
+}
+
+
+/*Hide image, jdenticon and flair in post*/
+.post-right-contents .star-rating{
+  display: none;
+}
+
+.post-right-contents .memberpicturesmall{
+  display: none;
+}
+
+.post-right-contents .flair{
+  display: none;
+}
+
+.post-right-contents .jdenticon{
+  display: none;
+}
+
+/*----------------------------------------------*/
+
+/*Show image, jdenticon and flair in profile*/
+
+.profile-card-meta .star-rating{
+  display: inline-block;
+}
+
+.profile-card-meta .memberpicturesmall{
+  display: inline;
+}
+
+.profile-card-meta .flair{
+  display: inline-block;
+}
+
+.profile-card-meta .jdenticon{
+  display: inline;
+}
+
+
+
+.profile-card-meta{
+  display: flex;
+}
+/*----------------------------------------------*/
+
+
+/*No margin on age*/
+.age {
+  margin-right: 0rem;
+}
+
+/*Remove border on posts*/
+.mainbodywrapper #posts .itemlist ol.posts li {
+  border: 0px solid rgba(0, 0, 0, 0.12);
+}
+
+/*move profile preview up in side bar, left in post*/
+.post-side-bar .profilepreview{
+  top:-5em;
+}
+
+.post-right-contents .profilepreview{
+  left:-5em;
+}
+
+/*show small memberpic for when post is quoted*/
+.quotepost .memberpicturesmall {
+  display: inline;
+}
+
+/*hide the sidebar for quoteposts*/
+.quotepost .post-side-bar {
+  display:none;
+}
+
+
+
+/*Remove generally bad img defaults*/
+
+img {
+  margin: 0;
+  display: inline-block;
+}
+
+.imgurimage {
+outline-offset: -1px;
+outline: 1px solid rgba(0, 0, 0, 0.05);
+max-height: 640px;
+width: auto;
+max-width: 100%;
+margin: 1rem auto 0 auto;
+display: block;
+}
+
+/* make the number links grey*/
+.post-footer-relative a {
+  color: #aaa;
+}
+
+.post-body{
+  word-break: break-word;
+}
+
+
+.repost .star-rating {
+  display: inline-block;
+}
+
+.tipdetailscompact .star-rating, .tipdetailscompact .flair, .tipdetailscompact .memberpicturesmall, .tipdetailscompact .jdenticon{
+  display: inline-block;
+}
+
+
+.rememberdetailscompact .star-rating, .rememberdetailscompact .flair, .rememberdetailscompact .memberpicturesmall, .rememberdetailscompact .jdenticon {
+  display: inline-block;
+}
+
+.tipdetailscompact, .rememberdetailscompact{
+line-height: 1.85;
+}

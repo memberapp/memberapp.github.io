@@ -400,6 +400,9 @@ img {
     .member-pagingid {
       max-width: 200px; } }
 
+.post-body {
+  word-break: break-word; }
+
 body {
   background: #f7f7f7;
   position: relative;
@@ -2531,7 +2534,15 @@ body.article {
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
-    @media (max-width: 399px) {
+  #topiclistanchor br {
+    display: none; }
+  #topiclistanchor .topicheader {
+    display: none; }
+  #topiclistanchor table {
+    width: 100%;
+    margin-bottom: 0;
+    padding: 1.75rem; }
+    @media (max-width: 767px) {
       #topiclistanchor table td.tltopicname {
         max-width: 200px;
         white-space: pre-wrap; } }
@@ -3236,10 +3247,10 @@ tbody tr td .filterprovider {
     #followers .content br {
       display: none; }
 
-
-    .quotepost {
+      .quotepost {
         margin: 0rem;
         margin-bottom: 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.12);
     }
     
     .repostnoquote .memberpicturesmall {
@@ -3250,3 +3261,12 @@ tbody tr td .filterprovider {
     .repostnoquote .repost {
       padding: 0.3rem
       }
+
+      #settingsanchor .content #languageselector {
+        width: 100%;
+    }
+
+    .post-body{
+      word-break: break-word;
+    }
+

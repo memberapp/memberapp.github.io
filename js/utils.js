@@ -11,25 +11,25 @@ function timeSince(timestamp, compress) {
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation( "y", "y") : " " + getSafeTranslation( "yearsago", "years ago"));
+    return (compress ? interval + getSafeTranslation("y", "y") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("yearsago", "years ago"));
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation( "m", "m") : " " + getSafeTranslation( "monthsago", "months ago"));
+    return (compress ? interval + getSafeTranslation("m", "m") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("monthsago", "months ago"));
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation( "d", "d") : " " + getSafeTranslation( "daysago", "days ago"));
+    return (compress ? interval + getSafeTranslation("d", "d") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("daysago", "days ago"));
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation( "h", "h") : " " + getSafeTranslation( "hoursago", "hours ago"));
+    return (compress ? interval + getSafeTranslation("h", "h") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("hoursago", "hours ago"));
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation( "m", "m") : " " + getSafeTranslation( "minutesago", "minutes ago"));
+    return (compress ? interval + getSafeTranslation("m", "m") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("minutesago", "minutes ago"));
   }
-  return Math.floor(seconds) + (compress ? getSafeTranslation( "s", "s") : " " + getSafeTranslation( "secondsago", "seconds ago"));
+  return (compress ? Math.floor(seconds) + getSafeTranslation("s", "s") : " " + getSafeTranslation("hace", "") + Math.floor(seconds) + " " + getSafeTranslation("secondsago", "seconds ago"));
 }
 
 var ordinal_suffix_of = function (i) {
@@ -50,7 +50,7 @@ var ordinal_suffix_of = function (i) {
 var getJSON = function (url) {
   //force a reload by appending time so no cached versions
   url += "&r=" + (new Date().getTime() % 100000);
-  updateStatus(getSafeTranslation('loading',"loading")+ " " + url);
+  updateStatus(getSafeTranslation('loading', "loading") + " " + url);
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     addListeners(xhr);
@@ -83,7 +83,7 @@ function addListeners(xhr) {
 }
 
 function handleEvent(e) {
-  updateStatus(`${e.type}: ${e.loaded} ` + getSafeTranslation('bytestransferred',`bytes transferred`));
+  updateStatus(`${e.type}: ${e.loaded} ` + getSafeTranslation('bytestransferred', `bytes transferred`));
 }
 
 function ds(input) {
@@ -253,20 +253,27 @@ function getLatestUSDrate() {
   getJSON(`https://markets.api.bitcoin.com/live/bitcoin?a=1`).then(function (data) {
     document.getElementById("usdrate").value = Number(data.data.BCH);
     updateSettingsNumber('usdrate');
-    updateStatus(getSafeTranslation('updatedforex',"Got updated exchange rate:") + numbers.usdrate);
+    updateStatus(getSafeTranslation('updatedforex', "Got updated exchange rate:") + numbers.usdrate);
     try {
       tq.updateBalance(pubkey);
     } catch (err) { }
   }, function (status) { //error detection....
-    console.log(getSafeTranslation('failedforex','Failed to get usd rate:') + status);
+    console.log(getSafeTranslation('failedforex', 'Failed to get usd rate:') + status);
     updateStatus(status);
   });
 }
 
 function balanceString(total, includeSymbol) {
   if (dropdowns.currencydisplay == "BCH" || numbers.usdrate === undefined || numbers.usdrate === 0) {
-    var balString = (Number(total) / 1000).toFixed(3);
-    balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
+    //var balString = (Number(total) / 1000).toFixed(3);
+    //balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
+    var balString = ""+Number(total);
+    if(balString.length>3){
+      balString = Number(balString.substr(0, balString.length - 3)).toLocaleString() + "k";
+    }else{
+      balString=Number(total);
+    }
+
     if (includeSymbol) {
       return "₿" + balString;
     } else {
@@ -308,6 +315,7 @@ DOMPurify.addHook('afterSanitizeAttributes', function (node) {
       node.setAttribute('target', '_blank');
       // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
       node.setAttribute('rel', 'noopener noreferrer');
+      node.setAttribute('click', 'event.stopPropoagation();');
     }
   }
   // set non-HTML/MathML links to xlink:show=new
@@ -374,7 +382,7 @@ var delay = function (elem, callback, target) {
   }
 };
 
-//replace items in a template (for nifty theme)
+//replace items in a template
 function templateReplace(templateString, obj, skipdebug) {
   //var templateString=document.getElementById(template).innerHTML;
   return templateString.replace(/\{(\w+)\}/g, function (_, k) {
@@ -387,20 +395,47 @@ function templateReplace(templateString, obj, skipdebug) {
 }
 
 function loadScript(src) {
-  console.log("background loading "+src);
+  console.log("background loading " + src);
   return new Promise(function (resolve, reject) {
-      var s;
-      s = document.createElement('script');
-      s.src = src;
-      s.onload = resolve;
-      s.onerror = reject;
-      document.head.appendChild(s);
+    var s;
+    s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
   });
 }
 
-function getLegacyToHash160(qaddress){
+function getLegacyToHash160(qaddress) {
   if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
   //don't want to make the above await, but want to load library
   //the next function will fail if sdk is not loaded for some reason, but will work on retry
   return new bitboxSdk.Address().legacyToHash160(qaddress);
+}
+
+function getBrowserLanguageCode() {
+  const zhTraditional = ["zh-hk", "zh-tw", "zh-hant"];
+  const zhSimplified = ["zh-cn", "zh-sg", "zh-hans"];
+  const allowedInput = ["af", "an", "ar", "as", "azb", "az", "bal", "bel",
+    "bg", "bn", "bo", "bs", "ca", "ckb", "cs", "cy", "da", "de", "el",
+    "en", "eo", "es", "et", "eu", "fa", "fi", "fo", "fr", "fy", "ga", "gd",
+    "gl", "gu", "haz", "he", "hi", "hr", "hsb", "hu", "id", "is", "it",
+    "ja", "jv", "kab", "ka", "kir", "kk", "km", "kmr", "kn", "ko", "lt",
+    "lv", "me", "mg", "mk", "ml", "mn", "mr", "ms", "mya", "nb", "ne",
+    "nl", "nn", "os", "pa", "pl", "ps", "pt", "ro", "ru", "si", "sk",
+    "skr", "sl", "snd", "so", "sq", "sr", "sv", "sw", "szl", "ta", "te",
+    "th", "tl", "tr", "ug", "uk", "ur", "uz", "vi", "zh", "zht"];
+  var language = (window.navigator.language || window.browserLanguage).toLowerCase();
+
+  if (zhSimplified.includes(language)) {
+    language = 'zh';
+  } else if (zhTraditional.includes(language)) {
+    language = 'zh'; //we only support zh atm
+  } else {
+    language = language.substring(0, 3).split('-')[0]
+  }
+  // As the language is controlled by the users browser,
+  // the input is restricted to a known set of possibilities
+  const src = allowedInput.includes(language) ? language : 'en';
+  return src;
 }

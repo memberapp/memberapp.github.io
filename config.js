@@ -1,3 +1,5 @@
+
+
 var mutedwords = new Array();
 var defaulttip = 1000;
 var oneclicktip = 0;
@@ -6,7 +8,7 @@ var pathpermalinks = 'https://member.cash/';
 var profilepicbase = 'img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var siteTitle = 'member.cash';
-var theStyle = '';
+var theStyle = 'feels compact';
 
 //These should probably all go in a single config object
 var settings = {

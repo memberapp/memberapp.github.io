@@ -2,12 +2,12 @@
 
 function displayContentBasedOnURLParameters() {
 
-    /*
+    
     if (backForwardEvent) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
     } else {
         window.scrollTo(0, 0);
-    }*/
+    }
 
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
 
@@ -242,10 +242,10 @@ function showNotifications(start, limit, qaddress, txid) {
 
 function showSettings() {
     //Need to be logged in
-    if (pubkey == "" || pubkey == null || pubkey == undefined) {
+    /*if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPosts(0, numbers.results, 'all');
         return;
-    }
+    }*/
     hideAll();
     show('settingsanchor');
     getAndPopulateSettings();

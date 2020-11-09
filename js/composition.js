@@ -35,14 +35,19 @@ function getMemorandumText() {
     return simplemde?simplemde.value():'';
 }
 
+var articlemode=false;
 function switchToArticleMode() {
     changeStyle('base none', false);
     setBodyStyle("article");
+    articlemode=true;
 }
 
 function switchToRegularMode() {
-    loadStyle();
-    setBodyStyle("none");
+    if(articlemode){
+        loadStyle();
+        setBodyStyle("none");
+        articlemode=false;
+    }
 }
 
 function memorandumPreview() {
@@ -195,6 +200,8 @@ function memorandumpostcompleted(txid) {
     txid = san(txid);
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a onclick="showThread('`+txid+`')" href="#thread?post=`+txid+`">View It</a> or  <a rel='noopener noreferrer' target="_blank" href="` + encodedURL + `">Also Post To Twitter (opens a new window)</a>`;
     document.getElementById('newpostmemorandumcompleted').innerHTML = completedPostHTML(txid,document.getElementById('memorandumtitle').value);
+    //TODO - bit heavy to retranslate the whole page, maybe just translate the new element
+    translatePage();
 
     /*
     var encodedURL = `https://twitter.com/intent/tweet?text=` + encodeURIComponent(document.getElementById('memorandumtitle').value + '\r\n' + ` member.cash/p/` + txid.substr(0, 10));
