@@ -2,12 +2,12 @@
 
 function displayContentBasedOnURLParameters() {
 
-    /*
+    
     if (backForwardEvent) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
     } else {
         window.scrollTo(0, 0);
-    }*/
+    }
 
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
 

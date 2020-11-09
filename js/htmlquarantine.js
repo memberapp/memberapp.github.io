@@ -261,6 +261,14 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var tipsandlinks = getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid);
     var replydiv = getReplyDiv(txid, page, differentiator);
 
+    var santxid=san(txid);
+    var permalink = `p/` + santxid.substring(0, 10);
+    var articlelink = `a/` + santxid.substring(0, 10);
+    if (pathpermalinks) {
+        permalink = pathpermalinks + `p/` + santxid.substring(0, 10);
+        articlelink = pathpermalinks + `a/` + santxid.substring(0, 10);
+    }
+
     var obj = {
         //These must all be HTML safe 
         author: theAuthorHTML,
@@ -290,7 +298,9 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         diff: differentiator,
         likeactivated:likeordislike == "1"?"-activated":"",
         dislikeactivated:likeordislike == "-1"?"-activated":"",
-        rememberactivated:repostidtxid?"-activated":""
+        rememberactivated:repostidtxid?"-activated":"",
+        permalink:permalink,
+        articlelink:articlelink
     };
 
     /*var retVal = `<div class="post">
@@ -525,11 +535,19 @@ function getCloseButtonHTML(profileelement) {
 }
 
 function getTipDetailsHTML(user, amount, type) {
-    return `<div class="tipdetails">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + balanceString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
+    var theclass="tipdetails";
+    if(theStyle.contains('compact')){
+        theclass="tipdetailscompact";
+    }
+    return `<div class="`+theclass+`">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + balanceString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
 }
 
 function getRememberDetailsHTML(user, message, topic, txid) {
-    return `<div class="rememberdetails">` + user + `<span class="plaintext"><a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + (message ? getSafeTranslation('quoteremembered', 'quote remembered') : getSafeTranslation('remembered', 'remembered')) + "</a></span> " + getTopicHTML(topic, getSafeTranslation('totopic', ' to t/')) + `</div>`;
+    var theclass="rememberdetails";
+    if(theStyle.contains('compact')){
+        theclass="rememberdetailscompact";
+    }
+    return `<div class="`+theclass+`">` + user + `<span class="plaintext"><a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + (message ? getSafeTranslation('quoteremembered', 'quote remembered') : getSafeTranslation('remembered', 'remembered')) + "</a></span> " + getTopicHTML(topic, getSafeTranslation('totopic', ' to t/')) + `</div>`;
 }
 
 function getRepostHeaderHTML(user) {
@@ -917,7 +935,7 @@ function getMessageHTML(data, count) {
             //should be possible to remove this after a month or so
         }
         //You sent a message
-        contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, null, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
+        contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, data.recipientrating, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
         decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
         contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
