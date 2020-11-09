@@ -95,7 +95,7 @@ var postCompactTemplate = `
                         <button
                             onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content');
                                         ddmenu.style.display='block'; 
-                                        setTimeout(function(){document.body.onclick = document.body.ontouchstart = function () {ddmenu.style.display='none';document.body.onclick = document.body.ontouchstart =null}},500);"
+                                        setTimeout(function(){document.body.onclick = document.body.ontouchend = function () {ddmenu.style.display='none';document.body.onclick = document.body.ontouchend =null}},500);"
                             class="dropbtn">☰</button>
                         <div class="dropdown-content" id="dropdown-content">
                             <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
