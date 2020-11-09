@@ -740,7 +740,7 @@ function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
                     //replies must be within 6 hours of each other
                     if (data[i].retxid == data[j].txid && Math.abs(data[i].firstseen - data[j].firstseen) < 6 * 60 * 60) {
                         //After 8/11/2020 replies must begin with '|' to be mergeable
-                        if (data[j].firstseen < 1604813359 || data[i].message.startsWith('|')) {
+                        if (data[j].firstseen < 1604813359 || data[i].message.startsWith('|') || data[i].stamp) {
                             //Subtract one as each post is automatically liked by its own author
                             data[j].likes = (Number(data[j].likes) + Number(data[i].likes - 1)).toString();
                             data[j].dislikes = (Number(data[j].dislikes) + Number(data[i].dislikes)).toString();

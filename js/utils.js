@@ -268,8 +268,8 @@ function balanceString(total, includeSymbol) {
     //var balString = (Number(total) / 1000).toFixed(3);
     //balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
     var balString = ""+Number(total);
-    if(balString.length>4){
-      balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "k";
+    if(balString.length>3){
+      balString = Number(balString.substr(0, balString.length - 3)).toLocaleString() + "k";
     }else{
       balString=Number(total);
     }
