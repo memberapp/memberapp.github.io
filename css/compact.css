@@ -174,41 +174,6 @@ a {
   cursor: pointer;
 }
 
-/*
-.post-metadata {
-    top: -1.15em;
-    position: relative;
-}
-
-.quotepost .post-metadata {
-    top: -.25em;
-    position: relative;
-}
-
-
-.post-body-wrapper {
-    padding-left: 3.3em;
-    top: -1.55em;
-    position: relative;
-}
-
-.post-header {
-    top: -.5em;
-    position: relative;
-}
-
-
-.quotepost .post-body-wrapper {
-    padding-left: 0em;
-    top: 0em;
-    position: relative;
-}
-
-.quotepost .post-header {
-    top: 0em;
-    position: relative;
-}*/
-
 .quotepost .post-footer {
     display: none;
 }
@@ -216,71 +181,6 @@ a {
 .post-footer-upvote-activated, .post-footer-downvote-activated, .post-footer-remembers-activated {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%);
 }
-
-
-/*
-.mainbodywrapper #posts .itemlist ol.posts li {
-    border: 0px solid rgba(0, 0, 0, 0.12);
-    margin-bottom: 0px;
-}
-
-
-.memberpicsmall .memberpicturesmall {
-    height: 1.25rem;
-    width: 1.25rem;
-}
-
-.jdenticon, .memberpicturesmall, .memberpicsmall{
-    height: 1.25rem;
-    width: 1.25rem;
-    top: 0em;
-    position: relative;
-}
-
-.post .memberpicsmall .memberpicturesmall {
-    height: 3rem;
-    width: 3rem;
-    z-index: 1;
-}
-
-.post .memberpicturesmall, .post .memberpicsmall{
-    height: 3rem;
-    width: 3rem;
-    top: .5em;
-    position: relative;
-}
-
-.post .jdenticon{
-    height: 3rem;
-    width: 3rem;
-    top: 1em;
-    position: relative;
-}
-
-.quotepost .memberpicsmall .memberpicturesmall {
-    height: 1.25rem;
-    width: 1.25rem;
-}
-
-.quotepost .jdenticon, .quotepost .memberpicturesmall, .quotepost .memberpicsmall{
-    height: 1.25rem;
-    width: 1.25rem;
-    top: 0em;
-    position: relative;
-}
-
-
-.profile-meta .memberpicsmall .memberpicturesmall {
-    height: 5rem;
-    width: 5rem;
-}
-
-.profile-meta .jdenticon, .profile-meta .memberpicturesmall, .profile-meta .memberpicsmall{
-    height: 5rem;
-    width: 5rem;
-    top: 0em;
-    position: relative;
-}*/
 
 
 .post-side-bar .member-handle{
@@ -472,7 +372,14 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 /*hide the sidebar for quoteposts*/
 .quotepost .post-side-bar {
   display:none;
+
 }
+
+.quotepost .post-right-contents {
+  margin-left: 0;
+}
+
+
 
 
 

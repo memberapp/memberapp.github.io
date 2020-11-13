@@ -3250,7 +3250,6 @@ tbody tr td .filterprovider {
       .quotepost {
         margin: 0rem;
         margin-bottom: 1rem;
-        border: 1px solid rgba(0, 0, 0, 0.12);
     }
     
     .repostnoquote .memberpicturesmall {
@@ -3266,7 +3265,8 @@ tbody tr td .filterprovider {
         width: 100%;
     }
 
-    .post-body{
+    .post-body, .messagepublickey{
       word-break: break-word;
     }
+    
 
