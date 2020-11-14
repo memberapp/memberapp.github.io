@@ -426,3 +426,13 @@ display: block;
 .tipdetailscompact, .rememberdetailscompact{
 line-height: 1.85;
 }
+
+
+.repost {
+    border-bottom: 0px;
+    background: inherit;
+}
+
+.member-handle, .member-pagingid {
+  max-width: 250px;
+}
