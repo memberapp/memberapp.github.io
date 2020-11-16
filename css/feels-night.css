@@ -467,7 +467,6 @@ html :lang(ar) {
   text-decoration: none;
   transition: all 0.15s ease-in-out;
   color: #2291EB;
-  text-transform: uppercase;
   border-radius: 0.25rem;
   border: 1px solid #2291EB;
   background: transparent;
@@ -682,15 +681,27 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.38);
   border-radius: 0.25rem;
   padding: 0px;
-  margin: 1.5rem;
+  margin: 0rem;
+  margin-bottom: 1rem;
   border-bottom-left-radius: 0.2rem;
   border-top-left-radius: 0.2rem; }
+  @media (max-width: 399px) {
+    .quotepost {
+      margin: 0.5rem;
+      margin-bottom: 1rem; } }
 
 .repostnoquote .quotepost {
   border: 0;
   border-radius: 0;
   padding: 0px;
   margin: 0; }
+
+.repostnoquote .memberpicturesmall {
+  height: 1rem;
+  width: 1rem; }
+
+.repostnoquote .repost {
+  padding: 0.3rem; }
 
 [id^=replycompletedthread] {
   text-align: center; }
@@ -810,7 +821,6 @@ button {
   transition: all 0.15s ease-in-out;
   color: white;
   float: right;
-  text-transform: uppercase;
   border-radius: 0.25rem;
   border: 1px solid #2291EB;
   background: #2291EB;
@@ -831,7 +841,6 @@ button {
 label {
   font-weight: bold;
   margin-bottom: 0.25rem;
-  text-transform: capitalize;
   display: block; }
 
 textarea,
@@ -1305,23 +1314,19 @@ video {
     display: flex;
     -ms-flex-direction: row;
     flex-direction: row; }
-    .postdetails .subtextbuttons .rememberscounttext a.remebersinactive,
-    .postdetails .subtextbuttons .rememberscounttext a.remebersactive,
-    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive,
-    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersactive {
+    .postdetails .subtextbuttons .rememberscounttext a.remembersactive,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersactive {
       margin-right: 0; }
-      .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
-      .postdetails .subtextbuttons .rememberscounttext a.remebersactive::before,
-      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before,
-      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersactive::before {
+      .postdetails .subtextbuttons .rememberscounttext a.remembersactive::before,
+      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersactive::before {
         background: url(../img/feelstheme/re-member.svg);
         background-size: 0.875rem 0.875rem;
         display: inline-block; }
-    .postdetails .subtextbuttons .rememberscounttext a.remebersinactive,
-    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive {
+    .postdetails .subtextbuttons .rememberscounttext a.remembersinactive,
+    .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersinactive {
       color: #2291EB; }
-      .postdetails .subtextbuttons .rememberscounttext a.remebersinactive::before,
-      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remebersinactive::before {
+      .postdetails .subtextbuttons .rememberscounttext a.remembersinactive::before,
+      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersinactive::before {
         fill: #2291EB; }
     .postdetails .subtextbuttons .rememberscounttext .repostscount,
     .comment-tree ul li .reply div .subtextbuttons .rememberscounttext .repostscount {
@@ -1540,7 +1545,6 @@ div#status {
   font-size: 0.75rem;
   padding: 0.25rem 1rem;
   font-weight: normal;
-  text-transform: capitalize;
   text-align: center; }
   @media (min-width: 1025px) {
     div#status {
@@ -1705,7 +1709,6 @@ header {
           height: 100%;
           -ms-flex-align: center;
           align-items: center;
-          text-transform: capitalize;
           -ms-flex-negative: 0;
           flex-shrink: 0; }
         header .pagetop nav .navitemsmain .headerbuttons {
@@ -1801,7 +1804,6 @@ footer {
   footer hr {
     display: none; }
   footer .footerlinks {
-    text-transform: capitalize;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: center;
@@ -1894,7 +1896,6 @@ footer {
       text-decoration: none;
       transition: all 0.15s ease-in-out;
       color: #2291EB;
-      text-transform: uppercase;
       border-radius: 0.25rem;
       border: 1px solid #2291EB;
       background: transparent;
@@ -1994,7 +1995,6 @@ footer {
       transition: all 0.15s ease-in-out;
       color: white;
       float: right;
-      text-transform: uppercase;
       border-radius: 0.25rem;
       border: 1px solid #2291EB;
       background: #2291EB;
@@ -2023,7 +2023,6 @@ footer {
       text-decoration: none;
       transition: all 0.15s ease-in-out;
       color: #2291EB;
-      text-transform: uppercase;
       border-radius: 0.25rem;
       border: 1px solid #2291EB;
       background: transparent;
@@ -2192,8 +2191,7 @@ footer {
         -ms-flex-pack: justify;
         justify-content: space-between;
         -ms-flex-align: center;
-        align-items: center;
-        text-transform: capitalize; }
+        align-items: center; }
         #newpost #memorandumarea #memorandumtopicarea label span {
           font-size: 0.875rem;
           color: rgba(255, 255, 255, 0.8);
@@ -2204,7 +2202,6 @@ footer {
       margin-bottom: 0.875rem;
       display: -ms-flexbox;
       display: flex;
-      text-transform: capitalize;
       -ms-flex-direction: column;
       flex-direction: column; }
       #newpost #memorandumarea .titlecontainer label {
@@ -2213,8 +2210,7 @@ footer {
         -ms-flex-pack: justify;
         justify-content: space-between;
         -ms-flex-align: center;
-        align-items: center;
-        text-transform: capitalize; }
+        align-items: center; }
         #newpost #memorandumarea .titlecontainer label span:last-of-type {
           font-size: 0.875rem;
           color: rgba(255, 255, 255, 0.8);
@@ -2237,7 +2233,6 @@ footer {
         border: 1px solid;
         border-radius: 0.25rem;
         font-weight: bold;
-        text-transform: capitalize;
         padding: 0.5rem 1.5rem;
         width: 100%;
         text-align: center;
@@ -2294,7 +2289,6 @@ footer {
       text-decoration: none;
       transition: all 0.15s ease-in-out;
       color: #2291EB;
-      text-transform: uppercase;
       border-radius: 0.25rem;
       border: 1px solid #2291EB;
       background: transparent;
@@ -2306,6 +2300,8 @@ footer {
         opacity: 0.65;
         cursor: not-allowed;
         pointer-events: none; }
+    #settingsanchor .content #languageselector {
+      width: 100%; }
     #settingsanchor .content #settingsnametextbutton,
     #settingsanchor .content #settingsprofiletextbutton {
       line-height: 1.2;
@@ -2314,7 +2310,6 @@ footer {
       text-decoration: none;
       transition: all 0.15s ease-in-out;
       color: #2291EB;
-      text-transform: uppercase;
       border-radius: 0.25rem;
       border: 1px solid #2291EB;
       background: transparent;
@@ -2514,20 +2509,16 @@ body.article {
   @media (max-width: 768px) {
     #topiclistanchor {
       max-width: 540px; } }
-  #topiclistanchor br {
-    display: none; }
-  #topiclistanchor table {
+  #topiclistanchor .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
     margin-bottom: 1.5rem;
     list-style-type: none;
     overflow: inherit;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    width: 100%;
-    padding: 1.75rem; }
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
     @media (max-width: 400px) {
-      #topiclistanchor table {
+      #topiclistanchor .content {
         margin-left: -15px !important;
         margin-right: -15px !important;
         border-radius: 0;
@@ -2545,7 +2536,9 @@ body.article {
     @media (max-width: 767px) {
       #topiclistanchor table td.tltopicname {
         max-width: 200px;
-        white-space: pre-wrap; } }
+        white-space: pre-wrap; }
+      #topiclistanchor table .tlmessagescount, #topiclistanchor table .tlsubscount, #topiclistanchor table .tlmessagecount {
+        display: none; } }
     #topiclistanchor table .tltopicname {
       text-align: left; }
 
@@ -2588,7 +2581,6 @@ tbody tr td a[href^="javascript:;"] {
   transition: all 0.15s ease-in-out;
   color: white;
   float: right;
-  text-transform: uppercase;
   border-radius: 0.25rem;
   border: 1px solid #2291EB;
   background: #2291EB;
@@ -2693,7 +2685,6 @@ tbody tr td .filterprovider {
           text-decoration: none;
           transition: all 0.15s ease-in-out;
           color: #2291EB;
-          text-transform: uppercase;
           border-radius: 0.25rem;
           border: 1px solid #2291EB;
           background: transparent;
@@ -2798,7 +2789,6 @@ tbody tr td .filterprovider {
           text-decoration: none;
           transition: all 0.15s ease-in-out;
           color: #2291EB;
-          text-transform: uppercase;
           border-radius: 0.25rem;
           border: 1px solid #2291EB;
           background: transparent;
@@ -2828,7 +2818,6 @@ tbody tr td .filterprovider {
           text-decoration: none;
           transition: all 0.15s ease-in-out;
           color: #2291EB;
-          text-transform: uppercase;
           border-radius: 0.25rem;
           border: 1px solid #2291EB;
           background: transparent;
@@ -2887,7 +2876,6 @@ tbody tr td .filterprovider {
         transition: all 0.15s ease-in-out;
         color: white;
         float: right;
-        text-transform: uppercase;
         border-radius: 0.25rem;
         border: 1px solid #2291EB;
         background: #2291EB;
@@ -3160,7 +3148,6 @@ tbody tr td .filterprovider {
         text-decoration: none;
         transition: all 0.15s ease-in-out;
         color: #2291EB;
-        text-transform: uppercase;
         border-radius: 0.25rem;
         border: 1px solid #2291EB;
         background: transparent;
@@ -3194,8 +3181,8 @@ tbody tr td .filterprovider {
         box-shadow: 0 1px 3px rgba(255, 255, 255, 0.38), 0 1px 2px rgba(0, 0, 0, 0.24); }
       #notifications ul.notificationslist li hr.notificationhr {
         display: none; }
-  #notifications .highlighted {
-    background-color: rgba(255, 255, 255, 0.38); }
+      #notifications ul.notificationslist li.highlighted .notificationtitle {
+        background-color: rgba(255, 255, 255, 0.38); }
 
 #blockers,
 #blocking,
@@ -3247,24 +3234,3 @@ tbody tr td .filterprovider {
     #followers .content br {
       display: none; }
 
-      .quotepost {
-        margin: 0rem;
-        margin-bottom: 1rem;
-    }
-    
-    .repostnoquote .memberpicturesmall {
-        height: 1rem;
-        width: 1rem;
-    }
-
-    .repostnoquote .repost {
-      padding: 0.3rem
-      }
-
-      #settingsanchor .content #languageselector {
-        width: 100%;
-    }
-
-    .post-body, .messagepublickey{
-      word-break: break-word;
-    }
