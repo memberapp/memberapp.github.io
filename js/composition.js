@@ -74,7 +74,7 @@ function memorandumPreview() {
 
     var isfollowing = true;
 
-    var repostedHTML = document.getElementById('quotepost').innerHTML;
+    var repostedHTML = document.getElementById('quotepost').outerHTML;
     
 
 
@@ -156,12 +156,12 @@ function postmemorandum() {
             alert(getSafeTranslation('nomemo',"No Memo - Try adding something in the memo box"));
             return false;
         }
-    }else{
+    }/*else{
         if (posttext.length == 0 && topic.length == 0) {
             alert(getSafeTranslation('nopost',"No post or topic. Try a regular remember instead."));
             return false;
         }
-    }
+    }*///nb allow empty remember for compact theme
     //topic may be empty string
 
     document.getElementById('newpostmemorandumcompleted').innerText = "";

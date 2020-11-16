@@ -1,5 +1,4 @@
 
-
 var mutedwords = new Array();
 var defaulttip = 1000;
 var oneclicktip = 0;
@@ -7,7 +6,7 @@ var maxfee = 2;
 var pathpermalinks = 'https://member.cash/';
 var profilepicbase = 'img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-var siteTitle = 'member.cash';
+var siteTitle = 'Ember';
 var theStyle = 'feels compact';
 
 //These should probably all go in a single config object
@@ -17,9 +16,9 @@ var settings = {
     "showtwitter": "true"
 };
 var dropdowns = {
-    "contentserver": "https://member.cash/v2/member.js",
-    "txbroadcastserver": "https://member.cash/v2/",
-    "utxoserver": "https://rest.bitcoin.com/v2/",
+    "contentserver": "http://localhost:3123/v2/member.js",
+    "txbroadcastserver": "http://localhost:3123/v2/",
+    "utxoserver": "http://localhost:3123/v2/",
     "currencydisplay": "USD",
     "languageselector": "en"
 };

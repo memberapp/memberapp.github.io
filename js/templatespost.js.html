@@ -41,7 +41,7 @@ var postCompactTemplate = `
                             <span data-vavilon="VV0153" class="text footerlabel">replies</span>
                         </a>
                     </span>
-                    <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvote{txid}">
+                    <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvotecontainer{txid}">
                         <a id="upvoteaction{txid}" href="javascript:;" onclick="likePost('{txid}','{address}')"
                             class="btn-icon" data-action="like">
                             <span class="likeicon">
@@ -56,7 +56,7 @@ var postCompactTemplate = `
                             <span data-vavilon="likes" class="text footerlabel">likes</span>
                         </a>
                     </span>
-                    <span class="post-footer-downvote{dislikeactivated} post-footer-relative" id="downvote{txid}">
+                    <span class="post-footer-downvote{dislikeactivated} post-footer-relative" id="downvotecontainer{txid}">
                         <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{address}')"
                             class="btn-icon" data-action="dislike">
                             <span class="dislikeicon">
@@ -94,8 +94,10 @@ var postCompactTemplate = `
                     <span class="dropdown">
                         <button
                             onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content');
-                                        ddmenu.style.display='block'; 
-                                        setTimeout(function(){document.body.onclick = document.body.touchstart = function () {ddmenu.style.display='none';document.body.onclick = document.body.touchstart =null}},500);"
+                                        ddmenu.style.display='block';
+                                    var ddcover=document.getElementById('ddcover');
+                                        ddcover.style.display='block';
+                                        ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
                             class="dropbtn">☰</button>
                         <div class="dropdown-content" id="dropdown-content">
                             <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
@@ -119,7 +121,6 @@ var postCompactTemplate = `
                             <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">Memo</a>
                             <a rel="noopener noreferrer" target="bitcoincom"
                                 href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>
-
                         </div>
                     </span>
                 </div>

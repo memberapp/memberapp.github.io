@@ -11,25 +11,25 @@ function timeSince(timestamp, compress) {
   var interval = Math.floor(seconds / 31536000);
 
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation("y", "y") : " " + getSafeTranslation("yearsago", "years ago"));
+    return (compress ? interval + getSafeTranslation("y", "y") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("yearsago", "years ago"));
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation("m", "m") : " " + getSafeTranslation("monthsago", "months ago"));
+    return (compress ? interval + getSafeTranslation("m", "m") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("monthsago", "months ago"));
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation("d", "d") : " " + getSafeTranslation("daysago", "days ago"));
+    return (compress ? interval + getSafeTranslation("d", "d") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("daysago", "days ago"));
   }
   interval = Math.floor(seconds / 3600);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation("h", "h") : " " + getSafeTranslation("hoursago", "hours ago"));
+    return (compress ? interval + getSafeTranslation("h", "h") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("hoursago", "hours ago"));
   }
   interval = Math.floor(seconds / 60);
   if (interval > 1) {
-    return interval + (compress ? getSafeTranslation("m", "m") : " " + getSafeTranslation("minutesago", "minutes ago"));
+    return (compress ? interval + getSafeTranslation("m", "m") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("minutesago", "minutes ago"));
   }
-  return Math.floor(seconds) + (compress ? getSafeTranslation("s", "s") : " " + getSafeTranslation("secondsago", "seconds ago"));
+  return (compress ? Math.floor(seconds) + getSafeTranslation("s", "s") : " " + getSafeTranslation("hace", "") + Math.floor(seconds) + " " + getSafeTranslation("secondsago", "seconds ago"));
 }
 
 var ordinal_suffix_of = function (i) {
@@ -268,8 +268,8 @@ function balanceString(total, includeSymbol) {
     //var balString = (Number(total) / 1000).toFixed(3);
     //balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
     var balString = ""+Number(total);
-    if(balString.length>4){
-      balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "k";
+    if(balString.length>3){
+      balString = Number(balString.substr(0, balString.length - 3)).toLocaleString() + "k";
     }else{
       balString=Number(total);
     }
