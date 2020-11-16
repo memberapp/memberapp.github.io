@@ -3234,3 +3234,6 @@ tbody tr td .filterprovider {
     #followers .content br {
       display: none; }
 
+      .post-body, .messagepublickey{
+        word-break: break-word;
+      }
