@@ -566,10 +566,13 @@ function decreaseGUILikes(txid) {
         uparrow.className = "votearrow";
         
         if (theStyle.contains('compact')) {
-            var dislikescount = Number(document.getElementById('dislikescount' + txid).innerText);
-            document.getElementById('dislikescount' + txid).innerText = dislikescount + 1;
-            uparrow.className = "votearrowactivateddown rotate180 post-footer-upvote";
-            downarrow.className = "votearrow post-footer-downvote-activated";
+            var dislikeElement=document.getElementById('dislikescount' + txid);
+            if(dislikeElement){
+                var dislikescount = Number(dislikeElement.innerText);
+                dislikeElement.innerText = dislikescount + 1;
+            }
+            uparrow.className = "votearrow post-footer-upvote";
+            downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
         }else{
             document.getElementById('score' + txid).className = "betweenvotesscoredown";
         }
