@@ -814,6 +814,19 @@ pages.settings = `
         <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
         <label data-vavilon="VV0090" for="showtwitter" class="checkboxlabel">Show Tweets</label>
     </div>
+<!-- Too slow on server side-->    
+
+    <div>
+        <label data-vavilon="VV0181" for="filtersettings" class="labelheader">Filter Settings</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="shownonameposts" onchange="updateSettingsCheckbox('shownonameposts');">
+        <label data-vavilon="VV0182" for="shownonameposts" class="checkboxlabel">Show Posts From Members With No Handle</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="shownopicposts" onchange="updateSettingsCheckbox('shownopicposts');">
+        <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No Picture</label>
+    </div>
     <div>
         <label data-vavilon="VV0091" for="contentserver">Content Server</label>
         <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">

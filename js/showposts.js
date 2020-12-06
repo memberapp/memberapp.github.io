@@ -43,7 +43,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     }
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname='+settings["shownonameposts"]+'&shownopic='+settings["shownopicposts"]+'&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
     getJSON(theURL).then(function (data) {
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
@@ -59,6 +59,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             try {
+                if(settings["shownonameposts"]=='false' && !data[i].name){continue;}
+                if(settings["shownopicposts"]=='false' && !data[i].picurl){continue;}
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
             } catch (err) {
                 console.log(err);

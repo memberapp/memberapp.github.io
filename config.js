@@ -14,7 +14,9 @@ var theStyle = 'feels compact';
 var settings = {
     "showyoutube": "true",
     "showimgur": "true",
-    "showtwitter": "true"
+    "showtwitter": "true",
+    "shownonameposts": "false",
+    "shownopicposts": "true"
 };
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",
