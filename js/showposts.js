@@ -79,6 +79,9 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             showOnly("topicmeta");
         }
 
+        if(!pubkey && !topicnameHOSTILE){
+            contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
+        }
 
 
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start, true);
