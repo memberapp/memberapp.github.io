@@ -603,8 +603,37 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         );
     }
 
+    if (settings["showlbry"] == "true") {
+        var lbryRegex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?lbry\.tv\/@.+\/(.+?(?=:)).*<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?lbry\.tv\/@.+\/(.+?(?=:)).*<\/a>/i;
+        message = message.replace(lbryRegex,`<div class="youtubecontainer"><iframe width="480" height="270" class="youtubeiframe" src="https://lbry.tv/$/embed/$1"></iframe></div>`);      
+    }
+
     return message;
 }
+
+/*
+function replaceLBRY(match, p1, p2, p3, p4, offset, string) {
+    var differentiator = Math.floor(Math.random() * 1000000);
+    populatelbry(p1,'lbry'+differentiator);
+    return `<div id="lbry`+differentiator+`" class="youtubecontainer"></div>`;
+}
+
+async function populatelbry(lbrylink,elementid){
+    //load lbry page
+    let response = await fetch("https://lbry.tv/"+lbrylink);
+    if (response.ok) { // if HTTP-status is 200-299
+        let json = await response.text();
+        document.getElementById(elementid).innerHTML=`<iframe width="480" height="270" class="youtubeiframe" src="https://lbry.tv/"></iframe>`;
+    } else {
+        //alert("HTTP-Error: " + response.status);
+    }
+    //parse for link
+    
+    //set contents
+    //
+}*/
 
 function replaceImgur(match, p1, p2, p3, p4, offset, string) {
     //return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;

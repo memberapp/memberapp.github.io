@@ -13,7 +13,10 @@ var theStyle = 'feels compact';
 var settings = {
     "showyoutube": "true",
     "showimgur": "true",
-    "showtwitter": "true"
+    "showtwitter": "true",
+    "showlbry": "true",
+    "shownonameposts": "false",
+    "shownopicposts": "true"
 };
 var dropdowns = {
     "contentserver": "http://localhost:3123/v2/member.js",

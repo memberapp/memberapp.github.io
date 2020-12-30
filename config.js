@@ -15,6 +15,7 @@ var settings = {
     "showyoutube": "true",
     "showimgur": "true",
     "showtwitter": "true",
+    "showlbry": "true",
     "shownonameposts": "false",
     "shownopicposts": "true"
 };
