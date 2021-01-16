@@ -326,7 +326,8 @@ dictionary.en=
   "VV0181":"Filter Settings",
   "VV0182":"Show Posts From Members With No Handle",
   "VV0183":"Show Posts From Members With No Picture",
-  "showlbry": "Show lbry.tv"
+  "showlbry": "Show lbry.tv",
+  "debuginfo": "Debug Info"
 
 }
   

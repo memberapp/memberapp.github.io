@@ -119,9 +119,11 @@ function dslite(input) {
 }
 
 
+var debuginfo="";
 
 function updateStatus(message) {
   document.getElementById("status").innerHTML = message;
+  debuginfo=message+'\n'+debuginfo;
 }
 
 function toHexString(byteArray) {

@@ -259,6 +259,9 @@ function updateSettings() {
     if (dropdowns.txbroadcastserver == "https://memberjs.org:8123/member.js") {
         dropdowns.txbroadcastserver = "https://member.cash/v2/";
     }
+
+    document.getElementById("debuginfo").value=debuginfo;
+  
 }
 
 function updateSettingsCheckbox(settingsName) {

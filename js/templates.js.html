@@ -796,7 +796,7 @@ pages.settings = `
     </div>
     <div>
         <label data-vavilon="VV0086" for="mutedwords">Muted Words (Comma Separate)</label>
-        <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60" onchange="updatemutedwords();"
+        <textarea id="mutedwords" name="text" rows="4" cols="60" onchange="updatemutedwords();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
     </div>
     <div>
@@ -859,6 +859,11 @@ pages.settings = `
             <option value="http://127.0.0.1:3123/v2/">Localhost</option>
         </select>
     </div>
+    <div>
+        <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
+        <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
+    </div>
+    
 </div>`;
 
 
