@@ -15,6 +15,7 @@ var settings = {
     "showimgur": "true",
     "showtwitter": "true",
     "showlbry": "true",
+    "showbitclout": "true",
     "shownonameposts": "false",
     "shownopicposts": "true"
 };

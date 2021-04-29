@@ -80,7 +80,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         if(!pubkey && !topicnameHOSTILE){
-            contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
+            //contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
         }
 
 
@@ -91,11 +91,15 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 }
 
 
-function getAndPopulateMessages(start, limit) {
+function getAndPopulateMessages(messagetype, start, limit) {
+
+    if(!messagetype){
+        messagetype='all';
+    }
 
     document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey +'&messagetype='+messagetype;
     getJSON(theURL).then(async function (data) {
 
         if (!eccryptoJs) {
@@ -550,6 +554,7 @@ function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
     var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0, 10) + "']");
     //document.getElementById("reply" + txid);
+    if(replybox)
     replybox.style.display = "block";
 
     //set focus here .focus()

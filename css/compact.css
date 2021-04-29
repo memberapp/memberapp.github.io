@@ -436,3 +436,8 @@ line-height: 1.85;
 .member-handle, .member-pagingid {
   max-width: 250px;
 }
+
+#loginbox .content .loginnotes a {
+  display: inline;
+  margin-top: 0.875rem;
+}

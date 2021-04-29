@@ -1,5 +1,5 @@
 var postCompactTemplate = `
-<div class="post">
+<div class="post" onmouseover="changeClass(this,'post highlighted')" onmouseout="changeClass(this,'post')">
     <div class="post-content">
         <div class="post-side-bar" onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
@@ -121,6 +121,7 @@ var postCompactTemplate = `
                             <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">Memo</a>
                             <a rel="noopener noreferrer" target="bitcoincom"
                                 href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>
+                            <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>
                         </div>
                     </span>
                 </div>

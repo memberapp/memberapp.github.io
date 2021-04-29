@@ -610,6 +610,13 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         message = message.replace(lbryRegex,`<div class="youtubecontainer"><iframe width="480" height="270" class="youtubeiframe" src="https://lbry.tv/$/embed/$1"></iframe></div>`);      
     }
 
+    if (settings["showbitclout"] == "true") {
+        //Bitclout
+        var bitcloutRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
+        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();"><div class="imgurcontainer"><img class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
+    }
     return message;
 }
 
@@ -1035,13 +1042,13 @@ function translatePage() {
         //if (fds.vavilon || fds.vavilon_title || fds.vavilon_value || fds.vavilon_data_label) {
             if (fds.vavilon) 
                 //matches[j].innerHTML=getSafeTranslation(fds.vavilon,fds.vavilon); //nb setting innerText is *a lot* faster
-                matches[j].innerText=getUnSafeTranslation(fds.vavilon,fds.vavilon);
+                matches[j].innerText=getUnSafeTranslation(fds.vavilon,matches[j].innerText);
             if (fds.vavilon_title) 
-                matches[j].title=getSafeTranslation(fds.vavilon_title,fds.vavilon_title);
+                matches[j].title=getSafeTranslation(fds.vavilon_title,matches[j].title);
             if (fds.vavilon_value)
-                matches[j].value=getSafeTranslation(fds.vavilon_value,fds.vavilon_value);
+                matches[j].value=getSafeTranslation(fds.vavilon_value,matches[j].value);
             if (fds.vavilon_data_label) 
-                fds.label=getSafeTranslation(fds.vavilon_data_label,fds.vavilon_data_label);
+                fds.label=getSafeTranslation(fds.vavilon_data_label,fds.label);
         //}
     }
     //document.body.style.display='block';

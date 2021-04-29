@@ -441,3 +441,7 @@ function getBrowserLanguageCode() {
   const src = allowedInput.includes(language) ? language : 'en';
   return src;
 }
+
+function changeClass(element, newClass){
+  element.className=newClass;
+}

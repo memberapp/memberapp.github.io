@@ -327,6 +327,7 @@ dictionary.en=
   "VV0182":"Show Posts From Members With No Handle",
   "VV0183":"Show Posts From Members With No Picture",
   "showlbry": "Show lbry.tv",
+  "showbitclout": "Show BitClout Images",
   "debuginfo": "Debug Info"
 
 }

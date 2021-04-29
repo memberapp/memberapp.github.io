@@ -106,9 +106,10 @@ class UTXOPool {
     if (this.onscreenElementName != null) {
       document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
 
-      document.getElementById('satoshiamount').innerHTML = total;
+      if(document.getElementById('satoshiamount'))
+        document.getElementById('satoshiamount').innerHTML = total;
 
-      if (total < 2000 && this.showwarning == true) {
+      if (total < 2000 && this.showwarning) {
         document.getElementById('lowfundswarning').style.display = 'block';
         showQRCode('lowfundsaddress', 100);
         //only show this message once per app load
