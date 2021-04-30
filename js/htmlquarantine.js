@@ -17,7 +17,7 @@
 //Members
 
 //Get html for a user, given their address and name
-function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, includeProfile) {
+function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, includeProfile, lastactive) {
     if (!address) {
         return "error:no address for user";
     }
@@ -65,6 +65,17 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         ratingID = 'test';
     }
 
+    var onlineStatus="";
+    var lastonlineseconds=curTime - lastactive;
+    if (lastactive &&  lastonlineseconds < 60 * 10) {
+        //if the user took an action in the past 3 minutes
+        onlineStatus="🟠";
+    }
+    if (lastactive && lastonlineseconds < 60 * 3) {
+        //if the user took an action in the past 3 minutes
+        onlineStatus="🟢";
+    }
+
     var obj = {
         //These must all be HTML safe.
         address: san(address),
@@ -77,7 +88,8 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         following: Number(following),
         followers: Number(followers),
         profile: ds(profile),
-        diff: ratingID
+        diff: ratingID,
+        onlinestatus: onlineStatus
     }
 
     if (theStyle.contains('compact')) {
@@ -95,7 +107,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 
 function userFromDataBasic(data, mainRatingID, size) {
     if(!data.raterrating){data.raterrating=data.rating;}//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, true);
+    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, true, data.lastactive);
 }
 
 //Posts and Replies
@@ -218,7 +230,7 @@ function replacePageName(match, p1, p2, offset, string) {
     return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive) {
 
     if (!address) { return ""; }
     if (!name) { name = address.substring(0, 10); }
@@ -252,8 +264,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     //    messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
     //}
 
-    var theAuthorHTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true);
-    var theAuthor2HTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, false);
+    var theAuthorHTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive);
+    var theAuthor2HTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, false, lastactive);
     
     var votelinks = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)));
     var age = getAgeHTML(firstseen);
@@ -341,7 +353,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
 }
 
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message = dslite(message);
@@ -362,7 +374,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     message = addImageAndYoutubeMarkdown(message, differentiator, true);
 
     var voteButtons = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)));
-    var author = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true);
+    var author = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var age = getAgeHTML(firstseen);
     var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid);
@@ -971,7 +983,7 @@ function getMessageHTML(data, count) {
             //should be possible to remove this after a month or so
         }
         //You sent a message
-        contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, data.recipientrating, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
+        contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, data.recipientrating, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, true, data.recipientlastactive) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
         decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
         contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";

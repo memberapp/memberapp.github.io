@@ -79,8 +79,8 @@ function memorandumPreview() {
 
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML)
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', document.getElementById('memorandumtopic').value, null, 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime);
+        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0)
+        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', document.getElementById('memorandumtopic').value, null, 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0);
 
         addDynamicHTMLElements();
     }
