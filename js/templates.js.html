@@ -180,10 +180,11 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n1">*BitClout Users. Your public key starts with 'BC1..'</span><br/> 
+        <span data-vavilon="VV0019n1">*BitClout Users. Your public key starts with 'BC1..'</span><br />
     </div>
     <div class="loginnotes">
-        <span>*Memo Users. Your <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">private key</a> starts with 'L..' or 'K..'</span> 
+        <span>*Memo Users. Your <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">private
+                key</a> starts with 'L..' or 'K..'</span>
     </div>
 
     <br />
@@ -345,11 +346,14 @@ var messagesanchorHTML=`
         available to you if you wish to use it.
     </p>
     <div id="messageschoice" class="messageslist">
-        <a data-vavilon_title="allmessages" class="btn privatemessagesbutton" href="#messages?messagetype=all" onclick="nlc();">All</a>
-        | <a data-vavilon_title="sentmessages" class="btn privatemessagesbutton" href="#messages?messagetype=sent" onclick="nlc();">Sent</a>
-        | <a data-vavilon_title="receivedmessages" class="btn privatemessagesbutton" href="#messages?messagetype=received" onclick="nlc();">Received</a>   
+        <a data-vavilon_title="allmessages" class="btn privatemessagesbutton" href="#messages?messagetype=all"
+            onclick="nlc();">All</a>
+        | <a data-vavilon_title="sentmessages" class="btn privatemessagesbutton" href="#messages?messagetype=sent"
+            onclick="nlc();">Sent</a>
+        | <a data-vavilon_title="receivedmessages" class="btn privatemessagesbutton"
+            href="#messages?messagetype=received" onclick="nlc();">Received</a>
     </div>
-    
+
     <div id="usersearchcontainer">
         <label data-vavilon="VV0049" for="usersearch">Member Search</label>
         <input class="usersearch" id="usersearch" maxlength="217"
@@ -531,9 +535,11 @@ pages.member = `
         <div>
             <a href="/m/@{pagingid}" id="memberprofilelink">Member</a><span class="separatorwide"></span><a
                 rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
-                id="membermemoprofilelink">Memo</a><span class="separatorwide"></span><a
-                rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/u/{pagingid}"
-                id="bitcloutprofilelink">BitClout</a>
+                id="membermemoprofilelink">Memo</a><span class="separatorwide"></span><a rel="noopener noreferrer"
+                target="bitclout" href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
+                class="separatorwide"></span><a rel="noopener noreferrer" target="cloutgate"
+                href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a>
+
         </div>
     </div>
     <label for="memberidenticon">Identicon</label>
@@ -568,7 +574,8 @@ pages.member = `
                 <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
                     <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
                         code</span>
-                </span></div>
+                </span>
+            </div>
         </div>
     </div>
     <div class="memberstats">
@@ -672,11 +679,12 @@ pages.settings = `
         <div class="settingsprofilelinks">
             <label data-vavilon="VV0064">Profile Links</label>
             <div>
-                <a href="/m/@{pagingid}" id="settingsprofilelink">Member</a><span
-                    class="separatorwide"></span><a rel="noopener noreferrer" target="memo"
-                    href="https://memo.cash/profile/{address}" id="settingsmemoprofilelink">Memo</a><a
-                    rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/u/{pagingid}"
-                    id="bitcloutprofilelink">BitClout</a>
+                <a href="/m/@{pagingid}" id="settingsprofilelink">Member</a><span class="separatorwide"></span><a
+                    rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
+                    id="settingsmemoprofilelink">Memo</a><a rel="noopener noreferrer" target="bitclout"
+                    href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="cloutgate"
+                    href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a>
             </div>
         </div>
         <label for="settingsidenticon">Identicon</label>
@@ -834,20 +842,22 @@ pages.settings = `
         <input type="checkbox" id="showbitclout" onchange="updateSettingsCheckbox('showbitclout');">
         <label data-vavilon="showbitclout" for="showbitclout" class="checkboxlabel">Show BitClout Images</label>
     </div>
-    
-    
-<!-- Too slow on server side-->    
+
+
+    <!-- Too slow on server side-->
 
     <div>
         <label data-vavilon="VV0181" for="filtersettings" class="labelheader">Filter Settings</label>
     </div>
     <div class="customcheckbox">
         <input type="checkbox" id="shownonameposts" onchange="updateSettingsCheckbox('shownonameposts');">
-        <label data-vavilon="VV0182" for="shownonameposts" class="checkboxlabel">Show Posts From Members With No Handle</label>
+        <label data-vavilon="VV0182" for="shownonameposts" class="checkboxlabel">Show Posts From Members With No
+            Handle</label>
     </div>
     <div class="customcheckbox">
         <input type="checkbox" id="shownopicposts" onchange="updateSettingsCheckbox('shownopicposts');">
-        <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No Picture</label>
+        <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No
+            Picture</label>
     </div>
     <div>
         <label data-vavilon="VV0091" for="contentserver">Content Server</label>
@@ -880,7 +890,7 @@ pages.settings = `
         <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
         <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
     </div>
-    
+
 </div>`;
 
 
@@ -1005,7 +1015,8 @@ var footerHTML = `
             to</span>
         <a data-vavilon="VV0138" rel='noopener noreferrer' target="member" href="https://member.cash">use the stable
             version at https://member.cash</a><br /><br />
-        <hr /></span>
+        <hr />
+    </span>
     <span class="footerlinks">
         <a data-vavilon="VV0139" rel='noopener noreferrer' target="memo"
             href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">
