@@ -281,6 +281,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         articlelink = pathpermalinks + `a/` + santxid.substring(0, 10);
     }
 
+    var directlink="";
+    if(pubkey=='19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6'){
+        directlink=`<a target="_self" href="https://bitclout.com/u/`+encodeURIComponent(pagingid)+`">BitClout</a>`;
+    }
     var obj = {
         //These must all be HTML safe 
         author: theAuthorHTML,
@@ -312,7 +316,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         dislikeactivated:likeordislike == "-1"?"-activated":"",
         rememberactivated:repostidtxid?"-activated":"",
         permalink:permalink,
-        articlelink:articlelink
+        articlelink:articlelink,
+        directlink:directlink
     };
 
     /*var retVal = `<div class="post">
@@ -684,7 +689,8 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
         txid: san(txid),
         title: mainbodyHTML,
         age: subtextHTML,
-        post: addendumHTML
+        post: addendumHTML,
+        iconHTML: iconHTML
     }
 
     if (theStyle.contains('compact')) {
@@ -1054,7 +1060,8 @@ function translatePage() {
         //if (fds.vavilon || fds.vavilon_title || fds.vavilon_value || fds.vavilon_data_label) {
             if (fds.vavilon) 
                 //matches[j].innerHTML=getSafeTranslation(fds.vavilon,fds.vavilon); //nb setting innerText is *a lot* faster
-                matches[j].innerText=getUnSafeTranslation(fds.vavilon,matches[j].innerText);
+                //matches[j].innerText=getUnSafeTranslation(fds.vavilon,matches[j].innerText); //nb textContent is *even* faster - doesn't cause reflow problems
+                matches[j].textContent=getUnSafeTranslation(fds.vavilon,matches[j].textContent);
             if (fds.vavilon_title) 
                 matches[j].title=getSafeTranslation(fds.vavilon_title,matches[j].title);
             if (fds.vavilon_value)

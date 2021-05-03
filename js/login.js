@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "5.7.3";
+var version = "5.8.5";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -278,7 +278,7 @@ async function login(loginkey) {
 
     if (!privkey) {
         tq.utxopools[pubkey].showwarning=false;
-        document.getElementById('lowfundswarning').style.display = 'none';
+        //document.getElementById('lowfundswarning').style.display = 'none';
         updateStatus(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
     }
 

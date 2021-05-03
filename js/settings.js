@@ -195,8 +195,7 @@ function getAndPopulateSettings() {
 function updateSettings() {
 
     //These may already be switched to qrcodes, so try/catch necessary
-    //try { document.getElementById('legacyformat').innerHTML = pubkey; } catch (err) { }
-    try { document.getElementById('lowfundsaddress').innerHTML = qpubkey; } catch (err) { }
+    //try { document.getElementById('lowfundsaddress').innerHTML = qpubkey; } catch (err) { }
 
     var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");
     if (storedmutedwords != undefined && storedmutedwords != null) {

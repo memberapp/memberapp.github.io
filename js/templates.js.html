@@ -103,7 +103,7 @@ var mainbodyHTML=`
         <div class="loading"></div>
     </div>
 
-    <div id="lowfundswarning" class="alert" style="display: none;"></div>
+    <!--<div id="lowfundswarning" class="alert" style="display: none;"></div>-->
 
     <div id="toolsanchor" class="applicationpage" style="display: none;"></div>
 
@@ -533,12 +533,14 @@ pages.member = `
     <div id="memberprofilelinks">
         <label data-vavilon="VV0064">Profile Links</label>
         <div>
-            <a href="/m/@{pagingid}" id="memberprofilelink">Member</a><span class="separatorwide"></span><a
+            <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">Member</a><span class="separatorwide"></span><a
                 rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
                 id="membermemoprofilelink">Memo</a><span class="separatorwide"></span><a rel="noopener noreferrer"
                 target="bitclout" href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
                 class="separatorwide"></span><a rel="noopener noreferrer" target="cloutgate"
-                href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a>
+                href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a><span
+                class="separatorwide"></span><a rel="noopener noreferrer" target="bitcloutsignal"
+                href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">bitcloutsignal</a>
 
         </div>
     </div>
@@ -679,12 +681,14 @@ pages.settings = `
         <div class="settingsprofilelinks">
             <label data-vavilon="VV0064">Profile Links</label>
             <div>
-                <a href="/m/@{pagingid}" id="settingsprofilelink">Member</a><span class="separatorwide"></span><a
+                <a href="https://member.cash/#member?qaddress={address}" id="settingsprofilelink">Member</a><span class="separatorwide"></span><a
                     rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
                     id="settingsmemoprofilelink">Memo</a><a rel="noopener noreferrer" target="bitclout"
                     href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
                     class="separatorwide"></span><a rel="noopener noreferrer" target="cloutgate"
-                    href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a>
+                    href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="bitcloutsignal"
+                    href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">bitcloutsignal</a>
             </div>
         </div>
         <label for="settingsidenticon">Identicon</label>
@@ -889,7 +893,9 @@ pages.settings = `
     <div>
         <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
         <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
+        <a href="/invalidatecache">Invalidate cache (will force reload of client)</a>
     </div>
+
 
 </div>`;
 

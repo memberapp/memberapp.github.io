@@ -132,6 +132,16 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
     }
 
     switch (type) {
+        case "message":
+            return notificationItemHTML(
+                "message",
+                `📧&nbsp;`,
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext','messagedyou','messaged you'),
+                timeSince(Number(data.time)),
+                "",
+                data.txid, highlighted
+            );
+            break;
         case "thread":
             postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
@@ -218,7 +228,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             postRatingID = starindex + page + ds(data.address) + type;
             return notificationItemHTML(
                 "repost",
-                `🔗&nbsp;`,
+                `🔁&nbsp;`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext','rememberedyour','remembered your') + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
                 timeSince(Number(data.time)),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive),

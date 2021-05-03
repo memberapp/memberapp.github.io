@@ -441,3 +441,114 @@ line-height: 1.85;
   display: inline;
   margin-top: 0.875rem;
 }
+
+
+/* Action Icons styles */
+.tipicon,
+.remembersicon,
+.likeicon,
+.replyicon {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 50% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  transition: background-color 0.2s linear !important;
+}
+
+
+
+/* Action Icons hover effects */
+/* Action Icons styles */
+.tipicon,
+.remembersicon,
+.likeicon,
+.replyicon {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 50% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  transition: background-color 0.2s linear !important;
+}
+
+
+
+/* Action Icons hover effects */
+.post-footer-upvote-activated:hover .likeicon,.post-footer-upvote:hover .likeicon {
+  filter: unset !important;
+  background-color: rgb(11 143 255 / 50%) !important;
+}
+.post-footer-reply:hover .replyicon, .post-footer-reply-activated:hover .replyicon {
+  filter: unset !important;
+  background-color: rgb(11 143 255 / 50%) !important;
+}
+.post-footer-remembers:hover .remembersicon, .post-footer-remembers-activated:hover .remembersicon {
+  filter: unset !important;
+  background-color: rgb(11 143 255 / 50%) !important;
+}
+.post-footer-tips:hover .tipicon,.post-footer-tips-activated:hover .tipicon {
+  filter: unset !important;
+  background-color: rgb(11 143 255 / 50%) !important;
+}
+
+/* make the number links grey*/
+.post-footer-relative a {
+  color: #aaa !important;
+  display: flex !important;
+  align-items: center !important;
+  grid-gap: 7px !important;
+}
+
+.iconcount{
+  position: unset !important;
+}
+
+/* work on 2nd point popover */
+
+/* profile-card box-shadow arround it */
+.profilepreview{
+  box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 5px rgb(0 0 0 / 10%) !important;
+}
+
+/* profile-card title controlling long titles */
+.member-handle, .member-pagingid{
+  text-overflow: initial !important;
+}
+/* profile-card content text line height and breaking long words */
+.profilepreview .profile-text{
+  line-height: 1.5 !important;
+  word-break: break-word !important;
+}
+/* profile-card ratings position  */
+.starrating{
+  float: right !important;
+}
+/* profile-card rating tooltip having number of rating */
+.star-rating[data-title]:hover:after{
+  box-shadow: 0px 0px 4px #2222224f !important;
+  margin-top: 4px !important;
+  background-image: -webkit-linear-gradient(top, #eeeeee, #ffffff) !important;
+}
+/* profile-card content box line height for whole content inside it  */
+.profile-right-contents{
+  line-height: 20px;
+}
+
+/* profile-card card body description  */
+.profile-text{
+  margin-top: 10px !important;
+}
+/* profile-card followers text font size */
+.profilepreviewfollowers a{
+  font-size: .9em !important;
+}
+
+  
+  

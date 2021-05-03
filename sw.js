@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '5.7.3';
+const version = '5.8.5';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -73,6 +73,14 @@ self.addEventListener('fetch', function (event) {
         'content-type': 'text/plain'
       }
     }));
+  }
+  else if (event.request.url.includes('/invalidatecache')) {
+    caches.delete(event.request);
+    event.respondWith(new Response("sw.js invalidated cache "+event.request), {
+      headers: {
+        'content-type': 'text/plain'
+      }
+    });
   }
   else if (event.request.url.startsWith(self.location.origin) && !event.request.url.includes('/v2/') ) {
     event.respondWith(

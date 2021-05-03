@@ -109,15 +109,19 @@ class UTXOPool {
       if(document.getElementById('satoshiamount'))
         document.getElementById('satoshiamount').innerHTML = total;
 
+      /*
       if (total < 2000 && this.showwarning) {
-        document.getElementById('lowfundswarning').style.display = 'block';
-        showQRCode('lowfundsaddress', 100);
-        //only show this message once per app load
-        this.showwarning = false;
+        var lowfundsElement=document.getElementById('lowfundswarning');
+        if(lowfundsElement){
+          document.getElementById('lowfundswarning').style.display = 'block';
+          showQRCode('lowfundsaddress', 100);
+          //only show this message once per app load
+          this.showwarning = false;
+        }
       }
       if (total >= 2000) {
         document.getElementById('lowfundswarning').style.display = 'none';
-      }
+      }*/
     }
 
     return total;
