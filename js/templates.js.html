@@ -98,6 +98,8 @@ var directRatingHTML=`
 
 var mainbodyHTML=`
 <header id="header"></header>
+<nav id="hamburgermenu" class="hamburgermenuclass"></nav>
+<nav id="majornavbuttons" class="majornavbuttonsclass"></nav>
 <div class="mainbody">
     <div id="loading" class="applicationpage loading" style="display: none;">
         <div class="loading"></div>
@@ -558,7 +560,8 @@ pages.member = `
                 <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
                     <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
                         code</span>
-                </span></div>
+                </span>
+            </div>
         </div>
     </div>
     <div class="memberstats">
@@ -842,6 +845,33 @@ pages.settings = `
     </div>
 </div>`;
 
+var hamburgerMenuHTML=`
+<span class="dropdown">
+    <button
+        onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content');
+                    ddmenu.style.display='block';
+                var ddcover=document.getElementById('ddcover');
+                    ddcover.style.display='block';
+                    ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
+        class="dropbtn">☰</button>
+    <div class="dropdown-content mainhamburger" id="dropdown-content">
+        <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">⚙️<span data-vavilon="VV0098">Settings</span></a>
+        <a data-vavilon_title="VV0098" id="settingsbutton"  title="Wallet"      class="hamburgerbutton" href="#settings"    onclick="nlc();">💵<span data-vavilon="VVwallet">Wallet</span></a>
+        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">📚<span data-vavilon="VV0100">Topic List</span></a>
+        <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">🌍<span data-vavilon="VV0101">Map</span></a>
+    </div>
+</span>
+`;
+
+var majorNavButtonsHTML=`
+<div class="majornavbuttonsdiv" class="majornavbuttonsdivid">
+    <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications?start=0"  >🔔<span class="alertcount noselect" id="alertcount"></span></a>
+    <a data-vavilon_title="VV0094" class="largenavbtn" onclick="nlc();" id="myfeedbutton"            title="My Feed (Latest posts from your topics or peeps)"    href="#myfeed"                 >📰</a>
+    <a data-vavilon_title="VV0100" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="Topic List"                                          href="#topiclist"              >📚</a>
+    <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton"   title="Messages"                                            href="#messages"               >📧<span class="alertcount noselect" id="alertcountpm"></span></a>
+    <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton"               title="New Post"                                            href="#new"                    >🖊️</a>
+</div>
+`;
 
 var headerHTML = `
 <div class="pagetop">
@@ -964,7 +994,8 @@ var footerHTML = `
             to</span>
         <a data-vavilon="VV0138" rel='noopener noreferrer' target="member" href="https://member.cash">use the stable
             version at https://member.cash</a><br /><br />
-        <hr /></span>
+        <hr />
+    </span>
     <span class="footerlinks">
         <a data-vavilon="VV0139" rel='noopener noreferrer' target="memo"
             href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">

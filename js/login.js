@@ -66,7 +66,12 @@ function init() {
 
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
+
+    document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
+    document.getElementById('majornavbuttons').innerHTML = majorNavButtonsHTML;
+
     document.getElementById('header').innerHTML = headerHTML;
+    
     document.getElementById('footer').innerHTML = footerHTML;
     document.getElementById('version').innerHTML = version;
     //setLang((navigator.language || navigator.userLanguage));

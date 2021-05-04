@@ -94,6 +94,12 @@
   text-transform: capitalize;
 }
 
+.mainhamburger{
+  right:unset;
+  top:0em;
+  left:0em;
+}
+
 /* Links inside the dropdown */
 .dropdown-content a {
   text-decoration: none;
