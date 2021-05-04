@@ -758,7 +758,11 @@ function mapThreadLoadingHTML(previewHTML) {
 
 //Trust graph and Rating
 function getMembersWithRatingHTML(i, page, data, action, reverse) {
-    var field1 = `<td>` + userFromDataBasic(data, i + page + data.address, 8) + `</td>`;
+    var directlink="";
+    if(pubkey=='19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6'){
+        directlink=`<a target="_self" href="https://bitclout.com/u/`+encodeURIComponent(data.pagingid)+`">BitClout</a>`;
+    }
+    var field1 = `<td>` + directlink + userFromDataBasic(data, i + page + data.address, 8) + `</td>`;
     var field2 = `<td>` + getMemberLink(data.address2, data.name2) + `</td>`;
     if (reverse) {
         return `<tr>` + field2 + `<td>` + action + `</td>` + field1 + `</tr>`;
