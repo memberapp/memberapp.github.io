@@ -322,7 +322,14 @@ dictionary.en=
   "toyour":"to your",
   "areyousure": "Are you sure you want to logout? Make sure you have written down your 12 word seed phrase or private key to login again. There is no other way to recover your seed phrase. It is on the settings page. Click Cancel if you need to do that now. Click OK to logout.",
   "hace":" ",
-  "existen":" "
+  "existen":" ",
+  "VV0181":"Filter Settings",
+  "VV0182":"Show Posts From Members With No Handle",
+  "VV0183":"Show Posts From Members With No Picture",
+  "showlbry": "Show lbry.tv",
+  "showbitclout": "Show BitClout Images",
+  "debuginfo": "Debug Info"
+
 }
   
   ;

@@ -93,7 +93,7 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("settings")) {
         showSettings();
     } else if (action.startsWith("messages")) {
-        showMessages();
+        showMessages(sanitizeAlphanumeric(getParameterByName("messagetype")));
     }
     else if (action.startsWith("new")) {
         showNewPost(sanitizeAlphanumeric(getParameterByName("txid")));
@@ -298,9 +298,9 @@ function showMemberPosts(start, limit, qaddress) {
     getAndPopulateNew('new', 'all', '', '', start, limit, 'memberposts', qaddress);
 }
 
-function showMessages(start, limit) {
+function showMessages(messagetype, start, limit) {
     show("messagesanchor");
-    getAndPopulateMessages(start, limit);
+    getAndPopulateMessages(messagetype, start, limit);
 }
 
 //These three should be refactored away

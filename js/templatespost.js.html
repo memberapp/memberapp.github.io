@@ -1,6 +1,7 @@
 var postCompactTemplate = `
-<div class="post">
+<div class="post" onmouseover="changeClass(this,'post highlighted')" onmouseout="changeClass(this,'post')">
     <div class="post-content">
+        {directlink}
         <div class="post-side-bar" onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
         </div>
@@ -109,7 +110,7 @@ var postCompactTemplate = `
                                     data-vavilon="permalink">Permalink</span></a>
                             <a id="articlelinkposts{diff}{txid}" href="{articlelink}"><span
                                     data-vavilon="article">Article</span></a>
-                            <a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
+                            <!--<a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
                                 href="javascript:;"><span data-vavilon="VV0161">Flag post</span></a>
                             <a id="hideuserlinkposts{diff}{txid}"
                                 onclick="hideuser('{address}','','hideuserlinkposts{diff}{txid}');"
@@ -120,7 +121,8 @@ var postCompactTemplate = `
                                     topic</span></a>
                             <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">Memo</a>
                             <a rel="noopener noreferrer" target="bitcoincom"
-                                href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>
+                                href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>-->
+                            <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>
                         </div>
                     </span>
                 </div>
@@ -199,7 +201,7 @@ var userProfileCompactTemplate=`
             {flair}
             <br />
             <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="member-pagingid">@{pagingid}</span>
+                <span class="member-pagingid">@{pagingid} {onlinestatus}</span>
             </a>
             <div class="profile-text">
                 <span class="profilepreviewtext">{profile}</span>
@@ -323,7 +325,7 @@ var notificationCompactTemplate=`
     <div class="notificationdetails">
         <div class="notificationminheight">
             <div class="notificationtitlecompact">
-                {title}
+                {iconHTML}{title}
                 <span class="age">{age}</span>
             </div>
             {post}
@@ -400,13 +402,14 @@ var replyAndTipsTemplate = `
 <span id="more{page}{txid}" style="display:none">
     <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
     {articlelink2}
-    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">memo</a>
+    <!--<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">memo</a>
     <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/{txid}">bitcoin.com</a>
     <a rel="noopener noreferrer" target="blockchair"
         href="https://blockchair.com/bitcoin-cash/transaction/{txid}">blockchair</a>
     <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/{txid}">btc.com</a>
     <a rel="noopener noreferrer" target="bitcoinunlimited"
-        href="https://explorer.bitcoinunlimited.info/tx/{txid}">bitcoin unlimited</a>
+        href="https://explorer.bitcoinunlimited.info/tx/{txid}">bitcoin unlimited</a>-->
+    <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>
     <a data-vavilon="VV0161" id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');"
         href="javascript:;">flag(post)</a>
     {hideuser}

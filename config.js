@@ -14,12 +14,16 @@ var theStyle = 'feels compact';
 var settings = {
     "showyoutube": "true",
     "showimgur": "true",
-    "showtwitter": "true"
+    "showtwitter": "true",
+    "showlbry": "true",
+    "showbitclout": "true",
+    "shownonameposts": "false",
+    "shownopicposts": "true"
 };
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",
     "txbroadcastserver": "https://member.cash/v2/",
-    "utxoserver": "https://member.cash/v2/",
+    "utxoserver": "https://rest.bitcoin.com/v2/",
     "currencydisplay": "USD",
     "languageselector": "en"
 };

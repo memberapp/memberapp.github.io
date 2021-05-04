@@ -53,6 +53,7 @@ const check = () => {
       }
     }catch(err){
       updateStatus(err);
+      updateStatus("Error requesting subscription permission");
       //alert(err);
     }
   }

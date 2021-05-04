@@ -119,9 +119,11 @@ function dslite(input) {
 }
 
 
+var debuginfo="";
 
 function updateStatus(message) {
   document.getElementById("status").innerHTML = message;
+  debuginfo=message+'\n'+debuginfo;
 }
 
 function toHexString(byteArray) {
@@ -438,4 +440,8 @@ function getBrowserLanguageCode() {
   // the input is restricted to a known set of possibilities
   const src = allowedInput.includes(language) ? language : 'en';
   return src;
+}
+
+function changeClass(element, newClass){
+  element.className=newClass;
 }

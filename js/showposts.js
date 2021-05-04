@@ -43,7 +43,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     }
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname='+settings["shownonameposts"]+'&shownopic='+settings["shownopicposts"]+'&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
     getJSON(theURL).then(function (data) {
 
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
@@ -59,6 +59,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             try {
+                if(settings["shownonameposts"]=='false' && !data[i].name){continue;}
+                if(settings["shownopicposts"]=='false' && !data[i].picurl){continue;}
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
             } catch (err) {
                 console.log(err);
@@ -77,6 +79,9 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             showOnly("topicmeta");
         }
 
+        if(!pubkey && !topicnameHOSTILE){
+            //contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
+        }
 
 
         displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start, true);
@@ -86,11 +91,15 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 }
 
 
-function getAndPopulateMessages(start, limit) {
+function getAndPopulateMessages(messagetype, start, limit) {
+
+    if(!messagetype){
+        messagetype='all';
+    }
 
     document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey +'&messagetype='+messagetype;
     getJSON(theURL).then(async function (data) {
 
         if (!eccryptoJs) {
@@ -477,18 +486,21 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID, 8));
-        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.nametime, '');
-        if (repostHTML2) {
-            repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
-        }
+        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.nametime, '', data.lastactive);
+        //if (repostHTML2) {
+        //    repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
+        //}
     }
 
     if (data.message) {
         //post with message
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2);
+        if (repostHTML2) {
+            repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
+        }
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2, data.lastactive);
     } else {
         //repost with no message
-        retHTML = getDivClassHTML("repostnoquote", repostHTML1 + repostHTML2);
+        retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
     }
 
 
@@ -501,7 +513,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, data.lastactive);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -542,6 +554,7 @@ function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
     var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0, 10) + "']");
     //document.getElementById("reply" + txid);
+    if(replybox)
     replybox.style.display = "block";
 
     //set focus here .focus()
@@ -563,10 +576,13 @@ function decreaseGUILikes(txid) {
         uparrow.className = "votearrow";
         
         if (theStyle.contains('compact')) {
-            var dislikescount = Number(document.getElementById('dislikescount' + txid).innerText);
-            document.getElementById('dislikescount' + txid).innerText = dislikescount + 1;
-            uparrow.className = "votearrowactivateddown rotate180 post-footer-upvote";
-            downarrow.className = "votearrow post-footer-downvote-activated";
+            var dislikeElement=document.getElementById('dislikescount' + txid);
+            if(dislikeElement){
+                var dislikescount = Number(dislikeElement.innerText);
+                dislikeElement.innerText = dislikescount + 1;
+            }
+            uparrow.className = "votearrow post-footer-upvote";
+            downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
         }else{
             document.getElementById('score' + txid).className = "betweenvotesscoredown";
         }

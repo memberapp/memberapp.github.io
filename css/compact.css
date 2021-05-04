@@ -180,41 +180,6 @@ a {
   cursor: pointer;
 }
 
-/*
-.post-metadata {
-    top: -1.15em;
-    position: relative;
-}
-
-.quotepost .post-metadata {
-    top: -.25em;
-    position: relative;
-}
-
-
-.post-body-wrapper {
-    padding-left: 3.3em;
-    top: -1.55em;
-    position: relative;
-}
-
-.post-header {
-    top: -.5em;
-    position: relative;
-}
-
-
-.quotepost .post-body-wrapper {
-    padding-left: 0em;
-    top: 0em;
-    position: relative;
-}
-
-.quotepost .post-header {
-    top: 0em;
-    position: relative;
-}*/
-
 .quotepost .post-footer {
     display: none;
 }
@@ -222,71 +187,6 @@ a {
 .post-footer-upvote-activated, .post-footer-downvote-activated, .post-footer-remembers-activated {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%);
 }
-
-
-/*
-.mainbodywrapper #posts .itemlist ol.posts li {
-    border: 0px solid rgba(0, 0, 0, 0.12);
-    margin-bottom: 0px;
-}
-
-
-.memberpicsmall .memberpicturesmall {
-    height: 1.25rem;
-    width: 1.25rem;
-}
-
-.jdenticon, .memberpicturesmall, .memberpicsmall{
-    height: 1.25rem;
-    width: 1.25rem;
-    top: 0em;
-    position: relative;
-}
-
-.post .memberpicsmall .memberpicturesmall {
-    height: 3rem;
-    width: 3rem;
-    z-index: 1;
-}
-
-.post .memberpicturesmall, .post .memberpicsmall{
-    height: 3rem;
-    width: 3rem;
-    top: .5em;
-    position: relative;
-}
-
-.post .jdenticon{
-    height: 3rem;
-    width: 3rem;
-    top: 1em;
-    position: relative;
-}
-
-.quotepost .memberpicsmall .memberpicturesmall {
-    height: 1.25rem;
-    width: 1.25rem;
-}
-
-.quotepost .jdenticon, .quotepost .memberpicturesmall, .quotepost .memberpicsmall{
-    height: 1.25rem;
-    width: 1.25rem;
-    top: 0em;
-    position: relative;
-}
-
-
-.profile-meta .memberpicsmall .memberpicturesmall {
-    height: 5rem;
-    width: 5rem;
-}
-
-.profile-meta .jdenticon, .profile-meta .memberpicturesmall, .profile-meta .memberpicsmall{
-    height: 5rem;
-    width: 5rem;
-    top: 0em;
-    position: relative;
-}*/
 
 
 .post-side-bar .member-handle{
@@ -478,7 +378,14 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 /*hide the sidebar for quoteposts*/
 .quotepost .post-side-bar {
   display:none;
+
 }
+
+.quotepost .post-right-contents {
+  margin-left: 0;
+}
+
+
 
 
 
@@ -525,3 +432,129 @@ display: block;
 .tipdetailscompact, .rememberdetailscompact{
 line-height: 1.85;
 }
+
+
+.repost {
+    border-bottom: 0px;
+    background: inherit;
+}
+
+.member-handle, .member-pagingid {
+  max-width: 250px;
+}
+
+#loginbox .content .loginnotes a {
+  display: inline;
+  margin-top: 0.875rem;
+}
+
+
+/* Action Icons styles */
+.tipicon,
+.remembersicon,
+.likeicon,
+.replyicon {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 50% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  transition: background-color 0.2s linear !important;
+}
+
+
+
+/* Action Icons hover effects */
+/* Action Icons styles */
+.tipicon,
+.remembersicon,
+.likeicon,
+.replyicon {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 35px !important;
+  height: 35px !important;
+  border-radius: 50% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  transition: background-color 0.2s linear !important;
+}
+
+
+
+/* Action Icons hover effects */
+.post-footer-upvote-activated:hover .likeicon,.post-footer-upvote:hover .likeicon {
+  filter: unset !important;
+  background-color: rgb(11 143 255 / 50%) !important;
+}
+.post-footer-reply:hover .replyicon, .post-footer-reply-activated:hover .replyicon {
+  filter: unset !important;
+  background-color: rgb(11 143 255 / 50%) !important;
+}
+.post-footer-remembers:hover .remembersicon, .post-footer-remembers-activated:hover .remembersicon {
+  filter: unset !important;
+  background-color: rgb(11 143 255 / 50%) !important;
+}
+.post-footer-tips:hover .tipicon,.post-footer-tips-activated:hover .tipicon {
+  filter: unset !important;
+  background-color: rgb(11 143 255 / 50%) !important;
+}
+
+/* make the number links grey*/
+.post-footer-relative a {
+  color: #aaa !important;
+  display: flex !important;
+  align-items: center !important;
+  grid-gap: 7px !important;
+}
+
+.iconcount{
+  position: unset !important;
+}
+
+/* work on 2nd point popover */
+
+/* profile-card box-shadow arround it */
+.profilepreview{
+  box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 5px rgb(0 0 0 / 10%) !important;
+}
+
+/* profile-card title controlling long titles */
+.member-handle, .member-pagingid{
+  text-overflow: initial !important;
+}
+/* profile-card content text line height and breaking long words */
+.profilepreview .profile-text{
+  line-height: 1.5 !important;
+  word-break: break-word !important;
+}
+/* profile-card ratings position  */
+.starrating{
+  float: right !important;
+}
+/* profile-card rating tooltip having number of rating */
+.star-rating[data-title]:hover:after{
+  box-shadow: 0px 0px 4px #2222224f !important;
+  margin-top: 4px !important;
+  background-image: -webkit-linear-gradient(top, #eeeeee, #ffffff) !important;
+}
+/* profile-card content box line height for whole content inside it  */
+.profile-right-contents{
+  line-height: 20px;
+}
+
+/* profile-card card body description  */
+.profile-text{
+  margin-top: 10px !important;
+}
+/* profile-card followers text font size */
+.profilepreviewfollowers a{
+  font-size: .9em !important;
+}
+
+  
+  

@@ -105,7 +105,7 @@ var mainbodyHTML=`
         <div class="loading"></div>
     </div>
 
-    <div id="lowfundswarning" class="alert" style="display: none;"></div>
+    <!--<div id="lowfundswarning" class="alert" style="display: none;"></div>-->
 
     <div id="toolsanchor" class="applicationpage" style="display: none;"></div>
 
@@ -169,7 +169,7 @@ var loginboxHTML=`
     <hr />
     <br />
     <br />
-    <br /><span data-vavilon="VV0018">Phrase (12 words)</span>
+    <br /><span data-vavilon="VV0018u">Phrase (12 words) or Public Key</span>
     <br />
     <div class="formgroup">
         <input size="64" id="loginkey">
@@ -182,11 +182,13 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019">*Memo Users. You can also login with your key (Compressed WIF: Starts with 'L..' or
-            'K..').</span> <a data-vavilon="VV0020" rel='noopener noreferrer' target="memo"
-            href="https://memo.cash/key/export">Fetch from
-            Memo</a>.
+        <span data-vavilon="VV0019n1">*BitClout Users. Your public key starts with 'BC1..'</span><br />
     </div>
+    <div class="loginnotes">
+        <span>*Memo Users. Your <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">private
+                key</a> starts with 'L..' or 'K..'</span>
+    </div>
+
     <br />
     <br />
 </div>
@@ -207,6 +209,7 @@ var lowfundswarningHTML=`
     <span data-vavilon="VV0023">Send Nuggets your address for a few cents if you're
         finding it difficult to get some.</span>
     <br />
+    BitClout <a rel='noopener noreferrer' href="https://bitclout.com/amazingnuggets">@amazingnuggets</a><br />
     Twitter <a rel='noopener noreferrer' href="https://twitter.com/chickenorgold">@chickenorgold</a><br />
     Reddit <a rel='noopener noreferrer'
         href="https://www.reddit.com/user/theamazingnuggets">/u/theamazingnuggets</a><br />
@@ -344,6 +347,15 @@ var messagesanchorHTML=`
         messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
         available to you if you wish to use it.
     </p>
+    <div id="messageschoice" class="messageslist">
+        <a data-vavilon_title="allmessages" class="btn privatemessagesbutton" href="#messages?messagetype=all"
+            onclick="nlc();">All</a>
+        | <a data-vavilon_title="sentmessages" class="btn privatemessagesbutton" href="#messages?messagetype=sent"
+            onclick="nlc();">Sent</a>
+        | <a data-vavilon_title="receivedmessages" class="btn privatemessagesbutton"
+            href="#messages?messagetype=received" onclick="nlc();">Received</a>
+    </div>
+
     <div id="usersearchcontainer">
         <label data-vavilon="VV0049" for="usersearch">Member Search</label>
         <input class="usersearch" id="usersearch" maxlength="217"
@@ -523,9 +535,15 @@ pages.member = `
     <div id="memberprofilelinks">
         <label data-vavilon="VV0064">Profile Links</label>
         <div>
-            <a href="#member?qaddress={address}" id="memberprofilelink">Member</a><span class="separatorwide"></span><a
+            <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">Member</a><span class="separatorwide"></span><a
                 rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
-                id="membermemoprofilelink">Memo</a>
+                id="membermemoprofilelink">Memo</a><span class="separatorwide"></span><a rel="noopener noreferrer"
+                target="bitclout" href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
+                class="separatorwide"></span><a rel="noopener noreferrer" target="cloutgate"
+                href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a><span
+                class="separatorwide"></span><a rel="noopener noreferrer" target="bitcloutsignal"
+                href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">bitcloutsignal</a>
+
         </div>
     </div>
     <label for="memberidenticon">Identicon</label>
@@ -665,9 +683,14 @@ pages.settings = `
         <div class="settingsprofilelinks">
             <label data-vavilon="VV0064">Profile Links</label>
             <div>
-                <a href="#member?qaddress={address}" id="settingsprofilelink">Member</a><span
-                    class="separatorwide"></span><a rel="noopener noreferrer" target="memo"
-                    href="https://memo.cash/profile/{address}" id="settingsmemoprofilelink">Memo</a>
+                <a href="https://member.cash/#member?qaddress={address}" id="settingsprofilelink">Member</a><span class="separatorwide"></span><a
+                    rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
+                    id="settingsmemoprofilelink">Memo</a><a rel="noopener noreferrer" target="bitclout"
+                    href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="cloutgate"
+                    href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="bitcloutsignal"
+                    href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">bitcloutsignal</a>
             </div>
         </div>
         <label for="settingsidenticon">Identicon</label>
@@ -780,6 +803,7 @@ pages.settings = `
             <option value="base nightmode none">Member Night Mode</option>
             <option value="base hackernews">Hacker News</option>
             <option value="base hackernews hnnightmode">Hacker News Night Mode</option>
+            <option value="niftycompact">Nifty (Under development)</option>
             <option data-vavilon="VV0168" value="none">None</option>
         </select>
     </div>
@@ -798,7 +822,7 @@ pages.settings = `
     </div>
     <div>
         <label data-vavilon="VV0086" for="mutedwords">Muted Words (Comma Separate)</label>
-        <textarea id="mutedwords" maxlength="217" name="text" rows="4" cols="60" onchange="updatemutedwords();"
+        <textarea id="mutedwords" name="text" rows="4" cols="60" onchange="updatemutedwords();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
     </div>
     <div>
@@ -816,11 +840,36 @@ pages.settings = `
         <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
         <label data-vavilon="VV0090" for="showtwitter" class="checkboxlabel">Show Tweets</label>
     </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="showlbry" onchange="updateSettingsCheckbox('showlbry');">
+        <label data-vavilon="showlbry" for="showlbry" class="checkboxlabel">Show lbry.tv</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="showbitclout" onchange="updateSettingsCheckbox('showbitclout');">
+        <label data-vavilon="showbitclout" for="showbitclout" class="checkboxlabel">Show BitClout Images</label>
+    </div>
+
+
+    <!-- Too slow on server side-->
+
+    <div>
+        <label data-vavilon="VV0181" for="filtersettings" class="labelheader">Filter Settings</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="shownonameposts" onchange="updateSettingsCheckbox('shownonameposts');">
+        <label data-vavilon="VV0182" for="shownonameposts" class="checkboxlabel">Show Posts From Members With No
+            Handle</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="shownopicposts" onchange="updateSettingsCheckbox('shownopicposts');">
+        <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No
+            Picture</label>
+    </div>
     <div>
         <label data-vavilon="VV0091" for="contentserver">Content Server</label>
         <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
             <option value="https://member.cash/v2/member.js">member.cash</option>
-            <option value="https://memberjs.bchd.cash/member.js">memberjs.bchd.cash</option>
+            <option value="https://memberjs.bchd.cash/v2/member.js">memberjs.bchd.cash</option>
             <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
         </select>
     </div>
@@ -843,6 +892,13 @@ pages.settings = `
             <option value="http://127.0.0.1:3123/v2/">Localhost</option>
         </select>
     </div>
+    <div>
+        <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
+        <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
+        <a href="/invalidatecache">Invalidate cache (will force reload of client)</a>
+    </div>
+
+
 </div>`;
 
 var hamburgerMenuHTML=`

@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "5.0.8";
+var version = "5.8.5";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -204,6 +204,16 @@ async function login(loginkey) {
             document.getElementById('loginkey').value = "";
             alert(getSafeTranslation('uncompressed', "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')"));
             return;
+        } else if (loginkey.startsWith("BC1")) {
+            //var bcpublicKey = decode(loginkey).toString('hex').substr(6, 66);
+            var bcpublicKey = bs58decode(loginkey).slice(3,36);
+            //.toString('hex').substr(6, 66);
+            var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
+            publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+
+            //var bcpubkey = Buffer.from(bcpublicKey, 'hex');
+            //var thing = bitcoinJs.ECPair.fromPublicKey(bcpubkey).publicKey;
+            //publicaddress = bitcoinJs.payments.p2pkh({ pubkey: thing }).address;
         } else if (loginkey.startsWith("q")) {
             publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
         } else if (loginkey.startsWith("b")) {
@@ -252,10 +262,6 @@ async function login(loginkey) {
     document.getElementById('newseedphrase').innerText = "";
     document.getElementById('loginkey').value = "";
 
-    if (privkey == "") {
-        alert(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
-    }
-
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
     updateSettings();
     getAndPopulateSettings();
@@ -275,12 +281,15 @@ async function login(loginkey) {
     document.getElementById('loggedout').style.display = "none";
     getLatestUSDrate();
 
+    if (!privkey) {
+        tq.utxopools[pubkey].showwarning=false;
+        //document.getElementById('lowfundswarning').style.display = 'none';
+        updateStatus(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
+    }
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
     document.getElementById('toolsanchor').innerHTML = toolsanchorHTML;
-    document.getElementById('lowfundswarning').innerHTML = lowfundswarningHTML;
-
     return;
 
 }
