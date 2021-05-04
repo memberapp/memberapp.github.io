@@ -448,6 +448,13 @@ line-height: 1.85;
   margin-top: 0.875rem;
 }
 
+.usersearchnav{
+  width: 15em;
+}
+
+#header{
+  display:none;
+}
 
 /* Action Icons styles */
 .tipicon,

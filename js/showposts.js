@@ -4,26 +4,6 @@
 
 var eccryptoJs = null;
 
-function getAndPopulateQuoteBox(txid) {
-    var page = 'quotepost';
-    showOnly(page);
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-
-    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkey + '&txid=' + txid;
-    getJSON(theURL).then(function (data) {
-        var contents = "";
-        if (data[0]) {
-            contents = getHTMLForPost(data[0], 1, page, 0, null, true);
-            document.getElementById(page).innerHTML = contents;
-        } else {
-            throw error(getSafeTranslation('noresult', 'no result returned'));
-        }
-        addDynamicHTMLElements();
-    }, function (status) { //error detection....
-        showErrorMessage(status, page, theURL);
-    });
-}
-
 function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress) {
     if (order == "") order = "hot";
     if (content == "") content = "posts";
@@ -46,6 +26,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     var theURL = dropdowns.contentserver + '?action=show&shownoname='+settings["shownonameposts"]+'&shownopic='+settings["shownopicposts"]+'&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
     getJSON(theURL).then(function (data) {
 
+        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
@@ -84,7 +65,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
 
-        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start, true);
+        displayItemListandNavButtonsHTML(navheader + contents, navbuttons, page, data, "posts", start, true);
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -309,6 +290,25 @@ function getAndPopulateTopicList(showpage) {
     });
 }
 
+function getAndPopulateQuoteBox(txid) {
+    var page = 'quotepost';
+    showOnly(page);
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkey + '&txid=' + txid;
+    getJSON(theURL).then(function (data) {
+        var contents = "";
+        if (data[0]) {
+            contents = getHTMLForPost(data[0], 1, page, 0, null, true);
+            document.getElementById(page).innerHTML = contents;
+        } else {
+            throw error(getSafeTranslation('noresult', 'no result returned'));
+        }
+        addDynamicHTMLElements();
+    }, function (status) { //error detection....
+        showErrorMessage(status, page, theURL);
+    });
+}
 
 
 function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start, adddynamic) {
@@ -575,7 +575,6 @@ function decreaseGUILikes(txid) {
         downarrow.className = "votearrowactivateddown rotate180";
         uparrow.className = "votearrow";
         
-        if (theStyle.contains('compact')) {
             var dislikeElement=document.getElementById('dislikescount' + txid);
             if(dislikeElement){
                 var dislikescount = Number(dislikeElement.innerText);
@@ -583,9 +582,7 @@ function decreaseGUILikes(txid) {
             }
             uparrow.className = "votearrow post-footer-upvote";
             downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
-        }else{
-            document.getElementById('score' + txid).className = "betweenvotesscoredown";
-        }
+
 
 }
 
@@ -609,7 +606,6 @@ function increaseGUILikes(txid) {
         downarrow.className = "votearrow rotate180";
         
         //Nifty
-        if (theStyle.contains('compact')) {
             //Change classes
             if(uparrow)
             uparrow.className = "votearrowactivated post-footer-upvote-activated";
@@ -618,11 +614,6 @@ function increaseGUILikes(txid) {
             var upvotecontainer=document.getElementById('upvotecontainer' + txid)
             if(upvotecontainer)
             upvotecontainer.className = "post-footer-upvote-activated post-footer-relative";
-        
-        }else{
-            //Change class
-            document.getElementById('score' + txid).className = "betweenvotesscoreup";
-        }
 
 }
 

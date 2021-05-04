@@ -92,16 +92,13 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         onlinestatus: onlineStatus
     }
 
-    if (theStyle.contains('compact')) {
         obj.profilecard="";
         if(includeProfile){
             obj.authorsidebar="";
             obj.profilecard=templateReplace(userProfileCompactTemplate, obj);
         }
         return templateReplace(userCompactTemplate, obj);
-    } else {
-        return templateReplace(userTemplate, obj);
-    }
+
 
 }
 
@@ -120,11 +117,7 @@ function getReplyDiv(txid, page, differentiator) {
         txid: san(txid)
     }
 
-    if (theStyle == 'nifty') {
-        return templateReplace(replyDivTemplate, obj);
-    } else {
-        return templateReplace(replyDivTemplate, obj);
-    }
+    return templateReplace(replyDivTemplate, obj);
 
 }
 
@@ -177,11 +170,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         maplink: mapLink,
     }
 
-    if (theStyle == 'nifty') {
-        return templateReplace(replyAndTipsTemplate, obj);
-    } else {
-        return templateReplace(replyAndTipsTemplate, obj);
-    }
+    return templateReplace(replyAndTipsTemplate, obj);
 
 
     /*
@@ -349,11 +338,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         return retVal;        
         */
 
-    if (theStyle.contains('compact') || theStyle == 'none') {
         return templateReplace(postCompactTemplate, obj);
-    } else {
-        return templateReplace(postTemplate, obj);
-    }
+
 
 }
 
@@ -402,11 +388,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         diff: differentiator
     };
 
-    if (theStyle == 'nifty') {
         return templateReplace(replyTemplate, obj);
-    } else {
-        return templateReplace(replyTemplate, obj);
-    }
 
     /*return `<div ` + (txid.startsWith(highlighttxid) ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
                 <div`+ (blockstxid != null || moderatedtxid != null ? ` class="blocked"` : ``) + `>
@@ -477,6 +459,38 @@ function getPostListItemHTML(postHTML) {
 
 function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + getSafeTranslation(linktext,linktext) + `</a>`;
+}
+
+function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
+    //Caution topicname may contain hostile characters/code
+
+    var navheader = `<nav class="timefilters">`;
+    navheader += `<a data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts from the past 48 Hours" class="`+(order=='hot'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts" class="`+(order=='new'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VV0108" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="`+(order=='topd'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw" title="Top posts from the past Week" class="`+(order=='topw'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topw&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VV0114" data-vavilon_title="VV0115" value="topm" title="Top posts from the past Month" class="`+(order=='topm'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topm&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy" title="Top posts from the past Year" class="`+(order=='topy'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topy&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="`+(order=='topa'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
+    navheader += "</nav>";
+    
+    navheader += `<nav class="contentfilters">`;
+    navheader += `<a data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" class="`+(content=='posts'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('posts', 'Posts') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" class="`+(content=='replies'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=replies&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('replies', 'Replies') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VV0124" data-vavilon_title="VV0125" title="See both posts and replies" class="`+(content=='both'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=all&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('both', 'In Both') + `</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += "</nav>";
+
+    return navheader;
+
 }
 
 function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
@@ -552,18 +566,12 @@ function getCloseButtonHTML(profileelement) {
 }
 
 function getTipDetailsHTML(user, amount, type) {
-    var theclass="tipdetails";
-    if(theStyle.contains('compact')){
-        theclass="tipdetailscompact";
-    }
+    var theclass="tipdetailscompact";
     return `<div class="`+theclass+`">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + balanceString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
 }
 
 function getRememberDetailsHTML(user, message, topic, txid) {
-    var theclass="rememberdetails";
-    if(theStyle.contains('compact')){
-        theclass="rememberdetailscompact";
-    }
+    var theclass="rememberdetailscompact";
     return `<div class="`+theclass+`">` + user + `<span class="plaintext"><a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + (message ? getSafeTranslation('quoteremembered', 'quote remembered') : getSafeTranslation('remembered', 'remembered')) + "</a></span> " + getTopicHTML(topic, getSafeTranslation('totopic', ' to t/')) + `</div>`;
 }
 
@@ -693,11 +701,8 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
         iconHTML: iconHTML
     }
 
-    if (theStyle.contains('compact')) {
         return templateReplace(notificationCompactTemplate, obj);
-    } else {
-        return templateReplace(notificationTemplate, obj);
-    }
+    
 
     /*return `
     <li class="`+ (highlighted ? 'highlighted ' : '') + `notificationitem notification` + san(notificationtype) + `" id='notification` + san(txid) + `'>
@@ -725,11 +730,7 @@ function getMapPostHTML(lat, lng, requireLogin) {
         lng: Number(lng)
     }
 
-    if (theStyle == 'nifty') {
         return templateReplace(mapPostTemplate, obj);
-    } else {
-        return templateReplace(mapPostTemplate, obj);
-    }
 
     /*return `
     <div id="newgeopost" class="bgcolor">

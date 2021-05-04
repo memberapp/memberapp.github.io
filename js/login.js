@@ -68,7 +68,9 @@ function init() {
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
 
     document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
+    document.getElementById('pagetitle').innerHTML = pageTitleHTML;    
     document.getElementById('majornavbuttons').innerHTML = majorNavButtonsHTML;
+    document.getElementById('usersearch').innerHTML =     userSearchHTML;
 
     document.getElementById('header').innerHTML = headerHTML;
     
@@ -274,9 +276,6 @@ async function login(loginkey) {
     //Get latest rate and update balance
     loadStyle();
 
-    if (theStyle == 'nifty') {
-        //document.getElementById('header').innerHTML = niftyHeaderHTML;
-    }
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
     getLatestUSDrate();
