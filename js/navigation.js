@@ -43,9 +43,9 @@ function displayContentBasedOnURLParameters() {
     }
 
     if (action.startsWith("show")) {
-        setOrder('orderselector', getParameterByName("order"));
-        setOrder('contentselector', getParameterByName("content"));
-        setOrder('filterselector', getParameterByName("filter"));
+        //setOrder('orderselector', getParameterByName("order"));
+        //setOrder('contentselector', getParameterByName("content"));
+        //setOrder('filterselector', getParameterByName("filter"));
 
         showPostsNew(
             sanitizeAlphanumeric(getParameterByName("order")),
@@ -149,6 +149,11 @@ function hideAll() {
 
 }
 
+function setPageTitle(translationID){
+    var pageTitle=getUnSafeTranslation(translationID);
+    document.getElementById('pagetitledivid').textContent = pageTitle;
+}
+
 function show(theDiv) {
     hideAll();
     document.getElementById(theDiv).style.display = "block";
@@ -172,6 +177,7 @@ function showLogin() {
 
 function showMap(geohash, posttrxid) {
     show("map");
+    setPageTitle("VV0101");
     getAndPopulateMap(geohash, posttrxid);
     document.getElementById('map').style.display = "block";
 }
@@ -190,6 +196,7 @@ function showRatings(qaddress) {
 
 function showNewPost(txid) {
     show("newpost");
+    setPageTitle("VV0096");
     document.getElementById('memorandumpreview').innerHTML = "";
     let topicNameHOSTILE = getCurrentTopicHOSTILE();
     //document.getElementById('memotopic').value = topicNameHOSTILE;
@@ -235,7 +242,7 @@ function showNotifications(start, limit, qaddress, txid) {
         showPosts(0, numbers.results, 'all');
         return;
     }
-
+    setPageTitle("VV0095");
     getAndPopulateNotifications(start, limit, "notifications", pubkey, txid);
 
 }
@@ -247,6 +254,7 @@ function showSettings() {
         return;
     }*/
     hideAll();
+    setPageTitle("VV0166");
     show('settingsanchor');
     getAndPopulateSettings();
     //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
@@ -279,6 +287,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
     }
 
     show('memberanchor');
+    setPageTitle("VV0063");
     getAndPopulateMember(qaddress);
     getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
     document.getElementById('memberanchor').style.display = "block";
@@ -300,6 +309,7 @@ function showMemberPosts(start, limit, qaddress) {
 
 function showMessages(messagetype, start, limit) {
     show("messagesanchor");
+    setPageTitle("VV0047");
     getAndPopulateMessages(messagetype, start, limit);
 }
 
@@ -339,9 +349,10 @@ function showTopic(start, limit, topicnameHOSTILE, type) {
 }
 
 function getCurrentTopicHOSTILE() {
-    var selector = document.getElementById('topicselector');
-    var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
-    return topicNameHOSTILE;
+    //var selector = document.getElementById('topicselector');
+    //var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
+    //return topicNameHOSTILE;
+    return "";
 }
 
 function showTopicList() {
@@ -403,7 +414,7 @@ function setTopic(topicNameHOSTILE) {
     var selector = document.getElementById('topicselector');
 
     if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
-        selector.selectedIndex = 0;
+        //selector.selectedIndex = 0;
         //hide("topicmeta");
         return;
     }
@@ -414,9 +425,10 @@ function setTopic(topicNameHOSTILE) {
         getAndPopulateTopic(topicNameHOSTILE);
     }
 
-    selector.selectedIndex = 1;
-    selector.options[selector.selectedIndex].value = topicNameHOSTILE;
-    selector.options[selector.selectedIndex].text = capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
+    //selector.selectedIndex = 1;
+    //selector.options[selector.selectedIndex].value = topicNameHOSTILE;
+    //selector.options[selector.selectedIndex].text = capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
+    document.getElementById('pagetitledivid').textContent = 't/'+capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
 }
 
 

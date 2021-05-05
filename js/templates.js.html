@@ -920,17 +920,26 @@ var hamburgerMenuHTML=`
 `;
 
 var pageTitleHTML = `
-<div class="pageTitlediv" class="pagetitledivid">Topic</div>
+<div class="pageTitlediv" id="pagetitledivid">Topic</div>
 `
 
 var majorNavButtonsHTML=`
 <div id="majornavbuttonsdivid" class="majornavbuttonsdiv">
+    <span id="loggedin" style="display:none;">
     <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications?start=0">🔔<span class="alertcount noselect" id="alertcount"></span></a>
     <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">📰</a>
     <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My Feed (Latest posts from your follows)"           href="#myfeed">👨</a>
     <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="My Topics  (Latest posts from your topics)"        href="#show?order=hot&content=posts&topicname=MyTopics&filter=everyone&start=0&limit=25">📚</a>
     <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton"   title="Messages"                                            href="#messages">📧<span class="alertcount noselect" id="alertcountpm"></span></a>
     <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton"               title="New Post"                                            href="#new">🖊️</a>
+    </span>
+    <span id="loggedout" class="loggedout">
+        <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebuttonloggedout"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">📰</a>
+        <a data-vavilon="VV0102" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">login</a>
+        <span class="separatorwide"></span>
+        <a data-vavilon="VV0103" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">start</a>
+    </span> 
+
 </div>
 `;
 
@@ -946,6 +955,7 @@ var userSearchHTML=`
 
 
 var headerHTML = `
+<!--
 <div class="pagetop">
     <nav>
         <span class="memberlogo">
@@ -1054,7 +1064,7 @@ var headerHTML = `
         <a data-vavilon_title="VV0136" id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href=""
             onclick="postsSelectorChanged();return false;">🔄</a>
     </nav>
-</div>
+</div>-->
 `;
 
 var footerHTML = `

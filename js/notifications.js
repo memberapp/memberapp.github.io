@@ -46,6 +46,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
     //Clear existing content
     show(page);
 
+    
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
     //Show navigation next/back buttons
