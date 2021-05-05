@@ -973,9 +973,9 @@ function populateSendMessage(address, name, publickey) {
         return;
     }
     document.getElementById('sendmessagebox').style.display = 'block';
-    document.getElementById('messagerecipient').innerText = name;
-    document.getElementById('messageaddress').innerText = address;
-    document.getElementById('messagepublickey').innerText = publickey;
+    document.getElementById('messagerecipient').textContent = name;
+    document.getElementById('messageaddress').textContent = address;
+    document.getElementById('messagepublickey').textContent = publickey;
     scrollToElement("sendmessagecontainer");
 }
 
@@ -1014,7 +1014,7 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
         await sleep(500);
     }
     //decrypted message can contain anything - don't do anything fancy with it - js/css risk!
-    document.getElementById(roottxid).innerText = decryptedMessage;
+    document.getElementById(roottxid).textContent = decryptedMessage;
 }
 
 /*function getNothingFoundMessageHTML(tk, def) {

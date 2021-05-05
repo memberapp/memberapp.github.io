@@ -261,7 +261,7 @@ async function login(loginkey) {
     document.getElementById('loggedin').style.display = "inline";
     document.getElementById('loggedout').style.display = "none";
     document.getElementById('newseedphrasedescription').style.display = "none";
-    document.getElementById('newseedphrase').innerText = "";
+    document.getElementById('newseedphrase').textContent = "";
     document.getElementById('loginkey').value = "";
 
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
@@ -308,7 +308,7 @@ function createNewAccount() {
     //show('settingsanchor');
     //alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
     document.getElementById('newseedphrasedescription').style.display = "inline";
-    document.getElementById('newseedphrase').innerText = mnemonic;
+    document.getElementById('newseedphrase').textContent = mnemonic;
     document.getElementById('loginkey').value = mnemonic;
 
 

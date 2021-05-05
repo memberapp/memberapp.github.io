@@ -67,8 +67,8 @@ async function postprivatemessage() {
     var stampAmount = document.getElementById("stampamount").value;
     if (stampAmount < 547) stampAmount = 547;
 
-    var messageRecipient = document.getElementById("messageaddress").innerText;
-    var publickey = document.getElementById("messagepublickey").innerText;
+    var messageRecipient = document.getElementById("messageaddress").textContent;
+    var publickey = document.getElementById("messagepublickey").textContent;
 
     // Encrypt the message
     const pubKeyBuf = Buffer.from(publickey, 'hex');
@@ -82,7 +82,7 @@ function privateMessagePosted() {
     document.getElementById('newpostmessagebutton').disabled = false;
     document.getElementById('newpostmessagebutton').value = getSafeTranslation('sendmessage', "Send Message");
     document.getElementById('newposttamessage').value = "";
-    document.getElementById('newpostmessagecompleted').innerText = getSafeTranslation('messagesent', "Message Sent");
+    document.getElementById('newpostmessagecompleted').textContent = getSafeTranslation('messagesent', "Message Sent");
 
 }
 

@@ -532,7 +532,7 @@ function sendReply(txid, page, divForStatus) {
     //Hide the reply button, show the reply status button
     document.getElementById("replybutton" + page + txid).style.display = "none";
     document.getElementById("replystatus" + page + txid).style.display = "block";
-    document.getElementById("replycompleted" + page + txid).innerText = "";
+    document.getElementById("replycompleted" + page + txid).textContent = "";
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     const replyhex = new Buffer(replytext).toString('hex');
@@ -568,8 +568,8 @@ function decreaseGUILikes(txid) {
         var downarrowAction = document.getElementById('downvoteaction' + txid);
         downarrowAction.onclick = null;
         var uparrow = document.getElementById('upvote' + txid);
-        var likescount = Number(document.getElementById('likescount' + txid).innerText);
-        document.getElementById('score' + txid).innerText = likescount - 1;
+        var likescount = Number(document.getElementById('likescount' + txid).textContent);
+        document.getElementById('score' + txid).textContent = likescount - 1;
         
         //Change classes
         downarrow.className = "votearrowactivateddown rotate180";
@@ -577,8 +577,8 @@ function decreaseGUILikes(txid) {
         
             var dislikeElement=document.getElementById('dislikescount' + txid);
             if(dislikeElement){
-                var dislikescount = Number(dislikeElement.innerText);
-                dislikeElement.innerText = dislikescount + 1;
+                var dislikescount = Number(dislikeElement.textContent);
+                dislikeElement.textContent = dislikescount + 1;
             }
             uparrow.className = "votearrow post-footer-upvote";
             downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
@@ -590,14 +590,14 @@ function increaseGUILikes(txid) {
 
 
         //increase number of likes, original themes
-        var likescount = Number(document.getElementById('likescount' + txid).innerText);
+        var likescount = Number(document.getElementById('likescount' + txid).textContent);
         var uparrow = document.getElementById('upvote' + txid);
         var uparrowAction = document.getElementById('upvoteaction' + txid);
         uparrowAction.onclick = null;
         var downarrow = document.getElementById('downvote' + txid);
         //Change counts
-        document.getElementById('likescount' + txid).innerText = likescount + 1;
-        document.getElementById('score' + txid).innerText = likescount + 1;
+        document.getElementById('likescount' + txid).textContent = likescount + 1;
+        document.getElementById('score' + txid).textContent = likescount + 1;
 
         //Change classes
         if(uparrow)
