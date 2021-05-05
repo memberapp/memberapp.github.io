@@ -10,6 +10,14 @@ async function userSearchChanged(searchbox, targetelement) {
         return;
     }
 
+    //Show search results
+    var resultsElement=document.getElementById(targetelement);
+    resultsElement.style.display="block";
+    //cover behind search results
+    var ddcover=document.getElementById('ddcover');
+    ddcover.style.display='block';
+    ddcover.onclick=resultsElement.onclick=function(){resultsElement.style.display=ddcover.style.display='none';};
+
     //onblur event was causing a new search making clicking on results impossible
     if (searchtermHOSTILE == previousSearchTermHOSTILE) {
         return;
@@ -29,6 +37,7 @@ async function userSearchChanged(searchbox, targetelement) {
     //Request content from the server and display it when received
     var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkey + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
     getJSON(theURL).then(function (data) {
+        
         var test = data;
         var contents = `<label for="usersearchresults">` + getSafeTranslation('results', 'Results') + `</label>`;
         for (var i = 0; i < data.length; i++) {
@@ -41,6 +50,8 @@ async function userSearchChanged(searchbox, targetelement) {
         showErrorMessage(status, null, theURL);
     });
 }
+
+
 
 
 function createSurrogate() {

@@ -564,4 +564,184 @@ line-height: 1.85;
 }
 
   
-  
+ /* New header wrapper div - making flexible its childs in a row */
+.newheader {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+  box-shadow: 0px 1px 5px -3px rgb(0 0 0 / 50%);
+  padding-bottom: 10px;
+  position: sticky;
+  width: 100%;
+  z-index: 99999;
+  top: -3px;
+  background: #fff;
+}
+
+/* majornavbuttons wrapper box - adding space btw icons */
+.newheader .majornavbuttonsdiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 30px;
+}
+
+
+.newheader .majornavbuttonsdiv a{
+  position: relative;
+}
+
+/* user search input and humberger wrapper div */
+.newheader .searchwrapper {
+  display: flex;
+  justify-content: center;
+  grid-gap: 20px;
+}
+
+.newheader .pagetitleclass {
+  display: flex;
+  align-items: center;
+}
+.newheader .searchwrapper input {
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0;
+  color: #aaa;
+  outline: none;
+  box-shadow: none;
+  padding-right: 2em;
+}
+.newheader .searchwrapper .usersearchnavclass::after {
+  content: "";
+  background-image: url(../img/feelstheme/loupe.png);
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 17px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.newheader .searchwrapper input::placeholder {
+  color: #aaa;
+}
+.newheader .majornavbuttonsclass {
+  display: flex;
+  width: fit-content;
+}
+.newheader .searchwrapper .mainhamburger {
+  right: unset;
+  top: 3.5em;
+  left: -7em;
+  box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.newheader .searchwrapper .mainhamburger a {
+  display: flex;
+  grid-gap: 6px;
+  align-items: center;
+  padding: 0.5rem 1rem;
+}
+.newheader .searchwrapper .usersearchnavclass {
+  position: relative;
+  z-index: 99;
+}
+
+.newheader .searchwrapper .usersearchnavclass label{
+  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+.newheader .searchwrapper .mainhamburger::before,
+.newheader .searchwrapper #usersearchnavresults::before {
+  content: "";
+  width: 23px;
+  height: 23px;
+  position: absolute;
+  top: -12.5px;
+  right: 2.7em;
+  background-color: #fff;
+  transform: rotate(45deg);
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  border-left: 1px solid rgba(0, 0, 0, 0.12);
+}
+.newheader .searchwrapper .dropdown {
+  width: 43px;
+  height: 36px;
+}
+.newheader .searchwrapper .dropdown:hover button {
+  transition: all 0.3s ease;
+  background-color: rgba(221, 221, 221, 0.8) !important;
+  color: #fff;
+}
+.newheader .searchwrapper .dropdown button {
+  font-size: 25px;
+  color: #aaa;
+  margin-bottom: 0;
+  font-weight: bolder;
+  width: 100%;
+  height: 100%;
+  padding: 3px;
+}
+
+.newheader .searchwrapper #usersearchnavresults {
+  position: absolute;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  top: 3.5em;
+  padding: 0.5em;
+  box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
+  min-width: 320px;
+  display:none;
+}
+
+.newheader .searchwrapper #usersearchnavresults::before {
+  right: unset;
+  left: 43px;
+}
+
+.newheader #usersearchnavresults .loading {
+  height: fit-content !important;
+  min-height: 300px;
+}
+
+.newheader .alertcount{
+  min-width: 20px;
+  height: 20px;
+  background: #7e7ef9;
+  border-radius: 50%;
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 12px;
+  top: -9px;
+  left: -11px;
+}
+
+@media (max-width: 760px) {
+  .newheader .majornavbuttonsclass {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #fff;
+      padding: 10px;
+      z-index: 999;
+      justify-content: space-around;
+      width: 100%;
+  }
+
+  .newheader .majornavbuttonsclass a {
+      font-size: 19px;
+  }
+  div#status {
+      bottom: 50px;
+  }
+  .newheader .searchwrapper #usersearchnavresults {
+      left: 50%;
+      transform: translateX(-50%);
+  }
+} 

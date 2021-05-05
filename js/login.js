@@ -70,7 +70,7 @@ function init() {
     document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
     document.getElementById('pagetitle').innerHTML = pageTitleHTML;    
     document.getElementById('majornavbuttons').innerHTML = majorNavButtonsHTML;
-    document.getElementById('usersearch').innerHTML =     userSearchHTML;
+    document.getElementById('usersearch').innerHTML = userSearchHTML;
 
     document.getElementById('header').innerHTML = headerHTML;
     

@@ -1054,7 +1054,7 @@ function getUnSafeTranslation(translationKey, fallback) {
 
 function translatePage() {
     //var matches = document.getElementsByTagName("*");
-    var matches = document.querySelectorAll('[data-vavilon],[data-vavilon_title],[data-vavilon_value],[data-vavilon_data_label]');
+    var matches = document.querySelectorAll('[data-vavilon],[data-vavilon_title],[data-vavilon_value],[data-vavilon_data_label],[data-vavilon_data_placeholder]');
     //document.body.style.display='none';
     for (var j = 0; j < matches.length; j++) {
         var fds=matches[j].dataset;
@@ -1069,6 +1069,9 @@ function translatePage() {
                 matches[j].value=getSafeTranslation(fds.vavilon_value,matches[j].value);
             if (fds.vavilon_data_label) 
                 fds.label=getSafeTranslation(fds.vavilon_data_label,fds.label);
+            if (fds.vavilon_data_placeholder) 
+                fds.placeholder=getSafeTranslation(fds.vavilon_data_placeholder,fds.placeholder);
+                
         //}
     }
     //document.body.style.display='block';
