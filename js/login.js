@@ -258,7 +258,7 @@ async function login(loginkey) {
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
 
-    document.getElementById('loggedin').style.display = "inline";
+    document.getElementById('loggedin').style.display = "flex";
     document.getElementById('loggedout').style.display = "none";
     document.getElementById('newseedphrasedescription').style.display = "none";
     document.getElementById('newseedphrase').textContent = "";
@@ -329,9 +329,9 @@ function logout() {
     privkey = "";
     pubkey = "";
     mnemonic = "";
+    document.getElementById('loggedout').style.display = "flex";
     document.getElementById('loggedin').style.display = "none";
-    document.getElementById('loggedout').style.display = "inline";
-
+    
 
     try {
         serviceWorkerLogout();

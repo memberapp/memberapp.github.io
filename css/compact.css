@@ -565,8 +565,10 @@ img {
   position: sticky;
   width: 100%;
   z-index: 99999;
-  top: -3px;
+  top: 0;
   background: #fff;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 
 /* majornavbuttons wrapper box - adding space btw icons */
@@ -577,11 +579,12 @@ img {
 }
 .newheader .majornavbuttonsdiv #loggedin {
   grid-gap: 30px;
-  display: flex !important;
+  display: flex;
 }
 
 .newheader .majornavbuttonsdiv a {
   position: relative;
+  font-size: 1.2em;
 }
 
 /* user search input and humberger wrapper div */
@@ -626,10 +629,24 @@ img {
 .newheader .searchwrapper .mainhamburger {
   right: unset;
   top: 3.5em;
-  left: -7em;
+  left: -9em;
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
   padding-left: 0;
   padding-right: 0;
+}
+
+.newheader .alertcount {
+  background: #cc2936;
+  font-size: 0.6rem;
+  border-radius: 1rem;
+  color: white;
+  font-weight: bold;
+  margin-left: 0.25rem;
+  top: -5px;
+  left: -13px;
+  position: absolute !important;
+  height: auto !important;
+  white-space: nowrap;
 }
 
 .newheader .searchwrapper .mainhamburger a {
@@ -653,7 +670,7 @@ img {
   height: 23px;
   position: absolute;
   top: -12.5px;
-  right: 2.7em;
+  right: 0.7em;
   background-color: #fff;
   transform: rotate(45deg);
   border-top: 1px solid rgba(0, 0, 0, 0.12);
@@ -717,6 +734,14 @@ img {
 .newheader .memberlogoimage {
   display: none;
 }
+.newheader .memberlogoimagefull {
+  width: 150px;
+  height: 44px;
+  object-fit: contain;
+}
+.newheader img {
+  outline: none;
+}
 .posts .timefilters,
 .posts .contentfilters {
   display: inline-block;
@@ -738,7 +763,7 @@ img {
 .posts .contentfilters {
   float: right;
 }
-.posts .timefilteroff{
+.posts .timefilteroff {
   color: #aaa;
 }
 
