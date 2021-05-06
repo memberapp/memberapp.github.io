@@ -331,7 +331,7 @@ function showPFC(start, limit, page, pubkey, type) {
 
 function showMyFeed() {
     setTopic('');
-    getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, numbers.results, 'posts', '');
+    getAndPopulateNew('new', 'posts', '', 'myfeed', 0, numbers.results, 'posts', '');
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit, qaddress) {
@@ -357,6 +357,7 @@ function getCurrentTopicHOSTILE() {
 
 function showTopicList() {
     setTopic("");
+    setPageTitle("VV0100");
     getAndPopulateTopicList(true);
 }
 
@@ -366,20 +367,20 @@ function postsSelectorChanged() {
     var selector;
 
     //orderselector
-    selector = document.getElementById('orderselector');
-    var order = selector.options[selector.selectedIndex].value;
+    //selector = document.getElementById('orderselector');
+    //var order = selector.options[selector.selectedIndex].value;
 
     //contentselector
-    selector = document.getElementById('contentselector');
-    var content = selector.options[selector.selectedIndex].value;
+    //selector = document.getElementById('contentselector');
+    //var content = selector.options[selector.selectedIndex].value;
 
     //topicselector
-    selector = document.getElementById('topicselector');
-    var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
+    //selector = document.getElementById('topicselector');
+    //var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
 
     //filterselector
-    selector = document.getElementById('filterselector');
-    var filter = selector.options[selector.selectedIndex].value;
+    //selector = document.getElementById('filterselector');
+    //var filter = selector.options[selector.selectedIndex].value;
 
     //These two statements may trigger page load twice on firefox but not on other browsers
 
@@ -411,7 +412,7 @@ function setOrder(selectorvalue, order) {
 
 function setTopic(topicNameHOSTILE) {
     //Warning, topicname may contain hostile characters
-    var selector = document.getElementById('topicselector');
+    /*var selector = document.getElementById('topicselector');*/
 
     if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
         //selector.selectedIndex = 0;
@@ -428,7 +429,11 @@ function setTopic(topicNameHOSTILE) {
     //selector.selectedIndex = 1;
     //selector.options[selector.selectedIndex].value = topicNameHOSTILE;
     //selector.options[selector.selectedIndex].text = capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
-    document.getElementById('pagetitledivid').textContent = 't/'+capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
+    if(topicNameHOSTILE.toLowerCase()=="mytopics"){
+        setPageTitle("VV0128");
+    }else{
+        document.getElementById('pagetitledivid').textContent = 't/'+capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
+    }
 }
 
 

@@ -15,6 +15,14 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Show the relevant html element
     show(page);
 
+    if(topicnameHOSTILE.toLowerCase()=="mytopics"){
+        setPageTitle("VV0128");
+    }if(filter.toLowerCase()=="myfeed"){
+        setPageTitle("VV0134a");
+    }if(filter=="everyone"){
+        setPageTitle("VVfirehose");
+    }
+
     //Show loading animation
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
@@ -243,6 +251,7 @@ function getAndPopulateTopicList(showpage) {
     var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey;
     getJSON(theURL).then(function (data) {
 
+        /*
         var selectboxIndex = 5;
         var selectbox = document.getElementById('topicselector');
         while (selectbox.options[selectboxIndex]) {
@@ -263,7 +272,7 @@ function getAndPopulateTopicList(showpage) {
             selectbox.add(option, [selectboxIndex]);
             selectboxIndex++;
         }
-
+        */
         if (showpage) {
             //group data rows by moderator before displaying
             var modsArray = [];

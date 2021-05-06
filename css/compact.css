@@ -1,74 +1,69 @@
+body {
+  background: #fff;
+}
 
-      body {
-        background: #FFF;
-    }
-      
-      .quotepost{
-        border-radius: 10px;
-      }
+.quotepost {
+  border-radius: 10px;
+}
 
-      .post-content{
-        width: 100%;
-        padding: .5em;
-      }
+.post-content {
+  width: 100%;
+  padding: 0.5em;
+}
 
-      
-      .post-body {
-            padding-bottom: .5em;
-      }
+.post-body {
+  padding-bottom: 0.5em;
+}
 
-      .footerlabel{
-        display: none;
-      }
+.footerlabel {
+  display: none;
+}
 
-      .elapsed-time{
-        display: none;
-      }
+.elapsed-time {
+  display: none;
+}
 
-      .elapsed-time-compressed{
-        display: inline;
-      }
+.elapsed-time-compressed {
+  display: inline;
+}
 
-      .fulltext{
-        display: none;
-      }
+.fulltext {
+  display: none;
+}
 
-      .likestext{
-        display: none;
-      }
-      
-      .likesbalance{
-        display: inline;
-      }
+.likestext {
+  display: none;
+}
 
-      .post-footer-downvote{
-        display: none;
-      }
+.likesbalance {
+  display: inline;
+}
 
-      
+.post-footer-downvote {
+  display: none;
+}
 
-      .post-footer {
-        width:100%;
-        font-size:1em;
-        display: flex;
-        justify-content: space-between;
-        margin-top: 0.5em;
-      }
+.post-footer {
+  width: 100%;
+  font-size: 1em;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5em;
+}
 
-
- /* Style The Dropdown Button */
+/* Style The Dropdown Button */
 .dropbtn {
   color: black;
   background-color: white;
   border: none;
   cursor: pointer;
-  padding-top: .15em;
+  padding-top: 0.15em;
 }
 
-.dropdown input[type="submit"], .dropdown button {
-    padding: 0rem 0rem;
+.dropdown input[type="submit"],
+.dropdown button {
+  padding: 0rem 0rem;
 }
-
 
 /* The container <div> - needed to position the dropdown content */
 .dropdown {
@@ -84,8 +79,8 @@
   min-width: 12em;
   z-index: 101;
   font-size: 1em;
-  right:-1em;
-  top:-3em;
+  right: -1em;
+  top: -3em;
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   padding: 1rem;
@@ -94,10 +89,10 @@
   text-transform: capitalize;
 }
 
-.mainhamburger{
-  right:unset;
-  top:0em;
-  left:0em;
+.mainhamburger {
+  right: unset;
+  top: 0em;
+  left: 0em;
 }
 
 /* Links inside the dropdown */
@@ -105,15 +100,17 @@
   text-decoration: none;
   display: block;
   font-size: 1em;
-  padding-bottom:1em;
+  padding-bottom: 1em;
 }
 
-.dropdownmenuitem{
-  padding-bottom:1em;
+.dropdownmenuitem {
+  padding-bottom: 1em;
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
 
 /* Show the dropdown menu on hover 
 .dropdown:hover .dropdown-content {
@@ -122,50 +119,50 @@
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
-  background-color:  #1063A8;
+  background-color: #1063a8;
 }
 
-.emojiicon{
-    display: none;
+.emojiicon {
+  display: none;
 }
 
-.replyicon{  
-    width: 1rem;
-    height: 1rem;
-    background: url(../img/feelstheme/compact-speech.svg);
-    filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
-    background-size: 1rem 1rem;
-    display: inline-block;
+.replyicon {
+  width: 1rem;
+  height: 1rem;
+  background: url(../img/feelstheme/compact-speech.svg);
+  filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
+  background-size: 1rem 1rem;
+  display: inline-block;
 }
 
-.remembersicon{  
-        width: 1rem;
-        height: 1rem;
-        background: url(../img/feelstheme/compact-remember.svg);
-        filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
-        background-size: 1rem 1rem;
-        display: inline-block;
+.remembersicon {
+  width: 1rem;
+  height: 1rem;
+  background: url(../img/feelstheme/compact-remember.svg);
+  filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
+  background-size: 1rem 1rem;
+  display: inline-block;
 }
 
-.likeicon{  
-    width: 1rem;
-    height: 1rem;
-    background: url(../img/feelstheme/compact-heart.svg);
-    filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
-    background-size: 1rem 1rem;
-    display: inline-block;
+.likeicon {
+  width: 1rem;
+  height: 1rem;
+  background: url(../img/feelstheme/compact-heart.svg);
+  filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
+  background-size: 1rem 1rem;
+  display: inline-block;
 }
 
-.tipicon{  
-    width: 1rem;
-    height: 1rem;
-    background: url(../img/feelstheme/compact-tip.svg);
-    filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
-    background-size: 1rem 1rem;
-    display: inline-block;
+.tipicon {
+  width: 1rem;
+  height: 1rem;
+  background: url(../img/feelstheme/compact-tip.svg);
+  filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
+  background-size: 1rem 1rem;
+  display: inline-block;
 }
 
-.iconcount{
+.iconcount {
   position: absolute;
   top: -0.2rem;
   left: 1.5rem;
@@ -175,39 +172,36 @@ a {
   overflow-wrap: normal;
 }
 
-.post-footer-relative{
+.post-footer-relative {
   position: relative;
   cursor: pointer;
 }
 
 .quotepost .post-footer {
-    display: none;
+  display: none;
 }
 
-.post-footer-upvote-activated, .post-footer-downvote-activated, .post-footer-remembers-activated {
+.post-footer-upvote-activated,
+.post-footer-downvote-activated,
+.post-footer-remembers-activated {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%);
 }
 
-
-.post-side-bar .member-handle{
+.post-side-bar .member-handle {
   display: none;
 }
 
 /*move the stars up a little*/
-.post-side-bar .star-rating{
+.post-side-bar .star-rating {
   top: -0.7em;
 }
 
 /*move the flair up a little, ensure it is left aligned*/
-.post-side-bar .flair{
-top: 2.2em;
-position: absolute;
-left: 0;
+.post-side-bar .flair {
+  top: 2.2em;
+  position: absolute;
+  left: 0;
 }
-
-
-
-
 
 .age::before {
   content: "\00a0• ";
@@ -217,18 +211,17 @@ left: 0;
   content: "\00a0";
 }
 
-.member-handle{
+.member-handle {
   font-weight: bold;
   display: inline-flex;
 }
 
-.member-pagingid{
-display: inline-flex;
+.member-pagingid {
+  display: inline-flex;
 }
 
-
 /*Getting Two columns, 3em on left, 100% on right*/
-.post-content{
+.post-content {
   display: flex;
   width: 100%;
 }
@@ -252,7 +245,9 @@ display: inline-flex;
   margin-left: 1em;
 }
 
-.memberpicturesmall, .memberpicsmallcompact, .jdenticon {
+.memberpicturesmall,
+.memberpicsmallcompact,
+.jdenticon {
   height: 1.25rem;
   width: 1.25rem;
   border-radius: 100%;
@@ -260,9 +255,10 @@ display: inline-flex;
   position: relative;
 }
 
-
 /*Side bar, profile pic and jdenticon side and profile pic in circle*/
-.post-side-bar .memberpicturesmall, .post-side-bar .memberpicsmallcompact, .post-side-bar .jdenticon{
+.post-side-bar .memberpicturesmall,
+.post-side-bar .memberpicsmallcompact,
+.post-side-bar .jdenticon {
   height: 3rem;
   width: 3rem;
   border-radius: 100%;
@@ -270,23 +266,22 @@ display: inline-flex;
 
 /*Profile card, profile pic and jdenticon side and profile pic in circle
 Use important, because we always want profile card pics to be this size*/
-.profile-card-meta .memberpicturesmall, .profile-card-meta .memberpicsmallcompact, .profile-card-meta .jdenticon{
+.profile-card-meta .memberpicturesmall,
+.profile-card-meta .memberpicsmallcompact,
+.profile-card-meta .jdenticon {
   height: 5rem !important;
   width: 5rem !important;
   border-radius: 100% !important;
 }
 
-
-
-
-.notificationtitlecompact{
-padding:1rem;
-border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+.notificationtitlecompact {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /*flair*/
 .flair {
-  background: #2291EB;
+  background: #2291eb;
   color: white;
   border-radius: 0.25rem;
   width: 3em;
@@ -296,8 +291,8 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /*Container that profile can be absolutely positioned against*/
-.membercompact{
-  position:relative;
+.membercompact {
+  position: relative;
 }
 
 /*Position absolutely*/
@@ -305,21 +300,20 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.12);
   top: -4.25rem;
 }
 
-
 /*Hide image, jdenticon and flair in post*/
-.post-right-contents .star-rating{
+.post-right-contents .star-rating {
   display: none;
 }
 
-.post-right-contents .memberpicturesmall{
+.post-right-contents .memberpicturesmall {
   display: none;
 }
 
-.post-right-contents .flair{
+.post-right-contents .flair {
   display: none;
 }
 
-.post-right-contents .jdenticon{
+.post-right-contents .jdenticon {
   display: none;
 }
 
@@ -327,29 +321,26 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
 /*Show image, jdenticon and flair in profile*/
 
-.profile-card-meta .star-rating{
+.profile-card-meta .star-rating {
   display: inline-block;
 }
 
-.profile-card-meta .memberpicturesmall{
+.profile-card-meta .memberpicturesmall {
   display: inline;
 }
 
-.profile-card-meta .flair{
+.profile-card-meta .flair {
   display: inline-block;
 }
 
-.profile-card-meta .jdenticon{
+.profile-card-meta .jdenticon {
   display: inline;
 }
 
-
-
-.profile-card-meta{
+.profile-card-meta {
   display: flex;
 }
 /*----------------------------------------------*/
-
 
 /*No margin on age*/
 .age {
@@ -362,12 +353,12 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /*move profile preview up in side bar, left in post*/
-.post-side-bar .profilepreview{
-  top:-5em;
+.post-side-bar .profilepreview {
+  top: -5em;
 }
 
-.post-right-contents .profilepreview{
-  left:-5em;
+.post-right-contents .profilepreview {
+  left: -5em;
 }
 
 /*show small memberpic for when post is quoted*/
@@ -377,17 +368,12 @@ border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 
 /*hide the sidebar for quoteposts*/
 .quotepost .post-side-bar {
-  display:none;
-
+  display: none;
 }
 
 .quotepost .post-right-contents {
   margin-left: 0;
 }
-
-
-
-
 
 /*Remove generally bad img defaults*/
 
@@ -397,13 +383,13 @@ img {
 }
 
 .imgurimage {
-outline-offset: -1px;
-outline: 1px solid rgba(0, 0, 0, 0.05);
-max-height: 640px;
-width: auto;
-max-width: 100%;
-margin: 1rem auto 0 auto;
-display: block;
+  outline-offset: -1px;
+  outline: 1px solid rgba(0, 0, 0, 0.05);
+  max-height: 640px;
+  width: auto;
+  max-width: 100%;
+  margin: 1rem auto 0 auto;
+  display: block;
 }
 
 /* make the number links grey*/
@@ -411,35 +397,40 @@ display: block;
   color: #aaa;
 }
 
-.post-body{
+.post-body {
   word-break: break-word;
 }
-
 
 .repost .star-rating {
   display: inline-block;
 }
 
-.tipdetailscompact .star-rating, .tipdetailscompact .flair, .tipdetailscompact .memberpicturesmall, .tipdetailscompact .jdenticon{
+.tipdetailscompact .star-rating,
+.tipdetailscompact .flair,
+.tipdetailscompact .memberpicturesmall,
+.tipdetailscompact .jdenticon {
   display: inline-block;
 }
 
-
-.rememberdetailscompact .star-rating, .rememberdetailscompact .flair, .rememberdetailscompact .memberpicturesmall, .rememberdetailscompact .jdenticon {
+.rememberdetailscompact .star-rating,
+.rememberdetailscompact .flair,
+.rememberdetailscompact .memberpicturesmall,
+.rememberdetailscompact .jdenticon {
   display: inline-block;
 }
 
-.tipdetailscompact, .rememberdetailscompact{
-line-height: 1.85;
+.tipdetailscompact,
+.rememberdetailscompact {
+  line-height: 1.85;
 }
-
 
 .repost {
-    border-bottom: 0px;
-    background: inherit;
+  border-bottom: 0px;
+  background: inherit;
 }
 
-.member-handle, .member-pagingid {
+.member-handle,
+.member-pagingid {
   max-width: 250px;
 }
 
@@ -448,12 +439,12 @@ line-height: 1.85;
   margin-top: 0.875rem;
 }
 
-.usersearchnav{
+.usersearchnav {
   width: 15em;
 }
 
-#header{
-  display:none;
+#header {
+  display: none;
 }
 
 /* Action Icons styles */
@@ -472,8 +463,6 @@ line-height: 1.85;
   transition: background-color 0.2s linear !important;
 }
 
-
-
 /* Action Icons hover effects */
 /* Action Icons styles */
 .tipicon,
@@ -491,22 +480,24 @@ line-height: 1.85;
   transition: background-color 0.2s linear !important;
 }
 
-
-
 /* Action Icons hover effects */
-.post-footer-upvote-activated:hover .likeicon,.post-footer-upvote:hover .likeicon {
+.post-footer-upvote-activated:hover .likeicon,
+.post-footer-upvote:hover .likeicon {
   filter: unset !important;
   background-color: rgb(11 143 255 / 50%) !important;
 }
-.post-footer-reply:hover .replyicon, .post-footer-reply-activated:hover .replyicon {
+.post-footer-reply:hover .replyicon,
+.post-footer-reply-activated:hover .replyicon {
   filter: unset !important;
   background-color: rgb(11 143 255 / 50%) !important;
 }
-.post-footer-remembers:hover .remembersicon, .post-footer-remembers-activated:hover .remembersicon {
+.post-footer-remembers:hover .remembersicon,
+.post-footer-remembers-activated:hover .remembersicon {
   filter: unset !important;
   background-color: rgb(11 143 255 / 50%) !important;
 }
-.post-footer-tips:hover .tipicon,.post-footer-tips-activated:hover .tipicon {
+.post-footer-tips:hover .tipicon,
+.post-footer-tips-activated:hover .tipicon {
   filter: unset !important;
   background-color: rgb(11 143 255 / 50%) !important;
 }
@@ -519,52 +510,52 @@ line-height: 1.85;
   grid-gap: 7px !important;
 }
 
-.iconcount{
+.iconcount {
   position: unset !important;
 }
 
 /* work on 2nd point popover */
 
 /* profile-card box-shadow arround it */
-.profilepreview{
+.profilepreview {
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 5px rgb(0 0 0 / 10%) !important;
 }
 
 /* profile-card title controlling long titles */
-.member-handle, .member-pagingid{
+.member-handle,
+.member-pagingid {
   text-overflow: initial !important;
 }
 /* profile-card content text line height and breaking long words */
-.profilepreview .profile-text{
+.profilepreview .profile-text {
   line-height: 1.5 !important;
   word-break: break-word !important;
 }
 /* profile-card ratings position  */
-.starrating{
+.starrating {
   float: right !important;
 }
 /* profile-card rating tooltip having number of rating */
-.star-rating[data-title]:hover:after{
+.star-rating[data-title]:hover:after {
   box-shadow: 0px 0px 4px #2222224f !important;
   margin-top: 4px !important;
   background-image: -webkit-linear-gradient(top, #eeeeee, #ffffff) !important;
 }
 /* profile-card content box line height for whole content inside it  */
-.profile-right-contents{
+.profile-right-contents {
   line-height: 20px;
 }
 
 /* profile-card card body description  */
-.profile-text{
+.profile-text {
   margin-top: 10px !important;
 }
 /* profile-card followers text font size */
-.profilepreviewfollowers a{
-  font-size: .9em !important;
+.profilepreviewfollowers a {
+  font-size: 0.9em !important;
 }
 
-  
- /* New header wrapper div - making flexible its childs in a row */
+/* New header wrapper div - making flexible its childs in a row */
 .newheader {
   display: flex;
   justify-content: space-around;
@@ -583,11 +574,13 @@ line-height: 1.85;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.newheader .majornavbuttonsdiv #loggedin {
   grid-gap: 30px;
+  display: flex !important;
 }
 
-
-.newheader .majornavbuttonsdiv a{
+.newheader .majornavbuttonsdiv a {
   position: relative;
 }
 
@@ -650,7 +643,7 @@ line-height: 1.85;
   z-index: 99;
 }
 
-.newheader .searchwrapper .usersearchnavclass label{
+.newheader .searchwrapper .usersearchnavclass label {
   border-bottom: 2px solid rgba(0, 0, 0, 0.12);
 }
 .newheader .searchwrapper .mainhamburger::before,
@@ -694,7 +687,7 @@ line-height: 1.85;
   padding: 0.5em;
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
   min-width: 320px;
-  display:none;
+  display: none;
 }
 
 .newheader .searchwrapper #usersearchnavresults::before {
@@ -707,7 +700,7 @@ line-height: 1.85;
   min-height: 300px;
 }
 
-.newheader .alertcount{
+/* .newheader .alertcount{
   min-width: 20px;
   height: 20px;
   background: #7e7ef9;
@@ -720,28 +713,89 @@ line-height: 1.85;
   font-size: 12px;
   top: -9px;
   left: -11px;
+} */
+.newheader .memberlogoimage {
+  display: none;
+}
+.posts .timefilters,
+.posts .contentfilters {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.posts .separator {
+  background: #ddd;
+  border: 1px solid #ddd;
+}
+.posts .timefilters a,
+.posts .contentfilters a {
+  /* background: #4bc846; */
+  padding: 5px 10px;
+  border-radius: 30px;
+  /* color: #fff; */
+  min-width: 100px;
+  transition: all 0.3s ease;
+}
+.posts .contentfilters {
+  float: right;
+}
+.posts .timefilteroff{
+  color: #aaa;
 }
 
+/* .posts .timefilters a:hover {
+  background: #21b31b;
+  transform: scale(1.1);
+} */
+/* .posts .contentfilters a {
+  background: #2291eb;
+} */
+/* .posts .contentfilters a:hover {
+  background: #0377d6;
+  transform: scale(1.1);
+} */
+
 @media (max-width: 760px) {
+  .newheader {
+    position: unset;
+  }
+  .posts .timefilters,
+  .posts .contentfilters {
+    display: block;
+    float: unset;
+  }
   .newheader .majornavbuttonsclass {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background-color: #fff;
-      padding: 10px;
-      z-index: 999;
-      justify-content: space-around;
-      width: 100%;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    z-index: 999;
+    justify-content: space-around;
+    width: 100%;
+  }
+  .newheader .memberlogoimage {
+    display: inline;
+    width: 50px;
+  }
+  .newheader .usersearchnav {
+    width: auto !important;
+  }
+
+  .newheader .pagetitleclass {
+    display: none;
+  }
+  .newheader .memberlogoimagefull {
+    display: none;
   }
 
   .newheader .majornavbuttonsclass a {
-      font-size: 19px;
+    font-size: 19px;
   }
   div#status {
-      bottom: 50px;
+    bottom: 50px;
   }
   .newheader .searchwrapper #usersearchnavresults {
-      left: 50%;
-      transform: translateX(-50%);
+    left: 50%;
+    transform: translateX(-50%);
   }
-} 
+}

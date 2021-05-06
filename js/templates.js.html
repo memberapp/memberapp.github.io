@@ -99,6 +99,14 @@ var directRatingHTML=`
 var mainbodyHTML=`
 <header id="header"></header>
 <div class="newheader">
+    <span class="memberlogo">
+        <a href="./index.html">
+            <img class="memberlogoimagefull" src="img/logos/logowide.png" width="130" height="26"
+                alt="Site Logo Full" />
+            <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26"
+                alt="Site Logo Icon" />
+        </a>
+    </span>
     <div id="pagetitle" class="pagetitleclass"></div>
     <nav id="majornavbuttons" class="majornavbuttonsclass"></nav>
     <div class="searchwrapper">
@@ -346,22 +354,8 @@ var newpostHTML=`
 var messagesanchorHTML=`
 <div class="content">
     <h2 data-vavilon="VV0047">Private Messages</h2>
-    <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain (that's the
-        sender, recipient, size and time of your message).
-        Additionally, if the recipient's private key is made public in the future, the recipient's
-        messages will become public. Using the blockchain for
-        messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
-        available to you if you wish to use it.
-    </p>
-    <div id="messageschoice" class="messageslist">
-        <a data-vavilon_title="allmessages" class="btn privatemessagesbutton" href="#messages?messagetype=all"
-            onclick="nlc();">All</a>
-        | <a data-vavilon_title="sentmessages" class="btn privatemessagesbutton" href="#messages?messagetype=sent"
-            onclick="nlc();">Sent</a>
-        | <a data-vavilon_title="receivedmessages" class="btn privatemessagesbutton"
-            href="#messages?messagetype=received" onclick="nlc();">Received</a>
-    </div>
 
+    <!--
     <div id="usersearchcontainer">
         <label data-vavilon="VV0049" for="usersearch">Member Search</label>
         <input class="usersearch" id="usersearch" maxlength="217"
@@ -369,14 +363,22 @@ var messagesanchorHTML=`
             onpaste="this.onchange();" oninput="this.onchange();">
         <br />
         <div id="usersearchresults"></div>
-    </div>
+    </div>-->
     <div id="sendmessagecontainer">
-        <label data-vavilon="VV0050">Send Encrypted Message</label>
-        <label for="messageto"><span data-vavilon="VV0052">(Search for user above)</span></label>
+        <!--<label data-vavilon="VV0050">Send Encrypted Message</label>-->
+        <!--<label for="messageto"><span data-vavilon="VV0052">(Search for user above)</span></label>-->
         <span id="messagerecipient" class="messagerecipient"></span>
         <span id="messageaddress" class="messageaddress"></span>
         <span id="messagepublickey" class="messagepublickey"></span>
         <div id="sendmessagebox" style="display: none;">
+            <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain (that's the
+                sender, recipient, size and time of your message).
+                Additionally, if the recipient's private key is made public in the future, the recipient's
+                messages will become public. Using the blockchain for
+                messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
+                available to you if you wish to use it.
+            </p>
+            
             <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum 547)</label>
             <input id="stampamount" size="8" type="number" value="547">
             <div>
@@ -392,8 +394,16 @@ var messagesanchorHTML=`
             </div>
         </div>
         <br />
-        <br />
     </div>
+    <div id="messageschoice" class="messageslist">
+        <a data-vavilon_title="allmessages" class="btn privatemessagesbutton" href="#messages?messagetype=all"
+            onclick="nlc();">All</a>
+        | <a data-vavilon_title="sentmessages" class="btn privatemessagesbutton" href="#messages?messagetype=sent"
+            onclick="nlc();">Sent</a>
+        | <a data-vavilon_title="receivedmessages" class="btn privatemessagesbutton"
+            href="#messages?messagetype=received" onclick="nlc();">Received</a>
+    </div>
+    <br />
     <div id="messageslist" class="messageslist"></div>
 </div>
 `;
@@ -914,7 +924,7 @@ var hamburgerMenuHTML=`
         <a data-vavilon_title="VV0098" id="settingsbutton"  title="Wallet"      class="hamburgerbutton" href="#tools"    onclick="nlc();">💵<span data-vavilon="VVwallet">Wallet</span></a>
         <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">📚<span data-vavilon="VV0100">Topic List</span></a>
         <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">🌍<span data-vavilon="VV0101">Map</span></a>
-        <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="nlc();">📴<span data-vavilon="VV0078">Logout</span></a>        
+        <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();">📴<span data-vavilon="VV0078">Logout</span></a>        
     </div>
 </span>
 `;
@@ -925,7 +935,7 @@ var pageTitleHTML = `
 
 var majorNavButtonsHTML=`
 <div id="majornavbuttonsdivid" class="majornavbuttonsdiv">
-    <span id="loggedin" style="display:none;">
+    <span id="loggedin" class="loggedin" style="display:none;">
     <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications?start=0">🔔<span class="alertcount noselect" id="alertcount"></span></a>
     <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">📰</a>
     <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My Feed (Latest posts from your follows)"           href="#myfeed">👨</a>

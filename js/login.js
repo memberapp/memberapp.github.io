@@ -276,8 +276,6 @@ async function login(loginkey) {
     //Get latest rate and update balance
     loadStyle();
 
-    document.getElementById('loggedin').style.display = "inline";
-    document.getElementById('loggedout').style.display = "none";
     getLatestUSDrate();
 
     if (!privkey) {

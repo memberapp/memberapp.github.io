@@ -39,9 +39,10 @@ async function userSearchChanged(searchbox, targetelement) {
     getJSON(theURL).then(function (data) {
         
         var test = data;
-        var contents = `<label for="usersearchresults">` + getSafeTranslation('results', 'Results') + `</label>`;
+        //var contents = `<label for="usersearchresults">` + getSafeTranslation('results', 'Results') + `</label>`;
+        var contents = '';
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getDivClassHTML('usersearchresult', userFromDataBasic(data[i], i + searchbox + data[i].address, 16) + sendEncryptedMessageHTML(data[i].address, data[i].name, data[i].publickey)) + "<br/>";
+            contents = contents + getDivClassHTML('usersearchresult', userFromDataBasic(data[i], i + searchbox + data[i].address, 16));
         }
         document.getElementById(targetelement).innerHTML = contents;
         addDynamicHTMLElements(data);
