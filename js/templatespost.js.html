@@ -99,7 +99,11 @@ var postCompactTemplate = `
                                     var ddcover=document.getElementById('ddcover');
                                         ddcover.style.display='block';
                                         ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
-                            class="dropbtn">☰</button>
+                            class="dropbtn"><div class="options">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div></button>
                         <div class="dropdown-content" id="dropdown-content">
                             <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
                                 href="javascript:;"><span data-vavilon="VV0147">Likes and</span> <span

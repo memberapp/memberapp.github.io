@@ -173,6 +173,7 @@ function showTools() {
 
 function showLogin() {
     show("loginbox");
+    setPageTitle("VV0102a");
 }
 
 function showMap(geohash, posttrxid) {

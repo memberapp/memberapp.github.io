@@ -105,8 +105,6 @@ dictionary.en=
   "VV0099": "Tools",
   "VV0100": "Topic List",
   "VV0101": "Map",
-  "VV0102": "login",
-  "VV0103": "start",
   "VV0104": "Hot",
   "VV0105": "Hottest posts",
   "VV0106": "New ",
@@ -330,7 +328,9 @@ dictionary.en=
   "showbitclout": "Show BitClout Images",
   "debuginfo": "Debug Info",
   "VVfirehose": "Firehose",
-  "VV0134a": "My People"
+  "VV0134a": "My People",
+  "VV0102a": "Login",
+  "VV0103a": "Start"
 
 }
   

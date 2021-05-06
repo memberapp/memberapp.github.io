@@ -349,7 +349,7 @@ Use important, because we always want profile card pics to be this size*/
 
 /*Remove border on posts*/
 .mainbodywrapper #posts .itemlist ol.posts li {
-  border: 0px solid rgba(0, 0, 0, 0.12);
+  /* border: 0px solid rgba(0, 0, 0, 0.12); */
 }
 
 /*move profile preview up in side bar, left in post*/
@@ -664,7 +664,8 @@ img {
   border-bottom: 2px solid rgba(0, 0, 0, 0.12);
 }
 .newheader .searchwrapper .mainhamburger::before,
-.newheader .searchwrapper #usersearchnavresults::before {
+.newheader .searchwrapper #usersearchnavresults::before,
+.post .dropdown .dropdown-content::before {
   content: "";
   width: 23px;
   height: 23px;
@@ -779,6 +780,71 @@ img {
   transform: scale(1.1);
 } */
 
+.post {
+  transition: all 0.3s ease;
+}
+.post-body {
+  border-top: 1px solid #e7e7e7;
+  margin-top: 0.4em;
+}
+.memberpicsmallcompact img {
+  margin-bottom: 10px;
+}
+.highlighted {
+  background-color: #f3f6fb;
+}
+.post .options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 3px;
+}
+.post .dropdown .dropbtn:hover .options div {
+  background-color: rgb(11 143 255 / 50%);
+}
+.post .dropdown .dropbtn {
+  background-color: transparent !important;
+  min-width: 30px;
+}
+.post .options div {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #cecdcd;
+  transition: all 0.3s ease;
+}
+.post .dropdown .dropdown-content {
+  background-color: white;
+  display: none;
+  position: absolute;
+  min-width: 12em;
+  z-index: 101;
+  font-size: 1em;
+  right: 2.2em;
+  top: -0.3em;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  z-index: 999;
+  box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
+  text-transform: capitalize;
+  padding: 0.5em 0;
+}
+.post .dropdown .dropdown-content a {
+  padding: 0.2em 1em;
+}
+
+.post .dropdown .dropdown-content a:hover {
+  background: linear-gradient(to right, #dadada, #fff) !important;
+  background-color: unset;
+}
+.post .dropdown .dropdown-content::before {
+  transform: rotate(136deg);
+  top: 6px;
+  right: -8px;
+  width: 17px;
+  height: 17px;
+}
 @media (max-width: 760px) {
   .newheader {
     position: unset;
