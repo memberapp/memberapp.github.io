@@ -559,16 +559,20 @@ img {
 .newheader {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 20px 0;
   box-shadow: 0px 1px 5px -3px rgb(0 0 0 / 50%);
   padding-bottom: 10px;
-  position: sticky;
+  position: fixed;
   width: 100%;
   z-index: 99;
   top: 0;
   background: #fff;
   padding-left: 5px;
   padding-right: 5px;
+}
+.mainbodywrapper .mainbody{
+  margin-top: 81px;
 }
 
 /* majornavbuttons wrapper box - adding space btw icons */
@@ -577,9 +581,22 @@ img {
   align-items: center;
   justify-content: center;
 }
+
 .newheader .majornavbuttonsdiv #loggedin {
-  grid-gap: 30px;
+  grid-gap: 22px;
   display: flex;
+}
+
+.newheader .majornavbuttonsclass #loggedout a.btn {
+  background: #1063a8;
+  color: #fff;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.25rem;
+  line-height: 1.2;
+  font-size: 100%;
+  font-weight: 400;
+  font-family: inherit;
+  margin-left: 22px;
 }
 
 .newheader .majornavbuttonsdiv a {
@@ -592,23 +609,46 @@ img {
   display: flex;
   justify-content: center;
   grid-gap: 20px;
+  min-width: 30%;
 }
 
 .newheader .pagetitleclass {
   display: flex;
   align-items: center;
+  max-width: 20%;
+  min-width: 20%;
+  padding: 0 5px;
+}
+.newheader .pagetitleclass .pageTitlediv {
+  text-align: center;
+  width: 100%;
+  color: #1063a8;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.25rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  font-size: 100%;
+  font-weight: 700;
+  font-family: inherit;
 }
 .newheader .searchwrapper input {
-  border: none;
+  /* border: none;
   border-bottom: 2px solid rgba(0, 0, 0, 0.12);
   border-radius: 0;
+  color: #aaa;
+  outline: none;
+  box-shadow: none;
+  padding-right: 2em; */
+
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.25rem;
   color: #aaa;
   outline: none;
   box-shadow: none;
   padding-right: 2em;
 }
 .newheader .searchwrapper .usersearchnavclass::after {
-  content: "";
+  /* content: "";
   background-image: url(../img/feelstheme/loupe.png);
   position: absolute;
   right: 5px;
@@ -617,14 +657,33 @@ img {
   width: 24px;
   height: 17px;
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: contain; */
+
+  content: "";
+  background-image: url(../img/feelstheme/loupe.png);
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-position: center;
+  background-color: #1063a8;
+  border-bottom-right-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
 }
 .newheader .searchwrapper input::placeholder {
   color: #aaa;
 }
+.newheader .searchwrapper .usersearchnav {
+  width: 18rem;
+}
 .newheader .majornavbuttonsclass {
   display: flex;
   width: fit-content;
+  min-width: 30%;
 }
 .newheader .searchwrapper .mainhamburger {
   right: unset;
@@ -643,7 +702,7 @@ img {
   font-weight: bold;
   margin-left: 0.25rem;
   top: -5px;
-  left: -13px;
+  right: -13px;
   position: absolute !important;
   height: auto !important;
   white-space: nowrap;
@@ -704,7 +763,7 @@ img {
   top: 3.5em;
   padding: 0.5em;
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
-  min-width: 320px;
+  min-width: 100%;
   display: none;
 }
 
@@ -845,14 +904,42 @@ img {
   width: 17px;
   height: 17px;
 }
+
+#loginbox .content {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+}
+.newseedphrasedescription {
+  transition: all 0.3s ease;
+}
+#loginbox {
+  min-height: calc(100vh - 81px);
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .newheader .searchwrapper .usersearchnav {
+    width: fit-content;
+  }
+}
+
 @media (max-width: 760px) {
   .newheader {
     position: unset;
+  }
+  .mainbodywrapper .mainbody{
+    margin-top: 1rem;
   }
   .posts .timefilters,
   .posts .contentfilters {
     display: block;
     float: unset;
+  }
+  .post .dropdown .dropbtn{
+        padding-top: 5px;
   }
   .newheader .majornavbuttonsclass {
     position: fixed;

@@ -17,16 +17,20 @@ function displayNotificationCount() {
         var element = document.getElementById("alertcount");
         if (alertcount > 0) {
             element.innerHTML = alertcount;
+            element.style.visibility="visible";
         } else {
             element.innerHTML = "";
+            element.style.visibility="hidden";
         }
 
         var alertcountpm = Number(data[0].countpm);
         var element = document.getElementById("alertcountpm");
         if (alertcountpm > 0) {
             element.innerHTML = alertcountpm;
+            element.style.visibility="visible";
         } else {
             element.innerHTML = "";
+            element.style.visibility="hidden";
         }
 
         var pageTitleCount = alertcount + alertcountpm;
@@ -40,7 +44,6 @@ function displayNotificationCount() {
         showErrorMessage(status, null, theURL);
     });
 }
-
 
 function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
     //Clear existing content
