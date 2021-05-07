@@ -564,7 +564,7 @@ img {
   padding-bottom: 10px;
   position: sticky;
   width: 100%;
-  z-index: 99999;
+  z-index: 99;
   top: 0;
   background: #fff;
   padding-left: 5px;
@@ -657,7 +657,7 @@ img {
 }
 .newheader .searchwrapper .usersearchnavclass {
   position: relative;
-  z-index: 99;
+  z-index: 100;
 }
 
 .newheader .searchwrapper .usersearchnavclass label {
