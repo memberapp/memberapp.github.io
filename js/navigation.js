@@ -61,6 +61,8 @@ function displayContentBasedOnURLParameters() {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
         showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")));
+    } else if (action.startsWith("profile")) {
+        showMember(sanitizeAlphanumeric(pubkey, ''));
     } else if (action.startsWith("member")) {
         showMember(sanitizeAlphanumeric(getParameterByName("qaddress")), getParameterByName("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -71,8 +73,8 @@ function displayContentBasedOnURLParameters() {
         showBlockers(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("blocking")) {
         showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("ratings")) {
-        showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("rep")) {
+        showReputation(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("posts")) {
         showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("feed")) {
@@ -101,7 +103,7 @@ function displayContentBasedOnURLParameters() {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
     } else if (action.startsWith("myfeed")) {
         showMyFeed();
-    } else if (action.startsWith("tools")) {
+    } else if (action.startsWith("wallet")) {
         showTools();
     } else if (action.startsWith("login")) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
@@ -137,6 +139,8 @@ function hideAll() {
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
     document.getElementById('memberanchor').style.display = "none";
+    document.getElementById('memberheader').style.display = "none";
+    
     document.getElementById('newpost').style.display = "none";
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
@@ -189,10 +193,22 @@ function hideMap() {
     document.getElementById('map').style.display = "none";
 }
 
-function showRatings(qaddress) {
-    show('anchorratings');
+function showReputation(qaddress) {
+    
     getAndPopulateRatings(qaddress);
+    getAndPopulateCommunityRatings(qaddress);
+
+    if (pubkey) {
+        getAndPopulateTrustGraph(pubkey, qaddress);
+    } else {
+        document.getElementById('trustgraph').style.display = "none";
+    }
+
+    show('community');
+    document.getElementById('memberheader').style.display = "block";
     document.getElementById('anchorratings').style.display = "block";
+    document.getElementById('trustgraph').style.display = "block";
+    
 }
 
 function showNewPost(txid) {
@@ -277,7 +293,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
                 showMember(qaddress);
                 return;
             } else {
-                show('memberanchor');
+                show('memberheader');
                 document.getElementById('memberanchor').innerHTML =  getSafeTranslation('pagingidnotfount','This paging id not found.');
                 return;
             }
@@ -287,14 +303,16 @@ function showMember(qaddress, pagingIDHOSTILE) {
         return;
     }
 
-    show('memberanchor');
+    //show('header');
     setPageTitle("VV0063");
     getAndPopulateMember(qaddress);
-    getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
-    document.getElementById('memberanchor').style.display = "block";
-    document.getElementById('community').style.display = "block";
-    document.getElementById('anchorratings').style.display = "block";
-    document.getElementById('trustgraph').style.display = "block";
+    //getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
+    show("memberanchor");
+    document.getElementById('memberheader').style.display = "block";
+    //document.getElementById('memberanchor').style.display = "block";
+    //document.getElementById('memberposts').style.display = "none";
+    
+
 }
 
 //deprecated - now on member page

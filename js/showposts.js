@@ -15,11 +15,14 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Show the relevant html element
     show(page);
 
-    if(topicnameHOSTILE.toLowerCase()=="mytopics"){
+    if(qaddress){
+        //skip, viewing single user's posts, title should already be filled in with user's paging id
+        document.getElementById("memberheader").style.display='block';    
+    }else if(topicnameHOSTILE.toLowerCase()=="mytopics"){
         setPageTitle("VV0128");
-    }if(filter.toLowerCase()=="myfeed"){
+    }else if(filter.toLowerCase()=="myfeed"){
         setPageTitle("VV0134a");
-    }if(filter=="everyone"){
+    }else if(filter=="everyone"){
         setPageTitle("VVfirehose");
     }
 

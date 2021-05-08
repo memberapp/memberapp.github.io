@@ -97,24 +97,7 @@ var directRatingHTML=`
 </tr>`;
 
 var mainbodyHTML=`
-<header id="header"></header>
-<div class="newheader">
-    <div id="ddcover" style="background:grey; overflow:visible; width: 100%; height: 100%; position: fixed; top: 0; left: 0; opacity: 0.1; display:none; z-index: 100;"></div>
-    <span class="memberlogo">
-        <a href="./index.html">
-            <img class="memberlogoimagefull" src="img/logos/logowide.png" width="130" height="26"
-                alt="Site Logo Full" />
-            <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26"
-                alt="Site Logo Icon" />
-        </a>
-    </span>
-    <div id="pagetitle" class="pagetitleclass"></div>
-    <nav id="majornavbuttons" class="majornavbuttonsclass"></nav>
-    <div class="searchwrapper">
-        <nav id="usersearch" class="usersearchclass"></nav>
-        <nav id="hamburgermenu" class="hamburgermenuclass"></nav>
-    </div>
-</div>
+<div class="newheader" id="header" style="display: inherit;"></div>
 <div class="mainbody">
     <div id="loading" class="applicationpage loading" style="display: none;">
         <div class="loading"></div>
@@ -130,17 +113,16 @@ var mainbodyHTML=`
 
     <div id="notifications" style="display: none;"></div>
 
-    <div id="memberanchor" class="member" style="display: none;"></div>
-
-    <div id="trustgraph" class="trustgraph" style="display:none;"></div>
-
+    <div id="memberheader" class="memberheader" style="display: none;">
+        <div id="membertabs" class="membertabs"></div>
+        <div id="memberanchor" class="member"></div>
+        <div id="trustgraph" class="trustgraph" style="display:none;"></div>
+        <div id="anchorratings" class="ratings" style="display: none;"></div>
+        <div id="community" class="community" style="display: none;"></div>
+        <div id="memberposts" style="display: none;"></div>
+    </div>
+    
     <div id="settingsanchor" style="display: none;"></div>
-
-    <div id="anchorratings" class="ratings" style="display: none;"></div>
-
-    <div id="community" class="community" style="display: none;"></div>
-
-    <div id="memberposts" style="display: none;"></div>
 
     <div id="followers" class="followers" style="display: none;"></div>
 
@@ -242,7 +224,7 @@ var lowfundswarningHTML=`
 
 var toolsanchorHTML=`
 <div class="content">
-    <h2 data-vavilon="VV0027">Tools</h2>
+    <h2 data-vavilon="VVwallet">Wallet</h2>
     <div id="sendfunds">
         <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
         <p data-vavilon="VV0029">You can send funds to another Bitcoin Cash address.</p>
@@ -257,39 +239,58 @@ var toolsanchorHTML=`
         <br />
     </div>
 
-    <br />
-    <hr />
-    <br />
-    <div id="surrogatecontainer">
-        <label data-vavilon="VV0033" for="surrogatename">Create Surrogate Member Account</label>
-        <p data-vavilon="VV0034">You can create a Surrogate Member account if you want to rate a user or organization
-            that
-            does not have their own Member account yet. '(Surrogate)' will follow the
-            handle to indicate the account is not claiming the identity, just acting as a receptacle for
-            reputational information.
-        </p>
-        <div class="formgroup">
-            <input class="surrogatename" id="surrogatename" maxlength="200"
-                onchange="userSearchChanged('surrogatename','surrogatesearchresults');" onkeypress="this.onchange();"
-                onpaste="this.onchange();" oninput="this.onchange();">
-            <button data-vavilon="VV0035" id="createsurrogatebutton" type="button"
-                onclick="createSurrogate();">Create</button>
+    <div id="settingsprofileaddress">
+        <label data-vavilon="VV0065" data-vavilon="address">Address</label>
+        <span id="cashaddrformat">{cashaddress}</span>
+        <div id="cashaddrformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
         </div>
-        <br />
-        <div id="surrogatelink"></div>
-        <div id="surrogatesearchresults"></div>
     </div>
-    <br />
-    <hr />
-    <br />
-    <a data-vavilon="VV0036" rel='noopener noreferrer' target="tokenrecycler"
-        href="https://slpvh.github.io/Token-Recycler/">Token
-        Recycler (External link)</a><br />
-    <br />
+    <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
+    <div id="settingsblockexplorer">
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
+            href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="settingsblockchair"
+            href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
+            href="https://bch.btc.com/{address}">btc.com</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
+            id="settingsbitcoinunlimited" href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
+            unlimited</a>
+    </div>
+    <div id="settingslegacyprofileaddress">
+        <label data-vavilon="VV0068">Legacy Address</label>
+        <span id="legacyformat">{address}</span>
+        <div id="legacyformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
+    </div>
+    <div id="settingsprivatekey">
+        <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
+        <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
+        <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
+                onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
+        <div id="privatekeydisplaydiv"></div>
+        <span id="privatekeyformat" style="display: none;">{privatekey}</span>
+        <div id="privatekeyformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
+    </div>
+
 </div>
 `;
 
 var newpostHTML=`
+<br />
 <br />
 <div id="memorandumarea">
     <input type="hidden" name="quotetxid" value="" id="quotetxid">
@@ -354,8 +355,6 @@ var newpostHTML=`
 
 var messagesanchorHTML=`
 <div class="content">
-    <h2 data-vavilon="VV0047">Private Messages</h2>
-
     <!--
     <div id="usersearchcontainer">
         <label data-vavilon="VV0049" for="usersearch">Member Search</label>
@@ -529,11 +528,17 @@ var trustgraphHTML=`
 </div>
 `;
 
+var membertabsHTML=`
+    <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}" href="#member?qaddress={address}">Profile</a>
+    <span class="separator"></span>
+    <a data-vavilon="VVreputation" data-vavilon_title="VVreputation" title="Reputation" class="{reputationclass}" href="#rep?qaddress={address}">Reputation</a>
+    <span class="separator"></span>
+    <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}" href="#memberposts?start=0&limit=25&order=new&content=all&filter=everyone&qaddress={address}&topicname=">Posts</a>
+`;
 
 var pages = {};
 pages.member = `
 <div class="content">
-    <h2>Member</h2>
     <div class="memberpiccontainer">
         <label data-vavilon="VV0059" id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile
             Picture</label>
@@ -563,7 +568,7 @@ pages.member = `
 
         </div>
     </div>
-    <label for="memberidenticon">Identicon</label>
+    <!--<label for="memberidenticon">Identicon</label>
     <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg>
     </div>
     <label data-vavilon="VV0065">Address</label>
@@ -575,7 +580,7 @@ pages.member = `
                     code</span>
             </span>
         </div>
-    </div>
+    </div>-->
     <label data-vavilon="VV0067" for="memberblockexplorer">Block Explorers</label>
     <div id="memberblockexplorer">
         <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="memberbitcoincom"
@@ -710,51 +715,14 @@ pages.settings = `
                     href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">bitcloutsignal</a>
             </div>
         </div>
-        <label for="settingsidenticon">Identicon</label>
+        <!--<label for="settingsidenticon">Identicon</label>
         <div id="settingsidenticon"><svg width="20" height="20" class="jdenticonlarge"
-                data-jdenticon-value="{address}"></svg></div>
+                data-jdenticon-value="{address}"></svg></div>-->
         <div id="settingsprofileaddress">
-
             <label data-vavilon="VV0065" data-vavilon="address">Address</label>
             <span id="cashaddrformat">{cashaddress}</span>
             <div id="cashaddrformatdiv">
                 <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
-                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                        code</span>
-                </span>
-            </div>
-        </div>
-        <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
-        <div id="settingsblockexplorer">
-            <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
-                href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
-            <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="settingsblockchair"
-                href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
-            <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
-                href="https://bch.btc.com/{address}">btc.com</a>
-            <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
-                id="settingsbitcoinunlimited" href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
-                unlimited</a>
-        </div>
-        <div id="settingslegacyprofileaddress">
-            <label data-vavilon="VV0068">Legacy Address</label>
-            <span id="legacyformat">{address}</span>
-            <div id="legacyformatdiv">
-                <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
-                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                        code</span>
-                </span>
-            </div>
-        </div>
-        <div id="settingsprivatekey">
-            <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
-            <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
-            <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
-                    onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
-            <div id="privatekeydisplaydiv"></div>
-            <span id="privatekeyformat" style="display: none;">{privatekey}</span>
-            <div id="privatekeyformatdiv">
-                <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
                     <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
                         code</span>
                 </span>
@@ -921,11 +889,12 @@ var hamburgerMenuHTML=`
                     ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
         class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
-        <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">⚙️<span data-vavilon="VV0098">Settings</span></a>
-        <a data-vavilon_title="VV0098" id="settingsbutton"  title="Wallet"      class="hamburgerbutton" href="#tools"    onclick="nlc();">💵<span data-vavilon="VVwallet">Wallet</span></a>
+        <a data-vavilon_title="VV0063" id="profilebutton"  title="Profile"    class="hamburgerbutton" href="#profile"    onclick="nlc();">⚙️<span data-vavilon="VV0063">Profile</span></a>
+        <a data-vavilon_title="VVwallet" id="walletbutton"  title="Wallet"      class="hamburgerbutton" href="#wallet"    onclick="nlc();">💵<span data-vavilon="VVwallet">Wallet</span></a>
         <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">📚<span data-vavilon="VV0100">Topic List</span></a>
         <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">🌍<span data-vavilon="VV0101">Map</span></a>
-        <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();">📴<span data-vavilon="VV0078">Logout</span></a>        
+        <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">⚙️<span data-vavilon="VV0098">Settings</span></a>
+        <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();">📴<span data-vavilon="VV0078">Logout</span></a>
     </div>
 </span>
 `;
@@ -966,6 +935,21 @@ var userSearchHTML=`
 
 
 var headerHTML = `
+    <div id="ddcover" style="background:grey; overflow:visible; width: 100%; height: 100%; position: fixed; top: 0; left: 0; opacity: 0.1; display:none; z-index: 100;"></div>
+    <span class="memberlogo">
+        <a href="./index.html">
+            <img class="memberlogoimagefull" src="img/logos/logowide.png" width="130" height="26"
+                alt="Site Logo Full" />
+            <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26"
+                alt="Site Logo Icon" />
+        </a>
+    </span>
+    <div id="pagetitle" class="pagetitleclass"></div>
+    <nav id="majornavbuttons" class="majornavbuttonsclass"></nav>
+    <div class="searchwrapper">
+        <nav id="usersearch" class="usersearchclass"></nav>
+        <nav id="hamburgermenu" class="hamburgermenuclass"></nav>
+    </div>
 <!--
 <div class="pagetop">
     <nav>
