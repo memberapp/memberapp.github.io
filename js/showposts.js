@@ -19,11 +19,13 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         //skip, viewing single user's posts, title should already be filled in with user's paging id
         document.getElementById("memberheader").style.display='block';    
     }else if(topicnameHOSTILE.toLowerCase()=="mytopics"){
-        setPageTitle("VV0128");
+        setPageTitleFromID("VV0128");
+    }else if(topicnameHOSTILE){
+        setPageTitleRaw("t/"+topicnameHOSTILE);
     }else if(filter.toLowerCase()=="myfeed"){
-        setPageTitle("VV0134a");
+        setPageTitleFromID("VV0134a");
     }else if(filter=="everyone"){
-        setPageTitle("VVfirehose");
+        setPageTitleFromID("VVfirehose");
     }
 
     //Show loading animation

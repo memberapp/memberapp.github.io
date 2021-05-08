@@ -153,9 +153,13 @@ function hideAll() {
 
 }
 
-function setPageTitle(translationID){
+function setPageTitleFromID(translationID){
     var pageTitle=getUnSafeTranslation(translationID);
-    document.getElementById('pagetitledivid').textContent = pageTitle;
+    setPageTitleRaw(pageTitle);
+}
+
+function setPageTitleRaw(newContent){
+    document.getElementById('pagetitledivid').textContent = newContent;
 }
 
 function show(theDiv) {
@@ -177,12 +181,12 @@ function showTools() {
 
 function showLogin() {
     show("loginbox");
-    setPageTitle("VV0102a");
+    setPageTitleFromID("VV0102a");
 }
 
 function showMap(geohash, posttrxid) {
     show("map");
-    setPageTitle("VV0101");
+    setPageTitleFromID("VV0101");
     getAndPopulateMap(geohash, posttrxid);
     document.getElementById('map').style.display = "block";
 }
@@ -213,7 +217,7 @@ function showReputation(qaddress) {
 
 function showNewPost(txid) {
     show("newpost");
-    setPageTitle("VV0096");
+    setPageTitleFromID("VV0096");
     document.getElementById('memorandumpreview').innerHTML = "";
     let topicNameHOSTILE = getCurrentTopicHOSTILE();
     //document.getElementById('memotopic').value = topicNameHOSTILE;
@@ -259,7 +263,7 @@ function showNotifications(start, limit, qaddress, txid) {
         showPosts(0, numbers.results, 'all');
         return;
     }
-    setPageTitle("VV0095");
+    setPageTitleFromID("VV0095");
     getAndPopulateNotifications(start, limit, "notifications", pubkey, txid);
 
 }
@@ -271,7 +275,7 @@ function showSettings() {
         return;
     }*/
     hideAll();
-    setPageTitle("VV0166");
+    setPageTitleFromID("VV0166");
     show('settingsanchor');
     getAndPopulateSettings();
     //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
@@ -304,7 +308,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
     }
 
     //show('header');
-    setPageTitle("VV0063");
+    setPageTitleFromID("VV0063");
     getAndPopulateMember(qaddress);
     //getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
     show("memberanchor");
@@ -328,7 +332,7 @@ function showMemberPosts(start, limit, qaddress) {
 
 function showMessages(messagetype, start, limit) {
     show("messagesanchor");
-    setPageTitle("VV0047");
+    setPageTitleFromID("VV0047");
     getAndPopulateMessages(messagetype, start, limit);
 }
 
@@ -376,7 +380,7 @@ function getCurrentTopicHOSTILE() {
 
 function showTopicList() {
     setTopic("");
-    setPageTitle("VV0100");
+    setPageTitleFromID("VV0100");
     getAndPopulateTopicList(true);
 }
 
@@ -449,9 +453,9 @@ function setTopic(topicNameHOSTILE) {
     //selector.options[selector.selectedIndex].value = topicNameHOSTILE;
     //selector.options[selector.selectedIndex].text = capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
     if(topicNameHOSTILE.toLowerCase()=="mytopics"){
-        setPageTitle("VV0128");
+        setPageTitleFromID("VV0128");
     }else{
-        document.getElementById('pagetitledivid').textContent = 't/'+capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
+        setPageTitleRaw('t/'+capitalizeFirstLetter(topicNameHOSTILE));
     }
 }
 

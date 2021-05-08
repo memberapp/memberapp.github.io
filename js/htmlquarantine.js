@@ -454,7 +454,7 @@ function getPostListItemHTML(postHTML) {
     if (postHTML == "") {
         return "";
     }
-    return `<li>` + postHTML + `</li>`;
+    return `<li class="post-list-li">` + postHTML + `</li>`;
 }
 
 function postlinkHTML(txid, linktext) {

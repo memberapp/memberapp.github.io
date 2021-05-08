@@ -71,7 +71,7 @@ var postCompactTemplate = `
                     </span>
                     <span class="post-footer-remembers{rememberactivated} post-footer-relative" id="remembers{txid}">
                         <a id="quotelinkposts{diff}{txid}"
-                            onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"
+                        
                             class="btn-icon" data-action="remember">
                             <span class="remembersicon">
                                 <span class="emojiicon">♻</span>
@@ -80,6 +80,14 @@ var postCompactTemplate = `
                                 {remembers}
                             </span>
                             <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
+                            <div class="remember-dropdown-wrapper">
+                                <div class="remember-dropdown">
+                                    <a class="dropdown-option"  onclick="repost('{txid}');">
+                                       <span class="remembersicon dropdown-option-icon "></span> <span data-vavilon="remember">remember</span>
+                                    </a>
+                                    <a class="dropdown-option"  onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"> <span class=" remembersicon dropdown-option-icon "></span> <span data-vavilon="VV0158">quote</span></a>
+                                </div>
+                            </div>
                         </a>
                     </span>
                     <span class="post-footer-tips post-footer-relative">

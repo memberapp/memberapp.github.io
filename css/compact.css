@@ -77,7 +77,6 @@ body {
   display: none;
   position: absolute;
   min-width: 12em;
-  z-index: 101;
   font-size: 1em;
   right: -1em;
   top: -3em;
@@ -349,9 +348,47 @@ Use important, because we always want profile card pics to be this size*/
 
 /*Remove border on posts*/
 .mainbodywrapper #posts .itemlist ol.posts li {
-  /* border: 0px solid rgba(0, 0, 0, 0.12); */
+  border: 0px solid rgba(0, 0, 0, 0.12);
 }
-
+.mainbodywrapper #posts .itemlist ol.posts li .post {
+  box-shadow: 0 13px 27px 6px #fafafa;
+}
+#newpost #memorandumarea{
+  border: none;
+  box-shadow: 0 13px 27px 6px #fafafa;
+}
+#messagesanchor .content{
+  border: none;
+}
+#messagesanchor .content #messageslist li{
+  box-shadow: 0 13px 27px 6px #fafafa;
+    padding: 2em 0.875rem;
+    border: none;
+}
+#messageschoice{
+  display: flex;
+    grid-gap: 11px;
+    color: #aaa;
+}
+#notifications ul.notificationslist li{
+  border: none;
+  box-shadow: 0 13px 27px 6px #fafafa;   
+  
+}
+#notifications .notificationtitlecompact{
+  margin: 0 0.5rem;
+  padding: 1rem 0;
+}
+#notifications ul.notificationslist li:hover{
+  box-shadow: 0 13px 27px 6px #fafafa !important; 
+}
+.notificationbutton{
+  color: #61aff0 !important;
+  border: 1px solid #61aff0 !important;
+}
+.notificationbutton:hover{
+  color: #fff !important;
+}
 /*move profile preview up in side bar, left in post*/
 .post-side-bar .profilepreview {
   top: -5em;
@@ -465,8 +502,8 @@ img {
 
 /* Action Icons hover effects */
 /* Action Icons styles */
-.tipicon,
-.remembersicon,
+/* .tipicon, */
+/* .remembersicon,
 .likeicon,
 .replyicon {
   display: flex !important;
@@ -478,28 +515,28 @@ img {
   background-repeat: no-repeat !important;
   background-position: center !important;
   transition: background-color 0.2s linear !important;
-}
+} */
 
 /* Action Icons hover effects */
 .post-footer-upvote-activated:hover .likeicon,
 .post-footer-upvote:hover .likeicon {
-  filter: unset !important;
-  background-color: rgb(11 143 255 / 50%) !important;
+  filter: unset ;
+  background-color: rgb(11 143 255 / 50%) ;
 }
 .post-footer-reply:hover .replyicon,
 .post-footer-reply-activated:hover .replyicon {
-  filter: unset !important;
-  background-color: rgb(11 143 255 / 50%) !important;
+  filter: unset ;
+  background-color: rgb(11 143 255 / 50%) ;
 }
 .post-footer-remembers:hover .remembersicon,
 .post-footer-remembers-activated:hover .remembersicon {
-  filter: unset !important;
-  background-color: rgb(11 143 255 / 50%) !important;
+  filter: unset ;
+  background-color: rgb(11 143 255 / 50%) ;
 }
 .post-footer-tips:hover .tipicon,
 .post-footer-tips-activated:hover .tipicon {
-  filter: unset !important;
-  background-color: rgb(11 143 255 / 50%) !important;
+  filter: unset ;
+  background-color: rgb(11 143 255 / 16%) ;
 }
 
 /* make the number links grey*/
@@ -571,8 +608,9 @@ img {
   padding-left: 5px;
   padding-right: 5px;
 }
-.mainbodywrapper .mainbody{
-  margin-top: 81px;
+.mainbodywrapper .mainbody {
+  margin-top: 90px;
+  padding-top: 35px;
 }
 
 /* majornavbuttons wrapper box - adding space btw icons */
@@ -588,11 +626,6 @@ img {
 }
 
 .newheader .majornavbuttonsclass #loggedout a.btn {
-  background: #1063a8;
-  color: #fff;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.25rem;
-  line-height: 1.2;
   font-size: 100%;
   font-weight: 400;
   font-family: inherit;
@@ -622,11 +655,10 @@ img {
 .newheader .pagetitleclass .pageTitlediv {
   text-align: center;
   width: 100%;
-  color: #1063a8;
+  color: #333;
   padding: 0.5rem 1.5rem;
   border-radius: 0.25rem;
   line-height: 1.2;
-  text-transform: uppercase;
   font-size: 100%;
   font-weight: 700;
   font-family: inherit;
@@ -670,9 +702,16 @@ img {
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center;
-  background-color: #1063a8;
+  background-color: #61aff0;
   border-bottom-right-radius: 0.25rem;
   border-top-right-radius: 0.25rem;
+}
+a{
+  color: #61aff0 !important;
+}
+.imgurimage{
+  width: 100% !important;
+  object-fit: cover;
 }
 .newheader .searchwrapper input::placeholder {
   color: #aaa;
@@ -702,10 +741,12 @@ img {
   font-weight: bold;
   margin-left: 0.25rem;
   top: -5px;
-  right: -13px;
+  right: -3px;
   position: absolute !important;
   height: auto !important;
   white-space: nowrap;
+  padding: 2px 5px;
+  visibility: hidden;
 }
 
 .newheader .searchwrapper .mainhamburger a {
@@ -724,7 +765,9 @@ img {
 }
 .newheader .searchwrapper .mainhamburger::before,
 .newheader .searchwrapper #usersearchnavresults::before,
-.post .dropdown .dropdown-content::before {
+.post .dropdown .dropdown-content::before,
+.post-footer-remembers .remember-dropdown::before,
+.post-footer-remembers-activiated .remember-dropdown::before {
   content: "";
   width: 23px;
   height: 23px;
@@ -805,7 +848,7 @@ img {
 .posts .timefilters,
 .posts .contentfilters {
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .posts .separator {
   background: #ddd;
@@ -847,7 +890,7 @@ img {
   margin-top: 0.4em;
 }
 .memberpicsmallcompact img {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 .highlighted {
   background-color: #f3f6fb;
@@ -920,9 +963,123 @@ img {
   position: relative;
 }
 
+.post-list-item .post {
+  animation: postFadein 1.5s;
+  -moz-animation: postFadein 1.5s; /* Firefox */
+  -webkit-animation: postFadein 1.5s; /* Safari and Chrome */
+  -o-animation: postFadein 1.5s; /* Opera */
+}
+
+@keyframes postFadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@-webkit-keyframes postFadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.post-footer-remember-tab {
+  position: relative;
+}
+
+.remember-dropdown-wrapper {
+  display: none;
+}
+.post-footer-remembers .remember-dropdown,
+.post-footer-remembers-activiated .remember-dropdown {
+  background-color: white;
+  position: absolute;
+  min-width: 12em;
+  font-size: 1em;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 3.5em;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 0.5rem;
+  z-index: 999;
+  box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
+  text-transform: capitalize;
+  height: fit-content;
+  padding: 0.5em 0;
+}
+
+.post-footer-remembers:hover .remember-dropdown-wrapper,
+.post-footer-remembers-activiated:hover .remember-dropdown-wrapper {
+  min-height: 180px;
+  display: inline;
+  min-width: 200px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  padding: 30px 0;
+}
+
+.post-footer-remembers .remember-dropdown::before,
+.post-footer-remembers-activiated .remember-dropdown::before {
+  left: 45%;
+  transform: translateX(-50%) rotate(45deg);
+  z-index: -1;
+}
+
+.remember-dropdown a {
+  color: #1063a8 !important;
+}
+
+.remember-dropdown .dropdown-option-icon {
+  background-color: unset !important;
+}
+.remember-dropdown .dropdown-option:hover {
+  color: #fff;
+  text-shadow: 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%),
+    0 0 42px rgb(11 143 255 / 50%);
+}
+
 @media (max-width: 1024px) {
   .newheader .searchwrapper .usersearchnav {
     width: fit-content;
+  }
+  .newheader .memberlogoimage {
+    display: inline;
+    width: 50px;
+  }
+  .newheader .memberlogoimagefull {
+    display: none;
+  }
+  .newheader .majornavbuttonsdiv #loggedin {
+    grid-gap: 13px;
   }
 }
 
@@ -930,7 +1087,7 @@ img {
   .newheader {
     position: unset;
   }
-  .mainbodywrapper .mainbody{
+  .mainbodywrapper .mainbody {
     margin-top: 1rem;
   }
   .posts .timefilters,
@@ -938,8 +1095,8 @@ img {
     display: block;
     float: unset;
   }
-  .post .dropdown .dropbtn{
-        padding-top: 5px;
+  .post .dropdown .dropbtn {
+    padding-top: 5px;
   }
   .newheader .majornavbuttonsclass {
     position: fixed;
@@ -951,18 +1108,11 @@ img {
     justify-content: space-around;
     width: 100%;
   }
-  .newheader .memberlogoimage {
-    display: inline;
-    width: 50px;
-  }
   .newheader .usersearchnav {
     width: auto !important;
   }
 
   .newheader .pagetitleclass {
-    display: none;
-  }
-  .newheader .memberlogoimagefull {
     display: none;
   }
 

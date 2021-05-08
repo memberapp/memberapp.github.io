@@ -119,11 +119,11 @@ function dslite(input) {
 }
 
 
-var debuginfo="";
+var debuginfo = "";
 
 function updateStatus(message) {
   document.getElementById("status").innerHTML = message;
-  debuginfo=message+'\n'+debuginfo;
+  debuginfo = message + '\n' + debuginfo;
 }
 
 function toHexString(byteArray) {
@@ -269,11 +269,11 @@ function balanceString(total, includeSymbol) {
   if (dropdowns.currencydisplay == "BCH" || numbers.usdrate === undefined || numbers.usdrate === 0) {
     //var balString = (Number(total) / 1000).toFixed(3);
     //balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
-    var balString = ""+Number(total);
-    if(balString.length>3){
+    var balString = "" + Number(total);
+    if (balString.length > 3) {
       balString = Number(balString.substr(0, balString.length - 3)).toLocaleString() + "k";
-    }else{
-      balString=Number(total);
+    } else {
+      balString = Number(total);
     }
 
     if (includeSymbol) {
@@ -442,6 +442,53 @@ function getBrowserLanguageCode() {
   return src;
 }
 
-function changeClass(element, newClass){
-  element.className=newClass;
+function changeClass(element, newClass) {
+  element.className = newClass;
 }
+
+//Fade in, move Fareed
+
+function elementInViewport2(ele) {
+  if (ele) {
+    var elements = Array.from(ele);
+    for (let i = 0; i < elements.length; i++) {
+      let el = elements[i];
+      var top = el.offsetTop;
+      var left = el.offsetLeft;
+      var width = el.offsetWidth;
+      var height = el.offsetHeight;
+
+      while (el.offsetParent) {
+        el = el.offsetParent;
+        top += el.offsetTop;
+        left += el.offsetLeft;
+      }
+
+      if (
+        top < window.pageYOffset + window.innerHeight &&
+        left < window.pageXOffset + window.innerWidth &&
+        top + height > window.pageYOffset &&
+        left + width > window.pageXOffset
+      ) {
+        elements[i].setAttribute('class', 'post-list-item');
+      }
+    }
+  }
+}
+setInterval(() => {
+  let stop = false;
+  if (document.getElementsByClassName('post-list-li') && !stop) {
+    stop = true;
+    elementInViewport2(document.getElementsByClassName('post-list-li'));
+  }
+}, 50);
+window.addEventListener('DOMContentLoaded', () => {
+  elementInViewport2(document.getElementsByClassName('post-list-li'));
+});
+
+window.addEventListener('scroll', function (e) {
+  if (window.pageYOffset > window.innerHeight)
+    elementInViewport2(document.getElementsByClassName('post-list-li'));
+});
+
+

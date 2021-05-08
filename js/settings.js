@@ -101,7 +101,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
         //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
         document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
-        document.getElementById('pagetitledivid').textContent = "@"+data[0].pagingid;
+        //setPageTitleRaw("@"+data[0].pagingid);
     
         //jdenticonname = data[0].name;
         //img/profilepics/`+san(address)+`128x128.jpg
@@ -170,6 +170,8 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
         var theElement = document.getElementById(`memberrating` + qaddress);
         var starRating1 = addSingleStarsRating(theElement);
+        setPageTitleRaw("@"+data[0].pagingid);
+    
     }
 
     var obj2 = {
@@ -188,13 +190,13 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     }
 
     document.getElementById('membertabs').innerHTML= templateReplace(membertabsHTML, obj2);
-
+    
     addDynamicHTMLElements();
 }
 
 
 function getAndPopulateMember(qaddress) {
-    document.getElementById('pagetitledivid').textContent = ". . .";
+    setPageTitleRaw(". . .");
     getDataCommonToSettingsAndMember(qaddress, null, "member");
 }
 
