@@ -13,27 +13,10 @@ function displayNotificationCount() {
             return;
         }
 
-        var alertcount = Number(data[0].count);
-        var element = document.getElementById("alertcount");
-        if (alertcount > 0) {
-            element.innerHTML = alertcount;
-            element.style.visibility="visible";
-        } else {
-            element.innerHTML = "";
-            element.style.visibility="hidden";
-        }
-
-        var alertcountpm = Number(data[0].countpm);
-        var element = document.getElementById("alertcountpm");
-        if (alertcountpm > 0) {
-            element.innerHTML = alertcountpm;
-            element.style.visibility="visible";
-        } else {
-            element.innerHTML = "";
-            element.style.visibility="hidden";
-        }
-
-        var pageTitleCount = alertcount + alertcountpm;
+        setAlertCount("alertcount",data[0].count);
+        setAlertCount("alertcountpm",data[0].countpm);
+        
+        var pageTitleCount = data[0].count + data[0].countpm;
         var pageTitle = "";
         if (pageTitleCount > 0) {
             pageTitle = "(" + pageTitleCount + ") ";
@@ -43,6 +26,19 @@ function displayNotificationCount() {
     }, function (status) { //error detection....
         showErrorMessage(status, null, theURL);
     });
+}
+
+function setAlertCount(elementid, alertNumber){
+    var alertcount = Number(alertNumber);
+    var element = document.getElementById(elementid);
+    if (alertcount > 0) {
+        element.innerHTML = alertcount;
+        element.style.visibility="visible";
+    } else {
+        element.innerHTML = "";
+        element.style.visibility="hidden";
+    }
+
 }
 
 function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
@@ -94,7 +90,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         if (start == 0) {
             lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
             localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
-            document.getElementById("alertcount").innerHTML = "";
+            setAlertCount("alertcount",0);
             document.title = siteTitle;
         }
 

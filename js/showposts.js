@@ -102,7 +102,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
 
         lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
-        document.getElementById("alertcountpm").innerHTML = "";
+        setAlertCount("alertcountpm",0);
         document.title = "member.cash";
 
 
