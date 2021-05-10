@@ -479,11 +479,10 @@ img {
 .usersearchnav {
   width: 15em;
 }
-
+/* New Header */
 #header {
   display: none;
 }
-
 /* Action Icons styles */
 .tipicon,
 .remembersicon,
@@ -597,9 +596,9 @@ img {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 20px 0;
+  /* padding: 20px 0; */
   box-shadow: 0px 1px 5px -3px rgb(0 0 0 / 50%);
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   position: fixed;
   width: 100%;
   z-index: 99;
@@ -607,6 +606,9 @@ img {
   background: #fff;
   padding-left: 5px;
   padding-right: 5px;
+}
+.memberlogo{
+  padding: 20px 0;
 }
 .mainbodywrapper .mainbody {
   margin-top: 90px;
@@ -635,8 +637,11 @@ img {
 .newheader .majornavbuttonsdiv a {
   position: relative;
   font-size: 1.2em;
+  padding: 32px 3px;
 }
-
+.newheader .majornavbuttonsdiv a:hover{
+  background: #ddeefc;
+}
 /* user search input and humberger wrapper div */
 .newheader .searchwrapper {
   display: flex;
@@ -891,6 +896,7 @@ a{
 }
 .highlighted {
   background-color: #f3f6fb;
+  color:#000;
 }
 .post .options {
   display: flex;
@@ -1063,7 +1069,24 @@ a{
   text-shadow: 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%),
     0 0 42px rgb(11 143 255 / 50%);
 }
-/* ************************************ */
+/* *********** POST follow button **************/
+.profilepreview .profile-actions .profilepreviewfollowbutton a{
+  background: #61aff0;
+  color: #fff !important;
+}
+.profilepreview .profile-actions .profilepreviewfollowbutton a:hover{
+  background: #0e5591;
+  color:#fff !important
+}
+.navbuttons a{
+  background: #61aff0;
+  color: #fff  !important;
+  border-color: #61aff0;
+}
+.navbuttons a:hover{
+  border-color: #1063A8;
+}
+/* Profile */
 #memberanchor .content {
   position: relative;
   box-shadow: 0 13px 27px 6px #fafafa;
@@ -1109,28 +1132,67 @@ a{
 #memberanchor .content #membernametext {
   margin-bottom: 0;
 }
-#memberanchor .content #memberprofilelinks {
-  margin-top: -15px;
-}
-#memberanchor .content #membernametext a.populate-send-message {
+#memberanchor .content .memberstatsButtons{
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
   position: absolute;
-  top: 29px;
-  right: 28px;
+  top: 26px;
+  right: 16px;
+}
+#memberanchor .content .memberstatsButtons div{
+  margin-right: 10px;
+}
+#memberanchor .content .memberstatsButtons #membernametext a.populate-send-message,
+#memberanchor .content .memberstatsButtons div a {
   border: 1px solid #61aff0;
-  background: transparent;
-  color: #61aff0;
+  background: transparent !important;
+  color: #61aff0 !important;
   border-radius: 45px;
+  padding: 0.5rem 1rem;
+}
+#memberanchor .content .memberstatsButtons #membernametext a.populate-send-message:hover,
+#memberanchor .content .memberstatsButtons div a:hover{
+  background: #61aff0 !important;
+  border: 1px solid #61aff0;
+  color: #fff !important;
 }
 .memberpiccontainer label {
   display: none !important;
 }
-.qrcodeclick {
+#memberanchor .content #memberlegacyaddress{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+#memberlegacyaddress #memberlegacyformatdiv {
+  border: 1px solid #61aff0;
+  padding: 0.2rem;
+  margin: 0;
+}
+#memberlegacyformatdiv span.qrcodeclick  span{
+  display: none;
   color: #61aff0 !important;
 }
-#memberanchor .content #membernametext a.populate-send-message:hover {
-  background: #61aff0;
-  border: 1px solid #61aff0;
-  color: #fff !important;
+#memberlegacyaddress span#memberlegacyformat {
+  margin-bottom: 0;
+  position: relative;
+  margin-left: 15px;
+}
+#memberlegacyaddress span#memberlegacyformat::before{
+  content: "\f328";
+  font-family: "Font Awesome 5 Free";
+  color:#61aff0;
+  left:-17px;
+  font-size: 1.2rem;
+  font-weight: 400;
+  position:absolute;
+  top:-2px;
+}
+#memberprofilelinks{
+  text-align: center;
 }
 #memberprofilelinks div a {
   border: 1px solid #61aff0;
@@ -1140,29 +1202,33 @@ a{
 #memberprofilelinks div a:hover {
   color: #fff !important;
 }
-.memberstats div {
-  position: relative;
-}
-.memberstats div:after {
-  content: "";
-  right: 0;
-  top: 18px;
-  position: absolute;
-  width: 2px;
-  height: 50px;
-  background: rgb(226, 232, 240);
+.memberstats{
+  background: #f8f8f8;
 }
 .memberstats div a {
-  font-size: 22px;
+  font-size: 1rem;
   text-transform: capitalize;
   font-weight: 700;
 }
 .memberstats div label {
   font-weight: 400;
   font-size: 14px;
+  color: #777;
+
 }
 #memberanchor .content .memberstats div {
   border: none;
+}
+#memberblockexplorer a{
+  display: block;
+  margin-left: 10px;
+}
+#memberblockexplorer a i{
+  color:#61aff0;
+  font-size: 1rem;
+}
+#memberblockexplorer img{
+  outline: none;
 }
 /* **************************************** */
 
@@ -1233,6 +1299,9 @@ a{
   #memberprofilelinks div a {
     margin: 10px;
   }
+  #memberanchor .content .memberstatsButtons{
+    right: 0;
+  }
 }
 @media (max-width: 500px) {
   #membertabs {
@@ -1242,16 +1311,19 @@ a{
   .memberheader .membertabs a {
     margin: 5px 15px 5px 0px;
   }
-  .memberpiccontainer span.memberpiclarge {
-    /* position: relative;
-    top:0;
-    left:0; */
-  }
   #memberanchor .content #membernametext a.populate-send-message {
     right: 10px;
   }
   #memberprofilelinks div a {
-    margin-top: 16px;
+    margin: 5px;
+  }
+  #memberanchor .content .memberprofiletextContainer {
+    margin-top: 100px;
+  }
+  #memberanchor .content .memberstatsButtons {
+    left: 26px ;
+    top: 80px ;
+    flex-direction: row ;
   }
 }
 @media (max-width: 320px) {
@@ -1276,10 +1348,14 @@ a{
     right: 10px;
     top: 160px;
   }
-  #memberprofilelinks div a {
-    margin-top: 16px;
+   #memberprofilelinks div a {
+    margin: 5px;
+  } 
+  
+  #memberanchor .content .memberstatsButtons {
+    left: 0 !important;
+    top: 80px !important;
+    flex-direction: row !important;
   }
-  #memberanchor .content .memberprofiletextContainer {
-    margin-top: 50px;
-  }
+
 }

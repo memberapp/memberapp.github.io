@@ -6,4 +6,118 @@ body {
     color: white;
     background-color: black;
 } 
+.highlighted {
+    background-color: #000;
+    box-shadow: 0px 0px 5px 2px #61aff0 !important;
+    color:#fff;
+    transition: .2s all ease-out;
+  }
+/* FIREHOSE */
+.newheader{
+    background-color: #000000;
+}
+.newheader .pagetitleclass .pageTitlediv{
+    color: #fff;
+}
+.newheader .searchwrapper .usersearchnavclass{
+    border: 1px solid #61aff0;
+    border-bottom-right-radius: 0.38rem;
+    border-top-right-radius: 0.38rem;
+}
+.newheader .searchwrapper .dropdown button{
+    color: #fff;
+}
+.newheader .searchwrapper .dropdown button:hover{
+    background-color: #61aff0 !important;
+}
+.mainbodywrapper #posts .itemlist ol.posts li .post{
+    /* box-shadow: 0px 0px 5px 2px #61aff0; */
+    box-shadow: none;
+    border: 1px solid #61aff0;
+}
+/* Action Icons hover effects */
+.post-footer-upvote-activated:hover .likeicon,
+.post-footer-upvote:hover .likeicon {
+  filter: unset ;
+  background-color: #fff;
+  color:#fff !important;
+}
+.post-footer-reply:hover .replyicon,
+.post-footer-reply-activated:hover .replyicon {
+  filter: unset ;
+  background-color: #fff;
+  color:#fff !important;
+}
+.post-footer-remembers:hover .remembersicon,
+.post-footer-remembers-activated:hover .remembersicon {
+  filter: unset ;
+  background-color: #fff;
+  color:#fff !important;
+}
+.post-footer-tips:hover .tipicon,
+.post-footer-tips-activated:hover .tipicon {
+  filter: unset ;
+  background-color: #fff;
+  color:#fff !important;
+}
 
+/* NOTIFICATION */
+#notifications ul.notificationslist li{
+    /* box-shadow: 0px 0px 5px 2px #61aff0; */
+    border:1px solid #61aff0;
+    box-shadow:none;
+}
+#notifications ul.notificationslist li:hover{
+    box-shadow: none !important;
+    border: 1px solid #61aff0;
+    transition: 0.5s linear;
+}
+
+/* PRIVATE MESSAGE PAGE NIGHT CSS */
+#messagesanchor .content #messageslist li{
+    /* box-shadow: 0px 5px 9px -7px #fafafa; */
+    /* box-shadow: 0px 0px 5px 2px #61aff0; */
+    box-shadow: none;
+    border: 1px solid #61aff0;
+}
+#messagesanchor .content #messageslist li:hover{
+    /* box-shadow: none !important; */
+    border: 1px solid #61aff0;
+    box-shadow: 0px 0px 5px 2px #61aff0;
+    transition: 0.5s;
+    animation: linear;
+}
+#messagesanchor .content #messageslist li a:hover{
+    background: #61aff0 !important;
+    color: #fff !important;
+}
+
+
+/* NEW POST PAGE NIGHT MODE CSS */
+#newpost #memorandumarea{
+    /* box-shadow: 7px 7px 6px -7px #61aff0; */
+    box-shadow: 0px 0px 5px 2px #61aff0;
+}
+#newpost #memorandumarea #memorandumpreviewareabutton a{
+    font-weight: 400;
+}
+#newpost #memorandumarea #memorandumpreviewareabutton a:hover{
+    color: #fff !important;
+    border-color: #61aff0;
+}
+
+
+/* PROFILE NIGHT CSS */
+#memberanchor .content{
+    box-shadow: 0px 0px 5px 2px #61aff0;
+}
+.memberstats{
+    border:1px solid #61aff0;
+    background: none;
+}
+
+
+/* TOPIC LIST  */
+#topiclistanchor td.tlaction a{
+    color: #fff !important;
+}
