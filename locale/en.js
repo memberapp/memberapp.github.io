@@ -182,7 +182,7 @@ dictionary.en=
   "disliked": "disliked",
   "quoteremembered": "quote remembered",
   "remembered": "remembered",
-  "totopic": "to t/",
+  "totopic": "#",
   "loading": "loading",
   "showpriv": "Show private key",
   "unsubscribe": "unsubscribe",

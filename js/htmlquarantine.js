@@ -290,7 +290,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         txidshort:san(txid).substring(0, 10),
         elapsed: getAgeHTML(firstseen, false),
         elapsedcompressed: getAgeHTML(firstseen, true),
-        topic: topic ? getTopicHTML(topic, getSafeTranslation('totopic', ' to t/')) : "",
+        topic: topic ? getTopicHTML(topic, getSafeTranslation('totopic', ' #')) : "",
         topicescaped: unicodeEscape(topic),
         quote: repostedHTML,
         address: address,
@@ -571,7 +571,7 @@ function getTipDetailsHTML(user, amount, type) {
 
 function getRememberDetailsHTML(user, message, topic, txid) {
     var theclass="rememberdetailscompact";
-    return `<div class="`+theclass+`">` + user + `<span class="plaintext"><a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + (message ? getSafeTranslation('quoteremembered', 'quote remembered') : getSafeTranslation('remembered', 'remembered')) + "</a></span> " + getTopicHTML(topic, getSafeTranslation('totopic', ' to t/')) + `</div>`;
+    return `<div class="`+theclass+`">` + user + `<span class="plaintext"><a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + (message ? getSafeTranslation('quoteremembered', 'quote remembered') : getSafeTranslation('remembered', 'remembered')) + "</a></span> " + getTopicHTML(topic, getSafeTranslation('totopic', ' #')) + `</div>`;
 }
 
 function getRepostHeaderHTML(user) {

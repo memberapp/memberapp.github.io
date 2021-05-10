@@ -183,7 +183,7 @@ dictionary.es=
     "disliked": "no me gusta",
     "quoteremembered": "cita recordada",
     "remembered": "recordado",
-    "totopic": "en t/",
+    "totopic": "#",
     "loading": "cargando",
     "showpriv": "Mostrar clave privada",
     "unsubscribe": "desuscribirse",

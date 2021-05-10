@@ -455,7 +455,7 @@ function setTopic(topicNameHOSTILE) {
     if(topicNameHOSTILE.toLowerCase()=="mytopics"){
         setPageTitleFromID("VV0128");
     }else{
-        setPageTitleRaw('t/'+capitalizeFirstLetter(topicNameHOSTILE));
+        setPageTitleRaw('#'+capitalizeFirstLetter(topicNameHOSTILE));
     }
 }
 

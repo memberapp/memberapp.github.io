@@ -546,14 +546,25 @@ pages.member = `
             {profilepiclargehtml}
         </span>
     </div>
-    <label data-vavilon="VV0060" for="membernametext">Handle</label>
-    <div id="membernametext">{handle}<a data-vavilon="VV0061" class="populate-send-message"
+    <!-- *** -->
+    <div class="memberprofiletextContainer">
+        <label data-vavilon="VV0063" for="memberprofiletext">Profile</label>
+        <div id="memberprofiletext">{profile}</div>
+    </div>
+    <div class="memberInfoTextContainer">
+        <div>
+            <label data-vavilon="VV0060" for="membernametext" class="handle-label">Handle</label>
+            <span>{handle}</span>
+        </div>
+        <div>
+            <label data-vavilon="VV0062" for="memberpagingid">Paging ID</label>
+            <span id="memberpagingid">@{pagingid}</span>
+        </div>
+    </div>
+    <!-- *** -->
+    <div id="membernametext"><a data-vavilon="VV0061" class="populate-send-message"
             onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');" href="javascript:;">Send
             Message</a></div>
-    <label data-vavilon="VV0062" for="memberpagingid">Paging ID</label>
-    <div id="memberpagingid">@{pagingid}</div>
-    <label data-vavilon="VV0063" for="memberprofiletext">Profile</label>
-    <div id="memberprofiletext">{profile}</div>
     <div id="memberprofilelinks">
         <label data-vavilon="VV0064">Profile Links</label>
         <div>

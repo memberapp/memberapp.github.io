@@ -889,9 +889,6 @@ a{
   border-top: 1px solid #e7e7e7;
   margin-top: 0.4em;
 }
-.memberpicsmallcompact img {
-  /* margin-bottom: 10px; */
-}
 .highlighted {
   background-color: #f3f6fb;
 }
@@ -1066,6 +1063,108 @@ a{
   text-shadow: 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%),
     0 0 42px rgb(11 143 255 / 50%);
 }
+/* ************************************ */
+#memberanchor .content {
+  position: relative;
+  box-shadow: 0 13px 27px 6px #fafafa;
+  border: none;
+}
+.memberheader .membertabs {
+  display: flex;
+  justify-content: flex-end;
+  width: 730px;
+  margin: 0 auto;
+}
+.memberheader .membertabs a {
+  margin: 5px 10px;
+}
+.memberpiccontainer label {
+  position: absolute;
+  left: 26px;
+  top: 75px;
+}
+.memberpiccontainer span.memberpiclarge {
+  position: absolute;
+  top: -65px;
+  left: 20px;
+}
+.memberpiccontainer img.settingspicturelarge {
+  border-radius: 50%;
+  border: 1px solid;
+  overflow: hidden;
+  object-fit: contain;
+  margin: 0 !important;
+  width: 130px;
+  height: 130px;
+}
+#memberanchor .content .memberprofiletextContainer {
+  margin-top: 57px;
+}
+#memberanchor .content .memberInfoTextContainer {
+  display: flex;
+}
+#memberanchor .content .memberInfoTextContainer div {
+  margin-right: 10px;
+}
+#memberanchor .content #membernametext {
+  margin-bottom: 0;
+}
+#memberanchor .content #memberprofilelinks {
+  margin-top: -15px;
+}
+#memberanchor .content #membernametext a.populate-send-message {
+  position: absolute;
+  top: 29px;
+  right: 28px;
+  border: 1px solid #61aff0;
+  background: transparent;
+  color: #61aff0;
+  border-radius: 45px;
+}
+.memberpiccontainer label {
+  display: none !important;
+}
+.qrcodeclick {
+  color: #61aff0 !important;
+}
+#memberanchor .content #membernametext a.populate-send-message:hover {
+  background: #61aff0;
+  border: 1px solid #61aff0;
+  color: #fff !important;
+}
+#memberprofilelinks div a {
+  border: 1px solid #61aff0;
+  border-radius: 45px;
+  color: #61aff0;
+}
+#memberprofilelinks div a:hover {
+  color: #fff !important;
+}
+.memberstats div {
+  position: relative;
+}
+.memberstats div:after {
+  content: "";
+  right: 0;
+  top: 18px;
+  position: absolute;
+  width: 2px;
+  height: 50px;
+  background: rgb(226, 232, 240);
+}
+.memberstats div a {
+  font-size: 22px;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+.memberstats div label {
+  font-weight: 400;
+  font-size: 14px;
+}
+#memberanchor .content .memberstats div {
+  border: none;
+}
+/* **************************************** */
 
 @media (max-width: 1024px) {
   .newheader .searchwrapper .usersearchnav {
@@ -1082,8 +1181,7 @@ a{
     grid-gap: 13px;
   }
 }
-
-@media (max-width: 760px) {
+@media (max-width: 768px) {
   .newheader {
     position: unset;
   }
@@ -1125,5 +1223,63 @@ a{
   .newheader .searchwrapper #usersearchnavresults {
     left: 50%;
     transform: translateX(-50%);
+  }
+  #membertabs {
+    max-width: 540px;
+  }
+  .memberheader .membertabs a {
+    margin: 5px 20px 5px 0px;
+  }
+  #memberprofilelinks div a {
+    margin: 10px;
+  }
+}
+@media (max-width: 500px) {
+  #membertabs {
+    max-width: 100%;
+    justify-content: flex-end;
+  }
+  .memberheader .membertabs a {
+    margin: 5px 15px 5px 0px;
+  }
+  .memberpiccontainer span.memberpiclarge {
+    /* position: relative;
+    top:0;
+    left:0; */
+  }
+  #memberanchor .content #membernametext a.populate-send-message {
+    right: 10px;
+  }
+  #memberprofilelinks div a {
+    margin-top: 16px;
+  }
+}
+@media (max-width: 320px) {
+  #membertabs {
+    max-width: 100%;
+    justify-content: center;
+  }
+  .memberheader .membertabs a {
+    margin: 5px 15px 5px 0px;
+  }
+  .memberpiccontainer span.memberpiclarge {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+  .memberpiccontainer label {
+    position: absolute;
+    left: 26px;
+    top: 168px;
+  }
+  #memberanchor .content #membernametext a.populate-send-message {
+    right: 10px;
+    top: 160px;
+  }
+  #memberprofilelinks div a {
+    margin-top: 16px;
+  }
+  #memberanchor .content .memberprofiletextContainer {
+    margin-top: 50px;
   }
 }

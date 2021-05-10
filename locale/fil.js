@@ -224,7 +224,7 @@ dictionary.fil=
   "surgepricing": "Error: Hindi tinanggap ang Transaksiyon dahil sa masyadong mababang fee. Tinataasan at muling sinusubukan. Muling itinataas ang presyo. ",
   "thisuserrates": "Nag-reyt kay",
   "tipped": "nagtip ng",
-  "totopic": "sa t/",
+  "totopic": "#",
   "transactionstillqueued": "Nakapila ang transaksiyon. Naghihintay ng bagong block, muling subukan sa (60 segundo)",
   "trytoset": "Subukang mag-set ng kahaliling pangalan - ",
   "unabledecrypt": "Muling subukan: Hindi maibalik sa orihinal na format ang mensahe:",
