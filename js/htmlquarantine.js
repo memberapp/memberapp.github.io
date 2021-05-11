@@ -872,7 +872,7 @@ function getTopicHTML(topicHOSTILE, append) {
     var displayNameHOSTILE = topicHOSTILE;
     if (topicHOSTILE == '') {
         if (append != '') return '';
-        displayNameHOSTILE = 'All Topics';
+        displayNameHOSTILE = 'All Tags';
     }
     return ` <span class="topic">` +
         `<a href="#topic?topicname=` + encodeURIComponent(topicHOSTILE) + `&start=0&limit=` + numbers.results + `&order=new" onclick="nlc();"> ` + append + capitalizeFirstLetter(ds(displayNameHOSTILE).substr(0, 40)) + `</a>`
