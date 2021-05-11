@@ -375,7 +375,7 @@ var delay = function (elem, callback, target) {
   var timeout = null;
   elem.onmouseover = function () {
     // Set timeout to be a timer which will invoke callback after 1s
-    timeout = setTimeout(function () { callback(target) }, 300);
+    timeout = setTimeout(function () { callback(target) }, 1000);
   };
 
   elem.onmouseout = function () {

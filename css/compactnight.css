@@ -39,7 +39,7 @@ body {
 .post-footer-upvote-activated:hover .likeicon,
 .post-footer-upvote:hover .likeicon {
   filter: unset ;
-  background-color: #fff;
+  background-color: #fff !important;
   color:#fff !important;
 }
 .post-footer-reply:hover .replyicon,

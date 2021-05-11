@@ -592,21 +592,25 @@ pages.member = `
             </span>
         </div>
     </div>-->
-    <label data-vavilon="VV0067" for="memberblockexplorer">Block Explorers</label>
+    <label data-vavilon="VV0067" for="memberblockexplorer" id="memberblockexplorer">Block Explorers</label>
     <div id="memberblockexplorer">
         <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="memberbitcoincom"
-            href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
+            href="https://explorer.bitcoin.com/bch/address/{address}">
+            bitcoin.com</a>
         <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="memberblockchair"
-            href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
+            href="https://blockchair.com/bitcoin-cash/address/{address}">
+            blockchair</a>
         <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="memberbtccom"
-            href="https://bch.btc.com/{address}">btc.com</a>
+            href="https://bch.btc.com/{address}">
+            btc.com</a>
         <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited" id="memberbitcoinunlimited"
-            href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin unlimited</a>
+            href="https://explorer.bitcoinunlimited.info/address/{address}">
+            bitcoin unlimited</a>
     </div>
     <div id="memberlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
         <div>
-            <span id="memberlegacyformat">{address}</span>
+            <span id="memberlegacyformat"> <img src="img/Icons/copy.png" alt="copy"> {address}</span>
             <div id="memberlegacyformatdiv">
                 <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
                     <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
@@ -900,12 +904,30 @@ var hamburgerMenuHTML=`
                     ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
         class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
-        <a data-vavilon_title="VV0063" id="profilebutton"  title="Profile"    class="hamburgerbutton" href="#profile"    onclick="nlc();">⚙️<span data-vavilon="VV0063">Profile</span></a>
-        <a data-vavilon_title="VVwallet" id="walletbutton"  title="Wallet"      class="hamburgerbutton" href="#wallet"    onclick="nlc();">💵<span data-vavilon="VVwallet">Wallet</span></a>
-        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">#<span data-vavilon="VV0100">Topic List</span></a>
-        <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">🌍<span data-vavilon="VV0101">Map</span></a>
-        <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">⚙️<span data-vavilon="VV0098">Settings</span></a>
-        <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();">📴<span data-vavilon="VV0078">Logout</span></a>
+        <a data-vavilon_title="VV0063" id="profilebutton"  title="Profile"    class="hamburgerbutton" href="#profile"    onclick="nlc();">
+            <!-- ⚙️ -->
+            <img src="img/Icons/user.png" alt="profile">
+            <span data-vavilon="VV0063">Profile</span></a>
+        <a data-vavilon_title="VVwallet" id="walletbutton"  title="Wallet"      class="hamburgerbutton" href="#wallet"    onclick="nlc();">
+            <!-- 💵 -->
+            <img src="img/Icons/wallet.png" alt="wallet">
+            <span data-vavilon="VVwallet">Wallet</span></a>
+        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">
+            <!-- # -->
+            <img src="img/Icons/topics.png" alt="topic">
+            <span data-vavilon="VV0100">Topic List</span></a>
+        <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">
+            <!-- 🌍 -->
+            <img src="img/Icons/map.png" alt="map">
+            <span data-vavilon="VV0101">Map</span></a>
+        <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">
+            <!-- ⚙️ -->
+            <img src="img//Icons/settings.png" alt="settings">
+            <span data-vavilon="VV0098">Settings</span></a>
+        <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();">
+            <!-- 📴 -->
+            <img src="img/Icons/exit.png" alt="logout">
+            <span data-vavilon="VV0078">Logout</span></a>
     </div>
 </span>
 `;
@@ -917,12 +939,30 @@ var pageTitleHTML = `
 var majorNavButtonsHTML=`
 <div id="majornavbuttonsdivid" class="majornavbuttonsdiv">
     <span id="loggedin" class="loggedin" style="display:none;">
-    <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications?start=0">🔔<span class="alertcount noselect" id="alertcount"></span></a>
-    <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">📰</a>
-    <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My Feed (Latest posts from your follows)"           href="#myfeed">👨</a>
-    <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="My Topics  (Latest posts from your topics)"        href="#show?order=hot&content=posts&topicname=MyTopics&filter=everyone&start=0&limit=25">#</a>
-    <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton"   title="Messages"                                            href="#messages">📧<span class="alertcount noselect" id="alertcountpm"></span></a>
-    <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton"               title="New Post"                                            href="#new">🖊️</a>
+    <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications?start=0">
+        <!-- 🔔 -->
+        <img src="img/Icons/notification.png" alt="notificatons">
+        <span class="alertcount noselect" id="alertcount"></span></a>
+    <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
+        <!-- 📰 -->
+        <img src="img/Icons/fire-hose.png" alt="FireHose">
+    </a>
+    <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My Feed (Latest posts from your follows)"           href="#myfeed">
+        <!-- 👨 -->
+        <img src="img/Icons/newsfeed.png" alt="MyFeed">
+    </a>
+    <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="My Topics  (Latest posts from your topics)"        href="#show?order=hot&content=posts&topicname=MyTopics&filter=everyone&start=0&limit=25">
+        <!-- # -->
+        <img src="img/Icons/topics.png" alt="MyTopics">
+    </a>
+    <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton"   title="Messages"                                            href="#messages">
+        <!-- 📧 -->
+        <img src="img/Icons/messages.png" alt="message">
+        <span class="alertcount noselect" id="alertcountpm"></span></a>
+    <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton"               title="New Post"                                            href="#new">
+        <!-- 🖊️ -->
+        <img src="img/Icons/post.png" alt="">
+    </a>
     </span>
     <span id="loggedout" class="loggedout">
         <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebuttonloggedout"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">📰</a>
@@ -946,7 +986,7 @@ var userSearchHTML=`
 
 
 var headerHTML = `
-    <div id="ddcover" style="background:grey; overflow:visible; width: 100%; height: 100%; position: fixed; top: 0; left: 0; opacity: 0.1; display:none; z-index: 100;"></div>
+    <div id="ddcover" style="background:grey; overflow:visible; width: 100%; height: 100%; position: fixed; top: 0; left: 0; opacity: 0.5; display:none; z-index: 500;"></div>
     <span class="memberlogo">
         <a href="./index.html">
             <img class="memberlogoimagefull" src="img/logos/logowide.png" width="130" height="26"
