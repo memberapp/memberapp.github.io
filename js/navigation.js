@@ -96,15 +96,18 @@ function displayContentBasedOnURLParameters() {
         showSettings();
     } else if (action.startsWith("messages")) {
         showMessages(sanitizeAlphanumeric(getParameterByName("messagetype")));
-    }
-    else if (action.startsWith("new")) {
+    } else if (action.startsWith("new")) {
         showNewPost(sanitizeAlphanumeric(getParameterByName("txid")));
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
-    } else if (action.startsWith("myfeed")) {
+    } else if (action.startsWith("myfeed") || action.startsWith("mypeople")) {
         showMyFeed();
+    } else if (action.startsWith("mytags")) {
+        showMyTags();
+    } else if (action.startsWith("firehose")) {
+        showFirehose();
     } else if (action.startsWith("wallet")) {
-        showTools();
+        showWallet();
     } else if (action.startsWith("login")) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
@@ -175,8 +178,9 @@ function hide(theDiv) {
     document.getElementById(theDiv).style.display = "none";
 }
 
-function showTools() {
-    show('toolsanchor');
+function showWallet() {
+    setPageTitleFromID("VVwallet");
+    show('toolsanchor');    
 }
 
 function showLogin() {
@@ -355,6 +359,16 @@ function showPFC(start, limit, page, pubkey, type) {
 function showMyFeed() {
     setTopic('');
     getAndPopulateNew('new', 'posts', '', 'myfeed', 0, numbers.results, 'posts', '');
+}
+
+function showFirehose() {
+    setTopic('');
+    getAndPopulateNew('hot', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
+}
+
+function showMyTags() {
+    setTopic('');
+    getAndPopulateNew('new', 'posts', 'mytopics', 'everyone', 0, numbers.results, 'posts', '');
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit, qaddress) {

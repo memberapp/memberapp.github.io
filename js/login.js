@@ -286,7 +286,9 @@ async function login(loginkey) {
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
-    document.getElementById('toolsanchor').innerHTML = toolsanchorHTML;
+
+    populateTools();
+
     return;
 
 }

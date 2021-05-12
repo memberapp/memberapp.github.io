@@ -194,6 +194,21 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     addDynamicHTMLElements();
 }
 
+function populateTools(){
+    var obj = {
+        address: pubkey,
+        cashaddress: qpubkey
+    };
+    
+    obj.privatekey = privkey;
+    obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
+
+    document.getElementById('toolsanchor').innerHTML = templateReplace(walletanchorHTML, obj);
+
+
+
+}
+
 
 function getAndPopulateMember(qaddress) {
     setPageTitleRaw(". . .");

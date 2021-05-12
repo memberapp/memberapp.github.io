@@ -222,24 +222,23 @@ var lowfundswarningHTML=`
 </div>
 `;
 
-var toolsanchorHTML=`
+var walletanchorHTML=`
 <div class="content">
-    <h2 data-vavilon="VVwallet">Wallet</h2>
-    <div id="sendfunds">
-        <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
-        <p data-vavilon="VV0029">You can send funds to another Bitcoin Cash address.</p>
 
-        <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
-        <input id="fundsamount" size="12" type="number" maxlength="12">
-
-        <label data-vavilon="VV0031" for="fundsamount">Bitcoin Cash Address (Any format)</label>
-        <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
-        <button data-vavilon="VV0032" id="sendfundsbutton" type="button" onclick="sendfunds();">Send
-            Funds</button>
-        <br />
+    <div id="walletbalance">
+        <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
+        <span class="balancebch" id="balancebch">0</span>
+        <span class="satoshis">(BCH)</span>
+        <span class="balancesatoshis" id="balancesatoshis">0</span>
+        <span class="satoshis">(satoshis)</span> 
+        <span class="approximatelyequal">≈</span>
+        <span class="balanceusd" id="balanceusd">0</span>
+        <span class="usd">(USD)</span>
+        <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance" class="balancedetails">🔄</span>
     </div>
+    
 
-    <div id="settingsprofileaddress">
+    <div id="walletaddress">
         <label data-vavilon="VV0065" data-vavilon="address">Address</label>
         <span id="cashaddrformat">{cashaddress}</span>
         <div id="cashaddrformatdiv">
@@ -249,19 +248,7 @@ var toolsanchorHTML=`
             </span>
         </div>
     </div>
-    <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
-    <div id="settingsblockexplorer">
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
-            href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="settingsblockchair"
-            href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
-            href="https://bch.btc.com/{address}">btc.com</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
-            id="settingsbitcoinunlimited" href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
-            unlimited</a>
-    </div>
-    <div id="settingslegacyprofileaddress">
+    <div id="walletlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
         <span id="legacyformat">{address}</span>
         <div id="legacyformatdiv">
@@ -271,7 +258,23 @@ var toolsanchorHTML=`
             </span>
         </div>
     </div>
-    <div id="settingsprivatekey">
+    <div id="walletsendfunds">
+        <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
+        <p data-vavilon="VV0029">You can send funds to another Bitcoin Cash address.</p>
+
+        <label data-vavilon="VV0031" for="fundsamount">Bitcoin Cash Address (Any format)</label>
+        <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
+        
+        <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
+        <input id="fundsamount" size="12" type="number" maxlength="12">
+
+        <span class="sendusd" id="sendusd">($0.00 USD)</span>
+
+        <button data-vavilon="VV0032" id="sendfundsbutton" type="button" onclick="sendfunds();">Send
+            Funds</button>
+        <br />
+    </div>
+    <div id="walletprivatekey">
         <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
         <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
         <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
@@ -285,7 +288,18 @@ var toolsanchorHTML=`
             </span>
         </div>
     </div>
-
+    <div id="walletblockexplorer">
+        <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
+            href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="settingsblockchair"
+            href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
+            href="https://bch.btc.com/{address}">btc.com</a>
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
+            id="settingsbitcoinunlimited" href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
+            unlimited</a>
+    </div>
 </div>
 `;
 
@@ -355,18 +369,7 @@ var newpostHTML=`
 
 var messagesanchorHTML=`
 <div class="content">
-    <!--
-    <div id="usersearchcontainer">
-        <label data-vavilon="VV0049" for="usersearch">Member Search</label>
-        <input class="usersearch" id="usersearch" maxlength="217"
-            onchange="userSearchChanged('usersearch','usersearchresults');" onkeypress="this.onchange();"
-            onpaste="this.onchange();" oninput="this.onchange();">
-        <br />
-        <div id="usersearchresults"></div>
-    </div>-->
     <div id="sendmessagecontainer">
-        <!--<label data-vavilon="VV0050">Send Encrypted Message</label>-->
-        <!--<label for="messageto"><span data-vavilon="VV0052">(Search for user above)</span></label>-->
         <span id="messagerecipient" class="messagerecipient"></span>
         <span id="messageaddress" class="messageaddress"></span>
         <span id="messagepublickey" class="messagepublickey"></span>
@@ -592,21 +595,6 @@ pages.member = `
             </span>
         </div>
     </div>-->
-    <label data-vavilon="VV0067" for="memberblockexplorer" id="memberblockexplorer">Block Explorers</label>
-    <div id="memberblockexplorer">
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="memberbitcoincom"
-            href="https://explorer.bitcoin.com/bch/address/{address}">
-            bitcoin.com</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="blockchair" id="memberblockchair"
-            href="https://blockchair.com/bitcoin-cash/address/{address}">
-            blockchair</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="memberbtccom"
-            href="https://bch.btc.com/{address}">
-            btc.com</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited" id="memberbitcoinunlimited"
-            href="https://explorer.bitcoinunlimited.info/address/{address}">
-            bitcoin unlimited</a>
-    </div>
     <div id="memberlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
         <div>
@@ -706,68 +694,10 @@ pages.settings = `
             </div>
         </div>
         <div>
-            <label data-vavilon="VV0078" for="settingsprofilelogout">Logout</label>
-            <a data-vavilon="VV0078" title="Logout" id="settingsprofilelogout" class="btn vavilon" href="#logout"
-                onclick="logout();">Logout</a>
-        </div>
-        <div>
             <label data-vavilon="VV0079" for="notificationbutton">Notifications</label>
             <span class="allownotifications"><a data-vavilon="VV0080" id="notificationbutton" class="notificationbutton"
                     href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow
                     Notifications</a></span>
-        </div>
-
-        <div class="settingsprofilelinks">
-            <label data-vavilon="VV0064">Profile Links</label>
-            <div>
-                <a href="https://member.cash/#member?qaddress={address}" id="settingsprofilelink">Member</a><span class="separatorwide"></span><a
-                    rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
-                    id="settingsmemoprofilelink">Memo</a><a rel="noopener noreferrer" target="bitclout"
-                    href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
-                    class="separatorwide"></span><a rel="noopener noreferrer" target="cloutgate"
-                    href="https://cloutgate.com/u/{pagingid}" id="bitcloutprofilelink">CloutGate</a><span
-                    class="separatorwide"></span><a rel="noopener noreferrer" target="bitcloutsignal"
-                    href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">bitcloutsignal</a>
-            </div>
-        </div>
-        <!--<label for="settingsidenticon">Identicon</label>
-        <div id="settingsidenticon"><svg width="20" height="20" class="jdenticonlarge"
-                data-jdenticon-value="{address}"></svg></div>-->
-        <div id="settingsprofileaddress">
-            <label data-vavilon="VV0065" data-vavilon="address">Address</label>
-            <span id="cashaddrformat">{cashaddress}</span>
-            <div id="cashaddrformatdiv">
-                <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
-                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                        code</span>
-                </span>
-            </div>
-        </div>
-        <div class="profilestats">
-            <div class="follow">
-                <label data-vavilon="VV0069">Follow</label>
-                {followbuttonhtml}
-            </div>
-            <div class="mute">
-                <label data-vavilon="VV0070">Mute</label>
-                {mutebuttonhtml}
-            </div>
-            <div class="followers">
-                <label data-vavilon="VV0071">Followers</label>
-                <a id="settingsfollowersnumber" href="#followers?qaddress={address}">{followers}</a>
-            </div>
-            <div class="following">
-                <label data-vavilon="VV0072">Following</label>
-                <a id="settingsfollowingnumber" href="#following?qaddress={address}">{following}</a>
-            </div>
-            <div class="muters">
-                <label data-vavilon="VV0073">Muters</label>
-                <a id="settingsblockersnumber" href="#blockers?qaddress={address}">{muters}</a>
-            </div>
-            <div class="muting">
-                <label data-vavilon="VV0074">Muting</label>
-                <a id="settingsblockingnumber" href="#blocking?qaddress={address}">{muting}</a>
-            </div>
         </div>
         <div>
             <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
@@ -905,27 +835,21 @@ var hamburgerMenuHTML=`
         class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
         <a data-vavilon_title="VV0063" id="profilebutton"  title="Profile"    class="hamburgerbutton" href="#profile"    onclick="nlc();">
-            <!-- ⚙️ -->
             <img src="img/Icons/user.png" alt="profile">
             <span data-vavilon="VV0063">Profile</span></a>
         <a data-vavilon_title="VVwallet" id="walletbutton"  title="Wallet"      class="hamburgerbutton" href="#wallet"    onclick="nlc();">
-            <!-- 💵 -->
             <img src="img/Icons/wallet.png" alt="wallet">
             <span data-vavilon="VVwallet">Wallet</span></a>
-        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">
-            <!-- # -->
+        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Tag List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">
             <img src="img/Icons/topics.png" alt="topic">
-            <span data-vavilon="VV0100">Topic List</span></a>
+            <span data-vavilon="VV0100">Tag List</span></a>
         <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">
-            <!-- 🌍 -->
             <img src="img/Icons/map.png" alt="map">
             <span data-vavilon="VV0101">Map</span></a>
         <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">
-            <!-- ⚙️ -->
             <img src="img//Icons/settings.png" alt="settings">
             <span data-vavilon="VV0098">Settings</span></a>
         <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();">
-            <!-- 📴 -->
             <img src="img/Icons/exit.png" alt="logout">
             <span data-vavilon="VV0078">Logout</span></a>
     </div>
@@ -939,28 +863,22 @@ var pageTitleHTML = `
 var majorNavButtonsHTML=`
 <div id="majornavbuttonsdivid" class="majornavbuttonsdiv">
     <span id="loggedin" class="loggedin" style="display:none;">
-    <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications?start=0">
-        <!-- 🔔 -->
+    <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications">
         <img src="img/Icons/notification.png" alt="notificatons">
         <span class="alertcount noselect" id="alertcount"></span></a>
-    <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
-        <!-- 📰 -->
+    <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"      title="Firehose (Everything)"                              href="#firehose">
         <img src="img/Icons/fire-hose.png" alt="FireHose">
     </a>
-    <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My Feed (Latest posts from your follows)"           href="#myfeed">
-        <!-- 👨 -->
+    <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My People (Latest posts from your follows)"           href="#mypeople">
         <img src="img/Icons/newsfeed.png" alt="MyFeed">
     </a>
-    <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="My Topics  (Latest posts from your topics)"        href="#show?order=hot&content=posts&topicname=MyTopics&filter=everyone&start=0&limit=25">
-        <!-- # -->
+    <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="My Tags  (Latest posts from your tags)"        href="#mytags">
         <img src="img/Icons/topics.png" alt="MyTopics">
     </a>
     <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton"   title="Messages"                                            href="#messages">
-        <!-- 📧 -->
         <img src="img/Icons/messages.png" alt="message">
         <span class="alertcount noselect" id="alertcountpm"></span></a>
     <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton"               title="New Post"                                            href="#new">
-        <!-- 🖊️ -->
         <img src="img/Icons/post.png" alt="">
     </a>
     </span>
@@ -1001,116 +919,6 @@ var headerHTML = `
         <nav id="usersearch" class="usersearchclass"></nav>
         <nav id="hamburgermenu" class="hamburgermenuclass"></nav>
     </div>
-<!--
-<div class="pagetop">
-    <nav>
-        <span class="memberlogo">
-            <a href="./index.html" aria-label="Refresh">
-                <img class="memberlogoimagefull" src="img/logos/logowide.svg" width="130" height="26"
-                    alt="Site Logo Full" />
-                <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26"
-                    alt="Site Logo Icon" />
-            </a>
-        </span>
-        <span class="navitemsmain">
-            <span id="loggedin" style="display:none;">
-                <span class="headerbuttons">
-                    <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;"
-                        title="Refresh Balance" id="balancedetails" class="balancedetails"><span
-                            id="balance">0</span></span>
-                    <a data-vavilon_title="VV0094" id="myfeedbutton"
-                        title="My Feed (Latest posts from your topics or peeps)" class="btn" href="#myfeed"
-                        onclick="nlc();">📰</a>
-                    <a data-vavilon_title="VV0095" id="notificationsbutton" title="Notifications" class="btn"
-                        href="#notifications?start=0" onclick="nlc();">🔔<span class="alertcount noselect"
-                            id="alertcount"></span></a>
-                    <a data-vavilon_title="VV0096" id="newbutton" title="New Post" class="btn newpostbutton" href="#new"
-                        onclick="nlc();">🖊️</a>
-                    <a data-vavilon_title="VV0097" id="privatemessagesbutton" title="Messages"
-                        class="btn privatemessagesbutton" href="#messages" onclick="nlc();">📧<span
-                            class="alertcount noselect" id="alertcountpm"></span></a>
-                    <a data-vavilon_title="VV0099" id="toolsbutton" title="Tools" class="btn" href="#tools"
-                        onclick="nlc();">🛠️</a>
-                </span>
-            </span>
-            <span class="headerbuttons">
-                <a data-vavilon_title="VV0098" id="settingsbutton" title="Settings" class="btn" href="#settings"
-                    onclick="nlc();">⚙️</a>
-                <a data-vavilon_title="VV0100" id="topiclistbutton" title="Topic List" class="btn" href="#topiclist"
-                    onclick="nlc();">📚</a>
-                <a data-vavilon_title="VV0101" id="mapbutton" title="Map" class="btn" href="#map"
-                    onclick="nlc();">🌍</a>
-            </span>
-            <span id="loggedout" class="loggedout">
-                <a data-vavilon="VV0102" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">login</a>
-                <span class="separatorwide"></span>
-                <a data-vavilon="VV0103" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">start</a>
-            </span>
-            <span class="separatorwidebreakpoint"></span>
-            <span id="topiccontainer" class="topiccontainer">
-                <select id="orderselector" onchange="postsSelectorChanged();" style="width:100%;max-width:100px">
-                    <option data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts"
-                        selected="selected">Hot</option>
-                    <option data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts">New
-                    </option>
-                    <option data-vavilon="VV0108" data-vavilon_title="VV0109" value="topd"
-                        title="Top posts from the past Day">Day</option>
-                    <option data-vavilon="VV0110" data-vavilon_title="VV0111" value="top48"
-                        title="Top posts from the past 48 Hours">48hrs</option>
-                    <option data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw"
-                        title="Top posts from the past Week">Week</option>
-                    <option data-vavilon="VV0114" data-vavilon_title="VV0115" value="topm"
-                        title="Top posts from the past Month">Month</option>
-                    <option data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy"
-                        title="Top posts from the past Year">Year</option>
-                    <option data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa"
-                        title="Top posts from all time">All</option>
-                </select>
-                <select id="contentselector" label="content" onchange="postsSelectorChanged();"
-                    style="width:100%;max-width:100px">
-                    <option data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" value="posts"
-                        selected="selected">Posts</option>
-                    <option data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" value="replies">
-                        Replies</option>
-                    <option data-vavilon="VV0124" data-vavilon_title="VV0125" title="See both posts and replies"
-                        value="both">In Both</option>
-                </select>
-                <select id="topicselector" label="topic" onchange="postsSelectorChanged();"
-                    style="width:100%;max-width:200px">
-                    <option data-vavilon="VV0126" data-vavilon_title="VV0127" value="" title="From all topics"
-                        selected="selected">All Topics</option>
-                    <option value=""></option>
-                    <option value="">---------------</option>
-                    <option data-vavilon="VV0128" data-vavilon_title="VV0129" value="MyTopics"
-                        title="From topics you are subscribed to">My Topics</option>
-                    <option data-vavilon="VV0130" data-vavilon_title="VV0131" value="MyFeed"
-                        title="From topics you are subscribed to or people you follow">My Feed</option>
-                    <option value="Member">Member</option>
-                    <option value="Bitcoin Cash">Bitcoin Cash</option>
-                    <option value="Poker">Poker</option>
-                    <option value="Memo">Memo</option>
-                    <option value="SLPTokens">SLPTokens</option>
-                    <option value="Tokens">Tokens</option>
-                    <option value="Philippines">Philippines</option>
-                    <option value="Capitalism">Capitalism</option>
-                    <option value="US Politics/Trump">US Politics</option>
-                    <option value="Favorite Quotes">Quotes</option>
-                    <option value="Ideas to improve our lives">Improvement</option>
-                    <option value="#911Truth">#911Truth</option>
-                </select>
-                <select id="filterselector" label="filter" onchange="postsSelectorChanged();"
-                    style="width:100%;max-width:200px">
-                    <option data-vavilon="VV0132" data-vavilon_title="VV0133" value="everyone" title="From everyone"
-                        selected="selected">Everyone</option>
-                    <option data-vavilon="VV0134" data-vavilon_title="VV0135" value="mypeeps"
-                        title="From people you follow">My Peeps</option>
-                </select>
-            </span>
-        </span>
-        <a data-vavilon_title="VV0136" id="refreshbutton" title="Refresh Content" class="headerbuttons btn" href=""
-            onclick="postsSelectorChanged();return false;">🔄</a>
-    </nav>
-</div>-->
 `;
 
 var footerHTML = `
