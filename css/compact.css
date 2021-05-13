@@ -50,6 +50,13 @@ body {
   justify-content: space-between;
   margin-top: 0.5em;
 }
+
+/* style for active tab */
+.activeTab{
+  background-color: #ddeefc;
+  border-radius: 10px;
+}
+
 /* Style The Dropdown Button */
 .dropbtn {
   color: black;
@@ -197,7 +204,6 @@ a {
 .post-side-bar .member-handle {
   display: none;
 }
-
 /*move the stars up a little*/
 .post-side-bar .star-rating {
   top: -0.7em;
@@ -635,16 +641,56 @@ img {
   /* padding-bottom: 10px; */
   position: fixed;
   width: 100%;
-  height: 66px;
+  height: 60px;
   z-index: 99;
   top: 0;
   background: #fff;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 0 10px;
+}
+.newheader .headerleftgroup{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  grid-gap: 10px;
+}
+.newheader .headercentergroup{
+  width: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.newheader .headerrightgroup{
+  width: 30%;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  grid-gap: 39px;
+}
+.newheader .headerrightgroup .usersearchclass{
+  width: 85%;
 }
 .memberlogo {
   padding-top: 8px;
-  padding-bottom: 2px;
+  width: 30%;
+}
+.newheader .headerleftgroup a.profilepicwrapper{
+   width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 62px;
+    cursor: pointer;
+    padding: 0px 0px;
+}
+.newheader .headerleftgroup span.profilepicheader{
+  display: flex;
+}
+.newheader .profilepicheaderimg{
+  height: 44px;
+  width: 44px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 .mainbodywrapper .mainbody {
   margin-top: 90px;
@@ -662,9 +708,11 @@ img {
   background-color: #ddeefc;
 } */
 .newheader .majornavbuttonsdiv #loggedin {
-  /* grid-gap: 22px; */
-  display: flex;
+  /* grid-gap: 10px; */
+  height: 100%;
+  /* display: flex; */
   justify-content: space-evenly;
+  align-items: center;
 }
 
 .newheader .majornavbuttonsclass #loggedout a.btn {
@@ -673,32 +721,47 @@ img {
   font-family: inherit;
   margin-left: 22px;
 }
-
+.newheader .majornavbuttonsclass #loggedout {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.newheader .majornavbuttonsclass #loggedout {
+  display: flex;
+  align-items: center;
+}
 .newheader .majornavbuttonsdiv a {
   position: relative;
   font-size: 1.5em;
-  padding: 11px 10px;
+  padding: 15px 10px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 50px;
 }
 .newheader .majornavbuttonsdiv a:hover {
   background: #ddeefc;
 }
 /* user search input and humberger wrapper div */
 .newheader .searchwrapper {
+  justify-content: space-evenly;
   display: flex;
-  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  align-items: center;
   grid-gap: 5px;
-  min-width: 30%;
 }
 
 .newheader .pagetitleclass {
   display: flex;
   align-items: center;
-  max-width: 27%;
-  min-width: 27%;
+  /* max-width: 27%;
+  min-width: 27%; */
+  width: 60%;
   padding: 0 5px;
 }
 .newheader .pagetitleclass .pageTitlediv {
-  text-align: center;
+  text-align: left;
   width: 100%;
   color: #333;
   padding: 0.5rem;
@@ -708,6 +771,9 @@ img {
   font-weight: 700;
   font-family: inherit;
   overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .newheader .searchwrapper input {
   /* border: none;
@@ -763,12 +829,19 @@ a {
   color: #aaa;
 }
 .newheader .searchwrapper .usersearchnav {
-  width: 18rem;
+  width: 100%;
 }
 .newheader .majornavbuttonsclass {
   display: flex;
   width: fit-content;
-  min-width: 30%;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+.newheader .majornavbuttonsclass img{
+  /* object-fit: contain; */
+  width: unset !important;
+  max-width: unset;
 }
 .newheader .searchwrapper .mainhamburger {
   right: unset;
@@ -799,6 +872,7 @@ a {
   display: flex;
   grid-gap: 6px;
   align-items: center;
+  justify-content: space-between;
   padding: 0.5rem 1rem;
 }
 .newheader .searchwrapper .mainhamburger #topiclistbutton span.tagicon {
@@ -806,6 +880,7 @@ a {
   width: 21px;
   text-align: center;
   height: 32px;
+  display: none;
 }
 .newheader .searchwrapper .usersearchnavclass {
   position: relative;
@@ -840,6 +915,11 @@ a {
   background-color: rgba(221, 221, 221, 0.8) !important;
   color: #fff;
 }
+.newheader .hamburgermenuclass{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .newheader .searchwrapper .dropdown button {
   font-size: 25px;
   color: #aaa;
@@ -848,6 +928,9 @@ a {
   width: 100%;
   height: 100%;
   padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .newheader .searchwrapper #usersearchnavresults {
@@ -1113,8 +1196,9 @@ a {
 }
 .remember-dropdown .dropdown-option:hover {
   color: #fff;
-  text-shadow: 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%),
-    0 0 42px rgb(11 143 255 / 50%);
+  background-color: #f1f1f1;
+  /* text-shadow: 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%),
+    0 0 42px rgb(11 143 255 / 50%); */
 }
 /* *********** POST follow button **************/
 .profilepreview .profile-actions .profilepreviewfollowbutton a {
@@ -1365,6 +1449,19 @@ label#memberblockexplorer {
 #toolsanchor .content div{
   margin-bottom: 1rem;
 }
+#toolsanchor .content #walletbalance,
+#toolsanchor .content #walletaddress,
+#toolsanchor .content #walletlegacyaddress,
+#toolsanchor .content #walletsendfunds,
+#toolsanchor .content #walletprivatekey,
+#toolsanchor .content #walletblockexplorer{
+  margin-bottom: 1rem;
+  padding: 22px;
+  border: 1px solid #fafaf9;
+  box-shadow: 0 13px 21px 6px #fafaf9;
+  border-radius: 18px;
+  background: #EEF2F7
+}
 #toolsanchor .content{
   position: relative;
   box-shadow: 0 13px 27px 6px #fafafa;
@@ -1392,18 +1489,18 @@ label#memberblockexplorer {
 #legacyformatdiv .qrcodeclick img,
 #privatekeyformatdiv .qrcodeclick img{
   border: 1px solid #61aff0;
-  cursor: zoom-in;
+  cursor: pointer;
 }
 #cashaddrformatdiv .qrcodeclick,
 #legacyformatdiv .qrcodeclick{
   position: absolute;
   right: 10px;
-  top: 28px;
+  top: 57px;
 }
 #privatekeyformatdiv .qrcodeclick {
   position: absolute;
   right: 10px;
-  top: 10px;
+  top: 25px;
 }
 #cashaddrformatdiv .qrcodeclick span,
 #legacyformatdiv .qrcodeclick span,
@@ -1433,29 +1530,41 @@ label#memberblockexplorer {
 #walletsendfunds input{
   margin-left:15px ;
 }
+#walletsendfunds input#sendfundsaddress,
+#walletsendfunds input#fundsamount{
+  border: 1px solid #61aff0;
+  border-radius: 45px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+}
 #walletsendfunds input#sendfundsaddress{
   width: 96%;
+  border: 1px solid #61aff0;
+  border-radius: 45px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
 }
 #walletsendfunds input#fundsamount{
   width: 50%;
 }
 #walletsendfunds .sendusd{
   position: absolute;
-  bottom: 33px;
+  bottom: 55px;
   right: 35%;
 }
 #walletsendfunds button#sendfundsbutton{
   position: absolute;
-  bottom: 14px;
-  right: 15%;
+  bottom: 5px;
+  right: 4%;
   margin-top: 20px;
   background-color: #61aff0 !important;
   border-radius: 45px;
   border: 1px solid #61aff0 !important;
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
 }
 #walletsendfunds button#sendfundsbutton:hover{
   background-color: #fff !important;
   color: #61aff0;
+  box-shadow: none;
+  animation-delay:  0.5s
 }
 #walletprivatekey label{
   margin-bottom: 1.5rem;
@@ -1464,7 +1573,7 @@ label#memberblockexplorer {
   cursor: pointer;
   border-bottom: 1px solid #61aff0;
   position: absolute;
-  top: 0px;
+  top: 20px;
   left:50%;
   text-align: center;
 }
@@ -1518,8 +1627,14 @@ label#memberblockexplorer {
   #memberanchor .content {
     height: 100vh;
   }
+  .newheader .majornavbuttonsclass img{
+    /* object-fit: none; */
+  }
+  .newheader .majornavbuttonsdiv a{
+    /* display: contents; */
+  }
   .newheader .searchwrapper .usersearchnav {
-    width: fit-content;
+    /* width: fit-content; */
   }
   .newheader .memberlogoimage {
     display: inline;
@@ -1544,6 +1659,7 @@ label#memberblockexplorer {
     margin-top: 50px;
   }
 }
+/* """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
 @media (max-width: 768px) {
   #memberanchor .content {
     height: 68vh;
@@ -1551,8 +1667,33 @@ label#memberblockexplorer {
   .newheader {
     position: unset;
   }
+  .newheader .headercentergroup{
+    width: 0;
+  }
+  .newheader .headerleftgroup{
+    width: 30%;
+  }
+  .newheader .headerrightgroup{
+    width: 70%;
+  }
+  .newheader .headerrightgroup .usersearchclass{
+    width: 75%;
+  }
+  .newheader .headerleftgroup{
+    grid-gap: 0px;
+  }
+  .newheader .memberlogo{    
+    width: 50%;
+    text-align: center;
+  }
+  .newheader .headerleftgroup a.profilepicwrapper{
+    width: 40%;
+  }
   .newheader .alertcount {
     top: 7px;
+  }
+  .newheader .searchwrapper{
+    width: 100%;
   }
   .mainbodywrapper .mainbody {
     margin-top: 1rem;
@@ -1561,6 +1702,14 @@ label#memberblockexplorer {
   .posts .contentfilters {
     display: block;
     float: unset;
+  }
+  .posts .contentfilters{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .posts .contentfilters a{
+    padding: 0px 10px;
+    min-width: 50px;
   }
   .post .dropdown .dropbtn {
     padding-top: 5px;
@@ -1574,13 +1723,17 @@ label#memberblockexplorer {
     z-index: 999;
     justify-content: space-around;
     width: 100%;
-    height: 56px;
+    height: 50px;
   }
   .newheader .majornavbuttonsdiv a {
-    padding: 7px 3px;
+    padding: 10px 3px;
+  }
+  .newheader .majornavbuttonsdiv a{
+    display: unset;
+    width: unset;
   }
   .newheader .usersearchnav {
-    width: auto !important;
+    /* width: auto !important; */
   }
 
   .newheader .pagetitleclass {
@@ -1588,7 +1741,8 @@ label#memberblockexplorer {
   }
 
   .newheader .majornavbuttonsclass a {
-    font-size: 1.5em;
+   align-items: center;
+   display: flex;
   }
   div#status {
     bottom: 50px;
@@ -1669,6 +1823,7 @@ label#memberblockexplorer {
     margin-bottom: 10px;
   }
 }
+/*  */
 @media (max-width: 500px) {
   #memberanchor .content {
     height: 100vh;
@@ -1680,8 +1835,33 @@ label#memberblockexplorer {
   .memberheader .membertabs a {
     margin: 5px 15px 5px 0px;
   }
+  .newheader .headerrightgroup{
+    width: unset;
+  }
   .newheader .memberlogoimage {
     width: 30px;
+  }
+  .newheader .headerleftgroup a.profilepicwrapper{
+    width: unset;
+  }
+  .newheader .profilepicheaderimg{
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+  }
+  .newheader .headerleftgroup{
+    grid-gap: 10px;
+  }
+  .newheader .searchwrapper{
+    width: unset;
+    grid-gap: 10px;
+  }
+  .newheader .searchwrapper .dropdown{
+    width: 38px;
+    height: 38px;
+  }
+  .newheader .searchwrapper .dropdown button{
+    font-size: 30px;
   }
   #memberanchor .content #membernametext a.populate-send-message {
     right: 18px;
@@ -1808,5 +1988,28 @@ label#memberblockexplorer {
     left: 0 !important;
     top: 80px !important;
     flex-direction: row !important;
+  }
+  .newheader{
+    padding: 0;
+  }
+  .newheader .searchwrapper{
+    grid-gap:0px;
+  }
+  .newheader .searchwrapper .usersearchnavclass::after{
+    width: 30px;
+  }
+  .newheader .searchwrapper .usersearchnav{
+     /* width: fit-content; */
+     padding-right: 0px !important;
+  }
+  .newheader .memberlogo{
+    width: 47%;
+    text-align: center;
+  }
+  .newheader .headerleftgroup{
+    grid-gap: 5px;
+  }
+  .newheader .searchwrapper .mainhamburger{
+    left: -10em;
   }
 }

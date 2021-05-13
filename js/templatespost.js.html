@@ -82,9 +82,18 @@ var postCompactTemplate = `
                                 {remembers}
                             </span>
                             <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
-                            <div class="dropdown-content" id="dropdown-content{diff}{txid}">
+                            <!-- <div class="dropdown-content" id="dropdown-content{diff}{txid}">
                                 <a onclick="repost('{txid}');"><span data-vavilon="remember">remember</span></a>
                                 <a onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"><span data-vavilon="VV0158">quote</span></a>
+                            </div> -->
+                            <!-- for remember dropdown -->
+                            <div class="remember-dropdown-wrapper">
+                                <div class="remember-dropdown" id="dropdown-content{diff}{txid}">
+                                    <a class="dropdown-option"  onclick="repost('{txid}');">
+                                       <span class="remembersicon dropdown-option-icon "></span> <span data-vavilon="remember">remember</span>
+                                    </a>
+                                    <a class="dropdown-option"  onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"> <span class=" remembersicon dropdown-option-icon "></span> <span data-vavilon="VV0158">quote</span></a>
+                                </div>
                             </div>
                         </a>
                     </span>
