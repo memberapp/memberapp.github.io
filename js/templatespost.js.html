@@ -70,9 +70,11 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-remembers{rememberactivated} post-footer-relative" id="remembers{txid}">
-                        <a id="quotelinkposts{diff}{txid}"
-                        
-                            class="btn-icon" data-action="remember">
+                        <a id="quotelinkposts{diff}{txid}" class="btn-icon" data-action="remember" onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content{diff}{txid}');
+                        ddmenu.style.display='block';
+                    var ddcover=document.getElementById('ddcover');
+                        ddcover.style.display='block';
+                        ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};">
                             <span class="remembersicon">
                                 <span class="emojiicon">♻</span>
                             </span>
@@ -80,13 +82,9 @@ var postCompactTemplate = `
                                 {remembers}
                             </span>
                             <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
-                            <div class="remember-dropdown-wrapper">
-                                <div class="remember-dropdown">
-                                    <a class="dropdown-option"  onclick="repost('{txid}');">
-                                       <span class="remembersicon dropdown-option-icon "></span> <span data-vavilon="remember">remember</span>
-                                    </a>
-                                    <a class="dropdown-option"  onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"> <span class=" remembersicon dropdown-option-icon "></span> <span data-vavilon="VV0158">quote</span></a>
-                                </div>
+                            <div class="dropdown-content" id="dropdown-content{diff}{txid}">
+                                <a onclick="repost('{txid}');"><span data-vavilon="remember">remember</span></a>
+                                <a onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"><span data-vavilon="VV0158">quote</span></a>
                             </div>
                         </a>
                     </span>

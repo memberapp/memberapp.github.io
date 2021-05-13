@@ -59,6 +59,17 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
 
 async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
     
+    //Set the headerbar pic
+    if (pre == "settings" && data[0]) {
+        var pictype = '.jpg';
+        if (data[0].picurl && data[0].picurl.toLowerCase().endsWith('.png')) {
+            pictype = '.png';
+        }
+        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="`+profilepicbase + san(qaddress) +`.128x128` + pictype + `">`;
+    }
+
+    
+
     if(qaddress){
         if(!cashaddress){
             //On a member page, the cashaddress won't be available so we have to calculate
@@ -122,6 +133,8 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
     if (obj.picurl) {
         obj.profilepiclargehtml = getProfilePicLargeHTML(profilepicbase + san(qaddress) + `.640x640.jpg`);
+
+        
     }
 
     if (pre == "settings") {
