@@ -50,7 +50,6 @@ body {
   justify-content: space-between;
   margin-top: 0.5em;
 }
-
 /* Style The Dropdown Button */
 .dropbtn {
   color: black;
@@ -128,7 +127,7 @@ body {
 .replyicon {
   width: 1rem;
   height: 1rem;
-  background: url(../img/feelstheme/compact-speech.svg);
+  background: url(../img/Icons/comment.png);
   filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
   background-size: 1rem 1rem;
   display: inline-block;
@@ -137,7 +136,7 @@ body {
 .remembersicon {
   width: 1rem;
   height: 1rem;
-  background: url(../img/feelstheme/compact-remember.svg);
+  background: url(../img/Icons/retweet.png);
   filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
   background-size: 1rem 1rem;
   display: inline-block;
@@ -146,16 +145,20 @@ body {
 .likeicon {
   width: 1rem;
   height: 1rem;
-  background: url(../img/feelstheme/compact-heart.svg);
+  background: url(../img/Icons/like.png);
   filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
   background-size: 1rem 1rem;
   display: inline-block;
 }
-
+/* a.btn-icon>.likeicon:active, a.btn-icon>.likeicon:focus a.btn-icon>.likeicon:target{ */
+  .likeicon:target{
+  background-image:url(../img/Icons/liked.png) !important;
+  transition-delay:0s;
+}
 .tipicon {
   width: 1rem;
   height: 1rem;
-  background: url(../img/feelstheme/compact-tip.svg);
+  background: url(../img/Icons/money.png);
   filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
   background-size: 1rem 1rem;
   display: inline-block;
@@ -185,7 +188,12 @@ a {
 .post-footer-remembers-activated {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%);
 }
-
+.post-footer-upvote-activated a .likeicon{
+  background-image: url(../img/Icons/liked.png) !important;
+}
+.post-footer-remembers-activated a .remembersicon{
+  background-image: url(../img/Icons/retweeted.png) !important;
+}
 .post-side-bar .member-handle {
   display: none;
 }
@@ -345,7 +353,13 @@ Use important, because we always want profile card pics to be this size*/
 .age {
   margin-right: 0rem;
 }
-
+/* active tab */
+.mainbodywrapper #posts .contentfilters a:active,
+.mainbodywrapper #posts .contentfilters a:visited,
+.mainbodywrapper #posts .contentfilters a:focus
+{
+background-color: #ddeefc !important;
+}
 /*Remove border on posts*/
 .mainbodywrapper #posts .itemlist ol.posts li {
   border: 0px solid rgba(0, 0, 0, 0.12);
@@ -357,13 +371,13 @@ Use important, because we always want profile card pics to be this size*/
   border: none;
   box-shadow: 0 13px 27px 6px #fafafa;
 }
-#newpostmemorandumbutton{
+#newpostmemorandumbutton {
   background: #61aff0 !important;
 }
-#newpost #memorandumarea #memorandumpreviewareabutton a{
+#newpost #memorandumarea #memorandumpreviewareabutton a {
   font-weight: 400;
 }
-#newpost #memorandumarea #memorandumpreviewareabutton a:hover{
+#newpost #memorandumarea #memorandumpreviewareabutton a:hover {
   color: #fff !important;
   border-color: #61aff0;
   background: #61aff0 !important;
@@ -376,7 +390,7 @@ Use important, because we always want profile card pics to be this size*/
   padding: 2em 0.875rem;
   border: none;
 }
-#messageslist li a:hover{
+#messageslist li a:hover {
   color: #fff !important;
   border-color: #61aff0 !important;
 }
@@ -534,24 +548,30 @@ img {
 .post-footer-upvote-activated:hover .likeicon,
 .post-footer-upvote:hover .likeicon {
   filter: unset;
-  background-color: rgb(11 143 255 / 50%);
+  background-color: rgb(11 143 255 /25%);
 }
 .post-footer-reply:hover .replyicon,
 .post-footer-reply-activated:hover .replyicon {
   filter: unset;
-  background-color: rgb(11 143 255 / 50%);
+  background-color: rgb(11 143 255 /25%);
 }
 .post-footer-remembers:hover .remembersicon,
 .post-footer-remembers-activated:hover .remembersicon {
   filter: unset;
-  background-color: rgb(11 143 255 / 50%);
+  background-color: rgb(11 143 255 /25%);  
+  /* background: url(../img/Icons/money.png); */
 }
 .post-footer-tips:hover .tipicon,
 .post-footer-tips-activated:hover .tipicon {
   filter: unset;
-  background-color: rgb(11 143 255 / 16%);
+  background-color: rgb(11 143 255 /25%);
 }
-
+/* rembericon on state */
+.post-footer-remembers:target .remembersicon,
+.post-footer-remembers-activated:target .remembersicon {
+  filter: unset;
+  background: url(../img/Icons/money.png);
+}
 /* make the number links grey*/
 .post-footer-relative a {
   color: #aaa !important;
@@ -615,6 +635,7 @@ img {
   /* padding-bottom: 10px; */
   position: fixed;
   width: 100%;
+  height: 66px;
   z-index: 99;
   top: 0;
   background: #fff;
@@ -622,7 +643,8 @@ img {
   padding-right: 5px;
 }
 .memberlogo {
-  padding: 10px 0;
+  padding-top: 8px;
+  padding-bottom: 2px;
 }
 .mainbodywrapper .mainbody {
   margin-top: 90px;
@@ -631,15 +653,18 @@ img {
 
 /* majornavbuttons wrapper box - adding space btw icons */
 .newheader .majornavbuttonsdiv {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   width: 100%;
 }
-
+/* .newheader .majornavbuttonsdiv:hover{
+  background-color: #ddeefc;
+} */
 .newheader .majornavbuttonsdiv #loggedin {
-  grid-gap: 22px;
+  /* grid-gap: 22px; */
   display: flex;
+  justify-content: space-evenly;
 }
 
 .newheader .majornavbuttonsclass #loggedout a.btn {
@@ -651,8 +676,8 @@ img {
 
 .newheader .majornavbuttonsdiv a {
   position: relative;
-  font-size: 1.2em;
-  padding: 22px 3px;
+  font-size: 1.5em;
+  padding: 11px 10px;
 }
 .newheader .majornavbuttonsdiv a:hover {
   background: #ddeefc;
@@ -660,8 +685,8 @@ img {
 /* user search input and humberger wrapper div */
 .newheader .searchwrapper {
   display: flex;
-  justify-content: center;
-  grid-gap: 20px;
+  justify-content: space-between;
+  grid-gap: 5px;
   min-width: 30%;
 }
 
@@ -682,6 +707,7 @@ img {
   font-size: 100%;
   font-weight: 700;
   font-family: inherit;
+  overflow-wrap: break-word;
 }
 .newheader .searchwrapper input {
   /* border: none;
@@ -760,7 +786,7 @@ a {
   color: white;
   font-weight: bold;
   margin-left: 0.25rem;
-  top: 15px;
+  top: 7px;
   right: -3px;
   position: absolute !important;
   height: auto !important;
@@ -774,6 +800,12 @@ a {
   grid-gap: 6px;
   align-items: center;
   padding: 0.5rem 1rem;
+}
+.newheader .searchwrapper .mainhamburger #topiclistbutton span.tagicon {
+  font-size: 1.5rem;
+  width: 21px;
+  text-align: center;
+  height: 32px;
 }
 .newheader .searchwrapper .usersearchnavclass {
   position: relative;
@@ -1102,14 +1134,19 @@ a {
   border-color: #1063a8;
 }
 /* topiclistanchor */
-#topiclistanchor tbody tr td a{
+#topiclistanchor tbody tr td a {
   color: #fff !important;
 }
-/* *****topicmeta*************/
-#topicmeta tbody tr td a{
+
+/* topicmeta section */
+#topicmeta tbody tr td a {
   color: #fff !important;
 }
-/****************** Profile**************** */
+#topicmeta .content h1.topicheader {
+  overflow-wrap: break-word;
+}
+
+/* profile page design */
 #memberanchor .content {
   position: relative;
   box-shadow: 0 13px 27px 6px #fafafa;
@@ -1198,7 +1235,7 @@ a {
   border: none;
 }
 
-#memberanchor .content .memberstats .mute a{
+#memberanchor .content .memberstats .mute a {
   border: 1px solid #61aff0;
   border: 1px solid #61aff0;
   background: transparent !important;
@@ -1226,13 +1263,13 @@ a {
   border: 1px solid #61aff0;
   color: #fff !important;
 }
-#memberanchor .content .memberstats .follow:hover a{
+#memberanchor .content .memberstats .follow:hover a {
   color: #fff !important;
 }
 .memberpiccontainer label {
   display: none !important;
 }
-#memberanchor .content #memberlegacyaddress{
+#memberanchor .content #memberlegacyaddress {
   position: absolute;
   top: 234px;
   width: 93%;
@@ -1244,7 +1281,7 @@ a {
   align-items: center;
   justify-content: space-between;
 } */
-#memberanchor .content #memberlegacyaddress label{
+#memberanchor .content #memberlegacyaddress label {
   display: none;
 }
 #memberlegacyaddress #memberlegacyformatdiv {
@@ -1263,17 +1300,17 @@ a {
   position: relative;
   margin-left: 15px;
 }
-#memberlegacyaddress span#memberlegacyformat img{
+#memberlegacyaddress span#memberlegacyformat img {
   width: 16px;
   cursor: pointer;
 }
 #memberprofilelinks {
   text-align: center;
 }
-#memberprofilelinks{
+#memberprofilelinks {
   position: absolute;
-  top:386px;
-} 
+  top: 386px;
+}
 #memberprofilelinks label {
   display: none;
 }
@@ -1302,10 +1339,10 @@ a {
 #memberanchor .content .memberstats div {
   border: none;
 }
-label#memberblockexplorer{
+label#memberblockexplorer {
   display: none;
 }
-#memberblockexplorer{
+#memberblockexplorer {
   position: absolute;
   top: 435px;
 }
@@ -1320,30 +1357,150 @@ label#memberblockexplorer{
 #memberblockexplorer img {
   outline: none;
 }
-#memberlegacyformatdiv{
+#memberlegacyformatdiv {
   position: relative;
 }
 
+/* Wallet page design */
+#toolsanchor .content div{
+  margin-bottom: 1rem;
+}
+#toolsanchor .content{
+  position: relative;
+  box-shadow: 0 13px 27px 6px #fafafa;
+  border: none;
+}
+#toolsanchor .content #walletbalance span.balancebch{
+  margin-left: 15px;
+}
+#walletbalance .balancedetails img{
+  outline: none !important;
+  cursor: pointer;
+  margin-left: 5px;
+}
+#toolsanchor .content #walletaddress span,
+#toolsanchor .content #walletlegacyaddress span,
+#toolsanchor .content #walletsendfunds p{
+  margin-left: 15px;
+}
+#walletaddress,
+#walletlegacyaddress,
+#walletprivatekey{
+  position: relative;
+}
+#cashaddrformatdiv .qrcodeclick img,
+#legacyformatdiv .qrcodeclick img,
+#privatekeyformatdiv .qrcodeclick img{
+  border: 1px solid #61aff0;
+  cursor: zoom-in;
+}
+#cashaddrformatdiv .qrcodeclick,
+#legacyformatdiv .qrcodeclick{
+  position: absolute;
+  right: 10px;
+  top: 28px;
+}
+#privatekeyformatdiv .qrcodeclick {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+#cashaddrformatdiv .qrcodeclick span,
+#legacyformatdiv .qrcodeclick span,
+#privatekeyformatdiv .qrcodeclick span{
+  display: none;
+}
 
+#walletaddress #cashaddrformat img,
+#walletlegacyaddress #legacyformat img{
+  width: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+#walletaddress span#cashaddrformat,
+#walletlegacyaddress #legacyformat{
+    margin-left: 0;
+    width: 90%;
+    overflow-wrap: break-word;
+}
 
+#walletsendfunds{
+  position: relative;
+}
+#walletsendfunds label{
+  margin-top: 1rem;
+}
+#walletsendfunds input{
+  margin-left:15px ;
+}
+#walletsendfunds input#sendfundsaddress{
+  width: 96%;
+}
+#walletsendfunds input#fundsamount{
+  width: 50%;
+}
+#walletsendfunds .sendusd{
+  position: absolute;
+  bottom: 33px;
+  right: 35%;
+}
+#walletsendfunds button#sendfundsbutton{
+  position: absolute;
+  bottom: 14px;
+  right: 15%;
+  margin-top: 20px;
+  background-color: #61aff0 !important;
+  border-radius: 45px;
+  border: 1px solid #61aff0 !important;
+}
+#walletsendfunds button#sendfundsbutton:hover{
+  background-color: #fff !important;
+  color: #61aff0;
+}
+#walletprivatekey label{
+  margin-bottom: 1.5rem;
+}
+#walletprivatekey #privatekey a{
+  cursor: pointer;
+  border-bottom: 1px solid #61aff0;
+  position: absolute;
+  top: 0px;
+  left:50%;
+  text-align: center;
+}
+#walletblockexplorer a{
+  display:block !important;
+  margin-left: 25px;
+  position: relative;
+  text-align: left !important;
+}
+#walletblockexplorer a::before{
+    content: url('../img/Icons/link.png');
+    position: absolute;
+    display: block;
+    width: 16px;
+    height: 16px;
+    top: 0px;
+    left: -23px;
+}
 /* POST ON MAP */
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar {
   width: 15px;
 }
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar-thumb {
-background-color: darkgrey;
-outline: 1px solid slategrey;
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 /* for firefox */
-#map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content{
-  scrollbar-width:thin;
+#map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
+  scrollbar-width: thin;
   scrollbar-color: #fff darkgrey;
 }
-#map .leaflet-popup-pane .leaflet-popup a.leaflet-popup-close-button{
+#map .leaflet-popup-pane .leaflet-popup a.leaflet-popup-close-button {
   left: -7px !important;
   background: #61aff0;
   border-radius: 50%;
@@ -1352,13 +1509,13 @@ outline: 1px solid slategrey;
   width: 26px;
   height: 26px;
 }
-#newgeopost input#newpostgeobutton{
+#newgeopost input#newpostgeobutton {
   background-color: #61aff0 !important;
 }
 /* **************************************** */
 
 @media (max-width: 1024px) {
-  #memberanchor .content{
+  #memberanchor .content {
     height: 100vh;
   }
   .newheader .searchwrapper .usersearchnav {
@@ -1371,19 +1528,16 @@ outline: 1px solid slategrey;
   .newheader .memberlogoimagefull {
     display: none;
   }
-  .newheader .majornavbuttonsdiv #loggedin {
-    grid-gap: 22px;
-  }
-  #memberanchor .content #memberlegacyaddress{
+  #memberanchor .content #memberlegacyaddress {
     top: 245px;
   }
-  #memberlegacyaddress #memberlegacyformatdiv{
+  #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
   }
-  #memberprofilelinks{
+  #memberprofilelinks {
     top: 410px;
   }
-  #memberblockexplorer{
+  #memberblockexplorer {
     top: 480px;
   }
   .memberstats {
@@ -1391,13 +1545,13 @@ outline: 1px solid slategrey;
   }
 }
 @media (max-width: 768px) {
-  #memberanchor .content{
+  #memberanchor .content {
     height: 68vh;
   }
   .newheader {
     position: unset;
   }
-  .newheader .alertcount{
+  .newheader .alertcount {
     top: 7px;
   }
   .mainbodywrapper .mainbody {
@@ -1414,14 +1568,16 @@ outline: 1px solid slategrey;
   .newheader .majornavbuttonsclass {
     position: fixed;
     bottom: 0;
+    left: 0;
     background-color: #fff;
     padding: 0px;
     z-index: 999;
     justify-content: space-around;
     width: 100%;
+    height: 56px;
   }
   .newheader .majornavbuttonsdiv a {
-    padding: 12px 3px;
+    padding: 7px 3px;
   }
   .newheader .usersearchnav {
     width: auto !important;
@@ -1432,10 +1588,7 @@ outline: 1px solid slategrey;
   }
 
   .newheader .majornavbuttonsclass a {
-    font-size: 19px;
-  }
-  .newheader .majornavbuttonsdiv #loggedin {
-    grid-gap: 60px;
+    font-size: 1.5em;
   }
   div#status {
     bottom: 50px;
@@ -1456,24 +1609,68 @@ outline: 1px solid slategrey;
   #memberanchor .content .memberstatsButtons {
     right: 0;
   }
-  #memberanchor .content #memberlegacyaddress{
+  #memberanchor .content #memberlegacyaddress {
     top: 245px;
   }
-  #memberlegacyaddress #memberlegacyformatdiv{
+  #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
   }
-  #memberprofilelinks{
+  #memberprofilelinks {
     top: 410px;
   }
-  #memberblockexplorer{
+  #memberblockexplorer {
     top: 520px;
   }
   .memberstats {
     margin-top: 40px;
   }
+
+  /* wallet page  */
+  #walletaddress span#cashaddrformat{
+    margin-left: 10px !important;
+  }
+  #toolsanchor .content #walletbalance span.balancebch{
+    margin-left: 10px !important;
+  }
+  #toolsanchor .content #walletsendfunds p{
+    margin-left: 10px !important;
+  }
+  #toolsanchor .content #walletlegacyaddress span{
+    margin-left: 10px !important;
+  }
+  #walletsendfunds input#sendfundsaddress{
+    width: 100%;
+  }
+  #cashaddrformatdiv, #legacyformatdiv{
+    text-align: center;
+    margin-top: 10px;
+  }
+  #cashaddrformatdiv .qrcodeclick, #legacyformatdiv .qrcodeclick{
+    position: unset;
+  }
+  #walletsendfunds button#sendfundsbutton{
+    position: unset;
+    margin-top: 15px;
+  }
+  #walletsendfunds .sendusd{
+      position: relative;
+      top: 10px;
+      left: 15px;
+  }
+  #walletsendfunds input#fundsamount{
+    width: 100%;
+  }
+  #walletprivatekey #privatekey a{
+    position: unset;
+    width: 150px;
+  }
+  #walletprivatekey label{
+    margin-top:2.4rem;
+    margin-bottom: 10px;
+  }
 }
 @media (max-width: 500px) {
-  #memberanchor .content{
+  #memberanchor .content {
     height: 100vh;
   }
   #membertabs {
@@ -1483,15 +1680,18 @@ outline: 1px solid slategrey;
   .memberheader .membertabs a {
     margin: 5px 15px 5px 0px;
   }
+  .newheader .memberlogoimage {
+    width: 30px;
+  }
   #memberanchor .content #membernametext a.populate-send-message {
     right: 18px;
     top: 80px;
   }
-  #memberanchor .content .memberstats .follow{
+  #memberanchor .content .memberstats .follow {
     top: 80px;
     right: 160px;
   }
-  #memberanchor .content .memberstats .mute{
+  #memberanchor .content .memberstats .mute {
     top: 80px;
     right: 148px;
   }
@@ -1506,36 +1706,76 @@ outline: 1px solid slategrey;
     top: 80px;
     flex-direction: row;
   }
-  .newheader .majornavbuttonsdiv #loggedin {
-    grid-gap: 24px;
-  }
-  #memberanchor .content #memberlegacyaddress{
+  #memberanchor .content #memberlegacyaddress {
     top: 315px;
     width: 90%;
   }
-  #memberlegacyaddress span#memberlegacyformat{
+  #memberlegacyaddress span#memberlegacyformat {
     margin-left: 0px;
     width: 90%;
   }
-  #memberlegacyaddress #memberlegacyformatdiv{
+  #memberlegacyaddress #memberlegacyformatdiv {
     margin: 0 auto;
   }
-  #memberlegacyaddress #memberlegacyformatdiv{
+  #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
     position: unset;
   }
-  #memberprofilelinks{
+  #memberprofilelinks {
     top: 510px;
     left: 0;
   }
-  #memberblockexplorer{
+  #memberblockexplorer {
     top: 620px;
   }
   .memberstats {
     margin-top: 75px;
   }
-  #memberanchor .content .memberstats div{
+  #memberanchor .content .memberstats div {
     margin: 5px !important;
+  }
+
+  /* wallet  media quries*/
+  #walletaddress span#cashaddrformat{
+    margin-left: 0 !important;
+  }
+  #toolsanchor .content #walletbalance span.balancebch{
+    margin-left: 0 !important;
+  }
+  #toolsanchor .content #walletsendfunds p{
+    margin-left: 0 !important;
+  }
+  #cashaddrformatdiv .qrcodeclick, #legacyformatdiv .qrcodeclick{
+    position: absolute;
+  }
+  #toolsanchor .content #walletlegacyaddress span{
+    margin-left: 0 !important;
+    /* position: ; */
+  }
+  #walletsendfunds input#sendfundsaddress{
+    width: 100%;
+  }
+  #walletsendfunds input{
+    margin-left: 0 !important;
+  }
+  #walletsendfunds input#fundsamount{
+    width: 100%;
+  }
+  #walletsendfunds button#sendfundsbutton{
+    position: unset;
+    margin-top: 10px;
+  }
+  #walletsendfunds .sendusd{
+    position: relative;
+    top: 10px;
+    left: 0px;
+  }
+  #walletprivatekey #privatekey a{
+    position: unset;
+  }
+  #walletprivatekey label{
+    margin-top:2rem;
+    margin-bottom: 10px;
   }
 }
 @media (max-width: 320px) {

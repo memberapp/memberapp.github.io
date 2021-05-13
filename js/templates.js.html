@@ -234,13 +234,15 @@ var walletanchorHTML=`
         <span class="approximatelyequal">≈</span>
         <span class="balanceusd" id="balanceusd">0</span>
         <span class="usd">(USD)</span>
-        <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance" class="balancedetails">🔄</span>
+        <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance" class="balancedetails">
+            <img src="img/Icons/reload.png" alt="">
+        </span>
     </div>
     
 
     <div id="walletaddress">
         <label data-vavilon="VV0065" data-vavilon="address">Address</label>
-        <span id="cashaddrformat">{cashaddress}</span>
+        <span id="cashaddrformat"><img src="img/Icons/copy.png" alt="copy"> {cashaddress}</span>
         <div id="cashaddrformatdiv">
             <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
                 <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
@@ -250,7 +252,7 @@ var walletanchorHTML=`
     </div>
     <div id="walletlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
-        <span id="legacyformat">{address}</span>
+        <span id="legacyformat"><img src="img/Icons/copy.png" alt="copy"> {address}</span>
         <div id="legacyformatdiv">
             <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
                 <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
@@ -841,7 +843,7 @@ var hamburgerMenuHTML=`
             <img src="img/Icons/wallet.png" alt="wallet">
             <span data-vavilon="VVwallet">Wallet</span></a>
         <a data-vavilon_title="VV0100" id="topiclistbutton" title="Tag List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">
-            <img src="img/Icons/topics.png" alt="topic">
+                <span class="tagicon">#</span>
             <span data-vavilon="VV0100">Tag List</span></a>
         <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">
             <img src="img/Icons/map.png" alt="map">
@@ -870,16 +872,16 @@ var majorNavButtonsHTML=`
         <img src="img/Icons/fire-hose.png" alt="FireHose">
     </a>
     <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My People (Latest posts from your follows)"           href="#mypeople">
-        <img src="img/Icons/newsfeed.png" alt="MyFeed">
+        <img src="img/Icons/group.png" alt="MyFeed">
     </a>
     <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="My Tags  (Latest posts from your tags)"        href="#mytags">
-        <img src="img/Icons/topics.png" alt="MyTopics">
+         #
     </a>
     <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton"   title="Messages"                                            href="#messages">
         <img src="img/Icons/messages.png" alt="message">
         <span class="alertcount noselect" id="alertcountpm"></span></a>
     <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton"               title="New Post"                                            href="#new">
-        <img src="img/Icons/post.png" alt="">
+        <img src="img/Icons/plus.png" alt="newpost">
     </a>
     </span>
     <span id="loggedout" class="loggedout">
@@ -912,6 +914,9 @@ var headerHTML = `
             <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26"
                 alt="Site Logo Icon" />
         </a>
+    </span>
+    <span id="profilepicheader" class="profilepicheader">
+        <img class="profilepicheaderimg" width="128" height="128" src="img/profilepics/1624FF9RkuaNdJ8E9ULxBYtwGoVJZSnq4y.128x128.jpg">
     </span>
     <div id="pagetitle" class="pagetitleclass"></div>
     <nav id="majornavbuttons" class="majornavbuttonsclass"></nav>

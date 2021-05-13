@@ -258,8 +258,8 @@ const showLocalNotification = (payload, swRegistration) => {
       icon = "/img/notificationicons/thread.svg";
       break;
     case "topic":
-      title = "Topic";
-      text = "There was a message in a topic you're subscribed to";
+      title = "Tag";
+      text = "There was a message in a tag you're subscribed to";
       icon = "/img/notificationicons/topic.svg";
       break;
     default:

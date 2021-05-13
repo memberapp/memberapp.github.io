@@ -188,7 +188,7 @@ function sendRepostNotification(txid,divForStatus, topic, newtxid){
 
     var replytext=getSafeTranslation('postremembered',"Your post was remembered");
     if(topic){
-        replytext+=" "+getSafeTranslation('intopic',"in topic")+" "+topic;
+        replytext+=" "+getSafeTranslation('intopic',"in tag")+" "+topic;
     }
     replytext+=" https://member.cash/p/"+newtxid.substr(0,10);
     var replyHex = new Buffer(replytext).toString('hex');
