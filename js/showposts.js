@@ -21,7 +21,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     }else if(topicnameHOSTILE.toLowerCase()=="mytopics"){
         setPageTitleFromID("VV0128");
     }else if(topicnameHOSTILE){
-        setPageTitleRaw("t/"+topicnameHOSTILE);
+        setPageTitleRaw("#"+topicnameHOSTILE);
     }else if(filter.toLowerCase()=="myfeed"){
         setPageTitleFromID("VV0134a");
     }else if(filter=="everyone"){

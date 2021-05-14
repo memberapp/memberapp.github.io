@@ -82,18 +82,9 @@ var postCompactTemplate = `
                                 {remembers}
                             </span>
                             <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
-                            <!-- <div class="dropdown-content" id="dropdown-content{diff}{txid}">
+                            <div class="dropdown-content" id="dropdown-content{diff}{txid}">
                                 <a onclick="repost('{txid}');"><span data-vavilon="remember">remember</span></a>
                                 <a onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"><span data-vavilon="VV0158">quote</span></a>
-                            </div> -->
-                            <!-- for remember dropdown -->
-                            <div class="remember-dropdown-wrapper">
-                                <div class="remember-dropdown" id="dropdown-content{diff}{txid}">
-                                    <a class="dropdown-option"  onclick="repost('{txid}');">
-                                       <span class="remembersicon dropdown-option-icon "></span> <span data-vavilon="remember">remember</span>
-                                    </a>
-                                    <a class="dropdown-option"  onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"> <span class=" remembersicon dropdown-option-icon "></span> <span data-vavilon="VV0158">quote</span></a>
-                                </div>
                             </div>
                         </a>
                     </span>
@@ -298,6 +289,12 @@ var replyTemplate=`
 
 var replyDivTemplate = `
 <div id="reply{txid}{page}" style="display:none">
+    <div class="replyprofilepic">
+    <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+        <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
+    </a>
+    </div>
+    <div class="replyform">
     <br />
     <textarea id="replytext{page}{txid}" rows="3"></textarea>
     <br />
@@ -306,6 +303,7 @@ var replyDivTemplate = `
     <input data-vavilon_value="VV0154" id="replystatus{page}{txid}" value="sending..." type="submit"
         style="display:none" disabled />
     <div id="replycompleted{page}{txid}" value=""></div>
+    </div>
 </div>`;
 
 var replyAndTipsTemplate = `

@@ -108,13 +108,27 @@ function userFromDataBasic(data, mainRatingID, size) {
 }
 
 //Posts and Replies
-function getReplyDiv(txid, page, differentiator) {
+function getReplyDiv(txid, page, differentiator,address,picurl) {
     page = page + differentiator;
+
+    var memberpic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
+    
+    var pictype = '.jpg';
+    
+    if (picurl) {
+        if (picurl.toLowerCase().endsWith('.png')) {
+            pictype = '.png';
+        }
+    }
+    memberpic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/>`;    
+ 
 
     var obj = {
         //These must all be HTML safe.
         page: page,
-        txid: san(txid)
+        txid: san(txid),
+        address: address,
+        profilepicsmall:memberpic
     }
 
     return templateReplace(replyDivTemplate, obj);
@@ -260,7 +274,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var age = getAgeHTML(firstseen);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var tipsandlinks = getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid);
-    var replydiv = getReplyDiv(txid, page, differentiator);
+    var replydiv = getReplyDiv(txid, page, differentiator,address,picurl);
 
     var santxid=san(txid);
     var permalink = `p/` + santxid.substring(0, 10);
@@ -369,7 +383,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var age = getAgeHTML(firstseen);
     var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid);
-    var replyDiv = getReplyDiv(txid, page, differentiator);
+    var replyDiv = getReplyDiv(txid, page, differentiator,address,picurl);
 
 
     var obj = {
