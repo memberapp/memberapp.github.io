@@ -247,7 +247,7 @@
   "VV0077": "Baguhin",
   "VV0104": "Hot",
   "VV0176": "Seed Phrase / Pribadong key / WIF",
-  "areyousure": "Sigurado ka bang nais mo nang mag-logout? Siguraduhing naisulat ang 12 salitang seed phrase o pribadong key upang makapag login muli. Walang ibang paraang para marecover ito. Nasa Mga Opsyon ang 12 salitang seed pharse. Pindutin ang cancel kung nais mo itong kunin. Pindutin ang OK kung nais mag logout. ",
+  "areyousure": "Sigurado ka bang nais mo nang mag-logout? Siguraduhing naisulat ang 12 salitang seed phrase o pribadong key upang makapag login muli. Walang ibang paraang para marecover ito. Nasa Mga Opsyon ang 12 salitang seed pharse. It is on the Wallet page. Pindutin ang cancel kung nais mo itong kunin. Pindutin ang OK kung nais mag logout. ",
   "discussion": "sa diskusiyong kabilang ka",
   "follow": "sundan",
   "followedyou": "sinundan ka",

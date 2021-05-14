@@ -360,6 +360,8 @@ function addDynamicHTMLElements(data) {
 
     //Add identicons
     jdenticon();
+    
+    setVisibleContentFinal();
 
     loadBigLibs();
 }

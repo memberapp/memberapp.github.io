@@ -308,6 +308,8 @@ var walletanchorHTML=`
 var newpostHTML=`
 <br />
 <br />
+<div id="newpostprofilepic">
+</div>
 <div id="memorandumarea">
     <input type="hidden" name="quotetxid" value="" id="quotetxid">
     <div id="memorandumtopicbutton">
@@ -920,9 +922,8 @@ var headerHTML = `
                     alt="Site Logo Icon" />
             </a>
         </span>
-        <a class="profilepicwrapper">
-        <span id="profilepicheader" class="profilepicheader" href="#profile" onclick="nlc();">
-            <img class="profilepicheaderimg" width="128" height="128" src="">
+        <a class="profilepicwrapper" href="#profile" onclick="nlc();"></a>
+        <span id="profilepicheader" class="profilepicheader">
         </span>
         </a>
         <div id="pagetitle" class="pagetitleclass"></div>

@@ -17,6 +17,7 @@ let tq = new TransactionQueue(updateStatus);
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var bitboxSdk = null;
 //var twitterEmbeds=new Array();
+var profilepic="";
 
 
 var localStorageSafe = null;
@@ -318,7 +319,7 @@ function logout() {
 
     var exitreally = confirm(getSafeTranslation('areyousure', `Are you sure you want to logout? 
     Make sure you have written down your 12 word seed phrase or private key to login again. 
-    There is no other way to recover your seed phrase. It is on the settings page.
+    There is no other way to recover your seed phrase. It is on the wallet page.
     Click Cancel if you need to do that now.
     Click OK to logout.`));
     if (!exitreally) {

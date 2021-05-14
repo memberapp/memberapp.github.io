@@ -318,7 +318,7 @@ dictionary.en=
   "rememberedyour":"remembered your",
   "flagusertopic":"Flag User For Tag",
   "toyour":"to your",
-  "areyousure": "Are you sure you want to logout? Make sure you have written down your 12 word seed phrase or private key to login again. There is no other way to recover your seed phrase. It is on the settings page. Click Cancel if you need to do that now. Click OK to logout.",
+  "areyousure": "Are you sure you want to logout? Make sure you have written down your 12 word seed phrase or private key to login again. There is no other way to recover your seed phrase. It is on the Wallet page. Click Cancel if you need to do that now. Click OK to logout.",
   "hace":" ",
   "existen":" ",
   "VV0181":"Filter Settings",

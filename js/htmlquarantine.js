@@ -41,7 +41,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         if (picurl.toLowerCase().endsWith('.png')) {
             pictype = '.png';
         }
-        memberpic = `<img class="memberpicturesmall" width='15' height='15' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/>`;    
+        memberpic = `<img class="memberpicturesmall" src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/>`;    
     }
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="` + userclass + `">`;
@@ -111,24 +111,15 @@ function userFromDataBasic(data, mainRatingID, size) {
 function getReplyDiv(txid, page, differentiator,address,picurl) {
     page = page + differentiator;
 
-    var memberpic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
     
-    var pictype = '.jpg';
-    
-    if (picurl) {
-        if (picurl.toLowerCase().endsWith('.png')) {
-            pictype = '.png';
-        }
-    }
-    memberpic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/>`;    
- 
 
     var obj = {
         //These must all be HTML safe.
         page: page,
         txid: san(txid),
         address: address,
-        profilepicsmall:memberpic
+        profilepicsmall:profilepic,
+        address:pubkey
     }
 
     return templateReplace(replyDivTemplate, obj);
@@ -479,27 +470,27 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
     //Caution topicname may contain hostile characters/code
 
     var navheader = `<nav class="timefilters">`;
-    navheader += `<a data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts" class="`+(order=='new'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
+    navheader += `<a data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts" class="`+(order=='new'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts from the past 48 Hours" class="`+(order=='hot'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
+    navheader += `<a data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts from the past 48 Hours" class="`+(order=='hot'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
     //navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0108" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="`+(order=='topd'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Day</a> `;
+    //navheader += `<a data-vavilon="VV0108" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="`+(order=='topd'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Day</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw" title="Top posts from the past Week" class="`+(order=='topw'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topw&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Week</a> `;
+    navheader += `<a data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw" title="Top posts from the past Week" class="`+(order=='topw'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topw&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Week</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0114" data-vavilon_title="VV0115" value="topm" title="Top posts from the past Month" class="`+(order=='topm'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topm&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Month</a> `;
+    navheader += `<a data-vavilon="VV0114" data-vavilon_title="VV0115" value="topm" title="Top posts from the past Month" class="`+(order=='topm'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topm&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Month</a> `;
     //navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy" title="Top posts from the past Year" class="`+(order=='topy'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topy&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
+    //navheader += `<a data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy" title="Top posts from the past Year" class="`+(order=='topy'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topy&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="`+(order=='topa'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
+    navheader += `<a data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="`+(order=='topa'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
     navheader += "</nav>";
     
     navheader += `<nav class="contentfilters">`;
-    navheader += `<a data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" class="`+(content=='posts'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
+    navheader += `<a data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" class="`+(content=='posts'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" class="`+(content=='replies'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=replies&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
+    navheader += `<a data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" class="`+(content=='replies'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=replies&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVboth" data-vavilon_title="VV0125" title="See both posts and replies" class="`+(content=='both'?'timefilteroff':'timefilteron')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=all&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Both</a> `;
+    navheader += `<a data-vavilon="VVboth" data-vavilon_title="VV0125" title="See both posts and replies" class="`+(content=='both'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=all&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Both</a> `;
     navheader += "</nav>";
 
     return navheader;
@@ -740,21 +731,13 @@ function getMapPostHTML(lat, lng, requireLogin) {
     var obj = {
         //These must all be HTML safe.
         lat: Number(lat),
-        lng: Number(lng)
+        lng: Number(lng),
+        profilepicsmall:profilepic,
+        address:pubkey
     }
 
         return templateReplace(mapPostTemplate, obj);
 
-    /*return `
-    <div id="newgeopost" class="bgcolor">
-        <input id="lat" size="10" type="hidden" value="`+ Number(lat) + `">
-        <input id="lon" size="10" type="hidden" value="`+ Number(lng) + `">
-        <input id="geohash" size="15" type="hidden">
-        <textarea class="geoposttextarea" id="newgeopostta" maxlength="217" name="text" rows="4"></textarea><br/>
-        <input id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
-        <input id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit" disabled>
-        <div id="newpostgeocompleted"></div>    
-    </div>`;*/
 }
 
 function getMapCloseButtonHTML() {

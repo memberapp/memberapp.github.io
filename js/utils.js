@@ -448,7 +448,7 @@ function changeClass(element, newClass) {
 
 //Fade in, move Fareed
 
-function elementInViewport2(ele) {
+function elementInViewport2(ele, newclass) {
   if (ele) {
     var elements = Array.from(ele);
     for (let i = 0; i < elements.length; i++) {
@@ -470,25 +470,22 @@ function elementInViewport2(ele) {
         top + height > window.pageYOffset &&
         left + width > window.pageXOffset
       ) {
-        elements[i].setAttribute('class', 'post-list-item');
+        elements[i].setAttribute('class', newclass);
       }
     }
   }
 }
-setInterval(() => {
-  let stop = false;
-  if (document.getElementsByClassName('post-list-li') && !stop) {
-    stop = true;
-    elementInViewport2(document.getElementsByClassName('post-list-li'));
-  }
-}, 50);
-window.addEventListener('DOMContentLoaded', () => {
-  elementInViewport2(document.getElementsByClassName('post-list-li'));
-});
 
+function setVisibleContentFinal(){
+  if (document.getElementsByClassName('post-list-li')) {
+    elementInViewport2(document.getElementsByClassName('post-list-li'),'post-list-final');
+  }
+}
+
+
+//When item is scrolled into view, it is set to fade in
 window.addEventListener('scroll', function (e) {
-  if (window.pageYOffset > window.innerHeight)
-    elementInViewport2(document.getElementsByClassName('post-list-li'));
+    elementInViewport2(document.getElementsByClassName('post-list-li'),'post-list-item');
 });
 
 

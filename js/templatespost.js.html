@@ -351,6 +351,11 @@ var mapPostTemplate=`
     <input id="lat" size="10" type="hidden" value="{lat}">
     <input id="lon" size="10" type="hidden" value="{lng}">
     <input id="geohash" size="15" type="hidden">
+    <div class="replyprofilepic">
+        <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+            <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
+        </a>
+    </div>    
     <textarea class="geoposttextarea" id="newgeopostta" maxlength="217" name="text" rows="4"></textarea><br />
     <input data-vavilon_value="VV0164" id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
     <input data-vavilon_value="VV0165" id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit"
