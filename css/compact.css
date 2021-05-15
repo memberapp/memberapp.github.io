@@ -51,11 +51,6 @@ body {
   margin-top: 0.5em;
 }
 
-/* style for active tab */
-.activetab {
-  background-color: #ddeefc;
-}
-
 /* Style The Dropdown Button */
 .dropbtn {
   color: black;
@@ -116,16 +111,24 @@ body {
   background-color: #f1f1f1;
 }
 
-/* Show the dropdown menu on hover 
-.dropdown:hover .dropdown-content {
+/* Show the dropdown menu on hover  */
+/* .dropdown:hover .dropdown-content {
   display: block;
-}*/
+} */
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
   background-color: #1063a8;
 }
-
+/* buttons */
+input[type="submit"],
+button {
+  background-color: #61aff0 !important;
+}
+input[type="submit"]:hover,
+button:hover {
+  background: #2291eb;
+}
 .emojiicon {
   display: none;
 }
@@ -271,6 +274,7 @@ a {
   border-radius: 100%;
   top: 0.125rem;
   position: relative;
+  object-fit: cover;
 }
 
 /*Side bar, profile pic and jdenticon side and profile pic in circle*/
@@ -280,6 +284,7 @@ a {
   height: 3rem;
   width: 3rem;
   border-radius: 100%;
+  object-fit: cover;
 }
 
 /*Profile card, profile pic and jdenticon side and profile pic in circle
@@ -379,6 +384,22 @@ Use important, because we always want profile card pics to be this size*/
 #newpost #memorandumarea {
   border: none;
   box-shadow: 0 13px 27px 6px #fafafa;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+/*new post silde profilepic  */
+#newpost #newpostprofilepic {
+  position: relative;
+  top: 62px;
+  left: 8px;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+#newpost #newpostprofilepic img {
+  width: 2rem;
+  height: 2rem;
+  outline: none;
+  border-radius: 100%;
 }
 #newpostmemorandumbutton {
   background: #61aff0 !important;
@@ -417,6 +438,11 @@ Use important, because we always want profile card pics to be this size*/
   grid-gap: 11px;
   color: #aaa;
 }
+.notificationitem .notificationIcon{
+  display: block;
+  padding-left: 12px;
+  padding-top: 20px;
+}
 #notifications ul.notificationslist li {
   border: none;
   box-shadow: 0 13px 27px 6px #fafafa;
@@ -447,8 +473,8 @@ Use important, because we always want profile card pics to be this size*/
 .profilepreview {
   animation: postFadein 0.5s;
   -moz-animation: postFadein 0.5s; /* Firefox */
-    -webkit-animation: postFadein 0.5s; /* Safari and Chrome */
-    -o-animation: postFadein 0.5s; /* Opera */
+  -webkit-animation: postFadein 0.5s; /* Safari and Chrome */
+  -o-animation: postFadein 0.5s; /* Opera */
 }
 /*show small memberpic for when post is quoted*/
 .quotepost .memberpicturesmall {
@@ -477,6 +503,7 @@ Use important, because we always want profile card pics to be this size*/
   height: 2rem;
   width: 2rem;
   border-radius: 100%;
+  outline: none;
 }
 /*Remove generally bad img defaults*/
 
@@ -681,7 +708,8 @@ img {
 .newheader .headercentergroup,
 .newheader .headerrightgroup,
 .newheader .headerleftgroup {
-  max-width: fit-content;
+  /* max-width: fit-content; */
+  max-width: 300px;
   min-width: 300px;
 }
 .newheader .headerleftgroup {
@@ -705,14 +733,13 @@ img {
   grid-gap: 39px;
 }
 .newheader .headerrightgroup .usersearchclass {
-  width: 85%;
+  width: 12.5rem;
 }
 .memberlogo {
   padding-top: 8px;
-  width: 30%;
 }
 .newheader .headerleftgroup a.profilepicwrapper {
-  width: 15%;
+  /* width: 15%; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -724,10 +751,11 @@ img {
   display: flex;
 }
 .newheader .profilepicheaderimg {
-  height: 44px;
-  width: 44px;
+  height: 3rem;
+  width: 3rem;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 100%;
+  max-width: fit-content;
 }
 .mainbodywrapper .mainbody {
   margin-top: 90px;
@@ -772,7 +800,7 @@ img {
 .newheader .majornavbuttonsdiv a {
   position: relative;
   font-size: 1.5em;
-  padding: 15px 10px;
+  padding: 15px 5px;
   display: flex;
   align-items: center;
   height: 100%;
@@ -839,24 +867,13 @@ img {
   padding-right: 2em;
 }
 .newheader .searchwrapper .usersearchnavclass::after {
-  /* content: "";
-  background-image: url(../img/feelstheme/loupe.png);
-  position: absolute;
-  right: 5px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 17px;
-  background-repeat: no-repeat;
-  background-size: contain; */
-
   content: "";
   background-image: url(../img/feelstheme/loupe.png);
   position: absolute;
   right: 0px;
   top: 50%;
   transform: translateY(-50%);
-  width: 50px;
+  width: 30px;
   height: 100%;
   background-repeat: no-repeat;
   background-size: auto;
@@ -881,7 +898,6 @@ a {
 .newheader .majornavbuttonsclass {
   display: flex;
   width: fit-content;
-  width: 100%;
   height: 100%;
   align-items: center;
 }
@@ -907,7 +923,7 @@ a {
   font-weight: bold;
   margin-left: 0.25rem;
   top: 6px;
-  right: 10px;
+  right: 0px;
   position: absolute !important;
   height: auto !important;
   white-space: nowrap;
@@ -978,6 +994,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  background-color: #fff !important;
 }
 
 .newheader .searchwrapper #usersearchnavresults {
@@ -1020,14 +1037,22 @@ a {
   display: none;
 }
 .newheader .memberlogoimagefull {
-  width: 150px;
+  /* width: 150px;
   height: 44px;
-  object-fit: contain;
+  object-fit: contain; */
+  max-width: unset !important;
 }
 .newheader img {
   outline: none;
 }
 /* tabs styling */
+.posts .timefilteroff {
+  color: #aaa;
+}
+.posts .timefilteron {
+  background-color: #ddeefc;
+}
+
 .posts .timefilters,
 .posts .contentfilters {
   display: inline-block;
@@ -1036,12 +1061,11 @@ a {
 .posts .separator {
   background: #ddd;
   border: 1px solid #ddd;
+  margin: 0px 4px;
 }
 .posts .timefilters a,
 .posts .contentfilters a {
   padding: 5px 10px;
-  /* border-radius: 30px; */
-  /* position: relative; */
   min-width: 100px;
   transition: all 0.3s ease;
 }
@@ -1057,10 +1081,6 @@ a {
 .posts .contentfilters {
   float: right;
 }
-.posts .timefilteroff {
-  color: #aaa;
-}
-
 /* .posts .timefilters a:hover {
   background: #21b31b;
   transform: scale(1.1);
@@ -1262,7 +1282,7 @@ a {
   color: #fff !important;
 }
 .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
-  background: #0e5591;
+  background: #2291eb;
   color: #fff !important;
 }
 .navbuttons a {
@@ -1274,8 +1294,21 @@ a {
   border-color: #1063a8;
 }
 /* topiclistanchor */
-tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
+table thead tr th,
+table thead tr td {
+  background: #61aff0;
+}
+tbody tr td a[href^="#modmorelink"],
+tbody tr td a[href^="javascript:;"] {
   color: #fff !important;
+}
+tbody tr td a[href^="#modmorelink"],
+tbody tr td a[href^="javascript:;"] {
+  background: #61aff0;
+}
+tbody tr td a[href^="#modmorelink"]:hover,
+tbody tr td a[href^="javascript:;"]:hover {
+  background: #2291eb;
 }
 /* topicmeta section */
 #topicmeta tbody tr td a {
@@ -1347,8 +1380,7 @@ tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
 #memberanchor .content .memberstatsButtons div {
   margin-right: 10px;
 }
-#memberanchor .content #membernametext a.populate-send-message,
-#memberanchor .content .memberstats .follow {
+#memberanchor .content #membernametext a.populate-send-message{
   border: 1px solid #61aff0;
   background: transparent !important;
   color: #61aff0 !important;
@@ -1363,7 +1395,7 @@ tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
 #memberanchor .content .memberstats .follow {
   position: absolute;
   top: 26px;
-  right: 170px;
+  right: 160px;
   padding: 0.3rem 1rem;
   margin: 0;
 }
@@ -1373,9 +1405,17 @@ tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
   font-size: 1rem;
   border: none;
 }
-
-#memberanchor .content .memberstats .mute a {
+#memberanchor .content .memberstats .follow a{
   border: 1px solid #61aff0;
+  background: transparent !important;
+  color: #61aff0 !important;
+  border-radius: 45px;
+  padding: 0.3rem 1rem;
+  position: absolute;
+  top: 0px;
+  right: 15px;
+}
+#memberanchor .content .memberstats .mute a {
   border: 1px solid #61aff0;
   background: transparent !important;
   color: #61aff0 !important;
@@ -1396,7 +1436,7 @@ tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
   display: none;
 }
 #memberanchor .content #membernametext a.populate-send-message:hover,
-#memberanchor .content .memberstats .follow:hover,
+#memberanchor .content .memberstats .follow a:hover,
 #memberanchor .content .memberstats .mute a:hover {
   background: #61aff0 !important;
   border: 1px solid #61aff0;
@@ -1409,9 +1449,10 @@ tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
   display: none !important;
 }
 #memberanchor .content #memberlegacyaddress {
-  position: absolute;
+  /* position: absolute;
   top: 234px;
-  width: 93%;
+  width: 93%; */
+  position: relative;
 }
 /* #memberanchor .content #memberlegacyaddress {
   /* display: flex;
@@ -1426,6 +1467,7 @@ tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
 #memberlegacyaddress #memberlegacyformatdiv {
   position: absolute;
   right: 0;
+  top: 0;
   border: 1px solid #61aff0;
   padding: 0.2rem;
   margin: 0;
@@ -1447,8 +1489,8 @@ tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
   text-align: center;
 }
 #memberprofilelinks {
-  position: absolute;
-  top: 386px;
+  /* position: absolute; */
+  /* top: 386px; */
 }
 #memberprofilelinks label {
   display: none;
@@ -1462,8 +1504,9 @@ tbody tr td a[href^="#modmorelink"], tbody tr td a[href^="javascript:;"]{
   color: #fff !important;
 }
 .memberstats {
-  background: #f8f8f8;
-  margin-top: 35px;
+    background: #ddeefc;
+    box-shadow: 0 13px 21px 6px #fafaf9;
+    border-radius: 10px;
 }
 .memberstats div a {
   font-size: 1rem;
@@ -1516,7 +1559,7 @@ label#memberblockexplorer {
   box-shadow: 0 13px 21px 6px #fafaf9;
   background: #eef2f7;
 }
-#toolsanchor .content #walletsendfunds{
+#toolsanchor .content #walletsendfunds {
   padding-bottom: 60px;
 }
 #toolsanchor .content {
@@ -1525,12 +1568,37 @@ label#memberblockexplorer {
   border: none;
 }
 #toolsanchor .content #walletbalance span.balancebch {
-  margin-left: 15px;
+  margin-left: 35%;
+}
+#toolsanchor .content #walletbalance span {
+  /* font-size: 1.5rem;
+  font-weight: 600; */
+  line-height: 1.8rem;
+}
+#toolsanchor .content #walletbalance span.approximatelyequal{
+  display: block;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#toolsanchor .content #walletbalance span.balanceusd {
+  margin-left: 40%;
+  font-size: 1.8rem;
+  color: #61aff0;
+  font-weight: bolder;
+}
+#toolsanchor .content #walletbalance span.usd {
+  font-size: o.8rem;
 }
 #walletbalance .balancedetails img {
   outline: none !important;
   cursor: pointer;
   margin-left: 5px;
+  margin-top: 0px;
+  position: relative;
+  top: 2px;
+  border: 1px solid #61aff0;
+  padding: 3px;
 }
 #toolsanchor .content #walletaddress span,
 #toolsanchor .content #walletlegacyaddress span,
@@ -1602,7 +1670,7 @@ label#memberblockexplorer {
 
 #walletsendfunds input#sendfundsaddress:focus,
 #walletsendfunds input#fundsamount:focus {
-  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px; 
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
 }
 #walletsendfunds input#fundsamount {
   width: 96%;
@@ -1686,8 +1754,8 @@ label#memberblockexplorer {
   width: 26px;
   height: 26px;
 }
-#newgeopost input#newpostgeobutton {
-  background-color: #61aff0 !important;
+#newgeopost input#newpostgeobutton:hover {
+  background: #2291eb !important;
 }
 /* **************************************** */
 
@@ -1701,12 +1769,14 @@ label#memberblockexplorer {
     max-width: 300px;
     min-width: 300px;
   }
-  .newheader .headerleftgroup{
+  .newheader .headerleftgroup {
     min-width: 250px;
   }
   .newheader .memberlogoimage {
     display: inline;
-    width: 50px;
+    width: 48px;
+    height: 48px;
+    max-width: unset;
   }
   .newheader .memberlogoimagefull {
     display: none;
@@ -1727,7 +1797,31 @@ label#memberblockexplorer {
     margin-top: 50px;
   }
 }
-/* """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
+/* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
+@media (max-width: 900px) {
+  .newheader {
+    padding: 0px;
+  }
+  .newheader .headercentergroup {
+    max-width: 250px;
+    min-width: 250px;
+  }
+  .newheader .headerrightgroup {
+    max-width: 260px;
+    min-width: 260px;
+  }
+  .newheader .headerleftgroup {
+    max-width: 220px;
+    min-width: 220px;
+  }
+  .newheader .headerleftgroup {
+    grid-gap: 5px;
+  }
+  .newheader .searchwrapper {
+    grid-gap: 0px;
+  }
+}
+/* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
 @media (max-width: 768px) {
   #memberanchor .content {
     height: 68vh;
@@ -1736,23 +1830,14 @@ label#memberblockexplorer {
     position: unset;
   }
   /* fixed width */
-  .newheader .headercentergroup,
-  .newheader .headerrightgroup,
-  .newheader .headerleftgroup {
+
+  .newheader .headercentergroup {
     max-width: unset;
     min-width: unset;
-  }
-  .newheader .headercentergroup {
     width: 0;
   }
   .newheader .headerleftgroup {
     width: 30%;
-  }
-  .newheader .headerrightgroup {
-    width: 70%;
-  }
-  .newheader .headerrightgroup .usersearchclass {
-    width: 75%;
   }
   .newheader .headerleftgroup {
     grid-gap: 0px;
@@ -1761,12 +1846,10 @@ label#memberblockexplorer {
     width: 50%;
     text-align: center;
   }
-  .newheader .headerleftgroup a.profilepicwrapper {
-    width: 40%;
-  }
+
   .newheader .alertcount {
     top: 2px;
-    right: -3px;
+    right: 30px;
   }
   .newheader .searchwrapper {
     width: 100%;
@@ -1814,10 +1897,6 @@ label#memberblockexplorer {
     display: unset;
     width: unset;
   }
-  .newheader .usersearchnav {
-    /* width: auto !important; */
-  }
-
   .newheader .pagetitleclass {
     display: none;
   }
@@ -1825,6 +1904,7 @@ label#memberblockexplorer {
   .newheader .majornavbuttonsclass a {
     align-items: center;
     display: flex;
+    width: 100%;
   }
   div#status {
     bottom: 50px;
@@ -1866,13 +1946,16 @@ label#memberblockexplorer {
     margin-left: 10px !important;
   }
   #toolsanchor .content #walletbalance span.balancebch {
-    margin-left: 10px !important;
+    margin-left: 18% !important;
   }
   #toolsanchor .content #walletsendfunds p {
     margin-left: 10px !important;
   }
   #toolsanchor .content #walletlegacyaddress span {
     margin-left: 10px !important;
+  }
+  #toolsanchor .content #walletbalance span.balanceusd{
+    margin-left: 26%;
   }
   #walletsendfunds input#sendfundsaddress {
     width: 96%;
@@ -1891,13 +1974,13 @@ label#memberblockexplorer {
     margin-top: 12px;
   }
   #walletsendfunds .sendusd {
-    bottom:15px;
+    bottom: 15px;
     left: 37px;
   }
   #walletsendfunds input#fundsamount {
     width: 96%;
   }
-  #toolsanchor .content #walletsendfunds{
+  #toolsanchor .content #walletsendfunds {
     padding-bottom: 40px;
   }
   #walletprivatekey #privatekey a {
@@ -1905,13 +1988,12 @@ label#memberblockexplorer {
     width: 150px;
   }
   #walletprivatekey label {
-    margin-top: .4rem;
+    margin-top: 0.4rem;
     margin-bottom: 10px;
   }
-  #privatekeyformatdiv .qrcodeclick{
+  #privatekeyformatdiv .qrcodeclick {
     top: 68px;
     right: 40%;
-
   }
   /* #privatekeyformatdiv{
     margin-bottom: 0px !important;
@@ -1920,6 +2002,9 @@ label#memberblockexplorer {
 }
 /*  */
 @media (max-width: 500px) {
+  .newheader {
+    grid-gap: 0px;
+  }
   #memberanchor .content {
     height: 100vh;
   }
@@ -1940,9 +2025,6 @@ label#memberblockexplorer {
   .newheader .headerrightgroup {
     width: unset;
   }
-  .newheader .memberlogoimage {
-    width: 30px;
-  }
   /* fixed-bottom bar */
   .newheader .majornavbuttonsdiv {
     max-width: unset;
@@ -1951,17 +2033,19 @@ label#memberblockexplorer {
   .newheader .headerleftgroup a.profilepicwrapper {
     width: unset;
   }
-  .newheader .profilepicheaderimg {
-    width: 38px;
-    height: 38px;
-    object-fit: cover;
-  }
   .newheader .headerleftgroup {
-    grid-gap: 10px;
+    grid-gap: 4px;
+    height: 100%;
   }
   .newheader .searchwrapper {
     width: unset;
-    grid-gap: 10px;
+    grid-gap: 0px;
+  }
+  .newheader .alertcount{
+    right: 7px;
+  }
+  .newheader .searchwrapper .mainhamburger {
+    left: -10em;
   }
   .newheader .searchwrapper .dropdown {
     width: 38px;
@@ -2032,6 +2116,9 @@ label#memberblockexplorer {
   #toolsanchor .content #walletsendfunds p {
     margin-left: 0 !important;
   }
+  #toolsanchor .content #walletbalance span.balanceusd{
+    margin-left: 0;
+  }
   #cashaddrformatdiv .qrcodeclick,
   #legacyformatdiv .qrcodeclick {
     position: absolute;
@@ -2061,11 +2148,11 @@ label#memberblockexplorer {
   #walletprivatekey #privatekey a {
     position: unset;
   }
-  #cashaddrformatdiv .qrcodeclick, #legacyformatdiv .qrcodeclick{
+  #cashaddrformatdiv .qrcodeclick,
+  #legacyformatdiv .qrcodeclick {
     right: 22px;
   }
-  #privatekeyformatdiv .qrcodeclick{
-    
+  #privatekeyformatdiv .qrcodeclick {
     right: 20px;
   }
   #walletprivatekey label {
