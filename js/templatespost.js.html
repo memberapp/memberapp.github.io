@@ -253,8 +253,9 @@ var notificationCompactTemplate=`
 <li class="{highlighted}notificationitem notification{type}" id='notification{txid}'>
     <div class="notificationdetails">
         <div class="notificationminheight">
+            {iconHTML}
             <div class="notificationtitlecompact">
-                {iconHTML}{title}
+                {title}
                 <span class="age">{age}</span>
             </div>
             {post}

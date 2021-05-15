@@ -2127,3 +2127,9 @@ label#memberblockexplorer {
     left: -10em;
   }
 }
+
+.connectionerror {
+  background: unset;
+  display: unset;
+  border: unset;
+}

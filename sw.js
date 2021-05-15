@@ -207,59 +207,59 @@ const showLocalNotification = (payload, swRegistration) => {
   switch (body) {
     case "rating":
       title = "Rated";
-      text = "You received a rating";
+      text = "Rating from @"+pagingid;
       icon = "/img/notificationicons/rating.svg";
       renotify = true;
       break;
     case "message":
       title = "Message";
-      text = "You received a private message";
+      text = "Message from @"+pagingid;
       icon = "/img/notificationicons/message.svg";
       renotify = true;
       break;
     case "follow":
       title = "Followed";
-      text = "You were followed";
+      text = "Followed by @"+pagingid;
       icon = "/img/notificationicons/follow.svg";
       renotify = true;
       break;
     case "page":
       title = "Paged";
-      text = "You were paged in a message";
+      text = "Paged by @"+pagingid;
       icon = "/img/notificationicons/page.svg";
       renotify = true;
       break;
     case "repost":
       title = "Remembered";
-      text = "Your message was remembered";
+      text = "Remembered by @"+pagingid;
       icon = "/img/notificationicons/repost.svg";
       renotify = true;
       break;
     case "tip":
       title = "Tipped";
-      text = "Your message got a tip";
+      text = "Tipped by @"+pagingid;
       icon = "/img/notificationicons/tip.svg";
       renotify = true;
       break;
     case "reply":
       title = "Reply";
-      text = "Your message was replied to";
+      text = "Reply from @"+pagingid;
       icon = "/img/notificationicons/reply.svg";
       renotify = true;
       break;
     case "like":
       title = "Liked";
-      text = "Your message got a like";
+      text = "Liked by @"+pagingid;
       icon = "/img/notificationicons/like.svg";
       break;
     case "thread":
       title = "Reply";
-      text = "There was a reply in a thread you're in";
+      text = "Thread reply by @"+pagingid;
       icon = "/img/notificationicons/thread.svg";
       break;
     case "topic":
       title = "Tag";
-      text = "There was a message in a tag you're subscribed to";
+      text = "Subscribed Tag Post by @"+pagingid;
       icon = "/img/notificationicons/topic.svg";
       break;
     default:
@@ -303,7 +303,10 @@ self.addEventListener('notificationclick', function (event) {
     }
 
     if (matchingClient) {
-      matchingClient.url = "https://member.cash" + page;
+      //matchingClient.url = "https://member.cash" + page;
+      client.postMessage({
+        notificationpage: "https://member.cash" + page
+      });
       return matchingClient.focus();
     } else {
       return clients.openWindow(page).then(windowClient => windowClient ? windowClient.focus() : null);

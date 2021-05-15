@@ -331,8 +331,9 @@ dictionary.en=
   "VV0134a": "My People",
   "VV0102a": "Login",
   "VV0103a": "Start",
-  "VVwallet": "Wallet"
-
+  "VVwallet": "Wallet",
+  "nothinghere2": "Nothing here yet, Subscribe to some more tags!",
+  "nothinginfeed2": "Nothing in your feed, Follow some more people!",
 }
   
   ;

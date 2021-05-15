@@ -62,10 +62,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         if (contents == "") {
-            contents = getDivClassHTML('message', getSafeTranslation("nothinghere", "Nothing here yet"));
+            contents = getDivClassHTML('message', getSafeTranslation("nothinghere2", "Nothing here yet"));
 
             if (filter == "mypeeps" || filter == "myfeed" || topicnameHOSTILE == "MyFeed" || topicnameHOSTILE == "MyTopics") {
-                contents = getDivClassHTML('message', getSafeTranslation("nothinginfeed", "Nothing in your feed"));
+                contents = getDivClassHTML('message', getSafeTranslation("nothinginfeed2", "Nothing in your feed"));
             }
 
         }
@@ -361,7 +361,8 @@ function addDynamicHTMLElements(data) {
     //Add identicons
     jdenticon();
     
-    setVisibleContentFinal();
+    //delay by half a second to allow time to appear
+    setTimeout(setVisibleContentFinal,500);
 
     loadBigLibs();
 }

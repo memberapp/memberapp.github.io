@@ -1,7 +1,8 @@
 "use strict";
 
-function displayContentBasedOnURLParameters() {
+function displayContentBasedOnURLParameters(suggestedurl) {
 
+    
     
     if (backForwardEvent) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
@@ -10,11 +11,12 @@ function displayContentBasedOnURLParameters() {
     }
 
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
-
-    var path = window.location.pathname;
-
-    var url = window.location.href;
-
+    if(suggestedurl){
+        var url = suggestedurl;
+    }else{
+        var url = window.location.href;
+    }
+    
     var action;
 
     if (url.indexOf('#') != -1) {
