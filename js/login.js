@@ -150,6 +150,8 @@ async function loadBigLibs() {
     if (!L) loadScript("js/lib/leaflet/leaflet.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
+    if (!bcdecrypt) loadScript("js/lib/bcdecrypt.js");
+    
 }
 
 

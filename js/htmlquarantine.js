@@ -14,6 +14,7 @@
 
 "use strict";
 
+
 //Members
 
 //Get html for a user, given their address and name
@@ -994,16 +995,30 @@ function getMessageHTML(data, count) {
     return contents;
 }
 
+var bcdecrypt=null;
+
 async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
     //const privateKeyBuf5 = wif.decode(privkey).privateKey;
 
     //"Try again later: Unable to decrypt message: "
     var decryptedMessage = getSafeTranslation('unabledecrypt', "Try again later: Unable to decrypt message: ");
     try {
-        const encrypted = eccryptoJs.deserialize(Buffer.from(message, 'hex'));
-        const structuredEj = await eccryptoJs.decrypt(privateKeyBuf, encrypted);
-        decryptedMessage = structuredEj.toString();
 
+        try{
+            //Bitclout message style
+            if(bcdecrypt==null){
+                await loadScript("js/lib/bcdecrypt.js");
+            }
+            var msgArray=new BCBuffer(message.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+            // I swear this buffer has the same information as when BC decrypts it correctly - seems to object to
+            // the buffer format in some way. Maybe need to use the bc library buffer type.
+            decryptedMessage=await bcdecrypt(privateKeyBuf,msgArray);
+        }catch(err2){
+            //Member message style
+            const encrypted = eccryptoJs.deserialize(Buffer.from(message, 'hex'));
+            const structuredEj = await eccryptoJs.decrypt(privateKeyBuf, encrypted);
+            decryptedMessage = structuredEj.toString();
+        }
     } catch (err) {
         decryptedMessage += err;
         console.log(err);
@@ -1012,6 +1027,7 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
     //decrypted message can contain anything - don't do anything fancy with it - js/css risk!
     document.getElementById(roottxid).textContent = decryptedMessage;
 }
+
 
 /*function getNothingFoundMessageHTML(tk, def) {
     return "<div class='message'>" + getSafeTranslation(tk, def) + "</div>";

@@ -266,7 +266,8 @@ var walletanchorHTML=`
         <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
         
         <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
-        <input id="fundsamount" size="12" type="number" maxlength="12">
+        <input id="fundsamount" size="12" type="number" maxlength="12" onchange="sendFundsAmountChanged();"
+        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
 
         <span class="sendusd" id="sendusd">($0.00 USD)</span>
 
@@ -573,7 +574,7 @@ pages.member = `
     <div id="memberprofilelinks">
         <label data-vavilon="VV0064">Profile Links</label>
         <div>
-            <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">Member</a><span class="separatorwide"></span><a
+            <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span class="separatorwide"></span><a
                 rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
                 id="membermemoprofilelink">Memo</a><span class="separatorwide"></span><a rel="noopener noreferrer"
                 target="bitclout" href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span

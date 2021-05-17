@@ -87,6 +87,12 @@ function privateMessagePosted() {
 
 }
 
+function sendFundsAmountChanged(){
+    var sendAmount = Number(document.getElementById("fundsamount").value);
+    var usdAmount = ((Number(sendAmount) * numbers.usdrate) / 100000000).toFixed(2);
+    document.getElementById("sendusd").textContent="($"+usdAmount+")";
+}
+
 function sendfunds() {
     var sendAmount = Number(document.getElementById("fundsamount").value);
     if (sendAmount < 547) {
