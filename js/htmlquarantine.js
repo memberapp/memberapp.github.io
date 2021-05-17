@@ -698,7 +698,7 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
     var obj = {
         //These must all be HTML safe.
         highlighted: (highlighted ? 'highlighted ' : ''),
-        type: san(notificationtype),
+        type: notificationtype,
         txid: san(txid),
         title: mainbodyHTML,
         age: subtextHTML,

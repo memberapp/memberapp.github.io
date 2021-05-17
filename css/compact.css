@@ -381,16 +381,21 @@ Use important, because we always want profile card pics to be this size*/
 .mainbodywrapper #posts .itemlist ol.posts li .post {
   box-shadow: 0 13px 27px 6px #fafafa;
 }
+#thread .itemlist .fatitem {
+  border: none;
+  box-shadow: 0 13px 27px 6px #fafafa;
+}
 #newpost #memorandumarea {
   border: none;
   box-shadow: 0 13px 27px 6px #fafafa;
   padding-right: 50px;
   padding-left: 50px;
+  margin-top: -40px;
 }
 /*new post silde profilepic  */
 #newpost #newpostprofilepic {
   position: relative;
-  top: 62px;
+  top: 103px;
   left: 8px;
   width: 2.5rem;
   height: 2.5rem;
@@ -414,6 +419,7 @@ Use important, because we always want profile card pics to be this size*/
 }
 #messagesanchor .content {
   border: none;
+  padding-top: 0px;
 }
 #messagesanchor .content #messageslist li {
   box-shadow: 0 13px 27px 6px #fafafa;
@@ -437,6 +443,14 @@ Use important, because we always want profile card pics to be this size*/
   display: flex;
   grid-gap: 11px;
   color: #aaa;
+}
+/* to make consistent space between navbar & content*/
+.mainbodywrapper #posts .itemlist ol.posts{
+  margin-top:0px;
+}
+
+#sendmessagecontainer{
+  height: 1px;
 }
 .notificationitem .notificationIcon{
   display: block;
@@ -800,7 +814,7 @@ img {
 .newheader .majornavbuttonsdiv a {
   position: relative;
   font-size: 1.5em;
-  padding: 15px 5px;
+  padding: 15px 10px;
   display: flex;
   align-items: center;
   height: 100%;
@@ -1003,16 +1017,19 @@ a {
   border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.5rem;
   top: 3.5em;
-  padding: 0.5em;
+  padding: 0.75em;
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
-  min-width: 100%;
+  /* min-width: 100%; */
+  width: 25rem;
+  right:-40px;
   display: none;
 }
 
 .newheader .searchwrapper #usersearchnavresults::before {
-  right: unset;
-  left: 43px;
+  right: 130px;
+  /* left: 43px; */
 }
+
 
 .newheader #usersearchnavresults .loading {
   height: fit-content !important;
@@ -1056,18 +1073,22 @@ a {
 .posts .timefilters,
 .posts .contentfilters {
   display: inline-block;
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
 }
 .posts .separator {
   background: #ddd;
   border: 1px solid #ddd;
-  margin: 0px 4px;
 }
 .posts .timefilters a,
 .posts .contentfilters a {
   padding: 5px 10px;
   min-width: 100px;
+  margin-left: 3px;
   transition: all 0.3s ease;
+}
+.posts .timefilters a:nth-child(1){
+  margin-right: 4px;
+  margin-left: 0;
 }
 /* .posts .timefilters a ::before, 
 .posts .contentfilters a{
@@ -1331,9 +1352,24 @@ tbody tr td a[href^="javascript:;"]:hover {
   justify-content: flex-end;
   width: 730px;
   margin: 0 auto;
+  margin-bottom: 1rem;
 }
 .memberheader .membertabs a {
   margin: 5px 10px;
+  position: relative;
+}
+.memberheader .membertabs a::after{
+  content: '';
+  width: 2px;
+  top: 3px;
+    height: 80%;
+  position: absolute;
+  right: -8px;   
+   background: #ddd;
+  border: 1px solid #ddd;
+}
+.memberpiccontainer label{
+  display: none !important;
 }
 .memberpiccontainer label {
   position: absolute;
@@ -1356,6 +1392,9 @@ tbody tr td a[href^="javascript:;"]:hover {
 }
 #memberanchor .content .memberprofiletextContainer {
   margin-top: 57px;
+}
+#memberanchor .content .memberprofiletextContainer label{
+  display: none !important;
 }
 #memberanchor .content .memberInfoTextContainer {
   display: flex;
@@ -1413,7 +1452,7 @@ tbody tr td a[href^="javascript:;"]:hover {
   padding: 0.3rem 1rem;
   position: absolute;
   top: 0px;
-  right: 15px;
+  right: 10px;
 }
 #memberanchor .content .memberstats .mute a {
   border: 1px solid #61aff0;
@@ -1423,7 +1462,7 @@ tbody tr td a[href^="javascript:;"]:hover {
   padding: 0.3rem 1rem;
   position: absolute;
   top: 0px;
-  right: 115px;
+  right: 118px;
 }
 #memberanchor .content .memberstats .mute {
   position: absolute;
@@ -1445,14 +1484,9 @@ tbody tr td a[href^="javascript:;"]:hover {
 #memberanchor .content .memberstats .follow:hover a {
   color: #fff !important;
 }
-.memberpiccontainer label {
-  display: none !important;
-}
 #memberanchor .content #memberlegacyaddress {
-  /* position: absolute;
-  top: 234px;
-  width: 93%; */
   position: relative;
+  margin-top: 2rem;
 }
 /* #memberanchor .content #memberlegacyaddress {
   /* display: flex;
@@ -1503,10 +1537,14 @@ tbody tr td a[href^="javascript:;"]:hover {
 #memberprofilelinks div a:hover {
   color: #fff !important;
 }
-.memberstats {
+/* .memberstats {
     background: #ddeefc;
     box-shadow: 0 13px 21px 6px #fafaf9;
     border-radius: 10px;
+} */
+#memberanchor .content .memberstats .muters,
+ #memberanchor .content .memberstats .muting{
+  display: none;
 }
 .memberstats div a {
   font-size: 1rem;
@@ -1520,6 +1558,23 @@ tbody tr td a[href^="javascript:;"]:hover {
 }
 #memberanchor .content .memberstats div {
   border: none;
+}
+#memberanchor .content .memberstats .muters, 
+#memberanchor .content .memberstats .muting{
+    display: none;
+}
+#memberanchor .content .memberstats .following, 
+#memberanchor .content .memberstats .followers{
+    position: absolute;
+    top:20px;
+    margin:0px;
+    padding:0;
+}
+#memberanchor .content .memberstats .followers{
+  left:340px;
+}
+#memberanchor .content .memberstats .following{
+  left:265px;
 }
 label#memberblockexplorer {
   display: none;
@@ -1781,9 +1836,6 @@ label#memberblockexplorer {
   .newheader .memberlogoimagefull {
     display: none;
   }
-  #memberanchor .content #memberlegacyaddress {
-    top: 245px;
-  }
   #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
   }
@@ -1793,32 +1845,38 @@ label#memberblockexplorer {
   #memberblockexplorer {
     top: 480px;
   }
-  .memberstats {
+  /* .memberstats {
     margin-top: 50px;
-  }
+  } */
 }
 /* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
 @media (max-width: 900px) {
   .newheader {
     padding: 0px;
   }
+  .memberlogo{
+    margin-left: 10px;
+  }
   .newheader .headercentergroup {
-    max-width: 250px;
-    min-width: 250px;
+    max-width: 260px;
+    min-width: 260px;
   }
   .newheader .headerrightgroup {
     max-width: 260px;
     min-width: 260px;
   }
   .newheader .headerleftgroup {
-    max-width: 220px;
-    min-width: 220px;
+    max-width: 200px;
+    min-width: 200px;
   }
   .newheader .headerleftgroup {
     grid-gap: 5px;
   }
   .newheader .searchwrapper {
     grid-gap: 0px;
+  }
+  .newheader .pagetitleclass .pageTitlediv {
+    display: none;
   }
 }
 /* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
@@ -1911,7 +1969,7 @@ label#memberblockexplorer {
   }
   .newheader .searchwrapper #usersearchnavresults {
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-66%);
   }
   #membertabs {
     max-width: 540px;
@@ -1924,9 +1982,6 @@ label#memberblockexplorer {
   }
   #memberanchor .content .memberstatsButtons {
     right: 0;
-  }
-  #memberanchor .content #memberlegacyaddress {
-    top: 245px;
   }
   #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
@@ -2025,6 +2080,9 @@ label#memberblockexplorer {
   .newheader .headerrightgroup {
     width: unset;
   }
+  #newpost #newpostprofilepic{
+    left: 0px;
+  }
   /* fixed-bottom bar */
   .newheader .majornavbuttonsdiv {
     max-width: unset;
@@ -2053,6 +2111,12 @@ label#memberblockexplorer {
   }
   .newheader .searchwrapper .dropdown button {
     font-size: 30px;
+  }
+  .newheader .searchwrapper #usersearchnavresults{
+    transform: translateX(-59%);
+  }
+  .newheader .searchwrapper #usersearchnavresults{
+    width: 20rem;
   }
   #memberanchor .content #membernametext a.populate-send-message {
     right: 18px;
@@ -2172,6 +2236,9 @@ label#memberblockexplorer {
     top: 0;
     left: 0;
   }
+  .newheader .searchwrapper #usersearchnavresults{
+    transform: translateX(-58%);
+  }
   .memberpiccontainer label {
     position: absolute;
     left: 26px;
@@ -2207,6 +2274,10 @@ label#memberblockexplorer {
     width: 47%;
     text-align: center;
   }
+  .newheader .memberlogoimage {
+    width: 30px;
+    height: 30px;
+}
   .newheader .headerleftgroup {
     grid-gap: 5px;
   }
