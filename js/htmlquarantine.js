@@ -77,6 +77,11 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         onlineStatus="🟢";
     }
 
+    var directlink="";
+    if(privkey && pubkey=='19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6'){
+        directlink=`<a target="_self" href="https://bitclout.com/u/`+encodeURIComponent(pagingid)+`">BitClout</a>`;
+    }
+
     var obj = {
         //These must all be HTML safe.
         address: san(address),
@@ -90,7 +95,8 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         followers: Number(followers),
         profile: ds(profile),
         diff: ratingID,
-        onlinestatus: onlineStatus
+        onlinestatus: onlineStatus,
+        directlink:directlink
     }
 
         obj.profilecard="";
@@ -277,7 +283,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     }
 
     var directlink="";
-    if(pubkey=='19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6'){
+    if(privkey && pubkey=='19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6'){
         directlink=`<a target="_self" href="https://bitclout.com/u/`+encodeURIComponent(pagingid)+`">BitClout</a>`;
     }
     var obj = {

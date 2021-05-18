@@ -1,7 +1,7 @@
 var postCompactTemplate = `
 <div class="post" onmouseover="changeClass(this,'post highlighted')" onmouseout="changeClass(this,'post')">
-    <div class="post-content">
-        {directlink}
+    {directlink}
+        <div class="post-content">
         <div class="post-side-bar" onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
         </div>
@@ -173,6 +173,7 @@ var scoresTemplate=`
 
 var userCompactTemplate=`
 <span class="membercompact" onclick="event.stopPropagation();">
+    {directlink}
     <span id="memberinfo{diff}posts{address}">
         <a href="#member?qaddress={address}" onclick="nlc();" class="memberdetails">
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
