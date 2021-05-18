@@ -11,10 +11,16 @@ async function userSearchChanged(searchbox, targetelement) {
     }
 
     //Show search results
+    updateStatus(targetelement);
     var resultsElement=document.getElementById(targetelement);
+    updateStatus(resultsElement);
+    updateStatus(resultsElement.style.display);
     resultsElement.style.display="block";
+    updateStatus(resultsElement.style.display);
     //cover behind search results
     var ddcover=document.getElementById('ddcover');
+    updateStatus(ddcover);
+    
     ddcover.style.display='block';
     ddcover.onclick=resultsElement.onclick=function(){resultsElement.style.display=ddcover.style.display='none';};
 

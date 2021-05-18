@@ -446,13 +446,13 @@ Use important, because we always want profile card pics to be this size*/
 }
 .notificationitem .notificationIcon{
   display: block;
-  /* padding-left: 12px;
-  padding-top: 20px; */
   position: absolute;
-  left: -25px;
+  left: -30px;
+  top:18px;
 }
 .notificationitem .notificationIcon img{
   outline: none;
+  width: 24px;
 }
 #notifications ul.notificationslist li {
   border: none;
@@ -1053,9 +1053,9 @@ a {
   display: none;
 }
 .newheader .memberlogoimagefull {
-   width: 150px;
+  width: 150px;
   height: 44px;
-  object-fit: contain;
+  object-fit: contain; 
   max-width: unset !important;
 }
 .newheader img {
@@ -2092,18 +2092,22 @@ label#memberblockexplorer {
 /*  */
 @media (max-width: 600px) {
   .notificationitem .notificationIcon{
-    position: unset;
-    padding-left: 10px;
-    padding-top: 10px;
+    left: -30px;
   }
   .newheader .alertcount{
     left: 50px;
     margin-left:0;
   }
+  #notifications{
+    max-width: 400px;
+  }
 }
 @media (max-width: 500px) {
   .newheader {
     grid-gap: 0px;
+  }
+  #notifications{
+    max-width: 380px;
   }
   #memberanchor .content {
     height: 100vh;
@@ -2288,9 +2292,16 @@ label#memberblockexplorer {
 
   /* notifcation icons */
   .notificationitem .notificationIcon{
-    position: unset;  
-    padding-left: 10px;
-    padding-top: 10px;
+    left: -25px;
+  }
+}
+/* extra   */
+@media (max-width: 400px) {
+  #notifications{
+     max-width: 300px;
+  }
+  .notificationitem .notificationIcon{
+    left: -25px;
   }
 }
 @media (max-width: 320px) {
@@ -2298,9 +2309,18 @@ label#memberblockexplorer {
     max-width: 100%;
     justify-content: center;
   }
+  #notifications{
+    max-width: 540px;
+ }
+  .notificationitem .notificationIcon{
+    position: unset;
+    padding-left: 10px;
+    padding-top: 15px;
+  }
   .memberheader .membertabs a {
     margin: 5px 15px 5px 0px;
   }
+
   .memberpiccontainer span.memberpiclarge {
     position: relative;
     top: 0;
