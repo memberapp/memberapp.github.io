@@ -791,6 +791,10 @@ pages.settings = `
         <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No
             Picture</label>
     </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="showonlybchnetwork" onchange="updateSettingsCheckbox('showonlybchnetwork');">
+        <label data-vavilon="VVbchonly" for="showonlybchnetwork" class="checkboxlabel">Show Only BCH Network Content</label>
+    </div>
     <div>
         <label data-vavilon="VV0091" for="contentserver">Content Server</label>
         <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">

@@ -18,7 +18,8 @@ var settings = {
     "showlbry": "true",
     "showbitclout": "true",
     "shownonameposts": "false",
-    "shownopicposts": "true"
+    "shownopicposts": "true",
+    "showonlybchnetwork": "false"
 };
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",
