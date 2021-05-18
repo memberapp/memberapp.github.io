@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '6.0.2';
+const version = '6.0.3';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -304,7 +304,7 @@ self.addEventListener('notificationclick', function (event) {
 
     if (matchingClient) {
       //matchingClient.url = "https://member.cash" + page;
-      client.postMessage({
+      matchingClient.postMessage({
         notificationpage: "https://member.cash" + page
       });
       return matchingClient.focus();

@@ -276,7 +276,13 @@ a {
   position: relative;
   object-fit: cover;
 }
-
+.memberpicsmallcompact,
+img.memberpicturesmallpost{
+  height: 2rem;
+  width: 2rem;
+  border-radius: 100%;
+  outline: none;
+}
 /*Side bar, profile pic and jdenticon side and profile pic in circle*/
 .post-side-bar .memberpicturesmall,
 .post-side-bar .memberpicsmallcompact,
@@ -301,6 +307,7 @@ Use important, because we always want profile card pics to be this size*/
   padding: 1rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
+
 /*flair*/
 .flair {
   background: #2291eb;
@@ -450,6 +457,7 @@ Use important, because we always want profile card pics to be this size*/
   left: -30px;
   top:18px;
 }
+
 .notificationitem .notificationIcon img{
   outline: none;
   width: 24px;
@@ -471,6 +479,7 @@ Use important, because we always want profile card pics to be this size*/
 }
 .notificationbutton:hover {
   color: #fff !important;
+  background-color: #61aaff;
 }
 /*move profile preview up in side bar, left in post*/
 .post-side-bar .profilepreview {
@@ -501,16 +510,19 @@ Use important, because we always want profile card pics to be this size*/
   margin-left: 0;
 }
 
-/* new post or reply user replyprofilepic */
+/* new post,reply or comment user replyprofilepic */
+.comment .replyprofilepic,
 .post-right-contents .replyprofilepic {
   position: relative;
 }
+.comment .replyprofilepic a,
 .post-right-contents .replyprofilepic a {
   position: absolute;
   left: -40px;
   top: 1.5rem;
 }
-.post-right-contents .replyprofilepic img {
+.post-right-contents .replyprofilepic img ,
+.comment .replyprofilepic img.memberpicturesmallpos{
   height: 2rem;
   width: 2rem;
   border-radius: 100%;
@@ -1053,9 +1065,9 @@ a {
   display: none;
 }
 .newheader .memberlogoimagefull {
-  width: 150px;
+   width: 150px;
   height: 44px;
-  object-fit: contain; 
+  object-fit: contain;
   max-width: unset !important;
 }
 .newheader img {
@@ -1103,10 +1115,11 @@ nav.contentfilters a {
 }
 .posts .timefilters a,
 .posts .contentfilters a {
-  padding: 9px 10px;
+  padding: 9px 5px;
   margin-left: 3px;
   transition: all 0.3s ease;
-  width: 69px;
+  max-width: 70px;
+  min-width: 55px;
 }
 .posts .timefilters a:hover, .posts .contentfilters a:hover{
   background-color: #61aaff !important;
@@ -1358,9 +1371,9 @@ tbody tr td a[href^="javascript:;"]:hover {
   background: #2291eb;
 }
 /* topicmeta section */
-#topicmeta tbody tr td a {
+/* #topicmeta tbody tr td a {
   color: #fff !important;
-}
+} */
 #topicmeta .content h1.topicheader {
   overflow-wrap: break-word;
 }
@@ -1370,28 +1383,43 @@ tbody tr td a[href^="javascript:;"]:hover {
   position: relative;
   box-shadow: 0 13px 27px 6px #fafafa;
   border: none;
-  height: 100vh;
 }
+/* profile page tabs */
 .memberheader .membertabs{
   display: flex;
     justify-content: flex-end;
-    width: 730px;
+    width: 770px;
     margin: 0 auto;
     margin-bottom: 1rem;
-}
-.memberheader .membertabs a::after{
-  content: '';
-  width: 2px;
-  height: 100%;
-  position: absolute;
-  right: -8px;
-  border: 1px solid #aaa;
+
+    position: relative;
+    background-color: #f6f9ff;
+    padding: 10px;
+    border-radius: 40px;
+    background: linear-gradient(to right, #fff 12%, #f6f9ff 100%);
 }
 .memberheader .membertabs a{  
-  margin: 5px 10px;
   position: relative;
+  padding: 3px 10px;
+   margin-left: 5px;
+  transition: all 0.3s ease;
+   max-width: 100px;
 }
-
+.memberheader .membertabs a:hover{  
+  position: relative;
+  background-color: #61aaff !important;
+  color: #fff !important;
+  border-radius: 36px;
+  max-width: 100px;
+}
+.memberheader .membertabs a.timefilteron{
+   z-index: 1;
+    background-color: #61aaff !important;
+    border-radius: 36px;
+    font-weight: 700;
+    color: black;
+    color: #fff !important;
+}
 .memberpiccontainer label{
   display: none !important;
 }
@@ -1813,9 +1841,50 @@ label#memberblockexplorer {
   top: 0px;
   left: -23px;
 }
+/* Private message */
+#messagesanchor #messageschoice{
+    position: relative;
+    display: block;
+    background-color: #f6f9ff;
+    padding: 10px;
+    border-radius: 40px;
+    overflow: hidden;
+}
+#messagesanchor #messageschoice a{
+  padding: 3px 10px;
+    margin-left: 3px;
+    transition: all 0.3s ease;
+    min-width: 70px;
+    text-align: center;
+    display: inline-block;
+}
+#messagesanchor #messageschoice a:hover{
+  z-index: 1;
+  background-color: #61aaff !important;
+  border-radius: 36px;
+  font-weight: 700;
+  color: black;
+  color: #fff !important;
+}
+#messagesanchor div#messageschoice a:first-child{
+  z-index: 1;
+    background-color: #61aaff !important;
+    border-radius: 36px;
+    font-weight: 700;
+    color: black;
+    color: #fff !important;
+}
+#messagesanchor #messageschoice a.timefilteron {
+  z-index: 1;
+  background-color: #61aaff !important;
+   border-radius: 36px;
+   font-weight: 700;
+   color: black;
+   color: #fff !important;
+}
 /* POST ON MAP */
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar {
-  width: 15px;
+  width: 10px;
 }
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -1823,7 +1892,6 @@ label#memberblockexplorer {
 
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar-thumb {
   background-color: darkgrey;
-  outline: 1px solid slategrey;
 }
 /* for firefox */
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
@@ -2091,6 +2159,15 @@ label#memberblockexplorer {
 }
 /*  */
 @media (max-width: 600px) {
+  /* .notificationitem .notificationIcon{
+    position: unset;
+    padding-left: 10px;
+    padding-top: 10px;
+  } */
+  #notifications{
+    max-width: 400px;
+  }
+
   .notificationitem .notificationIcon{
     left: -30px;
   }
@@ -2098,19 +2175,26 @@ label#memberblockexplorer {
     left: 50px;
     margin-left:0;
   }
-  #notifications{
-    max-width: 400px;
-  }
 }
 @media (max-width: 500px) {
   .newheader {
     grid-gap: 0px;
   }
+  #memberanchor .content {
+    height: 100vh;
+  }
   #notifications{
     max-width: 380px;
   }
-  #memberanchor .content {
-    height: 100vh;
+  /* tabs */
+  .posts .timefilters a,
+   .posts .contentfilters a{
+
+    min-width: 44px;
+    padding: 5px 0;
+}
+  .posts .timefilters a{
+    max-width: 55px;
   }
   #membertabs {
     max-width: 100%;
@@ -2289,9 +2373,14 @@ label#memberblockexplorer {
   #walletprivatekey label {
     margin-bottom: 10px;
   }
-
   /* notifcation icons */
-  .notificationitem .notificationIcon{
+  /* .notificationitem .notificationIcon{
+    position: unset;  
+    padding-left: 10px;
+    padding-top: 10px;
+  } */
+ /* notifcation icons */
+   .notificationitem .notificationIcon{
     left: -25px;
   }
 }
@@ -2309,18 +2398,12 @@ label#memberblockexplorer {
     max-width: 100%;
     justify-content: center;
   }
-  #notifications{
-    max-width: 540px;
- }
-  .notificationitem .notificationIcon{
-    position: unset;
-    padding-left: 10px;
-    padding-top: 15px;
-  }
   .memberheader .membertabs a {
     margin: 5px 15px 5px 0px;
   }
-
+  #notifications{
+    max-width: 540px;
+ }
   .memberpiccontainer span.memberpiclarge {
     position: relative;
     top: 0;
@@ -2333,6 +2416,19 @@ label#memberblockexplorer {
     position: absolute;
     left: 26px;
     top: 168px;
+  }
+  .posts .timefilters a, .posts .contentfilters a{
+    max-width: 47px;
+    padding: 5px 0px;
+    margin-left: 0px;
+  }
+  .posts .contentfilters a{
+    margin-left: 10px;
+  }
+  .notificationitem .notificationIcon{
+    position: unset;
+    padding-left: 10px;
+    padding-top: 15px;
   }
   #memberanchor .content #membernametext a.populate-send-message {
     right: 10px;
