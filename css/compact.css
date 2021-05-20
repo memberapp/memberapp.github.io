@@ -111,11 +111,6 @@ body {
   background-color: #f1f1f1;
 }
 
-/* Show the dropdown menu on hover  */
-/* .dropdown:hover .dropdown-content {
-  display: block;
-} */
-
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
   background-color: #1063a8;
@@ -444,10 +439,7 @@ Use important, because we always want profile card pics to be this size*/
 .mainbodywrapper #posts .itemlist ol.posts {
   margin-top: 0px;
 }
-/* 
-#sendmessagecontainer{
-  min-height: 1px;
-} */
+
 .notificationitem .notificationminheight {
   position: relative;
 }
@@ -497,6 +489,7 @@ Use important, because we always want profile card pics to be this size*/
 .scoreexpanded .closebutton a:hover,
  .remembersexpanded .closebutton a:hover{
    background-color: #61aff0;
+   color: #fff !important;
  }
 .profilepreview {
   animation: postFadein 0.5s;
@@ -518,7 +511,7 @@ Use important, because we always want profile card pics to be this size*/
   margin-left: 0;
 }
 
-/* new post,reply or comment user replyprofilepic */
+/* new post, reply or comment user replyprofilepic */
 .comment .replyprofilepic,
 .post-right-contents .replyprofilepic {
   position: relative;
@@ -679,9 +672,6 @@ img {
 .iconcount {
   position: unset !important;
 }
-
-/* work on 2nd point popover */
-
 /* profile-card box-shadow arround it */
 .profilepreview {
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 5px rgb(0 0 0 / 10%) !important;
@@ -799,11 +789,7 @@ img {
   height: 100%;
   padding: 0 5px;
 }
-/* .newheader .majornavbuttonsdiv:hover{
-  background-color: #ddeefc;
-} */
 .newheader .majornavbuttonsdiv #loggedin {
-  /* grid-gap: 10px; */
   height: 100%;
   justify-content: space-evenly;
   align-items: center;
@@ -882,14 +868,6 @@ img {
   white-space: nowrap;
 }
 .newheader .searchwrapper input {
-  /* border: none;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
-  border-radius: 0;
-  color: #aaa;
-  outline: none;
-  box-shadow: none;
-  padding-right: 2em; */
-
   border: 2px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   color: #aaa;
@@ -1050,28 +1028,12 @@ a {
 
 .newheader .searchwrapper #usersearchnavresults::before {
   right: 130px;
-  /* left: 43px; */
 }
 
 .newheader #usersearchnavresults .loading {
   height: fit-content !important;
   min-height: 300px;
 }
-
-/* .newheader .alertcount{
-  min-width: 20px;
-  height: 20px;
-  background: #7e7ef9;
-  border-radius: 50%;
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 12px;
-  top: -9px;
-  left: -11px;
-} */
 .newheader .memberlogoimage {
   display: none;
 }
@@ -1084,7 +1046,6 @@ a {
 .newheader img {
   outline: none;
 }
-/* tabs styling */
 
 /* active tab */
 nav.timefilters,
@@ -1571,10 +1532,7 @@ nav.contentfilters a {
 #memberprofilelinks {
   text-align: center;
 }
-#memberprofilelinks {
-  /* position: absolute; */
-  /* top: 386px; */
-}
+
 #memberprofilelinks label {
   display: none;
 }
@@ -1586,11 +1544,7 @@ nav.contentfilters a {
 #memberprofilelinks div a:hover {
   color: #fff !important;
 }
-/* .memberstats {
-    background: #ddeefc;
-    box-shadow: 0 13px 21px 6px #fafaf9;
-    border-radius: 10px;
-} */
+
 #memberanchor .content .memberstats .muters,
 #memberanchor .content .memberstats .muting {
   display: none;
@@ -1873,20 +1827,6 @@ label#memberblockexplorer {
   color: black;
   color: #fff !important;
 }
-/* #messagesanchor .content #sendmessagecontainer input
- {   
-  border: 1px solid #61aff0;
-  border-radius: 45px;
- }
- #messagesanchor .content #sendmessagecontainer textarea{
-  border: 1px solid #61aff0;
-  border-radius: 10px;
- }
-
-#messagesanchor .content #sendmessagecontainer input:focus,
- #messagesanchor .content #sendmessagecontainer textarea:focus{
- box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
- } */
 /* POST ON MAP */
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar {
   width: 10px;
@@ -2507,7 +2447,6 @@ footer{
     display: block;
   }
 }
-/* extra   */
 @media (max-width: 400px) {
   #notifications {
     max-width: 320px;
@@ -2521,9 +2460,6 @@ footer{
   .memberheader .membertabs a {
     padding: 3px 7px;
   }
-  /* #notifications {
-    max-width: 240px;
-  } */
 }
 @media (max-width: 320px) {
   #membertabs {

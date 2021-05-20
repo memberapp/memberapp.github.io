@@ -233,14 +233,15 @@ var walletanchorHTML=`
         <span class="balanceusd" id="balanceusd">0</span>
         <span class="usd">(USD)</span>
         <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance" class="balancedetails">
-            <img src="img/Icons/reload.png" alt="">
+            <img src="img/icons/reload.png" alt="">
         </span>
     </div>
     
 
     <div id="walletaddress">
         <label data-vavilon="VV0065" data-vavilon="address">Address</label>
-        <span id="cashaddrformat"><img src="img/Icons/copy.png" alt="copy"> {cashaddress}</span>
+        <img src="img/icons/copy.png" width="20" height="20" alt="copy">
+        <span id="cashaddrformat">{cashaddress}</span>
         <div id="cashaddrformatdiv">
             <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
                 <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
@@ -250,7 +251,8 @@ var walletanchorHTML=`
     </div>
     <div id="walletlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
-        <span id="legacyformat"><img src="img/Icons/copy.png" alt="copy"> {address}</span>
+        <img src="img/icons/copy.png" width="20" height="20" alt="copy">
+        <span id="legacyformat">{address}</span>
         <div id="legacyformatdiv">
             <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
                 <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
@@ -601,7 +603,8 @@ pages.member = `
     <div id="memberlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
         <div>
-            <span id="memberlegacyformat"> <img src="img/Icons/copy.png" alt="copy"> {address}</span>
+            <img src="img/icons/copy.png" width="20" height="20" alt="copy">
+            <span id="memberlegacyformat">{address}</span>
             <div id="memberlegacyformatdiv">
                 <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
                     <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
@@ -842,23 +845,23 @@ var hamburgerMenuHTML=`
         class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
         <a data-vavilon_title="VV0063" id="profilebutton"  title="Profile"    class="hamburgerbutton" href="#profile"    onclick="nlc();">
-            <img src="img/Icons/user.png" alt="profile">
+            <img src="img/icons/user.png" alt="profile">
             <span data-vavilon="VV0063">Profile</span></a>
         <a data-vavilon_title="VVwallet" id="walletbutton"  title="Wallet"      class="hamburgerbutton" href="#wallet"    onclick="nlc();">
-            <img src="img/Icons/wallet.png" alt="wallet">
+            <img src="img/icons/wallet.png" alt="wallet">
             <span data-vavilon="VVwallet">Wallet</span></a>
         <a data-vavilon_title="VV0100" id="topiclistbutton" title="Tag List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">
                 <span class="tagicon">#</span>
-                <img src="img/Icons/hashtag.png" alt="MyFeed">
+                <img src="img/icons/hashtag.png" alt="MyFeed">
             <span data-vavilon="VV0100">Tag List</span></a>
         <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">
-            <img src="img/Icons/map.png" alt="map">
+            <img src="img/icons/map.png" alt="map">
             <span data-vavilon="VV0101">Map</span></a>
         <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">
             <img src="img//Icons/settings.png" alt="settings">
             <span data-vavilon="VV0098">Settings</span></a>
         <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();">
-            <img src="img/Icons/exit.png" alt="logout">
+            <img src="img/icons/exit.png" alt="logout">
             <span data-vavilon="VV0078">Logout</span></a>
     </div>
 </span>
@@ -872,28 +875,28 @@ var majorNavButtonsHTML=`
 <div id="majornavbuttonsdivid" class="majornavbuttonsdiv">
     <span id="loggedin" class="loggedin" style="display:none;">
     <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications">
-        <img src="img/Icons/notification.png" alt="notificatons">
+        <img src="img/icons/notification.png" alt="notificatons">
         <span class="alertcount noselect" id="alertcount"></span></a>
     <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"      title="Firehose (Everything)"                              href="#firehose">
-        <img src="img/Icons/fire-hose.png" alt="FireHose">
+        <img src="img/icons/fire-hose.png" alt="FireHose">
     </a>
     <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My People (Latest posts from your follows)"           href="#mypeople">
-        <img src="img/Icons/group.png" alt="MyFeed">
+        <img src="img/icons/group.png" alt="MyFeed">
     </a>
     <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="My Tags  (Latest posts from your tags)"        href="#mytags">
-        <img src="img/Icons/hashtaglarge.png" alt="MyFeed">
+        <img src="img/icons/hashtaglarge.png" alt="MyFeed">
     </a>
     <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton"   title="Messages"                                            href="#messages">
-        <img src="img/Icons/messages.png" alt="message">
+        <img src="img/icons/messages.png" alt="message">
         <span class="alertcount noselect" id="alertcountpm"></span></a>
     <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton"               title="New Post"                                            href="#new">
-        <img src="img/Icons/plus.png" alt="newpost">
+        <img src="img/icons/plus.png" alt="newpost">
     </a>
     </span>
     <span id="loggedout" class="loggedout">
         <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebuttonloggedout"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
             <!-- 📰 -->
-            <img src="img/Icons/fire-hose.png" alt="firehose">
+            <img src="img/icons/fire-hose.png" alt="firehose">
         </a>
         <a data-vavilon="VV0102a" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">Login</a>
         <span class="separatorwide"></span>

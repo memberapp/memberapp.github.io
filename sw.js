@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '6.0.4';
+const version = '6.0.5';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -21,7 +21,8 @@ const SERVER_URL = '/v2/pn/sub';
 var swpubkey = "";
 
 self.addEventListener('install', (event) => {
-  self.skipWaiting()
+  event.waitUntil(self.skipWaiting());
+  //self.skipWaiting()
   console.log('[ServiceWorker] Skipped Waiting:');
   event.waitUntil(
     caches.open(INSTALL).then((cache) => {
@@ -31,7 +32,7 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener("activate", async function (event) {
-
+  event.waitUntil(self.clients.claim());
   console.log('[ServiceWorker] Activated. v' + version);
   const currentCaches = [INSTALL, RUNTIME];
 
