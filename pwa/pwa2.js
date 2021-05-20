@@ -11,6 +11,14 @@ if (location.protocol === 'https:' || location.hostname === 'localhost') {
                 console.log(err);
             });
         });
+        
+        navigator.serviceWorker.addEventListener('message', event => {
+          // event is a MessageEvent object
+          console.log(`pwa2.js - The service worker sent me a message: ${event.data}`);
+          console.log(`pwa2.js - The service worker sent me a message: ${event.data.notificationpage}`);
+          displayContentBasedOnURLParameters(event.data.notificationpage);
+        });
+
     } else {
         console.log('[Service Worker Registration] Not Supported');
     }
@@ -70,3 +78,4 @@ function serviceWorkerLogout(){
     navigator.serviceWorker.controller.postMessage('');
   }catch(err){}
 }
+

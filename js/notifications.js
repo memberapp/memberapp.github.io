@@ -13,23 +13,10 @@ function displayNotificationCount() {
             return;
         }
 
-        var alertcount = Number(data[0].count);
-        var element = document.getElementById("alertcount");
-        if (alertcount > 0) {
-            element.innerHTML = alertcount;
-        } else {
-            element.innerHTML = "";
-        }
-
-        var alertcountpm = Number(data[0].countpm);
-        var element = document.getElementById("alertcountpm");
-        if (alertcountpm > 0) {
-            element.innerHTML = alertcountpm;
-        } else {
-            element.innerHTML = "";
-        }
-
-        var pageTitleCount = alertcount + alertcountpm;
+        setAlertCount("alertcount",data[0].count);
+        setAlertCount("alertcountpm",data[0].countpm);
+        
+        var pageTitleCount = data[0].count + data[0].countpm;
         var pageTitle = "";
         if (pageTitleCount > 0) {
             pageTitle = "(" + pageTitleCount + ") ";
@@ -41,11 +28,24 @@ function displayNotificationCount() {
     });
 }
 
+function setAlertCount(elementid, alertNumber){
+    var alertcount = Number(alertNumber);
+    var element = document.getElementById(elementid);
+    if (alertcount > 0) {
+        element.innerHTML = alertcount;
+        element.style.visibility="visible";
+    } else {
+        element.innerHTML = "";
+        element.style.visibility="hidden";
+    }
+
+}
 
 function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
     //Clear existing content
     show(page);
 
+    
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
     //Show navigation next/back buttons
@@ -90,7 +90,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         if (start == 0) {
             lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
             localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
-            document.getElementById("alertcount").innerHTML = "";
+            setAlertCount("alertcount",0);
             document.title = siteTitle;
         }
 
@@ -135,9 +135,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
         case "message":
             return notificationItemHTML(
                 "message",
-                `📧&nbsp;`,
+                `img/Icons/notification/message.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext','messagedyou','messaged you'),
-                timeSince(Number(data.time)),
+                timeSince(Number(data.time),true),
                 "",
                 data.txid, highlighted
             );
@@ -146,9 +146,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
                 "thread",
-                `💬&nbsp;`,
+                `img/Icons/notification/discussion.png`,
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext','discussion',`in a discussion you're in'`),
-                timeSince(Number(data.time)),
+                timeSince(Number(data.time),true),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive),
                 data.txid, highlighted
             );
@@ -157,9 +157,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
                 "topic",
-                `📰&nbsp;`,
-                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + getSpanHTML('plaintext','inatopic',`in a topic you're subscribed to`),
-                timeSince(Number(data.time)),
+                `img/Icons/notification/post.png`,
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + getSpanHTML('plaintext','inatopic',`in a tag you're subscribed to`),
+                timeSince(Number(data.time),true),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive),
                 data.txid, highlighted
             );
@@ -168,9 +168,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
                 "page",
-                `📣&nbsp;`,
+                `img/Icons/notification/mentioned.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext','mentionedyou','mentioned you in a') + postlinkHTML(data.txid, `post`),
-                timeSince(Number(data.time)),
+                timeSince(Number(data.time),true),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive),
                 data.txid, highlighted
             );
@@ -179,9 +179,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
                 "reply",
-                `💬&nbsp;`,
+                `img/Icons/notification/reply.png`,
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext','toyour','to your') + postlinkHTML(data.rretxid, "post"),
-                timeSince(Number(data.time)),
+                timeSince(Number(data.time),true),
                 getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive),
                 data.txid, highlighted
             );
@@ -192,9 +192,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             theRating = Math.round(theRating * 10) / 10;
             return notificationItemHTML(
                 "rating",
-                `⭐&nbsp;`,
+                `img/Icons/notification/star.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext','ratedyou','rated you as') + theRating + getSpanHTML('plaintext','starscommenting','stars, commenting ...') + getSpanClassHTML("plaintext",escapeHTML(data.reason)),
-                timeSince(Number(data.time)),
+                timeSince(Number(data.time),true),
                 "",
                 data.txid, highlighted
             );
@@ -202,9 +202,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
         case "follow":
             return notificationItemHTML(
                 "follow",
-                `👩&nbsp;`,
+                `img/Icons/notification/follow.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext','followedyou','followed you'),
-                timeSince(Number(data.time)),
+                timeSince(Number(data.time),true),
                 "",
                 data.txid, highlighted
             );
@@ -217,9 +217,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             postRatingID = starindex + page + ds(data.address) + type;
             return notificationItemHTML(
                 "like",
-                `💗&nbsp;`,
+                `img/Icons/notification/liked.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext','likedyour','liked your') + postlinkHTML(data.likeretxid, "post") + getSpanClassHTML("plaintext",(Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : "")),
-                timeSince(Number(data.time)),
+                timeSince(Number(data.time),true),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive),
                 data.txid, highlighted
             );
@@ -228,9 +228,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             postRatingID = starindex + page + ds(data.address) + type;
             return notificationItemHTML(
                 "repost",
-                `🔁&nbsp;`,
+                `img/Icons/notification/repost.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext','rememberedyour','remembered your') + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
-                timeSince(Number(data.time)),
+                timeSince(Number(data.time),true),
                 getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive),
                 data.txid, highlighted
             );

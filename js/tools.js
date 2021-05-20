@@ -10,6 +10,20 @@ async function userSearchChanged(searchbox, targetelement) {
         return;
     }
 
+    //Show search results
+    updateStatus(targetelement);
+    var resultsElement=document.getElementById(targetelement);
+    updateStatus(resultsElement);
+    updateStatus(resultsElement.style.display);
+    resultsElement.style.display="block";
+    updateStatus(resultsElement.style.display);
+    //cover behind search results
+    var ddcover=document.getElementById('ddcover');
+    updateStatus(ddcover);
+    
+    ddcover.style.display='block';
+    ddcover.onclick=resultsElement.onclick=function(){resultsElement.style.display=ddcover.style.display='none';};
+
     //onblur event was causing a new search making clicking on results impossible
     if (searchtermHOSTILE == previousSearchTermHOSTILE) {
         return;
@@ -29,10 +43,12 @@ async function userSearchChanged(searchbox, targetelement) {
     //Request content from the server and display it when received
     var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkey + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
     getJSON(theURL).then(function (data) {
+        
         var test = data;
-        var contents = `<label for="usersearchresults">` + getSafeTranslation('results', 'Results') + `</label>`;
+        //var contents = `<label for="usersearchresults">` + getSafeTranslation('results', 'Results') + `</label>`;
+        var contents = '';
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getDivClassHTML('usersearchresult', userFromDataBasic(data[i], i + searchbox + data[i].address, 16) + sendEncryptedMessageHTML(data[i].address, data[i].name, data[i].publickey)) + "<br/>";
+            contents = contents + getDivClassHTML('usersearchresult', userFromDataBasic(data[i], i + searchbox + data[i].address, 16));
         }
         document.getElementById(targetelement).innerHTML = contents;
         addDynamicHTMLElements(data);
@@ -41,6 +57,8 @@ async function userSearchChanged(searchbox, targetelement) {
         showErrorMessage(status, null, theURL);
     });
 }
+
+
 
 
 function createSurrogate() {
@@ -56,8 +74,8 @@ async function postprivatemessage() {
     var stampAmount = document.getElementById("stampamount").value;
     if (stampAmount < 547) stampAmount = 547;
 
-    var messageRecipient = document.getElementById("messageaddress").innerText;
-    var publickey = document.getElementById("messagepublickey").innerText;
+    var messageRecipient = document.getElementById("messageaddress").textContent;
+    var publickey = document.getElementById("messagepublickey").textContent;
 
     // Encrypt the message
     const pubKeyBuf = Buffer.from(publickey, 'hex');
@@ -71,8 +89,14 @@ function privateMessagePosted() {
     document.getElementById('newpostmessagebutton').disabled = false;
     document.getElementById('newpostmessagebutton').value = getSafeTranslation('sendmessage', "Send Message");
     document.getElementById('newposttamessage').value = "";
-    document.getElementById('newpostmessagecompleted').innerText = getSafeTranslation('messagesent', "Message Sent");
+    document.getElementById('newpostmessagecompleted').textContent = getSafeTranslation('messagesent', "Message Sent");
 
+}
+
+function sendFundsAmountChanged(){
+    var sendAmount = Number(document.getElementById("fundsamount").value);
+    var usdAmount = ((Number(sendAmount) * numbers.usdrate) / 100000000).toFixed(2);
+    document.getElementById("sendusd").textContent="($"+usdAmount+")";
 }
 
 function sendfunds() {

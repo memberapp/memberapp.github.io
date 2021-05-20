@@ -4,26 +4,6 @@
 
 var eccryptoJs = null;
 
-function getAndPopulateQuoteBox(txid) {
-    var page = 'quotepost';
-    showOnly(page);
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-
-    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkey + '&txid=' + txid;
-    getJSON(theURL).then(function (data) {
-        var contents = "";
-        if (data[0]) {
-            contents = getHTMLForPost(data[0], 1, page, 0, null, true);
-            document.getElementById(page).innerHTML = contents;
-        } else {
-            throw error(getSafeTranslation('noresult', 'no result returned'));
-        }
-        addDynamicHTMLElements();
-    }, function (status) { //error detection....
-        showErrorMessage(status, page, theURL);
-    });
-}
-
 function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress) {
     if (order == "") order = "hot";
     if (content == "") content = "posts";
@@ -35,6 +15,19 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Show the relevant html element
     show(page);
 
+    if(qaddress){
+        //skip, viewing single user's posts, title should already be filled in with user's paging id
+        document.getElementById("memberheader").style.display='block';    
+    }else if(topicnameHOSTILE.toLowerCase()=="mytopics"){
+        setPageTitleFromID("VV0128");
+    }else if(topicnameHOSTILE){
+        setPageTitleRaw("#"+topicnameHOSTILE);
+    }else if(filter.toLowerCase()=="myfeed"){
+        setPageTitleFromID("VV0134a");
+    }else if(filter=="everyone"){
+        setPageTitleFromID("VVfirehose");
+    }
+
     //Show loading animation
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
@@ -42,10 +35,16 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         setTopic('');
     }
 
+    var bchOnly='';
+    if(settings['showonlybchnetwork']=="true"){
+        bchOnly='&bchplz=true';
+    }
+
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname='+settings["shownonameposts"]+'&shownopic='+settings["shownopicposts"]+'&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname='+settings["shownonameposts"]+'&shownopic='+settings["shownopicposts"]+'&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + bchOnly;
     getJSON(theURL).then(function (data) {
 
+        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
@@ -68,10 +67,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         if (contents == "") {
-            contents = getDivClassHTML('message', getSafeTranslation("nothinghere", "Nothing here yet"));
+            contents = getDivClassHTML('message', getSafeTranslation("nothinghere2", "Nothing here yet"));
 
             if (filter == "mypeeps" || filter == "myfeed" || topicnameHOSTILE == "MyFeed" || topicnameHOSTILE == "MyTopics") {
-                contents = getDivClassHTML('message', getSafeTranslation("nothinginfeed", "Nothing in your feed"));
+                contents = getDivClassHTML('message', getSafeTranslation("nothinginfeed2", "Nothing in your feed"));
             }
 
         }
@@ -84,7 +83,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
 
-        displayItemListandNavButtonsHTML(contents, navbuttons, page, data, "posts", start, true);
+        displayItemListandNavButtonsHTML(navheader + contents, navbuttons, page, data, "posts", start, true);
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -108,7 +107,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
 
         lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
-        document.getElementById("alertcountpm").innerHTML = "";
+        setAlertCount("alertcountpm",0);
         document.title = "member.cash";
 
 
@@ -262,6 +261,7 @@ function getAndPopulateTopicList(showpage) {
     var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey;
     getJSON(theURL).then(function (data) {
 
+        /*
         var selectboxIndex = 5;
         var selectbox = document.getElementById('topicselector');
         while (selectbox.options[selectboxIndex]) {
@@ -282,7 +282,7 @@ function getAndPopulateTopicList(showpage) {
             selectbox.add(option, [selectboxIndex]);
             selectboxIndex++;
         }
-
+        */
         if (showpage) {
             //group data rows by moderator before displaying
             var modsArray = [];
@@ -309,6 +309,25 @@ function getAndPopulateTopicList(showpage) {
     });
 }
 
+function getAndPopulateQuoteBox(txid) {
+    var page = 'quotepost';
+    showOnly(page);
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkey + '&txid=' + txid;
+    getJSON(theURL).then(function (data) {
+        var contents = "";
+        if (data[0]) {
+            contents = getHTMLForPost(data[0], 1, page, 0, null, true);
+            document.getElementById(page).innerHTML = contents;
+        } else {
+            throw error(getSafeTranslation('noresult', 'no result returned'));
+        }
+        addDynamicHTMLElements();
+    }, function (status) { //error detection....
+        showErrorMessage(status, page, theURL);
+    });
+}
 
 
 function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start, adddynamic) {
@@ -346,6 +365,9 @@ function addDynamicHTMLElements(data) {
 
     //Add identicons
     jdenticon();
+    
+    //delay by half a second to allow time to appear
+    setTimeout(setVisibleContentFinal,500);
 
     loadBigLibs();
 }
@@ -532,7 +554,7 @@ function sendReply(txid, page, divForStatus) {
     //Hide the reply button, show the reply status button
     document.getElementById("replybutton" + page + txid).style.display = "none";
     document.getElementById("replystatus" + page + txid).style.display = "block";
-    document.getElementById("replycompleted" + page + txid).innerText = "";
+    document.getElementById("replycompleted" + page + txid).textContent = "";
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     const replyhex = new Buffer(replytext).toString('hex');
@@ -568,24 +590,21 @@ function decreaseGUILikes(txid) {
         var downarrowAction = document.getElementById('downvoteaction' + txid);
         downarrowAction.onclick = null;
         var uparrow = document.getElementById('upvote' + txid);
-        var likescount = Number(document.getElementById('likescount' + txid).innerText);
-        document.getElementById('score' + txid).innerText = likescount - 1;
+        var likescount = Number(document.getElementById('likescount' + txid).textContent);
+        document.getElementById('score' + txid).textContent = likescount - 1;
         
         //Change classes
         downarrow.className = "votearrowactivateddown rotate180";
         uparrow.className = "votearrow";
         
-        if (theStyle.contains('compact')) {
             var dislikeElement=document.getElementById('dislikescount' + txid);
             if(dislikeElement){
-                var dislikescount = Number(dislikeElement.innerText);
-                dislikeElement.innerText = dislikescount + 1;
+                var dislikescount = Number(dislikeElement.textContent);
+                dislikeElement.textContent = dislikescount + 1;
             }
             uparrow.className = "votearrow post-footer-upvote";
             downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
-        }else{
-            document.getElementById('score' + txid).className = "betweenvotesscoredown";
-        }
+
 
 }
 
@@ -593,14 +612,14 @@ function increaseGUILikes(txid) {
 
 
         //increase number of likes, original themes
-        var likescount = Number(document.getElementById('likescount' + txid).innerText);
+        var likescount = Number(document.getElementById('likescount' + txid).textContent);
         var uparrow = document.getElementById('upvote' + txid);
         var uparrowAction = document.getElementById('upvoteaction' + txid);
         uparrowAction.onclick = null;
         var downarrow = document.getElementById('downvote' + txid);
         //Change counts
-        document.getElementById('likescount' + txid).innerText = likescount + 1;
-        document.getElementById('score' + txid).innerText = likescount + 1;
+        document.getElementById('likescount' + txid).textContent = likescount + 1;
+        document.getElementById('score' + txid).textContent = likescount + 1;
 
         //Change classes
         if(uparrow)
@@ -609,7 +628,6 @@ function increaseGUILikes(txid) {
         downarrow.className = "votearrow rotate180";
         
         //Nifty
-        if (theStyle.contains('compact')) {
             //Change classes
             if(uparrow)
             uparrow.className = "votearrowactivated post-footer-upvote-activated";
@@ -618,11 +636,6 @@ function increaseGUILikes(txid) {
             var upvotecontainer=document.getElementById('upvotecontainer' + txid)
             if(upvotecontainer)
             upvotecontainer.className = "post-footer-upvote-activated post-footer-relative";
-        
-        }else{
-            //Change class
-            document.getElementById('score' + txid).className = "betweenvotesscoreup";
-        }
 
 }
 

@@ -135,7 +135,7 @@ function geopost() {
     var geohash = encodeGeoHash(lat, lon);
 
 
-    document.getElementById('newpostgeocompleted').innerText = "";
+    document.getElementById('newpostgeocompleted').textContent = "";
     document.getElementById('newpostgeobutton').style.display = "none";
     document.getElementById('newpostgeostatus').style.display = "block";
     document.getElementById('newpostgeostatus').value = getSafeTranslation('posting',"Posting...");
@@ -164,7 +164,7 @@ function postmemorandum() {
     }*///nb allow empty remember for compact theme
     //topic may be empty string
 
-    document.getElementById('newpostmemorandumcompleted').innerText = "";
+    document.getElementById('newpostmemorandumcompleted').textContent = "";
     document.getElementById('newpostmemorandumbutton').style.display = "none";
     document.getElementById('newpostmemorandumstatus').style.display = "block";
     document.getElementById('newpostmemorandumstatus').value = getSafeTranslation('sendingtitle',"Sending Title...");
@@ -188,7 +188,7 @@ function sendRepostNotification(txid,divForStatus, topic, newtxid){
 
     var replytext=getSafeTranslation('postremembered',"Your post was remembered");
     if(topic){
-        replytext+=" "+getSafeTranslation('intopic',"in topic")+" "+topic;
+        replytext+=" "+getSafeTranslation('intopic',"in tag")+" "+topic;
     }
     replytext+=" https://member.cash/p/"+newtxid.substr(0,10);
     var replyHex = new Buffer(replytext).toString('hex');

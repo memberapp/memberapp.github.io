@@ -59,6 +59,20 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
 
 async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
     
+    //Set the headerbar pic
+    if (pre == "settings" && data && data[0]) {
+        profilepic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
+        var pictype = '.jpg';
+        if (data[0].picurl && data[0].picurl.toLowerCase().endsWith('.png')) {
+            pictype = '.png';
+        }
+        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="`+profilepicbase + san(qaddress) +`.128x128` + pictype + `">`;
+        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + profilepicbase + san(qaddress) + `.128x128` + pictype + `'/>`;       
+        document.getElementById('newpostprofilepic').innerHTML=profilepic;
+    }    
+
+    
+
     if(qaddress){
         if(!cashaddress){
             //On a member page, the cashaddress won't be available so we have to calculate
@@ -101,6 +115,8 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
         //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
         document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
+        //setPageTitleRaw("@"+data[0].pagingid);
+    
         //jdenticonname = data[0].name;
         //img/profilepics/`+san(address)+`128x128.jpg
     }
@@ -120,6 +136,8 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
     if (obj.picurl) {
         obj.profilepiclargehtml = getProfilePicLargeHTML(profilepicbase + san(qaddress) + `.640x640.jpg`);
+
+        
     }
 
     if (pre == "settings") {
@@ -168,23 +186,49 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
         var theElement = document.getElementById(`memberrating` + qaddress);
         var starRating1 = addSingleStarsRating(theElement);
+        setPageTitleRaw("@"+data[0].pagingid);
+    
     }
 
+    var obj2 = {
+        //These must all be HTML safe.
+        /*highlighted: (highlighted ? 'highlighted ' : ''),
+        type: san(notificationtype),
+        txid: san(txid),
+        title: mainbodyHTML,
+        age: subtextHTML,
+        post: addendumHTML,
+        iconHTML: iconHTML*/
+        address:qaddress,
+        profileclass:'timefilteron',
+        reputationclass:'timefilteroff',
+        postsclass:'timefilteroff'
+    }
+
+    document.getElementById('membertabs').innerHTML= templateReplace(membertabsHTML, obj2);
+    
     addDynamicHTMLElements();
+}
+
+function populateTools(){
+    var obj = {
+        address: pubkey,
+        cashaddress: qpubkey
+    };
+    
+    obj.privatekey = privkey;
+    obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
+
+    document.getElementById('toolsanchor').innerHTML = templateReplace(walletanchorHTML, obj);
+
+
+
 }
 
 
 function getAndPopulateMember(qaddress) {
-    //document.getElementById('memberlegacyformat').innerHTML = qaddress;
-    //document.getElementById('memberqrformat').innerHTML = `<a id="memberqrclicktoshow" onclick="document.getElementById('memberqrchart').style.display='block'; new QRCode(document.getElementById('memberqrchart'), '`+memberqpubkey+`'); document.getElementById('memberqrclicktoshow').style.display='none';">Click To Show</a><div id="memberqrchart"></div>`;
+    setPageTitleRaw(". . .");
     getDataCommonToSettingsAndMember(qaddress, null, "member");
-    getAndPopulateCommunityRatings(qaddress);
-    getAndPopulateRatings(qaddress);
-    if (pubkey) {
-        getAndPopulateTrustGraph(pubkey, qaddress);
-    } else {
-        document.getElementById('trustgraph').style.display = "none";
-    }
 }
 
 function getAndPopulateSettings() {

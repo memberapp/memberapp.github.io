@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "5.8.6";
+var version = "6.0.4";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -17,6 +17,7 @@ let tq = new TransactionQueue(updateStatus);
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var bitboxSdk = null;
 //var twitterEmbeds=new Array();
+var profilepic="";
 
 
 var localStorageSafe = null;
@@ -67,6 +68,13 @@ function init() {
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
     document.getElementById('header').innerHTML = headerHTML;
+ 
+    document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
+    document.getElementById('pagetitle').innerHTML = pageTitleHTML;    
+    document.getElementById('majornavbuttons').innerHTML = majorNavButtonsHTML;
+    document.getElementById('usersearch').innerHTML = userSearchHTML;
+
+    
     document.getElementById('footer').innerHTML = footerHTML;
     document.getElementById('version').innerHTML = version;
     //setLang((navigator.language || navigator.userLanguage));
@@ -142,6 +150,8 @@ async function loadBigLibs() {
     if (!L) loadScript("js/lib/leaflet/leaflet.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
+    if (!bcdecrypt) loadScript("js/lib/bcdecrypt.js");
+    
 }
 
 
@@ -251,10 +261,10 @@ async function login(loginkey) {
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
 
-    document.getElementById('loggedin').style.display = "inline";
+    document.getElementById('loggedin').style.display = "flex";
     document.getElementById('loggedout').style.display = "none";
     document.getElementById('newseedphrasedescription').style.display = "none";
-    document.getElementById('newseedphrase').innerText = "";
+    document.getElementById('newseedphrase').textContent = "";
     document.getElementById('loginkey').value = "";
 
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
@@ -269,11 +279,6 @@ async function login(loginkey) {
     //Get latest rate and update balance
     loadStyle();
 
-    if (theStyle == 'nifty') {
-        //document.getElementById('header').innerHTML = niftyHeaderHTML;
-    }
-    document.getElementById('loggedin').style.display = "inline";
-    document.getElementById('loggedout').style.display = "none";
     getLatestUSDrate();
 
     if (!privkey) {
@@ -284,7 +289,9 @@ async function login(loginkey) {
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
-    document.getElementById('toolsanchor').innerHTML = toolsanchorHTML;
+
+    populateTools();
+
     return;
 
 }
@@ -304,7 +311,7 @@ function createNewAccount() {
     //show('settingsanchor');
     //alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
     document.getElementById('newseedphrasedescription').style.display = "inline";
-    document.getElementById('newseedphrase').innerText = mnemonic;
+    document.getElementById('newseedphrase').textContent = mnemonic;
     document.getElementById('loginkey').value = mnemonic;
 
 
@@ -314,7 +321,7 @@ function logout() {
 
     var exitreally = confirm(getSafeTranslation('areyousure', `Are you sure you want to logout? 
     Make sure you have written down your 12 word seed phrase or private key to login again. 
-    There is no other way to recover your seed phrase. It is on the settings page.
+    There is no other way to recover your seed phrase. It is on the wallet page.
     Click Cancel if you need to do that now.
     Click OK to logout.`));
     if (!exitreally) {
@@ -327,9 +334,9 @@ function logout() {
     privkey = "";
     pubkey = "";
     mnemonic = "";
+    document.getElementById('loggedout').style.display = "flex";
     document.getElementById('loggedin').style.display = "none";
-    document.getElementById('loggedout').style.display = "inline";
-
+    
 
     try {
         serviceWorkerLogout();

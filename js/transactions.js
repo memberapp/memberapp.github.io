@@ -446,7 +446,7 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
     //Disable button
     var buttonElement = document.getElementById(buttonElement);
     buttonElement.disabled = true;
-    buttonElement.innerText = getSafeTranslation('creatingprivatekey', "Creating Private Key");
+    buttonElement.textContent = getSafeTranslation('creatingprivatekey', "Creating Private Key");
 
     //Send sufficient funds to new account to create name
 
@@ -469,14 +469,14 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
     tq.queueTransaction(tx);
 
     //Wait a while for tx to enter mempool
-    buttonElement.innerText = getSafeTranslation('waitafew', "Wait a few seconds for funds to arrive");
+    buttonElement.textContent = getSafeTranslation('waitafew', "Wait a few seconds for funds to arrive");
     await sleep(3 * 1000);
 
     //Try to set new name 
     let newName = name + " (Surrogate)";
-    buttonElement.innerText = getSafeTranslation('trytoset', "Try to set surrogate name -") + " " + newName;
+    buttonElement.textContent = getSafeTranslation('trytoset', "Try to set surrogate name -") + " " + newName;
 
-    buttonElement.innerText = getSafeTranslation('fetchutxos', "Fetch UTXOs");
+    buttonElement.textContent = getSafeTranslation('fetchutxos', "Fetch UTXOs");
 
     var theQAddress = new bitboxSdk.Address().toCashAddress(publicaddress);
     tq.addUTXOPool(publicaddress,theQAddress);
@@ -490,7 +490,7 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
 
     tq.queueTransaction(tx2,
         function () {
-            buttonElement.innerText = getSafeTranslation('createsurrogate', "Create Surrogate Account");
+            buttonElement.textContent = getSafeTranslation('createsurrogate', "Create Surrogate Account");
             buttonElement.disabled = false;
             surrogateLinkElement.innerHTML = userHTML(publicaddress, newName, "none", 0, 16);
         }

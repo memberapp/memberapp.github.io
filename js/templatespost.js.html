@@ -1,7 +1,7 @@
 var postCompactTemplate = `
 <div class="post" onmouseover="changeClass(this,'post highlighted')" onmouseout="changeClass(this,'post')">
-    <div class="post-content">
-        {directlink}
+    {directlink}
+        <div class="post-content">
         <div class="post-side-bar" onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
         </div>
@@ -70,16 +70,20 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-remembers{rememberactivated} post-footer-relative" id="remembers{txid}">
-                        <a id="quotelinkposts{diff}{txid}"
-                            onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"
-                            class="btn-icon" data-action="remember">
+                        <a id="quotelinkposts{diff}{txid}" class="btn-icon" data-action="remember" onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content{diff}{txid}');
+                        ddmenu.style.display='block';
+                    var ddcover=document.getElementById('ddcover');
+                        ddcover.style.display='block';
+                        ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};">
                             <span class="remembersicon">
                                 <span class="emojiicon">♻</span>
                             </span>
-                            <span class="iconcount" id="repostscount{txid}">
-                                {remembers}
-                            </span>
+                            <span class="iconcount" id="repostscount{txid}">{remembers}</span>
                             <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
+                            <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
+                                <a onclick="repost('{txid}');"><span data-vavilon="remember">remember</span></a>
+                                <a onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"><span data-vavilon="VV0158">quote</span></a>
+                            </div>
                         </a>
                     </span>
                     <span class="post-footer-tips post-footer-relative">
@@ -99,7 +103,11 @@ var postCompactTemplate = `
                                     var ddcover=document.getElementById('ddcover');
                                         ddcover.style.display='block';
                                         ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
-                            class="dropbtn">☰</button>
+                            class="dropbtn"><div class="options">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div></button>
                         <div class="dropdown-content" id="dropdown-content">
                             <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
                                 href="javascript:;"><span data-vavilon="VV0147">Likes and</span> <span
@@ -165,6 +173,7 @@ var scoresTemplate=`
 
 var userCompactTemplate=`
 <span class="membercompact" onclick="event.stopPropagation();">
+    {directlink}
     <span id="memberinfo{diff}posts{address}">
         <a href="#member?qaddress={address}" onclick="nlc();" class="memberdetails">
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
@@ -224,56 +233,6 @@ var userProfileCompactTemplate=`
 </span>
 `;
 
-var userTemplate=`
-<span class="memberfilter">
-    <span id="memberinfo{diff}posts{address}">
-        <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-            <span class="memberpicsmall" style="display:inline;">{profilepicsmall}</span>
-            <span class="member-handle">{handle}</span>
-        </a>
-    </span>
-    <span class="starrating">
-        <span data-ratingsize="16" data-ratingaddress="{address}" data-ratingraw="{rating}"
-            id="rating{diff}posts{address}" class="star-rating"></span>
-    </span>
-    {flair}
-    <span style="display: none;" id="profileinfo{diff}posts{address}" data-profileaddress="{address}"
-        class="profilepreview">
-        <div class="profile-meta">
-            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="memberpicsmall" style="display:inline;">{profilepicsmall}</span>
-            </a>
-            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="member-handle">{handle}</span>
-            </a>
-            <span class="starrating">
-                <span data-ratingsize="16" data-ratingaddress="{address}" data-ratingraw="{rating}"
-                    id="rating2posts{address}" class="star-rating"></span>
-            </span>
-            {flair}
-            <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="member-pagingid">@{pagingid}</span>
-            </a>
-        </div>
-        <div class="profile-text">
-            <span class="profilepreviewtext">{profile}</span>
-        </div>
-        <div class="profile-actions">
-            <span class="profilepreviewfollowers">
-                <a href="#followers?qaddress={address}" onclick="nlc();">{followers} <span
-                        data-vavilon="VV0149">followers</span></a>
-            </span>
-            <span class="profilepreviewfollowers">
-                <a href="#following?qaddress={address}" onclick="nlc();">{following} <span
-                        data-vavilon="VV0150">following</span></a>
-            </span>
-            <span class="profilepreviewfollowbutton">
-                {followbutton}
-            </span>
-        </div>
-    </span>
-</span>
-`;
 
 var nestedPostTemplate= `
 <li style="display:{unmuteddisplay};" id="LI{txid}" class="{hightlightedclass}">{replyHTML}{nestedPostHTML}</li>
@@ -289,57 +248,14 @@ var nestedPostTemplate= `
 </li>`;
 
 
-var postTemplate = `
-<div class="post">
-    <div class="votelinks">{votelinks}</div>
-    <div class="postdetails">
-        <div class="title"
-            onclick="if(document.getSelection().type === 'Range'){return;}else{location.href='#thread?root={roottxid}&amp;post={txid}'};">
-            <p>{message}</p>
-        </div>
-        {quote}
-        <div class="subtext">
-            <span class="submitter">
-                <span data-vavilon="VV0151" class="plaintext">submitted</span>
-                {age}
-                <span data-vavilon="VV0152" class="plaintext">by</span>
-                {author}
-                {topic}
-            </span>
-            <span class="subtextbuttons">
-                <a href="#thread?root={roottxid}&post={txid}" onclick="nlc();">{replies} <span
-                        data-vavilon="VV0153">comments</span></a>
-                {scores}
-                {tipsandlinks}
-            </span>
-        </div>
-        <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
-        <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
-        {replydiv}
-    </div>
-</div>
-`;
-
 var notificationCompactTemplate=`
 <li class="{highlighted}notificationitem notification{type}" id='notification{txid}'>
     <div class="notificationdetails">
         <div class="notificationminheight">
+            <span class="notificationIcon">
+                <img src='{iconHTML}'>
+            </span>
             <div class="notificationtitlecompact">
-                {iconHTML}{title}
-                <span class="age">{age}</span>
-            </div>
-            {post}
-        </div>
-        <hr class="notificationhr" />
-    </div>
-</li>
-`;
-
-var notificationTemplate=`
-<li class="{highlighted}notificationitem notification{type}" id='notification{txid}'>
-    <div class="notificationdetails">
-        <div class="notificationminheight">
-            <div class="notificationtitle">
                 {title}
                 <span class="age">{age}</span>
             </div>
@@ -349,6 +265,7 @@ var notificationTemplate=`
     </div>
 </li>
 `;
+
 
 var replyTemplate=`
 <div class="reply{highlighted}" id="{id}">
@@ -374,6 +291,12 @@ var replyTemplate=`
 
 var replyDivTemplate = `
 <div id="reply{txid}{page}" style="display:none">
+    <div class="replyprofilepic">
+    <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+        <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
+    </a>
+    </div>
+    <div class="replyform">
     <br />
     <textarea id="replytext{page}{txid}" rows="3"></textarea>
     <br />
@@ -382,6 +305,7 @@ var replyDivTemplate = `
     <input data-vavilon_value="VV0154" id="replystatus{page}{txid}" value="sending..." type="submit"
         style="display:none" disabled />
     <div id="replycompleted{page}{txid}" value=""></div>
+    </div>
 </div>`;
 
 var replyAndTipsTemplate = `
@@ -429,6 +353,11 @@ var mapPostTemplate=`
     <input id="lat" size="10" type="hidden" value="{lat}">
     <input id="lon" size="10" type="hidden" value="{lng}">
     <input id="geohash" size="15" type="hidden">
+    <div class="replyprofilepic">
+        <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+            <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
+        </a>
+    </div>    
     <textarea class="geoposttextarea" id="newgeopostta" maxlength="217" name="text" rows="4"></textarea><br />
     <input data-vavilon_value="VV0164" id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
     <input data-vavilon_value="VV0165" id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit"

@@ -183,7 +183,7 @@ dictionary.es=
     "disliked": "no me gusta",
     "quoteremembered": "cita recordada",
     "remembered": "recordado",
-    "totopic": "en t/",
+    "totopic": "#",
     "loading": "cargando",
     "showpriv": "Mostrar clave privada",
     "unsubscribe": "desuscribirse",
@@ -319,7 +319,7 @@ dictionary.es=
     "rememberedyour":"recordó tu",
     "flagusertopic":"reportar(usuario por tópico)",
     "toyour":"a tu",
-    "areyousure": "¿Estás seguro de cerrar sesión? Asegúrate de haber escrito tu frase de recuperación de 12 palabras o tu clave privada para inciar sesión de nuevo. No hay otra forma de recuperar tu frase de recuperación. Está en la página de ajustes. Haz clic en cancelar si necesitas hacerlo ahora. Haz clic en OK para cerrar sesión.",
+    "areyousure": "¿Estás seguro de cerrar sesión? Asegúrate de haber escrito tu frase de recuperación de 12 palabras o tu clave privada para inciar sesión de nuevo. No hay otra forma de recuperar tu frase de recuperación. Está en la página de Wallet. Haz clic en cancelar si necesitas hacerlo ahora. Haz clic en OK para cerrar sesión.",
     "hace":"hace ",
     "existen":"Existen"
   }

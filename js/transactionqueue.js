@@ -103,13 +103,26 @@ class UTXOPool {
     var total = this.getBalance();
 
 
+    document.getElementById('balancesatoshis').innerHTML=total;
+    document.getElementById('balancebch').innerHTML=(total/ 100000000).toFixed(5);
+
+    var usd = ((Number(total) * numbers.usdrate) / 100000000).toFixed(2);
+    if (usd < 1) {
+      document.getElementById('balanceusd').innerHTML=(usd * 100).toFixed(0) + "¢";
+    } else {
+      document.getElementById('balanceusd').innerHTML="$" + usd;
+    }
+    
+    
+    
+    /*
     if (this.onscreenElementName != null) {
       document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
 
       if(document.getElementById('satoshiamount'))
         document.getElementById('satoshiamount').innerHTML = total;
 
-      /*
+      
       if (total < 2000 && this.showwarning) {
         var lowfundsElement=document.getElementById('lowfundswarning');
         if(lowfundsElement){
@@ -121,8 +134,8 @@ class UTXOPool {
       }
       if (total >= 2000) {
         document.getElementById('lowfundswarning').style.display = 'none';
-      }*/
-    }
+      }
+    }*/
 
     return total;
   }

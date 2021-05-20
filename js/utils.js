@@ -119,11 +119,11 @@ function dslite(input) {
 }
 
 
-var debuginfo="";
+var debuginfo = "";
 
 function updateStatus(message) {
   document.getElementById("status").innerHTML = message;
-  debuginfo=message+'\n'+debuginfo;
+  debuginfo = message + '\n' + debuginfo;
 }
 
 function toHexString(byteArray) {
@@ -269,11 +269,11 @@ function balanceString(total, includeSymbol) {
   if (dropdowns.currencydisplay == "BCH" || numbers.usdrate === undefined || numbers.usdrate === 0) {
     //var balString = (Number(total) / 1000).toFixed(3);
     //balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
-    var balString = ""+Number(total);
-    if(balString.length>3){
+    var balString = "" + Number(total);
+    if (balString.length > 3) {
       balString = Number(balString.substr(0, balString.length - 3)).toLocaleString() + "k";
-    }else{
-      balString=Number(total);
+    } else {
+      balString = Number(total);
     }
 
     if (includeSymbol) {
@@ -375,7 +375,7 @@ var delay = function (elem, callback, target) {
   var timeout = null;
   elem.onmouseover = function () {
     // Set timeout to be a timer which will invoke callback after 1s
-    timeout = setTimeout(function () { callback(target) }, 300);
+    timeout = setTimeout(function () { callback(target) }, 1000);
   };
 
   elem.onmouseout = function () {
@@ -442,6 +442,50 @@ function getBrowserLanguageCode() {
   return src;
 }
 
-function changeClass(element, newClass){
-  element.className=newClass;
+function changeClass(element, newClass) {
+  element.className = newClass;
 }
+
+//Fade in, move Fareed
+
+function elementInViewport2(ele, newclass) {
+  if (ele) {
+    var elements = Array.from(ele);
+    for (let i = 0; i < elements.length; i++) {
+      let el = elements[i];
+      var top = el.offsetTop;
+      var left = el.offsetLeft;
+      var width = el.offsetWidth;
+      var height = el.offsetHeight;
+
+      while (el.offsetParent) {
+        el = el.offsetParent;
+        top += el.offsetTop;
+        left += el.offsetLeft;
+      }
+
+      if (
+        top < window.pageYOffset + window.innerHeight &&
+        left < window.pageXOffset + window.innerWidth &&
+        top + height > window.pageYOffset &&
+        left + width > window.pageXOffset
+      ) {
+        elements[i].setAttribute('class', newclass);
+      }
+    }
+  }
+}
+
+function setVisibleContentFinal(){
+  if (document.getElementsByClassName('post-list-li')) {
+    elementInViewport2(document.getElementsByClassName('post-list-li'),'post-list-final');
+  }
+}
+
+
+//When item is scrolled into view, it is set to fade in
+window.addEventListener('scroll', function (e) {
+    elementInViewport2(document.getElementsByClassName('post-list-li'),'post-list-item');
+});
+
+
