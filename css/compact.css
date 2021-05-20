@@ -277,7 +277,7 @@ a {
   object-fit: cover;
 }
 .memberpicsmallcompact,
-img.memberpicturesmallpost{
+img.memberpicturesmallpost {
   height: 2rem;
   width: 2rem;
   border-radius: 100%;
@@ -427,10 +427,10 @@ Use important, because we always want profile card pics to be this size*/
   padding: 2em 0.875rem;
   border: none;
 }
-/* #messageslist li a:hover {
-  color: #fff !important;
-  border-color: #61aff0 !important;
-} */
+/*  message send input */
+#messagesanchor .content #sendmessagecontainer #sendmessagebox{
+
+}
 /* send message hover effect */
 #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"],
 #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"] {
@@ -441,26 +441,25 @@ Use important, because we always want profile card pics to be this size*/
   color: #fff !important;
 }
 /* to make consistent space between navbar & content*/
-.mainbodywrapper #posts .itemlist ol.posts{
-  margin-top:0px;
+.mainbodywrapper #posts .itemlist ol.posts {
+  margin-top: 0px;
 }
-
+/* 
 #sendmessagecontainer{
-  height: 1px;
-}
-.notificationitem .notificationminheight{
+  min-height: 1px;
+} */
+.notificationitem .notificationminheight {
   position: relative;
 }
-.notificationitem .notificationIcon{
+.notificationitem .notificationIcon {
   display: block;
   position: absolute;
   left: -30px;
-  top:18px;
+  top: 18px;
 }
 
-.notificationitem .notificationIcon img{
+.notificationitem .notificationIcon img {
   outline: none;
-  width: 24px;
 }
 #notifications ul.notificationslist li {
   border: none;
@@ -490,6 +489,15 @@ Use important, because we always want profile card pics to be this size*/
   left: -5em;
 }
 
+/* close button for tip& like */
+.scoreexpanded .closebutton a, 
+.remembersexpanded .closebutton a{
+  border-color: #61aff0;
+}
+.scoreexpanded .closebutton a:hover,
+ .remembersexpanded .closebutton a:hover{
+   background-color: #61aff0;
+ }
 .profilepreview {
   animation: postFadein 0.5s;
   -moz-animation: postFadein 0.5s; /* Firefox */
@@ -521,8 +529,8 @@ Use important, because we always want profile card pics to be this size*/
   left: -40px;
   top: 1.5rem;
 }
-.post-right-contents .replyprofilepic img ,
-.comment .replyprofilepic img.memberpicturesmallpos{
+.post-right-contents .replyprofilepic img,
+.comment .replyprofilepic img.memberpicturesmallpos {
   height: 2rem;
   width: 2rem;
   border-radius: 100%;
@@ -896,14 +904,14 @@ img {
   right: 0px;
   top: 50%;
   transform: translateY(-50%);
-  width: 30px;
+  width: 33px;
   height: 100%;
   background-repeat: no-repeat;
   background-size: auto;
   background-position: center;
   background-color: #61aff0;
-  border-bottom-right-radius: 0.25rem;
-  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 45px;
+  border-top-right-radius: 45px;
 }
 a {
   color: #61aff0 !important;
@@ -916,7 +924,11 @@ a {
   color: #aaa;
 }
 .newheader .searchwrapper .usersearchnav {
-  width: 100%;
+  width: 100%;  
+  border-radius: 45px;
+}
+.newheader .searchwrapper .usersearchnav:focus{
+  border: 1px solid #61aff0;
 }
 .newheader .majornavbuttonsclass {
   display: flex;
@@ -1032,7 +1044,7 @@ a {
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 21px rgb(0 0 0 / 10%);
   /* min-width: 100%; */
   width: 25rem;
-  right:-40px;
+  right: -40px;
   display: none;
 }
 
@@ -1040,7 +1052,6 @@ a {
   right: 130px;
   /* left: 43px; */
 }
-
 
 .newheader #usersearchnavresults .loading {
   height: fit-content !important;
@@ -1065,7 +1076,7 @@ a {
   display: none;
 }
 .newheader .memberlogoimagefull {
-   width: 150px;
+  width: 150px;
   height: 44px;
   object-fit: contain;
   max-width: unset !important;
@@ -1077,7 +1088,7 @@ a {
 
 /* active tab */
 nav.timefilters,
-nav.contentfilters{
+nav.contentfilters {
   position: relative;
   display: block;
   background-color: #f6f9ff;
@@ -1100,12 +1111,12 @@ nav.contentfilters a {
 }
 
 .posts .timefilteron {
-   z-index: 1;
-   background-color: #61aaff !important;
-    border-radius: 36px;
-    font-weight: 700;
-    color: black;
-    color: #fff !important;
+  z-index: 1;
+  background-color: #61aaff !important;
+  border-radius: 36px;
+  font-weight: 700;
+  color: black;
+  color: #fff !important;
 }
 
 .posts .timefilters,
@@ -1121,13 +1132,14 @@ nav.contentfilters a {
   max-width: 70px;
   min-width: 55px;
 }
-.posts .timefilters a:hover, .posts .contentfilters a:hover{
+.posts .timefilters a:hover,
+.posts .contentfilters a:hover {
   background-color: #61aaff !important;
   border-radius: 36px;
   font-weight: 700;
   color: #fff !important;
 }
-.posts .timefilters a:nth-child(1){
+.posts .timefilters a:nth-child(1) {
   margin-right: 4px;
   margin-left: 0;
 }
@@ -1339,7 +1351,6 @@ nav.contentfilters a {
 /* *********** POST follow button **************/
 .profilepreview .profile-actions .profilepreviewfollowbutton a {
   background: #61aff0;
-  color: #fff !important;
 }
 .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
   background: #2291eb;
@@ -1353,27 +1364,7 @@ nav.contentfilters a {
 .navbuttons a:hover {
   background-color: #2291eb;
 }
-/* topiclistanchor */
-table thead tr th,
-table thead tr td {
-  background: #61aff0;
-}
-tbody tr td a[href^="#modmorelink"],
-tbody tr td a[href^="javascript:;"] {
-  color: #fff !important;
-}
-tbody tr td a[href^="#modmorelink"],
-tbody tr td a[href^="javascript:;"] {
-  background: #61aff0;
-}
-tbody tr td a[href^="#modmorelink"]:hover,
-tbody tr td a[href^="javascript:;"]:hover {
-  background: #2291eb;
-}
-/* topicmeta section */
-/* #topicmeta tbody tr td a {
-  color: #fff !important;
-} */
+
 #topicmeta .content h1.topicheader {
   overflow-wrap: break-word;
 }
@@ -1385,42 +1376,42 @@ tbody tr td a[href^="javascript:;"]:hover {
   border: none;
 }
 /* profile page tabs */
-.memberheader .membertabs{
+.memberheader .membertabs {
   display: flex;
-    justify-content: flex-end;
-    width: 770px;
-    margin: 0 auto;
-    margin-bottom: 1rem;
+  justify-content: flex-end;
+  width: 770px;
+  margin: 0 auto;
+  margin-bottom: 1rem;
 
-    position: relative;
-    background-color: #f6f9ff;
-    padding: 10px;
-    border-radius: 40px;
-    background: linear-gradient(to right, #fff 12%, #f6f9ff 100%);
+  position: relative;
+  background-color: #f6f9ff;
+  padding: 10px;
+  border-radius: 40px;
+  background: linear-gradient(to right, #fff 12%, #f6f9ff 100%);
 }
-.memberheader .membertabs a{  
+.memberheader .membertabs a {
   position: relative;
   padding: 3px 10px;
-   margin-left: 5px;
+  margin-left: 5px;
   transition: all 0.3s ease;
-   max-width: 100px;
+  max-width: 100px;
 }
-.memberheader .membertabs a:hover{  
+.memberheader .membertabs a:hover {
   position: relative;
   background-color: #61aaff !important;
   color: #fff !important;
   border-radius: 36px;
   max-width: 100px;
 }
-.memberheader .membertabs a.timefilteron{
-   z-index: 1;
-    background-color: #61aaff !important;
-    border-radius: 36px;
-    font-weight: 700;
-    color: black;
-    color: #fff !important;
+.memberheader .membertabs a.timefilteron {
+  z-index: 1;
+  background-color: #61aaff !important;
+  border-radius: 36px;
+  font-weight: 700;
+  color: black;
+  color: #fff !important;
 }
-.memberpiccontainer label{
+.memberpiccontainer label {
   display: none !important;
 }
 .memberpiccontainer label {
@@ -1445,7 +1436,7 @@ tbody tr td a[href^="javascript:;"]:hover {
 #memberanchor .content .memberprofiletextContainer {
   margin-top: 100px;
 }
-#memberanchor .content .memberprofiletextContainer label{
+#memberanchor .content .memberprofiletextContainer label {
   display: none !important;
 }
 #memberanchor .content .memberInfoTextContainer {
@@ -1456,7 +1447,7 @@ tbody tr td a[href^="javascript:;"]:hover {
 #memberanchor .content .memberInfoTextContainer label {
   display: none;
 }
-#memberanchor .content .memberInfoTextContainer span{
+#memberanchor .content .memberInfoTextContainer span {
   font-weight: 600;
   font-size: 1.2rem;
 }
@@ -1477,7 +1468,7 @@ tbody tr td a[href^="javascript:;"]:hover {
 #memberanchor .content .memberstatsButtons div {
   margin-right: 10px;
 }
-#memberanchor .content #membernametext a.populate-send-message{
+#memberanchor .content #membernametext a.populate-send-message {
   border: 1px solid #61aff0;
   background: transparent !important;
   color: #61aff0 !important;
@@ -1502,7 +1493,7 @@ tbody tr td a[href^="javascript:;"]:hover {
   font-size: 1rem;
   border: none;
 }
-#memberanchor .content .memberstats .follow a{
+#memberanchor .content .memberstats .follow a {
   border: 1px solid #61aff0;
   background: transparent !important;
   color: #61aff0 !important;
@@ -1601,7 +1592,7 @@ tbody tr td a[href^="javascript:;"]:hover {
     border-radius: 10px;
 } */
 #memberanchor .content .memberstats .muters,
- #memberanchor .content .memberstats .muting{
+#memberanchor .content .memberstats .muting {
   display: none;
 }
 .memberstats div a {
@@ -1617,22 +1608,22 @@ tbody tr td a[href^="javascript:;"]:hover {
 #memberanchor .content .memberstats div {
   border: none;
 }
-#memberanchor .content .memberstats .muters, 
-#memberanchor .content .memberstats .muting{
-    display: none;
+#memberanchor .content .memberstats .muters,
+#memberanchor .content .memberstats .muting {
+  display: none;
 }
-#memberanchor .content .memberstats .following, 
-#memberanchor .content .memberstats .followers{
-    position: absolute;
-    top:20px;
-    margin:0px;
-    padding:0;
+#memberanchor .content .memberstats .following,
+#memberanchor .content .memberstats .followers {
+  position: absolute;
+  top: 20px;
+  margin: 0px;
+  padding: 0;
 }
-#memberanchor .content .memberstats .followers{
-  left:340px;
+#memberanchor .content .memberstats .followers {
+  left: 340px;
 }
-#memberanchor .content .memberstats .following{
-  left:265px;
+#memberanchor .content .memberstats .following {
+  left: 265px;
 }
 label#memberblockexplorer {
   display: none;
@@ -1688,7 +1679,7 @@ label#memberblockexplorer {
   font-weight: 600; */
   line-height: 1.8rem;
 }
-#toolsanchor .content #walletbalance span.approximatelyequal{
+#toolsanchor .content #walletbalance span.approximatelyequal {
   display: block;
   text-align: center;
   font-size: 1.5rem;
@@ -1842,23 +1833,23 @@ label#memberblockexplorer {
   left: -23px;
 }
 /* Private message */
-#messagesanchor #messageschoice{
-    position: relative;
-    display: block;
-    background-color: #f6f9ff;
-    padding: 10px;
-    border-radius: 40px;
-    overflow: hidden;
+#messagesanchor #messageschoice {
+  position: relative;
+  display: block;
+  background-color: #f6f9ff;
+  padding: 10px;
+  border-radius: 40px;
+  overflow: hidden;
 }
-#messagesanchor #messageschoice a{
+#messagesanchor #messageschoice a {
   padding: 3px 10px;
-    margin-left: 3px;
-    transition: all 0.3s ease;
-    min-width: 70px;
-    text-align: center;
-    display: inline-block;
+  margin-left: 3px;
+  transition: all 0.3s ease;
+  min-width: 70px;
+  text-align: center;
+  display: inline-block;
 }
-#messagesanchor #messageschoice a:hover{
+#messagesanchor #messageschoice a:hover {
   z-index: 1;
   background-color: #61aaff !important;
   border-radius: 36px;
@@ -1866,22 +1857,36 @@ label#memberblockexplorer {
   color: black;
   color: #fff !important;
 }
-#messagesanchor div#messageschoice a:first-child{
+#messagesanchor div#messageschoice a:first-child {
   z-index: 1;
-    background-color: #61aaff !important;
-    border-radius: 36px;
-    font-weight: 700;
-    color: black;
-    color: #fff !important;
+  background-color: #61aaff !important;
+  border-radius: 36px;
+  font-weight: 700;
+  color: black;
+  color: #fff !important;
 }
 #messagesanchor #messageschoice a.timefilteron {
   z-index: 1;
   background-color: #61aaff !important;
-   border-radius: 36px;
-   font-weight: 700;
-   color: black;
-   color: #fff !important;
+  border-radius: 36px;
+  font-weight: 700;
+  color: black;
+  color: #fff !important;
 }
+/* #messagesanchor .content #sendmessagecontainer input
+ {   
+  border: 1px solid #61aff0;
+  border-radius: 45px;
+ }
+ #messagesanchor .content #sendmessagecontainer textarea{
+  border: 1px solid #61aff0;
+  border-radius: 10px;
+ }
+
+#messagesanchor .content #sendmessagecontainer input:focus,
+ #messagesanchor .content #sendmessagecontainer textarea:focus{
+ box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+ } */
 /* POST ON MAP */
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar {
   width: 10px;
@@ -1911,10 +1916,135 @@ label#memberblockexplorer {
   background: #2291eb !important;
 }
 
+/* tag page table design*/
+/* topiclistanchor */
+#topiclistanchor .content {
+  box-shadow: 0 13px 21px 6px #fafaf9;
+  border: none;
+}
+table thead tr{
+  border: none;
+}
+table thead tr th,
+table thead tr td {
+  background: transparent;
+  color: #333;
+  padding-bottom: 20px;
+}
+tbody tr td a[href^="#modmorelink"],
+tbody tr td a[href^="javascript:;"] {
+  color: #fff !important;
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+  border-radius: 45px;
+}
+tbody tr td a[href^="#modmorelink"],
+tbody tr td a[href^="javascript:;"] {
+  background: #61aff0;
+}
+tbody tr td a[href^="#modmorelink"]:hover,
+tbody tr td a[href^="javascript:;"]:hover {
+  background: #2291eb;
+  box-shadow: none;
+}
+table tbody tr:nth-child(even){
+  background: transparent;
+}
+.tlaction a {
+  box-shadow: 0px 0px 37px 6px rgb(0 0 0 / 10%);
+  border-radius: 45px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+}
+
+/* setting page  */
+#settingsanchor .content #settingsnametextbutton,
+#settingsanchor .content #settingsprofiletextbutton {
+  color: #fff;
+  border-color: #61aff0;
+}
+.customcheckbox input:checked ~ label:before {
+  background: #61aff0;
+}
+#settingsanchor .cachedeletebutton,
+.allownotifications a.notificationbutton {
+  line-height: 1.2;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  border-radius: 0.25rem;
+  background: transparent;
+  padding: 0.5rem 1.5rem;
+}
+.allownotifications a.notificationbutton {
+  color: #61aff0 !important;
+  border: 1px solid #61aff0 !important;
+}
+#settingsanchor .cachedeletebutton:hover,
+.allownotifications a.notificationbutton:hover {
+  background: #61aff0;
+  color: #fff !important;
+}
+#settingsanchor .cachedeletebutton {
+  border: 1px solid #61aff0;
+  position: relative;
+  top: 16px;
+}
+#settingsanchor input,
+#settingsanchor select,
+.formgroup input {
+  border: 1px solid #61aff0;
+  border-radius: 45px;
+}
+#settingsanchor textarea{
+  border: 1px solid #61aff0;
+  border-radius: 10px;
+}
+/* textarea scrollbar design */
+#settingsanchor textarea::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #f1f1f1;
+}
+
+#settingsanchor textarea::-webkit-scrollbar
+{
+	width: 8px;
+	background-color: #f1f1f1;
+}
+
+#settingsanchor textarea::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #c1c1c1;
+}
+
+#settingsanchor input:focus,
+#settingsanchor select:focus,
+#settingsanchor textarea:focus,
+.formgroup input:focus{
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+}
+
+.formgroup button {
+  border: 1px solid #61aff0;
+  border-radius: 45px;
+}
+#settingsanchor .content #settingsnametextbutton:disabled, #settingsanchor .content #settingsprofiletextbutton:disabled{
+  border: none !important;
+  border-radius: 45px;
+}
+textarea:disabled, input:disabled{
+  background-color: #ddeefc  !important;
+}
+
+
+/* footer section */
+footer{
+  background: #f6f9ff;
+}
 @media (max-width: 1024px) {
-  #memberanchor .content {
-    height: 100vh;
-  }
   .newheader .headercentergroup,
   .newheader .headerrightgroup,
   .newheader .headerleftgroup {
@@ -1942,16 +2072,13 @@ label#memberblockexplorer {
   #memberblockexplorer {
     top: 480px;
   }
-  /* .memberstats {
-    margin-top: 50px;
-  } */
 }
 /* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
 @media (max-width: 900px) {
   .newheader {
     padding: 0px;
   }
-  .memberlogo{
+  .memberlogo {
     margin-left: 10px;
   }
   .newheader .headercentergroup {
@@ -1974,6 +2101,9 @@ label#memberblockexplorer {
   }
   .newheader .pagetitleclass .pageTitlediv {
     display: none;
+  }
+  #notifications{
+    max-width: 651px;
   }
 }
 /* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
@@ -2091,15 +2221,15 @@ label#memberblockexplorer {
   .memberstats {
     margin-top: 40px;
   }
-  #memberanchor .content .memberstats .following{
+  #memberanchor .content .memberstats .following {
     left: 115px;
     top: 112px;
   }
-  #memberanchor .content .memberstats .followers{
+  #memberanchor .content .memberstats .followers {
     left: 28px;
     top: 112px;
   }
-  #memberanchor .content .memberprofiletextContainer{
+  #memberanchor .content .memberprofiletextContainer {
     margin-top: 135px;
   }
   /* wallet page  */
@@ -2115,7 +2245,7 @@ label#memberblockexplorer {
   #toolsanchor .content #walletlegacyaddress span {
     margin-left: 10px !important;
   }
-  #toolsanchor .content #walletbalance span.balanceusd{
+  #toolsanchor .content #walletbalance span.balanceusd {
     margin-left: 26%;
   }
   #walletsendfunds input#sendfundsaddress {
@@ -2156,44 +2286,44 @@ label#memberblockexplorer {
     top: 68px;
     right: 40%;
   }
+  #notifications{
+    max-width: 540px;
+  }
 }
 /*  */
 @media (max-width: 600px) {
-  /* .notificationitem .notificationIcon{
-    position: unset;
-    padding-left: 10px;
-    padding-top: 10px;
-  } */
-  #notifications{
+  #notifications {
     max-width: 400px;
   }
 
-  .notificationitem .notificationIcon{
+  .notificationitem .notificationIcon {
     left: -30px;
   }
-  .newheader .alertcount{
+  .newheader .alertcount {
     left: 50px;
-    margin-left:0;
+    margin-left: 0;
   }
+  
 }
 @media (max-width: 500px) {
   .newheader {
     grid-gap: 0px;
   }
-  #memberanchor .content {
-    height: 100vh;
+
+  /* lightbox */
+  #loginbox{
+    max-width: 340px;
   }
-  #notifications{
+  #notifications {
     max-width: 380px;
   }
   /* tabs */
   .posts .timefilters a,
-   .posts .contentfilters a{
-
+  .posts .contentfilters a {
     min-width: 44px;
     padding: 5px 0;
-}
-  .posts .timefilters a{
+  }
+  .posts .timefilters a {
     max-width: 55px;
   }
   #membertabs {
@@ -2201,7 +2331,7 @@ label#memberblockexplorer {
     justify-content: flex-end;
   }
   .memberheader .membertabs a {
-    margin: 5px 15px 5px 0px;
+    margin: 5px 0px 5px 0px;
   }
   /* fixed navbar */
   .newheader .headercentergroup,
@@ -2213,7 +2343,7 @@ label#memberblockexplorer {
   .newheader .headerrightgroup {
     width: unset;
   }
-  #newpost #newpostprofilepic{
+  #newpost #newpostprofilepic {
     left: 0px;
   }
   /* fixed-bottom bar */
@@ -2232,7 +2362,7 @@ label#memberblockexplorer {
     width: unset;
     grid-gap: 0px;
   }
-  .newheader .alertcount{
+  .newheader .alertcount {
     right: 10px;
     left: unset;
   }
@@ -2246,24 +2376,24 @@ label#memberblockexplorer {
   .newheader .searchwrapper .dropdown button {
     font-size: 30px;
   }
-  .newheader .searchwrapper #usersearchnavresults{
+  .newheader .searchwrapper #usersearchnavresults {
     transform: translateX(-59%);
   }
-  .newheader .searchwrapper #usersearchnavresults{
+  .newheader .searchwrapper #usersearchnavresults {
     width: 20rem;
   }
   /* profile */
-  #memberanchor .content .memberprofiletextContainer{
+  #memberanchor .content .memberprofiletextContainer {
     margin-top: 190px;
   }
   #memberanchor .content .memberstats .followers,
-  #memberanchor .content .memberstats .following{
+  #memberanchor .content .memberstats .following {
     top: 160px;
   }
-  #memberanchor .content .memberstats .follow a{
+  #memberanchor .content .memberstats .follow a {
     right: 0px;
   }
-  #memberanchor .content .memberInfoTextContainer{
+  #memberanchor .content .memberInfoTextContainer {
     top: 130px;
   }
   #memberanchor .content #membernametext a.populate-send-message {
@@ -2278,21 +2408,17 @@ label#memberblockexplorer {
     top: 80px;
     right: 148px;
   }
-  #memberanchor .content .memberstats .mute a{
+  #memberanchor .content .memberstats .mute a {
     right: 120px;
   }
   #memberprofilelinks div a {
     margin: 5px;
   }
-  
+
   #memberanchor .content .memberstatsButtons {
     left: 26px;
     top: 80px;
     flex-direction: row;
-  }
-  #memberanchor .content #memberlegacyaddress {
-    top: 315px;
-    width: 90%;
   }
   #memberlegacyaddress span#memberlegacyformat {
     margin-left: 0px;
@@ -2318,7 +2444,7 @@ label#memberblockexplorer {
   #memberanchor .content .memberstats div {
     margin: 5px !important;
   }
-  #memberanchor .content #memberprofiletext{
+  #memberanchor .content #memberprofiletext {
     line-height: 1.2rem;
   }
   /* wallet  media quries*/
@@ -2331,7 +2457,7 @@ label#memberblockexplorer {
   #toolsanchor .content #walletsendfunds p {
     margin-left: 0 !important;
   }
-  #toolsanchor .content #walletbalance span.balanceusd{
+  #toolsanchor .content #walletbalance span.balanceusd {
     margin-left: 0;
   }
   #cashaddrformatdiv .qrcodeclick,
@@ -2374,42 +2500,73 @@ label#memberblockexplorer {
     margin-bottom: 10px;
   }
   /* notifcation icons */
-  /* .notificationitem .notificationIcon{
-    position: unset;  
-    padding-left: 10px;
-    padding-top: 10px;
-  } */
- /* notifcation icons */
-   .notificationitem .notificationIcon{
+  .notificationitem .notificationIcon {
     left: -25px;
+  }
+  #settingsanchor .cachedeletebutton{
+    display: block;
   }
 }
 /* extra   */
 @media (max-width: 400px) {
-  #notifications{
-     max-width: 300px;
+  #notifications {
+    max-width: 320px;
   }
-  .notificationitem .notificationIcon{
-    left: -25px;
+  .notificationitem .notificationIcon {
+    left: -20px;
   }
+  .notificationitem .notificationIcon img{
+    width: 20px;
+  }
+  .memberheader .membertabs a {
+    padding: 3px 7px;
+  }
+  /* #notifications {
+    max-width: 240px;
+  } */
 }
 @media (max-width: 320px) {
   #membertabs {
-    max-width: 100%;
-    justify-content: center;
+    max-width: 90%;
+    justify-content: flex-end;
+    background: #f6f9ff;
   }
   .memberheader .membertabs a {
-    margin: 5px 15px 5px 0px;
+    margin: 0px 5px 0px 0px;
+    padding: 3px 10px;
   }
-  #notifications{
+  #notifications {
     max-width: 540px;
- }
+  }
+  /* profile */
   .memberpiccontainer span.memberpiclarge {
     position: relative;
     top: 0;
     left: 0;
   }
-  .newheader .searchwrapper #usersearchnavresults{
+  #memberanchor .content .memberInfoTextContainer {
+    top: 233px;
+  }
+  #memberanchor .content .memberstats .mute {
+    top: 172px;
+    right: 120px;
+  }
+  #memberanchor .content .memberstats .follow {
+    top: 172px;
+    right: 142px;
+  }
+  #memberanchor .content .memberstats .followers,
+  #memberanchor .content .memberstats .following {
+    top: 264px;
+  }
+  #memberanchor .content #membernametext a.populate-send-message {
+    padding: 0.5rem 0.81rem;
+  }
+  #memberanchor .content .memberstats .mute a,
+  #memberanchor .content .memberstats .follow a {
+    padding: 0.3rem 0.81rem;
+  }
+  .newheader .searchwrapper #usersearchnavresults {
     transform: translateX(-58%);
   }
   .memberpiccontainer label {
@@ -2417,22 +2574,26 @@ label#memberblockexplorer {
     left: 26px;
     top: 168px;
   }
-  .posts .timefilters a, .posts .contentfilters a{
+  .posts .timefilters a,
+  .posts .contentfilters a {
     max-width: 47px;
     padding: 5px 0px;
     margin-left: 0px;
   }
-  .posts .contentfilters a{
+  .posts .contentfilters a {
     margin-left: 10px;
   }
-  .notificationitem .notificationIcon{
+  .notificationitem .notificationIcon {
     position: unset;
     padding-left: 10px;
     padding-top: 15px;
   }
   #memberanchor .content #membernametext a.populate-send-message {
     right: 10px;
-    top: 160px;
+    top: 178px;
+  }
+  #memberanchor .content .memberprofiletextContainer {
+    margin-top: 168px;
   }
   #memberprofilelinks div a {
     margin: 5px;
@@ -2463,7 +2624,7 @@ label#memberblockexplorer {
   .newheader .memberlogoimage {
     width: 30px;
     height: 30px;
-}
+  }
   .newheader .headerleftgroup {
     grid-gap: 5px;
   }

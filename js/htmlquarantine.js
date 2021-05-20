@@ -848,7 +848,7 @@ function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, ra
 }
 
 function getRatingComment(qaddress, data) {
-    return `<input size="30" maxlength="190" id="memberratingcommentinputbox` + san(qaddress) + `" value="` + (data.length > 0 ? ds(data[0].ratingreason) : "") + `" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+    return `<input placeholder="`+getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...')+`" size="30" maxlength="190" id="memberratingcommentinputbox` + san(qaddress) + `" value="` + (data.length > 0 ? ds(data[0].ratingreason) : "") + `" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
 function getMemberRatingHTML(qaddress, ratingScore) {

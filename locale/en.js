@@ -334,6 +334,8 @@ dictionary.en=
   "VVwallet": "Wallet",
   "nothinghere2": "Nothing here yet, Subscribe to some more tags!",
   "nothinginfeed2": "Nothing in your feed, Follow some more people!",
+  "VVratinginstruction":"Add a comment and click on a star rating to rate this member..."
+
 }
   
   ;
