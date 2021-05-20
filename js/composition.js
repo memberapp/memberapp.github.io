@@ -74,13 +74,13 @@ function memorandumPreview() {
 
     var isfollowing = true;
 
-    var repostedHTML = document.getElementById('quotepost').innerHTML;
+    var repostedHTML = document.getElementById('quotepost').outerHTML;
     
 
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML)
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', document.getElementById('memorandumtopic').value, null, 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime);
+        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', document.getElementById('memorandumtopic').value, 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0)
+        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', document.getElementById('memorandumtopic').value, null, 0, '',pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0);
 
         addDynamicHTMLElements();
     }
@@ -135,7 +135,7 @@ function geopost() {
     var geohash = encodeGeoHash(lat, lon);
 
 
-    document.getElementById('newpostgeocompleted').innerText = "";
+    document.getElementById('newpostgeocompleted').textContent = "";
     document.getElementById('newpostgeobutton').style.display = "none";
     document.getElementById('newpostgeostatus').style.display = "block";
     document.getElementById('newpostgeostatus').value = getSafeTranslation('posting',"Posting...");
@@ -156,15 +156,15 @@ function postmemorandum() {
             alert(getSafeTranslation('nomemo',"No Memo - Try adding something in the memo box"));
             return false;
         }
-    }else{
+    }/*else{
         if (posttext.length == 0 && topic.length == 0) {
             alert(getSafeTranslation('nopost',"No post or topic. Try a regular remember instead."));
             return false;
         }
-    }
+    }*///nb allow empty remember for compact theme
     //topic may be empty string
 
-    document.getElementById('newpostmemorandumcompleted').innerText = "";
+    document.getElementById('newpostmemorandumcompleted').textContent = "";
     document.getElementById('newpostmemorandumbutton').style.display = "none";
     document.getElementById('newpostmemorandumstatus').style.display = "block";
     document.getElementById('newpostmemorandumstatus').value = getSafeTranslation('sendingtitle',"Sending Title...");
@@ -188,7 +188,7 @@ function sendRepostNotification(txid,divForStatus, topic, newtxid){
 
     var replytext=getSafeTranslation('postremembered',"Your post was remembered");
     if(topic){
-        replytext+=" "+getSafeTranslation('intopic',"in topic")+" "+topic;
+        replytext+=" "+getSafeTranslation('intopic',"in tag")+" "+topic;
     }
     replytext+=" https://member.cash/p/"+newtxid.substr(0,10);
     var replyHex = new Buffer(replytext).toString('hex');

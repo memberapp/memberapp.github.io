@@ -1,7 +1,8 @@
 "use strict";
 
-function displayContentBasedOnURLParameters() {
+function displayContentBasedOnURLParameters(suggestedurl) {
 
+    
     
     if (backForwardEvent) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
@@ -10,11 +11,12 @@ function displayContentBasedOnURLParameters() {
     }
 
     //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
-
-    var path = window.location.pathname;
-
-    var url = window.location.href;
-
+    if(suggestedurl){
+        var url = suggestedurl;
+    }else{
+        var url = window.location.href;
+    }
+    
     var action;
 
     if (url.indexOf('#') != -1) {
@@ -43,9 +45,9 @@ function displayContentBasedOnURLParameters() {
     }
 
     if (action.startsWith("show")) {
-        setOrder('orderselector', getParameterByName("order"));
-        setOrder('contentselector', getParameterByName("content"));
-        setOrder('filterselector', getParameterByName("filter"));
+        //setOrder('orderselector', getParameterByName("order"));
+        //setOrder('contentselector', getParameterByName("content"));
+        //setOrder('filterselector', getParameterByName("filter"));
 
         showPostsNew(
             sanitizeAlphanumeric(getParameterByName("order")),
@@ -61,6 +63,8 @@ function displayContentBasedOnURLParameters() {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
         showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")));
+    } else if (action.startsWith("profile")) {
+        showMember(sanitizeAlphanumeric(pubkey, ''));
     } else if (action.startsWith("member")) {
         showMember(sanitizeAlphanumeric(getParameterByName("qaddress")), getParameterByName("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -71,8 +75,8 @@ function displayContentBasedOnURLParameters() {
         showBlockers(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("blocking")) {
         showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
-    } else if (action.startsWith("ratings")) {
-        showRatings(sanitizeAlphanumeric(getParameterByName("qaddress")));
+    } else if (action.startsWith("rep")) {
+        showReputation(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("posts")) {
         showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
     } else if (action.startsWith("feed")) {
@@ -93,16 +97,19 @@ function displayContentBasedOnURLParameters() {
     } else if (action.startsWith("settings")) {
         showSettings();
     } else if (action.startsWith("messages")) {
-        showMessages();
-    }
-    else if (action.startsWith("new")) {
+        showMessages(sanitizeAlphanumeric(getParameterByName("messagetype")));
+    } else if (action.startsWith("new")) {
         showNewPost(sanitizeAlphanumeric(getParameterByName("txid")));
     } else if (action.startsWith("map")) {
         showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
-    } else if (action.startsWith("myfeed")) {
+    } else if (action.startsWith("myfeed") || action.startsWith("mypeople")) {
         showMyFeed();
-    } else if (action.startsWith("tools")) {
-        showTools();
+    } else if (action.startsWith("mytags")) {
+        showMyTags();
+    } else if (action.startsWith("firehose")) {
+        showFirehose();
+    } else if (action.startsWith("wallet")) {
+        showWallet();
     } else if (action.startsWith("login")) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
@@ -137,6 +144,8 @@ function hideAll() {
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
     document.getElementById('memberanchor').style.display = "none";
+    document.getElementById('memberheader').style.display = "none";
+    
     document.getElementById('newpost').style.display = "none";
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
@@ -147,6 +156,15 @@ function hideAll() {
     document.getElementById('messagesanchor').style.display = "none";
     document.getElementById('topicmeta').style.display = "none";
 
+}
+
+function setPageTitleFromID(translationID){
+    var pageTitle=getUnSafeTranslation(translationID);
+    setPageTitleRaw(pageTitle);
+}
+
+function setPageTitleRaw(newContent){
+    document.getElementById('pagetitledivid').textContent = newContent;
 }
 
 function show(theDiv) {
@@ -162,16 +180,19 @@ function hide(theDiv) {
     document.getElementById(theDiv).style.display = "none";
 }
 
-function showTools() {
-    show('toolsanchor');
+function showWallet() {
+    setPageTitleFromID("VVwallet");
+    show('toolsanchor');    
 }
 
 function showLogin() {
     show("loginbox");
+    setPageTitleFromID("VV0102a");
 }
 
 function showMap(geohash, posttrxid) {
     show("map");
+    setPageTitleFromID("VV0101");
     getAndPopulateMap(geohash, posttrxid);
     document.getElementById('map').style.display = "block";
 }
@@ -182,14 +203,27 @@ function hideMap() {
     document.getElementById('map').style.display = "none";
 }
 
-function showRatings(qaddress) {
-    show('anchorratings');
+function showReputation(qaddress) {
+    
     getAndPopulateRatings(qaddress);
+    getAndPopulateCommunityRatings(qaddress);
+
+    if (pubkey) {
+        getAndPopulateTrustGraph(pubkey, qaddress);
+    } else {
+        document.getElementById('trustgraph').style.display = "none";
+    }
+
+    show('community');
+    document.getElementById('memberheader').style.display = "block";
     document.getElementById('anchorratings').style.display = "block";
+    document.getElementById('trustgraph').style.display = "block";
+    
 }
 
 function showNewPost(txid) {
     show("newpost");
+    setPageTitleFromID("VV0096");
     document.getElementById('memorandumpreview').innerHTML = "";
     let topicNameHOSTILE = getCurrentTopicHOSTILE();
     //document.getElementById('memotopic').value = topicNameHOSTILE;
@@ -235,7 +269,7 @@ function showNotifications(start, limit, qaddress, txid) {
         showPosts(0, numbers.results, 'all');
         return;
     }
-
+    setPageTitleFromID("VV0095");
     getAndPopulateNotifications(start, limit, "notifications", pubkey, txid);
 
 }
@@ -247,6 +281,7 @@ function showSettings() {
         return;
     }*/
     hideAll();
+    setPageTitleFromID("VV0166");
     show('settingsanchor');
     getAndPopulateSettings();
     //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
@@ -268,7 +303,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
                 showMember(qaddress);
                 return;
             } else {
-                show('memberanchor');
+                show('memberheader');
                 document.getElementById('memberanchor').innerHTML =  getSafeTranslation('pagingidnotfount','This paging id not found.');
                 return;
             }
@@ -278,13 +313,16 @@ function showMember(qaddress, pagingIDHOSTILE) {
         return;
     }
 
-    show('memberanchor');
+    //show('header');
+    setPageTitleFromID("VV0063");
     getAndPopulateMember(qaddress);
-    getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
-    document.getElementById('memberanchor').style.display = "block";
-    document.getElementById('community').style.display = "block";
-    document.getElementById('anchorratings').style.display = "block";
-    document.getElementById('trustgraph').style.display = "block";
+    //getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
+    show("memberanchor");
+    document.getElementById('memberheader').style.display = "block";
+    //document.getElementById('memberanchor').style.display = "block";
+    //document.getElementById('memberposts').style.display = "none";
+    
+
 }
 
 //deprecated - now on member page
@@ -298,9 +336,10 @@ function showMemberPosts(start, limit, qaddress) {
     getAndPopulateNew('new', 'all', '', '', start, limit, 'memberposts', qaddress);
 }
 
-function showMessages(start, limit) {
+function showMessages(messagetype, start, limit) {
     show("messagesanchor");
-    getAndPopulateMessages(start, limit);
+    setPageTitleFromID("VV0047");
+    getAndPopulateMessages(messagetype, start, limit);
 }
 
 //These three should be refactored away
@@ -321,7 +360,17 @@ function showPFC(start, limit, page, pubkey, type) {
 
 function showMyFeed() {
     setTopic('');
-    getAndPopulateNew('new', 'posts', 'myfeed', 'myfeed', 0, numbers.results, 'posts', '');
+    getAndPopulateNew('new', 'posts', '', 'myfeed', 0, numbers.results, 'posts', '');
+}
+
+function showFirehose() {
+    setTopic('');
+    getAndPopulateNew('hot', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
+}
+
+function showMyTags() {
+    setTopic('');
+    getAndPopulateNew('new', 'posts', 'mytopics', 'everyone', 0, numbers.results, 'posts', '');
 }
 
 function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit, qaddress) {
@@ -339,13 +388,15 @@ function showTopic(start, limit, topicnameHOSTILE, type) {
 }
 
 function getCurrentTopicHOSTILE() {
-    var selector = document.getElementById('topicselector');
-    var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
-    return topicNameHOSTILE;
+    //var selector = document.getElementById('topicselector');
+    //var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
+    //return topicNameHOSTILE;
+    return "";
 }
 
 function showTopicList() {
     setTopic("");
+    setPageTitleFromID("VV0100");
     getAndPopulateTopicList(true);
 }
 
@@ -355,20 +406,20 @@ function postsSelectorChanged() {
     var selector;
 
     //orderselector
-    selector = document.getElementById('orderselector');
-    var order = selector.options[selector.selectedIndex].value;
+    //selector = document.getElementById('orderselector');
+    //var order = selector.options[selector.selectedIndex].value;
 
     //contentselector
-    selector = document.getElementById('contentselector');
-    var content = selector.options[selector.selectedIndex].value;
+    //selector = document.getElementById('contentselector');
+    //var content = selector.options[selector.selectedIndex].value;
 
     //topicselector
-    selector = document.getElementById('topicselector');
-    var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
+    //selector = document.getElementById('topicselector');
+    //var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
 
     //filterselector
-    selector = document.getElementById('filterselector');
-    var filter = selector.options[selector.selectedIndex].value;
+    //selector = document.getElementById('filterselector');
+    //var filter = selector.options[selector.selectedIndex].value;
 
     //These two statements may trigger page load twice on firefox but not on other browsers
 
@@ -400,10 +451,10 @@ function setOrder(selectorvalue, order) {
 
 function setTopic(topicNameHOSTILE) {
     //Warning, topicname may contain hostile characters
-    var selector = document.getElementById('topicselector');
+    /*var selector = document.getElementById('topicselector');*/
 
     if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
-        selector.selectedIndex = 0;
+        //selector.selectedIndex = 0;
         //hide("topicmeta");
         return;
     }
@@ -414,9 +465,14 @@ function setTopic(topicNameHOSTILE) {
         getAndPopulateTopic(topicNameHOSTILE);
     }
 
-    selector.selectedIndex = 1;
-    selector.options[selector.selectedIndex].value = topicNameHOSTILE;
-    selector.options[selector.selectedIndex].text = capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
+    //selector.selectedIndex = 1;
+    //selector.options[selector.selectedIndex].value = topicNameHOSTILE;
+    //selector.options[selector.selectedIndex].text = capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
+    if(topicNameHOSTILE.toLowerCase()=="mytopics"){
+        setPageTitleFromID("VV0128");
+    }else{
+        setPageTitleRaw('#'+capitalizeFirstLetter(topicNameHOSTILE));
+    }
 }
 
 
