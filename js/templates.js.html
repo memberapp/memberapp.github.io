@@ -842,15 +842,14 @@ var hamburgerMenuHTML=`
                     ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
         class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
-        <a data-vavilon_title="VV0063" id="profilebutton"  title="Profile"    class="hamburgerbutton" href="#profile"    onclick="nlc();">
+        <a data-vavilon_title="VV0063" id="profilebutton"  title="Profile"    class="hamburgerbutton" href="#profile"    onclick="nlc();" style="display:none;">
             <img src="img/icons/user.png" alt="profile">
             <span data-vavilon="VV0063">Profile</span></a>
-        <a data-vavilon_title="VVwallet" id="walletbutton"  title="Wallet"      class="hamburgerbutton" href="#wallet"    onclick="nlc();">
+        <a data-vavilon_title="VVwallet" id="walletbutton"  title="Wallet"      class="hamburgerbutton" href="#wallet"    onclick="nlc();" style="display:none;">
             <img src="img/icons/wallet.png" alt="wallet">
             <span data-vavilon="VVwallet">Wallet</span></a>
         <a data-vavilon_title="VV0100" id="topiclistbutton" title="Tag List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">
-                <span class="tagicon">#</span>
-                <img src="img/icons/hashtag.png" alt="MyFeed">
+            <img src="img/icons/hashtag.png" alt="MyFeed">
             <span data-vavilon="VV0100">Tag List</span></a>
         <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">
             <img src="img/icons/map.png" alt="map">
@@ -858,7 +857,7 @@ var hamburgerMenuHTML=`
         <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">
             <img src="img//Icons/settings.png" alt="settings">
             <span data-vavilon="VV0098">Settings</span></a>
-        <a data-vavilon_title="VV0078" id="logout"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();">
+        <a data-vavilon_title="VV0078" id="logoutbutton"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();" style="display:none;">
             <img src="img/icons/exit.png" alt="logout">
             <span data-vavilon="VV0078">Logout</span></a>
     </div>

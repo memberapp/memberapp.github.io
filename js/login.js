@@ -262,6 +262,10 @@ async function login(loginkey) {
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
 
     document.getElementById('loggedin').style.display = "flex";
+    document.getElementById('profilebutton').style.display = "flex";
+    document.getElementById('walletbutton').style.display = "flex";
+    document.getElementById('logoutbutton').style.display = "flex";
+    
     document.getElementById('loggedout').style.display = "none";
     document.getElementById('newseedphrasedescription').style.display = "none";
     document.getElementById('newseedphrase').textContent = "";
@@ -336,6 +340,9 @@ function logout() {
     mnemonic = "";
     document.getElementById('loggedout').style.display = "flex";
     document.getElementById('loggedin').style.display = "none";
+    document.getElementById('profilebutton').style.display = "none";
+    document.getElementById('walletbutton').style.display = "none";
+    document.getElementById('logoutbutton').style.display = "none";
     
 
     try {
