@@ -240,7 +240,7 @@ var walletanchorHTML=`
 
     <div id="walletaddress">
         <label data-vavilon="VV0065" data-vavilon="address">Address</label>
-        <img src="img/icons/copy.png" width="20" height="20" alt="copy">
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="cashaddrformat">{cashaddress}</span>
         <div id="cashaddrformatdiv">
             <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
@@ -251,7 +251,7 @@ var walletanchorHTML=`
     </div>
     <div id="walletlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
-        <img src="img/icons/copy.png" width="20" height="20" alt="copy">
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="legacyformat">{address}</span>
         <div id="legacyformatdiv">
             <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
@@ -581,8 +581,9 @@ pages.member = `
                 id="membermemoprofilelink">Memo</a><span class="separatorwide"></span><a rel="noopener noreferrer"
                 target="bitclout" href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
                 class="separatorwide"></span><a rel="noopener noreferrer" target="bitcloutsignal"
-                href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">bitcloutsignal</a>
-
+                href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">signal</a><span
+                class="separatorwide"></span><a rel="noopener noreferrer" target="prosperclout"
+                href="https://www.prosperclout.com/pk/{bcaddress}?tab=overview" id="prospercloutprofilelink">ProsperClout</a>
         </div>
     </div>
     <!--<label for="memberidenticon">Identicon</label>
@@ -601,7 +602,7 @@ pages.member = `
     <div id="memberlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
         <div>
-            <img src="img/icons/copy.png" width="20" height="20" alt="copy">
+            <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
             <span id="memberlegacyformat">{address}</span>
             <div id="memberlegacyformatdiv">
                 <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">

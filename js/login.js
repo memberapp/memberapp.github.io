@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "6.0.5";
+var version = "6.0.7";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -210,9 +210,9 @@ async function login(loginkey) {
             alert(getSafeTranslation('uncompressed', "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')"));
             return;
         } else if (loginkey.startsWith("BC1")) {
-            //var bcpublicKey = decode(loginkey).toString('hex').substr(6, 66);
-            var bcpublicKey = bs58decode(loginkey).slice(3,36);
-            //.toString('hex').substr(6, 66);
+            //var bcpublicKey = bs58decode(loginkey).slice(3,36);
+            var preslice=window.bs58check.decode(loginkey);
+            var bcpublicKey = preslice.slice(3);
             var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
             publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
 

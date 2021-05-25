@@ -495,9 +495,9 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
     navheader += `<nav class="contentfilters">`;
     navheader += `<a data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" class="`+(content=='posts'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" class="`+(content=='replies'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=replies&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
+    navheader += `<a data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" class="`+(content=='replies'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVboth" data-vavilon_title="VV0125" title="See both posts and replies" class="`+(content=='both'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=all&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Both</a> `;
+    navheader += `<a data-vavilon="VVall" data-vavilon_title="VV0125" title="See both posts and replies" class="`+(content=='both'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
     navheader += "</nav>";
 
     return navheader;

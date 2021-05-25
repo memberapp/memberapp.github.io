@@ -145,6 +145,11 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
     }
 
+    
+    if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
+    var bcaddress = window.bs58check.encode(new Buffer('cd1400'+san(data[0].publickey),'hex'));
+    obj.bcaddress=bcaddress;
+
     document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);
 
 
@@ -190,6 +195,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     
     }
 
+    
     var obj2 = {
         //These must all be HTML safe.
         /*highlighted: (highlighted ? 'highlighted ' : ''),
@@ -202,7 +208,8 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         address:qaddress,
         profileclass:'timefilteron',
         reputationclass:'timefilteroff',
-        postsclass:'timefilteroff'
+        postsclass:'timefilteroff',
+        bcaddress:bcaddress
     }
 
     document.getElementById('membertabs').innerHTML= templateReplace(membertabsHTML, obj2);
