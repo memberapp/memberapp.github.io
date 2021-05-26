@@ -58,7 +58,7 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
 }
 
 async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
-    
+
     //Set the headerbar pic
     if (pre == "settings" && data && data[0]) {
         profilepic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
@@ -66,21 +66,21 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         if (data[0].picurl && data[0].picurl.toLowerCase().endsWith('.png')) {
             pictype = '.png';
         }
-        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="`+profilepicbase + san(qaddress) +`.128x128` + pictype + `">`;
-        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + profilepicbase + san(qaddress) + `.128x128` + pictype + `'/>`;       
-        document.getElementById('newpostprofilepic').innerHTML=profilepic;
-    }    
+        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="` + profilepicbase + san(qaddress) + `.128x128` + pictype + `">`;
+        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + profilepicbase + san(qaddress) + `.128x128` + pictype + `'/>`;
+        document.getElementById('newpostprofilepic').innerHTML = profilepic;
+    }
 
-    
 
-    if(qaddress){
-        if(!cashaddress){
+
+    if (qaddress) {
+        if (!cashaddress) {
             //On a member page, the cashaddress won't be available so we have to calculate
             if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
-            cashaddress=new bitboxSdk.Address().toCashAddress(qaddress);
+            cashaddress = new bitboxSdk.Address().toCashAddress(qaddress);
         }
     }
-    
+
     //Note, data may not contain any rows, for new or unknown users.
 
     var obj = {
@@ -116,7 +116,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
         document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
         //setPageTitleRaw("@"+data[0].pagingid);
-    
+
         //jdenticonname = data[0].name;
         //img/profilepics/`+san(address)+`128x128.jpg
     }
@@ -137,7 +137,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     if (obj.picurl) {
         obj.profilepiclargehtml = getProfilePicLargeHTML(profilepicbase + san(qaddress) + `.640x640.jpg`);
 
-        
+
     }
 
     if (pre == "settings") {
@@ -145,16 +145,18 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
     }
 
-    
-    if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
-    var bcaddress = window.bs58check.encode(new Buffer('cd1400'+san(data[0].publickey),'hex'));
-    obj.bcaddress=bcaddress;
+
+    if (data[0] && data[0].publickey) {
+        if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
+        var bcaddress = window.bs58check.encode(new Buffer('cd1400' + san(data[0].publickey), 'hex'));
+        obj.bcaddress = bcaddress;
+    }
 
     document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);
 
 
     if (pre == "settings") {
-        
+
         updateSettings();
         document.getElementById(pre + 'nametextbutton').disabled = true;
         document.getElementById(pre + 'profiletextbutton').disabled = true;
@@ -164,9 +166,9 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
             document.getElementById(pre + 'nametext').disabled = true;
         }
 
-        if(qaddress){
+        if (qaddress) {
             document.getElementById('settingsloggedin').style.display = "block";
-        }else{
+        } else {
             document.getElementById('settingsloggedin').style.display = "none";
         }
 
@@ -191,11 +193,11 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
         var theElement = document.getElementById(`memberrating` + qaddress);
         var starRating1 = addSingleStarsRating(theElement);
-        setPageTitleRaw("@"+data[0].pagingid);
-    
+        setPageTitleRaw("@" + data[0].pagingid);
+
     }
 
-    
+
     var obj2 = {
         //These must all be HTML safe.
         /*highlighted: (highlighted ? 'highlighted ' : ''),
@@ -205,24 +207,24 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         age: subtextHTML,
         post: addendumHTML,
         iconHTML: iconHTML*/
-        address:qaddress,
-        profileclass:'timefilteron',
-        reputationclass:'timefilteroff',
-        postsclass:'timefilteroff',
-        bcaddress:bcaddress
+        address: qaddress,
+        profileclass: 'timefilteron',
+        reputationclass: 'timefilteroff',
+        postsclass: 'timefilteroff',
+        bcaddress: bcaddress
     }
 
-    document.getElementById('membertabs').innerHTML= templateReplace(membertabsHTML, obj2);
-    
+    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+
     addDynamicHTMLElements();
 }
 
-function populateTools(){
+function populateTools() {
     var obj = {
         address: pubkey,
         cashaddress: qpubkey
     };
-    
+
     obj.privatekey = privkey;
     obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
 
@@ -295,9 +297,9 @@ function updateSettings() {
             }
         }
 
-        if (key == "languageselector"){
-            if(dictionary[theSetting]){
-                dictionary.live=dictionary[theSetting];
+        if (key == "languageselector") {
+            if (dictionary[theSetting]) {
+                dictionary.live = dictionary[theSetting];
             }
         }
     }
@@ -310,8 +312,8 @@ function updateSettings() {
         dropdowns.txbroadcastserver = "https://member.cash/v2/";
     }
 
-    document.getElementById("debuginfo").value=debuginfo;
-  
+    document.getElementById("debuginfo").value = debuginfo;
+
 }
 
 function updateSettingsCheckbox(settingsName) {
@@ -330,9 +332,9 @@ function updateSettingsDropdown(settingsName) {
     if (settingsName == "utxoserver") {
         refreshPool();
     }
-    if (settingsName == "languageselector"){
-        if(dictionary[dropdowns[settingsName]]){
-            dictionary.live=dictionary[dropdowns[settingsName]];
+    if (settingsName == "languageselector") {
+        if (dictionary[dropdowns[settingsName]]) {
+            dictionary.live = dictionary[dropdowns[settingsName]];
             //location.reload();
             translatePage();
         }
