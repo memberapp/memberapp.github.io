@@ -146,7 +146,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     }
 
 
-    if (data[0] && data[0].publickey) {
+    if (data && data[0] && data[0].publickey) {
         if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
         var bcaddress = window.bs58check.encode(new Buffer('cd1400' + san(data[0].publickey), 'hex'));
         obj.bcaddress = bcaddress;
@@ -197,25 +197,6 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
     }
 
-
-    var obj2 = {
-        //These must all be HTML safe.
-        /*highlighted: (highlighted ? 'highlighted ' : ''),
-        type: san(notificationtype),
-        txid: san(txid),
-        title: mainbodyHTML,
-        age: subtextHTML,
-        post: addendumHTML,
-        iconHTML: iconHTML*/
-        address: qaddress,
-        profileclass: 'timefilteron',
-        reputationclass: 'timefilteroff',
-        postsclass: 'timefilteroff',
-        bcaddress: bcaddress
-    }
-
-    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
-
     addDynamicHTMLElements();
 }
 
@@ -238,6 +219,15 @@ function populateTools() {
 function getAndPopulateMember(qaddress) {
     setPageTitleRaw(". . .");
     getDataCommonToSettingsAndMember(qaddress, null, "member");
+    var obj2 = {
+        //These must all be HTML safe.
+        address: qaddress,
+        profileclass: 'timefilteron',
+        reputationclass: 'timefilteroff',
+        postsclass: 'timefilteroff'
+    }
+
+    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
 }
 
 function getAndPopulateSettings() {

@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "6.0.7";
+var version = "6.1.1";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -16,6 +16,7 @@ var pubkeyhex = ""; //Public Key, full hex
 let tq = new TransactionQueue(updateStatus);
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var bitboxSdk = null;
+var cytoscape = null;
 //var twitterEmbeds=new Array();
 var profilepic="";
 
@@ -151,6 +152,7 @@ async function loadBigLibs() {
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     if (!bcdecrypt) loadScript("js/lib/bcdecrypt.js");
+    if (!cytoscape) loadScript("js/lib/cytoscape.min.js");
     
 }
 

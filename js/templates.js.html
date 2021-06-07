@@ -53,6 +53,10 @@ var trustRatingTableHTML=`
 <br />
 <div id="overall"></div>
 <br />
+<div id="cy" style="width:100%;height:600px;"></div><div id="cynote" style="width:100%">&nbsp;</div>
+<br />
+<div data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is interpreted as a 4-star rating. Follow, 3-star. Mute, 2-star.</div>
+<br />
 <table>{tablecontents}</table>
 `;
 
@@ -115,8 +119,8 @@ var mainbodyHTML=`
         <div id="membertabs" class="membertabs"></div>
         <div id="memberanchor" class="member"></div>
         <div id="trustgraph" class="trustgraph" style="display:none;"></div>
-        <div id="anchorratings" class="ratings" style="display: none;"></div>
         <div id="community" class="community" style="display: none;"></div>
+        <div id="anchorratings" class="ratings" style="display: none;"></div>
         <div id="memberposts" style="display: none;"></div>
     </div>
     
@@ -531,8 +535,6 @@ var trustgraphHTML=`
     <h2 data-vavilon="VV0057">Trust Graph</h2>
     <div id="trustgraphdetails"></div>
     <br />
-    <br />
-    <div data-vavilon="VV0058" id="trustgraphnotes">*Notes: A mute is interpreted as a 2-star rating.</div>
 </div>
 `;
 
@@ -589,8 +591,9 @@ pages.member = `
     <!--<label for="memberidenticon">Identicon</label>
     <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg>
     </div>
-    <label data-vavilon="VV0065">Address</label>
-    <div id="membercashaddress">
+    <label data-vavilon="VV0065">Address</label>-->
+    <div id="walletaddress">
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="membercashaddrformat">{cashaddress}</span>
         <div id="membercashaddrformatdiv">
             <span class="qrcodeclick" onclick="showQRCode('membercashaddrformat',200);">
@@ -598,8 +601,8 @@ pages.member = `
                     code</span>
             </span>
         </div>
-    </div>-->
-    <div id="memberlegacyaddress">
+    </div>
+    <!--<div id="memberlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
         <div>
             <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
@@ -611,7 +614,7 @@ pages.member = `
                 </span>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="memberstats">
         <div class="follow">
             <label data-vavilon="VV0069">Follow</label>

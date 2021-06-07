@@ -17,7 +17,16 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
     if(qaddress){
         //skip, viewing single user's posts, title should already be filled in with user's paging id
-        document.getElementById("memberheader").style.display='block';    
+        var obj2 = {
+            //These must all be HTML safe.
+            address: qaddress,
+            profileclass: 'timefilteroff',
+            reputationclass: 'timefilteroff',
+            postsclass: 'timefilteron'
+        }
+        document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+        document.getElementById("memberheader").style.display='block';
+        
     }else if(topicnameHOSTILE.toLowerCase()=="mytopics"){
         setPageTitleFromID("VV0128");
     }else if(topicnameHOSTILE){

@@ -219,6 +219,16 @@ function showReputation(qaddress) {
     document.getElementById('anchorratings').style.display = "block";
     document.getElementById('trustgraph').style.display = "block";
     
+    var obj2 = {
+        //These must all be HTML safe.
+        address: qaddress,
+        profileclass: 'timefilteroff',
+        reputationclass: 'timefilteron',
+        postsclass: 'timefilteroff'
+    }
+
+    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+
 }
 
 function showNewPost(txid) {
