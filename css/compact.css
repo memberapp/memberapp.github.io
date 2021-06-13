@@ -2574,3 +2574,7 @@ footer{
   display: unset;
   border: unset;
 }
+
+.privatemessagetext{
+  white-space: pre-line;
+}

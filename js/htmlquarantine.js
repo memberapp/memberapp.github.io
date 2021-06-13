@@ -38,11 +38,8 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 
     var memberpic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
     if (picurl) {
-        var pictype = '.jpg';
-        if (picurl.toLowerCase().endsWith('.png')) {
-            pictype = '.png';
-        }
-        memberpic = `<img class="memberpicturesmall" src='` + profilepicbase + san(address) + `.128x128` + pictype + `'/>`;    
+        var picurlfull = getPicURL(picurl,profilepicbase,address);
+        memberpic = `<img class="memberpicturesmall" src='` + picurlfull + `'/>`;    
     }
 
     var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="` + userclass + `">`;
@@ -231,7 +228,7 @@ function replacePageName(match, p1, p2, offset, string) {
     return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate) {
 
     if (!address) { return ""; }
     if (!name) { name = address.substring(0, 10); }
@@ -239,12 +236,15 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     replies = Number(replies);
     //Replies respect newlines, but root posts do not
     var isReply = (roottxid != txid);
+    if(truncate && message.length>400){
+        message=message.substring(0,400)+'...';
+    }
     var messageHTML = ds(message);
     messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
     //ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
     //Add paging ids
-    messageHTML = messageHTML.replace(/(^|\s)@([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g, replacePageName);
+    messageHTML = messageHTML.replace(/(^|\s|>)@([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g, replacePageName);
     //messageHTML = messageHTML.replace(/(@[^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g,'<a href="#member?pagingid=$1">$1</a>');
 
     if (!isReply) {
@@ -1000,7 +1000,7 @@ function getMessageHTML(data, count) {
         contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, data.recipientrating, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, true, data.recipientlastactive) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
         decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
-        contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
+        contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }
     return contents;
 }
@@ -1034,6 +1034,7 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
         console.log(err);
         await sleep(500);
     }
+    //decryptedMessage = decryptedMessage.replace(/(?:\r\n|\r|\n)/g, '<br>');
     //decrypted message can contain anything - don't do anything fancy with it - js/css risk!
     document.getElementById(roottxid).textContent = decryptedMessage;
 }

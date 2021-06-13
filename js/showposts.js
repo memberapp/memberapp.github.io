@@ -69,7 +69,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             try {
                 if(settings["shownonameposts"]=='false' && !data[i].name){continue;}
                 if(settings["shownopicposts"]=='false' && !data[i].picurl){continue;}
-                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false));
+                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false, true));
             } catch (err) {
                 console.log(err);
             }
@@ -193,7 +193,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
-                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true));
+                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false));
                 var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID)
 
                 if (commentTree == '<ul></ul>') {
@@ -327,7 +327,7 @@ function getAndPopulateQuoteBox(txid) {
     getJSON(theURL).then(function (data) {
         var contents = "";
         if (data[0]) {
-            contents = getHTMLForPost(data[0], 1, page, 0, null, true);
+            contents = getHTMLForPost(data[0], 1, page, 0, null, true, true);
             document.getElementById(page).innerHTML = contents;
         } else {
             throw error(getSafeTranslation('noresult', 'no result returned'));
@@ -500,7 +500,7 @@ function addSingleStarsRating(theElement) {
 }
 
 
-function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
+function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, truncate) {
 
     //Always show if post is directly requested
     if (!alwaysShow) {
@@ -517,7 +517,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID, 8));
-        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.nametime, '', data.lastactive);
+        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.nametime, '', data.lastactive, truncate);
         //if (repostHTML2) {
         //    repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         //}
@@ -528,7 +528,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow) {
         if (repostHTML2) {
             repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         }
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2, data.lastactive);
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2, data.lastactive, truncate);
     } else {
         //repost with no message
         retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));

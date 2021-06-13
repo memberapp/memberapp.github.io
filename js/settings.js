@@ -57,17 +57,22 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
     });
 }
 
+function getPicURL(picurl,profilepicbase,qaddress){
+    var pictype = '.jpg';
+    if (picurl && picurl.toLowerCase().endsWith('.png')) {
+        pictype = '.png';
+    }
+    return profilepicbase + san(qaddress) + `.128x128` + pictype;
+}
+
 async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
 
     //Set the headerbar pic
     if (pre == "settings" && data && data[0]) {
         profilepic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
-        var pictype = '.jpg';
-        if (data[0].picurl && data[0].picurl.toLowerCase().endsWith('.png')) {
-            pictype = '.png';
-        }
-        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="` + profilepicbase + san(qaddress) + `.128x128` + pictype + `">`;
-        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + profilepicbase + san(qaddress) + `.128x128` + pictype + `'/>`;
+        var picurl = getPicURL(data[0].picurl,profilepicbase,qaddress);
+        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
+        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
         document.getElementById('newpostprofilepic').innerHTML = profilepic;
     }
 
