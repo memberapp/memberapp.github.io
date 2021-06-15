@@ -156,7 +156,7 @@
   "hoursago": "oras ang nakalipas",
   "insufficientfunds": "1001: Hindi sapat ang Pondo (walang angkop na UTXOs)",
   "intopic": "sa paksang",
-  "keynotrecognized": "Hindi tumugma ang Key, gumamit ng angkop na 12 salitang BIP36 seed phrase o ang compressed WIF (nagsisimula sa letrang 'L' o 'K')",
+  "keynotrecognized": "Hindi tumugma ang Key, gumamit ng angkop na 12 salitang BIP36 seed phrase o ang compressed WIF (nagsisimula sa letrang L o K)",
   "largerthanbalance": "Ang halagang ito ay mas mataas sa iyong balanse. ",
   "messagesent": "Naipadala ang mensahe.",
   "minutesago": "minuto ang nakalipas",

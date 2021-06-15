@@ -42,6 +42,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
     if (topicnameHOSTILE == null || topicnameHOSTILE == "") {
         setTopic('');
+        topicnameHOSTILE='';
     }
 
     var bchOnly='';

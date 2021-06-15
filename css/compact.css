@@ -1312,6 +1312,7 @@ nav.contentfilters a {
 /* *********** POST follow button **************/
 .profilepreview .profile-actions .profilepreviewfollowbutton a {
   background: #61aff0;
+  color: #fff !important;
 }
 .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
   background: #2291eb;

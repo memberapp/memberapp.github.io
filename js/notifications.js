@@ -4,6 +4,9 @@ var lastViewOfNotifications = 0;
 var lastViewOfNotificationspm = 0;
 
 function displayNotificationCount() {
+    if(!pubkey){
+        return;
+    }
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
     var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;

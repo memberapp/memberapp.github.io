@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "6.1.2";
+var version = "6.1.5";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -18,7 +18,7 @@ let tq = new TransactionQueue(updateStatus);
 var bitboxSdk = null;
 var cytoscape = null;
 //var twitterEmbeds=new Array();
-var profilepic="";
+var profilepic = "";
 
 
 var localStorageSafe = null;
@@ -69,13 +69,13 @@ function init() {
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
     document.getElementById('header').innerHTML = headerHTML;
- 
+
     document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
-    document.getElementById('pagetitle').innerHTML = pageTitleHTML;    
+    document.getElementById('pagetitle').innerHTML = pageTitleHTML;
     document.getElementById('majornavbuttons').innerHTML = majorNavButtonsHTML;
     document.getElementById('usersearch').innerHTML = userSearchHTML;
 
-    
+
     document.getElementById('footer').innerHTML = footerHTML;
     document.getElementById('version').innerHTML = version;
     //setLang((navigator.language || navigator.userLanguage));
@@ -153,7 +153,7 @@ async function loadBigLibs() {
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     if (!bcdecrypt) loadScript("js/lib/bcdecrypt.js");
     if (!cytoscape) loadScript("js/lib/cytoscape.min.js");
-    
+
 }
 
 
@@ -199,38 +199,47 @@ async function login(loginkey) {
         }
 
 
-        if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
-
-            let ecpair = new bitboxSdk.ECPair().fromWIF(loginkey);
-            publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
-
-            privkey = loginkey;
-            document.getElementById('loginkey').value = "";
-
-        } else if (loginkey.startsWith("5")) {
-            document.getElementById('loginkey').value = "";
-            alert(getSafeTranslation('uncompressed', "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')"));
-            return;
-        } else if (loginkey.startsWith("BC1")) {
-            //var bcpublicKey = bs58decode(loginkey).slice(3,36);
-            var preslice=window.bs58check.decode(loginkey);
-            var bcpublicKey = preslice.slice(3);
-            var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
-            publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
-
-            //var bcpubkey = Buffer.from(bcpublicKey, 'hex');
-            //var thing = bitcoinJs.ECPair.fromPublicKey(bcpubkey).publicKey;
-            //publicaddress = bitcoinJs.payments.p2pkh({ pubkey: thing }).address;
-        } else if (loginkey.startsWith("q")) {
-            publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
-        } else if (loginkey.startsWith("b")) {
-            publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
-        } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
-            if (new bitboxSdk.Address().isLegacyAddress(loginkey)) {
-                publicaddress = loginkey;
+        try {
+            if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
+                let ecpair = new bitboxSdk.ECPair().fromWIF(loginkey);
+                publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+                privkey = loginkey;
+                document.getElementById('loginkey').value = "";
+            } else if (loginkey.startsWith("BC1")) {
+                var preslice = window.bs58check.decode(loginkey);
+                var bcpublicKey = preslice.slice(3);
+                var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
+                publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+            } else if (loginkey.startsWith("q")) {
+                publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
+            } else if (loginkey.startsWith("b")) {
+                publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
+            } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
+                if (new bitboxSdk.Address().isLegacyAddress(loginkey)) {
+                    publicaddress = loginkey;
+                }
+            } else {
+                throw Error('No login key recognized');
             }
-        } else {
-            alert(getSafeTranslation('keynotrecognized', "Key not recognized, use a valid 12 word BIP39 seed phrase, or a compressed WIF (starts with 'L' or 'K')"));
+        } catch (err) {
+            if (loginkey.length < 20) {
+                var theURL = dropdowns.contentserver + '?action=usersearch&searchterm=' + encodeURIComponent(loginkey);
+                getJSON(theURL).then(function (data) {
+                    if (data && data.length > 0) {
+                        var qaddress = data[0].address;
+                        trylogin(qaddress);
+                        return;
+                    } else {
+                        alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
+                        return;
+                    }
+                }, function (status) { //error detection....
+                    alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
+                });
+            } else {
+                alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
+            }
+
             return;
         }
 
@@ -267,7 +276,7 @@ async function login(loginkey) {
     document.getElementById('profilebutton').style.display = "flex";
     document.getElementById('walletbutton').style.display = "flex";
     document.getElementById('logoutbutton').style.display = "flex";
-    
+
     document.getElementById('loggedout').style.display = "none";
     document.getElementById('newseedphrasedescription').style.display = "none";
     document.getElementById('newseedphrase').textContent = "";
@@ -288,7 +297,7 @@ async function login(loginkey) {
     getLatestUSDrate();
 
     if (!privkey) {
-        tq.utxopools[pubkey].showwarning=false;
+        tq.utxopools[pubkey].showwarning = false;
         //document.getElementById('lowfundswarning').style.display = 'none';
         updateStatus(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
     }
@@ -345,7 +354,7 @@ function logout() {
     document.getElementById('profilebutton').style.display = "none";
     document.getElementById('walletbutton').style.display = "none";
     document.getElementById('logoutbutton').style.display = "none";
-    
+
 
     try {
         serviceWorkerLogout();
