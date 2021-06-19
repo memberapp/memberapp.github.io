@@ -1,5 +1,6 @@
 body {
   background: #fff;
+  word-break: break-word;
 }
 
 .quotepost {
@@ -422,10 +423,6 @@ Use important, because we always want profile card pics to be this size*/
   padding: 2em 0.875rem;
   border: none;
 }
-/*  message send input */
-#messagesanchor .content #sendmessagecontainer #sendmessagebox{
-
-}
 /* send message hover effect */
 #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"],
 #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"] {
@@ -685,7 +682,6 @@ img {
 /* profile-card content text line height and breaking long words */
 .profilepreview .profile-text {
   line-height: 1.5 !important;
-  word-break: break-word !important;
 }
 /* profile-card ratings position  */
 .starrating {
@@ -1064,9 +1060,7 @@ nav.contentfilters a {
   text-align: center;
   line-height: 1;
   text-align: center;
-  display: inline-block;
   padding: 10px;
-  width: 65px;
   box-sizing: border-box;
   z-index: 2;
 }
@@ -1087,8 +1081,7 @@ nav.contentfilters a {
 }
 .posts .timefilters a,
 .posts .contentfilters a {
-  padding: 9px 5px;
-  margin-left: 3px;
+  padding: 3px 10px;
   transition: all 0.3s ease;
   max-width: 70px;
   min-width: 55px;
@@ -1097,14 +1090,14 @@ nav.contentfilters a {
 .posts .contentfilters a:hover {
   background-color: #61aaff !important;
   border-radius: 36px;
-  font-weight: 700;
+  /*font-weight: 700;*/
   color: #fff !important;
 }
-.posts .timefilters a:nth-child(1) {
+/*.posts .timefilters a:nth-child(1) {
   margin-right: 4px;
   margin-left: 0;
 }
-/* .posts .timefilters a ::before, 
+ .posts .timefilters a ::before, 
 .posts .contentfilters a{
   content: '';
   position: absolute;
@@ -1350,6 +1343,7 @@ nav.contentfilters a {
   padding: 10px;
   border-radius: 40px;
   background: linear-gradient(to right, #fff 12%, #f6f9ff 100%);
+  word-break: normal;
 }
 .memberheader .membertabs a {
   position: relative;
@@ -1448,12 +1442,14 @@ nav.contentfilters a {
   right: 160px;
   padding: 0.3rem 1rem;
   margin: 0;
+  word-break: normal;
 }
 #memberanchor .content .memberstats .follow a,
 #memberanchor .content .memberstats .mute a {
   font-weight: 400;
   font-size: 1rem;
   border: none;
+  word-break: normal;
 }
 #memberanchor .content .memberstats .follow a {
   border: 1px solid #61aff0;
@@ -1517,7 +1513,7 @@ nav.contentfilters a {
   padding: 0.2rem;
   margin: 0;
 }
-#memberlegacyformatdiv span.qrcodeclick span {
+span.qrcodeclick span {
   display: none;
   color: #61aff0 !important;
 }
@@ -1609,6 +1605,7 @@ label#memberblockexplorer {
 #toolsanchor .content #walletbalance,
 #toolsanchor .content #walletaddress,
 #toolsanchor .content #walletlegacyaddress,
+#toolsanchor .content #walletbcaddress,
 #toolsanchor .content #walletsendfunds,
 #toolsanchor .content #walletprivatekey,
 #toolsanchor .content #walletblockexplorer {
@@ -1661,34 +1658,26 @@ label#memberblockexplorer {
 }
 #toolsanchor .content #walletaddress span,
 #toolsanchor .content #walletlegacyaddress span,
+#toolsanchor .content #walletbcaddress span,
 #toolsanchor .content #walletsendfunds p {
   margin-left: 15px;
 }
 #walletaddress,
 #walletlegacyaddress,
+#walletbcaddress,
 #walletprivatekey {
   position: relative;
 }
-#cashaddrformatdiv .qrcodeclick img,
-#legacyformatdiv .qrcodeclick img,
-#privatekeyformatdiv .qrcodeclick img {
+.qrcodeclick img {
   border: 1px solid #61aff0;
   cursor: pointer;
 }
-#cashaddrformatdiv .qrcodeclick,
-#legacyformatdiv .qrcodeclick {
-  position: absolute;
-  right: 10px;
-  top: 57px;
-}
-#privatekeyformatdiv .qrcodeclick {
+.qrcodeclick {
   position: absolute;
   right: 10px;
   top: 25px;
 }
-#cashaddrformatdiv .qrcodeclick span,
-#legacyformatdiv .qrcodeclick span,
-#privatekeyformatdiv .qrcodeclick span {
+.qrcodeclick span {
   display: none;
 }
 
@@ -2197,8 +2186,7 @@ footer{
     text-align: center;
     margin-top: 10px;
   }
-  #cashaddrformatdiv .qrcodeclick,
-  #legacyformatdiv .qrcodeclick {
+  .qrcodeclick {
     position: unset;
   }
   #walletsendfunds button#sendfundsbutton {
@@ -2223,7 +2211,7 @@ footer{
     margin-top: 0.4rem;
     margin-bottom: 10px;
   }
-  #privatekeyformatdiv .qrcodeclick {
+  .qrcodeclick {
     top: 68px;
     right: 40%;
   }
@@ -2257,15 +2245,6 @@ footer{
   }
   #notifications {
     max-width: 380px;
-  }
-  /* tabs */
-  .posts .timefilters a,
-  .posts .contentfilters a {
-    min-width: 44px;
-    padding: 5px 0;
-  }
-  .posts .timefilters a {
-    max-width: 55px;
   }
   #membertabs {
     max-width: 100%;
@@ -2401,8 +2380,7 @@ footer{
   #toolsanchor .content #walletbalance span.balanceusd {
     margin-left: 0;
   }
-  #cashaddrformatdiv .qrcodeclick,
-  #legacyformatdiv .qrcodeclick {
+  .qrcodeclick {
     position: absolute;
   }
   #toolsanchor .content #walletlegacyaddress span {
@@ -2430,11 +2408,8 @@ footer{
   #walletprivatekey #privatekey a {
     position: unset;
   }
-  #cashaddrformatdiv .qrcodeclick,
-  #legacyformatdiv .qrcodeclick {
-    right: 22px;
-  }
-  #privatekeyformatdiv .qrcodeclick {
+  
+  .qrcodeclick {
     right: 20px;
   }
   #walletprivatekey label {
@@ -2578,4 +2553,8 @@ footer{
 
 .privatemessagetext{
   white-space: pre-line;
+}
+
+tbody tr td:first-of-type {
+  font-weight: unset;
 }

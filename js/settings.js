@@ -205,10 +205,15 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     addDynamicHTMLElements();
 }
 
-function populateTools() {
+async function populateTools() {
+
+    if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
+    var bcaddress = window.bs58check.encode(new Buffer('cd1400' + san(pubkeyhex), 'hex'));
+
     var obj = {
         address: pubkey,
-        cashaddress: qpubkey
+        cashaddress: qpubkey,
+        bcaddress: bcaddress
     };
 
     obj.privatekey = privkey;

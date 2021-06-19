@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "6.1.5";
+var version = "6.2.2";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -13,6 +13,8 @@ var privateKeyBuf;
 
 var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
+var bitcloutaddress = ""; //Bitclout address
+
 let tq = new TransactionQueue(updateStatus);
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var bitboxSdk = null;

@@ -216,6 +216,7 @@ function getAndPopulateTrustGraph(member, target) {
 
         cy.userZoomingEnabled(false);
         cy.center();
+        cy.fit();
 
         cy.on('tap', 'node', function () {
             window.location.href = "#rep?qaddress=" + this.data('id');

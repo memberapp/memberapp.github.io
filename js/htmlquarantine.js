@@ -237,7 +237,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     //Replies respect newlines, but root posts do not
     var isReply = (roottxid != txid);
     if(truncate && message.length>400){
-        message=message.substring(0,400)+'...';
+        message=message.substring(0,200)+'...';
     }
     var messageHTML = ds(message);
     messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
@@ -490,6 +490,8 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
     //navheader += `<a data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy" title="Top posts from the past Year" class="`+(order=='topy'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topy&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
     navheader += `<span class="separator"></span>`;
     navheader += `<a data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="`+(order=='topa'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VVold" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="`+(order=='old'?'timefilteron':'timefilteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=old&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Old</a> `;
     navheader += "</nav>";
     
     navheader += `<nav class="contentfilters">`;

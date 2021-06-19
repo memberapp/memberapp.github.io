@@ -40,8 +40,7 @@ var ratingAndReasonHTML=`
     <td data-vavilon_data_label="VV0007" data-label='Member'>{ratee}</td>
 </tr>
 <tr>
-    <td></td>
-    <td data-vavilon_data_label="VV0009" data-label='Commenting...' colspan='2'>
+    <td data-vavilon_data_label="VV0009" data-label='Commenting...' colspan='3'>
         <a href='#thread?root={txid}'>{reason}</a>
     </td>
 </tr>
@@ -242,7 +241,7 @@ var walletanchorHTML=`
     </div>
     
 
-    <div id="walletaddress">
+    <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
         <label data-vavilon="VV0065" data-vavilon="address">Address</label>
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="cashaddrformat">{cashaddress}</span>
@@ -253,7 +252,7 @@ var walletanchorHTML=`
             </span>
         </div>
     </div>
-    <div id="walletlegacyaddress">
+    <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
         <label data-vavilon="VV0068">Legacy Address</label>
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="legacyformat">{address}</span>
@@ -264,6 +263,7 @@ var walletanchorHTML=`
             </span>
         </div>
     </div>
+    
     <div id="walletsendfunds">
         <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
         <p data-vavilon="VV0029">You can send funds to another Bitcoin Cash address.</p>
@@ -592,7 +592,7 @@ pages.member = `
     <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg>
     </div>
     <label data-vavilon="VV0065">Address</label>-->
-    <div id="walletaddress">
+    <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="membercashaddrformat">{cashaddress}</span>
         <div id="membercashaddrformatdiv">
@@ -602,6 +602,17 @@ pages.member = `
             </span>
         </div>
     </div>
+    <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')">
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+        <span id="memberbcformat">{bcaddress}</span>
+        <div id="memberbcformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('memberbcformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
+    </div>
+    
     <!--<div id="memberlegacyaddress">
         <label data-vavilon="VV0068">Legacy Address</label>
         <div>
