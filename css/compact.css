@@ -2558,3 +2558,13 @@ footer{
 tbody tr td:first-of-type {
   font-weight: unset;
 }
+
+.star-rating .star-value {
+  filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(85deg) brightness(95%) contrast(93%);
+}
+
+.systemscore{
+  filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%) !important;
+}
+
+

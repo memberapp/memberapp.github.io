@@ -182,7 +182,7 @@ var userCompactTemplate=`
     </span>
     <span class="starratingcompact">
         <span data-ratingsize="10" data-ratingaddress="{address}" data-ratingraw="{rating}" id="ratingposts{diff}"
-            class="star-rating-compact"></span>
+        data-ratingsystem={systemscoreclass} class="star-rating-compact"></span>
     </span>
     {flair}
     {profilecard}
@@ -205,7 +205,7 @@ var userProfileCompactTemplate=`
             </a>
             <span class="starrating">
                 <span data-ratingsize="16" data-ratingaddress="{address}" data-ratingraw="{rating}"
-                    id="ratingprofilecard{diff}" class="star-rating"></span>
+                data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" class="star-rating"></span>
             </span>
             {flair}
             <br />
