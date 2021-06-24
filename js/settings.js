@@ -116,6 +116,10 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
 
+        var theRating = (data[0].sysrating / 64) + 1; 
+        var theRatingRound=Math.round(theRating * 10) / 10;
+        obj.membrain =  Number(theRatingRound) + "/5";
+
         //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
         //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
         //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
@@ -141,8 +145,6 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
     if (obj.picurl) {
         obj.profilepiclargehtml = getProfilePicLargeHTML(profilepicbase + san(qaddress) + `.640x640.jpg`);
-
-
     }
 
     if (pre == "settings") {

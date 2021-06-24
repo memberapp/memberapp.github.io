@@ -1563,19 +1563,7 @@ span.qrcodeclick span {
 #memberanchor .content .memberstats .muting {
   display: none;
 }
-#memberanchor .content .memberstats .following,
-#memberanchor .content .memberstats .followers {
-  position: absolute;
-  top: 20px;
-  margin: 0px;
-  padding: 0;
-}
-#memberanchor .content .memberstats .followers {
-  left: 340px;
-}
-#memberanchor .content .memberstats .following {
-  left: 265px;
-}
+
 label#memberblockexplorer {
   display: none;
 }
@@ -2151,14 +2139,7 @@ footer{
   .memberstats {
     margin-top: 40px;
   }
-  #memberanchor .content .memberstats .following {
-    left: 115px;
-    top: 112px;
-  }
-  #memberanchor .content .memberstats .followers {
-    left: 28px;
-    top: 112px;
-  }
+  
   #memberanchor .content .memberprofiletextContainer {
     margin-top: 135px;
   }
@@ -2306,10 +2287,7 @@ footer{
   #memberanchor .content .memberprofiletextContainer {
     margin-top: 190px;
   }
-  #memberanchor .content .memberstats .followers,
-  #memberanchor .content .memberstats .following {
-    top: 160px;
-  }
+  
   #memberanchor .content .memberstats .follow a {
     right: 0px;
   }
@@ -2463,14 +2441,7 @@ footer{
     top: 172px;
     right: 120px;
   }
-  #memberanchor .content .memberstats .follow {
-    top: 172px;
-    right: 142px;
-  }
-  #memberanchor .content .memberstats .followers,
-  #memberanchor .content .memberstats .following {
-    top: 264px;
-  }
+  
   #memberanchor .content #membernametext a.populate-send-message {
     padding: 0.5rem 0.81rem;
   }
