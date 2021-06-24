@@ -784,6 +784,7 @@ img {
   width: 100%;
   height: 100%;
   padding: 0 5px;
+  word-break: normal;
 }
 .newheader .majornavbuttonsdiv #loggedin {
   height: 100%;
@@ -1052,6 +1053,7 @@ nav.contentfilters {
   padding: 10px;
   border-radius: 40px;
   overflow: hidden;
+  word-break: normal;
 }
 
 nav.timefilters a,
