@@ -15,7 +15,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Show the relevant html element
     show(page);
 
-    if(qaddress){
+    if (qaddress) {
         //skip, viewing single user's posts, title should already be filled in with user's paging id
         var obj2 = {
             //These must all be HTML safe.
@@ -25,15 +25,15 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             postsclass: 'timefilteron'
         }
         document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
-        document.getElementById("memberheader").style.display='block';
-        
-    }else if(topicnameHOSTILE.toLowerCase()=="mytopics"){
+        document.getElementById("memberheader").style.display = 'block';
+
+    } else if (topicnameHOSTILE.toLowerCase() == "mytopics") {
         setPageTitleFromID("VV0128");
-    }else if(topicnameHOSTILE){
-        setPageTitleRaw("#"+topicnameHOSTILE);
-    }else if(filter.toLowerCase()=="myfeed"){
+    } else if (topicnameHOSTILE) {
+        setPageTitleRaw("#" + topicnameHOSTILE);
+    } else if (filter.toLowerCase() == "myfeed") {
         setPageTitleFromID("VV0134a");
-    }else if(filter=="everyone"){
+    } else if (filter == "everyone") {
         setPageTitleFromID("VVfirehose");
     }
 
@@ -42,16 +42,16 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
     if (topicnameHOSTILE == null || topicnameHOSTILE == "") {
         setTopic('');
-        topicnameHOSTILE='';
+        topicnameHOSTILE = '';
     }
 
-    var bchOnly='';
-    if(settings['showonlybchnetwork']=="true"){
-        bchOnly='&bchplz=true';
+    var bchOnly = '';
+    if (settings['showonlybchnetwork'] == "true") {
+        bchOnly = '&bchplz=true';
     }
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname='+settings["shownonameposts"]+'&shownopic='+settings["shownopicposts"]+'&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + bchOnly;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + bchOnly;
     getJSON(theURL).then(function (data) {
 
         var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
@@ -68,8 +68,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             try {
-                if(settings["shownonameposts"]=='false' && !data[i].name){continue;}
-                if(settings["shownopicposts"]=='false' && !data[i].picurl){continue;}
+                if (settings["shownonameposts"] == 'false' && !data[i].name) { continue; }
+                if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false, true));
             } catch (err) {
                 console.log(err);
@@ -88,7 +88,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             showOnly("topicmeta");
         }
 
-        if(!pubkey && !topicnameHOSTILE){
+        if (!pubkey && !topicnameHOSTILE) {
             //contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
         }
 
@@ -102,13 +102,13 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 function getAndPopulateMessages(messagetype, start, limit) {
 
-    if(!messagetype){
-        messagetype='all';
+    if (!messagetype) {
+        messagetype = 'all';
     }
 
     document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey +'&messagetype='+messagetype;
+    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey + '&messagetype=' + messagetype;
     getJSON(theURL).then(async function (data) {
 
         if (!eccryptoJs) {
@@ -117,7 +117,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
 
         lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
-        setAlertCount("alertcountpm",0);
+        setAlertCount("alertcountpm", 0);
         document.title = "member.cash";
 
 
@@ -313,7 +313,7 @@ function getAndPopulateTopicList(showpage) {
         //displayItemListandNavButtonsHTML(contents, "", "thread", data, "",0);
         //document.getElementById(page).innerHTML = contents;
         //detectMultipleIDS();
-        
+
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -375,9 +375,9 @@ function addDynamicHTMLElements(data) {
 
     //Add identicons
     jdenticon();
-    
+
     //delay by half a second to allow time to appear
-    setTimeout(setVisibleContentFinal,500);
+    setTimeout(setVisibleContentFinal, 500);
 
     loadBigLibs();
 }
@@ -396,7 +396,7 @@ function addMouseoverProfiles() {
     var matches = document.querySelectorAll("[id^='memberinfo']");
     for (var i = 0; i < matches.length; i++) {
         var profileElement = document.getElementById(matches[i].id.replace('member', 'profile'));
-        if(profileElement){
+        if (profileElement) {
             profileElement.onmouseleave = setDisplayNone;
             delay(matches[i], showPreviewProfile, profileElement);
         }
@@ -477,9 +477,9 @@ function addSingleStarsRating(theElement) {
     let disabledtext = theElement.dataset.disabledtext;
 
     var theRating = 0; if (rawRating != null && rawRating != 0) { theRating = (ds(rawRating) / 64) + 1; }
-    var theRatingRound=Math.round(theRating * 10) / 10;
-    if(theElement.dataset.ratingsystem=='systemscore'){
-        disabledtext='Membrain score '+theRatingRound+'/5';
+    var theRatingRound = Math.round(theRating * 10) / 10;
+    if (theElement.dataset.ratingsystem == 'systemscore') {
+        disabledtext = 'Membrain score ' + theRatingRound + '/5';
     }
 
 
@@ -561,7 +561,7 @@ function showReplyButton(txid, page, divForStatus) {
 }
 
 function sendReply(txid, page, divForStatus) {
-    if (!checkForPrivKey()) return false;
+    if (!bitCloutUser && !checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     if (replytext.length == 0) {
@@ -577,7 +577,12 @@ function sendReply(txid, page, divForStatus) {
     const replyhex = new Buffer(replytext).toString('hex');
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
-    sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, function () { replySuccessFunction(page, txid); });
+    if(privkey){
+        sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, function () { replySuccessFunction(page, txid); });
+    }
+    if(bitCloutUser){
+        sendBitCloutReply(txid,replytext);
+    }
     return true;
 }
 
@@ -593,8 +598,8 @@ function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
     var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0, 10) + "']");
     //document.getElementById("reply" + txid);
-    if(replybox)
-    replybox.style.display = "block";
+    if (replybox)
+        replybox.style.display = "block";
 
     //set focus here .focus()
     //document.getElementById("replylink"+txid).style.display = "none";
@@ -602,25 +607,25 @@ function showReplyBox(txid) {
 }
 
 function decreaseGUILikes(txid) {
-    
-        var downarrow = document.getElementById('downvote' + txid);
-        var downarrowAction = document.getElementById('downvoteaction' + txid);
-        downarrowAction.onclick = null;
-        var uparrow = document.getElementById('upvote' + txid);
-        var likescount = Number(document.getElementById('likescount' + txid).textContent);
-        document.getElementById('score' + txid).textContent = likescount - 1;
-        
-        //Change classes
-        downarrow.className = "votearrowactivateddown rotate180";
-        uparrow.className = "votearrow";
-        
-            var dislikeElement=document.getElementById('dislikescount' + txid);
-            if(dislikeElement){
-                var dislikescount = Number(dislikeElement.textContent);
-                dislikeElement.textContent = dislikescount + 1;
-            }
-            uparrow.className = "votearrow post-footer-upvote";
-            downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
+
+    var downarrow = document.getElementById('downvote' + txid);
+    var downarrowAction = document.getElementById('downvoteaction' + txid);
+    downarrowAction.onclick = null;
+    var uparrow = document.getElementById('upvote' + txid);
+    var likescount = Number(document.getElementById('likescount' + txid).textContent);
+    document.getElementById('score' + txid).textContent = likescount - 1;
+
+    //Change classes
+    downarrow.className = "votearrowactivateddown rotate180";
+    uparrow.className = "votearrow";
+
+    var dislikeElement = document.getElementById('dislikescount' + txid);
+    if (dislikeElement) {
+        var dislikescount = Number(dislikeElement.textContent);
+        dislikeElement.textContent = dislikescount + 1;
+    }
+    uparrow.className = "votearrow post-footer-upvote";
+    downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
 
 
 }
@@ -628,31 +633,31 @@ function decreaseGUILikes(txid) {
 function increaseGUILikes(txid) {
 
 
-        //increase number of likes, original themes
-        var likescount = Number(document.getElementById('likescount' + txid).textContent);
-        var uparrow = document.getElementById('upvote' + txid);
-        var uparrowAction = document.getElementById('upvoteaction' + txid);
-        uparrowAction.onclick = null;
-        var downarrow = document.getElementById('downvote' + txid);
-        //Change counts
-        document.getElementById('likescount' + txid).textContent = likescount + 1;
-        document.getElementById('score' + txid).textContent = likescount + 1;
+    //increase number of likes, original themes
+    var likescount = Number(document.getElementById('likescount' + txid).textContent);
+    var uparrow = document.getElementById('upvote' + txid);
+    var uparrowAction = document.getElementById('upvoteaction' + txid);
+    uparrowAction.onclick = null;
+    var downarrow = document.getElementById('downvote' + txid);
+    //Change counts
+    document.getElementById('likescount' + txid).textContent = likescount + 1;
+    document.getElementById('score' + txid).textContent = likescount + 1;
 
-        //Change classes
-        if(uparrow)
+    //Change classes
+    if (uparrow)
         uparrow.className = "votearrowactivated";
-        if(downarrow)
+    if (downarrow)
         downarrow.className = "votearrow rotate180";
-        
-        //Nifty
-            //Change classes
-            if(uparrow)
-            uparrow.className = "votearrowactivated post-footer-upvote-activated";
-            if(downarrow)
-            downarrow.className = "votearrow rotate180 post-footer-downvote";
-            var upvotecontainer=document.getElementById('upvotecontainer' + txid)
-            if(upvotecontainer)
-            upvotecontainer.className = "post-footer-upvote-activated post-footer-relative";
+
+    //Nifty
+    //Change classes
+    if (uparrow)
+        uparrow.className = "votearrowactivated post-footer-upvote-activated";
+    if (downarrow)
+        downarrow.className = "votearrow rotate180 post-footer-downvote";
+    var upvotecontainer = document.getElementById('upvotecontainer' + txid)
+    if (upvotecontainer)
+        upvotecontainer.className = "post-footer-upvote-activated post-footer-relative";
 
 }
 
@@ -663,17 +668,29 @@ function increaseGUIReposts(txid) {
 }
 
 function likePost(txid, tipAddress) {
-    if (!checkForPrivKey()) return false;
+    //if no identity login, then check for priv key 
+    if (!bitCloutUser && !checkForPrivKey()) return false;
 
+    //GUI update
     increaseGUILikes(txid);
-
     if (numbers.oneclicktip >= 547) {
         var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
         document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + numbers.oneclicktip, false);
         document.getElementById('tipscount' + txid).dataset.amount = tipscount + numbers.oneclicktip;
-        sendTipRaw(txid, tipAddress, numbers.oneclicktip, privkey, null);
-    } else {
-        sendLike(txid);
+    }
+
+    //If bitclout user is logged in
+    if (bitCloutUser) {
+        bitCloutLikePost(txid);
+    }
+
+    //If memo user is logged in
+    if (privkey) {
+        if (numbers.oneclicktip >= 547) {
+            sendTipRaw(txid, tipAddress, numbers.oneclicktip, privkey, null);
+        } else {
+            sendLike(txid, privkey);
+        }
     }
 }
 
@@ -685,15 +702,18 @@ function dislikePost(txid, tipAddress) {
     sendDislike(txid);
 }
 
-function repostPost(txid, page) {
-    if (!checkForPrivKey()) return false;
+function repostPost(txid) {
+    if (!bitCloutUser && !checkForPrivKey()) return false;
 
     increaseGUIReposts(txid);
 
-    //Change class
-    //document.getElementById('score' + txid).className = "betweenvotesscoreup";
+    if (bitCloutUser) {
+        bitCloutRePost(txid);
+    }
 
-    repost(txid);
+    if (privkey){
+        repost(txid,privkey);
+    }
 
 }
 

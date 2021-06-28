@@ -25,23 +25,24 @@ function sendTransaction(tx) {
     tq.queueTransaction(tx);
 }
 
-function repost(txid, message) {
+function repost(txid, privkey) {
 
     //Repost memo 	0x6d0b 	txhash(32), message(184)
 
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     var tx = {
         data: ["0x6d0b", "0x" + reversetx],
         cash: { key: privkey }
     }
 
+    /*
     if (message != null && message != '') {
         tx = {
             data: ["0x6d0b", "0x" + reversetx, message],
             cash: { key: privkey }
         }
-    }
+    }*/
 
     updateStatus(getSafeTranslation('remembering', "Remembering"));
     tq.queueTransaction(tx);
@@ -278,9 +279,7 @@ function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
     tq.queueTransaction(tx, successFunction, null);
 }
 
-function sendLike(txid) {
-    if (!checkForPrivKey()) return false;
-
+function sendLike(txid,privkey) {
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6d04", "0x" + reversetx],
@@ -336,8 +335,7 @@ function unsub(topicHOSTILE) {
 }
 
 function addressTransaction(removeElementID, qaddress, actionCode, statusMessage) {
-    if (!checkForPrivKey()) return false;
-
+    
     //document.getElementById(removeElementID).style.display = "none";
     var addressraw = getLegacyToHash160(qaddress);
     const tx = {
@@ -348,19 +346,33 @@ function addressTransaction(removeElementID, qaddress, actionCode, statusMessage
     tq.queueTransaction(tx);
 }
 
-function follow(qaddress) {
-    addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
+function follow(qaddress,targetpublickey) {
+    if (!bitCloutUser && !checkForPrivKey()) return false;
+    if(privkey){
+        addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
+    }
+    if(bitCloutUser){
+        sendBitCloutFollow(targetpublickey);
+    }
 }
 
-function unfollow(qaddress) {
-    addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
+function unfollow(qaddress,targetpublickey) {
+    if (!bitCloutUser && !checkForPrivKey()) return false;
+    if(privkey){
+        addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
+    }
+    if(bitCloutUser){
+        sendBitCloutUnFollow(targetpublickey);
+    }
 }
 
 function mute(qaddress) {
+    if (!checkForPrivKey()) return false;
     addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
 }
 
 function unmute(qaddress) {
+    if (!checkForPrivKey()) return false;
     addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
 }
 

@@ -81,7 +81,7 @@ var postCompactTemplate = `
                             <span class="iconcount" id="repostscount{txid}">{remembers}</span>
                             <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
-                                <a onclick="repost('{txid}');"><span data-vavilon="remember">remember</span></a>
+                                <a onclick="repostPost('{txid}');"><span data-vavilon="remember">remember</span></a>
                                 <a onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"><span data-vavilon="VV0158">quote</span></a>
                             </div>
                         </a>

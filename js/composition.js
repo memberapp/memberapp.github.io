@@ -145,7 +145,7 @@ function geopost() {
 }
 
 function postmemorandum() {
-    if (!checkForPrivKey()) return false;
+    if (!bitCloutUser && !checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
     var txid = document.getElementById('quotetxid').value;
     var postbody = document.getElementById('newposttamemorandum').value;
@@ -170,13 +170,28 @@ function postmemorandum() {
     document.getElementById('newpostmemorandumstatus').value = getSafeTranslation('sendingtitle',"Sending Title...");
 
     if(txid){
-        quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function(txidnew){sendRepostNotification(txid,"newpostmemorandumstatus",topic, txidnew);}, txid);
+        if(bitCloutUser){
+            sendBitCloutQuotePost(posttext,topic,txid);
+        }
+        if(privkey){
+            quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function(txidnew){sendRepostNotification(txid,"newpostmemorandumstatus",topic, txidnew);}, txid);
+        }
     }
     else if (postbody.length == 0 || document.getElementById('memorandumtextarea').style.display == 'none') {
         //post a regular memo
-        postRaw(posttext, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
+        if(bitCloutUser){
+            sendBitCloutPost(posttext,topic);
+        }
+        if(privkey){
+            postRaw(posttext, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
+        }
     } else {
-        postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
+        if(bitCloutUser){
+            sendBitCloutPostLong(posttext,postbody,topic);
+        }
+        if(privkey){
+            postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
+        }
     }
 
     //if (typeof popupOverlay !== "undefined") {

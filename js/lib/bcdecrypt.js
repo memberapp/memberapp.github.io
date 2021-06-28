@@ -26796,6 +26796,7 @@ const encrypt = function (publicKeyTo, msg, opts) {
 
 
 exports.encrypt = encrypt;
+window.bcencrypt = encrypt;
 
 const decrypt = function (privateKey, encrypted) {
   const metaLength = 1 + 64 + 16 + 32;

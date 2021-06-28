@@ -54,9 +54,9 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     if (ratingStarSize > 0) {
         ret += ratingHTML;
     }*/
-    var followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `'); this.style.display='none';">follow</a>`;
+    var followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('` + unicodeEscape(address) + `','` + unicodeEscape(publickey) + `'); this.style.display='none';">follow</a>`;
     if (isfollowing) {
-        followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('` + unicodeEscape(address) + `'); this.style.display='none';">unfollow</a>`;
+        followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('` + unicodeEscape(address) + `','` + unicodeEscape(publickey) + `'); this.style.display='none';">unfollow</a>`;
     }
 
     if (ratingID == undefined) {
@@ -165,7 +165,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 
     //Can remove mispelling 'remebers' when css files are updated
     var remembersActive = "remebersactive remembersactive";
-    var remembersOnclick = ` onclick="repostPost('` + santxid + `','` + page + `'); this.class='remebersinactive remembersinactive'; this.onclick='';" href="javascript:;"`;
+    var remembersOnclick = ` onclick="repostPost('` + santxid + `'); this.class='remebersinactive remembersinactive'; this.onclick='';" href="javascript:;"`;
     if (repostidtxid != null && repostidtxid != '') {
         remembersActive = "remebersinactive remembersinactive";
         remembersOnclick = ` `;
@@ -870,8 +870,8 @@ function getMemberRatingHTML(qaddress, ratingScore) {
 
 
 //Settings
-function clickActionNamedHTML(action, qaddress, name) {
-    return `<a data-vavilon='`+action+`' class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `"); self.style.display="none";'>` + ds(name) + `</a>`;
+function clickActionNamedHTML(action, qaddress, name, targetpubkey) {
+    return `<a data-vavilon='`+action+`' class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `","` + unicodeEscape(targetpubkey) + `"); self.style.display="none";'>` + ds(name) + `</a>`;
 }
 
 /*
@@ -1023,8 +1023,8 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
     var decryptedMessage = getSafeTranslation('unabledecrypt', "Try again later: Unable to decrypt message: ");
     try {
 
-        try{
-            //Bitclout message style
+        /*try{
+            //Bitclout message style - do not remove, this can be used to decrypt messages with priv key
             if(bcdecrypt==null){
                 await loadScript("js/lib/bcdecrypt.js");
             }
@@ -1032,12 +1032,30 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
             // I swear this buffer has the same information as when BC decrypts it correctly - seems to object to
             // the buffer format in some way. Maybe need to use the bc library buffer type.
             decryptedMessage=await bcdecrypt(privateKeyBuf,msgArray);
+            
+            //decryptedMessage=await bitcloutDecryptMessage(message);
+            return;
+
         }catch(err2){
             //Member message style
             const encrypted = eccryptoJs.deserialize(Buffer.from(message, 'hex'));
             const structuredEj = await eccryptoJs.decrypt(privateKeyBuf, encrypted);
             decryptedMessage = structuredEj.toString();
+        }*/
+
+        if(bitCloutUser){
+            putBitCloutDecryptedMessageInElement(message,roottxid);
+            return;
+        }else if(privkey){
+            //Member message style
+            const encrypted = eccryptoJs.deserialize(Buffer.from(message, 'hex'));
+            const structuredEj = await eccryptoJs.decrypt(privateKeyBuf, encrypted);
+            decryptedMessage = structuredEj.toString();
+        }else{
+            decryptedMessage = getSafeTranslation('logintodecrypt', "Login to decrypt message: ");
         }
+
+
     } catch (err) {
         decryptedMessage += err;
         console.log(err);
@@ -1057,11 +1075,11 @@ function ___i18n(translationKey) {
     if (dictionary.live[translationKey]) {
         return dictionary.live[translationKey];
     }
-    console.log("No translation for "+translationKey);
+    //console.log("No translation for "+translationKey);
     if (dictionary.fallback[translationKey]) {
         return dictionary.fallback[translationKey];
     }
-    console.log("No fallback translation for "+translationKey);
+    //console.log("No fallback translation for "+translationKey);
     return translationKey;
     
 }

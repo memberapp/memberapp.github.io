@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "6.3.1";
+var version = "6.3.16";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -96,6 +96,14 @@ function init() {
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
+
+    bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
+    bitCloutUserData = JSON.parse(localStorageGet(localStorageSafe, "bitcloutuserdata"));
+
+    if(bitCloutUser){
+        insertBitcloutIdentityFrame();
+    }
+
 
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 
@@ -263,6 +271,10 @@ async function login(loginkey) {
             //dropdowns.utxoserver
         }
 
+        if(bitCloutUser){
+            localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
+            localStorageSet(localStorageSafe, "bitcloutuserdata", JSON.stringify(bitCloutUserData));
+        }
 
     }
 
@@ -289,7 +301,7 @@ async function login(loginkey) {
     getAndPopulateSettings();
 
     //Register public key with utxo server so that utxos can be cached    
-    getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
+    //getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
 
     tq.addUTXOPool(pubkey, qpubkey, localStorageSafe, "balance");
@@ -344,6 +356,8 @@ function logout() {
     if (!exitreally) {
         return;
     }
+
+    bitcloutlogout();
 
     if (localStorageSafe != null) {
         localStorageSafe.clear();

@@ -67,6 +67,9 @@ function createSurrogate() {
 }
 
 async function postprivatemessage() {
+
+
+
     document.getElementById('newpostmessagebutton').disabled = true;
 
     var text = document.getElementById('newposttamessage').value;
@@ -77,12 +80,18 @@ async function postprivatemessage() {
     var messageRecipient = document.getElementById("messageaddress").textContent;
     var publickey = document.getElementById("messagepublickey").textContent;
 
-    // Encrypt the message
-    const pubKeyBuf = Buffer.from(publickey, 'hex');
-    const data = Buffer.from(text);
-    const structuredEj = await eccryptoJs.encrypt(pubKeyBuf, data);
-    const encryptedMessage = eccryptoJs.serialize(structuredEj).toString('hex');
-    sendMessageRaw(privkey, null, encryptedMessage, 1000, status, privateMessagePosted, messageRecipient, stampAmount);
+    if(bitCloutUser){
+        sendBitCloutPrivateMessage(messageRecipient,text);
+    }
+
+    if(privkey){
+        // Encrypt the message
+        const pubKeyBuf = Buffer.from(publickey, 'hex');
+        const data = Buffer.from(text);
+        const structuredEj = await eccryptoJs.encrypt(pubKeyBuf, data);
+        const encryptedMessage = eccryptoJs.serialize(structuredEj).toString('hex');
+        sendMessageRaw(privkey, null, encryptedMessage, 1000, status, privateMessagePosted, messageRecipient, stampAmount);
+    }
 }
 
 function privateMessagePosted() {

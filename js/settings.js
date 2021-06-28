@@ -57,7 +57,7 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
     });
 }
 
-function getPicURL(picurl,profilepicbase,qaddress){
+function getPicURL(picurl, profilepicbase, qaddress) {
     var pictype = '.jpg';
     if (picurl && picurl.toLowerCase().endsWith('.png')) {
         pictype = '.png';
@@ -70,7 +70,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     //Set the headerbar pic
     if (pre == "settings" && data && data[0]) {
         profilepic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
-        var picurl = getPicURL(data[0].picurl,profilepicbase,qaddress);
+        var picurl = getPicURL(data[0].picurl, profilepicbase, qaddress);
         document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
         profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
         document.getElementById('newpostprofilepic').innerHTML = profilepic;
@@ -99,6 +99,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         profile: "",
         pagingid: "",
         profilepiclargehtml: "",
+        publickey:"",
     };
 
     if (data && data[0]) {
@@ -116,9 +117,9 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
 
-        var theRating = (data[0].sysrating / 64) + 1; 
-        var theRatingRound=Math.round(theRating * 10) / 10;
-        obj.membrain =  Number(theRatingRound) + "/5";
+        var theRating = (data[0].sysrating / 64) + 1;
+        var theRatingRound = Math.round(theRating * 10) / 10;
+        obj.membrain = Number(theRatingRound) + "/5";
 
         //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
         //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
@@ -131,15 +132,15 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     }
 
     if (data && (data.length < 1 || Number(data[0].isfollowing) == 0)) {
-        obj.followbuttonhtml = clickActionNamedHTML("follow", qaddress, "follow");
+        obj.followbuttonhtml = clickActionNamedHTML("follow", qaddress, "follow", obj.publickey);
     } else {
-        obj.followbuttonhtml = clickActionNamedHTML("unfollow", qaddress, "unfollow");
+        obj.followbuttonhtml = clickActionNamedHTML("unfollow", qaddress, "unfollow", obj.publickey);
     }
 
     if (data && (data.length < 1 || Number(data[0].isblocked) == 0)) {
-        obj.mutebuttonhtml = clickActionNamedHTML("mute", qaddress, "mute");
+        obj.mutebuttonhtml = clickActionNamedHTML("mute", qaddress, "mute", obj.publickey);
     } else {
-        obj.mutebuttonhtml = clickActionNamedHTML("unmute", qaddress, "unmute");
+        obj.mutebuttonhtml = clickActionNamedHTML("unmute", qaddress, "unmute", obj.publickey);
     }
 
 
@@ -155,7 +156,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
     if (data && data[0] && data[0].publickey) {
         if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
-        var bcaddress = window.bs58check.encode(new Buffer('cd1400' + san(data[0].publickey), 'hex'));
+        var bcaddress = pubkeyToBCaddress(data[0].publickey);
         obj.bcaddress = bcaddress;
     }
 
@@ -210,7 +211,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 async function populateTools() {
 
     if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
-    var bcaddress = window.bs58check.encode(new Buffer('cd1400' + san(pubkeyhex), 'hex'));
+    var bcaddress = pubkeyToBCaddress(pubkeyhex);
 
     var obj = {
         address: pubkey,

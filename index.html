@@ -30,7 +30,7 @@
     <!--INSERTMETADATA-->
 
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/ http://localhost:3123/; media-src https://imgur.com https://i.imgur.com/; img-src 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ https://images.bitclout.com/ data: https://tile.openstreetmap.org/; frame-src 'self' https://lbry.tv/ https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
+        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/ http://localhost:3123/; media-src https://imgur.com https://i.imgur.com/; img-src 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ https://images.bitclout.com/ data: https://tile.openstreetmap.org/; frame-src 'self' https://identity.bitclout.com/ https://lbry.tv/ https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@
     <div id="previewcontent" class="previewcontent">
         <!--INSERTCONTENT-->
     </div>
-    
+
     <!--  External Libraries -->
     <script src="js/lib/buffer.js"></script>
     <script src="js/lib/anchorme.min.js"></script>
@@ -93,6 +93,9 @@
     <script src="js/lib/purify.min.js"></script>
     <!-- https://github.com/dmester/jdenticon -->
     <script src="js/lib/jdenticon.min.js"></script>
+
+    <script src="js/bitcloutlogin.js"></script>
+
 
 
     <!--  Member Minified Code. 
@@ -130,8 +133,11 @@
     <footer id="footer"></footer>
     <div id="status"></div>
     <div id="tweet-container"></div>
+    <!--<iframe id="identity" frameborder="0" src="https://identity.bitclout.com/embed" style="height: 100vh; width: 100vw;"
+        [style.display]="requestingStorageAccess ? 'block' : 'none'"></iframe>-->
+    <div id="bitcloutframe"></div>
     <script>
-        init();    
+        init();
     </script>
 </body>
 

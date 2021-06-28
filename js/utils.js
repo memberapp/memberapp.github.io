@@ -50,7 +50,9 @@ var ordinal_suffix_of = function (i) {
 var getJSON = function (url) {
   //force a reload by appending time so no cached versions
   url += "&r=" + (new Date().getTime() % 100000);
-  updateStatus(getSafeTranslation('loading', "loading") + " " + url);
+  try{
+    updateStatus(getSafeTranslation('loading', "loading") + " " + url);
+  }catch(noworries){}
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     addListeners(xhr);
@@ -516,4 +518,7 @@ function copyToClipboard(text) {
   }
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
 
