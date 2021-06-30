@@ -343,10 +343,10 @@ async function bitCloutRePost(txid) {
 }
 
 
-async function sendBitCloutPrivateMessage(messageRecipient, text, divForStatus, successFunction) {
+async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForStatus, successFunction) {
   var payload = {
     SenderPublicKeyBase58Check: bitCloutUser,
-    RecipientPublicKeyBase58Check: pubkeyToBCaddress(messageRecipient),
+    RecipientPublicKeyBase58Check: pubkeyToBCaddress(messageRecipientpubkey),
     MessageText: text,
     MinFeeRateNanosPerKB: 1000
   };

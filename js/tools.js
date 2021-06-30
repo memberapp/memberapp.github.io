@@ -91,8 +91,8 @@ async function postprivatemessage() {
         successFunction=null;
     }
 
-    if(bitCloutUser){
-        sendBitCloutPrivateMessage(messageRecipient,text, status, successFunction);
+    if(isBitCloutUser()){
+        sendBitCloutPrivateMessage(publickey,text, status, successFunction);
     }
 }
 
