@@ -145,7 +145,7 @@ function geopost() {
 }
 
 function postmemorandum() {
-    if (!bitCloutUser && !checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
     var txid = document.getElementById('quotetxid').value;
     var postbody = document.getElementById('newposttamemorandum').value;
@@ -169,28 +169,33 @@ function postmemorandum() {
     document.getElementById('newpostmemorandumstatus').style.display = "block";
     document.getElementById('newpostmemorandumstatus').value = getSafeTranslation('sendingtitle',"Sending Title...");
 
+    var successFunction=memorandumpostcompleted;
+
     if(txid){
-        if(bitCloutUser){
-            sendBitCloutQuotePost(posttext,topic,txid);
-        }
         if(privkey){
             quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function(txidnew){sendRepostNotification(txid,"newpostmemorandumstatus",topic, txidnew);}, txid);
+            successFunction=null;
+        }
+        if(bitCloutUser){
+            sendBitCloutQuotePost(posttext,topic,txid, "newpostmemorandumstatus", successFunction);
         }
     }
     else if (postbody.length == 0 || document.getElementById('memorandumtextarea').style.display == 'none') {
         //post a regular memo
-        if(bitCloutUser){
-            sendBitCloutPost(posttext,topic);
-        }
         if(privkey){
-            postRaw(posttext, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
+            postRaw(posttext, privkey, topic, "newpostmemorandumstatus", successFunction);
+            successFunction=null;
+        }
+        if(bitCloutUser){
+            sendBitCloutPost(posttext,topic, "newpostmemorandumstatus", successFunction);
         }
     } else {
-        if(bitCloutUser){
-            sendBitCloutPostLong(posttext,postbody,topic);
-        }
         if(privkey){
-            postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", memorandumpostcompleted);
+            postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction);
+            successFunction=null;
+        }
+        if(bitCloutUser){
+            sendBitCloutPostLong(posttext,postbody,topic, "newpostmemorandumstatus", successFunction);
         }
     }
 

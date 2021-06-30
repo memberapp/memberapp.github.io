@@ -1,6 +1,13 @@
 "use strict";
 
 function checkForPrivKey() {
+    if(isBitCloutIdentityUser()){
+        return true;
+    }
+    return checkForNativeUser();
+}
+
+function checkForNativeUser() {
     if (privkey == "" && pubkey != "") {
         alert(getSafeTranslation('readonlymode', "You may be logged in with a public key in read only mode. You must login with a private key to make this action."));
         return false;
@@ -49,7 +56,7 @@ function repost(txid, privkey) {
 }
 
 function setPic() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     document.getElementById('settingspicbutton').disabled = true;
     document.getElementById('settingspic').disabled = true;
@@ -71,7 +78,7 @@ function setPic() {
 
 
 function setName() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
 
     document.getElementById('settingsnametextbutton').disabled = true;
@@ -290,7 +297,7 @@ function sendLike(txid,privkey) {
 }
 
 function setProfile() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
 
     document.getElementById('settingsprofiletextbutton').disabled = true;
@@ -307,7 +314,7 @@ function setProfile() {
 
 function sub(topicHOSTILE) {
 
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -321,7 +328,7 @@ function sub(topicHOSTILE) {
 }
 
 function unsub(topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -347,7 +354,7 @@ function addressTransaction(removeElementID, qaddress, actionCode, statusMessage
 }
 
 function follow(qaddress,targetpublickey) {
-    if (!bitCloutUser && !checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     if(privkey){
         addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
     }
@@ -357,7 +364,7 @@ function follow(qaddress,targetpublickey) {
 }
 
 function unfollow(qaddress,targetpublickey) {
-    if (!bitCloutUser && !checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     if(privkey){
         addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
     }
@@ -367,12 +374,12 @@ function unfollow(qaddress,targetpublickey) {
 }
 
 function mute(qaddress) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
     addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
 }
 
 function unmute(qaddress) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
     addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
 }
 
@@ -389,7 +396,7 @@ function sendSendUnhidePost(txid) {
 }
 
 function txidTransaction(txid, actionCode, statusMessage) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
@@ -402,7 +409,7 @@ function txidTransaction(txid, actionCode, statusMessage) {
 }
 
 function rateUser(qaddress, rating, ratingcomment) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
     if (ratingcomment === undefined) {
         ratingcomment = "";
     }
@@ -437,7 +444,7 @@ function unhideuser(qaddress, topicHOSTILE, elementid) {
 
 
 function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMessage, topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     document.getElementById(removeElementID).style.display = "none";
     var addressraw = getLegacyToHash160(qaddress);

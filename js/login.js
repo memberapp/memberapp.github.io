@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "6.3.17";
+var version = "6.3.20";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -139,7 +139,7 @@ function trylogin(loginkey) {
         loadBigLibs();
         return;
     }
-    getAndPopulateTopicList(false);
+    //getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
     //make sure these get loaded
     setTimeout(loadBigLibs, 10000);
@@ -263,7 +263,7 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
-            checkIfBitcloutUser(pubkeyToBCaddress(pubkeyhex));
+            checkIfBitcloutUser(pubkeyhex);
             //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
         }
 

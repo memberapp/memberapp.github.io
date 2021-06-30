@@ -561,7 +561,7 @@ function showReplyButton(txid, page, divForStatus) {
 }
 
 function sendReply(txid, page, divForStatus) {
-    if (!bitCloutUser && !checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     if (replytext.length == 0) {
@@ -577,11 +577,14 @@ function sendReply(txid, page, divForStatus) {
     const replyhex = new Buffer(replytext).toString('hex');
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
-    if(privkey){
-        sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, function () { replySuccessFunction(page, txid); });
+
+    var successFunction = function () { replySuccessFunction(page, txid); };
+    if (privkey) {
+        sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, successFunction);
+        successFunction = null;
     }
-    if(bitCloutUser){
-        sendBitCloutReply(txid,replytext);
+    if (bitCloutUser) {
+        sendBitCloutReply(txid, replytext, divForStatus, successFunction);
     }
     return true;
 }
@@ -669,7 +672,7 @@ function increaseGUIReposts(txid) {
 
 function likePost(txid, tipAddress) {
     //if no identity login, then check for priv key 
-    if (!bitCloutUser && !checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     //GUI update
     increaseGUILikes(txid);
@@ -695,7 +698,7 @@ function likePost(txid, tipAddress) {
 }
 
 function dislikePost(txid, tipAddress) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     decreaseGUILikes(txid);
 
@@ -703,7 +706,7 @@ function dislikePost(txid, tipAddress) {
 }
 
 function repostPost(txid) {
-    if (!bitCloutUser && !checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     increaseGUIReposts(txid);
 
@@ -711,14 +714,14 @@ function repostPost(txid) {
         bitCloutRePost(txid);
     }
 
-    if (privkey){
-        repost(txid,privkey);
+    if (privkey) {
+        repost(txid, privkey);
     }
 
 }
 
 function sendTip(txid, tipAddress, page) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     //document.getElementById("tipbox" + page + txid).style.display = "none";
     //document.getElementById("tiplink" + page + txid).style.display = "block";
@@ -748,7 +751,7 @@ function sendTip(txid, tipAddress, page) {
 }
 
 function showTipBox(txid) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
     if (document.getElementById("tipamount" + txid).value == 0) {
         document.getElementById("tipamount" + txid).value = defaulttip;
     }

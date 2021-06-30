@@ -399,7 +399,7 @@ function templateReplace(templateString, obj, skipdebug) {
 }
 
 function loadScript(src) {
-  console.log("background loading " + src);
+  //console.log("background loading " + src);
   return new Promise(function (resolve, reject) {
     var s;
     s = document.createElement('script');

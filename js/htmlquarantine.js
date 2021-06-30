@@ -871,7 +871,7 @@ function getMemberRatingHTML(qaddress, ratingScore) {
 
 //Settings
 function clickActionNamedHTML(action, qaddress, name, targetpubkey) {
-    return `<a data-vavilon='`+action+`' class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `","` + unicodeEscape(targetpubkey) + `"); self.style.display="none";'>` + ds(name) + `</a>`;
+    return `<a data-vavilon='`+action+`' class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `","` + unicodeEscape(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
 }
 
 /*
