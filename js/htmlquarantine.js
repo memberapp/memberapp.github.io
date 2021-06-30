@@ -1043,8 +1043,22 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
             decryptedMessage = structuredEj.toString();
         }*/
 
-        if(bitCloutUser){
-            putBitCloutDecryptedMessageInElement(message,roottxid);
+        if(isBitCloutUser()){
+            if(isBitCloutIdentityUser()){
+                putBitCloutDecryptedMessageInElement(message,roottxid);
+            }else if(privateKeyBuf){
+                try{
+                    //Bitclout message style - 
+                    if(bcdecrypt==null){
+                        await loadScript("js/lib/bcdecrypt.js");
+                    }
+                    var msgArray=new BCBuffer(message.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+                    decryptedMessage=await bcdecrypt(privateKeyBuf,msgArray);   
+                    document.getElementById(roottxid).textContent = decryptedMessage;
+                }catch(err2){
+                    console.log(err2);
+                }
+            }
             return;
         }else if(privkey){
             //Member message style
@@ -1054,8 +1068,6 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
         }else{
             decryptedMessage = getSafeTranslation('logintodecrypt', "Login to decrypt message: ");
         }
-
-
     } catch (err) {
         decryptedMessage += err;
         console.log(err);

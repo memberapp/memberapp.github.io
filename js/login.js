@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, but don't know how.
 //So must be entered in two places
-var version = "6.3.16";
+var version = "6.3.17";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -97,14 +97,8 @@ function init() {
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
-    bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
-    bitCloutUserData = JSON.parse(localStorageGet(localStorageSafe, "bitcloutuserdata"));
-
-    if(bitCloutUser){
-        insertBitcloutIdentityFrame();
-    }
-
-
+    getBitCloutLoginFromLocalStorage();
+    
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 
     if (loginmnemonic != "null" && loginmnemonic != null && loginmnemonic != "") {
@@ -160,9 +154,11 @@ async function loadBigLibs() {
     if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
     if (!L) loadScript("js/lib/leaflet/leaflet.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
+    if (!window.elliptic) { loadScript("js/lib/elliptic.min.js");}
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     if (!bcdecrypt) loadScript("js/lib/bcdecrypt.js");
     if (!cytoscape) loadScript("js/lib/cytoscape.min.js");
+    
 
 }
 
@@ -263,18 +259,15 @@ async function login(loginkey) {
             pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
             privkeyhex = ecpair.d.toHex();
 
-
-
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
+            checkIfBitcloutUser(pubkeyToBCaddress(pubkeyhex));
+            //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
         }
 
-        if(bitCloutUser){
-            localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
-            localStorageSet(localStorageSafe, "bitcloutuserdata", JSON.stringify(bitCloutUserData));
-        }
+        
 
     }
 

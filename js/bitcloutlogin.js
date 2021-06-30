@@ -36,6 +36,15 @@ function handleInit(e) {
   respond(e.source, e.data.id, {});
 }
 
+function getBitCloutLoginFromLocalStorage(){
+    bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
+    bitCloutUserData = JSON.parse(localStorageGet(localStorageSafe, "bitcloutuserdata"));
+
+    if(bitCloutUserData){
+        insertBitcloutIdentityFrame();
+    }
+}
+
 function handleLoginBitclout(payload) {
   console.log("Handle Login");
   console.log(payload);
@@ -48,6 +57,8 @@ function handleLoginBitclout(payload) {
   if (payload && payload.publicKeyAdded) {
     bitCloutUser = payload.publicKeyAdded;
     bitCloutUserData = payload.users[bitCloutUser];
+    localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
+    localStorageSet(localStorageSafe, "bitcloutuserdata", JSON.stringify(bitCloutUserData));
     trylogin(payload.publicKeyAdded);
   }
 }
@@ -92,22 +103,40 @@ window.addEventListener("message", (message) => {
     handleLoginBitclout(payload);
   } else if (payload && payload.signedTransactionHex) {
     console.log(payload.signedTransactionHex);
-    var submitpayload = `{"TransactionHex":"` + payload.signedTransactionHex + `"}`;
-    var url2 = "https://member.cash/v2/bitclout?bcaction=submit-transaction&payload=" + encodeURIComponent(submitpayload);
-    getJSON(url2).then(function (data) {
-      console.log(data);
-      identityresponses.set(id, data.TxnHashHex);
-    });
+    submitSignedTransaction(payload.signedTransactionHex, id);
   } else if (payload && payload.decryptedHexes) {
     console.log(payload.decryptedHexes);
     for (var i = 0; i < payload.length; i++) {
       identityresponses.set(id, decryptedHexes[i][1]);
     }
-  }else{
+  } else {
     identityresponses.set(id, JSON.stringify(payload));
   }
 
 });
+
+function submitSignedTransaction(signedTrx,id) {
+  var submitpayload = `{"TransactionHex":"` + signedTrx + `"}`;
+  var url2 = "https://member.cash/v2/bitclout?bcaction=submit-transaction&payload=" + encodeURIComponent(submitpayload);
+  getJSON(url2).then(function (data) {
+    console.log(data);
+    identityresponses.set(id, data.TxnHashHex);
+  });
+}
+
+function checkIfBitcloutUser(pubkeyhex1) {
+  var bcAddress=pubkeyToBCaddress(pubkeyhex1);
+  var submitpayload = `{"PublicKeyBase58Check":"` + bcAddress + `"}`;
+  var url2 = "https://member.cash/v2/bitclout?bcaction=get-single-profile&payload=" + encodeURIComponent(submitpayload);
+  getJSON(url2).then(function (data) {
+    console.log(data);
+    if(data.Profile && data.Profile.Username){
+      //This is a BC user
+      bitCloutUser=bcAddress;
+      localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
+    }
+  });
+}
 
 var bcinit = false;
 var iframe = null;
@@ -116,7 +145,6 @@ var identityWindow = null;
 
 var bitCloutUser = null;
 var bitCloutUserData = null;
-//var uniqueid = null;
 
 let identityresponses = new Map();
 
@@ -129,7 +157,7 @@ async function putBitCloutDecryptedMessageInElement(message, elementid) {
 
 async function bitcloutDecryptMessage(message) {
 
-  var uniqueid=getRandomInt(1000000000);
+  var uniqueid = getRandomInt(1000000000);
   postMessage({
     id: uniqueid,
     service: 'identity',
@@ -145,12 +173,12 @@ async function bitcloutDecryptMessage(message) {
   });
 
   return await waitForResponse(uniqueid);
-  
+
 }
 
-async function waitForResponse(key){
-  for(var i=0;i<5;i++){
-    if(identityresponses.has(key)){
+async function waitForResponse(key) {
+  for (var i = 0; i < 15; i++) {
+    if (identityresponses.has(key)) {
       return identityresponses.get(key);
     }
     await sleep(200);
@@ -161,23 +189,32 @@ async function waitForResponse(key){
 
 
 async function sendBitCloutTransaction(payload, action, uniqueid) {
-  
-  var uniqueid=getRandomInt(1000000000);
+
+  var uniqueid = getRandomInt(1000000000);
   var url = "https://member.cash/v2/bitclout?bcaction=" + action + "&payload=" + encodeURIComponent(payload);
-  getJSON(url).then(function (data) {
+  getJSON(url).then(async function (data) {
     //Now sign the transaction
-    console.log(data.TransactionHex);
-    postMessage({
-      id: uniqueid,
-      service: 'identity',
-      method: 'sign',
-      payload: {
-        accessLevel: bitCloutUserData.accessLevel,
-        accessLevelHmac: bitCloutUserData.accessLevelHmac,
-        encryptedSeedHex: bitCloutUserData.encryptedSeedHex,
-        transactionHex: data.TransactionHex
-      }
-    });
+    
+    if(bitCloutUserData){
+      //Use identity
+      postMessage({
+        id: uniqueid,
+        service: 'identity',
+        method: 'sign',
+        payload: {
+          accessLevel: bitCloutUserData.accessLevel,
+          accessLevelHmac: bitCloutUserData.accessLevelHmac,
+          encryptedSeedHex: bitCloutUserData.encryptedSeedHex,
+          transactionHex: data.TransactionHex
+        }
+      });
+    }else{
+      //Use privkey to sign
+      var signedTx = await signTransaction(data.TransactionHex);
+      submitSignedTransaction(signedTx, uniqueid);
+    }
+
+    
   });
   return await waitForResponse(uniqueid);
 }
@@ -195,20 +232,20 @@ async function bitCloutLikePost(likedPostHashHex) {
 }
 
 //todo need to change the qaddress to bcaddress somehow
-async function sendBitCloutFollow(qaddress) {
+async function sendBitCloutFollow(followpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
-      "FollowedPublicKeyBase58Check":"`+ qaddress + `",
+      "FollowedPublicKeyBase58Check":"`+ pubkeyToBCaddress(followpubkey) + `",
       "IsUnfollow      ":false,
       "MinFeeRateNanosPerKB":1000
     }`;
   return await sendBitCloutTransaction(payload, "create-follow-txn-stateless");
 }
 
-async function sendBitCloutUnFollow(qaddress) {
+async function sendBitCloutUnFollow(unfollowpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
-      "FollowedPublicKeyBase58Check":"`+ qaddress + `",
+      "FollowedPublicKeyBase58Check":"`+ pubkeyToBCaddress(unfollowpubkey) + `",
       "IsUnfollow      ":true,
       "MinFeeRateNanosPerKB":1000
     }`;
@@ -220,71 +257,115 @@ async function sendBitCloutPost(posttext, topic) {
   if (topic) {
     posttext = posttext + " #" + topic;
   }
-  var body={Body: posttext, ImageURLs: []};
-  var payload={
-          UpdaterPublicKeyBase58Check: bitCloutUser,
-          BodyObj: body,
-          IsHidden:false,
-          MinFeeRateNanosPerKB:1000
-        };
+  var body = { Body: posttext, ImageURLs: [] };
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    BodyObj: body,
+    IsHidden: false,
+    MinFeeRateNanosPerKB: 1000
+  };
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
 }
 
-async function sendBitCloutReply(txid,replytext) {
-  var body={Body: replytext, ImageURLs: []};
-  var payload={
-          UpdaterPublicKeyBase58Check: bitCloutUser,
-          ParentStakeID: txid,
-          BodyObj: body,
-          IsHidden:false,
-          MinFeeRateNanosPerKB:1000
-        };
+async function sendBitCloutReply(txid, replytext) {
+  var body = { Body: replytext, ImageURLs: [] };
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: txid,
+    BodyObj: body,
+    IsHidden: false,
+    MinFeeRateNanosPerKB: 1000
+  };
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
 }
 
-async function sendBitCloutPostLong(posttext,postbody,topic){
+async function sendBitCloutPostLong(posttext, postbody, topic) {
   var txid = await sendBitCloutPost(posttext, topic);
-  return await sendBitCloutReply(txid,postbody);
+  return await sendBitCloutReply(txid, postbody);
 }
 
 async function bitCloutRePost(txid) {
-  var body={};
-  var payload={
-          UpdaterPublicKeyBase58Check: bitCloutUser,
-          RecloutedPostHashHex: txid,
-          BodyObj: body,
-          IsHidden:false,
-          MinFeeRateNanosPerKB:1000
-        };
+  var body = {};
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    RecloutedPostHashHex: txid,
+    BodyObj: body,
+    IsHidden: false,
+    MinFeeRateNanosPerKB: 1000
+  };
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
 }
 
-async function sendBitCloutQuotePost(posttext,topic,txid) {
+async function sendBitCloutQuotePost(posttext, topic, txid) {
   if (topic) {
     posttext = posttext + " #" + topic;
   }
-  var body={Body: posttext, ImageURLs: []};
-  
-  var payload={
-          UpdaterPublicKeyBase58Check: bitCloutUser,
-          RecloutedPostHashHex: txid,
-          BodyObj: body,
-          IsHidden:false,
-          MinFeeRateNanosPerKB:1000
-        };
-  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
-}  
+  var body = { Body: posttext, ImageURLs: [] };
 
-async function sendBitCloutPrivateMessage(messageRecipient,text) {
-  var payload={
-          SenderPublicKeyBase58Check: bitCloutUser,
-          RecipientPublicKeyBase58Check: pubkeyToBCaddress(messageRecipient),
-          MessageText:text,
-          MinFeeRateNanosPerKB:1000
-        };
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    RecloutedPostHashHex: txid,
+    BodyObj: body,
+    IsHidden: false,
+    MinFeeRateNanosPerKB: 1000
+  };
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
+}
+
+async function sendBitCloutPrivateMessage(messageRecipient, text) {
+  var payload = {
+    SenderPublicKeyBase58Check: bitCloutUser,
+    RecipientPublicKeyBase58Check: pubkeyToBCaddress(messageRecipient),
+    MessageText: text,
+    MinFeeRateNanosPerKB: 1000
+  };
   return await sendBitCloutTransaction(JSON.stringify(payload), "send-message-stateless");
 }
 
-function pubkeyToBCaddress(publickey){
+function pubkeyToBCaddress(publickey) {
   return window.bs58check.encode(new Buffer('cd1400' + san(publickey), 'hex'));
+}
+
+uvarint64ToBuf = function (uint) {
+  var result = [];
+  while (uint >= 0x80) {
+    result.push((uint & 0xFF) | 0x80);
+    uint >>>= 7;
+  }
+  result.push(uint | 0);
+  return new Buffer(result);
+};
+
+async function signTransaction(transactionHex) {
+  if (!eccryptoJs) {
+    await loadScript("js/lib/eccrypto-js.js");
+  }
+  //might be possible to remove this lib and use the eccryptoJs lib instead
+  if (!window.elliptic) {
+    await loadScript("js/lib/elliptic.min.js");
+  }
+
+  var ec = new window.elliptic.ec('secp256k1');
+  privateKey = ec.keyFromPrivate(privkeyhex);
+
+  var transactionBytes = new Buffer(transactionHex, 'hex');
+  var transactionHash = await eccryptoJs.sha256(await eccryptoJs.sha256(transactionBytes));
+
+  var signature = privateKey.sign(transactionHash);
+  var signatureBytes = new Buffer(signature.toDER());
+  var signatureLength = uvarint64ToBuf(signatureBytes.length);
+  var signedTransactionBytes = Buffer.concat([
+    transactionBytes.slice(0, -1),
+    signatureLength,
+    signatureBytes,
+  ]);
+  return signedTransactionBytes.toString('hex');
+};
+
+function isBitCloutUser(){
+  return  (bitCloutUser);
+}
+
+function isBitCloutIdentityUser(){
+  return  (bitCloutUserData);
 }
