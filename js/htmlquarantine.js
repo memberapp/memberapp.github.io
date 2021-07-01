@@ -75,9 +75,6 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     }
 
     var directlink="";
-    if(privkey && pubkey=='19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6'){
-        directlink=`<a target="_self" href="https://bitclout.com/u/`+encodeURIComponent(pagingid)+`">BitClout</a>`;
-    }
 
     var systemScoreClass='';
     if(!ratingRawScore){
@@ -290,9 +287,6 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     }
 
     var directlink="";
-    if(privkey && pubkey=='19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6'){
-        directlink=`<a target="_self" href="https://bitclout.com/u/`+encodeURIComponent(pagingid)+`">BitClout</a>`;
-    }
     var obj = {
         //These must all be HTML safe 
         author: theAuthorHTML,
@@ -772,9 +766,6 @@ function mapThreadLoadingHTML(previewHTML) {
 //Trust graph and Rating
 function getMembersWithRatingHTML(i, page, data, action, reverse) {
     var directlink="";
-    if(pubkey=='19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6'){
-        directlink=`<a target="_self" href="https://bitclout.com/u/`+encodeURIComponent(data.pagingid)+`">BitClout</a>`;
-    }
     var field1 = `<td>` + directlink + userFromDataBasic(data, i + page + data.address, 8) + `</td>`;
     var field2 = `<td>` + getMemberLink(data.address2, data.name2) + `</td>`;
     if (reverse) {

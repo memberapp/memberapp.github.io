@@ -120,7 +120,7 @@ window.addEventListener("message", (message) => {
 
 function submitSignedTransaction(signedTrx,id) {
   var submitpayload = `{"TransactionHex":"` + signedTrx + `"}`;
-  var url2 = "https://member.cash/v2/bitclout?bcaction=submit-transaction&payload=" + encodeURIComponent(submitpayload);
+  var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=submit-transaction&payload=" + encodeURIComponent(submitpayload);
   getJSON(url2).then(function (data) {
     console.log(data);
     serverresponses.set(id, data.TxnHashHex);
@@ -130,7 +130,7 @@ function submitSignedTransaction(signedTrx,id) {
 function checkIfBitcloutUser(pubkeyhex1) {
   var bcAddress=pubkeyToBCaddress(pubkeyhex1);
   var submitpayload = `{"PublicKeyBase58Check":"` + bcAddress + `"}`;
-  var url2 = "https://member.cash/v2/bitclout?bcaction=get-single-profile&payload=" + encodeURIComponent(submitpayload);
+  var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-single-profile&payload=" + encodeURIComponent(submitpayload);
   getJSON(url2).then(function (data) {
     console.log(data);
     if(data.Profile && data.Profile.Username){
@@ -211,7 +211,7 @@ async function sendBitCloutTransaction(payload, action, divForStatus) {
     var statusElement=document.getElementById(divForStatus);
   }
   var uniqueid = getRandomInt(1000000000);
-  var url = "https://member.cash/v2/bitclout?bcaction=" + action + "&payload=" + encodeURIComponent(payload);
+  var url = dropdowns.txbroadcastserver + "bitclout?bcaction=" + action + "&payload=" + encodeURIComponent(payload);
   if(statusElement)statusElement.value = "Constructing BitClout Tx";
   getJSON(url).then(async function (data) {
     //Now sign the transaction
