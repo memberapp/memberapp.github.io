@@ -105,9 +105,8 @@ window.addEventListener("message", (message) => {
     console.log(payload.signedTransactionHex);
     submitSignedTransaction(payload.signedTransactionHex, id);
   } else if (payload && payload.decryptedHexes) {
-    console.log(payload.decryptedHexes);
-    for (var i = 0; i < payload.length; i++) {
-      identityresponses.set(id, decryptedHexes[i][1]);
+    for (var key in payload.decryptedHexes){
+      identityresponses.set(id, payload.decryptedHexes[key]);
     }
   } else if (payload && payload.approvalRequired) {
       alert("identity.bitclout.com returned error "+JSON.stringify(payload));

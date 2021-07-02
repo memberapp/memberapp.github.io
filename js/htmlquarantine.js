@@ -515,9 +515,7 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
     if (start != 0) //Don't show back buttons if we're at the start
     { navbuttons += `<a class="next" href="#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('prev', 'back') + `</a> `; }
 
-    //Removing this if, because sometimes flagged posts are removed server side, so this condition may be true even where there are more results to return.
-    //Proper fix is to have the server return a flag to say if there are more results available.
-    if (numberOfResults > numbers.results) //Don't show next button unless the server has returned 1 additional set of results than requested
+    if (numberOfResults > numbers.results/2) //Sometimes an sql limit request returns fewer than the available set - nearly always include a next button
     { navbuttons += `<a class="back" href="#` + action + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('next', 'next') + `</a>`; }
 
     navbuttons += "</div>";

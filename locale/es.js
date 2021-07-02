@@ -108,7 +108,7 @@ dictionary.es=
     "VV0103": "comenzar",
     "VV0104": "de moda",
     "VV0105": "publicaciones de moda",
-    "VV0106": "Nuevo ",
+    "VV0106": "Nuevo",
     "VV0107": "Últimas publicaciones",
     "VV0108": "Día",
     "VV0109": "Principales publicaciones del último día",

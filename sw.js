@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '6.3.22';
+const version = '6.3.36';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -75,23 +75,42 @@ self.addEventListener('fetch', function (event) {
       }
     }));
   }
-  else if (event.request.url.includes('/invalidatecache')) {
-    caches.delete(event.request);
-    event.respondWith(new Response("sw.js invalidated cache "+event.request), {
-      headers: {
-        'content-type': 'text/plain'
+  else if (event.request.url.includes('/invalidatecache/')) {
+    //caches.delete(event.request);
+    /*caches.keys().then(function (cacheNames) {
+      return Promise.all(
+        cacheNames.map(function (cacheName) {
+            console.log('[ServiceWorker] Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+        })
+      );
+    })*/
+
+    //Delete all caches
+    caches.keys().then(function(names) {
+      for (let name of names){
+        console.log('[ServiceWorker] Deleting old cache:', name);
+        caches.delete(name);
       }
     });
+    event.respondWith(
+      new Response("sw.js invalidated cache "),
+      {headers: {'content-type': 'text/plain'}}
+    );
   }
-  else if (event.request.url.startsWith(self.location.origin) && !event.request.url.includes('/v2/') ) {
+  else if (event.request.url.startsWith(self.location.origin) && !event.request.url.includes('/v2/')) {
     event.respondWith(
       caches.match(event.request).then(cachedResponse => {
         if (cachedResponse) {
+          //console.log('[ServiceWorker] Returning Found In Cache:', event.request);
           return cachedResponse;
         }
+        //console.log('[ServiceWorker] Not Found :', event.request);
         return caches.open(RUNTIME).then(cache => {
+          //console.log('[ServiceWorker] Fetching :', event.request);
           return fetch(event.request).then(response => {
             // Put a copy of the response in the runtime cache.
+            //console.log('[ServiceWorker] Caching :', event.request);
             return cache.put(event.request, response.clone()).then(() => {
               return response;
             });
@@ -208,59 +227,59 @@ const showLocalNotification = (payload, swRegistration) => {
   switch (body) {
     case "rating":
       title = "Rated";
-      text = "Rating from @"+pagingid;
+      text = "Rating from @" + pagingid;
       icon = "/img/notificationicons/rating.svg";
       renotify = true;
       break;
     case "message":
       title = "Message";
-      text = "Message from @"+pagingid;
+      text = "Message from @" + pagingid;
       icon = "/img/notificationicons/message.svg";
       renotify = true;
       break;
     case "follow":
       title = "Followed";
-      text = "Followed by @"+pagingid;
+      text = "Followed by @" + pagingid;
       icon = "/img/notificationicons/follow.svg";
       renotify = true;
       break;
     case "page":
       title = "Paged";
-      text = "Paged by @"+pagingid;
+      text = "Paged by @" + pagingid;
       icon = "/img/notificationicons/page.svg";
       renotify = true;
       break;
     case "repost":
       title = "Remembered";
-      text = "Remembered by @"+pagingid;
+      text = "Remembered by @" + pagingid;
       icon = "/img/notificationicons/repost.svg";
       renotify = true;
       break;
     case "tip":
       title = "Tipped";
-      text = "Tipped by @"+pagingid;
+      text = "Tipped by @" + pagingid;
       icon = "/img/notificationicons/tip.svg";
       renotify = true;
       break;
     case "reply":
       title = "Reply";
-      text = "Reply from @"+pagingid;
+      text = "Reply from @" + pagingid;
       icon = "/img/notificationicons/reply.svg";
       renotify = true;
       break;
     case "like":
       title = "Liked";
-      text = "Liked by @"+pagingid;
+      text = "Liked by @" + pagingid;
       icon = "/img/notificationicons/like.svg";
       break;
     case "thread":
       title = "Reply";
-      text = "Thread reply by @"+pagingid;
+      text = "Thread reply by @" + pagingid;
       icon = "/img/notificationicons/thread.svg";
       break;
     case "topic":
       title = "Tag";
-      text = "Subscribed Tag Post by @"+pagingid;
+      text = "Subscribed Tag Post by @" + pagingid;
       icon = "/img/notificationicons/topic.svg";
       break;
     default:

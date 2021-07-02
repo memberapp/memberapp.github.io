@@ -772,7 +772,7 @@ img {
   width: 3rem;
   object-fit: cover;
   border-radius: 100%;
-  max-width: fit-content;
+  max-width: 3rem;
 }
 .mainbodywrapper .mainbody {
   margin-top: 90px;

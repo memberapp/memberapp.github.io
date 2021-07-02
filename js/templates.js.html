@@ -845,7 +845,7 @@ pages.settings = `
     <div>
         <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
         <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
-        <a href="invalidatecache" class="cachedeletebutton">Invalidate cache (will force reload of client)</a>
+        <a href="javascript:;" onclick="getJSON(dropdowns.contentserver + '/invalidatecache/')"; class="cachedeletebutton">Invalidate cache (will force reload of client)</a>
     </div>
 
 

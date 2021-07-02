@@ -107,7 +107,7 @@ dictionary.en=
   "VV0101": "Map",
   "VV0104": "Hot",
   "VV0105": "Hottest posts",
-  "VV0106": "New ",
+  "VV0106": "New",
   "VV0107": "Latest posts",
   "VV0108": "Day",
   "VV0109": "Top posts from the past Day",
