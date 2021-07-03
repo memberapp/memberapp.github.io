@@ -1,0 +1,98 @@
+<html>
+<body>
+    <script src="js/lib/buffer.js"></script>
+    <script src="js/bitcloutlogin.js"></script>
+<script src="js/lib/elliptic.min.js"></script>
+<script src="js/lib/bitboxsdk.js"></script>
+<script src="js/lib/eccrypto-js.js"></script>
+
+Encrypt<br/>
+
+Seed Phrase of Sender<br/>
+<input size="40" id="senderseed"/><br/>
+Bitclout Address Of Recipient<br/>
+<input size="40" id="recipientbcaddress"/><br/>
+Message<br/>
+<textarea rows="3" cols="40" id="messagetoencrypt"></textarea><br/>
+<button onclick="encryptMessage(
+    document.getElementById('senderseed').value,
+    document.getElementById('recipientbcaddress').value,
+    document.getElementById('messagetoencrypt').value,
+    document.getElementById('encryptedmessage')
+    );">Encrypt</button><br/>
+Encrypted Message<br/>
+<textarea rows="3" cols="40" id="encryptedmessage"></textarea><br/>
+
+<hr/>
+<br/>
+
+Decrypt<br/>
+Seed Phrase of Recipient<br/>
+<input size="40" id="seedphraserecipient"/><br/>
+Encrypted Message<br/>
+<textarea rows="3" cols="40" id="previouslyencryptedmessage"></textarea><br/>
+<button onclick="decryptMessage(
+    document.getElementById('seedphraserecipient').value,
+    document.getElementById('previouslyencryptedmessage').value,
+    document.getElementById('decryptedmessage')
+    );">Decrypt</button><br/>
+
+Decrypted Message<br/>
+<textarea rows="3" cols="40" id="decryptedmessage"></textarea><br/>
+
+<script>
+
+const Buffer = buffer.Buffer;
+
+async function encryptMessage(loginkey, bcpubkey, message, element){
+    if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
+      var newloginkey = new bitboxSdk.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
+      //mnemonic = loginkey;
+      //loginkey = newloginkey;
+      let ecpair = new bitboxSdk.ECPair().fromWIF(newloginkey);
+      publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+      privkey = loginkey;
+      
+      /*let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
+              pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
+              privkeyhex = ecpair.d.toHex();
+  
+      var bcAddress= pubkeyToBCaddress(pubkeyhex);
+      */
+              // Encrypt the message
+  
+              var preslice = window.bs58check.decode(bcpubkey);
+              var bcpublicKey = preslice.slice(3);
+              //var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
+              //publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+  
+              const pubKeyBuf = Buffer.from(bcpublicKey, 'hex');
+              const data = Buffer.from(message);
+              const structuredEj = await eccryptoJs.encrypt(pubKeyBuf, data);
+              const encryptedMessage = eccryptoJs.serialize(structuredEj).toString('hex');
+              element.value=encryptedMessage;
+              //sendMessageRaw(privkey, null, encryptedMessage, 1000, status, successFunction, messageRecipient, stampAmount);
+              //successFunction=null;
+    }
+  }
+
+  async function decryptMessage(loginkey, message, element){
+    if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
+    
+    var newloginkey = new bitboxSdk.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
+    let ecpair = new bitboxSdk.ECPair().fromWIF(newloginkey);
+
+    pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
+    privkeyhex = ecpair.d.toHex();
+
+    var privateKeyBuf = Buffer.from(privkeyhex, 'hex');
+
+    const encrypted = eccryptoJs.deserialize(Buffer.from(message, 'hex'));
+    const structuredEj = await eccryptoJs.decrypt(privateKeyBuf, encrypted);
+    element.value = structuredEj.toString();
+    }
+  }
+</script>
+
+</body>
+</html>

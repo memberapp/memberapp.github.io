@@ -268,7 +268,7 @@ async function sendBitCloutUnFollow(unfollowpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
       "FollowedPublicKeyBase58Check":"`+ pubkeyToBCaddress(unfollowpubkey) + `",
-      "IsUnfollow      ":true,
+      "IsUnfollow":true,
       "MinFeeRateNanosPerKB":1000
     }`;
   return await sendBitCloutTransaction(payload, "create-follow-txn-stateless");

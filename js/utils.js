@@ -310,6 +310,7 @@ function detectMultipleIDS() {
   }
 }
 
+
 // Add a hook to make all links open a new window
 DOMPurify.addHook('afterSanitizeAttributes', function (node) {
   // set all elements owning target to target=_blank
@@ -329,6 +330,7 @@ DOMPurify.addHook('afterSanitizeAttributes', function (node) {
     node.setAttribute('xlink:show', 'new');
   }
 });
+
 
 //Twitter stuff, doesn't seem to be working
 /*
@@ -521,4 +523,6 @@ function copyToClipboard(text) {
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
+
+
 
