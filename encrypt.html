@@ -8,14 +8,11 @@
 
 Encrypt<br/>
 
-Seed Phrase of Sender<br/>
-<input size="40" id="senderseed"/><br/>
 Bitclout Address Of Recipient<br/>
 <input size="40" id="recipientbcaddress"/><br/>
 Message<br/>
 <textarea rows="3" cols="40" id="messagetoencrypt"></textarea><br/>
 <button onclick="encryptMessage(
-    document.getElementById('senderseed').value,
     document.getElementById('recipientbcaddress').value,
     document.getElementById('messagetoencrypt').value,
     document.getElementById('encryptedmessage')
@@ -44,15 +41,15 @@ Decrypted Message<br/>
 
 const Buffer = buffer.Buffer;
 
-async function encryptMessage(loginkey, bcpubkey, message, element){
-    if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
+async function encryptMessage(bcpubkey, message, element){
+    /*if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
       var newloginkey = new bitboxSdk.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
       //mnemonic = loginkey;
       //loginkey = newloginkey;
       let ecpair = new bitboxSdk.ECPair().fromWIF(newloginkey);
       publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
       privkey = loginkey;
-      
+      */
       /*let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
               pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
               privkeyhex = ecpair.d.toHex();
@@ -73,7 +70,7 @@ async function encryptMessage(loginkey, bcpubkey, message, element){
               element.value=encryptedMessage;
               //sendMessageRaw(privkey, null, encryptedMessage, 1000, status, successFunction, messageRecipient, stampAmount);
               //successFunction=null;
-    }
+    //}
   }
 
   async function decryptMessage(loginkey, message, element){
