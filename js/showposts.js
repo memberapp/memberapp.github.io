@@ -516,7 +516,7 @@ function sendRating(rating, ratingText, pageName, theAddress){
     }
     
     if(bitCloutUser){
-        sendBitCloutPost("user:@" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:rating});
+        sendBitCloutPost("user:@" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:""+rating});
     }
 }
 
