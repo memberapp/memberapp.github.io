@@ -2540,4 +2540,12 @@ tbody tr td:first-of-type {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%) !important;
 }
 
+.bitcloutframe {
+  position: fixed;
+  top: 0px;
+}
+
+#memorandumpreview .reply{
+  display: none;
+}
 

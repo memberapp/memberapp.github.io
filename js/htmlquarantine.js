@@ -853,8 +853,8 @@ function getRatingComment(qaddress, data) {
     return `<input placeholder="`+getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...')+`" size="30" maxlength="190" id="memberratingcommentinputbox` + san(qaddress) + `" value="` + (data.length > 0 ? ds(data[0].ratingreason) : "") + `" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
-function getMemberRatingHTML(qaddress, ratingScore) {
-    return `<div class="starrating"><div data-ratingsize="20" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + Number(ratingScore) + `" id="memberrating` + san(qaddress) + `"></div></div>`;
+function getMemberRatingHTML(qaddress, ratingScore, pagingid) {
+    return `<div class="starrating"><div data-ratingsize="20" data-ratingname="`+ds(pagingid)+`" data-ratingaddress="` + san(qaddress) + `" data-ratingraw="` + Number(ratingScore) + `" id="memberrating` + san(qaddress) + `"></div></div>`;
 }
 
 

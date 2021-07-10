@@ -373,14 +373,24 @@ function unfollow(qaddress,targetpublickey) {
     }
 }
 
-function mute(qaddress) {
-    if (!checkForNativeUser()) return false;
-    addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
+function mute(qaddress,targetpublickey) {
+    if (!checkForPrivKey()) return false;
+    if(privkey){
+        addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
+    }
+    if(bitCloutUser){
+        sendBitCloutMute(targetpublickey);
+    }
 }
 
-function unmute(qaddress) {
-    if (!checkForNativeUser()) return false;
-    addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
+function unmute(qaddress,targetpublickey) {
+    if (!checkForPrivKey()) return false;
+    if(privkey){
+        addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
+    }
+    if(bitCloutUser){
+        sendBitCloutUnMute(targetpublickey);
+    }
 }
 
 function sendDislike(txid) {

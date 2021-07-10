@@ -491,11 +491,8 @@ function addSingleStarsRating(theElement) {
         disableText: disabledtext ? disabledtext : getSafeTranslation('thisuserrates', 'This user rates ') + ds(name) + ' {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
-            if (ratingText) {
-                rateCallbackAction(rating, this, ratingText.value);
-            } else {
-                rateCallbackAction(rating, this);
-            }
+            this.setRating(rating);
+            sendRating(rating, ratingText, name, theAddress);
             done();
         }
     });
@@ -505,6 +502,22 @@ function addSingleStarsRating(theElement) {
     }
     theElement.isdone = true;
     return starRating1;
+}
+
+function sendRating(rating, ratingText, pageName, theAddress){
+    if (!checkForPrivKey()) return false;
+    var comment="";
+    if (ratingText) {
+        comment=ratingText.value;
+    }
+
+    if(privkey){
+        rateCallbackAction(rating, comment, theAddress);
+    }
+    
+    if(bitCloutUser){
+        sendBitCloutPost("user:@" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:rating});
+    }
 }
 
 

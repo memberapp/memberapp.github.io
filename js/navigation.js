@@ -149,6 +149,8 @@ function hideAll() {
     document.getElementById('newpost').style.display = "none";
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
+    document.getElementById('footer').style.display = "block";//show the footer - it may have been hidden when the map was displayed
+    
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
@@ -192,6 +194,7 @@ function showLogin() {
 
 function showMap(geohash, posttrxid) {
     show("map");
+    document.getElementById('footer').style.display = "none";
     setPageTitleFromID("VV0101");
     getAndPopulateMap(geohash, posttrxid);
     document.getElementById('map').style.display = "block";

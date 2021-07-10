@@ -197,7 +197,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         if (data.length > 0) {
             ratingScore = Number(data[0].rating);
         }
-        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(qaddress, ratingScore);
+        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(qaddress, ratingScore, data[0].pagingid);
 
         var theElement = document.getElementById(`memberrating` + qaddress);
         var starRating1 = addSingleStarsRating(theElement);
@@ -380,11 +380,11 @@ function showQRCode(spanid, size) {
 
 
 
-function rateCallbackAction(rating, that, ratingtext) {
+function rateCallbackAction(rating, ratingtext, qaddress) {
     if (ratingtext === undefined) {
         ratingtext = "";
     }
-    var qaddress = that.theAddress;
+    //var qaddress = that.theAddress;
     var transposed = 0;
     switch (rating) {
         case 1:
@@ -403,9 +403,8 @@ function rateCallbackAction(rating, that, ratingtext) {
             transposed = 255;
             break;
     }
-    if (rateUser(qaddress, transposed, ratingtext)) {
-        that.setRating(rating);
-    }
+    rateUser(qaddress, transposed, ratingtext)
+
 }
 
 function updatemutedwords() {

@@ -8,8 +8,30 @@ function bitcloutlogin() {
 }
 
 function insertBitcloutIdentityFrame() {
-  document.getElementById('bitcloutframe').innerHTML = `<iframe id="identity" frameborder="0" class="" src="https://identity.bitclout.com/embed?v=2" style="width:1px; height:1px; display: none;"></iframe>`;
+  document.getElementById('bitcloutframe').innerHTML = `<iframe id="identity" frameborder="0" class="" src="https://identity.bitclout.com/embed?v=2" style="height: 100vh; width: 100vw; display: none;"></iframe>`;
 }
+
+function showBitcloutIdentityFrame() {
+  document.getElementById('bitcloutframe').style.display = 'block';
+}
+
+function hideBitcloutIdentityFrame() {
+  document.getElementById('bitcloutframe').style.display = 'none';
+}
+
+
+/* This is the recommended code from https://docs.bitclout.com/devs/identity-api
+but creates a large frame with 'click to unlock wallet' that doesn't do anything
+function insertBitcloutIdentityFrame() {
+  document.getElementById('bitcloutframe').innerHTML = `<iframe
+  id="identity"
+  frameborder="0"
+  src="https://identity.bitclout.com/embed"
+  style="height: 100vh; width: 100vw;"
+  [style.display]="requestingStorageAccess ? 'block' : 'none'"
+></iframe>`;
+}*/
+
 
 function bitcloutlogout() {
   /*identityWindow = window.open(
@@ -26,6 +48,12 @@ function handleInit(e) {
     bcinit = true;
     iframe = document.getElementById("identity");
     //uniqueid = e.data.id;
+
+    postMessage({
+      id: 'testpermissions',
+      service: 'identity',
+      method: 'info'
+    });
 
     for (const e of pendingRequests) {
       postMessage(e);
@@ -86,7 +114,7 @@ function postMessage(e) {
 // const childWindow = document.getElementById('identity').contentWindow;
 window.addEventListener("message", (message) => {
   console.log("message: ");
-  // console.log(message);
+  console.log(message);
 
   const {
     data: { id: id, method: method, payload: payload },
@@ -99,6 +127,17 @@ window.addEventListener("message", (message) => {
 
   if (method == "initialize") {
     handleInit(message);
+  } else if (method == "storageGranted") {
+    if(payload.hasStorageAccess==true){
+      hideBitcloutIdentityFrame();
+    }
+  } else if (id == "testpermissions") {
+    if(payload.hasStorageAccess==false){
+      showBitcloutIdentityFrame();
+    }
+    if(payload.browserSupported==false){
+      alert("This browser does not support BitClout Identity login.");
+    }
   } else if (method == "login") {
     handleLoginBitclout(payload);
   } else if (payload && payload.signedTransactionHex) {
@@ -109,13 +148,18 @@ window.addEventListener("message", (message) => {
       identityresponses.set(id, payload.decryptedHexes[key]);
     }
   } else if (payload && payload.approvalRequired) {
-      alert("identity.bitclout.com returned error "+JSON.stringify(payload));
+    if(!alertShown){
+      alert("Your OS/Browser may not be compatible with Write Mode BitClout Identity Service - identity.bitclout.com returned error "+JSON.stringify(payload));
+      alertShown=true;
+    }
       identityresponses.set(id, "identity.bitclout.com returned error "+JSON.stringify(payload));  
   } else {
     identityresponses.set(id, JSON.stringify(payload));
   }
 
 });
+
+var alertShown=false;
 
 function submitSignedTransaction(signedTrx,id) {
   var submitpayload = `{"TransactionHex":"` + signedTrx + `"}`;
@@ -242,18 +286,11 @@ async function sendBitCloutTransaction(payload, action, divForStatus) {
 }
 
 async function bitCloutLikePost(likedPostHashHex) {
-  /*postMessage({
-    id: 'test2',
-    service: 'identity',
-    method: 'info'
-  });*/
-
   //First get the unsigned tx
   var payload = `{"ReaderPublicKeyBase58Check":"` + bitCloutUser + `","LikedPostHashHex":"` + likedPostHashHex + `","IsUnlike":false,"MinFeeRateNanosPerKB":1000}`;
   return await sendBitCloutTransaction(payload, "create-like-stateless");
 }
 
-//todo need to change the qaddress to bcaddress somehow
 async function sendBitCloutFollow(followpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
@@ -274,6 +311,36 @@ async function sendBitCloutUnFollow(unfollowpubkey) {
   return await sendBitCloutTransaction(payload, "create-follow-txn-stateless");
 }
 
+async function sendBitCloutMute(followpubkey) {
+  var bcAddress=pubkeyToBCaddress(followpubkey);
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: 'af4e1c6b71019ed334d1ab1e254aaaa49ae77fe96ef5d078b9ef598ff182bce3',
+    BodyObj: { Body: 'mute '+bcAddress  },
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData={Mute:bcAddress};
+  
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
+async function sendBitCloutUnMute(followpubkey) {
+  var bcAddress=pubkeyToBCaddress(followpubkey);
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: 'af4e1c6b71019ed334d1ab1e254aaaa49ae77fe96ef5d078b9ef598ff182bce3',
+    BodyObj: { Body: 'unmute '+bcAddress },
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData={UnMute:bcAddress};
+
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
+
+
 async function sendBitCloutReply(txid, replytext, divForStatus, successFunction) {
   var body = { Body: replytext, ImageURLs: [] };
   var payload = {
@@ -290,7 +357,7 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction)
 
 
 //todo check if special characters work in posttext
-async function sendBitCloutPost(posttext, topic, divForStatus, successFunction) {
+async function sendBitCloutPost(posttext, topic, divForStatus, successFunction, postExtraData) {
   if (topic) {
     posttext = posttext + " #" + topic;
   }
@@ -301,6 +368,10 @@ async function sendBitCloutPost(posttext, topic, divForStatus, successFunction) 
     IsHidden: false,
     MinFeeRateNanosPerKB: 1000
   };
+
+  if(postExtraData){
+    payload.PostExtraData=postExtraData;
+  }
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
   if(successFunction){successFunction()};
   return txid;
@@ -325,7 +396,7 @@ async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, succes
 }
 
 async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction) {
-  var txid = await sendBitCloutPost(posttext, topic, divForStatus, null);
+  var txid = await sendBitCloutPost(posttext, topic, divForStatus, null, null);
   return await sendBitCloutReply(txid, postbody, divForStatus, successFunction);
 }
 

@@ -59,10 +59,11 @@ function memorandumPreview() {
 
     //Grab needed values from settings page
     var name = document.getElementById('settingsnametext').value;
-    var followers = document.getElementById('settingsfollowersnumber').innerHTML;
-    var following = document.getElementById('settingsfollowingnumber').innerHTML; 
-    var blockers = document.getElementById('settingsblockersnumber').innerHTML; 
-    var blocking = document.getElementById('settingsblockingnumber').innerHTML; 
+    //var followers = document.getElementById('settingsfollowersnumber').innerHTML;
+    //var following = document.getElementById('settingsfollowingnumber').innerHTML; 
+    //var blockers = document.getElementById('settingsblockersnumber').innerHTML; 
+    //var blocking = document.getElementById('settingsblockingnumber').innerHTML; 
+    let followers=0,following=0,blockers=0,blocking = 0;
 
     var pagingid = document.getElementById('settingspagingid').value;
     var profile = document.getElementById('settingsprofiletext').value;
@@ -126,7 +127,7 @@ function geopost() {
     var lon = Number(document.getElementById("lon").value);
 
     //Leaflet bug allow longitude values outside proper range
-    while (lon < 0) {
+    while (lon < -180) {
         lon = lon + 180;
     }
     while (lon > 180) {
@@ -140,7 +141,14 @@ function geopost() {
     document.getElementById('newpostgeostatus').style.display = "block";
     document.getElementById('newpostgeostatus').value = getSafeTranslation('posting',"Posting...");
 
-    postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", geocompleted);
+    var successFunction=geocompleted;
+    if(privkey){
+        postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
+        successFunction=null;
+    }
+    if(bitCloutUser){
+        sendBitCloutPost(posttext+" \nmember.cash/geotag/"+geohash, '', "newpostgeostatus", successFunction, {GeoHash:geohash});
+    }
 
 }
 
@@ -172,6 +180,7 @@ function postmemorandum() {
     var successFunction=memorandumpostcompleted;
 
     if(txid){
+        //Repost
         if(privkey){
             quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function(txidnew){sendRepostNotification(txid,"newpostmemorandumstatus",topic, txidnew);}, txid);
             successFunction=null;
@@ -187,7 +196,7 @@ function postmemorandum() {
             successFunction=null;
         }
         if(bitCloutUser){
-            sendBitCloutPost(posttext,topic, "newpostmemorandumstatus", successFunction);
+            sendBitCloutPost(posttext,topic, "newpostmemorandumstatus", successFunction, null);
         }
     } else {
         if(privkey){
