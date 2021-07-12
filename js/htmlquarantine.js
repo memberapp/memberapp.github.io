@@ -134,7 +134,7 @@ function getReplyDiv(txid, page, differentiator,address,picurl) {
 
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, repostcount, repostidtxid) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork) {
 
     var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid = san(txid);
@@ -168,6 +168,11 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         remembersOnclick = ` `;
     }
 
+    let sourceNetworkHTML='<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/"'+san(txid)+'>BitClout</a>';
+    if(sourcenetwork==0){
+        sourceNetworkHTML='<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/"'+san(txid)+'>Memo</a>';
+    }
+
     var obj = {
         //These must all be HTML safe.
         page: page,
@@ -181,6 +186,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         address: san(address),
         permalink: permalink,
         maplink: mapLink,
+        sourceNetworkHTML:sourceNetworkHTML
     }
 
     return templateReplace(replyAndTipsTemplate, obj);
@@ -232,7 +238,7 @@ function replacePageName(match, p1, p2, offset, string) {
     return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate, sysrating) {
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate, sysrating, sourcenetwork) {
 
     if (!address) { return ""; }
     if (!name) { name = address.substring(0, 10); }
@@ -275,7 +281,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var votelinks = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)));
     var age = getAgeHTML(firstseen);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
-    var tipsandlinks = getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid);
+    var tipsandlinks = getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid, sourcenetwork);
     var replydiv = getReplyDiv(txid, page, differentiator,address,picurl);
 
     var santxid=san(txid);
@@ -287,6 +293,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     }
 
     var directlink="";
+    let sourceNetworkHTML='<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/'+san(txid)+'">BitClout</a>';
+    if(sourcenetwork==0){
+        sourceNetworkHTML='<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/'+san(txid)+'">Memo</a>';
+    }
     var obj = {
         //These must all be HTML safe 
         author: theAuthorHTML,
@@ -319,7 +329,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         rememberactivated:repostidtxid?"-activated":"",
         permalink:permalink,
         articlelink:articlelink,
-        directlink:directlink
+        directlink:directlink,
+        sourceNetworkHTML:sourceNetworkHTML
     };
 
     /*var retVal = `<div class="post">
@@ -357,7 +368,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
 }
 
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating) {
+function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, sourcenetwork) {
     if (name == null) { name = address.substring(0, 10); }
     //Remove html - use dslite here to allow for markdown including some characters
     message = dslite(message);
@@ -381,7 +392,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     var author = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive, sysrating);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var age = getAgeHTML(firstseen);
-    var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid);
+    var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork);
     var replyDiv = getReplyDiv(txid, page, differentiator,address,picurl);
 
 

@@ -129,8 +129,9 @@ var postCompactTemplate = `
                                     topic</span></a>
                             <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">Memo</a>
                             <a rel="noopener noreferrer" target="bitcoincom"
-                                href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>-->
-                            <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>
+                                href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>
+                            <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>-->
+                            {sourceNetworkHTML}
                         </div>
                     </span>
                 </div>
@@ -332,8 +333,10 @@ var replyAndTipsTemplate = `
         href="https://blockchair.com/bitcoin-cash/transaction/{txid}">blockchair</a>
     <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/{txid}">btc.com</a>
     <a rel="noopener noreferrer" target="bitcoinunlimited"
-        href="https://explorer.bitcoinunlimited.info/tx/{txid}">bitcoin unlimited</a>-->
+        href="https://explorer.bitcoinunlimited.info/tx/{txid}">bitcoin unlimited</a>
     <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>
+    -->
+    {sourceNetworkHTML}    
     <a data-vavilon="VV0161" id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');"
         href="javascript:;">flag(post)</a>
     {hideuser}
