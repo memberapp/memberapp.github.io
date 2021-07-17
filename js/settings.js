@@ -235,9 +235,9 @@ function getAndPopulateMember(qaddress) {
     var obj2 = {
         //These must all be HTML safe.
         address: qaddress,
-        profileclass: 'timefilteron',
-        reputationclass: 'timefilteroff',
-        postsclass: 'timefilteroff'
+        profileclass: 'filteron',
+        reputationclass: 'filteroff',
+        postsclass: 'filteroff'
     }
 
     document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
@@ -385,26 +385,8 @@ function rateCallbackAction(rating, ratingtext, qaddress) {
         ratingtext = "";
     }
     //var qaddress = that.theAddress;
-    var transposed = 0;
-    switch (rating) {
-        case 1:
-            transposed = 1;
-            break;
-        case 2:
-            transposed = 64;
-            break;
-        case 3:
-            transposed = 128;
-            break;
-        case 4:
-            transposed = 192;
-            break;
-        case 5:
-            transposed = 255;
-            break;
-    }
-    rateUser(qaddress, transposed, ratingtext)
-
+    var transposed = transposeStarRating(rating);
+    rateUser(qaddress, transposed, ratingtext);
 }
 
 function updatemutedwords() {

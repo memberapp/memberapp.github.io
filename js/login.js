@@ -1,9 +1,9 @@
 
 "use strict";
 
-//Preferable to grab this from sw.js, but don't know how.
+//Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = "6.4.5";
+var version = "6.6.1";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39

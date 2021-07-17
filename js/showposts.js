@@ -20,9 +20,9 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var obj2 = {
             //These must all be HTML safe.
             address: qaddress,
-            profileclass: 'timefilteroff',
-            reputationclass: 'timefilteroff',
-            postsclass: 'timefilteron'
+            profileclass: 'filteroff',
+            reputationclass: 'filteroff',
+            postsclass: 'filteron'
         }
         document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
         document.getElementById("memberheader").style.display = 'block';

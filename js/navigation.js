@@ -62,7 +62,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("memberposts")) {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
-        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")));
+        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")), sanitizeAlphanumeric(getParameterByName("nfilter")),Number(getParameterByName("minrating")));
     } else if (action.startsWith("profile")) {
         showMember(sanitizeAlphanumeric(pubkey, ''));
     } else if (action.startsWith("member")) {
@@ -135,7 +135,7 @@ function hideAll() {
     document.getElementById('comments').innerHTML = "";
     document.getElementById('thread').innerHTML = "";
     document.getElementById('memberposts').innerHTML = "";
-    document.getElementById('notifications').innerHTML = "";
+    document.getElementById('notificationsbody').innerHTML = "";
 
     document.getElementById('settingsanchor').style.display = "none";
     document.getElementById('loginbox').style.display = "none";
@@ -225,9 +225,9 @@ function showReputation(qaddress) {
     var obj2 = {
         //These must all be HTML safe.
         address: qaddress,
-        profileclass: 'timefilteroff',
-        reputationclass: 'timefilteron',
-        postsclass: 'timefilteroff'
+        profileclass: 'filteroff',
+        reputationclass: 'filteron',
+        postsclass: 'filteroff'
     }
 
     document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
@@ -276,14 +276,18 @@ function showNewPost(txid) {
 }
 
 
-function showNotifications(start, limit, qaddress, txid) {
+function showNotifications(start, limit, qaddress, txid, nfilter, minrating) {
 
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPosts(0, numbers.results, 'all');
         return;
     }
     setPageTitleFromID("VV0095");
-    getAndPopulateNotifications(start, limit, "notifications", pubkey, txid);
+
+    if(!minrating){
+        minrating=2;
+    }
+    getAndPopulateNotifications(start, limit, "notifications", pubkey, txid, nfilter, minrating);
 
 }
 

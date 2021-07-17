@@ -44,21 +44,49 @@ function setAlertCount(elementid, alertNumber) {
 
 }
 
-function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
+function populateNotificationTab(limit,nfilter,minrating){
+    let options='&limit='+limit+'&minrating='+minrating;
+    document.getElementById("notificationtypes").innerHTML =
+    `<a data-vavilon="notificationall" data-vavilon_title="notificationall" title="See all notifications" class="`+(nfilter==''?'filteron':'filteroff')+`" href="#notifications?nfilter=`+options+`">All</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationlikes" data-vavilon_title="notificationlikes" title="See only likes" class="`+(nfilter=='like'?'filteron':'filteroff')+`" href="#notifications?nfilter=like`+options+`">Likes</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationfollows" data-vavilon_title="notificationfollows" title="See only follows" class="`+(nfilter=='follow'?'filteron':'filteroff')+`" href="#notifications?nfilter=follow`+options+`">Follows</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationreplies" data-vavilon_title="notificationreplies" title="See only replies" class="`+(nfilter=='reply'?'filteron':'filteroff')+`" href="#notifications?nfilter=reply`+options+`">Replies</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationratings" data-vavilon_title="notificationratings" title="See only ratings" class="`+(nfilter=='rating'?'filteron':'filteroff')+`" href="#notifications?nfilter=rating`+options+`">Ratings</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationpages" data-vavilon_title="notificationpages" title="See only pages" class="`+(nfilter=='page'?'filteron':'filteroff')+`" href="#notifications?nfilter=page`+options+`">Pages</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+(nfilter=='repost'?'filteron':'filteroff')+`" href="#notifications?nfilter=repost`+options+`">Remembers</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationtips" data-vavilon_title="notificationremembers" title="See only tips" class="`+(nfilter=='tip'?'filteron':'filteroff')+`" href="#notifications?nfilter=tip`+options+`">Tips</a>
+    <span class="separator"></span>`;
+}
+
+function getAndPopulateNotifications(start, limit, page, qaddress, txid, nfilter, minrating) {
     //Clear existing content
     show(page);
 
 
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+    document.getElementById("notificationsbody").innerHTML = document.getElementById("loading").innerHTML;
 
+    populateNotificationTab(limit,nfilter,minrating);
     //Show navigation next/back buttons
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
+    var minRatingTransposed = transposeStarRating(minrating);
+    notificationFilter.type=nfilter;
+    notificationFilter.minrating=minrating;
+    
+
+    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
-        var navbuttons = getNavButtonsNewHTML('new', page, '', '', start, limit, page, qaddress, "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
+        //var navbuttons = getNavButtonsNewHTML(start, limit, page, qaddress, "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length > 0 ? data[0].unduplicatedlength : 0);
         //var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents = ``;
@@ -80,7 +108,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         try {
             if (window.Notification.permission != 'granted') {
                 contents = allowNotificationButtonHTML() + contents;
-            }else{
+            } else {
                 requestNotificationPermission();
             }
         } catch (err) {
@@ -89,7 +117,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
             console.log(err);
         }
 
-        
+
 
         contents = getNotificationsTableHTML(contents, navbuttons);
 
@@ -102,7 +130,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         }
 
 
-        document.getElementById(page).innerHTML = contents; //display the result in an HTML element
+        document.getElementById("notificationsbody").innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data);
         if (txid) {
             scrollToPosition('notification' + san(txid));
@@ -110,8 +138,30 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
             scrollToPosition();
         }
 
+
+        //Activate navigation filter star ratings
+        let theElement = document.getElementById('notificationsfilter');
+        let starSize = Number(theElement.dataset.ratingsize);
+
+        if (!notificationFilter.element) {
+            notificationFilter.element = raterJs({
+                starSize: starSize,
+                rating: notificationFilter.minrating,
+                element: theElement,
+                showToolTip: false,
+                rateCallback: function rateCallback(rating, done) {
+                    notificationFilter.element.setRating(rating);
+                    done();
+                    notificationFilter.minrating=rating;
+                    getAndPopulateNotifications(0, notificationFilter.limit, "notifications", pubkey, txid, notificationFilter.type, notificationFilter.minrating);
+                }
+            });
+        }
+
+
         listenForTwitFrameResizes();
         //window.scrollTo(0, scrollhistory[window.location.hash]);
+
 
         //Put this at the end - it may be failing silently on iOS, so does least damage here
         if (window.Notification.permission == 'granted') {
@@ -128,6 +178,13 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         showErrorMessage(status, page, theURL);
     });
 }
+
+var notificationFilterRating;
+var notificationFilter=[];
+notificationFilter.type="";
+notificationFilter.minrating=0;
+notificationFilter.start=0;
+notificationFilter.limit=25;
 
 
 function userFromData(data, mainRatingID) {
@@ -150,7 +207,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
         data.rreplies = data.rrepliesroot;
     }
 
-    let referencedPostHTML="";
+    let referencedPostHTML = "";
 
     switch (type) {
 
@@ -159,18 +216,18 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
         case "page":
         case "reply":
             postRatingID = starindex + page + ds(data.raddress) + type;
-            referencedPostHTML=getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive, true, data.originsysrating, data.rsourcenetwork);
+            referencedPostHTML = getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive, true, data.originsysrating, data.rsourcenetwork);
             break;
         case "like":
         case "repost":
             postRatingID = starindex + page + ds(data.address) + type;
-            referencedPostHTML=getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive, true, data.originsysrating, data.lsourcenetwork);
+            referencedPostHTML = getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive, true, data.originsysrating, data.lsourcenetwork);
             break;
         default:
             break;
     }
 
-    switch (type) {        
+    switch (type) {
         case "message":
             /*return notificationItemHTML(
                 "message",
@@ -182,7 +239,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             );*/
             break;
         case "thread":
-            
+
             return notificationItemHTML(
                 "thread",
                 `img/icons/notification/discussion.png`,
@@ -267,7 +324,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             );
             break;
         case "repost":
-            
+
             return notificationItemHTML(
                 "repost",
                 `img/icons/notification/repost.png`,

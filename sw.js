@@ -3,14 +3,14 @@
 // A list of local resources we always want to be cached.
 
 const PRECACHE_URLS = [
-  'pwa/manifest.webmanifest',
-  'css/feels.css',
-  'css/base.css',
-  'locale/en.json'
+  //'pwa/manifest.webmanifest',
+  //'css/feels.css',
+  //'css/base.css',
+  //'locale/en.json'
 ];
 
 //If updating version here, also update version in login.js
-const version = '6.4.5';
+const version = '6.6.1';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;

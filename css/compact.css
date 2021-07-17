@@ -1045,8 +1045,7 @@ a {
 }
 
 /* active tab */
-nav.timefilters,
-nav.contentfilters {
+.filters {
   position: relative;
   display: block;
   background-color: #f6f9ff;
@@ -1054,10 +1053,12 @@ nav.contentfilters {
   border-radius: 40px;
   overflow: hidden;
   word-break: normal;
+  display: inline-block;
+  margin-bottom: .5rem;
+
 }
 
-nav.timefilters a,
-nav.contentfilters a {
+.filters a {
   text-decoration: none;
   text-align: center;
   line-height: 1;
@@ -1065,9 +1066,13 @@ nav.contentfilters a {
   padding: 10px;
   box-sizing: border-box;
   z-index: 2;
+  padding: 3px 10px;
+  transition: all 0.3s ease;
+  max-width: 70px;
+  min-width: 55px;
 }
 
-.posts .timefilteron {
+.filteron {
   z-index: 1;
   background-color: #61aaff !important;
   border-radius: 36px;
@@ -1076,52 +1081,16 @@ nav.contentfilters a {
   color: #fff !important;
 }
 
-.posts .timefilters,
-.posts .contentfilters {
-  display: inline-block;
-  margin-bottom: 1.5rem;
-}
-.posts .timefilters a,
-.posts .contentfilters a {
-  padding: 3px 10px;
-  transition: all 0.3s ease;
-  max-width: 70px;
-  min-width: 55px;
-}
-.posts .timefilters a:hover,
-.posts .contentfilters a:hover {
+.filters a:hover {
   background-color: #61aaff !important;
   border-radius: 36px;
   /*font-weight: 700;*/
   color: #fff !important;
 }
-/*.posts .timefilters a:nth-child(1) {
-  margin-right: 4px;
-  margin-left: 0;
-}
- .posts .timefilters a ::before, 
-.posts .contentfilters a{
-  content: '';
-  position: absolute;
-  right: 0px;
-  width: 2px;
-  height: 100%;
-  background-color: #ddeefc;
-} */
-.posts .contentfilters {
+
+.filterssecondset {
   float: right;
 }
-/* .posts .timefilters a:hover {
-  background: #21b31b;
-  transform: scale(1.1);
-} */
-/* .posts .contentfilters a {
-  background: #2291eb;
-} */
-/* .posts .contentfilters a:hover {
-  background: #0377d6;
-  transform: scale(1.1);
-} */
 
 .post {
   transition: all 0.3s ease;
@@ -1361,7 +1330,7 @@ nav.contentfilters a {
   border-radius: 36px;
   max-width: 100px;
 }
-.memberheader .membertabs a.timefilteron {
+.memberheader .membertabs a.filteron {
   z-index: 1;
   background-color: #61aaff !important;
   border-radius: 36px;
@@ -1799,7 +1768,7 @@ label#memberblockexplorer {
   color: black;
   color: #fff !important;
 }
-#messagesanchor #messageschoice a.timefilteron {
+#messagesanchor #messageschoice a.filteron {
   z-index: 1;
   background-color: #61aaff !important;
   border-radius: 36px;
@@ -2060,19 +2029,20 @@ footer{
   .mainbodywrapper .mainbody {
     margin-top: 1rem;
   }
-  .posts .timefilters,
-  .posts .contentfilters {
+  
+  .filters {
     display: block;
     float: unset;
   }
-  .posts .contentfilters {
+  
+  .filterssecondset {
+    /*
+    //these justify right but screw up spacing/display
     display: flex;
     justify-content: flex-end;
+    */
   }
-  /* .posts .contentfilters a {
-    padding: 0px 10px;
-    min-width: 50px;
-  } */
+
   .post .dropdown .dropbtn {
     padding-top: 5px;
   }
@@ -2458,15 +2428,6 @@ footer{
     position: absolute;
     left: 26px;
     top: 168px;
-  }
-  .posts .timefilters a,
-  .posts .contentfilters a {
-    max-width: 47px;
-    padding: 5px 0px;
-    margin-left: 0px;
-  }
-  .posts .contentfilters a {
-    margin-left: 10px;
   }
   .notificationitem .notificationIcon {
     position: unset;

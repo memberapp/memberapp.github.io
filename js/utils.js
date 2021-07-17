@@ -524,5 +524,27 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+function transposeStarRating(rating){
+  var transposed = 0;
+  switch (rating) {
+      case 1:
+          transposed = 1;
+          break;
+      case 2:
+          transposed = 64;
+          break;
+      case 3:
+          transposed = 128;
+          break;
+      case 4:
+          transposed = 192;
+          break;
+      case 5:
+          transposed = 255;
+          break;
+  }
+  return transposed;
+}
+
 
 
