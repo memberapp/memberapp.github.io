@@ -1,7 +1,7 @@
 "use strict";
 
 function checkForPrivKey() {
-    if(isBitCloutIdentityUser()){
+    if(isBitCloutUser()){
         return true;
     }
     return checkForNativeUser();
@@ -24,6 +24,9 @@ function checkForNativeUser() {
     return true;
 }
 
+function checkForNativeUserAndHasBalance(){
+    return (privkey && tq.getBalance(pubkey) > 546);
+}
 
 //var waitForTransactionToComplete = false;
 
@@ -146,25 +149,54 @@ async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, 
 }
 
 
-function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandumstatus, memorandumpostcompleted) {
+function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandumstatus, memorandumpostcompleted, quotetxid) {
+
+    let postTitleHex = new Buffer(posttext).toString('hex');
+    let replyHex = new Buffer(postbody).toString('hex');
+
+    //If the title is too long, put the excess in the reply. todo - find a natural breakpoint, see sendreplyraw for code
+    if (postTitleHex.length > 368) {
+        replyHex=postTitleHex.substr(368)+replyHex;
+        postTitleHex=postTitleHex.substr(0,368);
+    }
 
     var tx = {
         data: ["0x6d02", posttext],
         cash: { key: privkey }
     }
 
-    if (topic != "") {
+    if (topic) {
         tx = {
             data: ["0x6d0c", topic, posttext],
             cash: { key: privkey }
         }
     }
 
-    const replyHex = new Buffer(postbody).toString('hex');
+    if(quotetxid){
+        var reversetx = quotetxid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
+        tx = {
+            data: ["0x6d0b", "0x" + reversetx, posttext],
+            cash: { key: privkey }
+        }
+        if (topic) {
+            tx = {
+                data: ["0x6d0f", "0x" + reversetx, topic, posttext],
+                cash: { key: privkey }
+            }
+        }
+        updateStatus(getSafeTranslation('quoting', "Quoting"));
+    }
 
-    tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); }, null);
+
+    let finishFunction=memorandumpostcompleted;
+    if(replyHex){
+        finishFunction=function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); };
+    }
+    
+    tq.queueTransaction(tx, finishFunction, null);
 }
 
+/*
 function quotepostRaw(posttext, privkey, topic, newpoststatus, memocompleted, txid) {
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
@@ -183,9 +215,9 @@ function quotepostRaw(posttext, privkey, topic, newpoststatus, memocompleted, tx
     updateStatus(getSafeTranslation('quoting', "Quoting"));
 
     tq.queueTransaction(tx, memocompleted, null);
-}
+}*/
 
-
+/*
 function postRaw(posttext, privkey, topic, newpoststatus, memocompleted, txid) {
 
     var tx = {
@@ -201,8 +233,8 @@ function postRaw(posttext, privkey, topic, newpoststatus, memocompleted, txid) {
     }
 
     tq.queueTransaction(tx, memocompleted, null);
-}
-
+}*/
+/*
 function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) {
 
     const tx = {
@@ -211,7 +243,7 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) 
     }
     updateStatus(getSafeTranslation('sendinggeotag', "Sending Geotagged Post"));
     tq.queueTransaction(tx, geocompleted, null);
-}
+}*/
 
 
 
@@ -355,7 +387,7 @@ function addressTransaction(removeElementID, qaddress, actionCode, statusMessage
 
 function follow(qaddress,targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(privkey){
+    if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
     }
     if(bitCloutUser){
@@ -365,7 +397,7 @@ function follow(qaddress,targetpublickey) {
 
 function unfollow(qaddress,targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(privkey){
+    if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
     }
     if(bitCloutUser){
@@ -375,7 +407,7 @@ function unfollow(qaddress,targetpublickey) {
 
 function mute(qaddress,targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(privkey){
+    if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
     }
     if(bitCloutUser){
@@ -385,7 +417,7 @@ function mute(qaddress,targetpublickey) {
 
 function unmute(qaddress,targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(privkey){
+    if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
     }
     if(bitCloutUser){

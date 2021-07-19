@@ -98,7 +98,7 @@ var directRatingHTML=`
 </tr>`;
 
 var mainbodyHTML=`
-<div class="newheader" id="header" style="display: inherit;"></div>
+<div class="newheader" id="header"></div>
 <div class="mainbody">
     <div id="loading" class="applicationpage loading" style="display: none;">
         <div class="loading"></div>
@@ -325,10 +325,11 @@ var walletanchorHTML=`
 var newpostHTML=`
 <br />
 <br />
-<div id="newpostprofilepic">
+<div id="newpostprofilepic" class="newpostprofilepic">
 </div>
 <div id="memorandumarea">
     <input type="hidden" name="quotetxid" value="" id="quotetxid">
+    <!-- //Remove topic - use tags to introduce a topic
     <div id="memorandumtopicbutton">
         <a data-vavilon="VV0037" href=""
             onclick="document.getElementById('memorandumtopicarea').style.display = 'block';document.getElementById('memorandumtopicbutton').style.display = 'none'; return false;">+add
@@ -340,20 +341,21 @@ var newpostHTML=`
         <input class="memorandumtopic" id="memorandumtopic" maxlength="217" onchange="topictitleChanged('memorandum');"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
     </div>
+    -->
     <div>
-        <textarea class="memorandumtitle" id="memorandumtitle" maxlength="217" rows="4" cols="60"
-            onchange="topictitleChanged('memorandum'); memorandumPreview();" onkeypress="this.onchange();"
+        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60"
+            onchange="memorandumPreview();" onkeypress="this.onchange();"
             onpaste="this.onchange();" oninput="this.onchange();"></textarea>
-        <label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>
+        <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
     </div>
     <div id="memorandumtextbutton">
         <br />
         <a data-vavilon="VV0039" href=""
             onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
-            text</a>
+            article</a>
     </div>
     <div id="memorandumtextarea" style="display: none;">
-        <label data-vavilon="VV0040" for="newposttamemorandum">text (optional)</label>
+        <label data-vavilon="VV0040" for="newposttamemorandum">article (optional)</label>
         <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
     </div>
@@ -376,7 +378,7 @@ var newpostHTML=`
     </div>
     <div id="memorandumpreviewarea" style="display: none;">
         <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
-        <label for="memorandumpreview">Preview
+        <label for="memorandumpreview">
             <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045" href='javascript:;'
                     onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
             <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046" href='javascript:;'

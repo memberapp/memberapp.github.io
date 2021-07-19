@@ -81,7 +81,7 @@ async function postprivatemessage() {
     var publickey = document.getElementById("messagepublickey").textContent;
 
     var successFunction=privateMessagePosted;
-    if(privkey){
+    if(checkForNativeUserAndHasBalance()){
         // Encrypt the message
         const pubKeyBuf = Buffer.from(publickey, 'hex');
         const data = Buffer.from(text);

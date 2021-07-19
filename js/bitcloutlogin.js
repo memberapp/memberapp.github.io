@@ -170,8 +170,8 @@ function submitSignedTransaction(signedTrx,id) {
   });
 }
 
-function checkIfBitcloutUser(pubkeyhex1) {
-  var bcAddress=pubkeyToBCaddress(pubkeyhex1);
+async function checkIfBitcloutUser(pubkeyhex1) {
+  var bcAddress=await pubkeyToBCaddress(pubkeyhex1);
   var submitpayload = `{"PublicKeyBase58Check":"` + bcAddress + `"}`;
   var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-single-profile&payload=" + encodeURIComponent(submitpayload);
   getJSON(url2).then(function (data) {
@@ -198,14 +198,18 @@ let serverresponses = new Map();
 
 
 
-async function putBitCloutDecryptedMessageInElement(message, elementid) {
-  var decryptedMessage = await bitcloutDecryptMessage(message);
+async function putBitCloutDecryptedMessageInElement(message, elementid,publicKeySender) {
+  var decryptedMessage = await bitcloutDecryptMessage(message,publicKeySender);
   document.getElementById(elementid).textContent = decryptedMessage;
 }
 
-async function bitcloutDecryptMessage(message) {
+async function bitcloutDecryptMessage(message,publicKeySender) {
 
   var uniqueid = getRandomInt(1000000000);
+ 
+  //Not sure if message is v1 or v2, and the wrong one should error out harmlessly 
+  
+  //v1
   postMessage({
     id: uniqueid,
     service: 'identity',
@@ -219,6 +223,30 @@ async function bitcloutDecryptMessage(message) {
       ]
     }
   });
+
+  //publicKeySender
+  let messageObj={
+    EncryptedHex: message,
+    IsSender:false,
+    PublicKey:await pubkeyToBCaddress(publicKeySender),
+    V2:true
+  }
+      
+  //v2
+  postMessage({
+    id: uniqueid,
+    service: 'identity',
+    method: 'decrypt',
+    payload: {
+      accessLevel: bitCloutUserData.accessLevel,
+      accessLevelHmac: bitCloutUserData.accessLevelHmac,
+      encryptedSeedHex: bitCloutUserData.encryptedSeedHex,
+      encryptedMessages: [
+        messageObj
+      ]
+    }
+  });
+
 
   return await waitForResponse(uniqueid);
 
@@ -236,7 +264,7 @@ async function waitForResponse(key) {
 }
 
 async function waitForServerResponse(key) {
-  for (var i = 0; i < 50; i++) {
+  for (var i = 0; i < 250; i++) {
     if (serverresponses.has(key)) {
       return serverresponses.get(key);
     }
@@ -294,7 +322,7 @@ async function bitCloutLikePost(likedPostHashHex) {
 async function sendBitCloutFollow(followpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
-      "FollowedPublicKeyBase58Check":"`+ pubkeyToBCaddress(followpubkey) + `",
+      "FollowedPublicKeyBase58Check":"`+ await pubkeyToBCaddress(followpubkey) + `",
       "IsUnfollow      ":false,
       "MinFeeRateNanosPerKB":1000
     }`;
@@ -304,7 +332,7 @@ async function sendBitCloutFollow(followpubkey) {
 async function sendBitCloutUnFollow(unfollowpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
-      "FollowedPublicKeyBase58Check":"`+ pubkeyToBCaddress(unfollowpubkey) + `",
+      "FollowedPublicKeyBase58Check":"`+ await pubkeyToBCaddress(unfollowpubkey) + `",
       "IsUnfollow":true,
       "MinFeeRateNanosPerKB":1000
     }`;
@@ -312,7 +340,7 @@ async function sendBitCloutUnFollow(unfollowpubkey) {
 }
 
 async function sendBitCloutMute(followpubkey) {
-  var bcAddress=pubkeyToBCaddress(followpubkey);
+  var bcAddress=await pubkeyToBCaddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'af4e1c6b71019ed334d1ab1e254aaaa49ae77fe96ef5d078b9ef598ff182bce3',
@@ -326,7 +354,7 @@ async function sendBitCloutMute(followpubkey) {
 }
 
 async function sendBitCloutUnMute(followpubkey) {
-  var bcAddress=pubkeyToBCaddress(followpubkey);
+  var bcAddress=await pubkeyToBCaddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'af4e1c6b71019ed334d1ab1e254aaaa49ae77fe96ef5d078b9ef598ff182bce3',
@@ -335,6 +363,24 @@ async function sendBitCloutUnMute(followpubkey) {
     MinFeeRateNanosPerKB: 1000
   };
   payload.PostExtraData={UnMute:bcAddress};
+
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
+async function sendBitCloutRating(posttext, topic, divForStatus, successFunction, postExtraData) {
+  //var bcAddress=pubkeyToBCaddress(followpubkey);
+  if (topic) {
+    posttext = posttext + " #" + topic;
+  }
+  var body = { Body: posttext, ImageURLs: [] };
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: 'af4e1c6b71019ed334d1ab1e254aaaa49ae77fe96ef5d078b9ef598ff182bce3',
+    BodyObj: { Body: body },
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData=postExtraData;
 
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
@@ -351,7 +397,7 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction)
     MinFeeRateNanosPerKB: 1000
   };
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
-  if(successFunction){successFunction()};
+  if(successFunction){successFunction(txid, replytext)};
   return txid;
 }
 
@@ -373,7 +419,7 @@ async function sendBitCloutPost(posttext, topic, divForStatus, successFunction, 
     payload.PostExtraData=postExtraData;
   }
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
-  if(successFunction){successFunction()};
+  if(successFunction){successFunction(txid, posttext)};
   return txid;
 }
 
@@ -391,13 +437,18 @@ async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, succes
     MinFeeRateNanosPerKB: 1000
   };
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
-  if(successFunction){successFunction()};
+  if(successFunction){successFunction(txid,posttext)};
   return txid;
 }
 
 async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction) {
   var txid = await sendBitCloutPost(posttext, topic, divForStatus, null, null);
-  return await sendBitCloutReply(txid, postbody, divForStatus, successFunction);
+  if(postbody){
+    return await sendBitCloutReply(txid, postbody, divForStatus, successFunction);
+  }else{
+    if(successFunction){successFunction(txid,posttext)};
+    return txid;
+  }
 }
 
 async function bitCloutRePost(txid) {
@@ -416,17 +467,18 @@ async function bitCloutRePost(txid) {
 async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForStatus, successFunction) {
   var payload = {
     SenderPublicKeyBase58Check: bitCloutUser,
-    RecipientPublicKeyBase58Check: pubkeyToBCaddress(messageRecipientpubkey),
+    RecipientPublicKeyBase58Check: await pubkeyToBCaddress(messageRecipientpubkey),
     MessageText: text,
     MinFeeRateNanosPerKB: 1000
   };
   
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "send-message-stateless", divForStatus);
-  if(successFunction){successFunction()};
+  if(successFunction){successFunction(txid,'')};
   return txid;
 }
 
-function pubkeyToBCaddress(publickey) {
+async function pubkeyToBCaddress(publickey) {
+  if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
   return window.bs58check.encode(new Buffer('cd1400' + san(publickey), 'hex'));
 }
 

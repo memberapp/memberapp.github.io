@@ -511,12 +511,12 @@ function sendRating(rating, ratingText, pageName, theAddress){
         comment=ratingText.value;
     }
 
-    if(privkey){
+    if(checkForNativeUserAndHasBalance()){
         rateCallbackAction(rating, comment, theAddress);
     }
     
     if(bitCloutUser){
-        sendBitCloutPost("user:@" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:""+rating});
+        sendBitCloutRating("user:@" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:""+rating});
     }
 }
 
@@ -592,7 +592,7 @@ function sendReply(txid, page, divForStatus) {
     //no wait for the first reply
 
     var successFunction = function () { replySuccessFunction(page, txid); };
-    if (privkey) {
+    if (checkForNativeUserAndHasBalance()) {
         sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, successFunction);
         successFunction = null;
     }
@@ -701,7 +701,7 @@ function likePost(txid, tipAddress) {
     }
 
     //If memo user is logged in
-    if (privkey) {
+    if (checkForNativeUserAndHasBalance()) {
         if (numbers.oneclicktip >= 547) {
             sendTipRaw(txid, tipAddress, numbers.oneclicktip, privkey, null);
         } else {
@@ -727,7 +727,7 @@ function repostPost(txid) {
         bitCloutRePost(txid);
     }
 
-    if (privkey) {
+    if (checkForNativeUserAndHasBalance()) {
         repost(txid, privkey);
     }
 

@@ -1035,7 +1035,7 @@ function getMessageHTML(data, count) {
         //You sent a message
         contents += "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.toaddress, data.recipientrating, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, true, data.recipientlastactive, data.recipientsysrating) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.toaddress, data.recipientname, data.recipientpublickey) + "</div></li>";
     } else {
-        decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid);
+        decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid, data.publickey);
         contents += "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.address, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }
     return contents;
@@ -1043,7 +1043,7 @@ function getMessageHTML(data, count) {
 
 var bcdecrypt=null;
 
-async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
+async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid, publicKeySender) {
     //const privateKeyBuf5 = wif.decode(privkey).privateKey;
 
     //"Try again later: Unable to decrypt message: "
@@ -1072,7 +1072,7 @@ async function decryptMessageAndPlaceInDiv(privateKeyBuf, message, roottxid) {
 
         if(isBitCloutUser()){
             if(isBitCloutIdentityUser()){
-                putBitCloutDecryptedMessageInElement(message,roottxid);
+                putBitCloutDecryptedMessageInElement(message,roottxid,publicKeySender);
             }else if(privateKeyBuf){
                 try{
                     //Bitclout message style - 

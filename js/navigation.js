@@ -239,20 +239,17 @@ function showNewPost(txid) {
     setPageTitleFromID("VV0096");
     document.getElementById('memorandumpreview').innerHTML = "";
     let topicNameHOSTILE = getCurrentTopicHOSTILE();
-    //document.getElementById('memotopic').value = topicNameHOSTILE;
-    document.getElementById('memorandumtopic').value = topicNameHOSTILE;
-    if (topicNameHOSTILE != "") {
+    //document.getElementById('memorandumtopic').value = topicNameHOSTILE;
+    /*if (topicNameHOSTILE != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
         document.getElementById('memorandumtopicbutton').style.display = "none";
     } else {
         document.getElementById('memorandumtopicarea').style.display = "none";
         document.getElementById('memorandumtopicbutton').style.display = "block";
-    }
+    }*/
     //Do calculations on maxlengths for topics and titles
-    topictitleChanged("memorandum");
-    //topictitleChanged("memo");
-    //document.getElementById('newpostbutton').style.display = "block";
-
+    //topictitleChanged();
+    
     if (txid) {
         getAndPopulateQuoteBox(txid);
         

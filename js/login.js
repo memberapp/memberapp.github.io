@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = "6.6.1";
+var version = "6.6.3";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -263,7 +263,7 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
-            checkIfBitcloutUser(pubkeyhex);
+            await checkIfBitcloutUser(pubkeyhex);
             //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
         }
 
@@ -321,8 +321,10 @@ async function login(loginkey) {
 function loadStyle() {
     //Set the saved style if available
     let style = localStorageGet(localStorageSafe, "style2");
-    if (style != undefined && style != null) {
+    if (style) {
         changeStyle(style, true);
+    }else{
+        changeStyle(theStyle, true);
     }
 }
 

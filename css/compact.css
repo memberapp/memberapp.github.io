@@ -50,6 +50,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5em;
+  word-break:keep-all;
 }
 
 /* Style The Dropdown Button */
@@ -593,10 +594,10 @@ img {
 .usersearchnav {
   width: 15em;
 }
-/* New Header */
+/* New Header 
 #header {
   display: none;
-}
+}*/
 /* Action Icons styles */
 .tipicon,
 .remembersicon,
@@ -720,6 +721,7 @@ img {
   top: 0;
   background: #fff;
   padding: 0 10px;
+  display: inherit;
 }
 /* newheader header groups fixed width */
 .newheader .headercentergroup,
@@ -2506,7 +2508,10 @@ tbody tr td:first-of-type {
   top: 0px;
 }
 
-#memorandumpreview .reply{
-  display: none;
+.votelinks {
+  background: unset;
 }
+
+
+
 

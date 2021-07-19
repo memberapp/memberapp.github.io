@@ -985,6 +985,29 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
   word-wrap: anywhere;
 }
 
+
+
+.remember-dropdown, .likestext, .dropbtn, .post-side-bar, .replyprofilepic {
+  display: none;
+}
+
+.fatitem .subtextbuttons {
+  display: none;
+}
+
+.post-footer-remembers{
+  cursor: pointer;
+}
+
+.dropdown-content a::before {
+  content: "🔗";
+}
+
+.post-body-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
 /*Article Mode*/
 
 .article .fatitem {
@@ -996,7 +1019,7 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-.article .fatitem .title, .article .title a {
+.article .fatitem .title, .article .title a, .article .post-body {
   line-height: 48px;
   font-size: 40px;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
@@ -1043,7 +1066,7 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
   margin: 0;
 }
 
-.article header {
+.article .newheader {
   display: none;
 }
 
@@ -1080,6 +1103,10 @@ textarea, .memorandumtitle, .memotopic, .memorandumtopic {
 }
 
 .article .permalink {
+  display: none;
+}
+
+.article .newpostprofilepic{
   display: none;
 }
 

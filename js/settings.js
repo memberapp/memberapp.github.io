@@ -155,8 +155,8 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
 
     if (data && data[0] && data[0].publickey) {
-        if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
-        var bcaddress = pubkeyToBCaddress(data[0].publickey);
+        //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
+        var bcaddress = await pubkeyToBCaddress(data[0].publickey);
         obj.bcaddress = bcaddress;
     }
 
@@ -210,8 +210,8 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
 
 async function populateTools() {
 
-    if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
-    var bcaddress = pubkeyToBCaddress(pubkeyhex);
+    //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
+    var bcaddress = await pubkeyToBCaddress(pubkeyhex);
 
     var obj = {
         address: pubkey,
