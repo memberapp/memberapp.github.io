@@ -493,7 +493,7 @@ function setTopic(topicNameHOSTILE) {
 function showThread(roottxid, txid, articleStyle) {
     getAndPopulateThread(roottxid, txid, 'thread');
     if (articleStyle == "article") {
-        switchToArticleMode();
+        switchToArticleMode(roottxid);
     }
 }
 

@@ -15,7 +15,7 @@ function timeSince(timestamp, compress) {
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return (compress ? interval + getSafeTranslation("m", "m") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("monthsago", "months ago"));
+    return (compress ? interval + getSafeTranslation("mo", "mo") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("monthsago", "months ago"));
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
@@ -47,7 +47,7 @@ var ordinal_suffix_of = function (i) {
   return i + "th";
 }
 
-var getJSON = function (url) {
+var getJSON = function (url, postparams) {
   //force a reload by appending time so no cached versions
   url += "&r=" + (new Date().getTime() % 100000);
   try{
@@ -56,9 +56,6 @@ var getJSON = function (url) {
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     addListeners(xhr);
-    xhr.open('get', url, true);
-    xhr.responseType = 'json';
-
     xhr.onerror = function (e) {
       reject(xhr.status);
     };
@@ -71,7 +68,17 @@ var getJSON = function (url) {
         reject(xhr.status);
       }
     };
-    xhr.send();
+
+    xhr.responseType = 'json';
+    if(postparams){
+      xhr.open('post', url, true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.send(postparams);
+    }else{
+      xhr.open('get', url, true);
+      xhr.send();
+    }
+
   });
 };
 

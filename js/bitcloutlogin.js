@@ -163,8 +163,8 @@ var alertShown=false;
 
 function submitSignedTransaction(signedTrx,id) {
   var submitpayload = `{"TransactionHex":"` + signedTrx + `"}`;
-  var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=submit-transaction&payload=" + encodeURIComponent(submitpayload);
-  getJSON(url2).then(function (data) {
+  var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=submit-transaction";
+  getJSON(url2,"&payload=" + encodeURIComponent(submitpayload)).then(function (data) {
     console.log(data);
     serverresponses.set(id, data.TxnHashHex);
   });
@@ -173,8 +173,8 @@ function submitSignedTransaction(signedTrx,id) {
 async function checkIfBitcloutUser(pubkeyhex1) {
   var bcAddress=await pubkeyToBCaddress(pubkeyhex1);
   var submitpayload = `{"PublicKeyBase58Check":"` + bcAddress + `"}`;
-  var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-single-profile&payload=" + encodeURIComponent(submitpayload);
-  getJSON(url2).then(function (data) {
+  var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-single-profile";
+  getJSON(url2, "&payload=" + encodeURIComponent(submitpayload)).then(function (data) {
     console.log(data);
     if(data.Profile && data.Profile.Username){
       //This is a BC user
@@ -282,9 +282,10 @@ async function sendBitCloutTransaction(payload, action, divForStatus) {
     var statusElement=document.getElementById(divForStatus);
   }
   var uniqueid = getRandomInt(1000000000);
-  var url = dropdowns.txbroadcastserver + "bitclout?bcaction=" + action + "&payload=" + encodeURIComponent(payload);
+  var url = dropdowns.txbroadcastserver + "bitclout?bcaction=" + action;
+  //var url = dropdowns.txbroadcastserver + "bitclout";
   if(statusElement)statusElement.value = "Constructing BitClout Tx";
-  getJSON(url).then(async function (data) {
+  getJSON(url, "&payload=" + encodeURIComponent(payload)).then(async function (data) {
     //Now sign the transaction
     
     if(bitCloutUserData){
@@ -376,7 +377,7 @@ async function sendBitCloutRating(posttext, topic, divForStatus, successFunction
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'af4e1c6b71019ed334d1ab1e254aaaa49ae77fe96ef5d078b9ef598ff182bce3',
-    BodyObj: { Body: body },
+    BodyObj: body,
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
   };

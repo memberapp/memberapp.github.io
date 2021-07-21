@@ -2124,8 +2124,7 @@ footer {
     #thread {
       max-width: 800px; } }
   @media (max-width: 768px) {
-    #thread {
-      max-width: 540px; } }
+     }
   #thread .title {
     font-weight: bold; }
   #thread .itemlist .fatitem {
@@ -2240,10 +2239,6 @@ footer {
         #newpost #memorandumarea #memorandumpreviewareabutton a:hover {
           background-color: #1062a6;
           color: white; }
-    #newpost #memorandumarea .switchToRegularMode {
-      display: none; }
-    #newpost #memorandumarea .switchToArticleMode {
-      display: block; }
     #newpost #memorandumarea div#memorandumpreview {
       margin-left: -15px;
       margin-right: -15px;
@@ -2363,53 +2358,6 @@ footer {
           border-left: 0;
           border-right: 0;
           border-bottom: 1px solid rgba(0, 0, 0, 0.12); } }
-
-body.article {
-  background: white; }
-  body.article header,
-  body.article footer,
-  body.article #lowfundswarning {
-    display: none; }
-  body.article #thread .itemlist .fatitem {
-    border: none;
-    font-size: 1.25rem;
-    font-family: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol; }
-    body.article #thread .itemlist .fatitem .votelinks {
-      background: white; }
-    body.article #thread .itemlist .fatitem table {
-      font-size: 1.125rem; }
-    body.article #thread .itemlist .fatitem .post {
-      font-size: 2rem; }
-      body.article #thread .itemlist .fatitem .post .subtext {
-        display: none; }
-    body.article #thread .itemlist .fatitem pre {
-      padding: 1rem;
-      overflow: auto;
-      font-size: 85%;
-      line-height: 1.45;
-      background-color: #f6f8fa;
-      border-radius: 6px;
-      font-size: 1.25rem;
-      font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace; }
-      body.article #thread .itemlist .fatitem pre code {
-        display: inline;
-        padding: 0;
-        margin: 0;
-        overflow: visible;
-        line-height: inherit;
-        word-wrap: normal;
-        background-color: initial;
-        border: 0; }
-    body.article #thread .itemlist .fatitem blockquote {
-      background-color: #f6f8fa;
-      font-style: italic;
-      padding: 0 1em;
-      color: #6a737d;
-      border-left: .25em solid #dfe2e5;
-      margin: 0; }
-      body.article #thread .itemlist .fatitem blockquote p {
-        font-size: 1.25rem;
-        padding: 0.25rem 0; }
 
 #toolsanchor {
   width: 100%;

@@ -81,7 +81,8 @@ function getAndPopulateTrustGraph(member, target) {
                     'border-color': '#000',
                     'border-width': 3,
                     'border-opacity': 0.75,
-                    'text-margin-y': 5
+                    'text-margin-y': 5,
+                    'color': '#999',
                 })
                 .selector('.bottom-center')
                 .css({

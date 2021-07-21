@@ -70,7 +70,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             try {
                 if (settings["shownonameposts"] == 'false' && !data[i].name) { continue; }
                 if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
-                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false, true));
+                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false, true, false));
             } catch (err) {
                 console.log(err);
             }
@@ -194,7 +194,8 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
-                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false));
+                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false, true));
+                
                 var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID)
 
                 if (commentTree == '<ul></ul>') {
@@ -211,14 +212,18 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Threads have no navbuttons
         displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
 
+        //Repeat the title for article mode
+        document.querySelector('[id^="articleheader'+roottxid+'"]').innerHTML=document.querySelector('[id^="postbody'+roottxid+'"]').innerHTML;
+
         if (popup != undefined) {
             popup.setContent(getDivClassHTML('mapthread', contents));
-
         }
         addDynamicHTMLElements(data);
         scrollToPosition();
 
-        showReplyBox(san(txid) + pageName);
+        if(!articlemode){
+            showReplyBox(san(txid) + pageName);
+        }
 
 
         scrollToElement("highlightedcomment");
@@ -328,7 +333,7 @@ function getAndPopulateQuoteBox(txid) {
     getJSON(theURL).then(function (data) {
         var contents = "";
         if (data[0]) {
-            contents = getHTMLForPost(data[0], 1, page, 0, null, true, true);
+            contents = getHTMLForPost(data[0], 1, page, 0, null, true, true, false);
             document.getElementById(page).innerHTML = contents;
         } else {
             throw error(getSafeTranslation('noresult', 'no result returned'));
@@ -516,12 +521,12 @@ function sendRating(rating, ratingText, pageName, theAddress){
     }
     
     if(bitCloutUser){
-        sendBitCloutRating("user:@" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:""+rating});
+        sendBitCloutRating("user: @" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:""+rating});
     }
 }
 
 
-function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, truncate) {
+function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, truncate, includeArticleHeader) {
 
     //Always show if post is directly requested
     if (!alwaysShow) {
@@ -554,8 +559,10 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         //repost with no message
         retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
     }
-
-
+    if(includeArticleHeader){
+        retHTML += `<div id="articleheader`+san(data.txid)+`" class="articleheader"></div>`;
+    }
+    
     if (dataReply != null) {
         retHTML += getHTMLForReply(dataReply, 0, page, starindex, null);
     }

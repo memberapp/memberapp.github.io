@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = "6.6.3";
+var version = "6.6.10";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -352,11 +352,12 @@ function logout() {
         return;
     }
 
-    bitcloutlogout();
-
     if (localStorageSafe != null) {
         localStorageSafe.clear();
     }
+
+    bitcloutlogout();
+
     privkey = "";
     pubkey = "";
     mnemonic = "";
@@ -373,7 +374,7 @@ function logout() {
         console.log(err);
     }
 
-    show('loginbox');
+    location.href = "#login";
     //This clears any personal info that might be left in the html document.
     location.reload();
 
@@ -385,12 +386,12 @@ function changeStyle(newStyle, setStorage) {
         localStorageSet(localStorageSafe, "style2", newStyle);
     }
     var cssArray = newStyle.split(" ");
-    if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css"); }
-    else { document.getElementById("pagestyle").setAttribute("href", "css/feels.css"); }
-    if (cssArray[1]) { document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css"); }
-    else { document.getElementById("pagestyle2").setAttribute("href", "css/none.css"); }
-    if (cssArray[2]) { document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css"); }
-    else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css"); }
+    if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css?"+version); }
+    else { document.getElementById("pagestyle").setAttribute("href", "css/feels.css?"+version); }
+    if (cssArray[1]) { document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css?"+version); }
+    else { document.getElementById("pagestyle2").setAttribute("href", "css/none.css?"+version); }
+    if (cssArray[2]) { document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css?"+version); }
+    else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css?"+version); }
 }
 
 function setBodyStyle(newStyle) {

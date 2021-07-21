@@ -22,7 +22,7 @@ var postCompactTemplate = `
                 </span>
             </div>
             <div class="post-body-wrapper">
-                <div class="post-body"
+                <div id="postbody{txid}" class="post-body"
                     onclick="if(document.getSelection().type === 'Range'){return;}else{nlc();location.href='#thread?root={roottxid}&amp;post={txid}'};">
                     {message}
                 </div>
@@ -182,7 +182,7 @@ var userCompactTemplate=`
         </a>
     </span>
     <span class="starratingcompact">
-        <span data-ratingsize="10" data-ratingaddress="{address}" data-ratingraw="{rating}" id="ratingposts{diff}"
+        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingaddress="{address}" data-ratingraw="{rating}" id="ratingposts{diff}"
         data-ratingsystem={systemscoreclass} class="star-rating-compact"></span>
     </span>
     {flair}
@@ -211,8 +211,9 @@ var userProfileCompactTemplate=`
             {flair}
             <br />
             <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-                <span class="member-pagingid">@{pagingid} {onlinestatus}</span>
+                <span class="member-pagingid">@{pagingid}</span>
             </a>
+            <span class="member-onlinestatus age">{onlinestatus}</span>
             <div class="profile-text">
                 <span class="profilepreviewtext">{profile}</span>
             </div>
@@ -299,7 +300,7 @@ var replyDivTemplate = `
     </div>
     <div class="replyform">
     <br />
-    <textarea id="replytext{page}{txid}" rows="3"></textarea>
+    <textarea id="replytext{page}{txid}" rows="3" maxlength="5000"></textarea>
     <br />
     <input id="replybutton{page}{txid}" value="reply" type="submit"
         onclick="sendReply('{txid}','{page}','replystatus{page}{txid}');" />
@@ -361,7 +362,7 @@ var mapPostTemplate=`
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
         </a>
     </div>    
-    <textarea class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
+    <textarea maxlength="5000" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
     <input data-vavilon_value="VV0164" id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
     <input data-vavilon_value="VV0165" id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit"
         disabled>

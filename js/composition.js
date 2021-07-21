@@ -32,19 +32,25 @@ async function initMarkdownEditor() {
 }
 
 function getMemorandumText() {
-    return simplemde ? simplemde.value() : '';
+    if(!simplemde){
+        return '';
+    }
+
+    return simplemde.value();
 }
 
 var articlemode = false;
-function switchToArticleMode() {
-    changeStyle('base none', false);
+function switchToArticleMode(roottxid) {
+    //changeStyle('base none', false);
+    //'articleheader'+roottxid
+    //document.querySelector('[id^="articleheader'+roottxid+'"]').innerHTML=document.querySelector('[id^="postbody'+roottxid+'"]').innerHTML;
     setBodyStyle("article");
     articlemode = true;
 }
 
 function switchToRegularMode() {
     if (articlemode) {
-        loadStyle();
+        //loadStyle();
         setBodyStyle("none");
         articlemode = false;
     }
@@ -55,6 +61,8 @@ function memorandumPreview() {
         //Only run the preview if the preview area is visible
         return;
     }
+
+    
     var time = new Date().getTime() / 1000;
 
     //Grab needed values from settings page
@@ -81,7 +89,11 @@ function memorandumPreview() {
 
     document.getElementById('memorandumpreview').innerHTML =
         getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0, false)
+        + `<div id="articleheader000" class="articleheader"></div>`
         + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', '', null, 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0);
+
+        //Repeat the title for article mode
+    document.querySelector('[id^="articleheader000"]').innerHTML=document.querySelector('[id^="postbody000"]').innerHTML;
 
     addDynamicHTMLElements();
 }
@@ -137,7 +149,7 @@ function geopost() {
 
     let successFunction = geocompleted;
 
-    let taggedPostText=posttext + " \nmember.cash/geotag/" + geohash;
+    let taggedPostText=posttext + " \nhttps://member.cash/geotag/" + geohash;
     if (checkForNativeUserAndHasBalance()) {
         //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
         postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
@@ -155,6 +167,18 @@ function postmemorandum() {
     var txid = document.getElementById('quotetxid').value;
     var postbody = document.getElementById('newposttamemorandum').value;
     //var topic = document.getElementById('memorandumtopic').value;
+
+    var postLength=new Buffer(posttext).toString('hex').length/2;
+    var bodyLength=new Buffer(postbody).toString('hex').length/2;
+    if(postLength>20000){
+        alert("Post size is "+postLength+". Maximum size of 20,000 chars exceeded. This can't be posted.");
+        return;
+    }
+    if(bodyLength>20000){
+        alert("Body size is "+bodyLength+". Maximum size of 20,000 chars exceeded. This can't be posted.");
+        return;
+    }
+
     var topic='';
 
     if (!txid) {

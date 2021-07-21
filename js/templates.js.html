@@ -324,7 +324,6 @@ var walletanchorHTML=`
 
 var newpostHTML=`
 <br />
-<br />
 <div id="newpostprofilepic" class="newpostprofilepic">
 </div>
 <div id="memorandumarea">
@@ -343,7 +342,7 @@ var newpostHTML=`
     </div>
     -->
     <div>
-        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60"
+        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="5000"
             onchange="memorandumPreview();" onkeypress="this.onchange();"
             onpaste="this.onchange();" oninput="this.onchange();"></textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
@@ -361,7 +360,6 @@ var newpostHTML=`
     </div>
     <br />
     <div id="quotepost" class="quotepost"></div>
-    <br />
     <div>
         <input data-vavilon_value="VV0041" id="newpostmemorandumbutton" value="Post" type="submit"
             onclick="postmemorandum();">
@@ -948,7 +946,7 @@ var userSearchHTML=`
 
 
 var headerHTML = `
-    <div id="ddcover" style="background:grey; overflow:visible; width: 100%; height: 100%; position: fixed; top: 0; left: 0; opacity: 0.5; display:none; z-index: 500;"></div>
+    <div id="ddcover" class="ddcover"></div>
     <div class="headerleftgroup">
         <span class="memberlogo">
             <a href="./index.html">

@@ -121,3 +121,75 @@ body {
 #topiclistanchor td.tlaction a{
     color: #fff !important;
 }
+
+.article .fatitem {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .article .fatitem .comment {
+    color: rgba(255, 255, 255, 0.84);
+  }
+  
+  .article .articleheader{
+    color: rgba(255, 255, 255, 0.84);
+  }
+
+  pre {
+    background-color: #090904;
+  }
+
+  footer {
+    background: #090600;
+  }
+
+  #thread .itemlist .fatitem {
+    box-shadow: 0 13px 27px 6px #040404;
+}
+
+.newheader .searchwrapper .dropdown button {
+    color: #aaa;
+    background-color: #000 !important;
+}
+
+.dropdown-content a:hover {
+    background-color: #0e0e0e;
+  }
+
+  .newheader .searchwrapper #usersearchnavresults {
+    background: #000;
+}
+
+.newheader .majornavbuttonsdiv a:hover {
+    background: #221104;
+}
+
+.filters {
+    background-color: #090600;
+}
+
+.ddcover {
+    opacity: 0.3; 
+  }
+
+  .dropdown-content {
+    background-color: black;
+   }
+
+   #toolsanchor .content #walletbalance, #toolsanchor .content #walletaddress, #toolsanchor .content #walletlegacyaddress, #toolsanchor .content #walletbcaddress, #toolsanchor .content #walletsendfunds, #toolsanchor .content #walletprivatekey, #toolsanchor .content #walletblockexplorer {
+    box-shadow: 0 13px 21px 6px #040406;
+    background: #110d08;
+}
+
+#toolsanchor .content {
+    box-shadow: 0 13px 27px 6px #040404;
+}
+
+#topiclistanchor .content {
+    box-shadow: 0 13px 21px 6px #040404;
+    border: none;
+}
+
+.post .dropdown .dropdown-content {
+    background-color: black;
+}
+  

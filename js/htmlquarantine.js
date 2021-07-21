@@ -64,15 +64,16 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     }
 
     var onlineStatus="";
-    var lastonlineseconds=curTime - lastactive;
-    if (lastactive &&  lastonlineseconds < 60 * 10) {
+    //var lastonlineseconds=curTime - lastactive;
+    onlineStatus=timeSince(lastactive,true);
+    /*if (lastactive &&  lastonlineseconds < 60 * 10) {
         //if the user took an action in the past 3 minutes
         onlineStatus="🟠";
     }
     if (lastactive && lastonlineseconds < 60 * 3) {
         //if the user took an action in the past 3 minutes
         onlineStatus="🟢";
-    }
+    }*/
 
     var directlink="";
 
@@ -87,13 +88,14 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
         address: san(address),
         profilepicsmall: memberpic,
         handle: ds(name),
+        pagingidattrib: ds(pagingid),
         pagingid: ds(pagingid),
         flair: flair,
         rating: Number(ratingRawScore),
         followbutton: followButton,
         following: Number(following),
         followers: Number(followers),
-        profile: ds(profile),
+        profile: getSafeInteractiveHTML(profile, 'profilecard', false),
         diff: ratingID,
         onlinestatus: onlineStatus,
         systemscoreclass:systemScoreClass,       
@@ -233,47 +235,84 @@ function getScoresHTML(txid, likes, dislikes, tips, differentiator) {
     //return ` <span onclick="showScoresExpanded('` + san(txid) + `','scoresexpanded` + san(txid) + differentiator + `')" id="scores` + san(txid) + differentiator + `" class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `"  data-amount="` + Number(tips) + `">` + balanceString(Number(tips), false) + `</span></span></span>`;
 }
 
+function replacePageNamesWithLinks(target){
+    return target.replace(/(^|\s|>)@([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g, replacePageName);
+}
+
 function replacePageName(match, p1, p2, offset, string) {
     // p1 is nondigits, p2 digits, and p3 non-alphanumerics
     return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate, sysrating, sourcenetwork) {
+function replaceTagNamesWithLinks(target){
+    return target.replace(/(^|\s|>)#([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g, replaceTagName);
+}
 
-    if (!address) { return ""; }
-    if (!name) { name = address.substring(0, 10); }
-    repliesroot = Number(repliesroot);
-    replies = Number(replies);
-    //Replies respect newlines, but root posts do not
-    var isReply = (roottxid != txid);
-    if(truncate && message.length>400){
-        message=message.substring(0,200)+'...';
-    }
-    var messageHTML = ds(message);
+function replaceTagName(match, p1, p2, offset, string) {
+    // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+    return p1 + `<a href="#topic?topicname=` + encodeURIComponent(p2) + `" onclick="nlc();">#` + ds(p2) + `</a>`;
+}
+
+function replaceTickerNamesWithLinks(target){
+    return target.replace(/(^|\s|>)$([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g, replaceTickerName);
+}
+
+function replaceTickerName(match, p1, p2, offset, string) {
+    // p1 is nondigits, p2 digits, and p3 non-alphanumerics
+    return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">$` + ds(p2) + `</a>`;
+}
+
+
+function getSafeInteractiveHTML(message, differentiator, includeMajorMedia){
+    //Escape as HTML
+    let messageHTML = ds(message);
+    //Add Line breaks
     messageHTML = messageHTML.replace(/(?:\r\n|\r|\n)/g, '<br>');
 
-    //ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
-    //Add paging ids
-    messageHTML = messageHTML.replace(/(^|\s|>)@([^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g, replacePageName);
-    //messageHTML = messageHTML.replace(/(@[^.,\/#!$%\^&\*;:{}=\-`~()'"@<>\ \n?]{1,217})/g,'<a href="#member?pagingid=$1">$1</a>');
+    //Add tag links
+    messageHTML = replaceTagNamesWithLinks(messageHTML);
+    
+    //Add ticker links
+    messageHTML = replaceTickerNamesWithLinks(messageHTML);
+    
+    //Add paging id links
+    messageHTML = replacePageNamesWithLinks(messageHTML);
+    
+    //Add links for web addresses
+    messageHTML = anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
 
+    //Scan for XSS vulnerabilities
+    messageHTML = DOMPurify.sanitize(messageHTML);
+
+    //Add youtube etc
+    if(includeMajorMedia){
+        messageHTML = addImageAndYoutubeMarkdown(messageHTML, differentiator, false);
+    }
+
+    return messageHTML;
+}
+
+function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate, sysrating, sourcenetwork) {
+
+    if (!address) { updateStatus('Missing address for post error - this should not happen.'); return ""; }
+    if (!name) { name = address.substring(0, 10); }
+    
+    if(truncate && message.length>400){ //to do, try to break on a whitespace
+        message=message.substring(0,200)+'...';
+    }
+
+    let messageLinksHTML = getSafeInteractiveHTML(message, differentiator, true);
+
+    
+    repliesroot = Number(repliesroot);
+    replies = Number(replies);
+    var isReply = (roottxid != txid);
     if (!isReply) {
         //only if main post
         if (repliesroot > replies) {
             replies = repliesroot;
         }
     }
-    var messageLinksHTML = anchorme(messageHTML, { attributes: [{ name: "target", value: "_blank" }] });
-
-    //Scan for XSS vulnerabilities
-    messageLinksHTML = DOMPurify.sanitize(messageLinksHTML);
-
-    //Add youtube etc
-    messageLinksHTML = addImageAndYoutubeMarkdown(messageLinksHTML, differentiator, false);
-
-    //if (messageLinksHTML.indexOf("<a ") == -1 && messageLinksHTML.indexOf("<iframe ") == -1) {//if no links
-    //    messageLinksHTML = `<a href="#thread?root=` + san(roottxid) + `&post=` + san(txid) + `" onclick="nlc();">` + messageLinksHTML + `</a>`;
-    //}
 
     var theAuthorHTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive, sysrating);
     var theAuthor2HTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, false, lastactive, sysrating);

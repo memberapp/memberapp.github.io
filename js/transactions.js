@@ -154,33 +154,42 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
     let postTitleHex = new Buffer(posttext).toString('hex');
     let replyHex = new Buffer(postbody).toString('hex');
 
+    var maxPostLength=368;
+    if(topic){
+        maxPostLength=maxPostLength-4-topic.toString('hex').length;
+    }
+    if(quotetxid){
+        var reversetx = quotetxid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
+        maxPostLength=maxPostLength-4-reversetx.toString('hex').length;
+    }
+
     //If the title is too long, put the excess in the reply. todo - find a natural breakpoint, see sendreplyraw for code
-    if (postTitleHex.length > 368) {
-        replyHex=postTitleHex.substr(368)+replyHex;
-        postTitleHex=postTitleHex.substr(0,368);
+    if (postTitleHex.length > maxPostLength) {
+        replyHex=postTitleHex.substr(maxPostLength)+replyHex;
+        postTitleHex=postTitleHex.substr(0,maxPostLength);
     }
 
     var tx = {
-        data: ["0x6d02", posttext],
+        data: ["0x6d02", "0x" + postTitleHex],
         cash: { key: privkey }
     }
 
     if (topic) {
         tx = {
-            data: ["0x6d0c", topic, posttext],
+            data: ["0x6d0c", topic, "0x" + postTitleHex],
             cash: { key: privkey }
         }
     }
 
     if(quotetxid){
-        var reversetx = quotetxid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
+        
         tx = {
-            data: ["0x6d0b", "0x" + reversetx, posttext],
+            data: ["0x6d0b", "0x" + reversetx, "0x" + postTitleHex],
             cash: { key: privkey }
         }
         if (topic) {
             tx = {
-                data: ["0x6d0f", "0x" + reversetx, topic, posttext],
+                data: ["0x6d0f", "0x" + reversetx, topic, "0x" + postTitleHex],
                 cash: { key: privkey }
             }
         }

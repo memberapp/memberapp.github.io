@@ -109,7 +109,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.muting = Number(data[0].blocking);
         obj.handle = ds(data[0].name);
         obj.handlefunction = unicodeEscape(data[0].name);
-        obj.profile = ds(data[0].profile);
+        obj.profile = data[0].profile;
         obj.publickey = san(data[0].publickey);
         obj.pagingid = ds(data[0].pagingid);
         obj.picurl = ds(data[0].picurl);
@@ -158,6 +158,10 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
         var bcaddress = await pubkeyToBCaddress(data[0].publickey);
         obj.bcaddress = bcaddress;
+    }
+
+    if (pre == "member") {
+        obj.profile=getSafeInteractiveHTML(obj.profile, 'profile', false);
     }
 
     document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);
