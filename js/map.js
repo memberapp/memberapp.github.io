@@ -38,8 +38,8 @@ async function getAndPopulateMap(geohash, posttrxid) {
 
         //Popup for thread related to location
         //popup = L.popup({ autoPan: true, minWidth: 550, maxWidth: getWidth(), maxHeight: getHeight() });
-        popup = L.popup({ autoPan: true });
-        postpopup = L.popup({ autoPan: true, minWidth: 300 });
+        popup = L.popup({ autoPan: true, minWidth: 320 });
+        postpopup = L.popup({ autoPan: true, minWidth: 320 });
     }
     if (geohash == null || geohash == "") {
         //Try to zoom to current position
@@ -65,6 +65,7 @@ async function getAndPopulateMap(geohash, posttrxid) {
     //post to map by clicking on it
     map.on('click', onMapClick);
 
+    var suspendZoom=null;
     //map.on('moveend', onMapMove);
     map.on('moveend', function () {
         suspendPageReload=true;
@@ -77,7 +78,8 @@ async function getAndPopulateMap(geohash, posttrxid) {
         } else {
             location.href = "#map?geohash=" + encodeGeoHash(map.getCenter().lat, map.getCenter().lng);
         }
-        setTimeout(function () {suspendPageReload=false;},1000);
+        clearTimeout(suspendZoom);
+        suspendZoom=setTimeout(function () {suspendPageReload=false;},1000);
     });
 
     popup.on('close', function (e) {

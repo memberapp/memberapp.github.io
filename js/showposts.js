@@ -481,8 +481,10 @@ function addSingleStarsRating(theElement) {
 
     let disabledtext = theElement.dataset.disabledtext;
 
-    var theRating = 0; if (rawRating != null && rawRating != 0) { theRating = (ds(rawRating) / 64) + 1; }
-    var theRatingRound = Math.round(theRating * 10) / 10;
+    var theRatingRound = 0; 
+    if (rawRating) { 
+        theRatingRound = outOfFive(rawRating);
+    }
     if (theElement.dataset.ratingsystem == 'systemscore') {
         disabledtext = 'Membrain score ' + theRatingRound + '/5';
     }

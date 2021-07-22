@@ -117,9 +117,8 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
 
-        var theRating = (data[0].sysrating / 64) + 1;
-        var theRatingRound = Math.round(theRating * 10) / 10;
-        obj.membrain = Number(theRatingRound) + "/5";
+        let theRatingRound =  outOfFive(Number(data[0].sysrating)); 
+        obj.membrain = theRatingRound + "/5";
 
         //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
         //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);

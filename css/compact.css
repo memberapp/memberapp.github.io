@@ -1807,6 +1807,16 @@ label#memberblockexplorer {
   background: #2291eb !important;
 }
 
+/* some padding when there are no comments to display*/
+.nocommentsyet {
+  padding-left: 15px;
+}
+
+/* place stars under user correctly on map thread*/
+.mapthread .fatitem .post-side-bar .star-rating {
+  top: -0.3em;
+}
+
 /* tag page table design*/
 /* topiclistanchor */
 #topiclistanchor .content {

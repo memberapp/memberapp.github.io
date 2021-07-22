@@ -531,6 +531,12 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+function outOfFive(theRating){
+  theRating = (Number(theRating) / 64) + 1;
+  theRating = Math.round(theRating * 10) / 10;
+  return theRating;
+}            
+
 function transposeStarRating(rating){
   var transposed = 0;
   switch (rating) {

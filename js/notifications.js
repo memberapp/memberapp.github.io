@@ -285,8 +285,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             break;
         case "rating":
             var theRating = 0;
-            if (data.rating != null && data.rating != "") { theRating = (Number(data.rating) / 64) + 1; }
-            theRating = Math.round(theRating * 10) / 10;
+            if (data.rating) { 
+                theRating = outOfFive(data.rating); 
+            }
             return notificationItemHTML(
                 "rating",
                 `img/icons/notification/star.png`,
