@@ -522,7 +522,7 @@ function sendRating(rating, ratingText, pageName, theAddress){
         rateCallbackAction(rating, comment, theAddress);
     }
     
-    if(bitCloutUser){
+    if(isBitCloutUser()){
         sendBitCloutRating("user: @" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:""+rating});
     }
 }
@@ -605,7 +605,7 @@ function sendReply(txid, page, divForStatus) {
         sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, successFunction);
         successFunction = null;
     }
-    if (bitCloutUser) {
+    if (isBitCloutUser()) {
         sendBitCloutReply(txid, replytext, divForStatus, successFunction);
     }
     return true;
@@ -705,7 +705,7 @@ function likePost(txid, tipAddress) {
     }
 
     //If bitclout user is logged in
-    if (bitCloutUser) {
+    if (isBitCloutUser()) {
         bitCloutLikePost(txid);
     }
 
@@ -732,7 +732,7 @@ function repostPost(txid) {
 
     increaseGUIReposts(txid);
 
-    if (bitCloutUser) {
+    if (isBitCloutUser()) {
         bitCloutRePost(txid);
     }
 

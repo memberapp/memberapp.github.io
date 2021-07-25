@@ -369,7 +369,7 @@ Use important, because we always want profile card pics to be this size*/
 /*----------------------------------------------*/
 
 /*No margin on age*/
-.age {
+.plaintext, .age {
   margin-right: 0rem;
 }
 /*Remove border on posts*/
@@ -2539,6 +2539,12 @@ tbody tr td:first-of-type {
   opacity: 0.2; 
   display:none; 
   z-index: 500;
+}
+
+/* Less Space For Collapsed Comments */
+.comment-tree ul li.collapsed {
+  padding-top: 0px;
+  padding-bottom: 0px;
 }
 
 /* Article Mode Stuff */

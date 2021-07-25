@@ -478,6 +478,10 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
         if ((data[i].retxid == targettxid || data[i].retxid == firstreplytxid) && data[i].txid != firstreplytxid) {
+            let ratingused=data[i].sysrating;
+            if(data[i].rating){
+                ratingused=data[i].rating;
+            }
             var isMuted = (data[i].blockstxid != null || data[i].moderated != null);
 
             var obj = {
@@ -531,8 +535,8 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
     navheader += `<a data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts" class="`+(order=='new'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
     navheader += `<span class="separator"></span>`;
     navheader += `<a data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts from the past 48 Hours" class="`+(order=='hot'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
-    //navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0108" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="`+(order=='topd'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Day</a> `;
+    navheader += `<span class="separator"></span>`;
+    navheader += `<a data-vavilon="VVTop" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="`+(order=='topd'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Top</a> `;
     navheader += `<span class="separator"></span>`;
     navheader += `<a data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw" title="Top posts from the past Week" class="`+(order=='topw'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topw&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Week</a> `;
     navheader += `<span class="separator"></span>`;

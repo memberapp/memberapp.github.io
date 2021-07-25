@@ -155,7 +155,7 @@ function geopost() {
         postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
         successFunction = null;
     }
-    if (bitCloutUser) {
+    if (isBitCloutUser()) {
         sendBitCloutPost(posttext + " \nmember.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
     }
 
@@ -208,7 +208,7 @@ function postmemorandum() {
             postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
             successFunction = null;
         }
-        if (bitCloutUser) {
+        if (isBitCloutUser()) {
             sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction);
         }
     }
@@ -221,7 +221,7 @@ function postmemorandum() {
             postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
             successFunction = null;
         }
-        if (bitCloutUser) {
+        if (isBitCloutUser()) {
             sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
         }
     }

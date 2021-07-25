@@ -399,7 +399,7 @@ function follow(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
     }
-    if(bitCloutUser){
+    if(isBitCloutUser()){
         sendBitCloutFollow(targetpublickey);
     }
 }
@@ -409,7 +409,7 @@ function unfollow(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
     }
-    if(bitCloutUser){
+    if(isBitCloutUser()){
         sendBitCloutUnFollow(targetpublickey);
     }
 }
@@ -419,7 +419,7 @@ function mute(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
     }
-    if(bitCloutUser){
+    if(isBitCloutUser()){
         sendBitCloutMute(targetpublickey);
     }
 }
@@ -429,7 +429,7 @@ function unmute(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
     }
-    if(bitCloutUser){
+    if(isBitCloutUser()){
         sendBitCloutUnMute(targetpublickey);
     }
 }

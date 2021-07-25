@@ -192,4 +192,9 @@ body {
 .post .dropdown .dropdown-content {
     background-color: black;
 }
+
+.memberheader .membertabs {
+    background-color: #090600;
+    background: linear-gradient(to right, #000 12%, #090600 100%);
+}
   

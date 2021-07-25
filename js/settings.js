@@ -99,7 +99,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         profile: "",
         pagingid: "",
         profilepiclargehtml: "",
-        publickey:"",
+        publickey: "",
     };
 
     if (data && data[0]) {
@@ -117,7 +117,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
 
-        let theRatingRound =  outOfFive(Number(data[0].sysrating)); 
+        let theRatingRound = outOfFive(Number(data[0].sysrating));
         obj.membrain = theRatingRound + "/5";
 
         //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
@@ -157,10 +157,15 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
         var bcaddress = await pubkeyToBCaddress(data[0].publickey);
         obj.bcaddress = bcaddress;
+    } else if (qaddress == pubkey && pubkeyhex) {
+        var bcaddress = await pubkeyToBCaddress(pubkeyhex);
+        obj.bcaddress = bcaddress;
     }
 
+
+
     if (pre == "member") {
-        obj.profile=getSafeInteractiveHTML(obj.profile, 'profile', false);
+        obj.profile = getSafeInteractiveHTML(obj.profile, 'profile', false);
     }
 
     document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);

@@ -78,11 +78,11 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("rep")) {
         showReputation(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("posts")) {
-        showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'posts');
     } else if (action.startsWith("feed")) {
-        showFeed(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'posts');
     } else if (action.startsWith("comments")) {
-        showComments(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'replies');
     } else if (action.startsWith("trustgraph")) {
         showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
     } else if (action.startsWith("topiclist")) {
@@ -114,10 +114,10 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
         } else {
-            showPosts(0, numbers.results, 'all');
+            showPFC(0, numbers.results, 'posts');
         }
     } else {
-        showPosts(0, numbers.results, 'all');
+        showFirehose();
     }
 }
 
@@ -211,11 +211,11 @@ function showReputation(qaddress) {
     getAndPopulateRatings(qaddress);
     getAndPopulateCommunityRatings(qaddress);
 
-    if (pubkey) {
+    //if (pubkey) {
         getAndPopulateTrustGraph(pubkey, qaddress);
-    } else {
-        document.getElementById('trustgraph').style.display = "none";
-    }
+    //} else {
+    //    document.getElementById('trustgraph').style.display = "none";
+    //}
 
     show('community');
     document.getElementById('memberheader').style.display = "block";
@@ -276,7 +276,7 @@ function showNewPost(txid) {
 function showNotifications(start, limit, qaddress, txid, nfilter, minrating) {
 
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
-        showPosts(0, numbers.results, 'all');
+        showPFC(0, numbers.results, 'posts');
         return;
     }
     setPageTitleFromID("VV0095");
@@ -356,18 +356,7 @@ function showMessages(messagetype, start, limit) {
     getAndPopulateMessages(messagetype, start, limit);
 }
 
-//These three should be refactored away
-function showFeed(start, limit, type) {
-    showPFC(start, limit, 'posts', pubkey, type);
-}
-function showPosts(start, limit, type) {
-    showPFC(start, limit, 'posts', pubkey, type);
-}
-function showComments(start, limit, type) {
-    showPFC(start, limit, 'replies', pubkey, type);
-}
-
-function showPFC(start, limit, page, pubkey, type) {
+function showPFC(start, limit, page) {
     //getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
     showPostsNew('hot', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
 }
@@ -379,7 +368,7 @@ function showMyFeed() {
 
 function showFirehose() {
     setTopic('');
-    getAndPopulateNew('hot', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
+    getAndPopulateNew('topd', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
 }
 
 function showMyTags() {
