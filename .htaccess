@@ -1,8 +1,0 @@
-
-Redirect 301 "/hot" "https://member.cash/#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25"
-Redirect 301 "/new" "https://member.cash/#show?order=new&content=posts&topicname=&filter=everyone&start=0&limit=25"
-Redirect 301 "/top" "https://member.cash/#show?order=topw&content=posts&topicname=&filter=everyone&start=0&limit=25"
-Redirect 301 "/feed" "https://member.cash/#myfeed"
-Redirect 301 "/topfeed" "https://member.cash/#show?order=top48&content=posts&topicname=&filter=mypeeps&start=0&limit=25"
-RedirectMatch "^/geotag/([a-z0-9]*)" "https://member.cash/#map?geohash=$1"
-RedirectMatch "^/ba/([a-z0-9A-Z]*)" "https://member.cash/#member?qaddress=$1"

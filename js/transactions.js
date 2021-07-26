@@ -9,7 +9,7 @@ function checkForPrivKey() {
 
 function checkForNativeUser() {
     if (privkey == "" && pubkey != "") {
-        alert(getSafeTranslation('readonlymode', "You may be logged in with a public key in read only mode. You must login with a private key to make this action."));
+        alert(getSafeTranslation('readonlymode2', "You may be logged in with a public key in read only mode. Try logging out and logging back in again."));
         return false;
     } else if (privkey == "") {
         alert(getSafeTranslation('mustlogin', "You must login to do this."));
@@ -17,7 +17,7 @@ function checkForNativeUser() {
     }
 
     if (tq.getBalance(pubkey) < 547) {
-        alert(getSafeTranslation('notenough', "You do not have enough satoshis to do this. You can click on your balance to refresh it."));
+        alert(getSafeTranslation('notenough2', "You do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
         return false;
     }
 
