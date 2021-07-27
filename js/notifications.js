@@ -4,6 +4,9 @@ var lastViewOfNotifications = 0;
 var lastViewOfNotificationspm = 0;
 
 function displayNotificationCount() {
+    if (!pubkey) {
+        return;
+    }
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
     var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
@@ -13,9 +16,9 @@ function displayNotificationCount() {
             return;
         }
 
-        setAlertCount("alertcount",data[0].count);
-        setAlertCount("alertcountpm",data[0].countpm);
-        
+        setAlertCount("alertcount", data[0].count);
+        setAlertCount("alertcountpm", data[0].countpm);
+
         var pageTitleCount = data[0].count + data[0].countpm;
         var pageTitle = "";
         if (pageTitleCount > 0) {
@@ -28,37 +31,73 @@ function displayNotificationCount() {
     });
 }
 
-function setAlertCount(elementid, alertNumber){
+function setAlertCount(elementid, alertNumber) {
     var alertcount = Number(alertNumber);
     var element = document.getElementById(elementid);
     if (alertcount > 0) {
         element.innerHTML = alertcount;
-        element.style.visibility="visible";
+        element.style.visibility = "visible";
     } else {
         element.innerHTML = "";
-        element.style.visibility="hidden";
+        element.style.visibility = "hidden";
     }
 
 }
 
-function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
+function populateNotificationTab(limit,nfilter,minrating){
+    let options='&limit='+limit+'&minrating='+minrating;
+    document.getElementById("notificationtypes").innerHTML =
+    `<a data-vavilon="notificationall" data-vavilon_title="notificationall" title="See all notifications" class="`+(nfilter==''?'filteron':'filteroff')+`" href="#notifications?nfilter=`+options+`">All</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationlikes" data-vavilon_title="notificationlikes" title="See only likes" class="`+(nfilter=='like'?'filteron':'filteroff')+`" href="#notifications?nfilter=like`+options+`">Likes</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationfollows" data-vavilon_title="notificationfollows" title="See only follows" class="`+(nfilter=='follow'?'filteron':'filteroff')+`" href="#notifications?nfilter=follow`+options+`">Follows</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationreplies" data-vavilon_title="notificationreplies" title="See only replies" class="`+(nfilter=='reply'?'filteron':'filteroff')+`" href="#notifications?nfilter=reply`+options+`">Replies</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationratings" data-vavilon_title="notificationratings" title="See only ratings" class="`+(nfilter=='rating'?'filteron':'filteroff')+`" href="#notifications?nfilter=rating`+options+`">Ratings</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationpages" data-vavilon_title="notificationpages" title="See only pages" class="`+(nfilter=='page'?'filteron':'filteroff')+`" href="#notifications?nfilter=page`+options+`">Pages</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+(nfilter=='repost'?'filteron':'filteroff')+`" href="#notifications?nfilter=repost`+options+`">Remembers</a>
+    <span class="separator"></span>
+    <a data-vavilon="notificationtips" data-vavilon_title="notificationremembers" title="See only tips" class="`+(nfilter=='tip'?'filteron':'filteroff')+`" href="#notifications?nfilter=tip`+options+`">Tips</a>
+    <span class="separator"></span>`;
+
+    if(notificationFilter.element){
+        notificationFilter.element.setRating(minrating);
+    }
+
+}
+
+function getAndPopulateNotifications(start, limit, page, qaddress, txid, nfilter, minrating) {
     //Clear existing content
     show(page);
 
-    
-    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
+    document.getElementById("notificationsbody").innerHTML = document.getElementById("loading").innerHTML;
+
+    populateNotificationTab(limit,nfilter,minrating);
+    
+    
     //Show navigation next/back buttons
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit;
+    var minRatingTransposed = transposeStarRating(minrating);
+    notificationFilter.type=nfilter;
+    notificationFilter.minrating=minrating;
+    
+
+    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
-        var navbuttons = getNavButtonsNewHTML('new', page, '', '', start, limit, page, qaddress, "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
+        //var navbuttons = getNavButtonsNewHTML(start, limit, page, qaddress, "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length > 0 ? data[0].unduplicatedlength : 0);
         //var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents = ``;
+
 
         for (var i = 0; i < data.length; i++) {
             try {
@@ -69,20 +108,23 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         }
         //console.log(contents);
         if (contents == "") {
-            contents =  getDivClassHTML("message",getSafeTranslation("nonotifications","No notifications yet"));
+            contents = getDivClassHTML("message", getSafeTranslation("nonotifications", "No notifications yet"));
         }
 
-        if (window.Notification.permission != 'granted') {
-            contents = allowNotificationButtonHTML()+ contents;
-        }else{
-            try{
-                //notification subscriptions seem to get cancelled a lot - keep requesting subscription if granted to ensure continuity
+
+        try {
+            if (window.Notification.permission != 'granted') {
+                contents = allowNotificationButtonHTML() + contents;
+            } else {
                 requestNotificationPermission();
-            }catch(err){
-                //possibly catching an exception generated by ios here
-                console.log(err);
             }
+        } catch (err) {
+            //possibly catching an exception generated by ios here
+            contents = allowNotificationButtonHTML() + contents;
+            updateStatus(err);
         }
+
+
 
         contents = getNotificationsTableHTML(contents, navbuttons);
 
@@ -90,29 +132,70 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid) {
         if (start == 0) {
             lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
             localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
-            setAlertCount("alertcount",0);
+            setAlertCount("alertcount", 0);
             document.title = siteTitle;
         }
 
 
-        document.getElementById(page).innerHTML = contents; //display the result in an HTML element
+        document.getElementById("notificationsbody").innerHTML = contents; //display the result in an HTML element
         addDynamicHTMLElements(data);
-        if(txid){
+        if (txid) {
             scrollToPosition('notification' + san(txid));
-        }else{
+        } else {
             scrollToPosition();
         }
-        
+
+
+        //Activate navigation filter star ratings
+        let theElement = document.getElementById('notificationsfilter');
+        let starSize = Number(theElement.dataset.ratingsize);
+
+        if (!notificationFilter.element) {
+            notificationFilter.element = raterJs({
+                starSize: starSize,
+                rating: notificationFilter.minrating,
+                element: theElement,
+                showToolTip: false,
+                rateCallback: function rateCallback(rating, done) {
+                    notificationFilter.element.setRating(rating);
+                    done();
+                    notificationFilter.minrating=rating;
+                    getAndPopulateNotifications(0, notificationFilter.limit, "notifications", pubkey, txid, notificationFilter.type, notificationFilter.minrating);
+                }
+            });
+        }
+
+
         listenForTwitFrameResizes();
         //window.scrollTo(0, scrollhistory[window.location.hash]);
+
+
+        //Put this at the end - it may be failing silently on iOS, so does least damage here
+        /*if (window.Notification.permission == 'granted') {
+            try {
+                //notification subscriptions seem to get cancelled a lot - keep requesting subscription if granted to ensure continuity
+                requestNotificationPermission();
+            } catch (err) {
+                //possibly catching an exception generated by ios here
+                console.log(err);
+            }
+        }*/
+
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
 }
 
+var notificationFilterRating;
+var notificationFilter=[];
+notificationFilter.type="";
+notificationFilter.minrating=0;
+notificationFilter.start=0;
+notificationFilter.limit=25;
+
 
 function userFromData(data, mainRatingID) {
-    return userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, true, data.originlastactive);
+    return userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, true, data.originlastactive, data.originsysrating);
 }
 
 
@@ -131,70 +214,78 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
         data.rreplies = data.rrepliesroot;
     }
 
+    let referencedPostHTML = "";
+
+    postRatingID = starindex + page + ds(data.raddress) + type;
+    referencedPostHTML = getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive, true, data.originsysrating, data.rsourcenetwork);
+    
+    if(type=="like" || (type=="repost" && data.rposttype==0)){
+        postRatingID = starindex + page + ds(data.address) + type;
+        referencedPostHTML = getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive, true, data.originsysrating, data.lsourcenetwork);
+    }
+
     switch (type) {
         case "message":
-            return notificationItemHTML(
+            /*return notificationItemHTML(
                 "message",
-                `img/Icons/notification/message.png`,
+                `img/icons/notification/message.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext','messagedyou','messaged you'),
                 timeSince(Number(data.time),true),
                 "",
                 data.txid, highlighted
-            );
+            );*/
             break;
         case "thread":
-            postRatingID = starindex + page + ds(data.raddress) + type;
+
             return notificationItemHTML(
                 "thread",
-                `img/Icons/notification/discussion.png`,
-                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext','discussion',`in a discussion you're in'`),
-                timeSince(Number(data.time),true),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive),
+                `img/icons/notification/discussion.png`,
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext', 'discussion', `in a discussion you're in'`),
+                timeSince(Number(data.time), true),
+                referencedPostHTML,
                 data.txid, highlighted
             );
             break;
         case "topic":
-            postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
                 "topic",
-                `img/Icons/notification/post.png`,
-                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + getSpanHTML('plaintext','inatopic',`in a tag you're subscribed to`),
-                timeSince(Number(data.time),true),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive),
+                `img/icons/notification/post.png`,
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + getSpanHTML('plaintext', 'inatopic', `in a tag you're subscribed to`),
+                timeSince(Number(data.time), true),
+                referencedPostHTML,
                 data.txid, highlighted
             );
             break;
         case "page":
-            postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
                 "page",
-                `img/Icons/notification/mentioned.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext','mentionedyou','mentioned you in a') + postlinkHTML(data.txid, `post`),
-                timeSince(Number(data.time),true),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive),
+                `img/icons/notification/mentioned.png`,
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'mentionedyou', 'mentioned you in a') + postlinkHTML(data.txid, `post`),
+                timeSince(Number(data.time), true),
+                referencedPostHTML,
                 data.txid, highlighted
             );
             break;
         case "reply":
-            postRatingID = starindex + page + ds(data.raddress) + type;
             return notificationItemHTML(
                 "reply",
-                `img/Icons/notification/reply.png`,
-                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext','toyour','to your') + postlinkHTML(data.rretxid, "post"),
-                timeSince(Number(data.time),true),
-                getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive),
+                `img/icons/notification/reply.png`,
+                userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext', 'toyour', 'to your') + postlinkHTML(data.rretxid, "post"),
+                timeSince(Number(data.time), true),
+                referencedPostHTML,
                 data.txid, highlighted
             );
             break;
         case "rating":
             var theRating = 0;
-            if (data.rating != null && data.rating != "") { theRating = (Number(data.rating) / 64) + 1; }
-            theRating = Math.round(theRating * 10) / 10;
+            if (data.rating) { 
+                theRating = outOfFive(data.rating); 
+            }
             return notificationItemHTML(
                 "rating",
-                `img/Icons/notification/star.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext','ratedyou','rated you as') + theRating + getSpanHTML('plaintext','starscommenting','stars, commenting ...') + getSpanClassHTML("plaintext",escapeHTML(data.reason)),
-                timeSince(Number(data.time),true),
+                `img/icons/notification/star.png`,
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'ratedyou', 'rated you as') + theRating + getSpanHTML('plaintext', 'starscommenting', 'stars, commenting ...') + getSpanClassHTML("plaintext", escapeHTML(data.reason)),
+                timeSince(Number(data.time), true),
                 "",
                 data.txid, highlighted
             );
@@ -202,9 +293,9 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
         case "follow":
             return notificationItemHTML(
                 "follow",
-                `img/Icons/notification/follow.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext','followedyou','followed you'),
-                timeSince(Number(data.time),true),
+                `img/icons/notification/follow.png`,
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'followedyou', 'followed you'),
+                timeSince(Number(data.time), true),
                 "",
                 data.txid, highlighted
             );
@@ -214,24 +305,30 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 //Server returns empty likes sometimes, probably if a like is superceeded by another like
                 return "";
             }
-            postRatingID = starindex + page + ds(data.address) + type;
+            var postHTML = "";
+            var messageType = postlinkHTML(data.likeretxid, "remember");
+            if (data.lmessage) {
+                messageType = postlinkHTML(data.likeretxid, "post");
+                //This is a like of a post
+                postHTML = referencedPostHTML;
+            }
             return notificationItemHTML(
                 "like",
-                `img/Icons/notification/liked.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext','likedyour','liked your') + postlinkHTML(data.likeretxid, "post") + getSpanClassHTML("plaintext",(Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : "")),
-                timeSince(Number(data.time),true),
-                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive),
+                `img/icons/notification/liked.png`,
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'likedyour', 'liked your') + messageType + getSpanClassHTML("plaintext", (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : "")),
+                timeSince(Number(data.time), true),
+                postHTML,
                 data.txid, highlighted
             );
             break;
         case "repost":
-            postRatingID = starindex + page + ds(data.address) + type;
+
             return notificationItemHTML(
                 "repost",
-                `img/Icons/notification/repost.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext','rememberedyour','remembered your') + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
-                timeSince(Number(data.time),true),
-                getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive),
+                `img/icons/notification/repost.png`,
+                userFromData(data, mainRatingID) + ((data.rposttype==0)?getSpanHTML('plaintext', 'rememberedyour', 'remembered your'):getSpanHTML('plaintext', 'quoterememberedyour', 'quote remembered your')) + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
+                timeSince(Number(data.time), true),
+                referencedPostHTML,
                 data.txid, highlighted
             );
             break;

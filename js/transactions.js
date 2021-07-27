@@ -1,8 +1,15 @@
 "use strict";
 
 function checkForPrivKey() {
+    if(isBitCloutUser()){
+        return true;
+    }
+    return checkForNativeUser();
+}
+
+function checkForNativeUser() {
     if (privkey == "" && pubkey != "") {
-        alert(getSafeTranslation('readonlymode', "You may be logged in with a public key in read only mode. You must login with a private key to make this action."));
+        alert(getSafeTranslation('readonlymode2', "You may be logged in with a public key in read only mode. Try logging out and logging back in again."));
         return false;
     } else if (privkey == "") {
         alert(getSafeTranslation('mustlogin', "You must login to do this."));
@@ -10,13 +17,16 @@ function checkForPrivKey() {
     }
 
     if (tq.getBalance(pubkey) < 547) {
-        alert(getSafeTranslation('notenough', "You do not have enough satoshis to do this. You can click on your balance to refresh it."));
+        alert(getSafeTranslation('notenough2', "This is a Bitcoin Cash Action only and you do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
         return false;
     }
 
     return true;
 }
 
+function checkForNativeUserAndHasBalance(){
+    return (privkey && tq.getBalance(pubkey) > 546);
+}
 
 //var waitForTransactionToComplete = false;
 
@@ -25,30 +35,31 @@ function sendTransaction(tx) {
     tq.queueTransaction(tx);
 }
 
-function repost(txid, message) {
+function repost(txid, privkey) {
 
     //Repost memo 	0x6d0b 	txhash(32), message(184)
 
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     var tx = {
         data: ["0x6d0b", "0x" + reversetx],
         cash: { key: privkey }
     }
 
+    /*
     if (message != null && message != '') {
         tx = {
             data: ["0x6d0b", "0x" + reversetx, message],
             cash: { key: privkey }
         }
-    }
+    }*/
 
     updateStatus(getSafeTranslation('remembering', "Remembering"));
     tq.queueTransaction(tx);
 }
 
 function setPic() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     document.getElementById('settingspicbutton').disabled = true;
     document.getElementById('settingspic').disabled = true;
@@ -70,7 +81,7 @@ function setPic() {
 
 
 function setName() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
 
     document.getElementById('settingsnametextbutton').disabled = true;
@@ -138,25 +149,63 @@ async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, 
 }
 
 
-function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandumstatus, memorandumpostcompleted) {
+function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandumstatus, memorandumpostcompleted, quotetxid) {
+
+    let postTitleHex = new Buffer(posttext).toString('hex');
+    let replyHex = new Buffer(postbody).toString('hex');
+
+    var maxPostLength=368;
+    if(topic){
+        maxPostLength=maxPostLength-4-topic.toString('hex').length;
+    }
+    if(quotetxid){
+        var reversetx = quotetxid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
+        maxPostLength=maxPostLength-4-reversetx.toString('hex').length;
+    }
+
+    //If the title is too long, put the excess in the reply. todo - find a natural breakpoint, see sendreplyraw for code
+    if (postTitleHex.length > maxPostLength) {
+        replyHex=postTitleHex.substr(maxPostLength)+replyHex;
+        postTitleHex=postTitleHex.substr(0,maxPostLength);
+    }
 
     var tx = {
-        data: ["0x6d02", posttext],
+        data: ["0x6d02", "0x" + postTitleHex],
         cash: { key: privkey }
     }
 
-    if (topic != "") {
+    if (topic) {
         tx = {
-            data: ["0x6d0c", topic, posttext],
+            data: ["0x6d0c", topic, "0x" + postTitleHex],
             cash: { key: privkey }
         }
     }
 
-    const replyHex = new Buffer(postbody).toString('hex');
+    if(quotetxid){
+        
+        tx = {
+            data: ["0x6d0b", "0x" + reversetx, "0x" + postTitleHex],
+            cash: { key: privkey }
+        }
+        if (topic) {
+            tx = {
+                data: ["0x6d0f", "0x" + reversetx, topic, "0x" + postTitleHex],
+                cash: { key: privkey }
+            }
+        }
+        updateStatus(getSafeTranslation('quoting', "Quoting"));
+    }
 
-    tq.queueTransaction(tx, function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); }, null);
+
+    let finishFunction=memorandumpostcompleted;
+    if(replyHex){
+        finishFunction=function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); };
+    }
+    
+    tq.queueTransaction(tx, finishFunction, null);
 }
 
+/*
 function quotepostRaw(posttext, privkey, topic, newpoststatus, memocompleted, txid) {
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
@@ -175,9 +224,9 @@ function quotepostRaw(posttext, privkey, topic, newpoststatus, memocompleted, tx
     updateStatus(getSafeTranslation('quoting', "Quoting"));
 
     tq.queueTransaction(tx, memocompleted, null);
-}
+}*/
 
-
+/*
 function postRaw(posttext, privkey, topic, newpoststatus, memocompleted, txid) {
 
     var tx = {
@@ -193,8 +242,8 @@ function postRaw(posttext, privkey, topic, newpoststatus, memocompleted, txid) {
     }
 
     tq.queueTransaction(tx, memocompleted, null);
-}
-
+}*/
+/*
 function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) {
 
     const tx = {
@@ -203,7 +252,7 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) 
     }
     updateStatus(getSafeTranslation('sendinggeotag', "Sending Geotagged Post"));
     tq.queueTransaction(tx, geocompleted, null);
-}
+}*/
 
 
 
@@ -278,9 +327,7 @@ function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
     tq.queueTransaction(tx, successFunction, null);
 }
 
-function sendLike(txid) {
-    if (!checkForPrivKey()) return false;
-
+function sendLike(txid,privkey) {
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6d04", "0x" + reversetx],
@@ -291,7 +338,7 @@ function sendLike(txid) {
 }
 
 function setProfile() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
 
     document.getElementById('settingsprofiletextbutton').disabled = true;
@@ -306,9 +353,9 @@ function setProfile() {
 }
 
 
-function sub(topicHOSTILE) {
+function subTransaction(topicHOSTILE) {
 
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -321,8 +368,8 @@ function sub(topicHOSTILE) {
     tq.queueTransaction(tx);
 }
 
-function unsub(topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
+function unsubTransaction(topicHOSTILE) {
+    if (!checkForNativeUser()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -336,8 +383,7 @@ function unsub(topicHOSTILE) {
 }
 
 function addressTransaction(removeElementID, qaddress, actionCode, statusMessage) {
-    if (!checkForPrivKey()) return false;
-
+    
     //document.getElementById(removeElementID).style.display = "none";
     var addressraw = getLegacyToHash160(qaddress);
     const tx = {
@@ -348,21 +394,69 @@ function addressTransaction(removeElementID, qaddress, actionCode, statusMessage
     tq.queueTransaction(tx);
 }
 
-function follow(qaddress) {
-    addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
+function follow(qaddress,targetpublickey) {
+    if (!checkForPrivKey()) return false;
+    if(checkForNativeUserAndHasBalance()){
+        addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
+    }
+    if(isBitCloutUser()){
+        sendBitCloutFollow(targetpublickey);
+    }
 }
 
-function unfollow(qaddress) {
-    addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
+function unfollow(qaddress,targetpublickey) {
+    if (!checkForPrivKey()) return false;
+    if(checkForNativeUserAndHasBalance()){
+        addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
+    }
+    if(isBitCloutUser()){
+        sendBitCloutUnFollow(targetpublickey);
+    }
 }
 
-function mute(qaddress) {
-    addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
+function mute(qaddress,targetpublickey) {
+    if (!checkForPrivKey()) return false;
+    if(checkForNativeUserAndHasBalance()){
+        addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
+    }
+    if(isBitCloutUser()){
+        sendBitCloutMute(targetpublickey);
+    }
 }
 
-function unmute(qaddress) {
-    addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
+function unmute(qaddress,targetpublickey) {
+    if (!checkForPrivKey()) return false;
+    if(checkForNativeUserAndHasBalance()){
+        addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
+    }
+    if(isBitCloutUser()){
+        sendBitCloutUnMute(targetpublickey);
+    }
 }
+
+function sub(topicHOSTILE) {
+    if (!checkForPrivKey()) return false;
+    if(checkForNativeUserAndHasBalance()){
+        subTransaction(topicHOSTILE);
+    }
+    if(isBitCloutUser()){
+        sendBitCloutSub(topicHOSTILE);
+    }
+}
+
+function unsub(topicHOSTILE) {
+    if (!checkForPrivKey()) return false;
+    if(checkForNativeUserAndHasBalance()){
+        unsubTransaction(topicHOSTILE);
+    }
+    if(isBitCloutUser()){
+        sendBitCloutUnSub(topicHOSTILE);
+    }
+}
+
+
+
+
 
 function sendDislike(txid) {
     txidTransaction(txid, "0x6db4", getSafeTranslation('sendingdislike', "Sending Dislike"));
@@ -377,7 +471,7 @@ function sendSendUnhidePost(txid) {
 }
 
 function txidTransaction(txid, actionCode, statusMessage) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
@@ -390,7 +484,7 @@ function txidTransaction(txid, actionCode, statusMessage) {
 }
 
 function rateUser(qaddress, rating, ratingcomment) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
     if (ratingcomment === undefined) {
         ratingcomment = "";
     }
@@ -425,7 +519,7 @@ function unhideuser(qaddress, topicHOSTILE, elementid) {
 
 
 function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMessage, topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForNativeUser()) return false;
 
     document.getElementById(removeElementID).style.display = "none";
     var addressraw = getLegacyToHash160(qaddress);

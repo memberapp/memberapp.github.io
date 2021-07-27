@@ -1,9 +1,9 @@
 
 "use strict";
 
-//Preferable to grab this from sw.js, but don't know how.
+//Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = "6.0.4";
+var version = "6.7.0";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -13,11 +13,14 @@ var privateKeyBuf;
 
 var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
+var bitcloutaddress = ""; //Bitclout address
+
 let tq = new TransactionQueue(updateStatus);
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var bitboxSdk = null;
+var cytoscape = null;
 //var twitterEmbeds=new Array();
-var profilepic="";
+var profilepic = "";
 
 
 var localStorageSafe = null;
@@ -68,13 +71,13 @@ function init() {
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
     document.getElementById('header').innerHTML = headerHTML;
- 
+
     document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
-    document.getElementById('pagetitle').innerHTML = pageTitleHTML;    
+    document.getElementById('pagetitle').innerHTML = pageTitleHTML;
     document.getElementById('majornavbuttons').innerHTML = majorNavButtonsHTML;
     document.getElementById('usersearch').innerHTML = userSearchHTML;
 
-    
+
     document.getElementById('footer').innerHTML = footerHTML;
     document.getElementById('version').innerHTML = version;
     //setLang((navigator.language || navigator.userLanguage));
@@ -94,6 +97,8 @@ function init() {
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
+    getBitCloutLoginFromLocalStorage();
+    
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 
     if (loginmnemonic != "null" && loginmnemonic != null && loginmnemonic != "") {
@@ -134,7 +139,7 @@ function trylogin(loginkey) {
         loadBigLibs();
         return;
     }
-    getAndPopulateTopicList(false);
+    //getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters();
     //make sure these get loaded
     setTimeout(loadBigLibs, 10000);
@@ -149,9 +154,12 @@ async function loadBigLibs() {
     if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
     if (!L) loadScript("js/lib/leaflet/leaflet.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
+    if (!window.elliptic) { loadScript("js/lib/elliptic.min.js");}
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     if (!bcdecrypt) loadScript("js/lib/bcdecrypt.js");
+    if (!cytoscape) loadScript("js/lib/cytoscape.min.js");
     
+
 }
 
 
@@ -197,38 +205,47 @@ async function login(loginkey) {
         }
 
 
-        if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
-
-            let ecpair = new bitboxSdk.ECPair().fromWIF(loginkey);
-            publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
-
-            privkey = loginkey;
-            document.getElementById('loginkey').value = "";
-
-        } else if (loginkey.startsWith("5")) {
-            document.getElementById('loginkey').value = "";
-            alert(getSafeTranslation('uncompressed', "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')"));
-            return;
-        } else if (loginkey.startsWith("BC1")) {
-            //var bcpublicKey = decode(loginkey).toString('hex').substr(6, 66);
-            var bcpublicKey = bs58decode(loginkey).slice(3,36);
-            //.toString('hex').substr(6, 66);
-            var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
-            publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
-
-            //var bcpubkey = Buffer.from(bcpublicKey, 'hex');
-            //var thing = bitcoinJs.ECPair.fromPublicKey(bcpubkey).publicKey;
-            //publicaddress = bitcoinJs.payments.p2pkh({ pubkey: thing }).address;
-        } else if (loginkey.startsWith("q")) {
-            publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
-        } else if (loginkey.startsWith("b")) {
-            publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
-        } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
-            if (new bitboxSdk.Address().isLegacyAddress(loginkey)) {
-                publicaddress = loginkey;
+        try {
+            if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
+                let ecpair = new bitboxSdk.ECPair().fromWIF(loginkey);
+                publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+                privkey = loginkey;
+                document.getElementById('loginkey').value = "";
+            } else if (loginkey.startsWith("BC1")) {
+                var preslice = window.bs58check.decode(loginkey);
+                var bcpublicKey = preslice.slice(3);
+                var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
+                publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+            } else if (loginkey.startsWith("q")) {
+                publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
+            } else if (loginkey.startsWith("b")) {
+                publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
+            } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
+                if (new bitboxSdk.Address().isLegacyAddress(loginkey)) {
+                    publicaddress = loginkey;
+                }
+            } else {
+                throw Error('No login key recognized');
             }
-        } else {
-            alert(getSafeTranslation('keynotrecognized', "Key not recognized, use a valid 12 word BIP39 seed phrase, or a compressed WIF (starts with 'L' or 'K')"));
+        } catch (err) {
+            if (loginkey.length < 20) {
+                var theURL = dropdowns.contentserver + '?action=usersearch&searchterm=' + encodeURIComponent(loginkey);
+                getJSON(theURL).then(function (data) {
+                    if (data && data.length > 0) {
+                        var qaddress = data[0].address;
+                        trylogin(qaddress);
+                        return;
+                    } else {
+                        alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
+                        return;
+                    }
+                }, function (status) { //error detection....
+                    alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
+                });
+            } else {
+                alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
+            }
+
             return;
         }
 
@@ -242,14 +259,15 @@ async function login(loginkey) {
             pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
             privkeyhex = ecpair.d.toHex();
 
-
-
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
+            await checkIfBitcloutUser(pubkeyhex);
+            //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
         }
 
+        
 
     }
 
@@ -262,6 +280,10 @@ async function login(loginkey) {
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
 
     document.getElementById('loggedin').style.display = "flex";
+    document.getElementById('profilebutton').style.display = "flex";
+    document.getElementById('walletbutton').style.display = "flex";
+    document.getElementById('logoutbutton').style.display = "flex";
+
     document.getElementById('loggedout').style.display = "none";
     document.getElementById('newseedphrasedescription').style.display = "none";
     document.getElementById('newseedphrase').textContent = "";
@@ -272,7 +294,7 @@ async function login(loginkey) {
     getAndPopulateSettings();
 
     //Register public key with utxo server so that utxos can be cached    
-    getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
+    //getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
 
     tq.addUTXOPool(pubkey, qpubkey, localStorageSafe, "balance");
@@ -282,7 +304,7 @@ async function login(loginkey) {
     getLatestUSDrate();
 
     if (!privkey) {
-        tq.utxopools[pubkey].showwarning=false;
+        tq.utxopools[pubkey].showwarning = false;
         //document.getElementById('lowfundswarning').style.display = 'none';
         updateStatus(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
     }
@@ -299,8 +321,10 @@ async function login(loginkey) {
 function loadStyle() {
     //Set the saved style if available
     let style = localStorageGet(localStorageSafe, "style2");
-    if (style != undefined && style != null) {
+    if (style) {
         changeStyle(style, true);
+    }else{
+        changeStyle(theStyle, true);
     }
 }
 
@@ -331,12 +355,18 @@ function logout() {
     if (localStorageSafe != null) {
         localStorageSafe.clear();
     }
+
+    bitcloutlogout();
+
     privkey = "";
     pubkey = "";
     mnemonic = "";
     document.getElementById('loggedout').style.display = "flex";
     document.getElementById('loggedin').style.display = "none";
-    
+    document.getElementById('profilebutton').style.display = "none";
+    document.getElementById('walletbutton').style.display = "none";
+    document.getElementById('logoutbutton').style.display = "none";
+
 
     try {
         serviceWorkerLogout();
@@ -344,7 +374,7 @@ function logout() {
         console.log(err);
     }
 
-    show('loginbox');
+    location.href = "#login";
     //This clears any personal info that might be left in the html document.
     location.reload();
 
@@ -356,12 +386,12 @@ function changeStyle(newStyle, setStorage) {
         localStorageSet(localStorageSafe, "style2", newStyle);
     }
     var cssArray = newStyle.split(" ");
-    if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css"); }
-    else { document.getElementById("pagestyle").setAttribute("href", "css/feels.css"); }
-    if (cssArray[1]) { document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css"); }
-    else { document.getElementById("pagestyle2").setAttribute("href", "css/none.css"); }
-    if (cssArray[2]) { document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css"); }
-    else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css"); }
+    if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css?"+version); }
+    else { document.getElementById("pagestyle").setAttribute("href", "css/feels.css?"+version); }
+    if (cssArray[1]) { document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css?"+version); }
+    else { document.getElementById("pagestyle2").setAttribute("href", "css/none.css?"+version); }
+    if (cssArray[2]) { document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css?"+version); }
+    else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css?"+version); }
 }
 
 function setBodyStyle(newStyle) {

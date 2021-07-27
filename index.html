@@ -30,13 +30,13 @@
     <!--INSERTMETADATA-->
 
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/ http://localhost:3123/; media-src https://imgur.com https://i.imgur.com/; img-src 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ https://images.bitclout.com/ data: https://tile.openstreetmap.org/; frame-src 'self' https://lbry.tv/ https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
+        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ https://markets.api.bitcoin.com/live/bitcoin https://rest.bitcoin.com/v2/ https://memberjs.bchd.cash/ http://127.0.0.1:3123/ http://localhost:3123/; media-src https://imgur.com https://i.imgur.com/; img-src 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ https://images.bitclout.com/ data: https://tile.openstreetmap.org/; frame-src 'self' https://identity.bitclout.com/ https://lbry.tv/ https://www.youtube.com/  https://twitframe.com/ https://img.youtube.com/vi/;">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--  Progressive Web App Service Worker -->
     <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
-    <script src="pwa/pwa2.js"></script>
+    <script src="pwa/pwa2.js?6.7.0"></script>
 
     <!-- DNS-prefetch resource hints  -->
     <link rel="preconnect" href="https://memberjs.bchd.cash" />
@@ -68,9 +68,9 @@
     <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
     <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
 
-    <link id="pagestyle" rel="stylesheet" href="css/feels.css">
-    <link id="pagestyle2" rel="stylesheet" href="css/compact.css">
-    <link id="pagestyle3" rel="stylesheet" href="css/none.css">
+    <link id="pagestyle" rel="stylesheet" href="css/feels.css?6.7.0">
+    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?6.7.0">
+    <link id="pagestyle3" rel="stylesheet" href="css/none.css?6.7.0">
 
 </head>
 
@@ -79,6 +79,7 @@
         <!--INSERTCONTENT-->
     </div>
 
+    
     <!--  External Libraries -->
     <script src="js/lib/buffer.js"></script>
     <script src="js/lib/anchorme.min.js"></script>
@@ -93,36 +94,35 @@
     <script src="js/lib/purify.min.js"></script>
     <!-- https://github.com/dmester/jdenticon -->
     <script src="js/lib/jdenticon.min.js"></script>
-    <!-- https://unpkg.com/bs58@2.0.1/lib/bs58.js  -->
-    <script src="js/lib/bs58.js"></script>
 
     <!--  Member Minified Code. 
     <script src="js/lib/member.min.js"></script>-->
-
+    <script src="js/bitcloutlogin.js?6.7.0"></script>
+    
     <!--  Member Code. In separate files for development convenience -->
     <!--  Can be mininfied and amalgamated for releases -->
     <!--  Load Translations -->
     <script>var dictionary = [];</script>
-    <script src="locale/en.js"></script>
-    <script src="locale/es.js"></script>
-    <script src="locale/zh.js"></script>
-    <script src="locale/fil.js"></script>
-    <script src="config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/showposts.js"></script>
-    <script src="js/composition.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/navigation.js"></script>
-    <script src="js/transactions.js"></script>
-    <script src="js/transactionqueue.js"></script>
-    <script src='js/map.js'></script>
-    <script src='js/trustgraph.js'></script>
-    <script src="js/login.js"></script>
-    <script src="js/notifications.js"></script>
-    <script src="js/htmlquarantine.js"></script>
-    <script src="js/tools.js"></script>
-    <script src="js/templates.js.html"></script>
-    <script src="js/templatespost.js.html"></script>
+    <script src="locale/en.js?6.7.0"></script>
+    <script src="locale/es.js?6.7.0"></script>
+    <script src="locale/zh.js?6.7.0"></script>
+    <script src="locale/fil.js?6.7.0"></script>
+    <script src="config.js?6.7.0"></script>
+    <script src="js/utils.js?6.7.0"></script>
+    <script src="js/showposts.js?6.7.0"></script>
+    <script src="js/composition.js?6.7.0"></script>
+    <script src="js/settings.js?6.7.0"></script>
+    <script src="js/navigation.js?6.7.0"></script>
+    <script src="js/transactions.js?6.7.0"></script>
+    <script src="js/transactionqueue.js?6.7.0"></script>
+    <script src="js/map.js?6.7.0"></script>
+    <script src="js/trustgraph.js?6.7.0"></script>
+    <script src="js/login.js?6.7.0"></script>
+    <script src="js/notifications.js?6.7.0"></script>
+    <script src="js/htmlquarantine.js?6.7.0"></script>
+    <script src="js/tools.js?6.7.0"></script>
+    <script src="js/templates.js.html?6.7.0"></script>
+    <script src="js/templatespost.js.html?6.7.0"></script>
 
     <div id="map" style="width:100%; height:100%;display:none;z-index: 50;"></div>
     <input id="usdrate" type="number" style="display:none;">
@@ -131,8 +131,12 @@
     <footer id="footer"></footer>
     <div id="status"></div>
     <div id="tweet-container"></div>
+    <!--<iframe id="identity" frameborder="0" src="https://identity.bitclout.com/embed" style="height: 100vh; width: 100vw;"
+        [style.display]="requestingStorageAccess ? 'block' : 'none'"></iframe>-->
+    <div id="bitcloutframe"></div>
     <script>
-        init();    
+
+        init();
     </script>
 </body>
 

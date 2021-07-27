@@ -15,7 +15,7 @@ function timeSince(timestamp, compress) {
   }
   interval = Math.floor(seconds / 2592000);
   if (interval > 1) {
-    return (compress ? interval + getSafeTranslation("m", "m") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("monthsago", "months ago"));
+    return (compress ? interval + getSafeTranslation("mo", "mo") : " " + getSafeTranslation("hace", "") + interval + " " + getSafeTranslation("monthsago", "months ago"));
   }
   interval = Math.floor(seconds / 86400);
   if (interval > 1) {
@@ -47,16 +47,15 @@ var ordinal_suffix_of = function (i) {
   return i + "th";
 }
 
-var getJSON = function (url) {
+var getJSON = function (url, postparams) {
   //force a reload by appending time so no cached versions
   url += "&r=" + (new Date().getTime() % 100000);
-  updateStatus(getSafeTranslation('loading', "loading") + " " + url);
+  try{
+    updateStatus(getSafeTranslation('loading', "loading") + " " + url);
+  }catch(noworries){}
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     addListeners(xhr);
-    xhr.open('get', url, true);
-    xhr.responseType = 'json';
-
     xhr.onerror = function (e) {
       reject(xhr.status);
     };
@@ -69,7 +68,17 @@ var getJSON = function (url) {
         reject(xhr.status);
       }
     };
-    xhr.send();
+
+    xhr.responseType = 'json';
+    if(postparams){
+      xhr.open('post', url, true);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.send(postparams);
+    }else{
+      xhr.open('get', url, true);
+      xhr.send();
+    }
+
   });
 };
 
@@ -308,6 +317,7 @@ function detectMultipleIDS() {
   }
 }
 
+
 // Add a hook to make all links open a new window
 DOMPurify.addHook('afterSanitizeAttributes', function (node) {
   // set all elements owning target to target=_blank
@@ -327,6 +337,7 @@ DOMPurify.addHook('afterSanitizeAttributes', function (node) {
     node.setAttribute('xlink:show', 'new');
   }
 });
+
 
 //Twitter stuff, doesn't seem to be working
 /*
@@ -397,7 +408,7 @@ function templateReplace(templateString, obj, skipdebug) {
 }
 
 function loadScript(src) {
-  console.log("background loading " + src);
+  //console.log("background loading " + src);
   return new Promise(function (resolve, reject) {
     var s;
     s = document.createElement('script');
@@ -487,5 +498,66 @@ function setVisibleContentFinal(){
 window.addEventListener('scroll', function (e) {
     elementInViewport2(document.getElementsByClassName('post-list-li'),'post-list-item');
 });
+
+
+function copyToClipboard(text) {
+  if (window.clipboardData && window.clipboardData.setData) {
+      // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
+      return window.clipboardData.setData("Text", text);
+
+  }
+  else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
+      var textarea = document.createElement("textarea");
+      textarea.textContent = text;
+      textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+          updateStatus("Copied to clipboard.");
+          return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+      }
+      catch (ex) {
+          updateStatus("Copy to clipboard failed.");
+          console.warn("Copy to clipboard failed.", ex);
+          return false;
+      }
+      finally {
+          document.body.removeChild(textarea);
+      }
+  }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
+function outOfFive(theRating){
+  theRating = (Number(theRating) / 64) + 1;
+  theRating = Math.round(theRating * 10) / 10;
+  return theRating;
+}            
+
+function transposeStarRating(rating){
+  var transposed = 0;
+  switch (rating) {
+      case 1:
+          transposed = 1;
+          break;
+      case 2:
+          transposed = 64;
+          break;
+      case 3:
+          transposed = 128;
+          break;
+      case 4:
+          transposed = 192;
+          break;
+      case 5:
+          transposed = 255;
+          break;
+  }
+  return transposed;
+}
+
 
 

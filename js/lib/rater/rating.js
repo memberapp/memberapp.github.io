@@ -33,6 +33,11 @@ module.exports = function rater(options) {
   elem.classList.add("star-rating");
   var div = document.createElement("div");
   div.classList.add("star-value");
+
+  if(options.extraClass){
+    div.classList.add(options.extraClass);
+  }
+
   div.style.backgroundSize = starSize + "px";
   elem.appendChild(div);
   elem.style.width = starSize * stars + "px";

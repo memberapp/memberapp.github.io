@@ -57,30 +57,35 @@ function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
     });
 }
 
+function getPicURL(picurl, profilepicbase, qaddress) {
+    var pictype = '.jpg';
+    if (picurl && picurl.toLowerCase().endsWith('.png')) {
+        pictype = '.png';
+    }
+    return profilepicbase + san(qaddress) + `.128x128` + pictype;
+}
+
 async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
-    
+
     //Set the headerbar pic
     if (pre == "settings" && data && data[0]) {
         profilepic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(qaddress) + `"></svg>`;
-        var pictype = '.jpg';
-        if (data[0].picurl && data[0].picurl.toLowerCase().endsWith('.png')) {
-            pictype = '.png';
-        }
-        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="`+profilepicbase + san(qaddress) +`.128x128` + pictype + `">`;
-        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + profilepicbase + san(qaddress) + `.128x128` + pictype + `'/>`;       
-        document.getElementById('newpostprofilepic').innerHTML=profilepic;
-    }    
+        var picurl = getPicURL(data[0].picurl, profilepicbase, qaddress);
+        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
+        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
+        document.getElementById('newpostprofilepic').innerHTML = profilepic;
+    }
 
-    
 
-    if(qaddress){
-        if(!cashaddress){
+
+    if (qaddress) {
+        if (!cashaddress) {
             //On a member page, the cashaddress won't be available so we have to calculate
             if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
-            cashaddress=new bitboxSdk.Address().toCashAddress(qaddress);
+            cashaddress = new bitboxSdk.Address().toCashAddress(qaddress);
         }
     }
-    
+
     //Note, data may not contain any rows, for new or unknown users.
 
     var obj = {
@@ -94,6 +99,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         profile: "",
         pagingid: "",
         profilepiclargehtml: "",
+        publickey: "",
     };
 
     if (data && data[0]) {
@@ -103,7 +109,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.muting = Number(data[0].blocking);
         obj.handle = ds(data[0].name);
         obj.handlefunction = unicodeEscape(data[0].name);
-        obj.profile = ds(data[0].profile);
+        obj.profile = data[0].profile;
         obj.publickey = san(data[0].publickey);
         obj.pagingid = ds(data[0].pagingid);
         obj.picurl = ds(data[0].picurl);
@@ -111,33 +117,34 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
 
+        let theRatingRound = outOfFive(Number(data[0].sysrating));
+        obj.membrain = theRatingRound + "/5";
+
         //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
         //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
         //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
         document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
         //setPageTitleRaw("@"+data[0].pagingid);
-    
+
         //jdenticonname = data[0].name;
         //img/profilepics/`+san(address)+`128x128.jpg
     }
 
     if (data && (data.length < 1 || Number(data[0].isfollowing) == 0)) {
-        obj.followbuttonhtml = clickActionNamedHTML("follow", qaddress, "follow");
+        obj.followbuttonhtml = clickActionNamedHTML("follow", qaddress, "follow", obj.publickey);
     } else {
-        obj.followbuttonhtml = clickActionNamedHTML("unfollow", qaddress, "unfollow");
+        obj.followbuttonhtml = clickActionNamedHTML("unfollow", qaddress, "unfollow", obj.publickey);
     }
 
     if (data && (data.length < 1 || Number(data[0].isblocked) == 0)) {
-        obj.mutebuttonhtml = clickActionNamedHTML("mute", qaddress, "mute");
+        obj.mutebuttonhtml = clickActionNamedHTML("mute", qaddress, "mute", obj.publickey);
     } else {
-        obj.mutebuttonhtml = clickActionNamedHTML("unmute", qaddress, "unmute");
+        obj.mutebuttonhtml = clickActionNamedHTML("unmute", qaddress, "unmute", obj.publickey);
     }
 
 
     if (obj.picurl) {
         obj.profilepiclargehtml = getProfilePicLargeHTML(profilepicbase + san(qaddress) + `.640x640.jpg`);
-
-        
     }
 
     if (pre == "settings") {
@@ -145,11 +152,27 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
     }
 
+
+    if (data && data[0] && data[0].publickey) {
+        //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
+        var bcaddress = await pubkeyToBCaddress(data[0].publickey);
+        obj.bcaddress = bcaddress;
+    } else if (qaddress == pubkey && pubkeyhex) {
+        var bcaddress = await pubkeyToBCaddress(pubkeyhex);
+        obj.bcaddress = bcaddress;
+    }
+
+
+
+    if (pre == "member") {
+        obj.profile = getSafeInteractiveHTML(obj.profile, 'profile', false);
+    }
+
     document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);
 
 
     if (pre == "settings") {
-        
+
         updateSettings();
         document.getElementById(pre + 'nametextbutton').disabled = true;
         document.getElementById(pre + 'profiletextbutton').disabled = true;
@@ -159,9 +182,9 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
             document.getElementById(pre + 'nametext').disabled = true;
         }
 
-        if(qaddress){
+        if (qaddress) {
             document.getElementById('settingsloggedin').style.display = "block";
-        }else{
+        } else {
             document.getElementById('settingsloggedin').style.display = "none";
         }
 
@@ -182,40 +205,28 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         if (data.length > 0) {
             ratingScore = Number(data[0].rating);
         }
-        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(qaddress, ratingScore);
+        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(qaddress, ratingScore, data[0].pagingid);
 
         var theElement = document.getElementById(`memberrating` + qaddress);
         var starRating1 = addSingleStarsRating(theElement);
-        setPageTitleRaw("@"+data[0].pagingid);
-    
+        setPageTitleRaw("@" + data[0].pagingid);
+
     }
 
-    var obj2 = {
-        //These must all be HTML safe.
-        /*highlighted: (highlighted ? 'highlighted ' : ''),
-        type: san(notificationtype),
-        txid: san(txid),
-        title: mainbodyHTML,
-        age: subtextHTML,
-        post: addendumHTML,
-        iconHTML: iconHTML*/
-        address:qaddress,
-        profileclass:'timefilteron',
-        reputationclass:'timefilteroff',
-        postsclass:'timefilteroff'
-    }
-
-    document.getElementById('membertabs').innerHTML= templateReplace(membertabsHTML, obj2);
-    
     addDynamicHTMLElements();
 }
 
-function populateTools(){
+async function populateTools() {
+
+    //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
+    var bcaddress = await pubkeyToBCaddress(pubkeyhex);
+
     var obj = {
         address: pubkey,
-        cashaddress: qpubkey
+        cashaddress: qpubkey,
+        bcaddress: bcaddress
     };
-    
+
     obj.privatekey = privkey;
     obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
 
@@ -229,6 +240,15 @@ function populateTools(){
 function getAndPopulateMember(qaddress) {
     setPageTitleRaw(". . .");
     getDataCommonToSettingsAndMember(qaddress, null, "member");
+    var obj2 = {
+        //These must all be HTML safe.
+        address: qaddress,
+        profileclass: 'filteron',
+        reputationclass: 'filteroff',
+        postsclass: 'filteroff'
+    }
+
+    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
 }
 
 function getAndPopulateSettings() {
@@ -288,9 +308,9 @@ function updateSettings() {
             }
         }
 
-        if (key == "languageselector"){
-            if(dictionary[theSetting]){
-                dictionary.live=dictionary[theSetting];
+        if (key == "languageselector") {
+            if (dictionary[theSetting]) {
+                dictionary.live = dictionary[theSetting];
             }
         }
     }
@@ -303,8 +323,8 @@ function updateSettings() {
         dropdowns.txbroadcastserver = "https://member.cash/v2/";
     }
 
-    document.getElementById("debuginfo").value=debuginfo;
-  
+    document.getElementById("debuginfo").value = debuginfo;
+
 }
 
 function updateSettingsCheckbox(settingsName) {
@@ -323,9 +343,9 @@ function updateSettingsDropdown(settingsName) {
     if (settingsName == "utxoserver") {
         refreshPool();
     }
-    if (settingsName == "languageselector"){
-        if(dictionary[dropdowns[settingsName]]){
-            dictionary.live=dictionary[dropdowns[settingsName]];
+    if (settingsName == "languageselector") {
+        if (dictionary[dropdowns[settingsName]]) {
+            dictionary.live = dictionary[dropdowns[settingsName]];
             //location.reload();
             translatePage();
         }
@@ -368,32 +388,13 @@ function showQRCode(spanid, size) {
 
 
 
-function rateCallbackAction(rating, that, ratingtext) {
+function rateCallbackAction(rating, ratingtext, qaddress) {
     if (ratingtext === undefined) {
         ratingtext = "";
     }
-    var qaddress = that.theAddress;
-    var transposed = 0;
-    switch (rating) {
-        case 1:
-            transposed = 1;
-            break;
-        case 2:
-            transposed = 64;
-            break;
-        case 3:
-            transposed = 128;
-            break;
-        case 4:
-            transposed = 192;
-            break;
-        case 5:
-            transposed = 255;
-            break;
-    }
-    if (rateUser(qaddress, transposed, ratingtext)) {
-        that.setRating(rating);
-    }
+    //var qaddress = that.theAddress;
+    var transposed = transposeStarRating(rating);
+    rateUser(qaddress, transposed, ratingtext);
 }
 
 function updatemutedwords() {

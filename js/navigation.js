@@ -62,7 +62,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("memberposts")) {
         showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
-        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")));
+        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")), sanitizeAlphanumeric(getParameterByName("nfilter")),Number(getParameterByName("minrating")));
     } else if (action.startsWith("profile")) {
         showMember(sanitizeAlphanumeric(pubkey, ''));
     } else if (action.startsWith("member")) {
@@ -78,11 +78,11 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("rep")) {
         showReputation(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("posts")) {
-        showPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'posts');
     } else if (action.startsWith("feed")) {
-        showFeed(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'posts');
     } else if (action.startsWith("comments")) {
-        showComments(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("type")));
+        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'replies');
     } else if (action.startsWith("trustgraph")) {
         showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
     } else if (action.startsWith("topiclist")) {
@@ -114,10 +114,10 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
         } else {
-            showPosts(0, numbers.results, 'all');
+            showPFC(0, numbers.results, 'posts');
         }
     } else {
-        showPosts(0, numbers.results, 'all');
+        showFirehose();
     }
 }
 
@@ -135,7 +135,7 @@ function hideAll() {
     document.getElementById('comments').innerHTML = "";
     document.getElementById('thread').innerHTML = "";
     document.getElementById('memberposts').innerHTML = "";
-    document.getElementById('notifications').innerHTML = "";
+    document.getElementById('notificationsbody').innerHTML = "";
 
     document.getElementById('settingsanchor').style.display = "none";
     document.getElementById('loginbox').style.display = "none";
@@ -149,6 +149,8 @@ function hideAll() {
     document.getElementById('newpost').style.display = "none";
     document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
+    document.getElementById('footer').style.display = "block";//show the footer - it may have been hidden when the map was displayed
+    
     document.getElementById('trustgraph').style.display = "none";
     document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
@@ -192,6 +194,7 @@ function showLogin() {
 
 function showMap(geohash, posttrxid) {
     show("map");
+    document.getElementById('footer').style.display = "none";
     setPageTitleFromID("VV0101");
     getAndPopulateMap(geohash, posttrxid);
     document.getElementById('map').style.display = "block";
@@ -208,17 +211,27 @@ function showReputation(qaddress) {
     getAndPopulateRatings(qaddress);
     getAndPopulateCommunityRatings(qaddress);
 
-    if (pubkey) {
+    //if (pubkey) {
         getAndPopulateTrustGraph(pubkey, qaddress);
-    } else {
-        document.getElementById('trustgraph').style.display = "none";
-    }
+    //} else {
+    //    document.getElementById('trustgraph').style.display = "none";
+    //}
 
     show('community');
     document.getElementById('memberheader').style.display = "block";
     document.getElementById('anchorratings').style.display = "block";
     document.getElementById('trustgraph').style.display = "block";
     
+    var obj2 = {
+        //These must all be HTML safe.
+        address: qaddress,
+        profileclass: 'filteroff',
+        reputationclass: 'filteron',
+        postsclass: 'filteroff'
+    }
+
+    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+
 }
 
 function showNewPost(txid) {
@@ -226,20 +239,17 @@ function showNewPost(txid) {
     setPageTitleFromID("VV0096");
     document.getElementById('memorandumpreview').innerHTML = "";
     let topicNameHOSTILE = getCurrentTopicHOSTILE();
-    //document.getElementById('memotopic').value = topicNameHOSTILE;
-    document.getElementById('memorandumtopic').value = topicNameHOSTILE;
-    if (topicNameHOSTILE != "") {
+    //document.getElementById('memorandumtopic').value = topicNameHOSTILE;
+    /*if (topicNameHOSTILE != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
         document.getElementById('memorandumtopicbutton').style.display = "none";
     } else {
         document.getElementById('memorandumtopicarea').style.display = "none";
         document.getElementById('memorandumtopicbutton').style.display = "block";
-    }
+    }*/
     //Do calculations on maxlengths for topics and titles
-    topictitleChanged("memorandum");
-    //topictitleChanged("memo");
-    //document.getElementById('newpostbutton').style.display = "block";
-
+    //topictitleChanged();
+    
     if (txid) {
         getAndPopulateQuoteBox(txid);
         
@@ -263,14 +273,18 @@ function showNewPost(txid) {
 }
 
 
-function showNotifications(start, limit, qaddress, txid) {
+function showNotifications(start, limit, qaddress, txid, nfilter, minrating) {
 
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
-        showPosts(0, numbers.results, 'all');
+        showPFC(0, numbers.results, 'posts');
         return;
     }
     setPageTitleFromID("VV0095");
-    getAndPopulateNotifications(start, limit, "notifications", pubkey, txid);
+
+    if(!minrating){
+        minrating=2;
+    }
+    getAndPopulateNotifications(start, limit, "notifications", pubkey, txid, nfilter, minrating);
 
 }
 
@@ -342,18 +356,7 @@ function showMessages(messagetype, start, limit) {
     getAndPopulateMessages(messagetype, start, limit);
 }
 
-//These three should be refactored away
-function showFeed(start, limit, type) {
-    showPFC(start, limit, 'posts', pubkey, type);
-}
-function showPosts(start, limit, type) {
-    showPFC(start, limit, 'posts', pubkey, type);
-}
-function showComments(start, limit, type) {
-    showPFC(start, limit, 'replies', pubkey, type);
-}
-
-function showPFC(start, limit, page, pubkey, type) {
+function showPFC(start, limit, page) {
     //getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
     showPostsNew('hot', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
 }
@@ -365,7 +368,7 @@ function showMyFeed() {
 
 function showFirehose() {
     setTopic('');
-    getAndPopulateNew('hot', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
+    getAndPopulateNew('topd', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
 }
 
 function showMyTags() {
@@ -479,7 +482,7 @@ function setTopic(topicNameHOSTILE) {
 function showThread(roottxid, txid, articleStyle) {
     getAndPopulateThread(roottxid, txid, 'thread');
     if (articleStyle == "article") {
-        switchToArticleMode();
+        switchToArticleMode(roottxid);
     }
 }
 

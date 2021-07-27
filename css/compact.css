@@ -1,5 +1,6 @@
 body {
   background: #fff;
+  word-break: break-word;
 }
 
 .quotepost {
@@ -49,6 +50,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5em;
+  word-break:keep-all;
 }
 
 /* Style The Dropdown Button */
@@ -110,11 +112,6 @@ body {
 .dropdown-content a:hover {
   background-color: #f1f1f1;
 }
-
-/* Show the dropdown menu on hover  */
-/* .dropdown:hover .dropdown-content {
-  display: block;
-} */
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
@@ -372,7 +369,7 @@ Use important, because we always want profile card pics to be this size*/
 /*----------------------------------------------*/
 
 /*No margin on age*/
-.age {
+.plaintext, .age {
   margin-right: 0rem;
 }
 /*Remove border on posts*/
@@ -427,10 +424,6 @@ Use important, because we always want profile card pics to be this size*/
   padding: 2em 0.875rem;
   border: none;
 }
-/*  message send input */
-#messagesanchor .content #sendmessagecontainer #sendmessagebox{
-
-}
 /* send message hover effect */
 #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"],
 #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"] {
@@ -444,10 +437,7 @@ Use important, because we always want profile card pics to be this size*/
 .mainbodywrapper #posts .itemlist ol.posts {
   margin-top: 0px;
 }
-/* 
-#sendmessagecontainer{
-  min-height: 1px;
-} */
+
 .notificationitem .notificationminheight {
   position: relative;
 }
@@ -497,6 +487,7 @@ Use important, because we always want profile card pics to be this size*/
 .scoreexpanded .closebutton a:hover,
  .remembersexpanded .closebutton a:hover{
    background-color: #61aff0;
+   color: #fff !important;
  }
 .profilepreview {
   animation: postFadein 0.5s;
@@ -518,7 +509,7 @@ Use important, because we always want profile card pics to be this size*/
   margin-left: 0;
 }
 
-/* new post,reply or comment user replyprofilepic */
+/* new post, reply or comment user replyprofilepic */
 .comment .replyprofilepic,
 .post-right-contents .replyprofilepic {
   position: relative;
@@ -603,10 +594,10 @@ img {
 .usersearchnav {
   width: 15em;
 }
-/* New Header */
+/* New Header 
 #header {
   display: none;
-}
+}*/
 /* Action Icons styles */
 .tipicon,
 .remembersicon,
@@ -679,9 +670,6 @@ img {
 .iconcount {
   position: unset !important;
 }
-
-/* work on 2nd point popover */
-
 /* profile-card box-shadow arround it */
 .profilepreview {
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 5px rgb(0 0 0 / 10%) !important;
@@ -695,7 +683,6 @@ img {
 /* profile-card content text line height and breaking long words */
 .profilepreview .profile-text {
   line-height: 1.5 !important;
-  word-break: break-word !important;
 }
 /* profile-card ratings position  */
 .starrating {
@@ -734,6 +721,7 @@ img {
   top: 0;
   background: #fff;
   padding: 0 10px;
+  display: inherit;
 }
 /* newheader header groups fixed width */
 .newheader .headercentergroup,
@@ -786,7 +774,7 @@ img {
   width: 3rem;
   object-fit: cover;
   border-radius: 100%;
-  max-width: fit-content;
+  max-width: 3rem;
 }
 .mainbodywrapper .mainbody {
   margin-top: 90px;
@@ -798,12 +786,9 @@ img {
   width: 100%;
   height: 100%;
   padding: 0 5px;
+  word-break: normal;
 }
-/* .newheader .majornavbuttonsdiv:hover{
-  background-color: #ddeefc;
-} */
 .newheader .majornavbuttonsdiv #loggedin {
-  /* grid-gap: 10px; */
   height: 100%;
   justify-content: space-evenly;
   align-items: center;
@@ -882,14 +867,6 @@ img {
   white-space: nowrap;
 }
 .newheader .searchwrapper input {
-  /* border: none;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.12);
-  border-radius: 0;
-  color: #aaa;
-  outline: none;
-  box-shadow: none;
-  padding-right: 2em; */
-
   border: 2px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
   color: #aaa;
@@ -1050,28 +1027,12 @@ a {
 
 .newheader .searchwrapper #usersearchnavresults::before {
   right: 130px;
-  /* left: 43px; */
 }
 
 .newheader #usersearchnavresults .loading {
   height: fit-content !important;
   min-height: 300px;
 }
-
-/* .newheader .alertcount{
-  min-width: 20px;
-  height: 20px;
-  background: #7e7ef9;
-  border-radius: 50%;
-  display: flex;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  font-size: 12px;
-  top: -9px;
-  left: -11px;
-} */
 .newheader .memberlogoimage {
   display: none;
 }
@@ -1084,33 +1045,36 @@ a {
 .newheader img {
   outline: none;
 }
-/* tabs styling */
 
 /* active tab */
-nav.timefilters,
-nav.contentfilters {
+.filters {
   position: relative;
   display: block;
   background-color: #f6f9ff;
   padding: 10px;
   border-radius: 40px;
   overflow: hidden;
+  word-break: normal;
+  display: inline-block;
+  margin-bottom: .5rem;
+
 }
 
-nav.timefilters a,
-nav.contentfilters a {
+.filters a {
   text-decoration: none;
   text-align: center;
   line-height: 1;
   text-align: center;
-  display: inline-block;
   padding: 10px;
-  width: 65px;
   box-sizing: border-box;
   z-index: 2;
+  padding: 3px 10px;
+  transition: all 0.3s ease;
+  max-width: 70px;
+  min-width: 55px;
 }
 
-.posts .timefilteron {
+.filteron {
   z-index: 1;
   background-color: #61aaff !important;
   border-radius: 36px;
@@ -1119,53 +1083,16 @@ nav.contentfilters a {
   color: #fff !important;
 }
 
-.posts .timefilters,
-.posts .contentfilters {
-  display: inline-block;
-  margin-bottom: 1.5rem;
-}
-.posts .timefilters a,
-.posts .contentfilters a {
-  padding: 9px 5px;
-  margin-left: 3px;
-  transition: all 0.3s ease;
-  max-width: 70px;
-  min-width: 55px;
-}
-.posts .timefilters a:hover,
-.posts .contentfilters a:hover {
+.filters a:hover {
   background-color: #61aaff !important;
   border-radius: 36px;
-  font-weight: 700;
+  /*font-weight: 700;*/
   color: #fff !important;
 }
-.posts .timefilters a:nth-child(1) {
-  margin-right: 4px;
-  margin-left: 0;
-}
-/* .posts .timefilters a ::before, 
-.posts .contentfilters a{
-  content: '';
-  position: absolute;
-  right: 0px;
-  width: 2px;
-  height: 100%;
-  background-color: #ddeefc;
-} */
-.posts .contentfilters {
+
+.filterssecondset {
   float: right;
 }
-/* .posts .timefilters a:hover {
-  background: #21b31b;
-  transform: scale(1.1);
-} */
-/* .posts .contentfilters a {
-  background: #2291eb;
-} */
-/* .posts .contentfilters a:hover {
-  background: #0377d6;
-  transform: scale(1.1);
-} */
 
 .post {
   transition: all 0.3s ease;
@@ -1351,6 +1278,7 @@ nav.contentfilters a {
 /* *********** POST follow button **************/
 .profilepreview .profile-actions .profilepreviewfollowbutton a {
   background: #61aff0;
+  color: #fff !important;
 }
 .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
   background: #2291eb;
@@ -1388,6 +1316,7 @@ nav.contentfilters a {
   padding: 10px;
   border-radius: 40px;
   background: linear-gradient(to right, #fff 12%, #f6f9ff 100%);
+  word-break: normal;
 }
 .memberheader .membertabs a {
   position: relative;
@@ -1403,7 +1332,7 @@ nav.contentfilters a {
   border-radius: 36px;
   max-width: 100px;
 }
-.memberheader .membertabs a.timefilteron {
+.memberheader .membertabs a.filteron {
   z-index: 1;
   background-color: #61aaff !important;
   border-radius: 36px;
@@ -1486,12 +1415,14 @@ nav.contentfilters a {
   right: 160px;
   padding: 0.3rem 1rem;
   margin: 0;
+  word-break: normal;
 }
 #memberanchor .content .memberstats .follow a,
 #memberanchor .content .memberstats .mute a {
   font-weight: 400;
   font-size: 1rem;
   border: none;
+  word-break: normal;
 }
 #memberanchor .content .memberstats .follow a {
   border: 1px solid #61aff0;
@@ -1555,7 +1486,7 @@ nav.contentfilters a {
   padding: 0.2rem;
   margin: 0;
 }
-#memberlegacyformatdiv span.qrcodeclick span {
+span.qrcodeclick span {
   display: none;
   color: #61aff0 !important;
 }
@@ -1571,10 +1502,7 @@ nav.contentfilters a {
 #memberprofilelinks {
   text-align: center;
 }
-#memberprofilelinks {
-  /* position: absolute; */
-  /* top: 386px; */
-}
+
 #memberprofilelinks label {
   display: none;
 }
@@ -1586,11 +1514,7 @@ nav.contentfilters a {
 #memberprofilelinks div a:hover {
   color: #fff !important;
 }
-/* .memberstats {
-    background: #ddeefc;
-    box-shadow: 0 13px 21px 6px #fafaf9;
-    border-radius: 10px;
-} */
+
 #memberanchor .content .memberstats .muters,
 #memberanchor .content .memberstats .muting {
   display: none;
@@ -1612,19 +1536,7 @@ nav.contentfilters a {
 #memberanchor .content .memberstats .muting {
   display: none;
 }
-#memberanchor .content .memberstats .following,
-#memberanchor .content .memberstats .followers {
-  position: absolute;
-  top: 20px;
-  margin: 0px;
-  padding: 0;
-}
-#memberanchor .content .memberstats .followers {
-  left: 340px;
-}
-#memberanchor .content .memberstats .following {
-  left: 265px;
-}
+
 label#memberblockexplorer {
   display: none;
 }
@@ -1654,6 +1566,7 @@ label#memberblockexplorer {
 #toolsanchor .content #walletbalance,
 #toolsanchor .content #walletaddress,
 #toolsanchor .content #walletlegacyaddress,
+#toolsanchor .content #walletbcaddress,
 #toolsanchor .content #walletsendfunds,
 #toolsanchor .content #walletprivatekey,
 #toolsanchor .content #walletblockexplorer {
@@ -1706,34 +1619,26 @@ label#memberblockexplorer {
 }
 #toolsanchor .content #walletaddress span,
 #toolsanchor .content #walletlegacyaddress span,
+#toolsanchor .content #walletbcaddress span,
 #toolsanchor .content #walletsendfunds p {
   margin-left: 15px;
 }
 #walletaddress,
 #walletlegacyaddress,
+#walletbcaddress,
 #walletprivatekey {
   position: relative;
 }
-#cashaddrformatdiv .qrcodeclick img,
-#legacyformatdiv .qrcodeclick img,
-#privatekeyformatdiv .qrcodeclick img {
+.qrcodeclick img {
   border: 1px solid #61aff0;
   cursor: pointer;
 }
-#cashaddrformatdiv .qrcodeclick,
-#legacyformatdiv .qrcodeclick {
-  position: absolute;
-  right: 10px;
-  top: 57px;
-}
-#privatekeyformatdiv .qrcodeclick {
+.qrcodeclick {
   position: absolute;
   right: 10px;
   top: 25px;
 }
-#cashaddrformatdiv .qrcodeclick span,
-#legacyformatdiv .qrcodeclick span,
-#privatekeyformatdiv .qrcodeclick span {
+.qrcodeclick span {
   display: none;
 }
 
@@ -1865,7 +1770,7 @@ label#memberblockexplorer {
   color: black;
   color: #fff !important;
 }
-#messagesanchor #messageschoice a.timefilteron {
+#messagesanchor #messageschoice a.filteron {
   z-index: 1;
   background-color: #61aaff !important;
   border-radius: 36px;
@@ -1873,20 +1778,6 @@ label#memberblockexplorer {
   color: black;
   color: #fff !important;
 }
-/* #messagesanchor .content #sendmessagecontainer input
- {   
-  border: 1px solid #61aff0;
-  border-radius: 45px;
- }
- #messagesanchor .content #sendmessagecontainer textarea{
-  border: 1px solid #61aff0;
-  border-radius: 10px;
- }
-
-#messagesanchor .content #sendmessagecontainer input:focus,
- #messagesanchor .content #sendmessagecontainer textarea:focus{
- box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
- } */
 /* POST ON MAP */
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar {
   width: 10px;
@@ -1914,6 +1805,16 @@ label#memberblockexplorer {
 }
 #newgeopost input#newpostgeobutton:hover {
   background: #2291eb !important;
+}
+
+/* some padding when there are no comments to display*/
+.nocommentsyet {
+  padding-left: 15px;
+}
+
+/* place stars under user correctly on map thread*/
+.mapthread .fatitem .post-side-bar .star-rating {
+  top: -0.3em;
 }
 
 /* tag page table design*/
@@ -2140,19 +2041,20 @@ footer{
   .mainbodywrapper .mainbody {
     margin-top: 1rem;
   }
-  .posts .timefilters,
-  .posts .contentfilters {
+  
+  .filters {
     display: block;
     float: unset;
   }
-  .posts .contentfilters {
+  
+  .filterssecondset {
+    /*
+    //these justify right but screw up spacing/display
     display: flex;
     justify-content: flex-end;
+    */
   }
-  /* .posts .contentfilters a {
-    padding: 0px 10px;
-    min-width: 50px;
-  } */
+
   .post .dropdown .dropbtn {
     padding-top: 5px;
   }
@@ -2221,14 +2123,7 @@ footer{
   .memberstats {
     margin-top: 40px;
   }
-  #memberanchor .content .memberstats .following {
-    left: 115px;
-    top: 112px;
-  }
-  #memberanchor .content .memberstats .followers {
-    left: 28px;
-    top: 112px;
-  }
+  
   #memberanchor .content .memberprofiletextContainer {
     margin-top: 135px;
   }
@@ -2256,8 +2151,7 @@ footer{
     text-align: center;
     margin-top: 10px;
   }
-  #cashaddrformatdiv .qrcodeclick,
-  #legacyformatdiv .qrcodeclick {
+  .qrcodeclick {
     position: unset;
   }
   #walletsendfunds button#sendfundsbutton {
@@ -2282,13 +2176,15 @@ footer{
     margin-top: 0.4rem;
     margin-bottom: 10px;
   }
-  #privatekeyformatdiv .qrcodeclick {
+  .qrcodeclick {
     top: 68px;
     right: 40%;
   }
   #notifications{
     max-width: 540px;
   }
+
+
 }
 /*  */
 @media (max-width: 600px) {
@@ -2316,15 +2212,6 @@ footer{
   }
   #notifications {
     max-width: 380px;
-  }
-  /* tabs */
-  .posts .timefilters a,
-  .posts .contentfilters a {
-    min-width: 44px;
-    padding: 5px 0;
-  }
-  .posts .timefilters a {
-    max-width: 55px;
   }
   #membertabs {
     max-width: 100%;
@@ -2386,10 +2273,7 @@ footer{
   #memberanchor .content .memberprofiletextContainer {
     margin-top: 190px;
   }
-  #memberanchor .content .memberstats .followers,
-  #memberanchor .content .memberstats .following {
-    top: 160px;
-  }
+  
   #memberanchor .content .memberstats .follow a {
     right: 0px;
   }
@@ -2460,8 +2344,7 @@ footer{
   #toolsanchor .content #walletbalance span.balanceusd {
     margin-left: 0;
   }
-  #cashaddrformatdiv .qrcodeclick,
-  #legacyformatdiv .qrcodeclick {
+  .qrcodeclick {
     position: absolute;
   }
   #toolsanchor .content #walletlegacyaddress span {
@@ -2489,11 +2372,8 @@ footer{
   #walletprivatekey #privatekey a {
     position: unset;
   }
-  #cashaddrformatdiv .qrcodeclick,
-  #legacyformatdiv .qrcodeclick {
-    right: 22px;
-  }
-  #privatekeyformatdiv .qrcodeclick {
+  
+  .qrcodeclick {
     right: 20px;
   }
   #walletprivatekey label {
@@ -2507,7 +2387,6 @@ footer{
     display: block;
   }
 }
-/* extra   */
 @media (max-width: 400px) {
   #notifications {
     max-width: 320px;
@@ -2521,9 +2400,6 @@ footer{
   .memberheader .membertabs a {
     padding: 3px 7px;
   }
-  /* #notifications {
-    max-width: 240px;
-  } */
 }
 @media (max-width: 320px) {
   #membertabs {
@@ -2551,14 +2427,7 @@ footer{
     top: 172px;
     right: 120px;
   }
-  #memberanchor .content .memberstats .follow {
-    top: 172px;
-    right: 142px;
-  }
-  #memberanchor .content .memberstats .followers,
-  #memberanchor .content .memberstats .following {
-    top: 264px;
-  }
+  
   #memberanchor .content #membernametext a.populate-send-message {
     padding: 0.5rem 0.81rem;
   }
@@ -2573,15 +2442,6 @@ footer{
     position: absolute;
     left: 26px;
     top: 168px;
-  }
-  .posts .timefilters a,
-  .posts .contentfilters a {
-    max-width: 47px;
-    padding: 5px 0px;
-    margin-left: 0px;
-  }
-  .posts .contentfilters a {
-    margin-left: 10px;
   }
   .notificationitem .notificationIcon {
     position: unset;
@@ -2638,3 +2498,123 @@ footer{
   display: unset;
   border: unset;
 }
+
+.privatemessagetext{
+  white-space: pre-line;
+}
+
+tbody tr td:first-of-type {
+  font-weight: unset;
+}
+
+.star-rating .star-value {
+  filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(85deg) brightness(95%) contrast(93%);
+}
+
+.systemscore{
+  filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%) !important;
+}
+
+.bitcloutframe {
+  position: fixed;
+  top: 0px;
+}
+
+.votelinks {
+  background: unset;
+}
+
+#newpost br {
+  display: unset;
+}
+
+.ddcover {
+  background:grey;
+  overflow:visible;
+  width: 100%; 
+  height: 100%; 
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  opacity: 0.2; 
+  display:none; 
+  z-index: 500;
+}
+
+/* Less Space For Collapsed Comments */
+.comment-tree ul li.collapsed {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+/* Article Mode Stuff */
+.articleheader{
+  display: none;
+}
+
+.article .post-body {
+  display: none;
+}
+
+.article .fatitem {
+  text-rendering: optimizeLegibility;
+  color: rgba(0, 0, 0, 0.8);
+  font-style: normal;
+  overflow-wrap: break-word;
+  font-weight: 400;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.article .fatitem .comment {
+  margin-top: 0.86em;
+  font-size: 21px;
+  margin-bottom: -0.46em;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  letter-spacing: -0.004em;
+  line-height: 1.58;
+  color: rgba(0, 0, 0, 0.84);
+  margin: 0;
+}
+
+.article .articleheader{
+  line-height: 48px;
+  font-size: 40px;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  color: rgba(0, 0, 0, 0.84);
+  margin: 0;
+  letter-spacing: 0px;
+  padding-left:62px;
+  display: block;
+}
+
+
+
+.switchToArticleMode {
+  display: block;
+}
+
+.switchToRegularMode {
+  display: none;
+}
+
+.article .switchToArticleMode {
+  display: none;
+}
+
+.article .switchToRegularMode {
+  display: block;
+}
+
+@media (max-width: 768px) {
+.article .fatitem .votelinks {
+  display: none;
+}
+
+.article .articleheader {
+  padding-left: 12px;
+}
+}
+
+
+
+
