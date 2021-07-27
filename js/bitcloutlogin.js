@@ -340,11 +340,40 @@ async function sendBitCloutUnFollow(unfollowpubkey) {
   return await sendBitCloutTransaction(payload, "create-follow-txn-stateless");
 }
 
+
+async function sendBitCloutSub(topicHOSTILE) {
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
+    BodyObj: { Body: 'subscribe '+ topicHOSTILE },
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData={Subscribe:topicHOSTILE};
+  
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
+async function sendBitCloutUnSub(topicHOSTILE) {
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
+    BodyObj: { Body: 'unsubscribe '+ topicHOSTILE },
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData={Unsubscribe:topicHOSTILE};
+  
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
+
+
 async function sendBitCloutMute(followpubkey) {
   var bcAddress=await pubkeyToBCaddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
-    ParentStakeID: 'af4e1c6b71019ed334d1ab1e254aaaa49ae77fe96ef5d078b9ef598ff182bce3',
+    ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
     BodyObj: { Body: 'mute '+bcAddress  },
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
@@ -358,7 +387,7 @@ async function sendBitCloutUnMute(followpubkey) {
   var bcAddress=await pubkeyToBCaddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
-    ParentStakeID: 'af4e1c6b71019ed334d1ab1e254aaaa49ae77fe96ef5d078b9ef598ff182bce3',
+    ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
     BodyObj: { Body: 'unmute '+bcAddress },
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000

@@ -13,7 +13,7 @@ var errorTemplate=`
 
 var topicHeaderHTML=`
 <div class='content'>
-    <h1 class='topicheader'>{topic}</h1>
+    <h1 class='topicheader'>#{topic}</h1>
     <table>
         <thead>
             <tr>
@@ -54,7 +54,7 @@ var trustRatingTableHTML=`
 <br />
 <div id="cy" style="width:100%;height:600px;"></div><div id="cynote" style="width:100%">&nbsp;</div>
 <br />
-<div data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is interpreted as a 4-star rating. Follow, 3-star. Mute, 2-star.</div>
+<a href="https://member.cash/a/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
 <br />
 <table>{tablecontents}</table>
 `;
@@ -648,8 +648,8 @@ pages.member = `
             {mutebuttonhtml}
         </div>
         <div class="membrain">
-            <label data-vavilon="membrain">Membrain Score</label>
-            <a id="membrainnumber">{membrain}</a>
+            <a href="https://member.cash/a/804fc6e860"></a><label data-vavilon="membrain">MemBrain</label></a>
+            <a id="membrainnumber" href="https://member.cash/a/804fc6e860">{membrain}</a>
         </div>
         <div class="followers">
             <label data-vavilon="VV0071">Followers</label>

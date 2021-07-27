@@ -486,7 +486,7 @@ function addSingleStarsRating(theElement) {
         theRatingRound = outOfFive(rawRating);
     }
     if (theElement.dataset.ratingsystem == 'systemscore') {
-        disabledtext = 'Membrain score ' + theRatingRound + '/5';
+        disabledtext = 'MemBrain score ' + theRatingRound + '/5';
     }
 
 

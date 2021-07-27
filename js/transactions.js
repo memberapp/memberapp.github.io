@@ -17,7 +17,7 @@ function checkForNativeUser() {
     }
 
     if (tq.getBalance(pubkey) < 547) {
-        alert(getSafeTranslation('notenough2', "You do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
+        alert(getSafeTranslation('notenough2', "This is a Bitcoin Cash Action only and you do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
         return false;
     }
 
@@ -353,7 +353,7 @@ function setProfile() {
 }
 
 
-function sub(topicHOSTILE) {
+function subTransaction(topicHOSTILE) {
 
     if (!checkForNativeUser()) return false;
 
@@ -368,7 +368,7 @@ function sub(topicHOSTILE) {
     tq.queueTransaction(tx);
 }
 
-function unsub(topicHOSTILE) {
+function unsubTransaction(topicHOSTILE) {
     if (!checkForNativeUser()) return false;
 
     //Remove the clicked element so it can't be clicked again
@@ -433,6 +433,30 @@ function unmute(qaddress,targetpublickey) {
         sendBitCloutUnMute(targetpublickey);
     }
 }
+
+function sub(topicHOSTILE) {
+    if (!checkForPrivKey()) return false;
+    if(checkForNativeUserAndHasBalance()){
+        subTransaction(topicHOSTILE);
+    }
+    if(isBitCloutUser()){
+        sendBitCloutSub(topicHOSTILE);
+    }
+}
+
+function unsub(topicHOSTILE) {
+    if (!checkForPrivKey()) return false;
+    if(checkForNativeUserAndHasBalance()){
+        unsubTransaction(topicHOSTILE);
+    }
+    if(isBitCloutUser()){
+        sendBitCloutUnSub(topicHOSTILE);
+    }
+}
+
+
+
+
 
 function sendDislike(txid) {
     txidTransaction(txid, "0x6db4", getSafeTranslation('sendingdislike', "Sending Dislike"));
