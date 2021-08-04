@@ -114,7 +114,7 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
 
 function userFromDataBasic(data, mainRatingID, size) {
     if(!data.raterrating){data.raterrating=data.rating;}//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, true, data.lastactive, data.sysrating);
+    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, true, (data.lastactive?data.lastactive:data.pictime), data.sysrating);
 }
 
 //Posts and Replies

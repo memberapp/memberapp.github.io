@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = "6.7.0";
+var version = "6.8.2";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -157,7 +157,7 @@ async function loadBigLibs() {
     if (!window.elliptic) { loadScript("js/lib/elliptic.min.js");}
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     if (!bcdecrypt) loadScript("js/lib/bcdecrypt.js");
-    if (!cytoscape) loadScript("js/lib/cytoscape.min.js");
+    if (!cytoscape) loadScript("js/lib/cytoscape3.19.patched.min.js");
     
 
 }

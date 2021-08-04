@@ -59,8 +59,6 @@ function displayContentBasedOnURLParameters(suggestedurl) {
             sanitizeAlphanumeric(getParameterByName("qaddress"))
         );
         setTopic(getParameterByName("topicname"));
-    } else if (action.startsWith("memberposts")) {
-        showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("notifications")) {
         showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")), sanitizeAlphanumeric(getParameterByName("nfilter")),Number(getParameterByName("minrating")));
     } else if (action.startsWith("profile")) {
@@ -84,7 +82,9 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("comments")) {
         showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'replies');
     } else if (action.startsWith("trustgraph")) {
-        showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
+        showReputation(sanitizeAlphanumeric(getParameterByName("target")));
+    } else if (action.startsWith("support")) {
+        showBesties(sanitizeAlphanumeric(getParameterByName("qaddress")));
     } else if (action.startsWith("topiclist")) {
         showTopicList();
     } else if (action.startsWith("topic")) {
@@ -110,6 +110,8 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         showFirehose();
     } else if (action.startsWith("wallet")) {
         showWallet();
+    } else if (action.startsWith("custom")) {
+        showCustom();
     } else if (action.startsWith("login")) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
@@ -123,18 +125,27 @@ function displayContentBasedOnURLParameters(suggestedurl) {
 
 function hideAll() {
     switchToRegularMode();
+
+    //This should just hide and empty the main tabs (exception of settings)
+    //member page
+    document.getElementById('mcidmemberheader').style.display = "none";
+    document.getElementById('mcidmemberanchor').style.display = "none";
+    document.getElementById('mcidmemberanchor').innerHTML = "";
+    document.getElementById('trustgraph').style.display = "none";
+    document.getElementById('trustgraph').innerHTML = "";
+    document.getElementById('besties').style.display = "none";
+    document.getElementById('besties').innerHTML = "";
+    
     document.getElementById('feed').style.display = "none";
     document.getElementById('posts').style.display = "none";
     document.getElementById('comments').style.display = "none";
     document.getElementById('thread').style.display = "none";
-    document.getElementById('memberposts').style.display = "none";
     document.getElementById('notifications').style.display = "none";
     //remove the content too, so that we don't get conflicting ids
     document.getElementById('feed').innerHTML = "";
     document.getElementById('posts').innerHTML = "";
     document.getElementById('comments').innerHTML = "";
     document.getElementById('thread').innerHTML = "";
-    document.getElementById('memberposts').innerHTML = "";
     document.getElementById('notificationsbody').innerHTML = "";
 
     document.getElementById('settingsanchor').style.display = "none";
@@ -143,16 +154,14 @@ function hideAll() {
     document.getElementById('following').style.display = "none";
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
-    document.getElementById('memberanchor').style.display = "none";
-    document.getElementById('memberheader').style.display = "none";
     
     document.getElementById('newpost').style.display = "none";
-    document.getElementById('anchorratings').style.display = "none";
+    //document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('footer').style.display = "block";//show the footer - it may have been hidden when the map was displayed
     
-    document.getElementById('trustgraph').style.display = "none";
-    document.getElementById('community').style.display = "none";
+    //document.getElementById('trustgraph').style.display = "none";
+    //document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
     document.getElementById('messagesanchor').style.display = "none";
@@ -204,34 +213,6 @@ function hideMap() {
     //show("map");
     //getAndPopulateMap();
     document.getElementById('map').style.display = "none";
-}
-
-function showReputation(qaddress) {
-    
-    getAndPopulateRatings(qaddress);
-    getAndPopulateCommunityRatings(qaddress);
-
-    //if (pubkey) {
-        getAndPopulateTrustGraph(pubkey, qaddress);
-    //} else {
-    //    document.getElementById('trustgraph').style.display = "none";
-    //}
-
-    show('community');
-    document.getElementById('memberheader').style.display = "block";
-    document.getElementById('anchorratings').style.display = "block";
-    document.getElementById('trustgraph').style.display = "block";
-    
-    var obj2 = {
-        //These must all be HTML safe.
-        address: qaddress,
-        profileclass: 'filteroff',
-        reputationclass: 'filteron',
-        postsclass: 'filteroff'
-    }
-
-    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
-
 }
 
 function showNewPost(txid) {
@@ -298,7 +279,6 @@ function showSettings() {
     setPageTitleFromID("VV0166");
     show('settingsanchor');
     getAndPopulateSettings();
-    //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
 
 }
 
@@ -317,8 +297,11 @@ function showMember(qaddress, pagingIDHOSTILE) {
                 showMember(qaddress);
                 return;
             } else {
-                show('memberheader');
-                document.getElementById('memberanchor').innerHTML =  getSafeTranslation('pagingidnotfount','This paging id not found.');
+                hideAll();
+                showOnly("mcidmemberheader");
+                showOnly("mcidmembertabs");
+                showOnly("mcidmemberanchor");
+                document.getElementById('mcidmemberanchor').innerHTML =  getSafeTranslation('pagingidnotfount','This paging id not found.');
                 return;
             }
         }, function (status) { //error detection....
@@ -327,27 +310,54 @@ function showMember(qaddress, pagingIDHOSTILE) {
         return;
     }
 
-    //show('header');
-    setPageTitleFromID("VV0063");
-    getAndPopulateMember(qaddress);
-    //getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
-    show("memberanchor");
-    document.getElementById('memberheader').style.display = "block";
-    //document.getElementById('memberanchor').style.display = "block";
-    //document.getElementById('memberposts').style.display = "none";
+    //setPageTitleFromID("VV0063");
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("mcidmemberanchor");
+    setPageTitleRaw(". . .");
+    getDataCommonToSettingsAndMember(qaddress, null, "member", "mcidmember"); 
+    var obj2 = {address: qaddress,profileclass: 'filteron',reputationclass: 'filteroff',postsclass: 'filteroff',bestiesclass: 'filteroff'}
+    document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);  
+
+}
+
+function showBesties(qaddress) {
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("besties");
+    getAndPopulateBesties(qaddress);   
+
+    //Show Filter
+    var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteroff', postsclass: 'filteroff', bestiesclass: 'filteron'};
+    document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+}
+
+function showReputation(qaddress) {
     
-
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("trustgraph");
+    getAndPopulateTrustGraph(pubkey, qaddress);
+   
+    //Show Filter
+    var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff'};
+    document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
 }
 
-//deprecated - now on member page
-function showTrustGraph(member, target) {
-    show("trustgraph");
-    getAndPopulateTrustGraph(member, target);
-}
-
-function showMemberPosts(start, limit, qaddress) {
-    //getAndPopulate(start, limit, 'memberposts', qaddress);
-    getAndPopulateNew('new', 'all', '', '', start, limit, 'memberposts', qaddress);
+function showCustom(){
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("besties");
+     
+    getAndPopulateCustom();
+   
+    //Show Filter
+    //var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff'};
+    //document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
 }
 
 function showMessages(messagetype, start, limit) {

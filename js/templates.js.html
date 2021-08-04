@@ -100,19 +100,19 @@ var directRatingHTML=`
 var mainbodyHTML=`
 <div class="newheader" id="header"></div>
 <div class="mainbody">
-    <div id="loading" class="applicationpage loading" style="display: none;">
+    <div id="loading" class="mcapplicationpage loading" style="display: none;">
         <div class="loading"></div>
     </div>
 
     <!--<div id="lowfundswarning" class="alert" style="display: none;"></div>-->
 
-    <div id="toolsanchor" class="applicationpage tools" style="display: none;"></div>
+    <div id="toolsanchor" class="mcapplicationpage tools" style="display: none;"></div>
 
-    <div id="newpost" class="applicationpage newpost" style="display: none;"></div>
+    <div id="newpost" class="mcapplicationpage newpost" style="display: none;"></div>
 
-    <div id="feed" class="applicationpage feed" style="display: none;"></div>
+    <div id="feed" class="mcapplicationpage feed" style="display: none;"></div>
 
-    <div id="notifications" class="applicationpage notifications" style="display: none;">
+    <div id="notifications" class="mcapplicationpage notifications" style="display: none;">
         <div id="notificationtabs" class="tabs">
             <nav id="notificationtypes" class="filters">
                 
@@ -126,38 +126,38 @@ var mainbodyHTML=`
         <div id="notificationsbody" class="pageundertabs"></div>
     </div>
 
-    <div id="memberheader" class="applicationpage memberheader" style="display: none;">
-        <div id="membertabs" class="membertabs"></div>
-        <div id="memberanchor" class="member"></div>
+    <div id="mcidmemberheader" class="mcapplicationpage mcmemberheader" style="display: none;">
+        <div id="mcidmembertabs" class="filters filterssecondset" style="display:none;"></div>
+        <div id="mcidmemberanchor" class="memberanchor"></div>
         <div id="trustgraph" class="trustgraph" style="display:none;"></div>
-        <div id="community" class="community" style="display: none;"></div>
-        <div id="anchorratings" class="ratings" style="display: none;"></div>
-        <div id="memberposts" style="display: none;"></div>
+        <div id="besties" class="besties" style="display:none;"></div>        
+        <!--<div id="community" class="community" style="display: none;"></div>
+        <div id="anchorratings" class="ratings" style="display: none;"></div>-->
     </div>
     
-    <div id="settingsanchor" class="applicationpage settings" style="display: none;"></div>
+    <div id="settingsanchor" class="mcapplicationpage settings" style="display: none;"></div>
 
-    <div id="followers" class="applicationpage followers" style="display: none;"></div>
+    <div id="followers" class="mcapplicationpage followers" style="display: none;"></div>
 
-    <div id="following" class="applicationpage following" style="display: none;"></div>
+    <div id="following" class="mcapplicationpage following" style="display: none;"></div>
 
-    <div id="blockers" class="applicationpage blockers" style="display: none;"></div>
+    <div id="blockers" class="mcapplicationpage blockers" style="display: none;"></div>
 
-    <div id="blocking" class="applicationpage blocking" style="display: none;"></div>
+    <div id="blocking" class="mcapplicationpage blocking" style="display: none;"></div>
 
-    <div id="messagesanchor" class="applicationpage messages" style="display: none;"></div>
+    <div id="messagesanchor" class="mcapplicationpage messages" style="display: none;"></div>
 
-    <div id="topicmeta" class="applicationpage topics" style="display: none;"></div>
+    <div id="topicmeta" class="mcapplicationpage topics" style="display: none;"></div>
 
-    <div id="posts" class="applicationpage posts" style="display: none;"></div>
+    <div id="posts" class="mcapplicationpage posts" style="display: none;"></div>
 
-    <div id="comments" class="applicationpage comments" style="display: none;"></div>
+    <div id="comments" class="mcapplicationpage comments" style="display: none;"></div>
 
-    <div id="thread" class="applicationpage thread" style="display: none;"></div>
+    <div id="thread" class="mcapplicationpage thread" style="display: none;"></div>
 
-    <div id="loginbox" class="applicationpage loginbox" style="display: none;"></div>
+    <div id="loginbox" class="mcapplicationpage loginbox" style="display: none;"></div>
 
-    <div id="topiclistanchor" class="applicationpage topics" style="display: none;"></div>
+    <div id="topiclistanchor" class="mcapplicationpage topics" style="display: none;"></div>
 </div>`;
 
 var loginboxHTML=`
@@ -550,10 +550,21 @@ var trustgraphHTML=`
 </div>
 `;
 
+var bestiesHTML=`
+<div class="content">
+    <div id="bestiesdetails">
+        <div id="bestiescy" style="width:100%;height:600px;"></div><div id="cynote" style="width:100%">&nbsp;</div>
+    </div>
+    <br />
+</div>
+`;
+
 var membertabsHTML=`
     <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}" href="#member?qaddress={address}">Profile</a>
     <span class="separator"></span>
     <a data-vavilon="VVreputation" data-vavilon_title="VVreputation" title="Reputation" class="{reputationclass}" href="#rep?qaddress={address}">Reputation</a>
+    <span class="separator"></span>
+    <a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}" href="#support?qaddress={address}">Top 5</a>
     <span class="separator"></span>
     <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}" href="#show?start=0&limit=25&order=new&content=posts&filter=everyone&qaddress={address}&topicname=">Posts</a>
 `;

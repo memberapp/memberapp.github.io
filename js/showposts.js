@@ -16,17 +16,11 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     show(page);
 
     if (qaddress) {
-        //skip, viewing single user's posts, title should already be filled in with user's paging id
-        var obj2 = {
-            //These must all be HTML safe.
-            address: qaddress,
-            profileclass: 'filteroff',
-            reputationclass: 'filteroff',
-            postsclass: 'filteron'
-        }
-        document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
-        document.getElementById("memberheader").style.display = 'block';
-
+        //hideAll();
+        showOnly("mcidmemberheader");
+        showOnly("mcidmembertabs");
+        var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteroff', postsclass: 'filteron', bestiesclass: 'filteroff'};
+        document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
     } else if (topicnameHOSTILE.toLowerCase() == "mytopics") {
         setPageTitleFromID("VV0128");
     } else if (topicnameHOSTILE) {
@@ -53,6 +47,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     //Request content from the server and display it when received
     var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + bchOnly;
     getJSON(theURL).then(function (data) {
+
+        if (qaddress && data[0] && data[0].pagingid) {
+            setPageTitleRaw("@" + data[0].pagingid);
+        }
 
         var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};

@@ -3,6 +3,17 @@ body {
   word-break: break-word;
 }
 
+
+.mcapplicationpage {
+  max-width: 800px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+
 .quotepost {
   border-radius: 10px;
 }
@@ -1171,6 +1182,10 @@ a {
   position: relative;
 }
 
+.post-list-final, .pageundertabs {
+  clear: both;
+}
+
 .post-list-item .post {
   animation: postFadein 1.5s;
   -moz-animation: postFadein 1.5s; /* Firefox */
@@ -1297,14 +1312,19 @@ a {
   overflow-wrap: break-word;
 }
 
+.trustgraph, .memberanchor, .besties, .posts {
+  clear: both;
+  padding-left: 0px;
+  padding-right: 0px;
+}
 /* profile page design */
-#memberanchor .content {
+.memberanchor .content {
   position: relative;
   box-shadow: 0 13px 27px 6px #fafafa;
   border: none;
 }
 /* profile page tabs */
-.memberheader .membertabs {
+#membertabs {
   display: flex;
   justify-content: flex-end;
   width: 770px;
@@ -1318,21 +1338,21 @@ a {
   background: linear-gradient(to right, #fff 12%, #f6f9ff 100%);
   word-break: normal;
 }
-.memberheader .membertabs a {
+#membertabs a {
   position: relative;
   padding: 3px 10px;
   margin-left: 5px;
   transition: all 0.3s ease;
   max-width: 100px;
 }
-.memberheader .membertabs a:hover {
+#membertabs a:hover {
   position: relative;
   background-color: #61aaff !important;
   color: #fff !important;
   border-radius: 36px;
   max-width: 100px;
 }
-.memberheader .membertabs a.filteron {
+#membertabs a.filteron {
   z-index: 1;
   background-color: #61aaff !important;
   border-radius: 36px;
@@ -1362,31 +1382,31 @@ a {
   width: 130px;
   height: 130px;
 }
-#memberanchor .content .memberprofiletextContainer {
+.memberanchor .content .memberprofiletextContainer {
   margin-top: 100px;
 }
-#memberanchor .content .memberprofiletextContainer label {
+.memberanchor .content .memberprofiletextContainer label {
   display: none !important;
 }
-#memberanchor .content .memberInfoTextContainer {
+.memberanchor .content .memberInfoTextContainer {
   display: flex;
   position: absolute;
   top: 79px;
 }
-#memberanchor .content .memberInfoTextContainer label {
+.memberanchor .content .memberInfoTextContainer label {
   display: none;
 }
-#memberanchor .content .memberInfoTextContainer span {
+.memberanchor .content .memberInfoTextContainer span {
   font-weight: 600;
   font-size: 1.2rem;
 }
-#memberanchor .content .memberInfoTextContainer div {
+.memberanchor .content .memberInfoTextContainer div {
   margin-right: 10px;
 }
-#memberanchor .content #membernametext {
+.memberanchor .content #membernametext {
   margin-bottom: 0;
 }
-#memberanchor .content .memberstatsButtons {
+.memberanchor .content .memberstatsButtons {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
@@ -1394,22 +1414,22 @@ a {
   top: 26px;
   right: 16px;
 }
-#memberanchor .content .memberstatsButtons div {
+.memberanchor .content .memberstatsButtons div {
   margin-right: 10px;
 }
-#memberanchor .content #membernametext a.populate-send-message {
+.memberanchor .content #membernametext a.populate-send-message {
   border: 1px solid #61aff0;
   background: transparent !important;
   color: #61aff0 !important;
   border-radius: 45px;
   padding: 0.5rem 1rem;
 }
-#memberanchor .content #membernametext a.populate-send-message {
+.memberanchor .content #membernametext a.populate-send-message {
   position: absolute;
   top: 26px;
   right: 26px;
 }
-#memberanchor .content .memberstats .follow {
+.memberanchor .content .memberstats .follow {
   position: absolute;
   top: 26px;
   right: 160px;
@@ -1417,14 +1437,14 @@ a {
   margin: 0;
   word-break: normal;
 }
-#memberanchor .content .memberstats .follow a,
-#memberanchor .content .memberstats .mute a {
+.memberanchor .content .memberstats .follow a,
+.memberanchor .content .memberstats .mute a {
   font-weight: 400;
   font-size: 1rem;
   border: none;
   word-break: normal;
 }
-#memberanchor .content .memberstats .follow a {
+.memberanchor .content .memberstats .follow a {
   border: 1px solid #61aff0;
   background: transparent !important;
   color: #61aff0 !important;
@@ -1434,7 +1454,7 @@ a {
   top: 0px;
   right: 10px;
 }
-#memberanchor .content .memberstats .mute a {
+.memberanchor .content .memberstats .mute a {
   border: 1px solid #61aff0;
   background: transparent !important;
   color: #61aff0 !important;
@@ -1444,38 +1464,38 @@ a {
   top: 0px;
   right: 118px;
 }
-#memberanchor .content .memberstats .mute {
+.memberanchor .content .memberstats .mute {
   position: absolute;
   top: 26px;
   right: 160px;
   margin: 0;
 }
-#memberanchor .content .memberstats .follow label,
-#memberanchor .content .memberstats .mute label {
+.memberanchor .content .memberstats .follow label,
+.memberanchor .content .memberstats .mute label {
   display: none;
 }
-#memberanchor .content #membernametext a.populate-send-message:hover,
-#memberanchor .content .memberstats .follow a:hover,
-#memberanchor .content .memberstats .mute a:hover {
+.memberanchor .content #membernametext a.populate-send-message:hover,
+.memberanchor .content .memberstats .follow a:hover,
+.memberanchor .content .memberstats .mute a:hover {
   background: #61aff0 !important;
   border: 1px solid #61aff0;
   color: #fff !important;
 }
-#memberanchor .content .memberstats .follow:hover a {
+.memberanchor .content .memberstats .follow:hover a {
   color: #fff !important;
 }
-#memberanchor .content #memberlegacyaddress {
+.memberanchor .content #memberlegacyaddress {
   position: relative;
   margin-top: 2rem;
 }
-/* #memberanchor .content #memberlegacyaddress {
+/* .memberanchor .content #memberlegacyaddress {
   /* display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
 } */
-#memberanchor .content #memberlegacyaddress label {
+.memberanchor .content #memberlegacyaddress label {
   display: none;
 }
 #memberlegacyaddress #memberlegacyformatdiv {
@@ -1515,8 +1535,8 @@ span.qrcodeclick span {
   color: #fff !important;
 }
 
-#memberanchor .content .memberstats .muters,
-#memberanchor .content .memberstats .muting {
+.memberanchor .content .memberstats .muters,
+.memberanchor .content .memberstats .muting {
   display: none;
 }
 .memberstats div a {
@@ -1529,11 +1549,11 @@ span.qrcodeclick span {
   font-size: 14px;
   color: #777;
 }
-#memberanchor .content .memberstats div {
+.memberanchor .content .memberstats div {
   border: none;
 }
-#memberanchor .content .memberstats .muters,
-#memberanchor .content .memberstats .muting {
+.memberanchor .content .memberstats .muters,
+.memberanchor .content .memberstats .muting {
   display: none;
 }
 
@@ -2044,7 +2064,6 @@ footer{
   
   .filters {
     display: block;
-    float: unset;
   }
   
   .filterssecondset {
@@ -2102,13 +2121,13 @@ footer{
   #membertabs {
     max-width: 540px;
   }
-  .memberheader .membertabs a {
+  #membertabs a {
     margin: 5px 20px 5px 0px;
   }
   #memberprofilelinks div a {
     margin: 10px;
   }
-  #memberanchor .content .memberstatsButtons {
+  .memberanchor .content .memberstatsButtons {
     right: 0;
   }
   #memberlegacyaddress #memberlegacyformatdiv {
@@ -2124,7 +2143,7 @@ footer{
     margin-top: 40px;
   }
   
-  #memberanchor .content .memberprofiletextContainer {
+  .memberanchor .content .memberprofiletextContainer {
     margin-top: 135px;
   }
   /* wallet page  */
@@ -2217,7 +2236,7 @@ footer{
     max-width: 100%;
     justify-content: flex-end;
   }
-  .memberheader .membertabs a {
+  #membertabs a {
     margin: 5px 0px 5px 0px;
   }
   /* fixed navbar */
@@ -2270,36 +2289,36 @@ footer{
     width: 20rem;
   }
   /* profile */
-  #memberanchor .content .memberprofiletextContainer {
+  .memberanchor .content .memberprofiletextContainer {
     margin-top: 190px;
   }
   
-  #memberanchor .content .memberstats .follow a {
+  .memberanchor .content .memberstats .follow a {
     right: 0px;
   }
-  #memberanchor .content .memberInfoTextContainer {
+  .memberanchor .content .memberInfoTextContainer {
     top: 130px;
   }
-  #memberanchor .content #membernametext a.populate-send-message {
+  .memberanchor .content #membernametext a.populate-send-message {
     right: 18px;
     top: 85px;
   }
-  #memberanchor .content .memberstats .follow {
+  .memberanchor .content .memberstats .follow {
     top: 80px;
     right: 160px;
   }
-  #memberanchor .content .memberstats .mute {
+  .memberanchor .content .memberstats .mute {
     top: 80px;
     right: 148px;
   }
-  #memberanchor .content .memberstats .mute a {
+  .memberanchor .content .memberstats .mute a {
     right: 120px;
   }
   #memberprofilelinks div a {
     margin: 5px;
   }
 
-  #memberanchor .content .memberstatsButtons {
+  .memberanchor .content .memberstatsButtons {
     left: 26px;
     top: 80px;
     flex-direction: row;
@@ -2325,10 +2344,10 @@ footer{
   .memberstats {
     margin-top: 75px;
   }
-  #memberanchor .content .memberstats div {
+  .memberanchor .content .memberstats div {
     margin: 5px !important;
   }
-  #memberanchor .content #memberprofiletext {
+  .memberanchor .content #memberprofiletext {
     line-height: 1.2rem;
   }
   /* wallet  media quries*/
@@ -2397,7 +2416,7 @@ footer{
   .notificationitem .notificationIcon img{
     width: 20px;
   }
-  .memberheader .membertabs a {
+  #membertabs a {
     padding: 3px 7px;
   }
 }
@@ -2407,7 +2426,7 @@ footer{
     justify-content: flex-end;
     background: #f6f9ff;
   }
-  .memberheader .membertabs a {
+  #membertabs a {
     margin: 0px 5px 0px 0px;
     padding: 3px 10px;
   }
@@ -2420,19 +2439,19 @@ footer{
     top: 0;
     left: 0;
   }
-  #memberanchor .content .memberInfoTextContainer {
+  .memberanchor .content .memberInfoTextContainer {
     top: 233px;
   }
-  #memberanchor .content .memberstats .mute {
+  .memberanchor .content .memberstats .mute {
     top: 172px;
     right: 120px;
   }
   
-  #memberanchor .content #membernametext a.populate-send-message {
+  .memberanchor .content #membernametext a.populate-send-message {
     padding: 0.5rem 0.81rem;
   }
-  #memberanchor .content .memberstats .mute a,
-  #memberanchor .content .memberstats .follow a {
+  .memberanchor .content .memberstats .mute a,
+  .memberanchor .content .memberstats .follow a {
     padding: 0.3rem 0.81rem;
   }
   .newheader .searchwrapper #usersearchnavresults {
@@ -2448,18 +2467,18 @@ footer{
     padding-left: 10px;
     padding-top: 15px;
   }
-  #memberanchor .content #membernametext a.populate-send-message {
+  .memberanchor .content #membernametext a.populate-send-message {
     right: 10px;
     top: 178px;
   }
-  #memberanchor .content .memberprofiletextContainer {
+  .memberanchor .content .memberprofiletextContainer {
     margin-top: 168px;
   }
   #memberprofilelinks div a {
     margin: 5px;
   }
 
-  #memberanchor .content .memberstatsButtons {
+  .memberanchor .content .memberstatsButtons {
     left: 0 !important;
     top: 80px !important;
     flex-direction: row !important;

@@ -43,16 +43,16 @@ function getAndPopulateRatings(qaddress) {
 }
 
 
-function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre) {
+function getDataCommonToSettingsAndMember(qaddress, cashaddress, pre, prepage) {
 
-    document.getElementById(pre + 'anchor').innerHTML = document.getElementById("loading").innerHTML;
+    document.getElementById(prepage + 'anchor').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=settings&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
-        getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data);
+        getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data, prepage);
     }, function (status) { //error detection....
         //If this fails, we still want to show settings page, so user can change server etc
-        getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, null);
+        getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, null, prepage);
         showErrorMessage(status, null, theURL);
     });
 }
@@ -65,7 +65,7 @@ function getPicURL(picurl, profilepicbase, qaddress) {
     return profilepicbase + san(qaddress) + `.128x128` + pictype;
 }
 
-async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data) {
+async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pre, data, prepage) {
 
     //Set the headerbar pic
     if (pre == "settings" && data && data[0]) {
@@ -168,7 +168,7 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
         obj.profile = getSafeInteractiveHTML(obj.profile, 'profile', false);
     }
 
-    document.getElementById(pre + 'anchor').innerHTML = templateReplace(pages[pre], obj);
+    document.getElementById(prepage + 'anchor').innerHTML = templateReplace(pages[pre], obj);
 
 
     if (pre == "settings") {
@@ -237,23 +237,9 @@ async function populateTools() {
 }
 
 
-function getAndPopulateMember(qaddress) {
-    setPageTitleRaw(". . .");
-    getDataCommonToSettingsAndMember(qaddress, null, "member");
-    var obj2 = {
-        //These must all be HTML safe.
-        address: qaddress,
-        profileclass: 'filteron',
-        reputationclass: 'filteroff',
-        postsclass: 'filteroff'
-    }
-
-    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
-}
-
 function getAndPopulateSettings() {
 
-    getDataCommonToSettingsAndMember(pubkey, qpubkey, "settings");
+    getDataCommonToSettingsAndMember(pubkey, qpubkey, "settings", "settings");
 }
 
 function updateSettings() {
