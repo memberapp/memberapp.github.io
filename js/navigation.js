@@ -39,6 +39,10 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         var topicnameHOSTILE = decodeURI(url.substring(url.indexOf('/t/') + 3).toLowerCase()).trim();
         showTopic(0, numbers.results, topicnameHOSTILE);
         return;
+    } else if (url.indexOf('/list/') != -1) {
+        var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/list/') + 6).replace('@', '').toLowerCase()).trim();
+        showMember('', pagingidHOSTILE, true);
+        return;
     } else {
         setTopic("");
         action = "";
@@ -282,7 +286,7 @@ function showSettings() {
 
 }
 
-function showMember(qaddress, pagingIDHOSTILE) {
+function showMember(qaddress, pagingIDHOSTILE, isList) {
     //if pagingidhostile is not empty - await qaddress
     if (!typeof headeraddress === 'undefined') {
         qaddress = headeraddress;
@@ -294,7 +298,7 @@ function showMember(qaddress, pagingIDHOSTILE) {
         getJSON(theURL).then(function (data) {
             if (data && data.length > 0) {
                 qaddress = data[0].address;
-                showMember(qaddress);
+                showMember(qaddress,null,isList);
                 return;
             } else {
                 hideAll();
@@ -310,15 +314,27 @@ function showMember(qaddress, pagingIDHOSTILE) {
         return;
     }
 
-    //setPageTitleFromID("VV0063");
-    hideAll();
-    showOnly("mcidmemberheader");
-    showOnly("mcidmembertabs");
-    showOnly("mcidmemberanchor");
-    setPageTitleRaw(". . .");
-    getDataCommonToSettingsAndMember(qaddress, null, "member", "mcidmember"); 
-    var obj2 = {address: qaddress,profileclass: 'filteron',reputationclass: 'filteroff',postsclass: 'filteroff',bestiesclass: 'filteroff'}
-    document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);  
+    if(isList){
+        showPostsNew(
+            "new",
+            "posts",
+            "", //HOSTILE
+            "list",
+            0,
+            25,
+            sanitizeAlphanumeric(qaddress)
+        );
+    }else{
+        //setPageTitleFromID("VV0063");
+        hideAll();
+        showOnly("mcidmemberheader");
+        showOnly("mcidmembertabs");
+        showOnly("mcidmemberanchor");
+        setPageTitleRaw(". . .");
+        getDataCommonToSettingsAndMember(qaddress, null, "member", "mcidmember"); 
+        var obj2 = {address: qaddress,profileclass: 'filteron',reputationclass: 'filteroff',postsclass: 'filteroff',bestiesclass: 'filteroff'}
+        document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);  
+    }
 
 }
 

@@ -12,17 +12,17 @@ async function userSearchChanged(searchbox, targetelement) {
 
     //Show search results
     updateStatus(targetelement);
-    var resultsElement=document.getElementById(targetelement);
+    var resultsElement = document.getElementById(targetelement);
     updateStatus(resultsElement);
     updateStatus(resultsElement.style.display);
-    resultsElement.style.display="block";
+    resultsElement.style.display = "block";
     updateStatus(resultsElement.style.display);
     //cover behind search results
-    var ddcover=document.getElementById('ddcover');
+    var ddcover = document.getElementById('ddcover');
     updateStatus(ddcover);
-    
-    ddcover.style.display='block';
-    ddcover.onclick=resultsElement.onclick=function(){resultsElement.style.display=ddcover.style.display='none';};
+
+    ddcover.style.display = 'block';
+    ddcover.onclick = resultsElement.onclick = function () { resultsElement.style.display = ddcover.style.display = 'none'; };
 
     //onblur event was causing a new search making clicking on results impossible
     if (searchtermHOSTILE == previousSearchTermHOSTILE) {
@@ -43,7 +43,7 @@ async function userSearchChanged(searchbox, targetelement) {
     //Request content from the server and display it when received
     var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkey + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
     getJSON(theURL).then(function (data) {
-        
+
         var test = data;
         //var contents = `<label for="usersearchresults">` + getSafeTranslation('results', 'Results') + `</label>`;
         var contents = '';
@@ -68,8 +68,6 @@ function createSurrogate() {
 
 async function postprivatemessage() {
 
-
-
     document.getElementById('newpostmessagebutton').disabled = true;
 
     var text = document.getElementById('newposttamessage').value;
@@ -80,19 +78,25 @@ async function postprivatemessage() {
     var messageRecipient = document.getElementById("messageaddress").textContent;
     var publickey = document.getElementById("messagepublickey").textContent;
 
-    var successFunction=privateMessagePosted;
-    if(checkForNativeUserAndHasBalance()){
+    let preEncryptedMessage;
+    if (privateKeyBuf) {
         // Encrypt the message
         const pubKeyBuf = Buffer.from(publickey, 'hex');
         const data = Buffer.from(text);
-        const structuredEj = await eccryptoJs.encrypt(pubKeyBuf, data);
-        const encryptedMessage = eccryptoJs.serialize(structuredEj).toString('hex');
-        sendMessageRaw(privkey, null, encryptedMessage, 1000, status, successFunction, messageRecipient, stampAmount);
-        successFunction=null;
+        //const structuredEj = await eccryptoJs.encrypt(pubKeyBuf, data);
+        //const encryptedMessage = eccryptoJs.serialize(structuredEj).toString('hex');
+        let uncompressedPublicKeySender = Buffer.from(window.ec.keyFromPublic(pubKeyBuf, 'hex').getPublic(false, 'hex'), 'hex');
+        preEncryptedMessage = bcencryptShared(privateKeyBuf, uncompressedPublicKeySender, data, null).toString('hex');
     }
 
-    if(isBitCloutUser()){
-        sendBitCloutPrivateMessage(publickey,text, status, successFunction);
+    var successFunction = privateMessagePosted;
+    if (checkForNativeUserAndHasBalance()) {
+        sendMessageRaw(privkey, null, preEncryptedMessage, 1000, status, successFunction, messageRecipient, stampAmount);
+        successFunction = null;
+    }
+
+    if (isBitCloutUser()) {
+        sendBitCloutPrivateMessage(publickey, text, status, successFunction, preEncryptedMessage);
     }
 }
 
@@ -104,10 +108,10 @@ function privateMessagePosted() {
 
 }
 
-function sendFundsAmountChanged(){
+function sendFundsAmountChanged() {
     var sendAmount = Number(document.getElementById("fundsamount").value);
     var usdAmount = ((Number(sendAmount) * numbers.usdrate) / 100000000).toFixed(2);
-    document.getElementById("sendusd").textContent="($"+usdAmount+")";
+    document.getElementById("sendusd").textContent = "($" + usdAmount + ")";
 }
 
 function sendfunds() {

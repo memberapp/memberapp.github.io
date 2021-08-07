@@ -117,17 +117,13 @@ var mainbodyHTML=`
             <nav id="notificationtypes" class="filters">
                 
             </nav>
-            <nav class="filters filterssecondset">
-                <span class="starratingnotifications">
-                    <span data-ratingsize="16" id="notificationsfilter" class="star-rating-notifications"></span>
-                </span>
-            </nav>
+            
         </div>
         <div id="notificationsbody" class="pageundertabs"></div>
     </div>
 
     <div id="mcidmemberheader" class="mcapplicationpage mcmemberheader" style="display: none;">
-        <div id="mcidmembertabs" class="filters filterssecondset" style="display:none;"></div>
+        <div id="mcidmembertabs" class="filters" style="display:none;"></div>
         <div id="mcidmemberanchor" class="memberanchor"></div>
         <div id="trustgraph" class="trustgraph" style="display:none;"></div>
         <div id="besties" class="besties" style="display:none;"></div>        
@@ -419,12 +415,12 @@ var messagesanchorHTML=`
         </div>
         <br />
     </div>
-    <div id="messageschoice" class="messageslist">
-        <a data-vavilon_title="allmessages" class="btn privatemessagesbutton" href="#messages?messagetype=all"
+    <div id="messageschoice" class="filters">
+        <a data-vavilon_title="allmessages" class="filteroff" href="#messages?messagetype=all"
             onclick="nlc();">All</a>
-        <a data-vavilon_title="sentmessages" class="btn privatemessagesbutton" href="#messages?messagetype=sent"
+        <a data-vavilon_title="sentmessages" class="filteroff" href="#messages?messagetype=sent"
             onclick="nlc();">Sent</a>
-        <a data-vavilon_title="receivedmessages" class="btn privatemessagesbutton"
+        <a data-vavilon_title="receivedmessages" class="filteroff"
             href="#messages?messagetype=received" onclick="nlc();">Received</a>
     </div>
     <br />
@@ -560,6 +556,7 @@ var bestiesHTML=`
 `;
 
 var membertabsHTML=`
+<div class="filterssecondset">
     <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}" href="#member?qaddress={address}">Profile</a>
     <span class="separator"></span>
     <a data-vavilon="VVreputation" data-vavilon_title="VVreputation" title="Reputation" class="{reputationclass}" href="#rep?qaddress={address}">Reputation</a>
@@ -567,6 +564,7 @@ var membertabsHTML=`
     <a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}" href="#support?qaddress={address}">Top 5</a>
     <span class="separator"></span>
     <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}" href="#show?start=0&limit=25&order=new&content=posts&filter=everyone&qaddress={address}&topicname=">Posts</a>
+</div>
 `;
 
 var pages = {};

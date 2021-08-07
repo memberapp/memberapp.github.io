@@ -17,10 +17,13 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
     if (qaddress) {
         //hideAll();
-        showOnly("mcidmemberheader");
-        showOnly("mcidmembertabs");
-        var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteroff', postsclass: 'filteron', bestiesclass: 'filteroff'};
-        document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+        if(filter!="list"){
+            showOnly("mcidmemberheader");
+            showOnly("mcidmembertabs");
+            var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteroff', postsclass: 'filteron', bestiesclass: 'filteroff'};
+            document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+        }
+        setPageTitleRaw("List");
     } else if (topicnameHOSTILE.toLowerCase() == "mytopics") {
         setPageTitleFromID("VV0128");
     } else if (topicnameHOSTILE) {
@@ -48,7 +51,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + bchOnly;
     getJSON(theURL).then(function (data) {
 
-        if (qaddress && data[0] && data[0].pagingid) {
+        if (qaddress && data[0] && data[0].pagingid && filter!="list") {
             setPageTitleRaw("@" + data[0].pagingid);
         }
 
@@ -121,7 +124,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
 
         data = mergeRepliesToRepliesBySameAuthor(data, true);
         var contents = "";
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             data[i].address = data[i].senderaddress;
             contents += getMessageHTML(data[i], i);
         }
@@ -129,6 +132,9 @@ function getAndPopulateMessages(messagetype, start, limit) {
 
 
         document.getElementById('messageslist').innerHTML = contents;
+        for (let i = 0; i < data.length; i++) {
+            populateMessages(data[i], i);
+        }
         addDynamicHTMLElements(data);
         scrollToPosition();
     }, function (status) { //error detection....
