@@ -316,7 +316,7 @@ function showMember(qaddress, pagingIDHOSTILE, isList) {
 
     if(isList){
         showPostsNew(
-            "new",
+            "topd",
             "posts",
             "", //HOSTILE
             "list",
