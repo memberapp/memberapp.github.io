@@ -12,7 +12,7 @@ function getAndPopulateTrustGraph(member, target) {
     getJSON(theURL).then(async function (data) {
 
         setPageTitleRaw("@" + data[0].targetpagingid);
-
+        
 
         var directrating = 0.0;
         var oneRemoveRating = 0.0;

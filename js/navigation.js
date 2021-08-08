@@ -2,7 +2,10 @@
 
 function displayContentBasedOnURLParameters(suggestedurl) {
 
-    
+    //Be very careful with input here . . . this is the most dangerous part of the code
+    //input comes from URL so can contain any characters, so we want to sanitize it before using.
+    //Use sanitizeAlphanumeric or safeGPBN or numberGPBN
+    //If using getParameterByName - it must be marked HOSTILE in any receiving function
     
     if (backForwardEvent) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
@@ -10,7 +13,6 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         window.scrollTo(0, 0);
     }
 
-    //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
     if(suggestedurl){
         var url = suggestedurl;
     }else{
@@ -33,15 +35,15 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         return;
     } else if (url.indexOf('/m/') != -1) {
         var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase()).trim();
-        showMember('', pagingidHOSTILE);
+        showMember('', safeGPBN(pagingidHOSTILE));
         return;
     } else if (url.indexOf('/t/') != -1) {
         var topicnameHOSTILE = decodeURI(url.substring(url.indexOf('/t/') + 3).toLowerCase()).trim();
-        showTopic(0, numbers.results, topicnameHOSTILE);
+        showTopic(0, numbers.results, safeGPBN(topicnameHOSTILE));
         return;
     } else if (url.indexOf('/list/') != -1) {
         var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/list/') + 6).replace('@', '').toLowerCase()).trim();
-        showMember('', pagingidHOSTILE, true);
+        showMember('', safeGPBN(pagingidHOSTILE), true);
         return;
     } else {
         setTopic("");
@@ -49,63 +51,60 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     }
 
     if (action.startsWith("show")) {
-        //setOrder('orderselector', getParameterByName("order"));
-        //setOrder('contentselector', getParameterByName("content"));
-        //setOrder('filterselector', getParameterByName("filter"));
-
         showPostsNew(
-            sanitizeAlphanumeric(getParameterByName("order")),
-            sanitizeAlphanumeric(getParameterByName("content")),
-            getParameterByName("topicname"), //HOSTILE
-            sanitizeAlphanumeric(getParameterByName("filter")),
-            Number(getParameterByName("start")),
-            Number(getParameterByName("limit")),
-            sanitizeAlphanumeric(getParameterByName("qaddress"))
+            safeGPBN("order"),
+            safeGPBN("content"),
+            safeGPBN("topicname"),
+            safeGPBN("filter"),
+            numberGPBN("start"),
+            numberGPBN("limit"),
+            safeGPBN("qaddress")
         );
-        setTopic(getParameterByName("topicname"));
+        setTopic(safeGPBN("topicname"));
+    } else if (action.startsWith("list")) {
+        showPostsNew("topd","posts","","list", 0, 25, safeGPBN("qaddress"));
     } else if (action.startsWith("notifications")) {
-        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")), sanitizeAlphanumeric(getParameterByName("nfilter")),Number(getParameterByName("minrating")));
+        showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"),numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
         showMember(sanitizeAlphanumeric(pubkey, ''));
     } else if (action.startsWith("member")) {
-        showMember(sanitizeAlphanumeric(getParameterByName("qaddress")), getParameterByName("pagingid"));
+        showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
-        showFollowers(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showFollowers(safeGPBN("qaddress"));
     } else if (action.startsWith("following")) {
-        showFollowing(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showFollowing(safeGPBN("qaddress"));
     } else if (action.startsWith("blockers")) {
-        showBlockers(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showBlockers(safeGPBN("qaddress"));
     } else if (action.startsWith("blocking")) {
-        showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showBlocking(safeGPBN("qaddress"));
     } else if (action.startsWith("rep")) {
-        showReputation(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showReputation(safeGPBN("qaddress"));
     } else if (action.startsWith("posts")) {
-        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'posts');
+        showPFC(numberGPBN("start"), numberGPBN("limit"), 'posts');
     } else if (action.startsWith("feed")) {
-        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'posts');
+        showPFC(numberGPBN("start"), numberGPBN("limit"), 'posts');
     } else if (action.startsWith("comments")) {
-        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'replies');
+        showPFC(numberGPBN("start"), numberGPBN("limit"), 'replies');
     } else if (action.startsWith("trustgraph")) {
-        showReputation(sanitizeAlphanumeric(getParameterByName("target")));
+        showReputation(safeGPBN("target"));
     } else if (action.startsWith("support")) {
-        showBesties(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showBesties(safeGPBN("qaddress"));
     } else if (action.startsWith("topiclist")) {
         showTopicList();
     } else if (action.startsWith("topic")) {
-        //Warning - topicname may contain special characters
-        showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
+        showTopic(numberGPBN("start"), numberGPBN("limit"), safeGPBN("topicname"), safeGPBN("type"));
     } else if (action.startsWith("article")) {
-        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), 'article');
+        showThread(safeGPBN("root"), safeGPBN("post"), 'article');
     } else if (action.startsWith("thread")) {
-        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), 'thread');
+        showThread(safeGPBN("root"), safeGPBN("post"), 'thread');
     } else if (action.startsWith("settings")) {
         showSettings();
     } else if (action.startsWith("messages")) {
-        showMessages(sanitizeAlphanumeric(getParameterByName("messagetype")));
+        showMessages(safeGPBN("messagetype"));
     } else if (action.startsWith("new")) {
-        showNewPost(sanitizeAlphanumeric(getParameterByName("txid")));
+        showNewPost(safeGPBN("txid"));
     } else if (action.startsWith("map")) {
-        showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
+        showMap(safeGPBN("geohash"), safeGPBN("post"));
     } else if (action.startsWith("myfeed") || action.startsWith("mypeople")) {
         showMyFeed();
     } else if (action.startsWith("mytags")) {
@@ -223,7 +222,7 @@ function showNewPost(txid) {
     show("newpost");
     setPageTitleFromID("VV0096");
     document.getElementById('memorandumpreview').innerHTML = "";
-    let topicNameHOSTILE = getCurrentTopicHOSTILE();
+    //let topicNameHOSTILE = "";
     //document.getElementById('memorandumtopic').value = topicNameHOSTILE;
     /*if (topicNameHOSTILE != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
@@ -286,19 +285,19 @@ function showSettings() {
 
 }
 
-function showMember(qaddress, pagingIDHOSTILE, isList) {
-    //if pagingidhostile is not empty - await qaddress
+
+function showMember(qaddress, pagingID, isList) {
+    //if pagingid is not empty - await qaddress
     if (!typeof headeraddress === 'undefined') {
         qaddress = headeraddress;
         headeraddress = undefined;
     }
 
-    if (qaddress == '' && pagingIDHOSTILE != '') {
-        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingIDHOSTILE) + '&address=' + pubkey;
+    if (qaddress == '' && pagingID != '') {
+        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + pubkey;
         getJSON(theURL).then(function (data) {
             if (data && data.length > 0) {
-                qaddress = data[0].address;
-                showMember(qaddress,null,isList);
+                showMember(san(data[0].address),sanitizeAlphanumericUnderscore(data[0].pagingid),isList);
                 return;
             } else {
                 hideAll();
@@ -315,15 +314,7 @@ function showMember(qaddress, pagingIDHOSTILE, isList) {
     }
 
     if(isList){
-        showPostsNew(
-            "topd",
-            "posts",
-            "", //HOSTILE
-            "list",
-            0,
-            25,
-            sanitizeAlphanumeric(qaddress)
-        );
+        showPostsNew("topd","posts","","list", 0, 25, sanitizeAlphanumeric(qaddress));
     }else{
         //setPageTitleFromID("VV0063");
         hideAll();
@@ -331,8 +322,8 @@ function showMember(qaddress, pagingIDHOSTILE, isList) {
         showOnly("mcidmembertabs");
         showOnly("mcidmemberanchor");
         setPageTitleRaw(". . .");
-        getDataCommonToSettingsAndMember(qaddress, null, "member", "mcidmember"); 
-        var obj2 = {address: qaddress,profileclass: 'filteron',reputationclass: 'filteroff',postsclass: 'filteroff',bestiesclass: 'filteroff'}
+        getDataCommonToSettingsAndMember(sanitizeAlphanumeric(qaddress), null, "member", "mcidmember"); 
+        var obj2 = {address: sanitizeAlphanumeric(qaddress),profileclass: 'filteron',reputationclass: 'filteroff',postsclass: 'filteroff',bestiesclass: 'filteroff'};
         document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);  
     }
 
@@ -383,8 +374,7 @@ function showMessages(messagetype, start, limit) {
 }
 
 function showPFC(start, limit, page) {
-    //getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
-    showPostsNew('hot', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
+    showPostsNew('hot', page, '', 'everyone', start, limit)
 }
 
 function showMyFeed() {
@@ -402,25 +392,16 @@ function showMyTags() {
     getAndPopulateNew('new', 'posts', 'mytopics', 'everyone', 0, numbers.results, 'posts', '');
 }
 
-function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit, qaddress) {
-    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', qaddress);
+function showPostsNew(order, content, topicname, filter, start, limit, qaddress) {
+    getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress);
 }
 
 
 //Topics
-function showTopic(start, limit, topicnameHOSTILE, type) {
-    //Warning, topicname may contain hostile characters
-    setTopic(topicnameHOSTILE);
+function showTopic(start, limit, topicname, type) {
+    setTopic(topicname);
     if (!type) type = "new";
-    getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', '');
-    //getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
-}
-
-function getCurrentTopicHOSTILE() {
-    //var selector = document.getElementById('topicselector');
-    //var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
-    //return topicNameHOSTILE;
-    return "";
+    getAndPopulateNew(type, 'posts', topicname, 'everyone', start, limit, 'posts', '');
 }
 
 function showTopicList() {
@@ -429,10 +410,10 @@ function showTopicList() {
     getAndPopulateTopicList(true);
 }
 
-function postsSelectorChanged() {
+//function postsSelectorChanged() {
 
     //get value from the 4 drop downs
-    var selector;
+    //var selector;
 
     //orderselector
     //selector = document.getElementById('orderselector');
@@ -454,13 +435,13 @@ function postsSelectorChanged() {
 
     //set the document location without triggering the back/forward function
     //assumeBackForwardEvent = false;
-    nlc();
-    document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
+    //nlc();
+    //document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
     //setTimeout(function () { assumeBackForwardEvent = true; }, 100);
 
     //show the posts
     //displayContentBasedOnURLParameters();
-}
+//}
 
 /*function exitTopic(){
     //currentTopic = "";
@@ -478,29 +459,27 @@ function setOrder(selectorvalue, order) {
 }
 
 
-function setTopic(topicNameHOSTILE) {
-    //Warning, topicname may contain hostile characters
-    /*var selector = document.getElementById('topicselector');*/
-
-    if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
+function setTopic(topicName) {
+    
+    if (topicName == null || topicName == "") {
         //selector.selectedIndex = 0;
         //hide("topicmeta");
         return;
     }
 
-    if (topicNameHOSTILE.toLowerCase() == "myfeed" || topicNameHOSTILE.toLowerCase() == "mytopics") {
+    if (topicName.toLowerCase() == "myfeed" || topicName.toLowerCase() == "mytopics") {
         //hide("topicmeta");
     } else {
-        getAndPopulateTopic(topicNameHOSTILE);
+        getAndPopulateTopic(topicName);
     }
 
     //selector.selectedIndex = 1;
     //selector.options[selector.selectedIndex].value = topicNameHOSTILE;
     //selector.options[selector.selectedIndex].text = capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
-    if(topicNameHOSTILE.toLowerCase()=="mytopics"){
+    if(topicName.toLowerCase()=="mytopics"){
         setPageTitleFromID("VV0128");
     }else{
-        setPageTitleRaw('#'+capitalizeFirstLetter(topicNameHOSTILE));
+        setPageTitleRaw('#'+capitalizeFirstLetter(topicName));
     }
 }
 

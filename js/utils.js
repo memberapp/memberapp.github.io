@@ -83,8 +83,8 @@ var getJSON = function (url, postparams) {
 };
 
 function addListeners(xhr) {
-  xhr.addEventListener('loadstart', handleEvent);
-  xhr.addEventListener('load', handleEvent);
+  //xhr.addEventListener('loadstart', handleEvent);
+  //xhr.addEventListener('load', handleEvent);
   //xhr.addEventListener('loadend', handleEvent);
   xhr.addEventListener('progress', handleEvent);
   //xhr.addEventListener('error', handleEvent);
@@ -151,6 +151,12 @@ function sanitizeAlphanumeric(input) {
   return input.replace(/[^A-Za-z0-9]/g, '');
 }
 
+function sanitizeAlphanumericUnderscore(input) {
+  if (input === undefined || input == null) { return ""; }
+  input = input + "";
+  return input.replace(/[^A-Za-z0-9_]/g, '');
+}
+
 function sanyoutubeid(input) {
   if (input == null) { return ""; }
   return input.replace(/[^A-Za-z0-9\-_]/g, '');
@@ -209,6 +215,14 @@ function getWidth() {
 }
 
 String.prototype.contains = function (segment) { return this.indexOf(segment) !== -1; };
+
+function safeGPBN(name){
+  return sanitizeAlphanumericUnderscore(getParameterByName(name));
+}
+
+function numberGPBN(name){
+  return Number(getParameterByName(name));
+}
 
 function getParameterByName(name, url) {
   if (!url) url = window.location.href;

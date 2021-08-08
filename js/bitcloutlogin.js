@@ -20,19 +20,6 @@ function hideBitcloutIdentityFrame() {
 }
 
 
-/* This is the recommended code from https://docs.bitclout.com/devs/identity-api
-but creates a large frame with 'click to unlock wallet' that doesn't do anything
-function insertBitcloutIdentityFrame() {
-  document.getElementById('bitcloutframe').innerHTML = `<iframe
-  id="identity"
-  frameborder="0"
-  src="https://identity.bitclout.com/embed"
-  style="height: 100vh; width: 100vw;"
-  [style.display]="requestingStorageAccess ? 'block' : 'none'"
-></iframe>`;
-}*/
-
-
 function bitcloutlogout() {
   /*identityWindow = window.open(
     "https://identity.bitclout.com/logout?publicKey="+bitCloutUser,
@@ -274,9 +261,26 @@ async function waitForServerResponse(key) {
   throw Error("Error: bitclout.com Server did not return a value.");
 }
 
-
-
 async function sendBitCloutTransaction(payload, action, divForStatus) {
+  let confirmation;
+  let retrywait=0;
+  do{
+    if(retrywait>0){
+      if (divForStatus) {
+        let statusElement = document.getElementById(divForStatus);
+        if (statusElement) statusElement.value = "Retry in ms:"+retrywait;
+      }  
+    }
+    await sleep(retrywait);
+    confirmation=await constructAndSendBitCloutTransaction(payload, action, divForStatus);
+    retrywait=(retrywait*1.5)+2000;
+  }while(confirmation.length!=64); //txid should be 64 chars in length
+
+  return confirmation;
+}
+
+
+async function constructAndSendBitCloutTransaction(payload, action, divForStatus) {
 
   if (divForStatus) {
     var statusElement = document.getElementById(divForStatus);
