@@ -13,6 +13,10 @@ body {
   margin-left: auto;
 }
 
+.status{
+  white-space: nowrap;
+  overflow: hidden;
+}
 
 .quotepost {
   border-radius: 10px;

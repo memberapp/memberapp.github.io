@@ -11,8 +11,12 @@ function getAndPopulateTrustGraph(member, target) {
     let theURL = dropdowns.contentserver + '?action=trustgraph&address=' + member + '&qaddress=' + target;
     getJSON(theURL).then(async function (data) {
 
-        setPageTitleRaw("@" + data[0].targetpagingid);
-        
+        if(data[0]){
+            setPageTitleRaw("@" + data[0].targetpagingid);
+        } else {
+            document.getElementById('trustgraphdetails').innerHTML = "No information on this right now.";
+            return;
+        }
 
         var directrating = 0.0;
         var oneRemoveRating = 0.0;

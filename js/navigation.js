@@ -384,7 +384,7 @@ function showMyFeed() {
 
 function showFirehose() {
     setTopic('');
-    getAndPopulateNew('topd', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
+    getAndPopulateNew('hot', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
 }
 
 function showMyTags() {
