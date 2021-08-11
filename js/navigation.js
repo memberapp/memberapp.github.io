@@ -35,15 +35,15 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         return;
     } else if (url.indexOf('/m/') != -1) {
         var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase()).trim();
-        showMember('', safeGPBN(pagingidHOSTILE));
+        showMember('', sanitizeAlphanumericUnderscore(pagingidHOSTILE));
         return;
     } else if (url.indexOf('/t/') != -1) {
         var topicnameHOSTILE = decodeURI(url.substring(url.indexOf('/t/') + 3).toLowerCase()).trim();
-        showTopic(0, numbers.results, safeGPBN(topicnameHOSTILE));
+        showTopic(0, numbers.results, sanitizeAlphanumericUnderscore(topicnameHOSTILE));
         return;
     } else if (url.indexOf('/list/') != -1) {
         var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/list/') + 6).replace('@', '').toLowerCase()).trim();
-        showMember('', safeGPBN(pagingidHOSTILE), true);
+        showMember('', sanitizeAlphanumericUnderscore(pagingidHOSTILE), true);
         return;
     } else {
         setTopic("");

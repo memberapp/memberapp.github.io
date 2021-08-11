@@ -70,11 +70,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-remembers{rememberactivated} post-footer-relative" id="remembers{txid}">
-                        <a id="quotelinkposts{diff}{txid}" class="btn-icon" data-action="remember" onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content{diff}{txid}');
-                        ddmenu.style.display='block';
-                    var ddcover=document.getElementById('ddcover');
-                        ddcover.style.display='block';
-                        ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};">
+                        <a id="quotelinkposts{diff}{txid}" class="btn-icon" data-action="remember" onclick="dropDownMenuAction(this);">
                             <span class="remembersicon">
                                 <span class="emojiicon">♻</span>
                             </span>
@@ -97,13 +93,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="dropdown">
-                        <button
-                            onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content');
-                                        ddmenu.style.display='block';
-                                    var ddcover=document.getElementById('ddcover');
-                                        ddcover.style.display='block';
-                                        ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
-                            class="dropbtn"><div class="options">
+                        <button onclick="dropDownMenuAction(this);" class="dropbtn"><div class="options">
                                 <div></div>
                                 <div></div>
                                 <div></div>

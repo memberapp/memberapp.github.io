@@ -398,6 +398,9 @@ function updatemutedwords() {
 function getAndPopulateFB(page, qaddress) {
     document.getElementById(page).innerHTML = fbHTML[page];
     show(page);
+    if(!qaddress){
+        qaddress=pubkey;
+    }
     var theURL = dropdowns.contentserver + '?action=' + page + '&qaddress=' + qaddress + '&address=' + pubkey;
     getJSON(theURL).then(function (data) {
         var contents = "";

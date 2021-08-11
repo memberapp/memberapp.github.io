@@ -1,12 +1,12 @@
 var errorTemplate=`
 <p>
     <span class='connectionerror'>
-            <span class='connectionerrortitle' data-vavilon="VV0169">Oops. This request failed.</span><br />
-            <span data-vavilon="VV0170">There may be a problem with your internet connection, or the server may be
-                having
-                problems.</span><br />
-            <span data-vavilon="VV0171">The error code is</span> <span>{status}</span><br />
-            <span data-vavilon="VV0172">The resource was</span> <span>{url}</span><br />
+        <span class='connectionerrortitle' data-vavilon="VV0169">Oops. This request failed.</span><br />
+        <span data-vavilon="VV0170">There may be a problem with your internet connection, or the server may be
+            having
+            problems.</span><br />
+        <span data-vavilon="VV0171">The error code is</span> <span>{status}</span><br />
+        <span data-vavilon="VV0172">The resource was</span> <span>{url}</span><br />
     </span>
 </p>
 `;
@@ -35,7 +35,7 @@ var ratingAndReasonHTML=`
     <td data-vavilon_data_label="VV0007" data-label='Member'>{rater}</td>
     <td data-vavilon_data_label="VV0008" data-label='Rates As' align='center'>
         <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingaddress="{rateraddress}"
-          data-ratingraw="{rating}" id='{stem}{rateraddress}'></div>
+            data-ratingraw="{rating}" id='{stem}{rateraddress}'></div>
     </td>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{ratee}</td>
 </tr>
@@ -52,9 +52,11 @@ var trustRatingTableHTML=`
 <br />
 <div id="overall"></div>
 <br />
-<div id="cy" style="width:100%;height:600px;"></div><div id="cynote" style="width:100%">&nbsp;</div>
+<div id="cy" style="width:100%;height:600px;"></div>
+<div id="cynote" style="width:100%">&nbsp;</div>
 <br />
-<a href="https://member.cash/a/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
+<a href="https://member.cash/a/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
+    interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
 <br />
 <table>{tablecontents}</table>
 `;
@@ -115,9 +117,9 @@ var mainbodyHTML=`
     <div id="notifications" class="mcapplicationpage notifications" style="display: none;">
         <div id="notificationtabs" class="tabs">
             <nav id="notificationtypes" class="filters">
-                
+
             </nav>
-            
+
         </div>
         <div id="notificationsbody" class="pageundertabs"></div>
     </div>
@@ -126,11 +128,11 @@ var mainbodyHTML=`
         <div id="mcidmembertabs" class="filters" style="display:none;"></div>
         <div id="mcidmemberanchor" class="memberanchor"></div>
         <div id="trustgraph" class="trustgraph" style="display:none;"></div>
-        <div id="besties" class="besties" style="display:none;"></div>        
+        <div id="besties" class="besties" style="display:none;"></div>
         <!--<div id="community" class="community" style="display: none;"></div>
         <div id="anchorratings" class="ratings" style="display: none;"></div>-->
     </div>
-    
+
     <div id="settingsanchor" class="mcapplicationpage settings" style="display: none;"></div>
 
     <div id="followers" class="mcapplicationpage followers" style="display: none;"></div>
@@ -188,7 +190,8 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n2">*BitClout Users. </span><br /><a href="javascript:;" onclick='bitcloutlogin();'><span data-vavilon="loginwithidentity">Login with Identity</span></a>
+        <span data-vavilon="VV0019n2">*BitClout Users. </span><br /><a href="javascript:;"
+            onclick='bitcloutlogin();'><span data-vavilon="loginwithidentity">Login with Identity</span></a>
     </div>
     <div class="loginnotes">
         <span>*Memo Users. Your <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">private
@@ -239,15 +242,16 @@ var walletanchorHTML=`
         <span class="balancebch" id="balancebch">0</span>
         <span class="satoshis">(BCH)</span>
         <span class="balancesatoshis" id="balancesatoshis">0</span>
-        <span class="satoshis">(satoshis)</span> 
+        <span class="satoshis">(satoshis)</span>
         <span class="approximatelyequal">≈</span>
         <span class="balanceusd" id="balanceusd">0</span>
         <span class="usd">(USD)</span>
-        <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance" class="balancedetails">
+        <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
+            class="balancedetails">
             <img src="img/icons/reload.png" alt="">
         </span>
     </div>
-    
+
 
     <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
         <label data-vavilon="VV0065" data-vavilon="address">Address</label>
@@ -271,21 +275,22 @@ var walletanchorHTML=`
             </span>
         </div>
     </div>
-    
+
     <div id="walletsendfunds">
         <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
         <p data-vavilon="VV0029">You can send funds to another Bitcoin Cash address.</p>
 
         <label data-vavilon="VV0031" for="fundsamount">Bitcoin Cash Address (Any format)</label>
         <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
-        
+
         <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
         <input id="fundsamount" size="12" type="number" maxlength="12" onchange="sendFundsAmountChanged();"
-        onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
 
         <span class="sendusd" id="sendusd">($0.00 USD)</span>
 
-        <button data-vavilon="VV0032" id="sendfundsbutton" type="button" onclick="sendfunds();">Send
+        <button data-vavilon="VV0032" class="memberstandardbutton" id="sendfundsbutton" type="button"
+            onclick="sendfunds();">Send
             Funds</button>
         <br />
     </div>
@@ -311,8 +316,8 @@ var walletanchorHTML=`
             href="https://blockchair.com/bitcoin-cash/address/{address}">blockchair</a>
         <a class="blockexplorerlink" rel="noopener noreferrer" target="btccom" id="settingsbtccom"
             href="https://bch.btc.com/{address}">btc.com</a>
-        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited"
-            id="settingsbitcoinunlimited" href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
+        <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited" id="settingsbitcoinunlimited"
+            href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
             unlimited</a>
     </div>
 </div>
@@ -339,8 +344,8 @@ var newpostHTML=`
     -->
     <div>
         <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="5000"
-            onchange="memorandumPreview();" onkeypress="this.onchange();"
-            onpaste="this.onchange();" oninput="this.onchange();"></textarea>
+            onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
+            oninput="this.onchange();"></textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
     </div>
     <div id="memorandumtextbutton">
@@ -391,14 +396,15 @@ var messagesanchorHTML=`
         <span id="messageaddress" class="messageaddress"></span>
         <span id="messagepublickey" class="messagepublickey"></span>
         <div id="sendmessagebox" style="display: none;">
-            <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain (that's the
+            <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain
+                (that's the
                 sender, recipient, size and time of your message).
                 Additionally, if the recipient's private key is made public in the future, the recipient's
                 messages will become public. Using the blockchain for
                 messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
                 available to you if you wish to use it.
             </p>
-            
+
             <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum 547)</label>
             <input id="stampamount" size="8" type="number" value="547">
             <div>
@@ -416,12 +422,11 @@ var messagesanchorHTML=`
         <br />
     </div>
     <div id="messageschoice" class="filters">
-        <a data-vavilon_title="allmessages" class="filteroff" href="#messages?messagetype=all"
-            onclick="nlc();">All</a>
+        <a data-vavilon_title="allmessages" class="filteroff" href="#messages?messagetype=all" onclick="nlc();">All</a>
         <a data-vavilon_title="sentmessages" class="filteroff" href="#messages?messagetype=sent"
             onclick="nlc();">Sent</a>
-        <a data-vavilon_title="receivedmessages" class="filteroff"
-            href="#messages?messagetype=received" onclick="nlc();">Received</a>
+        <a data-vavilon_title="receivedmessages" class="filteroff" href="#messages?messagetype=received"
+            onclick="nlc();">Received</a>
     </div>
     <br />
     <div id="messageslist" class="messageslist"></div>
@@ -549,7 +554,8 @@ var trustgraphHTML=`
 var bestiesHTML=`
 <div class="content">
     <div id="bestiesdetails">
-        <div id="bestiescy" style="width:100%;height:600px;"></div><div id="cynote" style="width:100%">&nbsp;</div>
+        <div id="bestiescy" style="width:100%;height:600px;"></div>
+        <div id="cynote" style="width:100%">&nbsp;</div>
     </div>
     <br />
 </div>
@@ -557,15 +563,20 @@ var bestiesHTML=`
 
 var membertabsHTML=`
 <div class="filterssecondset">
-    <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}" href="#member?qaddress={address}">Profile</a>
+    <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}"
+        href="#member?qaddress={address}">Profile</a>
     <span class="separator"></span>
-    <a data-vavilon="VVreputation" data-vavilon_title="VVreputation" title="Reputation" class="{reputationclass}" href="#rep?qaddress={address}">Reputation</a>
+    <a data-vavilon="VVreputation" data-vavilon_title="VVreputation" title="Reputation" class="{reputationclass}"
+        href="#rep?qaddress={address}">Reputation</a>
     <span class="separator"></span>
-    <a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}" href="#support?qaddress={address}">Top 5</a>
+    <!--<a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}"
+        href="#support?qaddress={address}">Top 5</a>-->
     <span class="separator"></span>
-    <a data-vavilon="VVlist" data-vavilon_title="VVlist" title="List" class="filteroff" href="#list?qaddress={address}">List</a>
+    <a data-vavilon="VVlist" data-vavilon_title="VVlist" title="List" class="filteroff"
+        href="#list?qaddress={address}">List</a>
     <span class="separator"></span>
-    <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}" href="#show?start=0&limit=25&order=new&content=posts&filter=everyone&qaddress={address}&topicname=">Posts</a>
+    <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
+        href="#show?start=0&limit=25&order=new&content=posts&filter=everyone&qaddress={address}&topicname=">Posts</a>
 </div>
 `;
 
@@ -579,85 +590,46 @@ pages.member = `
             {profilepiclargehtml}
         </span>
     </div>
-    <!-- *** -->
-    <div class="memberprofiletextContainer">
-        <label data-vavilon="VV0063" for="memberprofiletext">Profile</label>
-        <div id="memberprofiletext">{profile}</div>
-    </div>
-    <div class="memberInfoTextContainer">
-        <div>
-            <label data-vavilon="VV0060" for="membernametext" class="handle-label">Handle</label>
-            <span>{handle}</span>
-        </div>
-        <div>
-            <label data-vavilon="VV0062" for="memberpagingid">Paging ID</label>
-            <span id="memberpagingid">@{pagingid}</span>
-        </div>
-    </div>
-    <!-- *** -->
-    <div id="membernametext"><a data-vavilon="VV0061" class="populate-send-message"
-            onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');" href="javascript:;">Send
-            Message</a></div>
-    <div id="memberprofilelinks">
-        <label data-vavilon="VV0064">Profile Links</label>
-        <div>
-            <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span class="separatorwide"></span><a
-                rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
-                id="membermemoprofilelink">Memo</a><span class="separatorwide"></span><a rel="noopener noreferrer"
-                target="bitclout" href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
-                class="separatorwide"></span><a rel="noopener noreferrer" target="bitcloutsignal"
-                href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">signal</a><span
-                class="separatorwide"></span><a rel="noopener noreferrer" target="prosperclout"
-                href="https://www.prosperclout.com/pk/{bcaddress}?tab=overview" id="prospercloutprofilelink">ProsperClout</a>
-        </div>
-    </div>
     <!--<label for="memberidenticon">Identicon</label>
     <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg>
     </div>
     <label data-vavilon="VV0065">Address</label>-->
-    <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
-        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-        <span id="membercashaddrformat">{cashaddress}</span>
-        <div id="membercashaddrformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('membercashaddrformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
-        </div>
-    </div>
-    <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')">
-        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-        <span id="memberbcformat">{bcaddress}</span>
-        <div id="memberbcformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('memberbcformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
-        </div>
-    </div>
-    
-    <!--<div id="memberlegacyaddress">
-        <label data-vavilon="VV0068">Legacy Address</label>
-        <div>
-            <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-            <span id="memberlegacyformat">{address}</span>
-            <div id="memberlegacyformatdiv">
-                <span class="qrcodeclick" onclick="showQRCode('memberlegacyformat',200);">
-                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                        code</span>
-                </span>
+
+    <div class="profileactions">
+        {followbuttonhtml}
+        <span class="dropdown">
+            <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
+            <div class="dropdown-content mainhamburger" id="dropdown-content">
+                <a data-vavilon="VV0061" class="populate-send-message"
+                    onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');"
+                    href="javascript:;">Send Message</a>
+                {mutebuttonhtml}
+                <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="memo"
+                    href="https://memo.cash/profile/{address}" id="membermemoprofilelink">Memo</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="bitclout"
+                    href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="bitcloutsignal"
+                    href="https://bitcloutsignal.com/history/{pagingid}" id="bitcloutsignalprofilelink">signal</a><span
+                    class="separatorwide"></span><a rel="noopener noreferrer" target="prosperclout"
+                    href="https://www.prosperclout.com/pk/{bcaddress}?tab=overview"
+                    id="prospercloutprofilelink">ProsperClout</a>
             </div>
-        </div>
-    </div>-->
+        </span>
+    </div>
+
+
+
+    <!-- *** -->
+    <div class="memberdetails">
+        <span class="profile-handle">{handle}</span>
+        <br />
+        <span class="profile-pagingid" id="memberpagingid">@{pagingid}</span>
+    </div>
+
+    <div id="memberprofiletext">{profile}</div>
+
     <div class="memberstats">
-        <div class="follow">
-            <label data-vavilon="VV0069">Follow</label>
-            {followbuttonhtml}
-        </div>
-        <div class="mute">
-            <label data-vavilon="VV0070">Mute</label>
-            {mutebuttonhtml}
-        </div>
         <div class="membrain">
             <a href="https://member.cash/a/804fc6e860"></a><label data-vavilon="membrain">MemBrain</label></a>
             <a id="membrainnumber" href="https://member.cash/a/804fc6e860">{membrain}</a>
@@ -686,6 +658,28 @@ pages.member = `
             <div class="memberrating" id="memberrating"></div>
         </div>
     </div>
+    <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+        <span id="membercashaddrformat">{cashaddress}</span>
+        <div id="membercashaddrformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('membercashaddrformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
+    </div>
+    <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')">
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+        <span id="memberbcformat">{bcaddress}</span>
+        <div id="memberbcformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('memberbcformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
+    </div>
+
+
 </div>`;
 
 pages.settings = `
@@ -741,8 +735,8 @@ pages.settings = `
         </div>
         <div>
             <label data-vavilon="VV0079" for="notificationbutton">Notifications</label>
-            <span class="allownotifications"><a data-vavilon="VV0080" id="notificationbutton" class="notificationbutton"
-                    href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow
+            <span class="allownotifications"><a data-vavilon="VV0080" class="memberlinkbutton" href="javascript:;"
+                    onclick="requestNotificationPermission(); this.style.display='none';">Allow
                     Notifications</a></span>
         </div>
         <div>
@@ -836,7 +830,8 @@ pages.settings = `
     </div>
     <div class="customcheckbox">
         <input type="checkbox" id="showonlybchnetwork" onchange="updateSettingsCheckbox('showonlybchnetwork');">
-        <label data-vavilon="VVbchonly" for="showonlybchnetwork" class="checkboxlabel">Show Only BCH Network Content</label>
+        <label data-vavilon="VVbchonly" for="showonlybchnetwork" class="checkboxlabel">Show Only BCH Network
+            Content</label>
     </div>
     <div>
         <label data-vavilon="VV0091" for="contentserver">Content Server</label>
@@ -868,7 +863,9 @@ pages.settings = `
     <div>
         <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
         <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
-        <a href="javascript:;" onclick="getJSON(dropdowns.contentserver + '/invalidatecache/')"; class="cachedeletebutton">Invalidate cache (will force reload of client)</a>
+        <br/>
+        <a href="javascript:;" onclick="getJSON(dropdowns.contentserver + '/invalidatecache/')" ;
+            class="memberlinkbutton">Invalidate cache (will force reload of client)</a>
     </div>
 
 
@@ -876,30 +873,29 @@ pages.settings = `
 
 var hamburgerMenuHTML=`
 <span class="dropdown">
-    <button
-        onclick="var ddmenu=this.parentElement.querySelector('#dropdown-content');
-                    ddmenu.style.display='block';
-                var ddcover=document.getElementById('ddcover');
-                    ddcover.style.display='block';
-                    ddcover.onclick=ddmenu.onclick=function(){ddmenu.style.display=ddcover.style.display='none';};"
-        class="dropbtn">☰</button>
+    <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
-        <a data-vavilon_title="VV0063" id="profilebutton"  title="Profile"    class="hamburgerbutton" href="#profile"    onclick="nlc();" style="display:none;">
+        <a data-vavilon_title="VV0063" id="profilebutton" title="Profile" class="hamburgerbutton" href="#profile"
+            onclick="nlc();" style="display:none;">
             <img src="img/icons/user.png" alt="profile">
             <span data-vavilon="VV0063">Profile</span></a>
-        <a data-vavilon_title="VVwallet" id="walletbutton"  title="Wallet"      class="hamburgerbutton" href="#wallet"    onclick="nlc();" style="display:none;">
+        <a data-vavilon_title="VVwallet" id="walletbutton" title="Wallet" class="hamburgerbutton" href="#wallet"
+            onclick="nlc();" style="display:none;">
             <img src="img/icons/wallet.png" alt="wallet">
             <span data-vavilon="VVwallet">Wallet</span></a>
-        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Tag List"  class="hamburgerbutton" href="#topiclist"   onclick="nlc();">
+        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Tag List" class="hamburgerbutton" href="#topiclist"
+            onclick="nlc();">
             <img src="img/icons/hashtag.png" alt="MyFeed">
             <span data-vavilon="VV0100">Tag List</span></a>
-        <a data-vavilon_title="VV0101" id="mapbutton"       title="Map"         class="hamburgerbutton" href="#map"         onclick="nlc();">
+        <a data-vavilon_title="VV0101" id="mapbutton" title="Map" class="hamburgerbutton" href="#map" onclick="nlc();">
             <img src="img/icons/map.png" alt="map">
             <span data-vavilon="VV0101">Map</span></a>
-        <a data-vavilon_title="VV0098" id="settingsbutton"  title="Settings"    class="hamburgerbutton" href="#settings"    onclick="nlc();">
+        <a data-vavilon_title="VV0098" id="settingsbutton" title="Settings" class="hamburgerbutton" href="#settings"
+            onclick="nlc();">
             <img src="img//Icons/settings.png" alt="settings">
             <span data-vavilon="VV0098">Settings</span></a>
-        <a data-vavilon_title="VV0078" id="logoutbutton"          title="Logout"      class="hamburgerbutton" href="#logout"      onclick="logout();" style="display:none;">
+        <a data-vavilon_title="VV0078" id="logoutbutton" title="Logout" class="hamburgerbutton" href="#logout"
+            onclick="logout();" style="display:none;">
             <img src="img/icons/exit.png" alt="logout">
             <span data-vavilon="VV0078">Logout</span></a>
     </div>
@@ -913,34 +909,41 @@ var pageTitleHTML = `
 var majorNavButtonsHTML=`
 <div id="majornavbuttonsdivid" class="majornavbuttonsdiv">
     <span id="loggedin" class="loggedin" style="display:none;">
-    <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"     title="Notifications"                                       href="#notifications">
-        <img src="img/icons/notification.png" alt="notificatons">
-        <span class="alertcount noselect" id="alertcount"></span></a>
-    <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"      title="Firehose (Everything)"                              href="#firehose">
-        <img src="img/icons/fire-hose.png" alt="FireHose">
-    </a>
-    <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"           title="My People (Latest posts from your follows)"           href="#mypeople">
-        <img src="img/icons/group.png" alt="MyFeed">
-    </a>
-    <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"         title="My Tags  (Latest posts from your tags)"        href="#mytags">
-        <img src="img/icons/hashtaglarge.png" alt="MyFeed">
-    </a>
-    <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton"   title="Messages"                                            href="#messages">
-        <img src="img/icons/messages.png" alt="message">
-        <span class="alertcount noselect" id="alertcountpm"></span></a>
-    <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton"               title="New Post"                                            href="#new">
-        <img src="img/icons/plus.png" alt="newpost">
-    </a>
+        <a data-vavilon_title="VV0095" class="largenavbtn" onclick="nlc();" id="notificationsbutton"
+            title="Notifications" href="#notifications">
+            <img src="img/icons/notification.png" alt="notificatons">
+            <span class="alertcount noselect" id="alertcount"></span></a>
+        <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebutton"
+            title="Firehose (Everything)" href="#firehose">
+            <img src="img/icons/fire-hose.png" alt="FireHose">
+        </a>
+        <a data-vavilon_title="VV0094a" class="largenavbtn" onclick="nlc();" id="myfeedbutton"
+            title="My People (Latest posts from your follows)" href="#mypeople">
+            <img src="img/icons/group.png" alt="MyFeed">
+        </a>
+        <a data-vavilon_title="VV0100a" class="largenavbtn" onclick="nlc();" id="topiclistbutton"
+            title="My Tags  (Latest posts from your tags)" href="#mytags">
+            <img src="img/icons/hashtaglarge.png" alt="MyFeed">
+        </a>
+        <a data-vavilon_title="VV0097" class="largenavbtn" onclick="nlc();" id="privatemessagesbutton" title="Messages"
+            href="#messages">
+            <img src="img/icons/messages.png" alt="message">
+            <span class="alertcount noselect" id="alertcountpm"></span></a>
+        <a data-vavilon_title="VV0096" class="largenavbtn" onclick="nlc();" id="newbutton" title="New Post" href="#new">
+            <img src="img/icons/plus.png" alt="newpost">
+        </a>
     </span>
     <span id="loggedout" class="loggedout">
-        <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebuttonloggedout"      title="Firehose (Everything)"                              href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
+        <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebuttonloggedout"
+            title="Firehose (Everything)"
+            href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
             <!-- 📰 -->
             <img src="img/icons/fire-hose.png" alt="firehose">
         </a>
         <a data-vavilon="VV0102a" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">Login</a>
         <span class="separatorwide"></span>
         <a data-vavilon="VV0103a" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">Start</a>
-    </span> 
+    </span>
 
 </div>
 `;
@@ -948,8 +951,9 @@ var majorNavButtonsHTML=`
 var userSearchHTML=`
 <div id="usersearchnav" class="usersearchnavclass">
     <input class="usersearchnav" id="usersearchnavid" maxlength="40"
-        onchange="userSearchChanged('usersearchnavid','usersearchnavresults');" onkeypress="this.onchange();" onfocus="this.onchange();"
-        onpaste="this.onchange();" oninput="this.onchange();" data-vavilon_data_placeholder="VVsearchplaceholder" placeholder="Search..."/>
+        onchange="userSearchChanged('usersearchnavid','usersearchnavresults');" onkeypress="this.onchange();"
+        onfocus="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"
+        data-vavilon_data_placeholder="VVsearchplaceholder" placeholder="Search..." />
     <div id="usersearchnavresults"></div>
 </div>
 `;
@@ -957,30 +961,30 @@ var userSearchHTML=`
 
 
 var headerHTML = `
-    <div id="ddcover" class="ddcover"></div>
-    <div class="headerleftgroup">
-        <span class="memberlogo">
-            <a href="./index.html">
-                <img class="memberlogoimagefull" src="img/logos/logowide.svg" width="130" height="26"
-                    alt="Site Logo Full" />
-                <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26"
-                    alt="Site Logo Icon" />
-            </a>
-        </span>
-        <a class="profilepicwrapper" href="#profile" onclick="nlc();"><span id="profilepicheader" class="profilepicheader"></a>
-        </span>
+<div id="ddcover" class="ddcover"></div>
+<div class="headerleftgroup">
+    <span class="memberlogo">
+        <a href="./index.html">
+            <img class="memberlogoimagefull" src="img/logos/logowide.svg" width="130" height="26"
+                alt="Site Logo Full" />
+            <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26" alt="Site Logo Icon" />
         </a>
-        <div id="pagetitle" class="pagetitleclass"></div>
+    </span>
+    <a class="profilepicwrapper" href="#profile" onclick="nlc();"><span id="profilepicheader"
+            class="profilepicheader"></a>
+    </span>
+    </a>
+    <div id="pagetitle" class="pagetitleclass"></div>
+</div>
+<div class="headercentergroup">
+    <nav id="majornavbuttons" class="majornavbuttonsclass"></nav>
+</div>
+<div class="headerrightgroup">
+    <div class="searchwrapper">
+        <nav id="usersearch" class="usersearchclass"></nav>
+        <nav id="hamburgermenu" class="hamburgermenuclass"></nav>
     </div>
-    <div class="headercentergroup">
-        <nav id="majornavbuttons" class="majornavbuttonsclass"></nav>
-    </div>
-    <div class="headerrightgroup">
-        <div class="searchwrapper">
-            <nav id="usersearch" class="usersearchclass"></nav>
-            <nav id="hamburgermenu" class="hamburgermenuclass"></nav>
-        </div>
-    </div>
+</div>
 `;
 
 var footerHTML = `
@@ -996,8 +1000,10 @@ var footerHTML = `
     </span>
     <span class="footerlinks">
         <span data-vavilon="VV0139">Supporters</span>&nbsp;∙&nbsp;
-        <a rel='noopener noreferrer' target="memo" href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">BCH</a>&nbsp;∙&nbsp;
-        <a rel='noopener noreferrer' target="bitclout" href="https://bitclout.com/u/membercash?tab=creator-coin">BCLT</a>
+        <a rel='noopener noreferrer' target="memo"
+            href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">BCH</a>&nbsp;∙&nbsp;
+        <a rel='noopener noreferrer' target="bitclout"
+            href="https://bitclout.com/u/membercash?tab=creator-coin">BCLT</a>
         <span class="separatorwide"></span>
         <a data-vavilon="VV0140" rel='noopener noreferrer' target="member"
             href="https://member.cash/#member?qaddress=16gs2oeLVJJT3YTL8uHLoRyLQtaWfEDxh1">Donate</a>
@@ -1011,7 +1017,7 @@ var footerHTML = `
         <span class="separatorwide"></span>
         <a data-vavilon="VV0142" href="mailto:freetrade.mc@gmail.com">Contact</a>
         <span class="separatorwide"></span>
-        <span data-vavilon="VV0143">version</span> <span id="version">loading</span>.<u>9</u>
+        <span data-vavilon="VV0143">version</span> <span id="version" title="version">loading</span>.<u>9</u>
     </span>
     <br />
     <br />

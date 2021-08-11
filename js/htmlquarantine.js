@@ -294,7 +294,9 @@ function getSafeInteractiveHTML(message, differentiator, includeMajorMedia) {
 
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate, sysrating, sourcenetwork) {
 
-    if (!address) { updateStatus('Missing address for post error - this should not happen.'); return ""; }
+    if (!address) { 
+        updateStatus('Missing address for post error - this should not happen.'); return ""; 
+    }
     if (!name) { name = address.substring(0, 10); }
 
     if (truncate && message.length > 400) { //to do, try to break on a whitespace
@@ -772,7 +774,7 @@ function replaceImgur(match, p1, p2, p3, p4, offset, string) {
 //Notifications
 
 function allowNotificationButtonHTML() {
-    return `<span class="allownotifications"><a data-vavilon="VV0080" class="notificationbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>`;
+    return `<span class="allownotifications"><a data-vavilon="VV0080" class="memberlinkbutton" href="javascript:;" onclick="requestNotificationPermission(); this.style.display='none';">Allow Notifications</a></span>`;
 }
 
 function getNotificationsTableHTML(contents, navbuttons) {
@@ -940,7 +942,7 @@ function getMemberRatingHTML(qaddress, ratingScore, pagingid) {
 
 //Settings
 function clickActionNamedHTML(action, qaddress, name, targetpubkey) {
-    return `<a data-vavilon='` + action + `' class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `","` + unicodeEscape(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
+    return `<a class='${action}button' data-vavilon='` + action + `' class='` + action + `' href='javascript:;' onclick='` + action + `("` + unicodeEscape(qaddress) + `","` + unicodeEscape(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
 }
 
 /*

@@ -369,7 +369,9 @@ function addDynamicHTMLElements(data) {
 
     if (data != null && data != undefined && data[0]) {
         //if (data.length > 0) {
-        updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
+        let qt=(Math.round(data[0].msc * 100) / 100).toFixed(2);
+        updateStatus("QT:" + qt);
+        document.getElementById("version").title=qt;
         //}
     }
     //Add ratings, disable controls if the star rating can be updated

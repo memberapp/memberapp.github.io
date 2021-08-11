@@ -429,33 +429,6 @@ html :lang(ar) {
   width: 100%;
   background-size: 100px 82px; }
 
-.profilestats,
-.memberstats {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap; }
-  .profilestats div,
-  .memberstats div {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex: 1;
-    flex: 1;
-    border: 1px solid rgba(0, 0, 0, 0.38);
-    border-radius: 0.25rem; }
-    .profilestats div label,
-    .memberstats div label {
-      margin-bottom: 0; }
 
 .settingsprofilelinks div a,
 #settingsprofilelinks div a,
@@ -2802,8 +2775,7 @@ tbody tr td .filterprovider {
     padding: 1.75rem; }
     .memberanchor .content div {
       margin-bottom: 1rem; }
-    .memberanchor .content #memberprofiletext {
-      white-space: break-spaces; }
+
     @media (max-width: 400px) {
       .memberanchor .content {
         margin-left: -15px !important;
