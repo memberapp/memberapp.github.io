@@ -163,9 +163,11 @@ async function getDataCommonToSettingsAndMemberFinally(qaddress, cashaddress, pr
     }
 
 
-
     if (pre == "member") {
         obj.profile = getSafeInteractiveHTML(obj.profile, 'profile', false);
+        if(data && data[0]){
+            obj.pinnedpostHTML = getHTMLForPostHTML(data[0].rtxid, data[0].raddress, data[0].name, data[0].rlikes, data[0].rdislikes, data[0].rtips, data[0].rfirstseen, data[0].rmessage, data[0].rroottxid, data[0].rtopic, data[0].rreplies, data[0].rgeohash, 'memberpage', '???mainratingid', data[0].likedtxid, data[0].likeordislike, data[0].rrepliesroot, data[0].rating, 0, data[0].rrepostcount, data[0].repostidtxid, data[0].pagingid, data[0].publickey, data[0].picurl, data[0].tokens, data[0].followers, data[0].following, data[0].blockers, data[0].blocking, data[0].profile, data[0].isfollowing, data[0].nametime, '', data[0].lastactive, false, data[0].sysrating, data[0].rnetwork);
+        }
     }
 
     document.getElementById(prepage + 'anchor').innerHTML = templateReplace(pages[pre], obj);

@@ -324,6 +324,20 @@ async function bitCloutLikePost(likedPostHashHex) {
   return await sendBitCloutTransaction(payload, "create-like-stateless");
 }
 
+async function bitCloutPinPost(pinPostHashHex,pubkey) {
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: pinPostHashHex,
+    BodyObj: { Body: `pinpost https://member.cash/ba/${pubkey}`},
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData = { Pinpost: "true" };
+
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
+
 async function sendBitCloutFollow(followpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",

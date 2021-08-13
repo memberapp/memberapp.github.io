@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = "6.11.4";
+var version = "6.11.5";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -293,9 +293,11 @@ async function login(loginkey) {
     updateSettings();
     getAndPopulateSettings();
 
-    //Register public key with utxo server so that utxos can be cached    
+    //Register public key hex with utxo server so that utxos can be cached    
     //getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
+    //Register public key with content server to prepare feeds faster    
+    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkey + '?a=100').then(function (data) { }, function (status) { });
 
     tq.addUTXOPool(pubkey, qpubkey, localStorageSafe, "balance");
     //Get latest rate and update balance

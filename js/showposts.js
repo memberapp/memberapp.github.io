@@ -698,6 +698,17 @@ function increaseGUIReposts(txid) {
     document.getElementById('repostscount' + txid).innerHTML = repostscount + 1;
 }
 
+function pinpost(txid){
+//If bitclout user is logged in
+    if (isBitCloutUser()) {
+        bitCloutPinPost(txid,pubkey);
+    }
+
+    if (checkForNativeUserAndHasBalance()) {
+        memoPinPost(txid, privkey);
+    }
+}
+
 function likePost(txid, tipAddress) {
     //if no identity login, then check for priv key 
     if (!checkForPrivKey()) return false;

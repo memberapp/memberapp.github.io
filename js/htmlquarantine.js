@@ -338,6 +338,12 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     if (sourcenetwork == 0) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/' + san(txid) + '">Memo</a>';
     }
+
+    let pinnedpostHTML='';
+    if(address==pubkey){
+        pinnedpostHTML = `<a data-vavilon="VVpinpost" href="javascript:;" onclick="pinpost('${san(txid)}')">Pin Post</a>`;
+    }
+    
     var obj = {
         //These must all be HTML safe 
         author: theAuthorHTML,
@@ -371,7 +377,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         permalink: permalink,
         articlelink: articlelink,
         directlink: directlink,
-        sourceNetworkHTML: sourceNetworkHTML
+        sourceNetworkHTML: sourceNetworkHTML,
+        pinnedpostHTML:pinnedpostHTML
     };
 
     /*var retVal = `<div class="post">

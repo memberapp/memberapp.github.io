@@ -1114,7 +1114,7 @@ a {
   background-color: #f3f6fb;
   color: #000;
 }
-.post .options {
+.options {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1128,7 +1128,7 @@ a {
   background-color: transparent !important;
   min-width: 30px;
 }
-.post .options div {
+.options div {
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -1165,6 +1165,10 @@ a {
   right: -8px;
   width: 17px;
   height: 17px;
+}
+
+.post div {
+   margin-bottom: unset !important;
 }
 
 #loginbox .content {
