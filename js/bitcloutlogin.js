@@ -262,7 +262,7 @@ async function waitForServerResponse(key) {
 }
 
 async function sendBitCloutTransaction(payload, action, divForStatus) {
-  let confirmation;
+  let confirmation='';
   let retrywait=0;
   do{
     if(retrywait>0){
@@ -272,9 +272,14 @@ async function sendBitCloutTransaction(payload, action, divForStatus) {
       }  
     }
     await sleep(retrywait);
-    confirmation=await constructAndSendBitCloutTransaction(payload, action, divForStatus);
+    try{
+      confirmation=await constructAndSendBitCloutTransaction(payload, action, divForStatus);
+    }catch(err){
+      console.log("error sending:"+err);
+      //sometime may error out, means we'll try again.
+    }
     retrywait=(retrywait*1.5)+2000;
-  }while(confirmation.length!=64); //txid should be 64 chars in length
+  }while(!confirmation || confirmation.length!=64); //txid should be 64 chars in length
 
   return confirmation;
 }
@@ -289,6 +294,7 @@ async function constructAndSendBitCloutTransaction(payload, action, divForStatus
   var url = dropdowns.txbroadcastserver + "bitclout?bcaction=" + action;
   //var url = dropdowns.txbroadcastserver + "bitclout";
   if (statusElement) statusElement.value = "Constructing BitClout Tx";
+  
   getJSON(url, "&payload=" + encodeURIComponent(payload)).then(async function (data) {
     //Now sign the transaction
 
@@ -312,9 +318,8 @@ async function constructAndSendBitCloutTransaction(payload, action, divForStatus
       var signedTx = await signTransaction(data.TransactionHex);
       submitSignedTransaction(signedTx, uniqueid, divForStatus);
     }
-
-
-  });
+  }).catch(err => serverresponses.set(uniqueid, err.message));
+  
   return await waitForServerResponse(uniqueid);
 }
 
