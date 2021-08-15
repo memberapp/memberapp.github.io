@@ -440,8 +440,15 @@ async function sendBitCloutRating(posttext, topic, divForStatus, successFunction
 
 
 
-async function sendBitCloutReply(txid, replytext, divForStatus, successFunction) {
+async function sendBitCloutReply(txid, replytext, divForStatus, successFunction, parentSourceNetwork) {
   var body = { Body: replytext, ImageURLs: [] };
+  let postExtraData;
+  if(parentSourceNetwork!=1){
+    //Bitclout does not allow a reply to post that does not exist on its network
+    //We'll send reply to a different post, and make a note of the real reply below
+    postExtraData={ Overideretxid: txid };
+    txid='b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3';
+  }
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: txid,
@@ -449,6 +456,10 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction)
     IsHidden: false,
     MinFeeRateNanosPerKB: 1000
   };
+  if(parentSourceNetwork!=1){
+    payload.PostExtraData = postExtraData;
+  }
+
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
   if (successFunction) { successFunction(txid, replytext) };
   return txid;

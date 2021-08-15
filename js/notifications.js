@@ -328,7 +328,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "purchase",
                 `img/icons/notification/follow.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'purchasecoin', "purchased your creator coin. Sorry we don't have the details yet."),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'purchasecoin', `purchased your creator coin. ~${((Number(data.ccamount)*4)/(1000000000*3)).toFixed(2)} BCLT`),
                 timeSince(Number(data.time), true),
                 `<a  rel="noopener noreferrer" target="signal" href='https://bitcloutsignal.com/history/${data.userpagingid}'>Coin Transactions From Signal</a>`,
                 data.txid, highlighted
@@ -336,10 +336,11 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             break;
 
         case "sale":
+            Number(data.ccamount);
             return notificationItemHTML(
                 "sale",
                 `img/icons/notification/follow.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'soldcoin', "sold your creator coin. Sorry we don't have the details yet."),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'soldcoin', `sold your creator coin. ~${((Number(data.ccamount)*4)/(1000000000*3)).toFixed(2)} BCLT`),
                 timeSince(Number(data.time), true),
                 `<a  rel="noopener noreferrer" target="signal" href='https://bitcloutsignal.com/history/${data.userpagingid}'>Coin Transactions From Signal</a>`,
                 data.txid, highlighted
@@ -380,9 +381,6 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             break;
 
         // Maybe shelve these 'negative' ones
-        case "unfollow":
-            //return `Unfollow: User x unfollowed you time`;
-            break;
         case "mute":
             //return `Mute: User x muted you time`;
             break;

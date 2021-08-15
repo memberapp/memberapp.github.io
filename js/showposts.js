@@ -588,7 +588,7 @@ function showReplyButton(txid, page, divForStatus) {
     document.getElementById("replytext" + page + txid).value = "";
 }
 
-function sendReply(txid, page, divForStatus) {
+function sendReply(txid, page, divForStatus, parentSourceNetwork) {
     if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
@@ -612,7 +612,7 @@ function sendReply(txid, page, divForStatus) {
         successFunction = null;
     }
     if (isBitCloutUser()) {
-        sendBitCloutReply(txid, replytext, divForStatus, successFunction);
+        sendBitCloutReply(txid, replytext, divForStatus, successFunction, parentSourceNetwork);
     }
     return true;
 }

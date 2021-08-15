@@ -294,7 +294,7 @@ var replyDivTemplate = `
     <textarea id="replytext{page}{txid}" rows="3" maxlength="5000"></textarea>
     <br />
     <input id="replybutton{page}{txid}" value="reply" type="submit"
-        onclick="sendReply('{txid}','{page}','replystatus{page}{txid}');" />
+        onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}');" />
     <input data-vavilon_value="VV0154" id="replystatus{page}{txid}" value="sending..." type="submit"
         style="display:none" disabled />
     <div id="replycompleted{page}{txid}" value=""></div>

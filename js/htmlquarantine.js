@@ -118,18 +118,16 @@ function userFromDataBasic(data, mainRatingID, size) {
 }
 
 //Posts and Replies
-function getReplyDiv(txid, page, differentiator, address, picurl) {
+function getReplyDiv(txid, page, differentiator, address, sourcenetwork) {
     page = page + differentiator;
-
-
-
     var obj = {
         //These must all be HTML safe.
         page: page,
         txid: san(txid),
         address: address,
         profilepicsmall: profilepic,
-        address: pubkey
+        address: pubkey,
+        sourcenetwork: sourcenetwork
     }
 
     return templateReplace(replyDivTemplate, obj);
@@ -323,7 +321,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var age = getAgeHTML(firstseen);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var tipsandlinks = getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid, sourcenetwork);
-    var replydiv = getReplyDiv(txid, page, differentiator, address, picurl);
+    var replydiv = getReplyDiv(txid, page, differentiator, address, sourcenetwork);
 
     var santxid = san(txid);
     var permalink = `p/` + santxid.substring(0, 10);
@@ -441,7 +439,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var age = getAgeHTML(firstseen);
     var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork);
-    var replyDiv = getReplyDiv(txid, page, differentiator, address, picurl);
+    var replyDiv = getReplyDiv(txid, page, differentiator, address, sourcenetwork);
 
 
     var obj = {

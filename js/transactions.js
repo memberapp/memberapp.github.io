@@ -337,6 +337,16 @@ function sendLike(txid,privkey) {
     tq.queueTransaction(tx);
 }
 
+function memoPinPost(txid, privkey){
+    var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
+    const tx = {
+        data: ["0x6d35", "0x" + reversetx],
+        cash: { key: privkey }
+    }
+    updateStatus(getSafeTranslation('pinningpost', "Pinning Post"));
+    tq.queueTransaction(tx);
+}
+
 function setProfile() {
     if (!checkForNativeUser()) return false;
 
