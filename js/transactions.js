@@ -340,7 +340,7 @@ function sendLike(txid,privkey) {
 function memoPinPost(txid, privkey){
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
-        data: ["0x6d35", "0x" + reversetx],
+        data: ["0x6da9", "0x" + reversetx],
         cash: { key: privkey }
     }
     updateStatus(getSafeTranslation('pinningpost', "Pinning Post"));
