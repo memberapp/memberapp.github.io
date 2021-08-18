@@ -1,14 +1,17 @@
-function bitcloutlogin() {
-  insertBitcloutIdentityFrame();
+
+var lastidprovider='https://identity.bitclout.com';
+function bitcloutlogin(idprovider) {
+  lastidprovider=idprovider;
+  insertBitcloutIdentityFrame(idprovider);
   identityWindow = window.open(
-    "https://identity.bitclout.com/log-in?accessLevelRequest=3",
+    idprovider+"/log-in?accessLevelRequest=3",
     null,
     "toolbar=no, width=800, height=1000, top=0, left=0"
   );
 }
 
-function insertBitcloutIdentityFrame() {
-  document.getElementById('bitcloutframe').innerHTML = `<iframe id="identity" frameborder="0" class="" src="https://identity.bitclout.com/embed?v=2" style="height: 100vh; width: 100vw; display: none;"></iframe>`;
+function insertBitcloutIdentityFrame(idprovider) {
+  document.getElementById('bitcloutframe').innerHTML = `<iframe id="identity" frameborder="0" class="" src="${idprovider}/embed?v=2" style="height: 100vh; width: 100vw; display: none;"></iframe>`;
 }
 
 function showBitcloutIdentityFrame() {
@@ -28,6 +31,7 @@ function bitcloutlogout() {
   );*/
   bitCloutUser = null;
   bitCloutUserData = null;
+  bitCloutIDProvider = null;
 }
 
 function handleInit(e) {
@@ -53,10 +57,18 @@ function handleInit(e) {
 
 function getBitCloutLoginFromLocalStorage() {
   bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
-  bitCloutUserData = JSON.parse(localStorageGet(localStorageSafe, "bitcloutuserdata"));
+  try{
+    bitCloutUserData = JSON.parse(localStorageGet(localStorageSafe, "bitcloutuserdata"));
+  }catch(err){
+    console.log("bitCloutUserData not available - should not happen!");
+  }
+  bitCloutIDProvider = localStorageGet(localStorageSafe, "bitcloutidprovider");
+  if(!bitCloutIDProvider){ //legacy
+    bitCloutIDProvider = 'https://identity.bitclout.com';
+  }
 
   if (bitCloutUserData) {
-    insertBitcloutIdentityFrame();
+    insertBitcloutIdentityFrame(bitCloutIDProvider);
   }
 }
 
@@ -71,9 +83,15 @@ function handleLoginBitclout(payload) {
 
   if (payload && payload.publicKeyAdded) {
     bitCloutUser = payload.publicKeyAdded;
-    bitCloutUserData = payload.users[bitCloutUser];
+    bitCloutIDProvider = lastidprovider;
+    if(payload.users[bitCloutUser]){
+      bitCloutUserData = payload.users[bitCloutUser];
+    }else{
+      alert(bitCloutIDProvider+" did not send back the relevant payload.users in the payload. This may be a read only login.");
+    }
     localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
     localStorageSet(localStorageSafe, "bitcloutuserdata", JSON.stringify(bitCloutUserData));
+    localStorageSet(localStorageSafe, "bitcloutidprovider", JSON.stringify(bitCloutIDProvider));
     trylogin(payload.publicKeyAdded);
   }
 }
@@ -178,6 +196,7 @@ var identityWindow = null;
 
 var bitCloutUser = null;
 var bitCloutUserData = null;
+var bitCloutIDProvider = null;
 
 let identityresponses = new Map();
 let serverresponses = new Map();

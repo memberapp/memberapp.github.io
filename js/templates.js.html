@@ -101,20 +101,20 @@ var directRatingHTML=`
 
 var mainbodyHTML=`
 <div class="newheader" id="header"></div>
-<div class="mainbody">
-    <div id="loading" class="mcapplicationpage loading" style="display: none;">
+<div class="mainbody mcapplicationpage">
+    <div id="loading" class="loading" style="display: none;">
         <div class="loading"></div>
     </div>
 
     <!--<div id="lowfundswarning" class="alert" style="display: none;"></div>-->
 
-    <div id="toolsanchor" class="mcapplicationpage tools" style="display: none;"></div>
+    <div id="toolsanchor" class="tools" style="display: none;"></div>
 
-    <div id="newpost" class="mcapplicationpage newpost" style="display: none;"></div>
+    <div id="newpost" class="newpost" style="display: none;"></div>
 
-    <div id="feed" class="mcapplicationpage feed" style="display: none;"></div>
+    <div id="feed" class="feed" style="display: none;"></div>
 
-    <div id="notifications" class="mcapplicationpage notifications" style="display: none;">
+    <div id="notifications" class="notifications" style="display: none;">
         <div id="notificationtabs" class="tabs">
             <nav id="notificationtypes" class="filters">
 
@@ -124,7 +124,7 @@ var mainbodyHTML=`
         <div id="notificationsbody" class="pageundertabs"></div>
     </div>
 
-    <div id="mcidmemberheader" class="mcapplicationpage mcmemberheader" style="display: none;">
+    <div id="mcidmemberheader" class="mcmemberheader" style="display: none;">
         <div id="mcidmembertabs" class="filters" style="display:none;"></div>
         <div id="mcidmemberanchor" class="memberanchor"></div>
         <div id="trustgraph" class="trustgraph" style="display:none;"></div>
@@ -133,29 +133,29 @@ var mainbodyHTML=`
         <div id="anchorratings" class="ratings" style="display: none;"></div>-->
     </div>
 
-    <div id="settingsanchor" class="mcapplicationpage settings" style="display: none;"></div>
+    <div id="settingsanchor" class="settings" style="display: none;"></div>
 
-    <div id="followers" class="mcapplicationpage followers" style="display: none;"></div>
+    <div id="followers" class="followers" style="display: none;"></div>
 
-    <div id="following" class="mcapplicationpage following" style="display: none;"></div>
+    <div id="following" class="following" style="display: none;"></div>
 
-    <div id="blockers" class="mcapplicationpage blockers" style="display: none;"></div>
+    <div id="blockers" class="blockers" style="display: none;"></div>
 
-    <div id="blocking" class="mcapplicationpage blocking" style="display: none;"></div>
+    <div id="blocking" class="blocking" style="display: none;"></div>
 
-    <div id="messagesanchor" class="mcapplicationpage messages" style="display: none;"></div>
+    <div id="messagesanchor" class="messages" style="display: none;"></div>
 
-    <div id="topicmeta" class="mcapplicationpage topics" style="display: none;"></div>
+    <div id="topicmeta" class="topics" style="display: none;"></div>
 
-    <div id="posts" class="mcapplicationpage posts" style="display: none;"></div>
+    <div id="posts" class="posts" style="display: none;"></div>
 
-    <div id="comments" class="mcapplicationpage comments" style="display: none;"></div>
+    <div id="comments" class="comments" style="display: none;"></div>
 
-    <div id="thread" class="mcapplicationpage thread" style="display: none;"></div>
+    <div id="thread" class="thread" style="display: none;"></div>
 
-    <div id="loginbox" class="mcapplicationpage loginbox" style="display: none;"></div>
+    <div id="loginbox" class="loginbox" style="display: none;"></div>
 
-    <div id="topiclistanchor" class="mcapplicationpage topics" style="display: none;"></div>
+    <div id="topiclistanchor" class="topics" style="display: none;"></div>
 </div>`;
 
 var loginboxHTML=`
@@ -177,7 +177,7 @@ var loginboxHTML=`
     <hr />
     <br />
     <br />
-    <br /><span data-vavilon="VV0018u">Phrase (12 words), Username or Public Key</span>
+    <br /><span data-vavilon="VV0018u">Phrase (12 words), Username, Public or Private Key</span>
     <br />
     <div class="formgroup">
         <input size="64" id="loginkey">
@@ -191,7 +191,9 @@ var loginboxHTML=`
     <br />
     <div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. </span><br /><a href="javascript:;"
-            onclick='bitcloutlogin();'><span data-vavilon="loginwithidentity">Login with Identity</span></a>
+            onclick='bitcloutlogin("https://identity.bitclout.com");'><span data-vavilon="loginwithidentity">Login with Identity</span></a> or
+            <a href="javascript:;"
+            onclick='bitcloutlogin("https://identity.love4src.com");'><span data-vavilon="love4src">love4src</span></a>
     </div>
     <div class="loginnotes">
         <span>*Memo Users. Your <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">private

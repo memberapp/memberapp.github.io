@@ -362,7 +362,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "like",
                 `img/icons/notification/liked.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'likedyour', 'liked your') + messageType + getSpanClassHTML("plaintext", (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : "")),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'likedyour', 'liked your') + messageType + getSpanClassHTML("plaintext", (Number(data.amount) > 0 ? usdString(Number(data.amount), false) : "")),
                 timeSince(Number(data.time), true),
                 postHTML,
                 data.txid, highlighted
@@ -373,7 +373,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "repost",
                 `img/icons/notification/repost.png`,
-                userFromData(data, mainRatingID) + ((data.rposttype == 0) ? getSpanHTML('plaintext', 'rememberedyour', 'remembered your') : getSpanHTML('plaintext', 'quoterememberedyour', 'quote remembered your')) + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? balanceString(Number(data.amount), false) : ""),
+                userFromData(data, mainRatingID) + ((data.rposttype == 0) ? getSpanHTML('plaintext', 'rememberedyour', 'remembered your') : getSpanHTML('plaintext', 'quoterememberedyour', 'quote remembered your')) + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? usdString(Number(data.amount), false) : ""),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
                 data.txid, highlighted

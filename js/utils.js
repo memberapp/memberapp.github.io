@@ -288,6 +288,16 @@ function getLatestUSDrate() {
   });
 }
 
+function usdString(total, includeSymbol) {
+  var usd = Number(total/10000).toFixed(2);
+  if (usd < 1) {
+    return (usd * 100).toFixed(0) + "¢";
+  } else {
+    return "$" + usd;
+  }
+}
+
+
 function balanceString(total, includeSymbol) {
   if (dropdowns.currencydisplay == "BCH" || numbers.usdrate === undefined || numbers.usdrate === 0) {
     //var balString = (Number(total) / 1000).toFixed(3);

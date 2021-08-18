@@ -227,7 +227,7 @@ function getScoresHTML(txid, likes, dislikes, tips, differentiator) {
         diff: differentiator,
         likesbalance: (Number(likes) - Number(dislikes)),
         tips: Number(tips),
-        balancestring: balanceString(Number(tips), false)
+        balancestring: usdString(Number(tips), false)
     }
     return templateReplace(scoresTemplate, obj);
     //return ` <span onclick="showScoresExpanded('` + san(txid) + `','scoresexpanded` + san(txid) + differentiator + `')" id="scores` + san(txid) + differentiator + `" class="score"><span class="likescounttext"><span id="likescount` + san(txid) + `">` + (Number(likes) - Number(dislikes)) + `</span> likes and</span> <span class="tipscounttext"><span id="tipscount` + san(txid) + `"  data-amount="` + Number(tips) + `">` + balanceString(Number(tips), false) + `</span></span></span>`;
@@ -352,7 +352,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         likes: Number(likes),
         dislikes: Number(dislikes),
         remembers: Number(repostcount),
-        tips: balanceString(Number(tips), true),
+        tips: usdString(Number(tips), true),
         tipsinsatoshis: Number(tips),
         txid: san(txid),
         txidshort: san(txid).substring(0, 10),
@@ -656,7 +656,7 @@ function getCloseButtonHTML(profileelement) {
 
 function getTipDetailsHTML(user, amount, type) {
     var theclass = "tipdetailscompact";
-    return `<div class="` + theclass + `">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + balanceString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
+    return `<div class="` + theclass + `">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + usdString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
 }
 
 function getRememberDetailsHTML(user, message, topic, txid) {

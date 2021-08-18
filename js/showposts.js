@@ -717,7 +717,7 @@ function likePost(txid, tipAddress) {
     increaseGUILikes(txid);
     if (numbers.oneclicktip >= 547) {
         var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
-        document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + numbers.oneclicktip, false);
+        document.getElementById('tipscount' + txid).innerHTML = usdString(tipscount + numbers.oneclicktip, false);
         document.getElementById('tipscount' + txid).dataset.amount = tipscount + numbers.oneclicktip;
     }
 
