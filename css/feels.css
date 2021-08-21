@@ -1078,15 +1078,6 @@ img {
   .votelinks .votetext {
     display: none; }
 
-.twittercontainer {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin-top: 1rem; }
-  .twittercontainer iframe {
-    width: 100%;
-    max-width: 550px; }
 
 video {
   width: 100%;
@@ -1098,40 +1089,7 @@ video {
     background-color: black;
     background-image: unset; }
 
-.youtubepreview {
-  position: relative;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: center;
-  justify-content: center; }
-  .youtubepreview .youtubepreviewimage {
-    width: 288px;
-    height: 162px;
-    object-fit: cover; }
-    @media (min-width: 769px) {
-      .youtubepreview .youtubepreviewimage {
-        width: 480px;
-        height: 270px; } }
-  .youtubepreview .play-icon {
-    position: absolute;
-    width: 100px;
-    height: auto; }
 
-.youtubecontainer {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin-top: 1rem; }
-  .youtubecontainer iframe {
-    width: 288px;
-    height: 162px; }
-    @media (min-width: 769px) {
-      .youtubecontainer iframe {
-        width: 480px;
-        height: 270px; } }
 
 .notificationtitle,
 .repost {
@@ -1571,7 +1529,7 @@ header {
     max-width: 960px; } }
   @media (min-width: 1025px) and (max-width: 768px) {
     header .pagetop nav {
-      max-width: 540px; } }
+      } }
       header .pagetop nav:before {
         position: absolute;
         content: " ";
@@ -1762,7 +1720,7 @@ footer {
     max-width: 960px; } }
     @media (max-width: 768px) {
       footer .content {
-        max-width: 540px; } }
+        } }
   footer #developmentversion {
     font-size: 1rem;
     text-align: center;
@@ -1843,7 +1801,7 @@ footer {
         max-width: 800px; } }
     @media (max-width: 768px) {
       #lowfundswarning .content {
-        max-width: 540px; } }
+        } }
     #lowfundswarning .content #satoshiamount,
     #lowfundswarning .content #lowfundsaddress {
       font-weight: bold;
@@ -2066,7 +2024,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     .mainbodywrapper #posts {
-      max-width: 540px; } }
+      } }
   .mainbodywrapper #posts .itemlist ol.posts {
     padding: 0; }
     .mainbodywrapper #posts .itemlist ol.posts li {
@@ -2132,7 +2090,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #newpost {
-      max-width: 540px; } }
+      } }
   #newpost br {
     display: none; }
   #newpost #memorandumarea {
@@ -2230,7 +2188,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #settingsanchor {
-      max-width: 540px; } }
+      } }
   #settingsanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2310,7 +2268,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #memberposts {
-      max-width: 540px; } }
+      } }
   #memberposts .itemlist ol {
     padding: 0;
     margin: 0; }
@@ -2343,7 +2301,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #toolsanchor {
-      max-width: 540px; } }
+      } }
   #toolsanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2376,7 +2334,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #loginbox {
-      max-width: 540px; } }
+      } }
   #loginbox .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2429,7 +2387,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #topiclistanchor {
-      max-width: 540px; } }
+      } }
   #topiclistanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2474,7 +2432,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #topicmeta {
-      max-width: 540px; } }
+      } }
   #topicmeta .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2564,7 +2522,7 @@ tbody tr td .filterprovider {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #messagesanchor {
-      max-width: 540px; } }
+      } }
   #messagesanchor .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -2844,7 +2802,7 @@ tbody tr td .filterprovider {
   @media (max-width: 768px) {
     #anchorratings,
     #community {
-      max-width: 540px; } }
+      } }
   #anchorratings .content,
   #community .content {
     background: white;
@@ -2897,7 +2855,7 @@ tbody tr td .filterprovider {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #trustgraph {
-      max-width: 540px; } }
+      } }
   #trustgraph .content {
     background: white;
     border: 1px solid rgba(0, 0, 0, 0.12);
@@ -3051,7 +3009,7 @@ tbody tr td .filterprovider {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #notifications {
-      max-width: 540px; } }
+      } }
   #notifications .notificationtitle {
     background: #f8f9fa; }
   #notifications ul.notificationslist {
@@ -3123,7 +3081,7 @@ tbody tr td .filterprovider {
     #blocking,
     #following,
     #followers {
-      max-width: 540px; } }
+      } }
   #blockers .content,
   #blocking .content,
   #following .content,

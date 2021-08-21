@@ -467,7 +467,7 @@ Use important, because we always want profile card pics to be this size*/
 .notificationitem .notificationIcon {
   display: block;
   position: absolute;
-  left: -30px;
+  left: -25px;
   top: 18px;
 }
 
@@ -670,7 +670,7 @@ img {
   color: #aaa !important;
   display: flex !important;
   align-items: center !important;
-  grid-gap: 7px !important;
+  grid-gap: 2px !important;
 }
 
 .iconcount {
@@ -1077,7 +1077,7 @@ a {
   padding: 10px;
   box-sizing: border-box;
   z-index: 2;
-  padding: 3px 10px;
+  padding: 3px 8px;
   transition: all 0.3s ease;
   max-width: 70px;
   min-width: 55px;
@@ -1826,9 +1826,7 @@ footer{
   .newheader .pagetitleclass .pageTitlediv {
     display: none;
   }
-  #notifications{
-    max-width: 651px;
-  }
+
 }
 /* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
 @media (max-width: 768px) {
@@ -1982,29 +1980,22 @@ footer{
     top: 68px;
     right: 40%;
   }
-  #notifications{
-    max-width: 540px;
-  }
-
   
-
+  
+  .tipicon, .remembersicon, .likeicon, .replyicon {
+    width: 30px !important;
+    height: 30px !important;
+ }
 
 
 }
-/*  */
-@media (max-width: 600px) {
-  #notifications {
-    max-width: 400px;
-  }
 
-  .notificationitem .notificationIcon {
-    left: -30px;
-  }
+/* This is necessary because the alert notifications are not properly positioned on the alert icons*/
+@media (max-width: 600px) {
   .newheader .alertcount {
     left: 50px;
     margin-left: 0;
-  }
-  
+  }  
 }
 
 @media (max-width: 500px) {
@@ -2016,9 +2007,7 @@ footer{
   #loginbox{
     max-width: 340px;
   }
-  #notifications {
-    max-width: 380px;
-  }
+
   /* fixed navbar */
   .newheader .headercentergroup,
   .newheader .headerrightgroup,
@@ -2146,9 +2135,6 @@ footer{
     margin-bottom: 10px;
   }
   /* notifcation icons */
-  .notificationitem .notificationIcon {
-    left: -25px;
-  }
 
 }
 
@@ -2419,5 +2405,48 @@ a.memberlinkbutton:hover{
   border: none !important;
   border-radius: 45px;
 }
+
+
+ /* Youtube, Imgur, Twitter */
+
+ /* Ensure youtube play button appears in the center */
+  .youtubepreview .play-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Ensure youtube preview image spans full width available */
+    .youtubepreviewimage {
+      width: 100%;
+      vertical-align: top;
+    }
+    
+    /* Ensure youtube iframe writes on top of preview image */
+    .youtubeiframe {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+    }
+    .youtubepreview {
+      position: relative;
+    }
+  
+    /* Ensure twitter iframe spans full width available  */
+    .twitteriframe {
+      display: inline;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      height: 400px;
+      width: 100%;
+      vertical-align: top;
+    }
 
 

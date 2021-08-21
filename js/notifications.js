@@ -63,9 +63,9 @@ function populateNotificationTab(limit, nfilter, minrating) {
     <span class="separator"></span>
     <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+ (nfilter == 'repost' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=repost` + options + `">Remembers</a>
     <span class="separator"></span>
-    <a data-vavilon="notificationpurchase" data-vavilon_title="notificationpurchase" title="See only creator coin purchases" class="`+ (nfilter == 'purchase' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=purchase` + options + `">Purchases</a>
+    <a data-vavilon="notificationpurchase" data-vavilon_title="notificationpurchase" title="See only creator coin purchases" class="`+ (nfilter == 'purchase' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=purchase` + options + `">Buys</a>
     <span class="separator"></span>
-    <a data-vavilon="notificationsale" data-vavilon_title="notificationsale" title="See only creator coin sales" class="`+ (nfilter == 'sale' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=sale` + options + `">Sales</a>
+    <a data-vavilon="notificationsale" data-vavilon_title="notificationsale" title="See only creator coin sales" class="`+ (nfilter == 'sale' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=sale` + options + `">Sells</a>
     <span class="separator"></span>
     <nav class="filterssecondset">
         <span class="starratingnotifications">
@@ -328,7 +328,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "purchase",
                 `img/icons/notification/follow.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'purchasecoin', `purchased your creator coin. ~${((Number(data.ccamount)*4)/(1000000000*3)).toFixed(2)} BCLT`),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'purchasecoin', `purchased your creator coin. ~${usdString(data.ccamount*1.33)} `),
                 timeSince(Number(data.time), true),
                 `<a  rel="noopener noreferrer" target="signal" href='https://bitcloutsignal.com/history/${data.userpagingid}'>Coin Transactions From Signal</a>`,
                 data.txid, highlighted
@@ -340,7 +340,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "sale",
                 `img/icons/notification/follow.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'soldcoin', `sold your creator coin. ~${((Number(data.ccamount)*4)/(1000000000*3)).toFixed(2)} BCLT`),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'soldcoin', `sold your creator coin. ~${usdString(data.ccamount*1.33)} `),
                 timeSince(Number(data.time), true),
                 `<a  rel="noopener noreferrer" target="signal" href='https://bitcloutsignal.com/history/${data.userpagingid}'>Coin Transactions From Signal</a>`,
                 data.txid, highlighted
@@ -373,7 +373,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "repost",
                 `img/icons/notification/repost.png`,
-                userFromData(data, mainRatingID) + ((data.rposttype == 0) ? getSpanHTML('plaintext', 'rememberedyour', 'remembered your') : getSpanHTML('plaintext', 'quoterememberedyour', 'quote remembered your')) + postlinkHTML(data.likeretxid, "post") + ` ` + (Number(data.amount) > 0 ? usdString(Number(data.amount), false) : ""),
+                userFromData(data, mainRatingID) + ((data.rposttype == 0) ? getSpanHTML('plaintext', 'rememberedyour', 'remembered your') : getSpanHTML('plaintext', 'quoterememberedyour', 'quote remembered your')) + postlinkHTML(data.likeretxid, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
                 data.txid, highlighted

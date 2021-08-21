@@ -678,9 +678,9 @@ function getNoCommentsYetHTML() {
 
 //Media replacement
 function makeYoutubeIframe(youtubeid, starttime) {
-    var src = event.srcElement.parentElement.parentElement.parentElement.parentElement;
+    var src = event.srcElement.parentElement;
     //setTimeout(function(){src.innerHTML='<div><br/><iframe class="youtubeiframe" src="https://www.youtube.com/embed/'+san(youtubeid)+'?rel=0&autoplay=1&showinfo=0" frameborder="0"></iframe></div>';},100);
-    src.innerHTML = '<iframe width="480" height="270" class="youtubeiframe" src="https://www.youtube.com/embed/' + sanyoutubeid(youtubeid) + '?rel=0&autoplay=1&showinfo=0&start=' + starttime + '" frameborder="0"></iframe>';
+    src.innerHTML += '<iframe width="480" height="270" class="youtubeiframe" src="https://www.youtube.com/embed/' + sanyoutubeid(youtubeid) + '?rel=0&autoplay=1&showinfo=0&start=' + starttime + '" frameborder="0"></iframe>';
 }
 
 function addImageAndYoutubeMarkdown(message, differentiator, global) {

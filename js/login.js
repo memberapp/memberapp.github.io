@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = "6.12.1";
+var version = "6.12.3";
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -151,15 +151,14 @@ async function loadBigLibs() {
     if (loadBigLibsStarted) return;
     loadBigLibsStarted = true;
     //Load big libraries that may not be immediately needed.
+    if (!window.bs58check) { loadScript("js/lib/bs58check.min.js"); }
     if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
-    if (!L) loadScript("js/lib/leaflet/leaflet.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) { loadScript("js/lib/elliptic.min.js");}
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     if (!bcdecrypt) loadScript("js/lib/identityencryption.js");
     if (!cytoscape) loadScript("js/lib/cytoscape3.19.patched.min.js");
-    
-
+    if (!L) loadScript("js/lib/leaflet/leaflet.js");
 }
 
 
@@ -212,6 +211,7 @@ async function login(loginkey) {
                 privkey = loginkey;
                 document.getElementById('loginkey').value = "";
             } else if (loginkey.startsWith("BC1")) {
+                if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
                 var preslice = window.bs58check.decode(loginkey);
                 var bcpublicKey = preslice.slice(3);
                 var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
