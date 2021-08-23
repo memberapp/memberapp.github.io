@@ -170,6 +170,10 @@ function submitSignedTransaction(signedTrx, id) {
   var submitpayload = `{"TransactionHex":"` + signedTrx + `"}`;
   var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=submit-transaction";
   getJSON(url2, "&payload=" + encodeURIComponent(submitpayload)).then(function (data) {
+    if(!data){
+      serverresponses.set(id, "Error no data");
+      return;
+    }
     console.log(data);
     serverresponses.set(id, data.TxnHashHex);
   });
@@ -289,15 +293,16 @@ async function sendBitCloutTransaction(payload, action, divForStatus) {
         let statusElement = document.getElementById(divForStatus);
         if (statusElement) statusElement.value = "Retry in ms:"+retrywait;
       }  
+      await sleep(retrywait);
     }
-    await sleep(retrywait);
+
     try{
       confirmation=await constructAndSendBitCloutTransaction(payload, action, divForStatus);
     }catch(err){
       console.log("error sending:"+err);
       //sometime may error out, means we'll try again.
     }
-    retrywait=(retrywait*1.5)+2000;
+    retrywait=(retrywait*1.2)+1000;
   }while(!confirmation || confirmation.length!=64); //txid should be 64 chars in length
 
   return confirmation;
@@ -315,8 +320,13 @@ async function constructAndSendBitCloutTransaction(payload, action, divForStatus
   if (statusElement) statusElement.value = "Constructing BitClout Tx";
   
   getJSON(url, "&payload=" + encodeURIComponent(payload)).then(async function (data) {
-    //Now sign the transaction
+    
+    if(!data){
+      serverresponses.set(uniqueid, "Error: No Data");
+      return;
+    }
 
+    //Now sign the transaction
     if (bitCloutUserData) {
       //Use identity
       if (statusElement) statusElement.value = "Signing Tx With Identity";
