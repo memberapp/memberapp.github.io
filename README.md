@@ -1,6 +1,7 @@
 ## Member
 
-Member is a Bitcoin Cash blockchain browser. It reads and allows users to create actions in the Memo/Member protocol.
+Member is an aggregator for multiple decentralized social networks. It covers social posts from the Deso (BitClout), 
+Bitcoin Cash (Memo) and Hive (Hive) blockchains. It also allows users to create actions on the BCH and DeSo blockchains.
 Notably it displays and creates posts, likes, tips, profiles, reputational ratings and geolocated posts.
 It is designed to be a 'fat' javascript client app that runs against a relatively dumb server.
 You can see it online here - https://member.cash
