@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = "6.12.4";
+var version = '7.0.16';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -32,8 +32,13 @@ ShowdownConverter.setFlavor('github');
 ShowdownConverter.setOption('simpleLineBreaks', true);
 ShowdownConverter.setOption('simplifiedAutoLink', true);
 ShowdownConverter.setOption('openLinksInNewWindow', true);
-ShowdownConverter.setOption('ghMentions', true);
-ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
+ShowdownConverter.setOption('ghMentions', false);
+
+var turndownService = new TurndownService();
+TurndownService.prototype.escape = function(text){return text;};
+
+
+//ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
 
 //Create warning if user tries to reload or exit while transactions are in progress or queued.
 window.onbeforeunload = function () {
@@ -232,7 +237,7 @@ async function login(loginkey) {
                 var theURL = dropdowns.contentserver + '?action=usersearch&searchterm=' + encodeURIComponent(loginkey);
                 getJSON(theURL).then(function (data) {
                     if (data && data.length > 0) {
-                        var qaddress = data[0].address;
+                        var qaddress = data[0].bitcoinaddress;
                         trylogin(qaddress);
                         return;
                     } else {

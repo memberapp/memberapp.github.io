@@ -833,6 +833,12 @@ img {
 .newheader .majornavbuttonsdiv a:hover {
   background: #ddeefc;
 }
+
+.majornavbuttonson {
+  background: #ddeefc;
+}
+
+
 /* alert count style */
 .newheader .majornavbuttonsdiv #privatemessagesbutton,
 .newheader .majornavbuttonsdiv #notificationsbutton {
@@ -900,7 +906,6 @@ a {
   color: #61aff0 !important;
 }
 .imgurimage {
-  width: 100% !important;
   object-fit: cover;
 }
 .newheader .searchwrapper input::placeholder {
@@ -1888,9 +1893,7 @@ footer{
   .newheader .majornavbuttonsclass #loggedout a {
     padding: 12px 3px;
   }
-  .newheader .majornavbuttonsclass #loggedout a.largenavbtn {
-    padding: 9px 3px;
-  }
+  
   .newheader .majornavbuttonsdiv a {
     display: unset;
     width: unset;
@@ -2438,7 +2441,15 @@ a.memberlinkbutton:hover{
     .youtubepreview {
       position: relative;
     }
-  
+
+    .odyseeiframe {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+    
     /* Ensure twitter iframe spans full width available  */
     .twitteriframe {
       display: inline;

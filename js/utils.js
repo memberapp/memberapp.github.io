@@ -142,9 +142,15 @@ function toHexString(byteArray) {
 }
 
 function san(input) {
-  return sanitizeAlphanumeric(input);
+  return sane(input);
 }
 
+function sanhl(input) { //hive link
+  if (input === undefined || input == null) { return ""; }
+  input = input + "";
+  return input.replace(/[^A-Za-z0-9\-_\./]/g, '');
+}
+/*
 function sanitizeAlphanumeric(input) {
   if (input === undefined || input == null) { return ""; }
   input = input + "";
@@ -155,11 +161,12 @@ function sanitizeAlphanumericUnderscore(input) {
   if (input === undefined || input == null) { return ""; }
   input = input + "";
   return input.replace(/[^A-Za-z0-9_]/g, '');
-}
+}*/
 
-function sanyoutubeid(input) {
-  if (input == null) { return ""; }
-  return input.replace(/[^A-Za-z0-9\-_]/g, '');
+function sane(input) {
+  if (input === undefined || input == null) { return ""; }
+  input = input + "";
+  return input.replace(/[^A-Za-z0-9\-_\.]/g, '');
 }
 
 function unicodeEscape(str) {
@@ -217,7 +224,7 @@ function getWidth() {
 String.prototype.contains = function (segment) { return this.indexOf(segment) !== -1; };
 
 function safeGPBN(name) {
-  return sanitizeAlphanumericUnderscore(getParameterByName(name));
+  return sane(getParameterByName(name));
 }
 
 function numberGPBN(name) {

@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '6.12.4';
+const version = '7.0.16';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
@@ -87,15 +87,15 @@ self.addEventListener('fetch', function (event) {
     })*/
 
     //Delete all caches
-    caches.keys().then(function(names) {
-      for (let name of names){
+    caches.keys().then(function (names) {
+      for (let name of names) {
         console.log('[ServiceWorker] Deleting old cache:', name);
         caches.delete(name);
       }
     });
     event.respondWith(
       new Response("sw.js invalidated cache "),
-      {headers: {'content-type': 'text/plain'}}
+      { headers: { 'content-type': 'text/plain' } }
     );
   }
   else if (event.request.url.startsWith(self.location.origin) && !event.request.url.includes('/v2/')) {
@@ -231,6 +231,18 @@ const showLocalNotification = (payload, swRegistration) => {
       icon = "/img/notificationicons/rating.svg";
       renotify = true;
       break;
+    case "purchase":
+      title = "Purchase";
+      text = "Purchase by @" + pagingid;
+      icon = "/img/notificationicons/rating.svg";
+      renotify = true;
+      break;
+    case "sale":
+      title = "Sale";
+      text = "Sale by @" + pagingid;
+      icon = "/img/notificationicons/rating.svg";
+      renotify = true;
+      break;
     case "message":
       title = "Message";
       text = "Message from @" + pagingid;
@@ -243,10 +255,22 @@ const showLocalNotification = (payload, swRegistration) => {
       icon = "/img/notificationicons/follow.svg";
       renotify = true;
       break;
+    case "unfollow":
+      title = "Unfollowed";
+      text = "Unfollowed by @" + pagingid;
+      icon = "/img/notificationicons/follow.svg";
+      renotify = true;
+      break;
     case "page":
       title = "Paged";
       text = "Paged by @" + pagingid;
       icon = "/img/notificationicons/page.svg";
+      renotify = true;
+      break;
+    case "quoterepost":
+      title = "Quote Remembered";
+      text = "Quote Remembered by @" + pagingid;
+      icon = "/img/notificationicons/repost.svg";
       renotify = true;
       break;
     case "repost":

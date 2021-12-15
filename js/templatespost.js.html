@@ -31,7 +31,7 @@ var postCompactTemplate = `
                 </div>
                 <div class="post-footer">
                     <span class="post-footer-reply post-footer-relative">
-                        <a id="replylink{txid}posts{diff}" onclick="showReplyBox('{txid}posts{diff}');"
+                        <a id="replylink{txid}{page}{diff}" onclick="showReplyBox('{txid}{page}{diff}');"
                             href="javascript:;" class="btn-icon" data-action="reply">
                             <span class="replyicon">
                                 <span class="emojiicon">💬</span>
@@ -43,7 +43,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvotecontainer{txid}">
-                        <a id="upvoteaction{txid}" href="javascript:;" onclick="likePost('{txid}','{address}')"
+                        <a id="upvoteaction{txid}" href="javascript:;" onclick="likePost('{txid}','{origtxid}','{address}')"
                             class="btn-icon" data-action="like">
                             <span class="likeicon">
                                 <span class="emojiicon">💙</span>
@@ -58,7 +58,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-downvote{dislikeactivated} post-footer-relative" id="downvotecontainer{txid}">
-                        <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{address}')"
+                        <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{origtxid}','{address}')"
                             class="btn-icon" data-action="dislike">
                             <span class="dislikeicon">
                                 <span class="emojiicon">👎</span>
@@ -77,8 +77,8 @@ var postCompactTemplate = `
                             <span class="iconcount" id="repostscount{txid}">{remembers}</span>
                             <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
-                                <a onclick="repostPost('{txid}');"><span data-vavilon="remember">remember</span></a>
-                                <a onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={txid}';"><span data-vavilon="VV0158">quote</span></a>
+                                <a onclick="repostPost('{txid}','{origtxid}','{sourcenetwork}');"><span data-vavilon="remember">remember</span></a>
+                                <a onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={origtxid}';"><span data-vavilon="VV0158">quote</span></a>
                             </div>
                         </a>
                     </span>
@@ -130,7 +130,7 @@ var postCompactTemplate = `
                     <input id="tipamountposts{diff}{txid}" type="number" value="0" min="0" style="width: 6em;"
                         step="1000">
                     <input id="tipbuttonposts{diff}{txid}" value="tip" type="submit"
-                        onclick="sendTip('{txid}','{address}','posts{diff}');">
+                        onclick="sendTip('{txid}','{origtxid}','{address}','posts{diff}');">
                     <input id="tipstatusposts{diff}{txid}" value="sending" type="submit" style="display:none"
                         disabled="">
                 </span>
@@ -173,7 +173,7 @@ var userCompactTemplate=`
         </a>
     </span>
     <span class="starratingcompact">
-        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingaddress="{address}" data-ratingraw="{rating}" id="ratingposts{diff}"
+        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingaddress="{bitcoinaddress}" data-ratingraw="{rating}" id="ratingposts{diff}"
         data-ratingsystem={systemscoreclass} class="star-rating-compact"></span>
     </span>
     {flair}
@@ -196,7 +196,7 @@ var userProfileCompactTemplate=`
                 <span class="member-handle">{handle}</span>
             </a>
             <span class="starrating">
-                <span data-ratingsize="16" data-ratingaddress="{address}" data-ratingraw="{rating}"
+                <span data-ratingsize="16" data-ratingaddress="{bitcoinaddress}" data-ratingraw="{rating}"
                 data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" class="star-rating"></span>
             </span>
             {flair}
@@ -294,7 +294,7 @@ var replyDivTemplate = `
     <textarea id="replytext{page}{txid}" rows="3" maxlength="5000"></textarea>
     <br />
     <input id="replybutton{page}{txid}" value="reply" type="submit"
-        onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}');" />
+        onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
     <input data-vavilon_value="VV0154" id="replystatus{page}{txid}" value="sending..." type="submit"
         style="display:none" disabled />
     <div id="replycompleted{page}{txid}" value=""></div>
@@ -313,7 +313,7 @@ var replyAndTipsTemplate = `
     </span>
 </span>
 <a data-vavilon="VV0157" id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>
-<a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={txid}">quote</a>
+<a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
 <a data-vavilon="VV0159" id="morelink{page}{txid}" onclick="showMore('more{page}{txid}','morelink{page}{txid}');"
     href="javascript:;">+more</a>
 <span id="more{page}{txid}" style="display:none">
@@ -337,7 +337,7 @@ var replyAndTipsTemplate = `
 <span id="tipbox{page}{txid}" style="display:none">
     <input id="tipamount{page}{txid}" type="number" value="0" min="0" style="width: 6em;" step="1000" />
     <input data-vavilon_value="VV0162" id="tipbutton{page}{txid}" value="tip" type="submit"
-        onclick="sendTip('{txid}','{address}','{page}');" />
+        onclick="sendTip('{txid}','{origtxid}','{address}','{page}');" />
     <input data-vavilon_value="VV0163" id="tipstatus{page}{txid}" value="sending" type="submit" style="display:none"
         disabled />
 </span>`;
