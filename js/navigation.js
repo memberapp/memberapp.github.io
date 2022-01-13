@@ -2,42 +2,50 @@
 
 function displayContentBasedOnURLParameters(suggestedurl) {
 
-    
-    
+    //Be very careful with input here . . . this is the most dangerous part of the code
+    //input comes from URL so can contain any characters, so we want to sanitize it before using.
+    //Use sane or safeGPBN or numberGPBN
+    //If using getParameterByName - it must be marked HOSTILE in any receiving function
+
     if (backForwardEvent) {
         window.scrollTo(0, scrollhistory[window.location.hash]);
     } else {
         window.scrollTo(0, 0);
     }
 
-    //Careful with input here . . . comes from URL so can contain any characters, so we want to sanitize it before using.
-    if(suggestedurl){
+    if (suggestedurl) {
         var url = suggestedurl;
-    }else{
+    } else {
         var url = window.location.href;
     }
-    
+
     var action;
 
     if (url.indexOf('#') != -1) {
-        action = sanitizeAlphanumeric(url.substring(url.indexOf('#') + 1).toLowerCase());
+        action = sane(url.substring(url.indexOf('#') + 1).toLowerCase());
         //navigation back to home page, clear topic
 
     } else if (url.indexOf('/p/') != -1) {
-        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
-        showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'thread');
+        //var postid = sane(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
+        let postid=document.getElementById('threadid').innerHTML; 
+        showThread(sane(postid), sane(postid), 'thread');
         return;
     } else if (url.indexOf('/a/') != -1) {
-        var postid = sanitizeAlphanumeric(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
-        showThread(sanitizeAlphanumeric(postid), sanitizeAlphanumeric(postid), 'article');
+        //var postid = sane(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
+        let postid=document.getElementById('threadid').innerHTML; 
+        showThread(sane(postid), sane(postid), 'article');
         return;
     } else if (url.indexOf('/m/') != -1) {
         var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/m/') + 3).replace('@', '').toLowerCase()).trim();
-        showMember('', pagingidHOSTILE);
+        showMember('', sane(pagingidHOSTILE));
         return;
     } else if (url.indexOf('/t/') != -1) {
         var topicnameHOSTILE = decodeURI(url.substring(url.indexOf('/t/') + 3).toLowerCase()).trim();
-        showTopic(0, numbers.results, topicnameHOSTILE);
+        showTopic(0, numbers.results, sane(topicnameHOSTILE));
+        return;
+    } else if (url.indexOf('/list/') != -1) {
+        var pagingidHOSTILE = decodeURI(url.substring(url.indexOf('/list/') + 6).replace('@', '').toLowerCase()).trim();
+        showMember('', sane(pagingidHOSTILE), true);
         return;
     } else {
         setTopic("");
@@ -45,71 +53,70 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     }
 
     if (action.startsWith("show")) {
-        //setOrder('orderselector', getParameterByName("order"));
-        //setOrder('contentselector', getParameterByName("content"));
-        //setOrder('filterselector', getParameterByName("filter"));
-
         showPostsNew(
-            sanitizeAlphanumeric(getParameterByName("order")),
-            sanitizeAlphanumeric(getParameterByName("content")),
-            getParameterByName("topicname"), //HOSTILE
-            sanitizeAlphanumeric(getParameterByName("filter")),
-            Number(getParameterByName("start")),
-            Number(getParameterByName("limit")),
-            sanitizeAlphanumeric(getParameterByName("qaddress"))
+            safeGPBN("order"),
+            safeGPBN("content"),
+            safeGPBN("topicname"),
+            safeGPBN("filter"),
+            numberGPBN("start"),
+            numberGPBN("limit"),
+            safeGPBN("qaddress")
         );
-        setTopic(getParameterByName("topicname"));
-    } else if (action.startsWith("memberposts")) {
-        showMemberPosts(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")));
+        setTopic(safeGPBN("topicname"));
+    } else if (action.startsWith("list")) {
+        showPostsNew("topd", "posts", "", "list", 0, 25, safeGPBN("qaddress"));
     } else if (action.startsWith("notifications")) {
-        showNotifications(Number(getParameterByName("start")), Number(getParameterByName("limit")), sanitizeAlphanumeric(getParameterByName("qaddress")), sanitizeAlphanumeric(getParameterByName("txid")), sanitizeAlphanumeric(getParameterByName("nfilter")),Number(getParameterByName("minrating")));
+        showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
-        showMember(sanitizeAlphanumeric(pubkey, ''));
+        showMember(sane(pubkey), '');
     } else if (action.startsWith("member")) {
-        showMember(sanitizeAlphanumeric(getParameterByName("qaddress")), getParameterByName("pagingid"));
+        showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
-        showFollowers(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showFollowers(safeGPBN("qaddress"));
     } else if (action.startsWith("following")) {
-        showFollowing(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showFollowing(safeGPBN("qaddress"));
     } else if (action.startsWith("blockers")) {
-        showBlockers(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showBlockers(safeGPBN("qaddress"));
     } else if (action.startsWith("blocking")) {
-        showBlocking(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showBlocking(safeGPBN("qaddress"));
     } else if (action.startsWith("rep")) {
-        showReputation(sanitizeAlphanumeric(getParameterByName("qaddress")));
+        showReputation(safeGPBN("qaddress"));
     } else if (action.startsWith("posts")) {
-        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'posts');
+        showPFC(numberGPBN("start"), numberGPBN("limit"), 'posts');
     } else if (action.startsWith("feed")) {
-        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'posts');
+        showPFC(numberGPBN("start"), numberGPBN("limit"), 'posts');
     } else if (action.startsWith("comments")) {
-        showPFC(Number(getParameterByName("start")), Number(getParameterByName("limit")), 'replies');
+        showPFC(numberGPBN("start"), numberGPBN("limit"), 'replies');
     } else if (action.startsWith("trustgraph")) {
-        showTrustGraph(sanitizeAlphanumeric(getParameterByName("member")), sanitizeAlphanumeric(getParameterByName("target")));
+        showReputation(safeGPBN("target"));
+    } else if (action.startsWith("support")) {
+        showBesties(safeGPBN("qaddress"));
     } else if (action.startsWith("topiclist")) {
         showTopicList();
     } else if (action.startsWith("topic")) {
-        //Warning - topicname may contain special characters
-        showTopic(Number(getParameterByName("start")), Number(getParameterByName("limit")), getParameterByName("topicname"), sanitizeAlphanumeric(getParameterByName("type")));
+        showTopic(numberGPBN("start"), numberGPBN("limit"), safeGPBN("topicname"), safeGPBN("type"));
     } else if (action.startsWith("article")) {
-        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), 'article');
+        showThread(safeGPBN("root"), safeGPBN("post"), 'article');
     } else if (action.startsWith("thread")) {
-        showThread(sanitizeAlphanumeric(getParameterByName("root")), sanitizeAlphanumeric(getParameterByName("post")), 'thread');
+        showThread(safeGPBN("root"), safeGPBN("post"), 'thread');
     } else if (action.startsWith("settings")) {
         showSettings();
     } else if (action.startsWith("messages")) {
-        showMessages(sanitizeAlphanumeric(getParameterByName("messagetype")));
+        showMessages(safeGPBN("messagetype"));
     } else if (action.startsWith("new")) {
-        showNewPost(sanitizeAlphanumeric(getParameterByName("txid")));
+        showNewPost(safeGPBN("txid"));
     } else if (action.startsWith("map")) {
-        showMap(sanitizeAlphanumeric(getParameterByName("geohash")), sanitizeAlphanumeric(getParameterByName("post")));
+        showMap(safeGPBN("geohash"), safeGPBN("post"));
     } else if (action.startsWith("myfeed") || action.startsWith("mypeople")) {
-        showMyFeed();
+        showPostsNew('new', 'posts', '', 'myfeed', 0, numbers.results, '');
     } else if (action.startsWith("mytags")) {
-        showMyTags();
+        showPostsNew('new', 'posts', 'mytopics', 'everyone', 0, numbers.results, '');
     } else if (action.startsWith("firehose")) {
-        showFirehose();
+        showPostsNew('hot', 'posts', '', 'everyone', 0, numbers.results, '');
     } else if (action.startsWith("wallet")) {
         showWallet();
+    } else if (action.startsWith("custom")) {
+        showCustom();
     } else if (action.startsWith("login")) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
@@ -117,24 +124,33 @@ function displayContentBasedOnURLParameters(suggestedurl) {
             showPFC(0, numbers.results, 'posts');
         }
     } else {
-        showFirehose();
+        showPostsNew('hot', 'posts', '', 'everyone', 0, numbers.results, '');
     }
 }
 
 function hideAll() {
     switchToRegularMode();
+
+    //This should just hide and empty the main tabs (exception of settings)
+    //member page
+    document.getElementById('mcidmemberheader').style.display = "none";
+    document.getElementById('mcidmemberanchor').style.display = "none";
+    document.getElementById('mcidmemberanchor').innerHTML = "";
+    document.getElementById('trustgraph').style.display = "none";
+    document.getElementById('trustgraph').innerHTML = "";
+    document.getElementById('besties').style.display = "none";
+    document.getElementById('besties').innerHTML = "";
+
     document.getElementById('feed').style.display = "none";
     document.getElementById('posts').style.display = "none";
     document.getElementById('comments').style.display = "none";
     document.getElementById('thread').style.display = "none";
-    document.getElementById('memberposts').style.display = "none";
     document.getElementById('notifications').style.display = "none";
     //remove the content too, so that we don't get conflicting ids
     document.getElementById('feed').innerHTML = "";
     document.getElementById('posts').innerHTML = "";
     document.getElementById('comments').innerHTML = "";
     document.getElementById('thread').innerHTML = "";
-    document.getElementById('memberposts').innerHTML = "";
     document.getElementById('notificationsbody').innerHTML = "";
 
     document.getElementById('settingsanchor').style.display = "none";
@@ -143,16 +159,14 @@ function hideAll() {
     document.getElementById('following').style.display = "none";
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
-    document.getElementById('memberanchor').style.display = "none";
-    document.getElementById('memberheader').style.display = "none";
-    
+
     document.getElementById('newpost').style.display = "none";
-    document.getElementById('anchorratings').style.display = "none";
+    //document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('footer').style.display = "block";//show the footer - it may have been hidden when the map was displayed
-    
-    document.getElementById('trustgraph').style.display = "none";
-    document.getElementById('community').style.display = "none";
+
+    //document.getElementById('trustgraph').style.display = "none";
+    //document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
     document.getElementById('messagesanchor').style.display = "none";
@@ -160,12 +174,24 @@ function hideAll() {
 
 }
 
-function setPageTitleFromID(translationID){
-    var pageTitle=getUnSafeTranslation(translationID);
+function highlightmajornavbutton(thebutton) {
+    document.getElementById("notificationsbutton").classList = "";
+    document.getElementById("firehosebutton").classList = "";
+    document.getElementById("myfeedbutton").classList = "";
+    document.getElementById("topiclistbutton").classList = "";
+    document.getElementById("privatemessagesbutton").classList = "";
+    document.getElementById("newbutton").classList = "";
+    if (thebutton) {
+        document.getElementById(thebutton).classList = "majornavbuttonson";
+    }
+}
+
+function setPageTitleFromID(translationID) {
+    var pageTitle = getUnSafeTranslation(translationID);
     setPageTitleRaw(pageTitle);
 }
 
-function setPageTitleRaw(newContent){
+function setPageTitleRaw(newContent) {
     document.getElementById('pagetitledivid').textContent = newContent;
 }
 
@@ -184,7 +210,7 @@ function hide(theDiv) {
 
 function showWallet() {
     setPageTitleFromID("VVwallet");
-    show('toolsanchor');    
+    show('toolsanchor');
 }
 
 function showLogin() {
@@ -206,39 +232,12 @@ function hideMap() {
     document.getElementById('map').style.display = "none";
 }
 
-function showReputation(qaddress) {
-    
-    getAndPopulateRatings(qaddress);
-    getAndPopulateCommunityRatings(qaddress);
-
-    //if (pubkey) {
-        getAndPopulateTrustGraph(pubkey, qaddress);
-    //} else {
-    //    document.getElementById('trustgraph').style.display = "none";
-    //}
-
-    show('community');
-    document.getElementById('memberheader').style.display = "block";
-    document.getElementById('anchorratings').style.display = "block";
-    document.getElementById('trustgraph').style.display = "block";
-    
-    var obj2 = {
-        //These must all be HTML safe.
-        address: qaddress,
-        profileclass: 'filteroff',
-        reputationclass: 'filteron',
-        postsclass: 'filteroff'
-    }
-
-    document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
-
-}
-
-function showNewPost(txid) {
+function showNewPost(txid,sourcenetwork) {
+    highlightmajornavbutton("newbutton");
     show("newpost");
     setPageTitleFromID("VV0096");
     document.getElementById('memorandumpreview').innerHTML = "";
-    let topicNameHOSTILE = getCurrentTopicHOSTILE();
+    //let topicNameHOSTILE = "";
     //document.getElementById('memorandumtopic').value = topicNameHOSTILE;
     /*if (topicNameHOSTILE != "") {
         document.getElementById('memorandumtopicarea').style.display = "block";
@@ -249,11 +248,11 @@ function showNewPost(txid) {
     }*/
     //Do calculations on maxlengths for topics and titles
     //topictitleChanged();
-    
+
     if (txid) {
         getAndPopulateQuoteBox(txid);
-        
-        document.getElementById('quotetxid').value = txid;
+
+        document.getElementById('quotetxid').value = txid;       
         document.getElementById('memorandumtextarea').style.display = 'none';
         document.getElementById('memorandumtextbutton').style.display = 'none';
 
@@ -275,14 +274,15 @@ function showNewPost(txid) {
 
 function showNotifications(start, limit, qaddress, txid, nfilter, minrating) {
 
+    highlightmajornavbutton("notificationsbutton");
     if (pubkey == "" || pubkey == null || pubkey == undefined) {
         showPFC(0, numbers.results, 'posts');
         return;
     }
     setPageTitleFromID("VV0095");
 
-    if(!minrating){
-        minrating=2;
+    if (!minrating) {
+        minrating = 2;
     }
     getAndPopulateNotifications(start, limit, "notifications", pubkey, txid, nfilter, minrating);
 
@@ -298,27 +298,29 @@ function showSettings() {
     setPageTitleFromID("VV0166");
     show('settingsanchor');
     getAndPopulateSettings();
-    //getAndPopulate(0, numbers.results, 'memberposts', pubkey);
 
 }
 
-function showMember(qaddress, pagingIDHOSTILE) {
-    //if pagingidhostile is not empty - await qaddress
+
+function showMember(qaddress, pagingID, isList) {
+    //if pagingid is not empty - await qaddress
     if (!typeof headeraddress === 'undefined') {
         qaddress = headeraddress;
         headeraddress = undefined;
     }
 
-    if (qaddress == '' && pagingIDHOSTILE != '') {
-        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingIDHOSTILE) + '&address=' + pubkey;
+    if (qaddress == '' && pagingID) {
+        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + pubkey;
         getJSON(theURL).then(function (data) {
             if (data && data.length > 0) {
-                qaddress = data[0].address;
-                showMember(qaddress);
+                showMember(san(data[0].address), sane(data[0].pagingid), isList);
                 return;
             } else {
-                show('memberheader');
-                document.getElementById('memberanchor').innerHTML =  getSafeTranslation('pagingidnotfount','This paging id not found.');
+                hideAll();
+                showOnly("mcidmemberheader");
+                showOnly("mcidmembertabs");
+                showOnly("mcidmemberanchor");
+                document.getElementById('mcidmemberanchor').innerHTML = getSafeTranslation('pagingidnotfount', 'This paging id not found.');
                 return;
             }
         }, function (status) { //error detection....
@@ -327,74 +329,90 @@ function showMember(qaddress, pagingIDHOSTILE) {
         return;
     }
 
-    //show('header');
-    setPageTitleFromID("VV0063");
-    getAndPopulateMember(qaddress);
-    //getAndPopulateNew('new', 'all', '', '', 0, numbers.results, 'memberposts', qaddress);
-    show("memberanchor");
-    document.getElementById('memberheader').style.display = "block";
-    //document.getElementById('memberanchor').style.display = "block";
-    //document.getElementById('memberposts').style.display = "none";
-    
+    if (isList) {
+        showPostsNew("topd", "posts", "", "list", 0, 25, sane(qaddress));
+    } else {
+        //setPageTitleFromID("VV0063");
+        hideAll();
+        showOnly("mcidmemberheader");
+        showOnly("mcidmembertabs");
+        showOnly("mcidmemberanchor");
+        setPageTitleRaw(". . .");
+        getDataMember(sane(qaddress));
+        var obj2 = { address: sane(qaddress), profileclass: 'filteron', reputationclass: 'filteroff', postsclass: 'filteroff', bestiesclass: 'filteroff' };
+        document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+    }
 
 }
 
-//deprecated - now on member page
-function showTrustGraph(member, target) {
-    show("trustgraph");
-    getAndPopulateTrustGraph(member, target);
+function showBesties(qaddress) {
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("besties");
+    getAndPopulateBesties(qaddress);
+
+    //Show Filter
+    var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteroff', postsclass: 'filteroff', bestiesclass: 'filteron' };
+    document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
 }
 
-function showMemberPosts(start, limit, qaddress) {
-    //getAndPopulate(start, limit, 'memberposts', qaddress);
-    getAndPopulateNew('new', 'all', '', '', start, limit, 'memberposts', qaddress);
+function showReputation(qaddress) {
+
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("trustgraph");
+    getAndPopulateTrustGraph(pubkey, qaddress);
+
+    //Show Filter
+    var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff' };
+    document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+}
+
+function showCustom() {
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("besties");
+
+    getAndPopulateCustom();
+
+    //Show Filter
+    //var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff'};
+    //document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
 }
 
 function showMessages(messagetype, start, limit) {
+    highlightmajornavbutton("privatemessagesbutton");
     show("messagesanchor");
     setPageTitleFromID("VV0047");
     getAndPopulateMessages(messagetype, start, limit);
 }
 
 function showPFC(start, limit, page) {
-    //getAndPopulate(start, limit, page, pubkey, type, getCurrentTopicHOSTILE());
-    showPostsNew('hot', page, getCurrentTopicHOSTILE(), 'everyone', start, limit)
+    showPostsNew('hot', page, '', 'everyone', start, limit)
 }
 
-function showMyFeed() {
-    setTopic('');
-    getAndPopulateNew('new', 'posts', '', 'myfeed', 0, numbers.results, 'posts', '');
-}
+function showPostsNew(order, content, topicname, filter, start, limit, qaddress) {
+    //setTopic('');
+    if(topicname=='mytopics'){
+        highlightmajornavbutton("topiclistbutton");
+    }else if(filter=='myfeed'){
+        highlightmajornavbutton("myfeedbutton");
+    }else if(filter=='everyone'){
+        highlightmajornavbutton("firehosebutton");
+    }
 
-function showFirehose() {
-    setTopic('');
-    getAndPopulateNew('topd', 'posts', '', 'everyone', 0, numbers.results, 'posts', '');
-}
-
-function showMyTags() {
-    setTopic('');
-    getAndPopulateNew('new', 'posts', 'mytopics', 'everyone', 0, numbers.results, 'posts', '');
-}
-
-function showPostsNew(order, content, topicnameHOSTILE, filter, start, limit, qaddress) {
-    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, 'posts', qaddress);
+    getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress);
 }
 
 
 //Topics
-function showTopic(start, limit, topicnameHOSTILE, type) {
-    //Warning, topicname may contain hostile characters
-    setTopic(topicnameHOSTILE);
+function showTopic(start, limit, topicname, type) {
+    setTopic(topicname);
     if (!type) type = "new";
-    getAndPopulateNew(type, 'posts', topicnameHOSTILE, 'everyone', start, limit, 'posts', '');
-    //getAndPopulate(start, limit, 'posts', pubkey, type, topicNameHOSTILE);
-}
-
-function getCurrentTopicHOSTILE() {
-    //var selector = document.getElementById('topicselector');
-    //var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
-    //return topicNameHOSTILE;
-    return "";
+    getAndPopulateNew(type, 'posts', topicname, 'everyone', start, limit, 'posts', '');
 }
 
 function showTopicList() {
@@ -403,38 +421,38 @@ function showTopicList() {
     getAndPopulateTopicList(true);
 }
 
-function postsSelectorChanged() {
+//function postsSelectorChanged() {
 
-    //get value from the 4 drop downs
-    var selector;
+//get value from the 4 drop downs
+//var selector;
 
-    //orderselector
-    //selector = document.getElementById('orderselector');
-    //var order = selector.options[selector.selectedIndex].value;
+//orderselector
+//selector = document.getElementById('orderselector');
+//var order = selector.options[selector.selectedIndex].value;
 
-    //contentselector
-    //selector = document.getElementById('contentselector');
-    //var content = selector.options[selector.selectedIndex].value;
+//contentselector
+//selector = document.getElementById('contentselector');
+//var content = selector.options[selector.selectedIndex].value;
 
-    //topicselector
-    //selector = document.getElementById('topicselector');
-    //var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
+//topicselector
+//selector = document.getElementById('topicselector');
+//var topicNameHOSTILE = selector.options[selector.selectedIndex].value;
 
-    //filterselector
-    //selector = document.getElementById('filterselector');
-    //var filter = selector.options[selector.selectedIndex].value;
+//filterselector
+//selector = document.getElementById('filterselector');
+//var filter = selector.options[selector.selectedIndex].value;
 
-    //These two statements may trigger page load twice on firefox but not on other browsers
+//These two statements may trigger page load twice on firefox but not on other browsers
 
-    //set the document location without triggering the back/forward function
-    //assumeBackForwardEvent = false;
-    nlc();
-    document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
-    //setTimeout(function () { assumeBackForwardEvent = true; }, 100);
+//set the document location without triggering the back/forward function
+//assumeBackForwardEvent = false;
+//nlc();
+//document.location.hash = "#show?order=" + order + "&content=" + content + "&topicname=" + encodeURIComponent(topicNameHOSTILE) + "&filter=" + filter + "&start=0&limit=" + Number(numbers.results);
+//setTimeout(function () { assumeBackForwardEvent = true; }, 100);
 
-    //show the posts
-    //displayContentBasedOnURLParameters();
-}
+//show the posts
+//displayContentBasedOnURLParameters();
+//}
 
 /*function exitTopic(){
     //currentTopic = "";
@@ -452,29 +470,27 @@ function setOrder(selectorvalue, order) {
 }
 
 
-function setTopic(topicNameHOSTILE) {
-    //Warning, topicname may contain hostile characters
-    /*var selector = document.getElementById('topicselector');*/
+function setTopic(topicName) {
 
-    if (topicNameHOSTILE == null || topicNameHOSTILE == "") {
+    if (topicName == null || topicName == "") {
         //selector.selectedIndex = 0;
         //hide("topicmeta");
         return;
     }
 
-    if (topicNameHOSTILE.toLowerCase() == "myfeed" || topicNameHOSTILE.toLowerCase() == "mytopics") {
+    if (topicName.toLowerCase() == "myfeed" || topicName.toLowerCase() == "mytopics") {
         //hide("topicmeta");
     } else {
-        getAndPopulateTopic(topicNameHOSTILE);
+        getAndPopulateTopic(topicName);
     }
 
     //selector.selectedIndex = 1;
     //selector.options[selector.selectedIndex].value = topicNameHOSTILE;
     //selector.options[selector.selectedIndex].text = capitalizeFirstLetter(topicNameHOSTILE.substring(0, 13));
-    if(topicNameHOSTILE.toLowerCase()=="mytopics"){
+    if (topicName.toLowerCase() == "mytopics") {
         setPageTitleFromID("VV0128");
-    }else{
-        setPageTitleRaw('#'+capitalizeFirstLetter(topicNameHOSTILE));
+    } else {
+        setPageTitleRaw('#' + capitalizeFirstLetter(topicName));
     }
 }
 
@@ -487,19 +503,19 @@ function showThread(roottxid, txid, articleStyle) {
 }
 
 function showFollowers(qaddress) {
-    getAndPopulateFB('followers',qaddress);
+    getAndPopulateFB('followers', qaddress);
 }
 
 function showFollowing(qaddress) {
-    getAndPopulateFB('following',qaddress);
+    getAndPopulateFB('following', qaddress);
 }
 
 function showBlockers(qaddress) {
-    getAndPopulateFB('blockers',qaddress);
+    getAndPopulateFB('blockers', qaddress);
 }
 
 function showBlocking(qaddress) {
-    getAndPopulateFB('blocking',qaddress);
+    getAndPopulateFB('blocking', qaddress);
 
 }
 
@@ -524,7 +540,7 @@ var detectBackOrForward = function () {
         }
         return true;
     }
-    else{
+    else {
         //this is a back/foward nav event
         backForwardEvent = true;
         if (hashHistory[hashHistory.length - 2] == hash) {
@@ -532,11 +548,11 @@ var detectBackOrForward = function () {
         } else {
             hashHistory.push(hash);
         }
-        if (!suspendPageReload){
+        if (!suspendPageReload) {
             displayContentBasedOnURLParameters();
         }
         return true;
-    } 
+    }
 }
 
 var scrollhistory = [];
@@ -560,7 +576,7 @@ function testForHashChange() {
     }
     setTimeout(testForHashChange, 100);
 }
-var backForwardEvent=false;
+var backForwardEvent = false;
 
 document.addEventListener("click", function () { scrollhistory[window.location.hash] = window.scrollY; }, true);
 document.getElementsByTagName('body')[0].onmouseleave = function () { scrollhistory[window.location.hash] = window.scrollY; }
@@ -593,5 +609,5 @@ function scrollToPosition(theElement) {
     else {
         window.scrollTo(0, 0);
     }
-    backForwardEvent=false;
+    backForwardEvent = false;
 }

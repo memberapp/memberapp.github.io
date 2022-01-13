@@ -50,9 +50,9 @@ var ordinal_suffix_of = function (i) {
 var getJSON = function (url, postparams) {
   //force a reload by appending time so no cached versions
   url += "&r=" + (new Date().getTime() % 100000);
-  try{
+  try {
     updateStatus(getSafeTranslation('loading', "loading") + " " + url);
-  }catch(noworries){}
+  } catch (noworries) { }
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     addListeners(xhr);
@@ -70,11 +70,11 @@ var getJSON = function (url, postparams) {
     };
 
     xhr.responseType = 'json';
-    if(postparams){
+    if (postparams) {
       xhr.open('post', url, true);
       xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
       xhr.send(postparams);
-    }else{
+    } else {
       xhr.open('get', url, true);
       xhr.send();
     }
@@ -83,8 +83,8 @@ var getJSON = function (url, postparams) {
 };
 
 function addListeners(xhr) {
-  xhr.addEventListener('loadstart', handleEvent);
-  xhr.addEventListener('load', handleEvent);
+  //xhr.addEventListener('loadstart', handleEvent);
+  //xhr.addEventListener('load', handleEvent);
   //xhr.addEventListener('loadend', handleEvent);
   xhr.addEventListener('progress', handleEvent);
   //xhr.addEventListener('error', handleEvent);
@@ -142,18 +142,31 @@ function toHexString(byteArray) {
 }
 
 function san(input) {
-  return sanitizeAlphanumeric(input);
+  return sane(input);
 }
 
+function sanhl(input) { //hive link
+  if (input === undefined || input == null) { return ""; }
+  input = input + "";
+  return input.replace(/[^A-Za-z0-9\-_\./]/g, '');
+}
+/*
 function sanitizeAlphanumeric(input) {
   if (input === undefined || input == null) { return ""; }
   input = input + "";
   return input.replace(/[^A-Za-z0-9]/g, '');
 }
 
-function sanyoutubeid(input) {
-  if (input == null) { return ""; }
-  return input.replace(/[^A-Za-z0-9\-_]/g, '');
+function sanitizeAlphanumericUnderscore(input) {
+  if (input === undefined || input == null) { return ""; }
+  input = input + "";
+  return input.replace(/[^A-Za-z0-9_]/g, '');
+}*/
+
+function sane(input) {
+  if (input === undefined || input == null) { return ""; }
+  input = input + "";
+  return input.replace(/[^A-Za-z0-9\-_\.]/g, '');
 }
 
 function unicodeEscape(str) {
@@ -209,6 +222,14 @@ function getWidth() {
 }
 
 String.prototype.contains = function (segment) { return this.indexOf(segment) !== -1; };
+
+function safeGPBN(name) {
+  return sane(getParameterByName(name));
+}
+
+function numberGPBN(name) {
+  return Number(getParameterByName(name));
+}
 
 function getParameterByName(name, url) {
   if (!url) url = window.location.href;
@@ -273,6 +294,16 @@ function getLatestUSDrate() {
     updateStatus(status);
   });
 }
+
+function usdString(total, includeSymbol) {
+  var usd = Number(total/10000).toFixed(2);
+  if (usd < 1) {
+    return (usd * 100).toFixed(0) + "¢";
+  } else {
+    return "$" + usd;
+  }
+}
+
 
 function balanceString(total, includeSymbol) {
   if (dropdowns.currencydisplay == "BCH" || numbers.usdrate === undefined || numbers.usdrate === 0) {
@@ -487,43 +518,43 @@ function elementInViewport2(ele, newclass) {
   }
 }
 
-function setVisibleContentFinal(){
+function setVisibleContentFinal() {
   if (document.getElementsByClassName('post-list-li')) {
-    elementInViewport2(document.getElementsByClassName('post-list-li'),'post-list-final');
+    elementInViewport2(document.getElementsByClassName('post-list-li'), 'post-list-final');
   }
 }
 
 
 //When item is scrolled into view, it is set to fade in
 window.addEventListener('scroll', function (e) {
-    elementInViewport2(document.getElementsByClassName('post-list-li'),'post-list-item');
+  elementInViewport2(document.getElementsByClassName('post-list-li'), 'post-list-item');
 });
 
 
 function copyToClipboard(text) {
   if (window.clipboardData && window.clipboardData.setData) {
-      // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
-      return window.clipboardData.setData("Text", text);
+    // Internet Explorer-specific code path to prevent textarea being shown while dialog is visible.
+    return window.clipboardData.setData("Text", text);
 
   }
   else if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-      var textarea = document.createElement("textarea");
-      textarea.textContent = text;
-      textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-          updateStatus("Copied to clipboard.");
-          return document.execCommand("copy");  // Security exception may be thrown by some browsers.
-      }
-      catch (ex) {
-          updateStatus("Copy to clipboard failed.");
-          console.warn("Copy to clipboard failed.", ex);
-          return false;
-      }
-      finally {
-          document.body.removeChild(textarea);
-      }
+    var textarea = document.createElement("textarea");
+    textarea.textContent = text;
+    textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+      updateStatus("Copied to clipboard.");
+      return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+    }
+    catch (ex) {
+      updateStatus("Copy to clipboard failed.");
+      console.warn("Copy to clipboard failed.", ex);
+      return false;
+    }
+    finally {
+      document.body.removeChild(textarea);
+    }
   }
 }
 
@@ -531,32 +562,42 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
-function outOfFive(theRating){
+function outOfFive(theRating) {
   theRating = (Number(theRating) / 64) + 1;
   theRating = Math.round(theRating * 10) / 10;
   return theRating;
-}            
+}
 
-function transposeStarRating(rating){
+function transposeStarRating(rating) {
   var transposed = 0;
   switch (rating) {
-      case 1:
-          transposed = 1;
-          break;
-      case 2:
-          transposed = 64;
-          break;
-      case 3:
-          transposed = 128;
-          break;
-      case 4:
-          transposed = 192;
-          break;
-      case 5:
-          transposed = 255;
-          break;
+    case 1:
+      transposed = 1;
+      break;
+    case 2:
+      transposed = 64;
+      break;
+    case 3:
+      transposed = 128;
+      break;
+    case 4:
+      transposed = 192;
+      break;
+    case 5:
+      transposed = 255;
+      break;
   }
   return transposed;
+}
+
+function dropDownMenuAction(that) {
+  //var ddmenu = that.parentElement.querySelector('#dropdown-content');
+  var ddmenu = that.parentElement.querySelector("[id^='dropdown-content']");
+  
+  ddmenu.style.display = 'block';
+  var ddcover = document.getElementById('ddcover');
+  ddcover.style.display = 'block';
+  ddcover.onclick = ddmenu.onclick = function () { ddmenu.style.display = ddcover.style.display = 'none'; };
 }
 
 

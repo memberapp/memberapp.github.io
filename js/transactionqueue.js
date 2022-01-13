@@ -160,7 +160,7 @@ class UTXOPool {
       for (let i = 0; i < utxos.length; i++) {
         utxos[i].satoshis = Number(utxos[i].satoshis);
         utxos[i].vout = Number(utxos[i].vout);
-        utxos[i].txid = sanitizeAlphanumeric(utxos[i].txid);
+        utxos[i].txid = sane(utxos[i].txid);
       }
 
       //Remove any utxos with less or equal to dust limit, they may be SLP tokens
@@ -545,13 +545,13 @@ class TransactionQueue {
       this.updateTransactionPool(utxos, options, tx);
       this.transactionInProgress = false;
       //Remove unexpected input in result
-      result = sanitizeAlphanumeric(result);
+      result = sane(result);
       callback(null, result, this);
     }, (err) => {
       //console.log(err);
       this.transactionInProgress = false;
       //Remove unexpected input in error message
-      err.message = sanitizeAlphanumeric(err.error);
+      err.message = sane(err.error);
       if (err.message === undefined || err.message == "") {
         err.message = getSafeTranslation('networkerror', "Network Error");
       }

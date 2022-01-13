@@ -1,14 +1,17 @@
-function bitcloutlogin() {
-  insertBitcloutIdentityFrame();
+
+var lastidprovider = 'https://identity.bitclout.com';
+function bitcloutlogin(idprovider) {
+  lastidprovider = idprovider;
+  insertBitcloutIdentityFrame(idprovider);
   identityWindow = window.open(
-    "https://identity.bitclout.com/log-in?accessLevelRequest=3",
+    idprovider + "/log-in?accessLevelRequest=3",
     null,
     "toolbar=no, width=800, height=1000, top=0, left=0"
   );
 }
 
-function insertBitcloutIdentityFrame() {
-  document.getElementById('bitcloutframe').innerHTML = `<iframe id="identity" frameborder="0" class="" src="https://identity.bitclout.com/embed?v=2" style="height: 100vh; width: 100vw; display: none;"></iframe>`;
+function insertBitcloutIdentityFrame(idprovider) {
+  document.getElementById('bitcloutframe').innerHTML = `<iframe id="identity" frameborder="0" class="" src="${idprovider}/embed?v=2" style="height: 100vh; width: 100vw; display: none;"></iframe>`;
 }
 
 function showBitcloutIdentityFrame() {
@@ -20,19 +23,6 @@ function hideBitcloutIdentityFrame() {
 }
 
 
-/* This is the recommended code from https://docs.bitclout.com/devs/identity-api
-but creates a large frame with 'click to unlock wallet' that doesn't do anything
-function insertBitcloutIdentityFrame() {
-  document.getElementById('bitcloutframe').innerHTML = `<iframe
-  id="identity"
-  frameborder="0"
-  src="https://identity.bitclout.com/embed"
-  style="height: 100vh; width: 100vw;"
-  [style.display]="requestingStorageAccess ? 'block' : 'none'"
-></iframe>`;
-}*/
-
-
 function bitcloutlogout() {
   /*identityWindow = window.open(
     "https://identity.bitclout.com/logout?publicKey="+bitCloutUser,
@@ -41,6 +31,7 @@ function bitcloutlogout() {
   );*/
   bitCloutUser = null;
   bitCloutUserData = null;
+  bitCloutIDProvider = null;
 }
 
 function handleInit(e) {
@@ -64,13 +55,24 @@ function handleInit(e) {
   respond(e.source, e.data.id, {});
 }
 
-function getBitCloutLoginFromLocalStorage(){
-    bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
+function getBitCloutLoginFromLocalStorage() {
+  bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
+  try {
     bitCloutUserData = JSON.parse(localStorageGet(localStorageSafe, "bitcloutuserdata"));
+  } catch (err) {
+    console.log("bitCloutUserData not available - should not happen!");
+  }
+  bitCloutIDProvider = localStorageGet(localStorageSafe, "bitcloutidprovider");
+  if (bitCloutIDProvider) {
+    bitCloutIDProvider = bitCloutIDProvider.replace(/\"/g, '');
+  }
+  if (!bitCloutIDProvider) { //legacy
+    bitCloutIDProvider = 'https://identity.bitclout.com';
+  }
 
-    if(bitCloutUserData){
-        insertBitcloutIdentityFrame();
-    }
+  if (bitCloutUserData) {
+    insertBitcloutIdentityFrame(bitCloutIDProvider);
+  }
 }
 
 function handleLoginBitclout(payload) {
@@ -84,9 +86,15 @@ function handleLoginBitclout(payload) {
 
   if (payload && payload.publicKeyAdded) {
     bitCloutUser = payload.publicKeyAdded;
-    bitCloutUserData = payload.users[bitCloutUser];
+    bitCloutIDProvider = lastidprovider;
+    if (payload.users[bitCloutUser]) {
+      bitCloutUserData = payload.users[bitCloutUser];
+    } else {
+      alert(bitCloutIDProvider + " did not send back the relevant payload.users in the payload. This may be a read only login.");
+    }
     localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
     localStorageSet(localStorageSafe, "bitcloutuserdata", JSON.stringify(bitCloutUserData));
+    localStorageSet(localStorageSafe, "bitcloutidprovider", bitCloutIDProvider);
     trylogin(payload.publicKeyAdded);
   }
 }
@@ -128,14 +136,14 @@ window.addEventListener("message", (message) => {
   if (method == "initialize") {
     handleInit(message);
   } else if (method == "storageGranted") {
-    if(payload.hasStorageAccess==true){
+    if (payload.hasStorageAccess == true) {
       hideBitcloutIdentityFrame();
     }
   } else if (id == "testpermissions") {
-    if(payload.hasStorageAccess==false){
+    if (payload.hasStorageAccess == false) {
       showBitcloutIdentityFrame();
     }
-    if(payload.browserSupported==false){
+    if (payload.browserSupported == false) {
       alert("This browser does not support BitClout Identity login.");
     }
   } else if (method == "login") {
@@ -144,41 +152,51 @@ window.addEventListener("message", (message) => {
     console.log(payload.signedTransactionHex);
     submitSignedTransaction(payload.signedTransactionHex, id);
   } else if (payload && payload.decryptedHexes) {
-    for (var key in payload.decryptedHexes){
+    for (var key in payload.decryptedHexes) {
       identityresponses.set(id, payload.decryptedHexes[key]);
     }
   } else if (payload && payload.approvalRequired) {
-    if(!alertShown){
-      alert("Your OS/Browser may not be compatible with Write Mode BitClout Identity Service - identity.bitclout.com returned error "+JSON.stringify(payload));
-      alertShown=true;
+    if (!alertShown) {
+      alert("Your OS/Browser may not be compatible with Write Mode BitClout Identity Service - identity.bitclout.com returned error " + JSON.stringify(payload));
+      alertShown = true;
     }
-      identityresponses.set(id, "identity.bitclout.com returned error "+JSON.stringify(payload));  
+    identityresponses.set(id, "identity.bitclout.com returned error " + JSON.stringify(payload));
   } else {
     identityresponses.set(id, JSON.stringify(payload));
   }
 
 });
 
-var alertShown=false;
+var alertShown = false;
 
-function submitSignedTransaction(signedTrx,id) {
+function submitSignedTransaction(signedTrx, id) {
   var submitpayload = `{"TransactionHex":"` + signedTrx + `"}`;
   var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=submit-transaction";
-  getJSON(url2,"&payload=" + encodeURIComponent(submitpayload)).then(function (data) {
+  getJSON(url2, "&payload=" + encodeURIComponent(submitpayload)).then(function (data) {
+    if (!data) {
+      serverresponses.set(id, "Error no data");
+      return;
+    }
     console.log(data);
+
+    if (data.error) {
+      serverresponses.set(id, data.error);
+      return;
+    }
+
     serverresponses.set(id, data.TxnHashHex);
   });
 }
 
 async function checkIfBitcloutUser(pubkeyhex1) {
-  var bcAddress=await pubkeyToBCaddress(pubkeyhex1);
+  var bcAddress = await pubkeyToBCaddress(pubkeyhex1);
   var submitpayload = `{"PublicKeyBase58Check":"` + bcAddress + `"}`;
   var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-single-profile";
   getJSON(url2, "&payload=" + encodeURIComponent(submitpayload)).then(function (data) {
     console.log(data);
-    if(data.Profile && data.Profile.Username){
+    if (data.Profile && data.Profile.Username) {
       //This is a BC user
-      bitCloutUser=bcAddress;
+      bitCloutUser = bcAddress;
       localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
     }
   });
@@ -191,6 +209,7 @@ var identityWindow = null;
 
 var bitCloutUser = null;
 var bitCloutUserData = null;
+var bitCloutIDProvider = null;
 
 let identityresponses = new Map();
 let serverresponses = new Map();
@@ -198,17 +217,17 @@ let serverresponses = new Map();
 
 
 
-async function putBitCloutDecryptedMessageInElement(message, elementid,publicKeySender) {
-  var decryptedMessage = await bitcloutDecryptMessage(message,publicKeySender);
+async function putBitCloutDecryptedMessageInElement(message, elementid, publicKeySender) {
+  var decryptedMessage = await bitcloutDecryptMessage(message, publicKeySender);
   document.getElementById(elementid).textContent = decryptedMessage;
 }
 
-async function bitcloutDecryptMessage(message,publicKeySender) {
+async function bitcloutDecryptMessage(message, publicKeySender) {
 
   var uniqueid = getRandomInt(1000000000);
- 
-  //Not sure if message is v1 or v2, and the wrong one should error out harmlessly 
-  
+
+  //Not sure if message is v1 or v2, try both and the wrong one should error out harmlessly 
+
   //v1
   postMessage({
     id: uniqueid,
@@ -225,13 +244,13 @@ async function bitcloutDecryptMessage(message,publicKeySender) {
   });
 
   //publicKeySender
-  let messageObj={
+  let messageObj = {
     EncryptedHex: message,
-    IsSender:false,
-    PublicKey:await pubkeyToBCaddress(publicKeySender),
-    V2:true
+    IsSender: false,
+    PublicKey: await pubkeyToBCaddress(publicKeySender),
+    V2: true
   }
-      
+
   //v2
   postMessage({
     id: uniqueid,
@@ -274,23 +293,69 @@ async function waitForServerResponse(key) {
   throw Error("Error: bitclout.com Server did not return a value.");
 }
 
-
-
 async function sendBitCloutTransaction(payload, action, divForStatus) {
+  let confirmation = '';
+  let retrywait = 0;
+  do {
+    if (retrywait > 0) {
+      if (divForStatus) {
+        let statusElement = document.getElementById(divForStatus);
+        if (statusElement) statusElement.value = "Retry in ms:" + retrywait;
+      }
+      await sleep(retrywait);
+    }
 
-  if(divForStatus){
-    var statusElement=document.getElementById(divForStatus);
+    try {
+      confirmation = await constructAndSendBitCloutTransaction(payload, action, divForStatus);
+    } catch (err) {
+      console.log("error sending:" + err);
+      //sometime may error out, means we'll try again.
+    }
+
+    if (confirmation && confirmation.includes('RuleErrorFollowingNonexistentProfile')) {
+      //alert('Oops. This user does not exist on BitClout. Cannot Follow. RuleErrorFollowingNonexistentProfile');
+      throw new Error('RuleErrorFollowingNonexistentProfile');
+    }
+
+    if (confirmation && confirmation.includes('RuleErrorCannotLikeNonexistentPost')) {
+      //alert('Oops. This post no longer exists on BitClout. Cannot like it. RuleErrorCannotLikeNonexistentPost');
+      throw new Error('RuleErrorCannotLikeNonexistentPost');
+    }
+
+    if (confirmation && confirmation.includes('RuleErrorSubmitPostParentNotFound')) {
+      //alert('Oops. This post no longer exists on BitClout. Cannot reply to it. RuleErrorSubmitPostParentNotFound');
+      throw new Error('RuleErrorSubmitPostParentNotFound');
+    }
+
+
+    retrywait = (retrywait * 1.5) + 2000;
+  } while (!confirmation || confirmation.length != 64); //txid should be 64 chars in length
+
+  return confirmation;
+}
+
+
+async function constructAndSendBitCloutTransaction(payload, action, divForStatus) {
+
+  if (divForStatus) {
+    var statusElement = document.getElementById(divForStatus);
   }
   var uniqueid = getRandomInt(1000000000);
   var url = dropdowns.txbroadcastserver + "bitclout?bcaction=" + action;
   //var url = dropdowns.txbroadcastserver + "bitclout";
-  if(statusElement)statusElement.value = "Constructing BitClout Tx";
+  if (statusElement) statusElement.value = "Constructing BitClout Tx";
+
   getJSON(url, "&payload=" + encodeURIComponent(payload)).then(async function (data) {
+
+    if (!data) {
+      serverresponses.set(uniqueid, "Error: No Data");
+      return;
+    }
+
     //Now sign the transaction
-    
-    if(bitCloutUserData){
+    if (bitCloutUserData) {
       //Use identity
-      if(statusElement)statusElement.value = "Signing Tx With Identity";
+      if (statusElement) statusElement.value = "Signing Tx With Identity";
       postMessage({
         id: uniqueid,
         service: 'identity',
@@ -302,15 +367,14 @@ async function sendBitCloutTransaction(payload, action, divForStatus) {
           transactionHex: data.TransactionHex
         }
       });
-    }else{
+    } else {
       //Use privkey to sign
-      if(statusElement)statusElement.value = "Signing Tx With Key";
+      if (statusElement) statusElement.value = "Signing Tx With Key";
       var signedTx = await signTransaction(data.TransactionHex);
       submitSignedTransaction(signedTx, uniqueid, divForStatus);
     }
+  }).catch(err => serverresponses.set(uniqueid, err.message));
 
-    
-  });
   return await waitForServerResponse(uniqueid);
 }
 
@@ -319,6 +383,20 @@ async function bitCloutLikePost(likedPostHashHex) {
   var payload = `{"ReaderPublicKeyBase58Check":"` + bitCloutUser + `","LikedPostHashHex":"` + likedPostHashHex + `","IsUnlike":false,"MinFeeRateNanosPerKB":1000}`;
   return await sendBitCloutTransaction(payload, "create-like-stateless");
 }
+
+async function bitCloutPinPost(pinPostHashHex, pubkey) {
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: pinPostHashHex,
+    BodyObj: { Body: `pinpost https://member.cash/ba/${pubkey}` },
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData = { Pinpost: "true" };
+
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
 
 async function sendBitCloutFollow(followpubkey) {
   var payload = `{
@@ -345,12 +423,12 @@ async function sendBitCloutSub(topicHOSTILE) {
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
-    BodyObj: { Body: 'subscribe '+ topicHOSTILE },
+    BodyObj: { Body: 'subscribe ' + topicHOSTILE },
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
   };
-  payload.PostExtraData={Subscribe:topicHOSTILE};
-  
+  payload.PostExtraData = { Subscribe: topicHOSTILE };
+
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
 
@@ -358,41 +436,41 @@ async function sendBitCloutUnSub(topicHOSTILE) {
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
-    BodyObj: { Body: 'unsubscribe '+ topicHOSTILE },
+    BodyObj: { Body: 'unsubscribe ' + topicHOSTILE },
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
   };
-  payload.PostExtraData={Unsubscribe:topicHOSTILE};
-  
+  payload.PostExtraData = { Unsubscribe: topicHOSTILE };
+
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
 
 
 
 async function sendBitCloutMute(followpubkey) {
-  var bcAddress=await pubkeyToBCaddress(followpubkey);
+  var bcAddress = await pubkeyToBCaddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
-    BodyObj: { Body: 'mute '+bcAddress  },
+    BodyObj: { Body: 'mute ' + bcAddress },
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
   };
-  payload.PostExtraData={Mute:bcAddress};
-  
+  payload.PostExtraData = { Mute: bcAddress };
+
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
 
 async function sendBitCloutUnMute(followpubkey) {
-  var bcAddress=await pubkeyToBCaddress(followpubkey);
+  var bcAddress = await pubkeyToBCaddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
-    BodyObj: { Body: 'unmute '+bcAddress },
+    BodyObj: { Body: 'unmute ' + bcAddress },
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
   };
-  payload.PostExtraData={UnMute:bcAddress};
+  payload.PostExtraData = { UnMute: bcAddress };
 
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
@@ -410,24 +488,37 @@ async function sendBitCloutRating(posttext, topic, divForStatus, successFunction
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
   };
-  payload.PostExtraData=postExtraData;
+  payload.PostExtraData = postExtraData;
 
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
 
 
 
-async function sendBitCloutReply(txid, replytext, divForStatus, successFunction) {
+async function sendBitCloutReply(txid, replytext, divForStatus, successFunction, parentSourceNetwork) {
   var body = { Body: replytext, ImageURLs: [] };
+  let postExtraData;
+  /*if (parentSourceNetwork != 1) {
+    //Bitclout does not allow a reply to post that does not exist on its network
+    //We'll send reply to a different post, and make a note of the real reply below
+    postExtraData = { Overideretxid: txid };
+    txid = 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3';
+  }*/
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
-    ParentStakeID: txid,
     BodyObj: body,
     IsHidden: false,
     MinFeeRateNanosPerKB: 1000
   };
+
+  if (parentSourceNetwork != 1) {
+    payload.PostExtraData = { Overideretxid: txid };
+  }else{
+    payload.ParentStakeID = txid;
+  }
+
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
-  if(successFunction){successFunction(txid, replytext)};
+  if (successFunction) { successFunction(txid, replytext) };
   return txid;
 }
 
@@ -445,70 +536,115 @@ async function sendBitCloutPost(posttext, topic, divForStatus, successFunction, 
     MinFeeRateNanosPerKB: 1000
   };
 
-  if(postExtraData){
-    payload.PostExtraData=postExtraData;
+  if (postExtraData) {
+    payload.PostExtraData = postExtraData;
   }
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
-  if(successFunction){successFunction(txid, posttext)};
+  if (successFunction) { successFunction(txid, posttext) };
   return txid;
 }
 
-async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, successFunction) {
-  if (topic) {
-    posttext = posttext + " #" + topic;
-  }
-  var body = { Body: posttext, ImageURLs: [] };
+async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, successFunction, network) {
+  if (network == 1) {
+    if (topic) {
+      posttext = posttext + " #" + topic;
+    }
+    var body = { Body: posttext, ImageURLs: [] };
 
-  var payload = {
-    UpdaterPublicKeyBase58Check: bitCloutUser,
-    RecloutedPostHashHex: txid,
-    BodyObj: body,
-    IsHidden: false,
-    MinFeeRateNanosPerKB: 1000
-  };
-  var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
-  if(successFunction){successFunction(txid,posttext)};
-  return txid;
+    var payload = {
+      UpdaterPublicKeyBase58Check: bitCloutUser,
+      RepostedPostHashHex: txid,
+      BodyObj: body,
+      IsHidden: false,
+      MinFeeRateNanosPerKB: 1000
+    };
+    var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
+    if (successFunction) { successFunction(txid, posttext) };
+    return txid;
+  } else {
+    return await sendBitCloutPost(posttext + "\n\nhttps://member.cash/p/" + txid.substr(0, 10), topic, divForStatus, successFunction, null);
+  }
 }
 
 async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction) {
   var txid = await sendBitCloutPost(posttext, topic, divForStatus, null, null);
-  if(postbody){
+  if (postbody) {
     return await sendBitCloutReply(txid, postbody, divForStatus, successFunction);
-  }else{
-    if(successFunction){successFunction(txid,posttext)};
+  } else {
+    if (successFunction) { successFunction(txid, posttext) };
     return txid;
   }
 }
 
-async function bitCloutRePost(txid) {
+async function bitCloutRePost(txid, sourcenetwork) {
   var body = {};
-  var payload = {
-    UpdaterPublicKeyBase58Check: bitCloutUser,
-    RecloutedPostHashHex: txid,
-    BodyObj: body,
-    IsHidden: false,
-    MinFeeRateNanosPerKB: 1000
-  };
-  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
+  if (sourcenetwork == 1) {
+    var payload = {
+      UpdaterPublicKeyBase58Check: bitCloutUser,
+      RepostedPostHashHex: txid,
+      BodyObj: body,
+      IsHidden: false,
+      MinFeeRateNanosPerKB: 1000
+    };
+    return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
+  } else {
+    return await sendBitCloutPost("https://member.cash/p/" + txid.substr(0, 10), '', null, null, null);
+  }
 }
 
 
-async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForStatus, successFunction) {
-  var payload = {
+async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForStatus, successFunction, preEncryptedMessage) {
+
+  let recipient = await pubkeyToBCaddress(messageRecipientpubkey);
+  let payload;
+  let encryptedMessage;
+
+  if (preEncryptedMessage) {
+    encryptedMessage = preEncryptedMessage;
+  } else if (bitCloutUserData) {
+    //First encrypt the message with identity
+    let uniqueid = getRandomInt(1000000000);
+    if (statusElement) statusElement.value = "Encrypting Message With Identity";
+    postMessage({
+      id: uniqueid,
+      service: 'identity',
+      method: 'encrypt',
+      payload: {
+        accessLevel: bitCloutUserData.accessLevel,
+        accessLevelHmac: bitCloutUserData.accessLevelHmac,
+        encryptedSeedHex: bitCloutUserData.encryptedSeedHex,
+        recipientPublicKey: recipient,
+        message: text
+      }
+    });
+    //Wait for reply
+    encryptedMessage = await waitForServerResponse(uniqueid);
+  }
+
+  payload = {
     SenderPublicKeyBase58Check: bitCloutUser,
-    RecipientPublicKeyBase58Check: await pubkeyToBCaddress(messageRecipientpubkey),
-    MessageText: text,
+    RecipientPublicKeyBase58Check: recipient,
+    EncryptedMessageText: encryptedMessage,
     MinFeeRateNanosPerKB: 1000
   };
-  
+
+  /*} else {
+    //message signed by server with recpients public key only - 
+    payload = {
+      SenderPublicKeyBase58Check: bitCloutUser,
+      RecipientPublicKeyBase58Check: recipient,
+      MessageText: text,
+      MinFeeRateNanosPerKB: 1000
+    };
+  }*/
+
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "send-message-stateless", divForStatus);
-  if(successFunction){successFunction(txid,'')};
+  if (successFunction) { successFunction(txid, '') };
   return txid;
 }
 
 async function pubkeyToBCaddress(publickey) {
-  if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); } //need this for bs58check
+  if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
   return window.bs58check.encode(new Buffer('cd1400' + san(publickey), 'hex'));
 }
 
@@ -548,10 +684,10 @@ async function signTransaction(transactionHex) {
   return signedTransactionBytes.toString('hex');
 };
 
-function isBitCloutUser(){
-  return  (bitCloutUser);
+function isBitCloutUser() {
+  return (bitCloutUser);
 }
 
-function isBitCloutIdentityUser(){
-  return  (bitCloutUserData);
+function isBitCloutIdentityUser() {
+  return (bitCloutUserData);
 }

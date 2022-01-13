@@ -16,17 +16,14 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     show(page);
 
     if (qaddress) {
-        //skip, viewing single user's posts, title should already be filled in with user's paging id
-        var obj2 = {
-            //These must all be HTML safe.
-            address: qaddress,
-            profileclass: 'filteroff',
-            reputationclass: 'filteroff',
-            postsclass: 'filteron'
+        //hideAll();
+        if(filter!="list"){
+            showOnly("mcidmemberheader");
+            showOnly("mcidmembertabs");
+            var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteroff', postsclass: 'filteron', bestiesclass: 'filteroff'};
+            document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
         }
-        document.getElementById('membertabs').innerHTML = templateReplace(membertabsHTML, obj2);
-        document.getElementById("memberheader").style.display = 'block';
-
+        setPageTitleRaw("List");
     } else if (topicnameHOSTILE.toLowerCase() == "mytopics") {
         setPageTitleFromID("VV0128");
     } else if (topicnameHOSTILE) {
@@ -54,6 +51,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
     var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + bchOnly;
     getJSON(theURL).then(function (data) {
 
+        if (qaddress && data[0] && data[0].pagingid && filter!="list") {
+            setPageTitleRaw("@" + data[0].pagingid);
+        }
+
         var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
@@ -68,7 +69,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             try {
-                if (settings["shownonameposts"] == 'false' && !data[i].name) { continue; }
+                if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
                 if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
                 contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false, true, false));
             } catch (err) {
@@ -123,7 +124,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
 
         data = mergeRepliesToRepliesBySameAuthor(data, true);
         var contents = "";
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             data[i].address = data[i].senderaddress;
             contents += getMessageHTML(data[i], i);
         }
@@ -131,6 +132,9 @@ function getAndPopulateMessages(messagetype, start, limit) {
 
 
         document.getElementById('messageslist').innerHTML = contents;
+        for (let i = 0; i < data.length; i++) {
+            populateMessages(data[i], i);
+        }
         addDynamicHTMLElements(data);
         scrollToPosition();
     }, function (status) { //error detection....
@@ -335,6 +339,7 @@ function getAndPopulateQuoteBox(txid) {
         if (data[0]) {
             contents = getHTMLForPost(data[0], 1, page, 0, null, true, true, false);
             document.getElementById(page).innerHTML = contents;
+            document.getElementById('quotetxidnetwork').value = data[0].network; 
         } else {
             throw error(getSafeTranslation('noresult', 'no result returned'));
         }
@@ -365,7 +370,9 @@ function addDynamicHTMLElements(data) {
 
     if (data != null && data != undefined && data[0]) {
         //if (data.length > 0) {
-        updateStatus("QT:" + (Math.round(data[0].msc * 100) / 100).toFixed(2));
+        let qt=(Math.round(data[0].msc * 100) / 100).toFixed(2);
+        updateStatus("QT:" + qt);
+        document.getElementById("version").title=qt;
         //}
     }
     //Add ratings, disable controls if the star rating can be updated
@@ -545,7 +552,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID, 8));
-        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '', data.rplastactive, truncate, data.rpsysrating, data.rpsourcenetwork);
+        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '', data.rplastactive, truncate, data.rpsysrating, data.rpsourcenetwork, data.rphivename, data.rphivelink, data.rpbitcoinaddress);
         //if (repostHTML2) {
         //    repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         //}
@@ -556,7 +563,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         if (repostHTML2) {
             repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         }
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2, data.lastactive, truncate, data.sysrating, data.network);
+        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2, data.lastactive, truncate, data.sysrating, data.network, data.hivename, data.hivelink, data.bitcoinaddress);
     } else {
         //repost with no message
         retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
@@ -574,7 +581,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, data.lastactive, data.sysrating);
+    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, data.lastactive, data.sysrating, data.network, data.hivename, data.hivelink, data.bitcoinaddress);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -582,7 +589,7 @@ function showReplyButton(txid, page, divForStatus) {
     document.getElementById("replytext" + page + txid).value = "";
 }
 
-function sendReply(txid, page, divForStatus) {
+function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, network) {
     if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
@@ -602,11 +609,11 @@ function sendReply(txid, page, divForStatus) {
 
     var successFunction = function () { replySuccessFunction(page, txid); };
     if (checkForNativeUserAndHasBalance()) {
-        sendReplyRaw(privkey, txid, replyhex, 0, divForStatus, successFunction);
+        sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
         successFunction = null;
     }
     if (isBitCloutUser()) {
-        sendBitCloutReply(txid, replytext, divForStatus, successFunction);
+        sendBitCloutReply(origtxid, replytext, divForStatus, successFunction, parentSourceNetwork);
     }
     return true;
 }
@@ -621,7 +628,7 @@ function replySuccessFunction(page, txid) {
 
 function showReplyBox(txid) {
     //if (!checkForPrivKey()) return false;
-    var replybox = document.querySelector("[id^='" + "reply" + txid.substr(0, 10) + "']");
+    var replybox = document.querySelector("[id^='" + "reply" + txid + "']");
     //document.getElementById("reply" + txid);
     if (replybox)
         replybox.style.display = "block";
@@ -692,7 +699,18 @@ function increaseGUIReposts(txid) {
     document.getElementById('repostscount' + txid).innerHTML = repostscount + 1;
 }
 
-function likePost(txid, tipAddress) {
+function pinpost(txid){
+//If bitclout user is logged in
+    if (isBitCloutUser()) {
+        bitCloutPinPost(txid,pubkey);
+    }
+
+    if (checkForNativeUserAndHasBalance()) {
+        memoPinPost(txid, privkey);
+    }
+}
+
+function likePost(txid, origtxid, tipAddress) {
     //if no identity login, then check for priv key 
     if (!checkForPrivKey()) return false;
 
@@ -700,49 +718,49 @@ function likePost(txid, tipAddress) {
     increaseGUILikes(txid);
     if (numbers.oneclicktip >= 547) {
         var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
-        document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + numbers.oneclicktip, false);
+        document.getElementById('tipscount' + txid).innerHTML = usdString(tipscount + numbers.oneclicktip, false);
         document.getElementById('tipscount' + txid).dataset.amount = tipscount + numbers.oneclicktip;
     }
 
     //If bitclout user is logged in
     if (isBitCloutUser()) {
-        bitCloutLikePost(txid);
+        bitCloutLikePost(origtxid);
     }
 
     //If memo user is logged in
     if (checkForNativeUserAndHasBalance()) {
         if (numbers.oneclicktip >= 547) {
-            sendTipRaw(txid, tipAddress, numbers.oneclicktip, privkey, null);
+            sendTipRaw(origtxid, tipAddress, numbers.oneclicktip, privkey, null);
         } else {
-            sendLike(txid, privkey);
+            sendLike(origtxid, privkey);
         }
     }
 }
 
-function dislikePost(txid, tipAddress) {
+function dislikePost(txid, origtxid, tipAddress) {
     if (!checkForNativeUser()) return false;
 
     decreaseGUILikes(txid);
 
-    sendDislike(txid);
+    sendDislike(origtxid);
 }
 
-function repostPost(txid) {
+function repostPost(txid,origtxid,sourcenetwork) {
     if (!checkForPrivKey()) return false;
 
     increaseGUIReposts(txid);
 
     if (isBitCloutUser()) {
-        bitCloutRePost(txid);
+        bitCloutRePost(origtxid,sourcenetwork);
     }
 
     if (checkForNativeUserAndHasBalance()) {
-        repost(txid, privkey);
+        repost(origtxid, privkey);
     }
 
 }
 
-function sendTip(txid, tipAddress, page) {
+function sendTip(txid, origtxid, tipAddress, page) {
     if (!checkForNativeUser()) return false;
 
     //document.getElementById("tipbox" + page + txid).style.display = "none";
@@ -764,7 +782,7 @@ function sendTip(txid, tipAddress, page) {
     document.getElementById('tipscount' + txid).dataset.amount = tipscount + tipAmount;
     document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + tipAmount, false);
 
-    sendTipRaw(txid, tipAddress, tipAmount, privkey,
+    sendTipRaw(origtxid, tipAddress, tipAmount, privkey,
         function () {
             document.getElementById('tipstatus' + page + txid).value = "sent";
         }

@@ -429,33 +429,6 @@ html :lang(ar) {
   width: 100%;
   background-size: 100px 82px; }
 
-.profilestats,
-.memberstats {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap; }
-  .profilestats div,
-  .memberstats div {
-    margin: 0.5rem;
-    padding: 0.5rem;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex: 1;
-    flex: 1;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 0.25rem; }
-    .profilestats div label,
-    .memberstats div label {
-      margin-bottom: 0; }
 
 .settingsprofilelinks div a,
 #settingsprofilelinks div a,
@@ -1125,41 +1098,6 @@ video {
     background-color: black;
     background-image: unset; }
 
-.youtubepreview {
-  position: relative;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  -ms-flex-pack: center;
-  justify-content: center; }
-  .youtubepreview .youtubepreviewimage {
-    width: 288px;
-    height: 162px;
-    object-fit: cover; }
-    @media (min-width: 769px) {
-      .youtubepreview .youtubepreviewimage {
-        width: 480px;
-        height: 270px; } }
-  .youtubepreview .play-icon {
-    position: absolute;
-    width: 100px;
-    height: auto; }
-
-.youtubecontainer {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: center;
-  justify-content: center;
-  margin-top: 1rem; }
-  .youtubecontainer iframe {
-    width: 288px;
-    height: 162px; }
-    @media (min-width: 769px) {
-      .youtubecontainer iframe {
-        width: 480px;
-        height: 270px; } }
-
 .notificationtitle,
 .repost {
   display: -ms-flexbox;
@@ -1598,7 +1536,7 @@ header {
     max-width: 960px; } }
   @media (min-width: 1025px) and (max-width: 768px) {
     header .pagetop nav {
-      max-width: 540px; } }
+      } }
       header .pagetop nav:before {
         position: absolute;
         content: " ";
@@ -1789,7 +1727,7 @@ footer {
     max-width: 960px; } }
     @media (max-width: 768px) {
       footer .content {
-        max-width: 540px; } }
+        } }
   footer #developmentversion {
     font-size: 1rem;
     text-align: center;
@@ -1870,7 +1808,7 @@ footer {
         max-width: 800px; } }
     @media (max-width: 768px) {
       #lowfundswarning .content {
-        max-width: 540px; } }
+        } }
     #lowfundswarning .content #satoshiamount,
     #lowfundswarning .content #lowfundsaddress {
       font-weight: bold;
@@ -1974,7 +1912,7 @@ footer {
     color: white;
     font-weight: 400;
     line-height: 1.15;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem !important;
     font-size: 0.825rem; }
   .profilepreview .profile-actions {
     display: -ms-flexbox;
@@ -2093,7 +2031,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     .mainbodywrapper #posts {
-      max-width: 540px; } }
+      } }
   .mainbodywrapper #posts .itemlist ol.posts {
     padding: 0; }
     .mainbodywrapper #posts .itemlist ol.posts li {
@@ -2158,7 +2096,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #newpost {
-      max-width: 540px; } }
+      } }
   #newpost br {
     display: none; }
   #newpost #memorandumarea {
@@ -2256,7 +2194,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #settingsanchor {
-      max-width: 540px; } }
+      } }
   #settingsanchor .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
@@ -2336,7 +2274,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #memberposts {
-      max-width: 540px; } }
+      } }
   #memberposts .itemlist ol {
     padding: 0;
     margin: 0; }
@@ -2371,7 +2309,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #toolsanchor {
-      max-width: 540px; } }
+      } }
   #toolsanchor .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
@@ -2404,7 +2342,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #loginbox {
-      max-width: 540px; } }
+      } }
   #loginbox .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
@@ -2457,7 +2395,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #topiclistanchor {
-      max-width: 540px; } }
+      } }
   #topiclistanchor .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
@@ -2502,7 +2440,7 @@ footer {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #topicmeta {
-      max-width: 540px; } }
+      } }
   #topicmeta .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
@@ -2592,7 +2530,7 @@ tbody tr td .filterprovider {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #messagesanchor {
-      max-width: 540px; } }
+      } }
   #messagesanchor .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
@@ -2781,19 +2719,19 @@ tbody tr td .filterprovider {
             cursor: not-allowed;
             pointer-events: none; }
 
-#memberanchor {
+.memberanchor {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto; }
   @media (min-width: 769px) {
-    #memberanchor {
+    .memberanchor {
       max-width: 800px; } }
   @media (max-width: 768px) {
-    #memberanchor {
-      max-width: 540px; } }
-  #memberanchor .content {
+    .memberanchor {
+      } }
+  .memberanchor .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
     border-radius: 0.25rem;
@@ -2802,22 +2740,21 @@ tbody tr td .filterprovider {
     overflow: inherit;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     padding: 1.75rem; }
-    #memberanchor .content div {
+    .memberanchor .content div {
       margin-bottom: 1rem; }
-    #memberanchor .content #memberprofiletext {
-      white-space: break-spaces; }
+
     @media (max-width: 400px) {
-      #memberanchor .content {
+      .memberanchor .content {
         margin-left: -15px !important;
         margin-right: -15px !important;
         border-radius: 0;
         border-left: 0;
         border-right: 0;
         border-bottom: 1px solid rgba(255, 255, 255, 0.38); } }
-    #memberanchor .content #membernametext {
+    .memberanchor .content #membernametext {
       display: -ms-flexbox;
       display: flex; }
-      #memberanchor .content #membernametext a[href^="javascript:;"] {
+      .memberanchor .content #membernametext a[href^="javascript:;"] {
         line-height: 1.2;
         cursor: pointer;
         text-decoration: none;
@@ -2832,16 +2769,16 @@ tbody tr td .filterprovider {
         border: transparent;
         font-weight: 400;
         margin-left: auto; }
-        #memberanchor .content #membernametext a[href^="javascript:;"]:hover {
+        .memberanchor .content #membernametext a[href^="javascript:;"]:hover {
           background: #1484df;
           color: white;
           border: transparent; }
-        #memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
+        .memberanchor .content #membernametext a[href^="javascript:;"]:disabled {
           opacity: 0.65; }
-    #memberanchor .content .memberrating {
+    .memberanchor .content .memberrating {
       margin: 0 auto;
       display: table; }
-      #memberanchor .content .memberrating .starrating {
+      .memberanchor .content .memberrating .starrating {
         display: -ms-inline-flexbox;
         display: inline-flex;
         -ms-flex-align: center;
@@ -2854,7 +2791,7 @@ tbody tr td .filterprovider {
         margin-right: 0.5rem;
         background: rgba(0, 0, 0, 0.03);
         border-radius: 0.25rem; }
-        #memberanchor .content .memberrating .starrating div {
+        .memberanchor .content .memberrating .starrating div {
           margin: 0 !important;
           padding: 0 !important;
           border: none !important;
@@ -2874,7 +2811,7 @@ tbody tr td .filterprovider {
   @media (max-width: 768px) {
     #anchorratings,
     #community {
-      max-width: 540px; } }
+      } }
   #anchorratings .content,
   #community .content {
     background: black;
@@ -2927,7 +2864,7 @@ tbody tr td .filterprovider {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #trustgraph {
-      max-width: 540px; } }
+      } }
   #trustgraph .content {
     background: black;
     border: 1px solid rgba(255, 255, 255, 0.38);
@@ -3081,7 +3018,7 @@ tbody tr td .filterprovider {
       max-width: 800px; } }
   @media (max-width: 768px) {
     #notifications {
-      max-width: 540px; } }
+      } }
   #notifications .notificationtitle {
     background: #474747; }
   #notifications ul.notificationslist {
@@ -3153,7 +3090,7 @@ tbody tr td .filterprovider {
     #blocking,
     #following,
     #followers {
-      max-width: 540px; } }
+      } }
   #blockers .content,
   #blocking .content,
   #following .content,

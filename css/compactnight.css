@@ -108,14 +108,9 @@ body {
 
 
 /* PROFILE NIGHT CSS */
-#memberanchor .content{
+.memberanchor .content{
     box-shadow: 0px 0px 5px 2px #61aff0;
 }
-.memberstats{
-    border:1px solid #61aff0;
-    background: none;
-}
-
 
 /* TOPIC LIST  */
 #topiclistanchor td.tlaction a{
@@ -163,6 +158,10 @@ body {
     background: #221104;
 }
 
+.majornavbuttonson {
+    background: #221104;
+  }
+
 .filters {
     background-color: #090600;
 }
@@ -193,7 +192,7 @@ body {
     background-color: black;
 }
 
-.memberheader .membertabs {
+#membertabs {
     background-color: #090600;
     background: linear-gradient(to right, #000 12%, #090600 100%);
 }

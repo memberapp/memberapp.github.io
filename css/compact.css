@@ -3,6 +3,21 @@ body {
   word-break: break-word;
 }
 
+
+.mcapplicationpage {
+  max-width: 800px;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.status{
+  white-space: nowrap;
+  overflow: hidden;
+}
+
 .quotepost {
   border-radius: 10px;
 }
@@ -87,7 +102,6 @@ body {
   padding: 1rem;
   z-index: 999;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-  text-transform: capitalize;
 }
 
 .mainhamburger {
@@ -227,6 +241,15 @@ a {
 
 .age::after {
   content: "\00a0";
+}
+
+.handle-label, .pagingid-label{
+  display:none;
+}
+
+.profile-handle{
+  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .member-handle {
@@ -444,7 +467,7 @@ Use important, because we always want profile card pics to be this size*/
 .notificationitem .notificationIcon {
   display: block;
   position: absolute;
-  left: -30px;
+  left: -25px;
   top: 18px;
 }
 
@@ -462,14 +485,7 @@ Use important, because we always want profile card pics to be this size*/
 #notifications ul.notificationslist li:hover {
   box-shadow: 0 13px 27px 6px #fafafa !important;
 }
-.notificationbutton {
-  color: #61aff0 !important;
-  border: 1px solid #61aff0 !important;
-}
-.notificationbutton:hover {
-  color: #fff !important;
-  background-color: #61aaff;
-}
+
 /*move profile preview up in side bar, left in post*/
 .post-side-bar .profilepreview {
   top: -5em;
@@ -479,16 +495,6 @@ Use important, because we always want profile card pics to be this size*/
   left: -5em;
 }
 
-/* close button for tip& like */
-.scoreexpanded .closebutton a, 
-.remembersexpanded .closebutton a{
-  border-color: #61aff0;
-}
-.scoreexpanded .closebutton a:hover,
- .remembersexpanded .closebutton a:hover{
-   background-color: #61aff0;
-   color: #fff !important;
- }
 .profilepreview {
   animation: postFadein 0.5s;
   -moz-animation: postFadein 0.5s; /* Firefox */
@@ -664,7 +670,7 @@ img {
   color: #aaa !important;
   display: flex !important;
   align-items: center !important;
-  grid-gap: 7px !important;
+  grid-gap: 2px !important;
 }
 
 .iconcount {
@@ -827,6 +833,12 @@ img {
 .newheader .majornavbuttonsdiv a:hover {
   background: #ddeefc;
 }
+
+.majornavbuttonson {
+  background: #ddeefc;
+}
+
+
 /* alert count style */
 .newheader .majornavbuttonsdiv #privatemessagesbutton,
 .newheader .majornavbuttonsdiv #notificationsbutton {
@@ -894,7 +906,6 @@ a {
   color: #61aff0 !important;
 }
 .imgurimage {
-  width: 100% !important;
   object-fit: cover;
 }
 .newheader .searchwrapper input::placeholder {
@@ -918,7 +929,7 @@ a {
   width: unset !important;
   max-width: unset;
 }
-.newheader .searchwrapper .mainhamburger {
+.mainhamburger {
   right: unset;
   top: 3.5em;
   left: -9em;
@@ -945,14 +956,15 @@ a {
   visibility: hidden;
 }
 
-.newheader .searchwrapper .mainhamburger a {
+.mainhamburger a {
   display: flex;
   grid-gap: 6px;
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem 1rem;
 }
-.newheader .searchwrapper .mainhamburger #topiclistbutton span.tagicon {
+
+.mainhamburger #topiclistbutton span.tagicon {
   font-size: 1.5rem;
   width: 21px;
   text-align: center;
@@ -967,7 +979,7 @@ a {
 .newheader .searchwrapper .usersearchnavclass label {
   border-bottom: 2px solid rgba(0, 0, 0, 0.12);
 }
-.newheader .searchwrapper .mainhamburger::before,
+.mainhamburger::before,
 .newheader .searchwrapper #usersearchnavresults::before,
 .post .dropdown .dropdown-content::before,
 .post-footer-remembers .remember-dropdown::before,
@@ -983,11 +995,12 @@ a {
   border-top: 1px solid rgba(0, 0, 0, 0.12);
   border-left: 1px solid rgba(0, 0, 0, 0.12);
 }
-.newheader .searchwrapper .dropdown {
+
+.dropdown {
   width: 43px;
   height: 36px;
 }
-.newheader .searchwrapper .dropdown:hover button {
+.dropdown:hover button {
   transition: all 0.3s ease;
   background-color: rgba(221, 221, 221, 0.8) !important;
   color: #fff;
@@ -997,7 +1010,7 @@ a {
   justify-content: center;
   align-items: center;
 }
-.newheader .searchwrapper .dropdown button {
+.dropdown button {
   font-size: 25px;
   color: #aaa;
   margin-bottom: 0;
@@ -1048,6 +1061,7 @@ a {
 
 /* active tab */
 .filters {
+  width: 100%;
   position: relative;
   display: block;
   background-color: #f6f9ff;
@@ -1068,7 +1082,7 @@ a {
   padding: 10px;
   box-sizing: border-box;
   z-index: 2;
-  padding: 3px 10px;
+  padding: 3px 8px;
   transition: all 0.3s ease;
   max-width: 70px;
   min-width: 55px;
@@ -1105,7 +1119,7 @@ a {
   background-color: #f3f6fb;
   color: #000;
 }
-.post .options {
+.options {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1119,7 +1133,7 @@ a {
   background-color: transparent !important;
   min-width: 30px;
 }
-.post .options div {
+.options div {
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -1158,6 +1172,10 @@ a {
   height: 17px;
 }
 
+.post div {
+   margin-bottom: unset !important;
+}
+
 #loginbox .content {
   position: absolute;
   width: 100%;
@@ -1169,6 +1187,10 @@ a {
 #loginbox {
   min-height: calc(100vh - 81px);
   position: relative;
+}
+
+.post-list-final, .pageundertabs {
+  clear: both;
 }
 
 .post-list-item .post {
@@ -1275,71 +1297,25 @@ a {
   /* text-shadow: 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%), 0 0 30px rgb(11 143 255 / 50%),
     0 0 42px rgb(11 143 255 / 50%); */
 }
-/* *********** POST follow button **************/
-.profilepreview .profile-actions .profilepreviewfollowbutton a {
-  background: #61aff0;
-  color: #fff !important;
-}
-.profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
-  background: #2291eb;
-  color: #fff !important;
-}
-.navbuttons a {
-  background: #61aff0;
-  color: #fff !important;
-  border-color: #61aff0;
-}
-.navbuttons a:hover {
-  background-color: #2291eb;
-}
+
+
 
 #topicmeta .content h1.topicheader {
   overflow-wrap: break-word;
 }
 
+.trustgraph, .memberanchor, .besties, .posts {
+  clear: both;
+  padding-left: 0px;
+  padding-right: 0px;
+}
 /* profile page design */
-#memberanchor .content {
+.memberanchor .content {
   position: relative;
   box-shadow: 0 13px 27px 6px #fafafa;
   border: none;
 }
-/* profile page tabs */
-.memberheader .membertabs {
-  display: flex;
-  justify-content: flex-end;
-  width: 770px;
-  margin: 0 auto;
-  margin-bottom: 1rem;
 
-  position: relative;
-  background-color: #f6f9ff;
-  padding: 10px;
-  border-radius: 40px;
-  background: linear-gradient(to right, #fff 12%, #f6f9ff 100%);
-  word-break: normal;
-}
-.memberheader .membertabs a {
-  position: relative;
-  padding: 3px 10px;
-  margin-left: 5px;
-  transition: all 0.3s ease;
-  max-width: 100px;
-}
-.memberheader .membertabs a:hover {
-  position: relative;
-  background-color: #61aaff !important;
-  color: #fff !important;
-  border-radius: 36px;
-  max-width: 100px;
-}
-.memberheader .membertabs a.filteron {
-  z-index: 1;
-  background-color: #61aaff !important;
-  border-radius: 36px;
-  font-weight: 700;
-  color: black;
-  color: #fff !important;
-}
 .memberpiccontainer label {
   display: none !important;
 }
@@ -1348,11 +1324,7 @@ a {
   left: 26px;
   top: 75px;
 }
-.memberpiccontainer span.memberpiclarge {
-  position: absolute;
-  top: -65px;
-  left: 20px;
-}
+
 .memberpiccontainer img.settingspicturelarge {
   border-radius: 50%;
   border: 1px solid;
@@ -1362,120 +1334,41 @@ a {
   width: 130px;
   height: 130px;
 }
-#memberanchor .content .memberprofiletextContainer {
+.memberanchor .content .memberprofiletextContainer {
   margin-top: 100px;
 }
-#memberanchor .content .memberprofiletextContainer label {
+.memberanchor .content .memberprofiletextContainer label {
   display: none !important;
 }
-#memberanchor .content .memberInfoTextContainer {
-  display: flex;
-  position: absolute;
-  top: 79px;
-}
-#memberanchor .content .memberInfoTextContainer label {
-  display: none;
-}
-#memberanchor .content .memberInfoTextContainer span {
-  font-weight: 600;
-  font-size: 1.2rem;
-}
-#memberanchor .content .memberInfoTextContainer div {
-  margin-right: 10px;
-}
-#memberanchor .content #membernametext {
+.memberanchor .content #membernametext {
   margin-bottom: 0;
 }
-#memberanchor .content .memberstatsButtons {
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: center;
-  position: absolute;
-  top: 26px;
-  right: 16px;
-}
-#memberanchor .content .memberstatsButtons div {
-  margin-right: 10px;
-}
-#memberanchor .content #membernametext a.populate-send-message {
+
+.memberanchor .content #membernametext a.populate-send-message {
   border: 1px solid #61aff0;
   background: transparent !important;
   color: #61aff0 !important;
   border-radius: 45px;
   padding: 0.5rem 1rem;
 }
-#memberanchor .content #membernametext a.populate-send-message {
+.memberanchor .content #membernametext a.populate-send-message {
   position: absolute;
   top: 26px;
   right: 26px;
 }
-#memberanchor .content .memberstats .follow {
-  position: absolute;
-  top: 26px;
-  right: 160px;
-  padding: 0.3rem 1rem;
-  margin: 0;
-  word-break: normal;
-}
-#memberanchor .content .memberstats .follow a,
-#memberanchor .content .memberstats .mute a {
-  font-weight: 400;
-  font-size: 1rem;
-  border: none;
-  word-break: normal;
-}
-#memberanchor .content .memberstats .follow a {
-  border: 1px solid #61aff0;
-  background: transparent !important;
-  color: #61aff0 !important;
-  border-radius: 45px;
-  padding: 0.3rem 1rem;
-  position: absolute;
-  top: 0px;
-  right: 10px;
-}
-#memberanchor .content .memberstats .mute a {
-  border: 1px solid #61aff0;
-  background: transparent !important;
-  color: #61aff0 !important;
-  border-radius: 45px;
-  padding: 0.3rem 1rem;
-  position: absolute;
-  top: 0px;
-  right: 118px;
-}
-#memberanchor .content .memberstats .mute {
-  position: absolute;
-  top: 26px;
-  right: 160px;
-  margin: 0;
-}
-#memberanchor .content .memberstats .follow label,
-#memberanchor .content .memberstats .mute label {
-  display: none;
-}
-#memberanchor .content #membernametext a.populate-send-message:hover,
-#memberanchor .content .memberstats .follow a:hover,
-#memberanchor .content .memberstats .mute a:hover {
-  background: #61aff0 !important;
-  border: 1px solid #61aff0;
-  color: #fff !important;
-}
-#memberanchor .content .memberstats .follow:hover a {
-  color: #fff !important;
-}
-#memberanchor .content #memberlegacyaddress {
+.memberanchor .content #membernametext a.populate-send-message:hover,
+.memberanchor .content #memberlegacyaddress {
   position: relative;
   margin-top: 2rem;
 }
-/* #memberanchor .content #memberlegacyaddress {
+/* .memberanchor .content #memberlegacyaddress {
   /* display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
 } */
-#memberanchor .content #memberlegacyaddress label {
+.memberanchor .content #memberlegacyaddress label {
   display: none;
 }
 #memberlegacyaddress #memberlegacyformatdiv {
@@ -1515,27 +1408,6 @@ span.qrcodeclick span {
   color: #fff !important;
 }
 
-#memberanchor .content .memberstats .muters,
-#memberanchor .content .memberstats .muting {
-  display: none;
-}
-.memberstats div a {
-  font-size: 1rem;
-  text-transform: capitalize;
-  font-weight: 700;
-}
-.memberstats div label {
-  font-weight: 400;
-  font-size: 14px;
-  color: #777;
-}
-#memberanchor .content .memberstats div {
-  border: none;
-}
-#memberanchor .content .memberstats .muters,
-#memberanchor .content .memberstats .muting {
-  display: none;
-}
 
 label#memberblockexplorer {
   display: none;
@@ -1695,22 +1567,8 @@ label#memberblockexplorer {
   max-width: fit-content;
   font-weight: 700;
 }
-#walletsendfunds button#sendfundsbutton {
-  position: absolute;
-  bottom: 5px;
-  right: 4%;
-  margin-top: 20px;
-  background-color: #61aff0 !important;
-  border-radius: 45px;
-  border: 1px solid #61aff0 !important;
-  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
-}
-#walletsendfunds button#sendfundsbutton:hover {
-  background-color: #fff !important;
-  color: #61aff0;
-  box-shadow: none;
-  animation-delay: 0.5s;
-}
+
+
 #walletprivatekey label {
   margin-bottom: 1.5rem;
 }
@@ -1737,7 +1595,7 @@ label#memberblockexplorer {
   top: 0px;
   left: -23px;
 }
-/* Private message */
+/* Private message 
 #messagesanchor #messageschoice {
   position: relative;
   display: block;
@@ -1777,7 +1635,7 @@ label#memberblockexplorer {
   font-weight: 700;
   color: black;
   color: #fff !important;
-}
+}*/
 /* POST ON MAP */
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar {
   width: 10px;
@@ -1857,39 +1715,11 @@ table tbody tr:nth-child(even){
 }
 
 /* setting page  */
-#settingsanchor .content #settingsnametextbutton,
-#settingsanchor .content #settingsprofiletextbutton {
-  color: #fff;
-  border-color: #61aff0;
-}
+
 .customcheckbox input:checked ~ label:before {
   background: #61aff0;
 }
-#settingsanchor .cachedeletebutton,
-.allownotifications a.notificationbutton {
-  line-height: 1.2;
-  font-weight: 400;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.15s ease-in-out;
-  border-radius: 0.25rem;
-  background: transparent;
-  padding: 0.5rem 1.5rem;
-}
-.allownotifications a.notificationbutton {
-  color: #61aff0 !important;
-  border: 1px solid #61aff0 !important;
-}
-#settingsanchor .cachedeletebutton:hover,
-.allownotifications a.notificationbutton:hover {
-  background: #61aff0;
-  color: #fff !important;
-}
-#settingsanchor .cachedeletebutton {
-  border: 1px solid #61aff0;
-  position: relative;
-  top: 16px;
-}
+
 #settingsanchor input,
 #settingsanchor select,
 .formgroup input {
@@ -1928,16 +1758,14 @@ table tbody tr:nth-child(even){
   box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
 }
 
-.formgroup button {
-  border: 1px solid #61aff0;
-  border-radius: 45px;
-}
-#settingsanchor .content #settingsnametextbutton:disabled, #settingsanchor .content #settingsprofiletextbutton:disabled{
-  border: none !important;
-  border-radius: 45px;
-}
+
 textarea:disabled, input:disabled{
   background-color: #ddeefc  !important;
+}
+
+.starratingnotifications {
+  padding-top: 3px;
+  padding-right: 15px;
 }
 
 
@@ -2003,9 +1831,7 @@ footer{
   .newheader .pagetitleclass .pageTitlediv {
     display: none;
   }
-  #notifications{
-    max-width: 651px;
-  }
+
 }
 /* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
 @media (max-width: 768px) {
@@ -2044,16 +1870,8 @@ footer{
   
   .filters {
     display: block;
-    float: unset;
   }
-  
-  .filterssecondset {
-    /*
-    //these justify right but screw up spacing/display
-    display: flex;
-    justify-content: flex-end;
-    */
-  }
+
 
   .post .dropdown .dropbtn {
     padding-top: 5px;
@@ -2075,9 +1893,7 @@ footer{
   .newheader .majornavbuttonsclass #loggedout a {
     padding: 12px 3px;
   }
-  .newheader .majornavbuttonsclass #loggedout a.largenavbtn {
-    padding: 9px 3px;
-  }
+  
   .newheader .majornavbuttonsdiv a {
     display: unset;
     width: unset;
@@ -2099,18 +1915,10 @@ footer{
     transform: translateX(-66%);
   }
   /* profile page */
-  #membertabs {
-    max-width: 540px;
-  }
-  .memberheader .membertabs a {
-    margin: 5px 20px 5px 0px;
-  }
   #memberprofilelinks div a {
     margin: 10px;
   }
-  #memberanchor .content .memberstatsButtons {
-    right: 0;
-  }
+  
   #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
   }
@@ -2120,11 +1928,8 @@ footer{
   #memberblockexplorer {
     top: 520px;
   }
-  .memberstats {
-    margin-top: 40px;
-  }
   
-  #memberanchor .content .memberprofiletextContainer {
+  .memberanchor .content .memberprofiletextContainer {
     margin-top: 135px;
   }
   /* wallet page  */
@@ -2154,10 +1959,8 @@ footer{
   .qrcodeclick {
     position: unset;
   }
-  #walletsendfunds button#sendfundsbutton {
-    position: unset;
-    margin-top: 12px;
-  }
+
+ 
   #walletsendfunds .sendusd {
     bottom: 15px;
     left: 37px;
@@ -2180,27 +1983,24 @@ footer{
     top: 68px;
     right: 40%;
   }
-  #notifications{
-    max-width: 540px;
-  }
+  
+  
+  .tipicon, .remembersicon, .likeicon, .replyicon {
+    width: 30px !important;
+    height: 30px !important;
+ }
 
 
 }
-/*  */
-@media (max-width: 600px) {
-  #notifications {
-    max-width: 400px;
-  }
 
-  .notificationitem .notificationIcon {
-    left: -30px;
-  }
+/* This is necessary because the alert notifications are not properly positioned on the alert icons*/
+@media (max-width: 600px) {
   .newheader .alertcount {
     left: 50px;
     margin-left: 0;
-  }
-  
+  }  
 }
+
 @media (max-width: 500px) {
   .newheader {
     grid-gap: 0px;
@@ -2210,16 +2010,7 @@ footer{
   #loginbox{
     max-width: 340px;
   }
-  #notifications {
-    max-width: 380px;
-  }
-  #membertabs {
-    max-width: 100%;
-    justify-content: flex-end;
-  }
-  .memberheader .membertabs a {
-    margin: 5px 0px 5px 0px;
-  }
+
   /* fixed navbar */
   .newheader .headercentergroup,
   .newheader .headerrightgroup,
@@ -2253,7 +2044,7 @@ footer{
     right: 10px;
     left: unset;
   }
-  .newheader .searchwrapper .mainhamburger {
+  .mainhamburger {
     left: -10em;
   }
   .newheader .searchwrapper .dropdown {
@@ -2270,40 +2061,18 @@ footer{
     width: 20rem;
   }
   /* profile */
-  #memberanchor .content .memberprofiletextContainer {
+  .memberanchor .content .memberprofiletextContainer {
     margin-top: 190px;
   }
   
-  #memberanchor .content .memberstats .follow a {
-    right: 0px;
-  }
-  #memberanchor .content .memberInfoTextContainer {
-    top: 130px;
-  }
-  #memberanchor .content #membernametext a.populate-send-message {
+  .memberanchor .content #membernametext a.populate-send-message {
     right: 18px;
     top: 85px;
-  }
-  #memberanchor .content .memberstats .follow {
-    top: 80px;
-    right: 160px;
-  }
-  #memberanchor .content .memberstats .mute {
-    top: 80px;
-    right: 148px;
-  }
-  #memberanchor .content .memberstats .mute a {
-    right: 120px;
   }
   #memberprofilelinks div a {
     margin: 5px;
   }
 
-  #memberanchor .content .memberstatsButtons {
-    left: 26px;
-    top: 80px;
-    flex-direction: row;
-  }
   #memberlegacyaddress span#memberlegacyformat {
     margin-left: 0px;
     width: 90%;
@@ -2322,15 +2091,7 @@ footer{
   #memberblockexplorer {
     top: 620px;
   }
-  .memberstats {
-    margin-top: 75px;
-  }
-  #memberanchor .content .memberstats div {
-    margin: 5px !important;
-  }
-  #memberanchor .content #memberprofiletext {
-    line-height: 1.2rem;
-  }
+
   /* wallet  media quries*/
   #walletaddress span#cashaddrformat {
     margin-left: 0 !important;
@@ -2360,10 +2121,7 @@ footer{
   #walletsendfunds input#fundsamount {
     width: 100%;
   }
-  #walletsendfunds button#sendfundsbutton {
-    position: unset;
-    margin-top: 10px;
-  }
+ 
   #walletsendfunds .sendusd {
     position: relative;
     top: 10px;
@@ -2380,118 +2138,9 @@ footer{
     margin-bottom: 10px;
   }
   /* notifcation icons */
-  .notificationitem .notificationIcon {
-    left: -25px;
-  }
-  #settingsanchor .cachedeletebutton{
-    display: block;
-  }
-}
-@media (max-width: 400px) {
-  #notifications {
-    max-width: 320px;
-  }
-  .notificationitem .notificationIcon {
-    left: -20px;
-  }
-  .notificationitem .notificationIcon img{
-    width: 20px;
-  }
-  .memberheader .membertabs a {
-    padding: 3px 7px;
-  }
-}
-@media (max-width: 320px) {
-  #membertabs {
-    max-width: 90%;
-    justify-content: flex-end;
-    background: #f6f9ff;
-  }
-  .memberheader .membertabs a {
-    margin: 0px 5px 0px 0px;
-    padding: 3px 10px;
-  }
-  #notifications {
-    max-width: 540px;
-  }
-  /* profile */
-  .memberpiccontainer span.memberpiclarge {
-    position: relative;
-    top: 0;
-    left: 0;
-  }
-  #memberanchor .content .memberInfoTextContainer {
-    top: 233px;
-  }
-  #memberanchor .content .memberstats .mute {
-    top: 172px;
-    right: 120px;
-  }
-  
-  #memberanchor .content #membernametext a.populate-send-message {
-    padding: 0.5rem 0.81rem;
-  }
-  #memberanchor .content .memberstats .mute a,
-  #memberanchor .content .memberstats .follow a {
-    padding: 0.3rem 0.81rem;
-  }
-  .newheader .searchwrapper #usersearchnavresults {
-    transform: translateX(-58%);
-  }
-  .memberpiccontainer label {
-    position: absolute;
-    left: 26px;
-    top: 168px;
-  }
-  .notificationitem .notificationIcon {
-    position: unset;
-    padding-left: 10px;
-    padding-top: 15px;
-  }
-  #memberanchor .content #membernametext a.populate-send-message {
-    right: 10px;
-    top: 178px;
-  }
-  #memberanchor .content .memberprofiletextContainer {
-    margin-top: 168px;
-  }
-  #memberprofilelinks div a {
-    margin: 5px;
-  }
 
-  #memberanchor .content .memberstatsButtons {
-    left: 0 !important;
-    top: 80px !important;
-    flex-direction: row !important;
-  }
-  .newheader {
-    padding: 0;
-  }
-  .newheader .searchwrapper {
-    grid-gap: 0px;
-  }
-  .newheader .searchwrapper .usersearchnavclass::after {
-    width: 30px;
-  }
-  .newheader .searchwrapper .usersearchnav {
-    /* width: fit-content; */
-    padding-right: 0px !important;
-  }
-  .newheader .memberlogo {
-    width: 47%;
-    text-align: center;
-  }
-  .newheader .memberlogoimage {
-    width: 30px;
-    height: 30px;
-  }
-  .newheader .headerleftgroup {
-    grid-gap: 5px;
-  }
-  .newheader .searchwrapper .mainhamburger {
-    left: -10em;
-  }
 }
+
 
 .connectionerror {
   background: unset;
@@ -2587,7 +2236,7 @@ tbody tr td:first-of-type {
   display: block;
 }
 
-
+/* Article Mode Stuff */
 
 .switchToArticleMode {
   display: block;
@@ -2606,15 +2255,209 @@ tbody tr td:first-of-type {
 }
 
 @media (max-width: 768px) {
-.article .fatitem .votelinks {
-  display: none;
+  .article .fatitem .votelinks {
+    display: none;
+  }
+
+  .article .articleheader {
+    padding-left: 12px;
+  }
 }
 
-.article .articleheader {
-  padding-left: 12px;
+.profileactions {
+  float:right;
+  top: -70px;
+  position: relative;
 }
+
+.profileactions .dropdown {
+  top: 10px;
+}
+
+.memberstats {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.memberstats div {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.memberstats div a {
+  font-size: 1rem;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+
+.memberstats div label {
+  font-weight: 400;
+  font-size: 14px;
+  color: #777;
+}
+
+.muting, .muters {
+  display: none !important;
+}
+
+.mutebutton{
+text-transform: capitalize;
 }
 
 
+/* Standard Buttons */
+
+.memberstandardbutton {
+  position: absolute;
+  bottom: 5px;
+  right: 4%;
+  margin-top: 20px;
+  background-color: #61aff0 !important;
+  border-radius: 45px;
+  border: 1px solid #61aff0 !important;
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+  position: unset;
+  margin-top: 12px;
+}
+
+.memberstandardbutton:hover {
+  background-color: #fff !important;
+  color: #61aff0;
+  box-shadow: none;
+  animation-delay: 0.5s;
+}
+
+a.unfollowbutton,
+a.followbutton,
+a.memberlinkbutton {
+  line-height: 1.2;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease-in-out;
+  border-radius: 0.25rem;
+  color: #fff !important;
+  padding: 0.5rem 1.5rem;
+  background: #61aff0 !important;
+  border: 1px solid #61aff0 !important;
+}
+
+a.unfollowbutton:hover,
+a.followbutton:hover,
+a.memberlinkbutton:hover{
+  color: #61aff0 !important;
+  background: #fff !important;
+}
+
+
+#settingsanchor .content #settingsnametextbutton,
+#settingsanchor .content #settingsprofiletextbutton {
+  color: #fff;
+  border-color: #61aff0;
+}
+
+
+ /* *********** POST follow button **************/
+/* close button for tip& like */
+.scoreexpanded .closebutton a, 
+.remembersexpanded .closebutton a{
+  border-color: #61aff0;
+}
+.scoreexpanded .closebutton a:hover,
+ .remembersexpanded .closebutton a:hover{
+   background-color: #61aff0;
+   color: #fff !important;
+ }
+
+.profilepreview .profile-actions .profilepreviewfollowbutton a {
+  background: #61aff0;
+  color: #fff !important;
+}
+.profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
+  background: #2291eb;
+  color: #fff !important;
+}
+.navbuttons a {
+  background: #61aff0;
+  color: #fff !important;
+  border-color: #61aff0;
+}
+.navbuttons a:hover {
+  background-color: #2291eb;
+}
+
+.formgroup button {
+  border: 1px solid #61aff0;
+  border-radius: 45px;
+}
+#settingsanchor .content #settingsnametextbutton:disabled, #settingsanchor .content #settingsprofiletextbutton:disabled{
+  border: none !important;
+  border-radius: 45px;
+}
+
+
+ /* Youtube, Imgur, Twitter */
+
+ /* Ensure youtube play button appears in the center */
+  .youtubepreview .play-icon {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Ensure youtube preview image spans full width available */
+    .youtubepreviewimage {
+      width: 100%;
+      vertical-align: top;
+    }
+    
+    /* Ensure youtube iframe writes on top of preview image */
+    .youtubeiframe {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      width: 100%;
+    }
+    .youtubepreview {
+      position: relative;
+    }
+
+    .odyseeiframe {
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
+    
+    /* Ensure twitter iframe spans full width available  */
+    .twitteriframe {
+      display: inline;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      height: 400px;
+      width: 100%;
+      vertical-align: top;
+    }
 
 

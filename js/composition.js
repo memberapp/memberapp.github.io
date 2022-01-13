@@ -88,12 +88,14 @@ function memorandumPreview() {
 
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0, false)
+        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0, false, 0, 0, 'na', 'na', pubkey)
         + `<div id="articleheader000" class="articleheader"></div>`
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', '', null, 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0);
+        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', '', null, 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, 0, 'na','na',pubkey);
 
         //Repeat the title for article mode
     document.querySelector('[id^="articleheader000"]').innerHTML=document.querySelector('[id^="postbody000"]').innerHTML;
+
+    //document.getElementById('articleheader000').innerHTML=document.getElementById('postbody000').innerHTML;
 
     addDynamicHTMLElements();
 }
@@ -165,6 +167,7 @@ function postmemorandum() {
     if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
     var txid = document.getElementById('quotetxid').value;
+    var network = document.getElementById('quotetxidnetwork').value;
     var postbody = document.getElementById('newposttamemorandum').value;
     //var topic = document.getElementById('memorandumtopic').value;
 
@@ -209,7 +212,7 @@ function postmemorandum() {
             successFunction = null;
         }
         if (isBitCloutUser()) {
-            sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction);
+            sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network);
         }
     }
     else {
@@ -237,7 +240,7 @@ function sendRepostNotification(txid, divForStatus, topic, newtxid) {
     if (topic) {
         replytext += " " + getSafeTranslation('intopic', "in tag") + " " + topic;
     }
-    replytext += " https://member.cash/p/" + newtxid.substr(0, 10);
+    replytext += " https://member.cash/p/" + newtxid;
     var replyHex = new Buffer(replytext).toString('hex');
 
     sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, function (txidnew) { memorandumpostcompleted(newtxid); });
