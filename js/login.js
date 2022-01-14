@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '7.0.16';
+var version = '7.0.17';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -201,6 +201,8 @@ async function login(loginkey) {
             // to legacy address
             var newloginkey = new bitboxSdk.HDNode().toWIF(hdNode);
             */
+            //this might be the correct derivation path for above code
+            //hdNode = new bitboxSdk.HDNode().derivePath(hdNode, "44'/0'/0'/0/0");
 
             var newloginkey = new bitboxSdk.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
             localStorageSet(localStorageSafe, "mnemonic", loginkey);

@@ -599,7 +599,7 @@ pages.member = `
     </div>
     <label data-vavilon="VV0065">Address</label>-->
 
-    <div class="profileactions" id="memberprofileactions">
+    <div class="profileactions" id="memberprofileactions"><br/><br/>
         {followbuttonhtml}
         <span class="dropdown">
             <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
@@ -788,6 +788,14 @@ pages.settings = `
             <option value="BCH">BCH</option>
         </select>
     </div>
+    <div>
+        <label data-vavilon="VVrssfeed" for="rssfeed">RSS Feed</label>
+        <input class="sendfundsaddress" id="rssfeed" maxlength="200" size="60">
+        <button data-vavilon="VVaddrssfeedbutton" class="memberstandardbutton" id="addrssfeedbutton" type="button"
+            onclick="addRSSFeed();">Add RSS Feed</button>
+    </div>
+    <br/>
+    <br/>
     <div>
         <label data-vavilon="VV0086" for="mutedwords">Muted Words (Comma Separate)</label>
         <textarea id="mutedwords" name="text" rows="4" cols="60" onchange="updatemutedwords();"

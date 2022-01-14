@@ -108,6 +108,15 @@ function privateMessagePosted() {
 
 }
 
+function addRSSFeed(){
+    let rssURL=document.getElementById("rssfeed").value;
+    updateStatus("Fetching RSS");
+    getJSON(dropdowns.utxoserver + 'rss/add?address='+encodeURIComponent(rssURL)).then(function (data) { 
+        updateStatus(sane(data.userid));
+        window.location.href = "#member?qaddress=" + sane(data.userid);
+    }, function (status) { });
+}
+
 function sendFundsAmountChanged() {
     var sendAmount = Number(document.getElementById("fundsamount").value);
     var usdAmount = ((Number(sendAmount) * numbers.usdrate) / 100000000).toFixed(2);
