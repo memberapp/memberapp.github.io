@@ -161,6 +161,8 @@ window.addEventListener("message", (message) => {
       alertShown = true;
     }
     identityresponses.set(id, "identity.bitclout.com returned error " + JSON.stringify(payload));
+  } else if(payload && payload.encryptedMessage) {
+    identityresponses.set(id, payload.encryptedMessage);
   } else {
     identityresponses.set(id, JSON.stringify(payload));
   }
@@ -397,7 +399,7 @@ async function bitCloutPinPost(pinPostHashHex, pubkey) {
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
 
-
+/*
 async function sendBitCloutFollow(followpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
@@ -416,7 +418,7 @@ async function sendBitCloutUnFollow(unfollowpubkey) {
       "MinFeeRateNanosPerKB":1000
     }`;
   return await sendBitCloutTransaction(payload, "create-follow-txn-stateless");
-}
+}*/
 
 
 async function sendBitCloutSub(topicHOSTILE) {
@@ -474,6 +476,35 @@ async function sendBitCloutUnMute(followpubkey) {
 
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
+
+async function sendBitCloutFollow(followpubkey) {
+  var bcAddress = await pubkeyToBCaddress(followpubkey);
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
+    BodyObj: { Body: 'follow ' + bcAddress },
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData = { Follow: bcAddress };
+
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
+async function sendBitCloutUnFollow(followpubkey) {
+  var bcAddress = await pubkeyToBCaddress(followpubkey);
+  var payload = {
+    UpdaterPublicKeyBase58Check: bitCloutUser,
+    ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
+    BodyObj: { Body: 'unfollow ' + bcAddress },
+    IsHidden: true,
+    MinFeeRateNanosPerKB: 1000
+  };
+  payload.PostExtraData = { UnFollow: bcAddress };
+
+  return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
+}
+
 
 async function sendBitCloutRating(posttext, topic, divForStatus, successFunction, postExtraData) {
   //var bcAddress=pubkeyToBCaddress(followpubkey);
@@ -604,7 +635,7 @@ async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForSt
   } else if (bitCloutUserData) {
     //First encrypt the message with identity
     let uniqueid = getRandomInt(1000000000);
-    if (statusElement) statusElement.value = "Encrypting Message With Identity";
+    if (divForStatus) divForStatus.value = "Encrypting Message With Identity";
     postMessage({
       id: uniqueid,
       service: 'identity',
@@ -618,7 +649,7 @@ async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForSt
       }
     });
     //Wait for reply
-    encryptedMessage = await waitForServerResponse(uniqueid);
+    encryptedMessage = await waitForResponse(uniqueid);
   }
 
   payload = {

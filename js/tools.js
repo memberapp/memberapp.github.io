@@ -111,9 +111,9 @@ function privateMessagePosted() {
 function addRSSFeed(){
     let rssURL=document.getElementById("rssfeed").value;
     updateStatus("Fetching RSS");
-    getJSON(dropdowns.utxoserver + 'rss/add?address='+encodeURIComponent(rssURL)).then(function (data) { 
+    getJSON(dropdowns.txbroadcastserver + 'rss/add?address='+encodeURIComponent(rssURL)).then(function (data) { 
         updateStatus(sane(data.userid));
-        window.location.href = "#member?qaddress=" + sane(data.userid);
+        window.location.href = "#show?order=new&qaddress=" + sane(data.userid);
     }, function (status) { });
 }
 
