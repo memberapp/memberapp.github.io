@@ -55,23 +55,31 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             setPageTitleRaw("@" + data[0].pagingid);
         }
 
+        let end=start;
+        if(order=='new' && data.length && data[0]){
+            end=data[data.length-1].firstseen;
+        }else{
+            end=start+limit;
+        }
+
         var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
 
-        data = mergeRepliesToRepliesBySameAuthor(data, false);
+        //Why is this here? Should only be required in thread. removing 20/01/2022
+        //data = mergeRepliesToRepliesBySameAuthor(data, false);
 
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             try {
                 if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
                 if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
-                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1 + start, page, i, null, false, true, false));
+                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1, page, i, null, false, true, false));
             } catch (err) {
                 console.log(err);
             }
