@@ -341,7 +341,7 @@ function getSafeMessage(messageHTML, differentiator, includeMajorMedia) {
 function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate, sysrating, sourcenetwork, hivename, hivelink, bitcoinaddress) {
 
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
-    if (sourcenetwork == 2) {
+    if (sourcenetwork == 2 || sourcenetwork == 99) {
         origTXID = sha256.create().update(hivelink).hex();
     }
 
