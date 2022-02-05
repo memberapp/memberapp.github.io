@@ -409,9 +409,10 @@ function listenForTwitFrameResizes() {
   /* find all iframes with ids starting with "tweet_" */
   var tweetIframes = document.querySelectorAll("*[id^='tweet_']");
   tweetIframes.forEach(element => {
+    //onload doesn't seem to always have the tweet loaded, so return 133 as height
+    //maybe could use readyState instead.
     element.onload = function () {
-      this.contentWindow.postMessage({ element: this.id, query: "height" },
-        "https://twitframe.com");
+        this.contentWindow.postMessage({ element: this.id, query: "height" }, "https://twitframe.com");
     };
   });
 
@@ -419,10 +420,26 @@ function listenForTwitFrameResizes() {
 
 /* listen for the return message once the tweet has been loaded */
 window.onmessage = (oe) => {
+  console.log("twit message: ");
+  console.log(oe);
   if (oe.origin != "https://twitframe.com")
     return;
   if (oe.data.height && oe.data.element.match(/^tweet_/)) {
     try {
+      //console.log("element "+oe.data.element);
+      //console.log("prev height "+document.getElementById(oe.data.element).style.height);
+      //console.log("new height "+parseInt(oe.data.height) + "px");
+      if(parseInt(oe.data.height)<140){
+        console.log("Error, twitter resize height must be 140 or greater.");
+        
+        /*
+        //This attempt to repost the message doesn't work. I don't know why
+        var that=document.getElementById(oe.data.element);
+        setTimeout(function(){
+          that.contentWindow.postMessage({ element: that.id, query: "height" }, "https://twitframe.com");
+        },1000);*/
+        return;
+      }
       document.getElementById(oe.data.element).style.height = parseInt(oe.data.height) + "px";
     } catch (err) {
       console.log("Tweet frame resize error: Probably due to running from filesystem: " + err);

@@ -121,7 +121,7 @@ function postMessage(e) {
 
 // const childWindow = document.getElementById('identity').contentWindow;
 window.addEventListener("message", (message) => {
-  console.log("message: ");
+  console.log("bitclout message: ");
   console.log(message);
 
   const {
