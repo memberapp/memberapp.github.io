@@ -190,6 +190,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         permalink: permalink,
         maplink: mapLink,
         sourceNetworkHTML: sourceNetworkHTML,
+
         origtxid: san(origtxid)
     }
 
@@ -397,14 +398,19 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var directlink = "";
 
     let sourceNetworkHTML;
+    let sourceNetworkImage;
     if (sourcenetwork == 0) {
-        sourceNetworkHTML = '<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/' + san(hivelink) + '">Memo</a>';
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}">Memo</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}"><img src='img/networks/0.png'></a>`;
     } else if (sourcenetwork == 1) {
-        sourceNetworkHTML = '<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/' + san(hivelink) + '">BitClout</a>';
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/${san(hivelink)}">BitClout</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/${san(hivelink)}"><img src='img/networks/1.png'></a>`;
     } else if (sourcenetwork == 2) {
-        sourceNetworkHTML = '<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@' + sanhl(hivelink) + '">hive.blog</a>';
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}">hive.blog</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}"><img src='img/networks/2.png'></a>`;
     } else if (sourcenetwork == 99) {
-        sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">RSS Link</a>';
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img src='img/networks/99.png'></a>`;
     }
 
     let pinnedpostHTML = '';
@@ -446,6 +452,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         articlelink: articlelink,
         directlink: directlink,
         sourceNetworkHTML: sourceNetworkHTML,
+        sourceNetworkImage: sourceNetworkImage,
         pinnedpostHTML: pinnedpostHTML,
         origtxid: san(origTXID),
         sourcenetwork: san(sourcenetwork),

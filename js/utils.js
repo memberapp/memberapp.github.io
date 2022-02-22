@@ -376,7 +376,7 @@ DOMPurify.addHook('afterSanitizeAttributes', function (node) {
       node.setAttribute('target', '_blank');
       // prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
       node.setAttribute('rel', 'noopener noreferrer');
-      node.setAttribute('click', 'event.stopPropoagation();');
+      node.setAttribute('onclick', 'event.stopPropagation();');
     }
   }
   // set non-HTML/MathML links to xlink:show=new

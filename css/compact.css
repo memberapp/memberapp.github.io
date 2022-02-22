@@ -27,6 +27,10 @@ body {
   padding: 0.5em;
 }
 
+.network-source {
+  float:right;
+}
+
 .post-body {
   padding-bottom: 0.5em;
 }
@@ -2411,6 +2415,18 @@ a.memberlinkbutton:hover{
 
 
  /* Youtube, Imgur, Twitter */
+
+ /*Allow nitter embeds extra width on mobile */
+
+ @media (max-width: 768px) {
+
+  .nittercontainer{
+  position: relative;
+  left: -60px;
+  top: 7px;
+  width: calc(100% + 60px);
+  }
+ }
 
  /* Ensure youtube play button appears in the center */
   .youtubepreview .play-icon {
