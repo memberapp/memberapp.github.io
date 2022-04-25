@@ -358,8 +358,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         }
     }
 
-    if (truncate && message.length > 400) { //to do, try to break on a whitespace
-        message = message.substring(0, 200) + '...';
+    if (truncate && message.length > 800) { //to do, try to break on a whitespace
+        message = message.substring(0, 400) + '...';
     }
 
     let messageLinksHTML = getSafeMessage(message, differentiator, true);
