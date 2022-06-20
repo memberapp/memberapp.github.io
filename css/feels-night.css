@@ -2257,7 +2257,7 @@ footer {
     #settingsanchor .content #cssselector,
     #settingsanchor .content #contentserver,
     #settingsanchor .content #txbroadcastserver,
-    #settingsanchor .content #utxoserver,
+    #settingsanchor .content #mcutxoserver,
     #settingsanchor .content #currencydisplay {
       width: 100%; }
     #settingsanchor .content label {

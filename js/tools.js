@@ -108,10 +108,10 @@ function privateMessagePosted() {
 
 }
 
-function addRSSFeed(){
-    let rssURL=document.getElementById("rssfeed").value;
+function addRSSFeed() {
+    let rssURL = document.getElementById("rssfeed").value;
     updateStatus("Fetching RSS");
-    getJSON(dropdowns.txbroadcastserver + 'rss/add?address='+encodeURIComponent(rssURL)).then(function (data) { 
+    getJSON(dropdowns.txbroadcastserver + 'rss/add?address=' + encodeURIComponent(rssURL)).then(function (data) {
         updateStatus(sane(data.userid));
         window.location.href = "#show?order=new&qaddress=" + sane(data.userid);
     }, function (status) { });
@@ -123,7 +123,7 @@ function sendFundsAmountChanged() {
     document.getElementById("sendusd").textContent = "($" + usdAmount + ")";
 }
 
-function sendfunds() {
+async function sendfunds() {
     var sendAmount = Number(document.getElementById("fundsamount").value);
     if (sendAmount < 547) {
         alert(getSafeTranslation('547orlarger', "Amount has to be 547 satoshis or larger."));
@@ -138,6 +138,11 @@ function sendfunds() {
     var sendAddress = document.getElementById("sendfundsaddress").value.trim();
     if (sendAddress == "") {
         alert(getSafeTranslation('enteranaddress', "Make sure to enter an address to send to."));
+    }
+    
+    //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
+    if(sendAddress.startsWith("member:")){
+        sendAddress = await membercoinToLegacy(sendAddress);
     }
 
     document.getElementById("fundsamount").disabled = true;
@@ -164,3 +169,26 @@ function sendFundsComplete() {
     document.getElementById("sendfundsbutton").disabled = false;
 
 }
+
+async function membercoinToLegacy(address) {
+    const { prefix, type, hash } = cashaddr.decode(address);
+    let hashhex = Buffer.from(hash).toString('hex');
+    if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
+    let toencode = new Buffer('00' + hashhex, 'hex');
+    return window.bs58check.encode(toencode);
+}
+
+async function legacyToMembercoin(pubkey) {
+    if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
+    let hash=Buffer.from(window.bs58check.decode(pubkey)).slice(1);
+    return cashaddr.encode('member', 'P2PKH', hash)
+
+    //const { prefix, type, hash } = cashaddr.decode(address);
+    //let hashhex = Buffer.from(hash).toString('hex');
+    //if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
+    //let toencode = new Buffer('00' + hashhex, 'hex');
+    //return window.bs58check.encode(toencode);
+    //return 'not defined yet';
+}
+
+

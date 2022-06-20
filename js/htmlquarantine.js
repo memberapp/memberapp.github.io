@@ -131,7 +131,7 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
 
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork, hivelink, origtxid) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork, hivelink, origtxid, bitcoinaddress) {
 
     var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid = san(txid);
@@ -172,6 +172,8 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/' + san(hivelink) + '">BitClout</a>';
     } else if (sourcenetwork == 2) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@' + sanhl(hivelink) + '">hive.blog</a>';
+    } else if (sourcenetwork == 3) {
+        sourceNetworkHTML = '<a rel="noopener noreferrer" href="' + permalink + '">member.cash</a>';
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">RSS Link</a>';
     }
@@ -190,8 +192,8 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         permalink: permalink,
         maplink: mapLink,
         sourceNetworkHTML: sourceNetworkHTML,
-
-        origtxid: san(origtxid)
+        origtxid: san(origtxid),
+        bitcoinaddress: bitcoinaddress
     }
 
     return templateReplace(replyAndTipsTemplate, obj);
@@ -384,7 +386,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var votelinks = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
     var age = getAgeHTML(firstseen);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
-    var tipsandlinks = getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid, sourcenetwork, hivelink, origTXID);
+    var tipsandlinks = getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid, sourcenetwork, hivelink, origTXID, bitcoinaddress);
     var replydiv = getReplyDiv(txid, page, differentiator, address, sourcenetwork, origTXID);
 
     var santxid = san(txid);
@@ -408,6 +410,9 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     } else if (sourcenetwork == 2) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}">hive.blog</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}"><img src='img/networks/2.png'></a>`;
+    } else if (sourcenetwork == 3) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="hiveblog" href="${permalink}">member.cash</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="hiveblog" href="${permalink}"><img src='img/networks/3.png'></a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img src='img/networks/99.png'></a>`;
@@ -456,7 +461,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         pinnedpostHTML: pinnedpostHTML,
         origtxid: san(origTXID),
         sourcenetwork: san(sourcenetwork),
-        page: page
+        page: page,
+        bitcoinaddress: bitcoinaddress
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -503,7 +509,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
     var author = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive, sysrating, hivename, bitcoinaddress);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var age = getAgeHTML(firstseen);
-    var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork, hivelink, origTXID);
+    var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork, hivelink, origTXID, bitcoinaddress);
     var replyDiv = getReplyDiv(txid, page, differentiator, address, sourcenetwork, origTXID);
 
 
@@ -761,7 +767,7 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*?(?:watch|embed)?(?:.*?v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*?<\/a>/gi :
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/.*?(?:watch|embed)?(?:.*?v=|v\/|\/)([\w\-_]{7,12})(?:[\&\?\#].*?)*?(?:([\&\?\#]t=)?(([\dhms]+))?).*?<\/a>/i;
         message = message.replace(youtubeRegex,
-            `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="event.stopPropagation();makeYoutubeIframe('$1','$4');"><div class="youtubepreview"><img height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" alt="video post" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
+            `<div class="youtubecontainer"><div class="youtubepreviewimage"><a onclick="event.stopPropagation();makeYoutubeIframe('$1','$4');"><div class="youtubepreview"><img loading="lazy" height="270" class="youtubepreviewimage" src="https://img.youtube.com/vi/$1/0.jpg"><img class="play-icon" alt="video post" width="100" src="img/youtubeplaybutton.svg"></div></a></div></div>`
         );
     }
 
@@ -791,8 +797,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         //This works but is ugly
         //Add differentiator so that if a tweet is shown multiple times, it has a different id each time
         message = message.replace(tweetRegex,
-            //'<div class="twittercontainer"><iframe  height="400" width="550" class="twitteriframe" id="tweet_$3' + differentiator + '" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe></div>'
-            '<div class="nittercontainer"><iframe height="400" width="550" class="twitteriframe" id="tweet_$3' + differentiator + '" border=0 frameborder=0  src="https://nitter.net/i/status/$3/embed?theme=twitter"></iframe></div>'        
+            '<div class="twittercontainer"><iframe loading="lazy" height="400" width="550" class="twitteriframe" id="tweet_$3' + differentiator + '" border=0 frameborder=0  src="https://twitframe.com/show?url=https%3A%2F%2Ftwitter.com%2F$1%2Fstatus%2F$3"></iframe></div>'
+            //'<div class="nittercontainer"><iframe loading="lazy" height="400" width="550" class="twitteriframe" id="tweet_$3' + differentiator + '" border=0 frameborder=0  src="https://nitter.net/i/status/$3/embed?theme=twitter"></iframe></div>'        
         );
     }
 
@@ -811,7 +817,7 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         var lbryRegex = global ?
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?lbry\.tv\/@.+\/(.+?(?=:)).*<\/a>/gi :
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?lbry\.tv\/@.+\/(.+?(?=:)).*<\/a>/i;
-        message = message.replace(lbryRegex, `<div class="youtubecontainer"><iframe width="480" height="270" class="odyseeiframe" src="https://odysee.com/$/embed/$1" allowFullScreen="false"></iframe></div>`);
+        message = message.replace(lbryRegex, `<div class="youtubecontainer"><iframe loading="lazy" width="480" height="270" class="odyseeiframe" src="https://odysee.com/$/embed/$1" allowFullScreen="false"></iframe></div>`);
     }
 
     if (settings["showbitclout"] == "true") {
@@ -819,12 +825,12 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         var bitcloutRegex = global ?
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();"><div class="imgurcontainer"><img class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
+        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
 
         var bitcloutRegex = global ?
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();"><div class="imgurcontainer"><img class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
+        message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
 
 
     }
@@ -859,10 +865,10 @@ function replaceImgur(match, p1, p2, p3, p4, offset, string) {
     //return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
     if (!p4) { p4 = '.jpg'; }
     if (p4.toLowerCase() == '.mp4') {
-        return `<a href='javascript:;'><video controls class="imgurimage" draggable="false" playsinline="true" loop="true"><source type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
+        return `<a href='javascript:;'><video controls class="imgurimage" draggable="false" playsinline="true" loop="true"><source loading="lazy" type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
     }
 
-    return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur" onclick="event.stopPropagation();"><div class="imgurcontainer"><img class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
+    return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
 }
 
 //Notifications

@@ -190,10 +190,7 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n2">*BitClout Users. </span><br /><a href="javascript:;"
-            onclick='bitcloutlogin("https://identity.bitclout.com");'><span data-vavilon="loginwithidentity">Login with Identity</span></a> or
-            <a href="javascript:;"
-            onclick='bitcloutlogin("https://identity.love4src.com");'><span data-vavilon="love4src">love4src</span></a>
+        <span data-vavilon="VV0019n2">*Deso/BitClout Users. Use your 'BC...' address or username for read only access.</span><br />
     </div>
     <div class="loginnotes">
         <span>*Memo Users. Your <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">private
@@ -211,7 +208,7 @@ var lowfundswarningHTML=`
     <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span data-vavilon="VV0021">satoshis
         exist in your member.cash account - each
         action (posting, liking, subscribing, following, messaging etc)
-        requires a small amount of Bitcoin Cash. Add some funds, a few cents is enough.</span>
+        requires a small amount of Membercoin. Add some funds, a few cents is enough.</span>
     <br />
     <br />
     <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress"></span>
@@ -242,12 +239,12 @@ var walletanchorHTML=`
     <div id="walletbalance">
         <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
         <span class="balancebch" id="balancebch">0</span>
-        <span class="satoshis">(BCH)</span>
+        <span class="satoshis">(MEM)</span>
         <span class="balancesatoshis" id="balancesatoshis">0</span>
         <span class="satoshis">(satoshis)</span>
-        <span class="approximatelyequal">≈</span>
-        <span class="balanceusd" id="balanceusd">0</span>
-        <span class="usd">(USD)</span>
+        <span class="approximatelyequal" style="display: none;">≈</span>
+        <span class="balanceusd" id="balanceusd" style="display: none;">0</span>
+        <span class="usd" style="display: none;">(USD)</span>
         <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
             class="balancedetails">
             <img src="img/icons/reload.png" alt="">
@@ -280,16 +277,16 @@ var walletanchorHTML=`
 
     <div id="walletsendfunds">
         <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
-        <p data-vavilon="VV0029">You can send funds to another Bitcoin Cash address.</p>
+        <p data-vavilon="VV0029">You can send funds to another Membercoin address.</p>
 
-        <label data-vavilon="VV0031" for="fundsamount">Bitcoin Cash Address (Any format)</label>
+        <label data-vavilon="VV0031" for="fundsamount">Membercoin Address (Any format)</label>
         <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
 
         <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
         <input id="fundsamount" size="12" type="number" maxlength="12" onchange="sendFundsAmountChanged();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
 
-        <span class="sendusd" id="sendusd">($0.00 USD)</span>
+        <span class="sendusd" id="sendusd"  style="display: none;">($0.00 USD)</span>
 
         <button data-vavilon="VV0032" class="memberstandardbutton" id="sendfundsbutton" type="button"
             onclick="sendfunds();">Send
@@ -311,6 +308,7 @@ var walletanchorHTML=`
         </div>
     </div>
     <div id="walletblockexplorer">
+        <!--
         <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
         <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
             href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
@@ -321,6 +319,7 @@ var walletanchorHTML=`
         <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoinunlimited" id="settingsbitcoinunlimited"
             href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
             unlimited</a>
+        -->
     </div>
 </div>
 `;
@@ -347,7 +346,7 @@ var newpostHTML=`
     </div>
     -->
     <div>
-        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="5000"
+        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="2500"
             onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
             oninput="this.onchange();"></textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
@@ -850,7 +849,6 @@ pages.settings = `
         <label data-vavilon="VV0091" for="contentserver">Content Server</label>
         <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
             <option value="https://member.cash/v2/member.js">member.cash</option>
-            <option value="https://memberjs.bchd.cash/v2/member.js">memberjs.bchd.cash</option>
             <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
         </select>
     </div>
@@ -858,18 +856,14 @@ pages.settings = `
         <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
         <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
             <option value="https://member.cash/v2/">member.cash</option>
-            <option value="https://memberjs.bchd.cash/v2/">memberjs.bchd.cash</option>
             <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-            <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
         </select>
     </div>
 
     <div>
-        <label data-vavilon="VV0093" for="utxoserver">UTXO Server</label>
-        <select id="utxoserver" onchange="updateSettingsDropdown('utxoserver');">
+        <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
+        <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
             <option value="https://member.cash/v2/">member.cash</option>
-            <option value="https://rest.bitcoin.com/v2/">Bitcoin.com</option>
-            <option value="https://memberjs.bchd.cash/v2/">memberjs.bchd.cash</option>
             <option value="http://127.0.0.1:3123/v2/">Localhost</option>
         </select>
     </div>

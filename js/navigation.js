@@ -64,7 +64,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         );
         setTopic(safeGPBN("topicname"));
     } else if (action.startsWith("list")) {
-        showPostsNew("topd", "posts", "", "list", 0, 25, safeGPBN("qaddress"));
+        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"));
     } else if (action.startsWith("notifications")) {
         showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
@@ -330,7 +330,7 @@ function showMember(qaddress, pagingID, isList) {
     }
 
     if (isList) {
-        showPostsNew("topd", "posts", "", "list", 0, 25, sane(qaddress));
+        showPostsNew("new", "posts", "", "list", 0, 25, sane(qaddress));
     } else {
         //setPageTitleFromID("VV0063");
         hideAll();

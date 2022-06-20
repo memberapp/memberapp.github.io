@@ -133,7 +133,7 @@ var postCompactTemplate = `
                     <input id="tipamountposts{diff}{txid}" type="number" value="0" min="0" style="width: 6em;"
                         step="1000">
                     <input id="tipbuttonposts{diff}{txid}" value="tip" type="submit"
-                        onclick="sendTip('{txid}','{origtxid}','{address}','posts{diff}');">
+                        onclick="sendTip('{txid}','{origtxid}','{bitcoinaddress}','posts{diff}');">
                     <input id="tipstatusposts{diff}{txid}" value="sending" type="submit" style="display:none"
                         disabled="">
                 </span>
@@ -294,7 +294,7 @@ var replyDivTemplate = `
     </div>
     <div class="replyform">
     <br />
-    <textarea id="replytext{page}{txid}" rows="3" maxlength="5000"></textarea>
+    <textarea id="replytext{page}{txid}" rows="3" maxlength="2500"></textarea>
     <br />
     <input id="replybutton{page}{txid}" value="reply" type="submit"
         onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
@@ -340,7 +340,7 @@ var replyAndTipsTemplate = `
 <span id="tipbox{page}{txid}" style="display:none">
     <input id="tipamount{page}{txid}" type="number" value="0" min="0" style="width: 6em;" step="1000" />
     <input data-vavilon_value="VV0162" id="tipbutton{page}{txid}" value="tip" type="submit"
-        onclick="sendTip('{txid}','{origtxid}','{address}','{page}');" />
+        onclick="sendTip('{txid}','{origtxid}','{bitcoinaddress}','{page}');" />
     <input data-vavilon_value="VV0163" id="tipstatus{page}{txid}" value="sending" type="submit" style="display:none"
         disabled />
 </span>`;
@@ -356,7 +356,7 @@ var mapPostTemplate=`
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
         </a>
     </div>    
-    <textarea maxlength="5000" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
+    <textarea maxlength="2500" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
     <input data-vavilon_value="VV0164" id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
     <input data-vavilon_value="VV0165" id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit"
         disabled>

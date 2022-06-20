@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '7.0.27';
+var version = '8.0.6';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -11,7 +11,7 @@ var privkey = ""; //Private Key
 var privkeyhex = "";
 var privateKeyBuf;
 
-var qpubkey = ""; //Public Key (q style address)
+//var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
 var bitcloutaddress = ""; //Bitclout address
 
@@ -35,7 +35,7 @@ ShowdownConverter.setOption('openLinksInNewWindow', true);
 ShowdownConverter.setOption('ghMentions', false);
 
 var turndownService = new TurndownService();
-TurndownService.prototype.escape = function(text){return text;};
+TurndownService.prototype.escape = function (text) { return text; };
 
 
 //ShowdownConverter.setOption('ghMentionsLink', "#member?pagingid={u}");
@@ -102,8 +102,8 @@ function init() {
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
-    getBitCloutLoginFromLocalStorage();
-    
+    //getBitCloutLoginFromLocalStorage();
+
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 
     if (loginmnemonic != "null" && loginmnemonic != null && loginmnemonic != "") {
@@ -159,7 +159,7 @@ async function loadBigLibs() {
     if (!window.bs58check) { loadScript("js/lib/bs58check.min.js"); }
     if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
-    if (!window.elliptic) { loadScript("js/lib/elliptic.min.js");}
+    if (!window.elliptic) { loadScript("js/lib/elliptic.min.js"); }
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     if (!bcdecrypt) loadScript("js/lib/identityencryption.js");
     if (!cytoscape) loadScript("js/lib/cytoscape3.19.patched.min.js");
@@ -172,12 +172,13 @@ async function login(loginkey) {
     mnemonic = localStorageGet(localStorageSafe, "mnemonic");
     privkey = localStorageGet(localStorageSafe, "privkey");
     pubkey = localStorageGet(localStorageSafe, "pubkey");
-    qpubkey = localStorageGet(localStorageSafe, "qpubkey");
+    //qpubkey = localStorageGet(localStorageSafe, "qpubkey");
     pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
     privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
+    bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
 
 
-    if (!(pubkey && qpubkey) || (privkey && !privkeyhex)) {
+    if (!(pubkey) || (privkey && !privkeyhex)) {
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
@@ -212,7 +213,13 @@ async function login(loginkey) {
 
 
         try {
-            if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
+            if(loginkey.startsWith("q")){
+                loginkey="member:"+loginkey;
+            }
+
+            if (loginkey.startsWith("member:")) {
+                publicaddress = await membercoinToLegacy(loginkey);
+            } else if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
                 let ecpair = new bitboxSdk.ECPair().fromWIF(loginkey);
                 publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
                 privkey = loginkey;
@@ -223,9 +230,7 @@ async function login(loginkey) {
                 var bcpublicKey = preslice.slice(3);
                 var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
                 publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
-            } else if (loginkey.startsWith("q")) {
-                publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
-            } else if (loginkey.startsWith("b")) {
+            } else if (loginkey.startsWith("bitcoincash:")) {
                 publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
             } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
                 if (new bitboxSdk.Address().isLegacyAddress(loginkey)) {
@@ -257,9 +262,9 @@ async function login(loginkey) {
         }
 
         pubkey = publicaddress.toString();
-        qpubkey = new bitboxSdk.Address().toCashAddress(pubkey);
+        //qpubkey = new bitboxSdk.Address().toCashAddress(pubkey);
         localStorageSet(localStorageSafe, "pubkey", pubkey);
-        localStorageSet(localStorageSafe, "qpubkey", qpubkey);
+        //localStorageSet(localStorageSafe, "qpubkey", qpubkey);
 
         if (privkey) {
             let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
@@ -274,7 +279,7 @@ async function login(loginkey) {
             //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
         }
 
-        
+
 
     }
 
@@ -306,11 +311,13 @@ async function login(loginkey) {
     //Register public key with content server to prepare feeds faster    
     getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkey + '?a=100').then(function (data) { }, function (status) { });
 
-    tq.addUTXOPool(pubkey, qpubkey, localStorageSafe, "balance");
-    //Get latest rate and update balance
     loadStyle();
 
     getLatestUSDrate();
+
+    //Get latest rate and update balance
+    if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }
+    tq.addUTXOPool(pubkey, localStorageSafe, "balance");
 
     if (!privkey) {
         tq.utxopools[pubkey].showwarning = false;
@@ -320,6 +327,8 @@ async function login(loginkey) {
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
+
+
 
     populateTools();
 
@@ -332,7 +341,7 @@ function loadStyle() {
     let style = localStorageGet(localStorageSafe, "style2");
     if (style) {
         changeStyle(style, true);
-    }else{
+    } else {
         changeStyle(theStyle, true);
     }
 }
@@ -395,12 +404,12 @@ function changeStyle(newStyle, setStorage) {
         localStorageSet(localStorageSafe, "style2", newStyle);
     }
     var cssArray = newStyle.split(" ");
-    if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css?"+version); }
-    else { document.getElementById("pagestyle").setAttribute("href", "css/feels.css?"+version); }
-    if (cssArray[1]) { document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css?"+version); }
-    else { document.getElementById("pagestyle2").setAttribute("href", "css/none.css?"+version); }
-    if (cssArray[2]) { document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css?"+version); }
-    else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css?"+version); }
+    if (cssArray[0]) { document.getElementById("pagestyle").setAttribute("href", "css/" + cssArray[0] + ".css?" + version); }
+    else { document.getElementById("pagestyle").setAttribute("href", "css/feels.css?" + version); }
+    if (cssArray[1]) { document.getElementById("pagestyle2").setAttribute("href", "css/" + cssArray[1] + ".css?" + version); }
+    else { document.getElementById("pagestyle2").setAttribute("href", "css/none.css?" + version); }
+    if (cssArray[2]) { document.getElementById("pagestyle3").setAttribute("href", "css/" + cssArray[2] + ".css?" + version); }
+    else { document.getElementById("pagestyle3").setAttribute("href", "css/none.css?" + version); }
 }
 
 function setBodyStyle(newStyle) {

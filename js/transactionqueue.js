@@ -20,11 +20,10 @@ var resendWait = 2000;
 
 class UTXOPool {
 
-  constructor(address, qaddress, statusMessageFunction, storageObject, onscreenElementName) {
+  constructor(address, statusMessageFunction, storageObject, onscreenElementName) {
     //This takes legacy address format
     this.theAddress = address;
-    this.theQAddress = qaddress;
-
+    
     this.utxoPool = {};
     this.statusMessageFunction = statusMessageFunction;
     this.storageObject = storageObject;
@@ -146,21 +145,28 @@ class UTXOPool {
     
     const Address = bitboxSdk.Address;
     let address = new Address();
-    address.restURL = dropdowns.utxoserver;
+    address.restURL = dropdowns.mcutxoserver;
 
     (async () => {
-      outputInfo = await address.utxo(this.theQAddress);
+      outputInfo = await address.utxo(this.theAddress);
 
 
       //console.log(outputInfo);
-      let utxos = outputInfo.utxos;
-      let utxosOriginalNumber = outputInfo.utxos.length;
+      //let utxos = outputInfo.utxos;
+      let utxos = outputInfo;
+      let utxosOriginalNumber = outputInfo.length;
 
       //Check no unexpected data in the fields we care about
       for (let i = 0; i < utxos.length; i++) {
         utxos[i].satoshis = Number(utxos[i].satoshis);
         utxos[i].vout = Number(utxos[i].vout);
         utxos[i].txid = sane(utxos[i].txid);
+
+        //Electrum format
+        utxos[i].satoshis = Number(utxos[i].value);
+        utxos[i].vout = Number(utxos[i].tx_pos);
+        utxos[i].txid = sane(utxos[i].tx_hash);
+        utxos[i].height = sane(utxos[i].tx_height);
       }
 
       //Remove any utxos with less or equal to dust limit, they may be SLP tokens
@@ -216,8 +222,8 @@ class TransactionQueue {
     this.utxopools = {};
   }
 
-  addUTXOPool(address, qaddress, storageObject, onscreenElementName) {
-    this.utxopools[address] = new UTXOPool(address, qaddress, this.statusMessageFunction, storageObject, onscreenElementName);
+  addUTXOPool(address, storageObject, onscreenElementName) {
+    this.utxopools[address] = new UTXOPool(address, this.statusMessageFunction, storageObject, onscreenElementName);
     //This is used to display this UTXOPool balance on screen
     /*if(onscreenElementName!=null){
       this.utxopools[address].onscreenElementName=onscreenElementName;
@@ -342,7 +348,9 @@ class TransactionQueue {
     }
     resendWait = 2000;
     if (res.length > 10) {
-      returnObject.updateStatus("<a  rel='noopener noreferrer' target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + san(res) + "'>txid:" + san(res) + "</a>");
+      returnObject.updateStatus("txid:" + san(res) );
+      //returnObject.updateStatus("<a  rel='noopener noreferrer' target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + san(res) + "'>txid:" + san(res) + "</a>");
+      
       //console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
       let successCallback = returnObject.onSuccessFunctionQueue.shift();
       returnObject.queue.shift();
@@ -396,9 +404,9 @@ class TransactionQueue {
 
     //If we're not maintaining a utxopool, create one
     if (this.utxopools[theAddress] == null) {
-      var theQAddress = new bitboxSdk.Address().toCashAddress(theAddress);
+      //var theQAddress = new bitboxSdk.Address().toCashAddress(theAddress);
       //This makes a server request so may take some time to return
-      this.addUTXOPool(theAddress,theQAddress);
+      this.addUTXOPool(theAddress);
     }
 
     let utxos = this.utxopools[theAddress].getUTXOs();

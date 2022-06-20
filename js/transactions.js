@@ -17,7 +17,7 @@ function checkForNativeUser() {
     }
 
     if (tq.getBalance(pubkey) < 547) {
-        alert(getSafeTranslation('notenough2', "This is a Bitcoin Cash Action only and you do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
+        alert(getSafeTranslation('notenough2', "This is a Membercoin Action only and you do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
         return false;
     }
 
@@ -106,9 +106,9 @@ async function sendMessageRaw(privatekey, txid, replyHex, waitTimeMilliseconds, 
     document.getElementById(divForStatus).value = getSafeTranslation('bytesremaining', "Sending Message . . . bytes remaining . .") + replyHex.length / 2;
 
     var sendHex = "";
-    if (replyHex.length > 368) {
-        sendHex = replyHex.substring(0, 368);
-        replyHex = replyHex.substring(368);
+    if (replyHex.length > maxhexlength) {
+        sendHex = replyHex.substring(0, maxhexlength);
+        replyHex = replyHex.substring(maxhexlength);
     } else {
         sendHex = replyHex;
         replyHex = "";
@@ -154,7 +154,7 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
     let postTitleHex = new Buffer(posttext).toString('hex');
     let replyHex = new Buffer(postbody).toString('hex');
 
-    var maxPostLength=368;
+    var maxPostLength=maxhexlength;
     if(topic){
         maxPostLength=maxPostLength-4-topic.toString('hex').length;
     }
@@ -255,34 +255,38 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) 
 }*/
 
 
+//var maxhexlength=368; //memo - 184*2
+var maxhexlength=2500*2;
+var whitespacebreak=20;
 
 async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {
 
     document.getElementById(divForStatus).value = getSafeTranslation('bytesremaining', "Sending Reply . . . bytes remaining . . ") + replyHex.length / 2;
 
     var sendHex = "";
-    if (replyHex.length > 368) {
+    
+    if (replyHex.length > maxhexlength) {
         //Search for whitespace - try to break at a whitespace
-        var whitespaceIndex = 348;
-        var spaceIndex = replyHex.lastIndexOf("20", 368);
+        var whitespaceIndex = maxhexlength-whitespacebreak;
+        var spaceIndex = replyHex.lastIndexOf("20", maxhexlength);
         if (spaceIndex % 2 == 0 && spaceIndex > whitespaceIndex) {
             whitespaceIndex = spaceIndex;
         }
-        var nlIndex = replyHex.lastIndexOf("0A", 368);
+        var nlIndex = replyHex.lastIndexOf("0A", maxhexlength);
         if (nlIndex % 2 == 0 && nlIndex > whitespaceIndex) {
             whitespaceIndex = nlIndex;
         }
-        var crIndex = replyHex.lastIndexOf("0D", 368);
+        var crIndex = replyHex.lastIndexOf("0D", maxhexlength);
         if (crIndex % 2 == 0 && crIndex > whitespaceIndex) {
             whitespaceIndex = crIndex;
         }
 
-        if (whitespaceIndex > 348) {
+        if (whitespaceIndex > maxhexlength-whitespacebreak) {
             sendHex = replyHex.substring(0, whitespaceIndex);
             replyHex = replyHex.substring(whitespaceIndex);
         } else {
-            sendHex = replyHex.substring(0, 368);
-            replyHex = replyHex.substring(368);
+            sendHex = replyHex.substring(0, maxhexlength);
+            replyHex = replyHex.substring(maxhexlength);
         }
     } else {
         sendHex = replyHex;
@@ -582,8 +586,8 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
 
     buttonElement.textContent = getSafeTranslation('fetchutxos', "Fetch UTXOs");
 
-    var theQAddress = new bitboxSdk.Address().toCashAddress(publicaddress);
-    tq.addUTXOPool(publicaddress,theQAddress);
+    //var theQAddress = new bitboxSdk.Address().toCashAddress(publicaddress);
+    tq.addUTXOPool(publicaddress);
     await sleep(3 * 1000);
 
 

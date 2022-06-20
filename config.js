@@ -24,7 +24,7 @@ var settings = {
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",
     "txbroadcastserver": "https://member.cash/v2/",
-    "utxoserver": "https://rest.bitcoin.com/v2/",
+    "mcutxoserver": "https://member.cash/v2/",
     "currencydisplay": "USD",
     "languageselector": "en"
 };

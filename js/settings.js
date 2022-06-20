@@ -93,8 +93,10 @@ async function getDataMemberFinally(data){
     if (qaddress) {
         //On a member page, the cashaddress won't be available so we have to calculate
         //todo, should make this async, so can return page immediately
-        if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
-        cashaddress = new bitboxSdk.Address().toCashAddress(qaddress);
+        //if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
+        //cashaddress = new bitboxSdk.Address().toCashAddress(qaddress);
+        //cashaddress = cashaddress.replace("bitcoincash:","member:")
+        cashaddress = await legacyToMembercoin(qaddress);
     }
 
     //Note, data may not contain any rows, for new or unknown users.
@@ -220,8 +222,9 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     if (qaddress && !cashaddress) {
         {
             //On a member page, the cashaddress won't be available so we have to calculate
-            if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
-            cashaddress = new bitboxSdk.Address().toCashAddress(qaddress);
+            //if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
+            //cashaddress = new bitboxSdk.Address().toCashAddress(qaddress);
+            await legacyToMembercoin(qaddress);
         }
     }
 
@@ -329,10 +332,9 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 async function populateTools() {
 
     var bcaddress = await pubkeyToBCaddress(pubkeyhex);
-
     var obj = {
         address: pubkey,
-        cashaddress: qpubkey,
+        cashaddress: await legacyToMembercoin(pubkey),
         bcaddress: bcaddress
     };
 
@@ -346,8 +348,9 @@ async function populateTools() {
 }
 
 
-function getAndPopulateSettings() {
-    getDataSettings(pubkey, qpubkey);
+async function getAndPopulateSettings() {
+    let cashaddr=await legacyToMembercoin(pubkey);
+    getDataSettings(pubkey, cashaddr);
 }
 
 function updateSettings() {
@@ -434,7 +437,7 @@ function updateSettingsDropdown(settingsName) {
     if (settingsName == "currencydisplay") {
         tq.updateBalance(pubkey);
     }
-    if (settingsName == "utxoserver") {
+    if (settingsName == "mcutxoserver") {
         refreshPool();
     }
     if (settingsName == "languageselector") {
