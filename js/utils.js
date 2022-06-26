@@ -299,7 +299,7 @@ function localStorageSet(theSO, itemName, theString) {
 
 //var usdrate = 266.75;
 
-function getLatestUSDrate() {
+/*function getLatestUSDrate() {
   getJSON(`https://markets.api.bitcoin.com/live/bitcoin?a=1`).then(function (data) {
     document.getElementById("usdrate").value = Number(data.data.BCH);
     updateSettingsNumber('usdrate');
@@ -311,6 +311,14 @@ function getLatestUSDrate() {
     console.log(getSafeTranslation('failedforex', 'Failed to get usd rate:') + status);
     updateStatus(status);
   });
+}*/
+
+function satsToUSD(sats){
+  return sats*numbers.usdrate/10000;
+}
+
+function satsToUSDString(sats){
+  return usdString(satsToUSD(sats),true);
 }
 
 function usdString(total, includeSymbol) {
@@ -324,7 +332,7 @@ function usdString(total, includeSymbol) {
 
 
 function balanceString(total, includeSymbol) {
-  if (dropdowns.currencydisplay == "BCH" || numbers.usdrate === undefined || numbers.usdrate === 0) {
+  if (numbers.usdrate === undefined || numbers.usdrate === 0) {
     //var balString = (Number(total) / 1000).toFixed(3);
     //balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
     var balString = "" + Number(total);
@@ -633,6 +641,19 @@ function dropDownMenuAction(that) {
   var ddcover = document.getElementById('ddcover');
   ddcover.style.display = 'block';
   ddcover.onclick = ddmenu.onclick = function () { ddmenu.style.display = ddcover.style.display = 'none'; };
+}
+
+function getSatsWithInterest(principle,utxoheight,chainheight){
+  if(!utxoheight){//not in blockchain yet. unconfirmed, no interest earned yet
+    return principle;
+  }
+  if(!chainheight){//we don't know chainheight - we must or we may lose interest
+    throw Error('Chainheight not found - we must know this or may lose interest');
+  }
+  //Interest rate on each block 1+(1/2^22)
+  let blocksheld=chainheight-utxoheight;
+  let withInterest=principle * 1+Math.pow((1/Math.pow(2,22)),blocksheld);
+  return withInterest;
 }
 
 

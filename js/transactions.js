@@ -16,7 +16,7 @@ function checkForNativeUser() {
         return false;
     }
 
-    if (tq.getBalance(pubkey) < 547) {
+    if (tq.getBalance(pubkey,chainheight) < 547) {
         alert(getSafeTranslation('notenough2', "This is a Membercoin Action only and you do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
         return false;
     }
@@ -25,7 +25,7 @@ function checkForNativeUser() {
 }
 
 function checkForNativeUserAndHasBalance(){
-    return (privkey && tq.getBalance(pubkey) > 546);
+    return (privkey && tq.getBalance(pubkey,chainheight) > 546);
 }
 
 //var waitForTransactionToComplete = false;

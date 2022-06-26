@@ -18,15 +18,14 @@ var settings = {
     "showlbry": "true",
     "showbitclout": "true",
     "shownonameposts": "false",
-    "shownopicposts": "true",
-    "showonlybchnetwork": "false"
+    "shownopicposts": "true"
 };
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",
     "txbroadcastserver": "https://member.cash/v2/",
     "mcutxoserver": "https://member.cash/v2/",
-    "currencydisplay": "USD",
-    "languageselector": "en"
+    "languageselector": "en",
+    "contentnetwork": -1
 };
 var numbers = {
     "defaulttip": 1000,

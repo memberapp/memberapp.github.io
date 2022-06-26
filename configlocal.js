@@ -23,7 +23,6 @@ var dropdowns = {
     "contentserver": "http://localhost:3123/v2/member.js",
     "txbroadcastserver": "http://localhost:3123/v2/",
     "mcutxoserver": "http://localhost:3123/v2/",
-    "currencydisplay": "USD",
     "languageselector": "en"
 };
 var numbers = {

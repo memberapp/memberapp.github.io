@@ -433,10 +433,12 @@ function updateSettingsCheckbox(settingsName) {
 function updateSettingsDropdown(settingsName) {
     var selector = document.getElementById(settingsName);
     dropdowns[settingsName] = selector.options[selector.selectedIndex].value;
+    settings[settingsName] = "" + dropdowns[settingsName];
     localStorageSet(localStorageSafe, settingsName, dropdowns[settingsName]);
-    if (settingsName == "currencydisplay") {
-        tq.updateBalance(pubkey);
-    }
+
+    //if (settingsName == "currencydisplay") {
+    //    tq.updateBalance(pubkey);
+    //}
     if (settingsName == "mcutxoserver") {
         refreshPool();
     }

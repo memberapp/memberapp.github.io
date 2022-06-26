@@ -38,7 +38,7 @@ class UTXOPool {
         let loadup = JSON.parse(localStorageGet(this.storageObject, "utxopool" + this.theAddress));
         if (loadup != "null" && loadup != null && loadup != "") {
           this.utxoPool = loadup;
-          this.updateBalance();
+          this.updateBalance(chainheight);
         }
       }
     }
@@ -78,19 +78,24 @@ class UTXOPool {
         return false;
       }
     }
-    this.utxoPool.push({ satoshis: satoshis, vout: vout, txid: txid });
+    //add one additional block - assuming it will be included in next block
+    this.utxoPool.push({ satoshis: satoshis, vout: vout, txid: txid, height: chainheight+1 });
     return true;
   }
 
-  getBalance() {
+  getBalance(chainheight) {
     var total = 0;
     for (let i = 0; i < this.utxoPool.length; i++) {
-      total = total + this.utxoPool[i].satoshis;
+      total = total + getSatsWithInterest(this.utxoPool[i].satoshis,this.utxoPool[i].height,chainheight+1);
     }
     return total;
   }
 
-  updateBalance() {
+
+
+
+
+  updateBalance(chainheight) {
 
     try {
       if (this.storageObject != undefined && this.storageObject != null) {
@@ -99,7 +104,7 @@ class UTXOPool {
     } catch (err) {
     }
 
-    var total = this.getBalance();
+    var total = this.getBalance(chainheight);
 
 
     document.getElementById('balancesatoshis').innerHTML=total;
@@ -166,7 +171,13 @@ class UTXOPool {
         utxos[i].satoshis = Number(utxos[i].value);
         utxos[i].vout = Number(utxos[i].tx_pos);
         utxos[i].txid = sane(utxos[i].tx_hash);
-        utxos[i].height = sane(utxos[i].tx_height);
+        utxos[i].height = sane(utxos[i].height);
+        if(utxos[i].chainheight){
+          chainheight=utxos[i].chainheight;
+        }
+        if(utxos[i].usdrate){
+          numbers.usdrate=utxos[i].usdrate;
+        }
       }
 
       //Remove any utxos with less or equal to dust limit, they may be SLP tokens
@@ -179,7 +190,7 @@ class UTXOPool {
       let usableUTXOScount = utxos.length;
       this.updateStatus(utxosOriginalNumber + getSafeTranslation('utxosreceived', " utxo(s) received. usable") + ' ' + usableUTXOScount);
       this.utxoPool = utxos;
-      this.updateBalance();
+      this.updateBalance(chainheight);
     })();
   }
 }
@@ -415,9 +426,9 @@ class TransactionQueue {
       throw new Error(getSafeTranslation('insufficientfunds', "1001:Insufficient Funds (No Suitable UTXOs)"));
     }
 
+    //Try to use every utxo, everytime, to reduce onchain utxos.
+/*
     let usableUTXOScount = utxos.length;
-
-
     //Max size of a standard transaction is expected to be around 424 bytes - 1 input, 1 OP 220 bytes, 1 change output
     //So in most cases, one single input should be enough to cover it
     //Add 546 to try to ensure change, so none is lost due to dust limit
@@ -451,7 +462,7 @@ class TransactionQueue {
     if (utxos.length == 0) {
       throw new Error(getSafeTranslation('alreadyspent', "2000:All UTXOs are already spent"));
     }
-
+*/
     return utxos;
 
     //        resolve(utxos);
@@ -487,7 +498,7 @@ class TransactionQueue {
     let fundsRemaining = 0;
     //Calculate sum of tx outputs and add inputs
     for (let i = 0; i < utxos.length; i++) {
-      let originalAmount = utxos[i].satoshis;
+      let originalAmount = getSatsWithInterest(utxos[i].satoshis,utxos[i].height,chainheight+1);
       fundsRemaining = fundsRemaining + originalAmount;
       // index of vout
       let vout = utxos[i].vout;
@@ -587,15 +598,15 @@ class TransactionQueue {
         theUTXOPool.addUTXO(tx.getId(), i, tx.outs[i].value);
       }
     }
-    theUTXOPool.updateBalance();
+    theUTXOPool.updateBalance(chainheight);
   }
 
   updateBalance(address) {
-    return this.utxopools[address].updateBalance();
+    return this.utxopools[address].updateBalance(chainheight);
   }
 
-  getBalance(address) {
-    return this.utxopools[address].getBalance();
+  getBalance(address,chainheight) {
+    return this.utxopools[address].getBalance(chainheight);
   }
 
 }

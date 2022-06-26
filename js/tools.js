@@ -140,6 +140,10 @@ async function sendfunds() {
         alert(getSafeTranslation('enteranaddress', "Make sure to enter an address to send to."));
     }
     
+    if(sendAddress.startsWith("q")){
+        sendAddress="member:"+sendAddress;
+    }
+
     //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
     if(sendAddress.startsWith("member:")){
         sendAddress = await membercoinToLegacy(sendAddress);

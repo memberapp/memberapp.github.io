@@ -3,13 +3,14 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.0.6';
+var version = '8.0.11';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
 var privkeyhex = "";
 var privateKeyBuf;
+var chainheight = 0;
 
 //var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
@@ -21,6 +22,7 @@ var bitboxSdk = null;
 var cytoscape = null;
 //var twitterEmbeds=new Array();
 var profilepic = "";
+
 
 
 var localStorageSafe = null;
@@ -133,7 +135,7 @@ function getAndSetVersion() {
         });
 }
 
-function trylogin(loginkey) {
+function trylogin(loginkey,nextpage) {
     try {
         login(loginkey);
         displayNotificationCount();
@@ -145,7 +147,7 @@ function trylogin(loginkey) {
         return;
     }
     //getAndPopulateTopicList(false);
-    displayContentBasedOnURLParameters();
+    displayContentBasedOnURLParameters(nextpage);
     //make sure these get loaded
     setTimeout(loadBigLibs, 10000);
 
@@ -313,7 +315,7 @@ async function login(loginkey) {
 
     loadStyle();
 
-    getLatestUSDrate();
+    //getLatestUSDrate();
 
     //Get latest rate and update balance
     if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }

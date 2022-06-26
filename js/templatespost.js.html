@@ -46,7 +46,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvotecontainer{txid}">
-                        <a id="upvoteaction{txid}" href="javascript:;" onclick="likePost('{txid}','{origtxid}','{address}')"
+                        <a id="upvoteaction{txid}" href="javascript:;" onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0)"
                             class="btn-icon" data-action="like">
                             <span class="likeicon">
                                 <span class="emojiicon">💙</span>
@@ -61,7 +61,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-downvote{dislikeactivated} post-footer-relative" id="downvotecontainer{txid}">
-                        <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{origtxid}','{address}')"
+                        <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{origtxid}')"
                             class="btn-icon" data-action="dislike">
                             <span class="dislikeicon">
                                 <span class="emojiicon">👎</span>
@@ -86,13 +86,20 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-tips post-footer-relative">
-                        <a id="tiplinkposts{diff}{txid}" onclick="showTipBox('posts{diff}{txid}');" href="javascript:;"
-                            class="btn-icon" data-action="tip">
+                        <a id="tiplinkposts{diff}{txid}" class="btn-icon" data-action="tip" onclick="dropDownMenuAction(this);">
                             <span class="tipicon">
                                 <span class="emojiicon">💰</span>
                             </span>
                             <span id="tipscount{txid}" class="iconcount" data-amount="{tipsinsatoshis}">{tips}</span>
                             <span data-vavilon="tips" class="text footerlabel">tips</span>
+                            <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
+                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1 MEM ({MEMUSD1})</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5 MEM ({MEMUSD5})</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10 MEM ({MEMUSD10})</span></a>
+                                <a onclick="if (confirm('Tip 20 MEM ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span data-vavilon="remember">20 MEM ({MEMUSD20})</span></a>
+                                <a onclick="if (confirm('Tip 50 MEM ({MEMUSD50})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    5000000000);}"><span data-vavilon="remember">50 MEM ({MEMUSD50})</span></a>
+                                <a onclick="if (confirm('Tip 100 MEM ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span data-vavilon="remember">100 MEM ({MEMUSD100})</span></a>
+                            </div>
                         </a>
                     </span>
                     <span class="dropdown">
@@ -315,22 +322,26 @@ var replyAndTipsTemplate = `
         <span data-vavilon="VV0156">remembers</span>
     </span>
 </span>
-<a data-vavilon="VV0157" id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>
+<!--<a data-vavilon="VV0157" id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>-->
+
+<a id="tiplinkposts{diff}{txid}" class="btn-icon" onclick="dropDownMenuAction(this);">
+    <span data-vavilon="VV0157">tip</span>
+    <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}" style="position: relative;">
+        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1 MEM ({MEMUSD1})</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5 MEM ({MEMUSD5})</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10 MEM ({MEMUSD10})</span></a>
+        <a onclick="if (confirm('Tip 20 MEM ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span data-vavilon="remember">20 MEM ({MEMUSD20})</span></a>
+        <a onclick="if (confirm('Tip 50 MEM ({MEMUSD50})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    5000000000);}"><span data-vavilon="remember">50 MEM ({MEMUSD50})</span></a>
+        <a onclick="if (confirm('Tip 100 MEM ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span data-vavilon="remember">100 MEM ({MEMUSD100})</span></a>
+    </div>
+</a>
+
 <a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
 <a data-vavilon="VV0159" id="morelink{page}{txid}" onclick="showMore('more{page}{txid}','morelink{page}{txid}');"
     href="javascript:;">+more</a>
 <span id="more{page}{txid}" style="display:none">
     <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
     {articlelink2}
-    <!--<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/{txid}">memo</a>
-    <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/{txid}">bitcoin.com</a>
-    <a rel="noopener noreferrer" target="blockchair"
-        href="https://blockchair.com/bitcoin-cash/transaction/{txid}">blockchair</a>
-    <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/{txid}">btc.com</a>
-    <a rel="noopener noreferrer" target="bitcoinunlimited"
-        href="https://explorer.bitcoinunlimited.info/tx/{txid}">bitcoin unlimited</a>
-    <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>
-    -->
     {sourceNetworkHTML}    
     <a data-vavilon="VV0161" id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');"
         href="javascript:;">flag(post)</a>

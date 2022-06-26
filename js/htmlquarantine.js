@@ -193,37 +193,17 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         maplink: mapLink,
         sourceNetworkHTML: sourceNetworkHTML,
         origtxid: san(origtxid),
-        bitcoinaddress: bitcoinaddress
+        bitcoinaddress: bitcoinaddress,
+        MEMUSD1: satsToUSDString(    100000000),
+        MEMUSD5: satsToUSDString(    500000000),
+        MEMUSD10: satsToUSDString(  1000000000),
+        MEMUSD20: satsToUSDString(  2000000000),
+        MEMUSD50: satsToUSDString(  5000000000),
+        MEMUSD100: satsToUSDString(10000000000)
     }
 
     return templateReplace(replyAndTipsTemplate, obj);
 
-
-    /*
-        return mapLink +
-            `<a id="replylink` + santxid + page + `" onclick="showReplyBox('` + santxid + page + `');" href="javascript:;"> ` + getSafeTranslation('reply') + `</a>
-            <span class="rememberscounttext"><a class="`+ remembersActive + `" id="repostlink` + page + santxid + `" ` + remembersOnclick + `> 
-            <span onclick="showRemembersExpanded('` + santxid + `','remembersexpanded` + santxid + differentiator + `')" class="repostscount" id="repostscount` + santxid + `"> ` + Number(repostcount) + " " + getSafeTranslation('remembers') + "</span>" + `</a></span>
-            <a id="tiplink`+ page + santxid + `" onclick="showTipBox('` + page + santxid + `');" href="javascript:;">tip</a>
-            <a id="quotelink`+ page + santxid + `" href="#new?txid=` + santxid + `">quote</a>
-            <a id="morelink`+ page + santxid + `" onclick="showMore('more` + page + santxid + `','morelink` + page + santxid + `');" href="javascript:;">+more</a>
-            <span id="more`+ page + santxid + `" style="display:none">
-                <a class="permalink" id="permalink`+ page + santxid + `" href="` + permalink + `">permalink</a> `
-            + articleLink2 + `
-                <a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/` + santxid + `">memo</a>
-                <a rel="noopener noreferrer" target="bitcoincom" href="https://explorer.bitcoin.com/bch/tx/` + santxid + `">bitcoin.com</a>
-                <a rel="noopener noreferrer" target="blockchair" href="https://blockchair.com/bitcoin-cash/transaction/` + santxid + `">blockchair</a>
-                <a rel="noopener noreferrer" target="btccom" href="https://bch.btc.com/` + santxid + `">btc.com</a>
-                <a rel="noopener noreferrer" target="bitcoinunlimited" href="https://explorer.bitcoinunlimited.info/tx/` + santxid + `">bitcoin unlimited</a>
-                <a id="hidepostlink`+ page + santxid + `" onclick="sendHidePost('` + santxid + `');" href="javascript:;">flag(post)</a>`
-            + hideuserHTML +
-            `</span>
-    
-            <span id="tipbox`+ page + santxid + `" style="display:none">
-                <input id="tipamount`+ page + santxid + `" type="number" value="0" min="0" style="width: 6em;" step="1000"/>
-                <input id="tipbutton`+ page + santxid + `" value="tip" type="submit" onclick="sendTip('` + santxid + `','` + san(address) + `','` + page + `');"/>
-                <input id="tipstatus`+ page + santxid + `"value="sending" type="submit" style="display:none" disabled/>
-            </span>`;*/
 }
 
 function getScoresHTML(txid, likes, dislikes, tips, differentiator) {
@@ -352,6 +332,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         updateStatus('Missing address for post error - this should not happen.'); return "";
     }
 
+    if (!bitcoinaddress) {
+        updateStatus('Missing legacy address for post error - this can happen if server does not have public key for user.');
+    }
+
     if (!name) {
         if (sourcenetwork == 2) {//get the hive name
             name = hivelink.split('/')[0];
@@ -383,7 +367,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     var theAuthorHTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive, sysrating, hivename, bitcoinaddress);
     var theAuthor2HTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, false, lastactive, sysrating, hivename, bitcoinaddress);
 
-    var votelinks = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
+    var votelinks = getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
     var age = getAgeHTML(firstseen);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var tipsandlinks = getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid, sourcenetwork, hivelink, origTXID, bitcoinaddress);
@@ -462,7 +446,14 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         origtxid: san(origTXID),
         sourcenetwork: san(sourcenetwork),
         page: page,
-        bitcoinaddress: bitcoinaddress
+        bitcoinaddress: bitcoinaddress,
+        MEMUSD1: satsToUSDString(    100000000),
+        MEMUSD5: satsToUSDString(    500000000),
+        MEMUSD10: satsToUSDString(  1000000000),
+        MEMUSD20: satsToUSDString(  2000000000),
+        MEMUSD50: satsToUSDString(  5000000000),
+        MEMUSD100: satsToUSDString(10000000000)
+        
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -505,7 +496,7 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
 
     message = addImageAndYoutubeMarkdown(message, differentiator, true);
 */
-    var voteButtons = getVoteButtons(txid, address, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
+    var voteButtons = getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
     var author = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive, sysrating, hivename, bitcoinaddress);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var age = getAgeHTML(firstseen);
@@ -683,7 +674,7 @@ function getItemListandNavButtonsHTML(contentsHTML, navbuttonsHTML, styletype, s
     }
 }
 
-function getVoteButtons(txid, address, likedtxid, likeordislike, score, origTXID) {
+function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID) {
 
     var upvoteHTML;
     let scoreHTML = `<span class="betweenvotesscore" id="score` + san(txid) + `">` + Number(score) + `</span>`;
@@ -693,7 +684,7 @@ function getVoteButtons(txid, address, likedtxid, likeordislike, score, origTXID
         upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a>`;
         scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
     } else {
-        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;" onclick="likePost('` + san(txid) + `','` + san(origTXID) + `','` + san(address) + `')"><span id="upvote` + san(txid) + `" class="votearrow" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up', 'up') + `</span></a>`;
+        upvoteHTML = `<a id="upvoteaction${san(txid)}" href="javascript:;" onclick="likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0)"><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a>`;
     }
 
     if (likeordislike == "-1") {

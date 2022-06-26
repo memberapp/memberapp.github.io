@@ -42,13 +42,13 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         topicnameHOSTILE = '';
     }
 
-    var bchOnly = '';
-    if (settings['showonlybchnetwork'] == "true") {
-        bchOnly = '&bchplz=true';
+    var networkOnly = '';
+    if (dropdowns['contentnetwork'] != "-1") {
+        networkOnly = `&network=${dropdowns['contentnetwork']}`;
     }
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + bchOnly;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + networkOnly;
     getJSON(theURL).then(function (data) {
 
         if (qaddress && data[0] && data[0].pagingid && filter!="list") {
@@ -381,6 +381,11 @@ function addDynamicHTMLElements(data) {
         let qt=(Math.round(data[0].msc * 100) / 100).toFixed(2);
         updateStatus("QT:" + qt);
         document.getElementById("version").title=qt;
+
+        if(data[0].chainheight)
+            chainheight=data[0].chainheight;
+        if(data[0].usdrate)
+            numbers.usdrate=data[0].usdrate;
         //}
     }
     //Add ratings, disable controls if the star rating can be updated
@@ -718,16 +723,19 @@ function pinpost(txid){
     }
 }
 
-function likePost(txid, origtxid, tipAddress) {
+function likePost(txid, origtxid, tipAddress, amountSats) {
+    if(amountSats==0){
+        amountSats=numbers.oneclicktip;
+    }
     //if no identity login, then check for priv key 
     if (!checkForPrivKey()) return false;
 
     //GUI update
     increaseGUILikes(txid);
-    if (numbers.oneclicktip >= 547) {
-        var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
-        document.getElementById('tipscount' + txid).innerHTML = usdString(tipscount + numbers.oneclicktip, false);
-        document.getElementById('tipscount' + txid).dataset.amount = tipscount + numbers.oneclicktip;
+    if (amountSats >= 547) {
+        let newAmount=Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(amountSats);
+        document.getElementById('tipscount' + txid).innerHTML = usdString(newAmount, false);
+        document.getElementById('tipscount' + txid).dataset.amount = newAmount;
     }
 
     //If bitclout user is logged in
@@ -737,15 +745,15 @@ function likePost(txid, origtxid, tipAddress) {
 
     //If memo user is logged in
     if (checkForNativeUserAndHasBalance()) {
-        if (numbers.oneclicktip >= 547) {
-            sendTipRaw(origtxid, tipAddress, numbers.oneclicktip, privkey, null);
+        if (amountSats >= 547) {
+            sendTipRaw(origtxid, tipAddress, amountSats, privkey, null);
         } else {
             sendLike(origtxid, privkey);
         }
     }
 }
 
-function dislikePost(txid, origtxid, tipAddress) {
+function dislikePost(txid, origtxid) {
     if (!checkForNativeUser()) return false;
 
     decreaseGUILikes(txid);
@@ -786,9 +794,9 @@ function sendTip(txid, origtxid, tipAddress, page) {
     defaulttip = tipAmount;
 
     document.getElementById('tipstatus' + page + txid).value = getSafeTranslation('sendingtip', "Sending Tip . .") + ' ' + tipAmount;
-    var tipscount = Number(document.getElementById('tipscount' + txid).dataset.amount);
-    document.getElementById('tipscount' + txid).dataset.amount = tipscount + tipAmount;
-    document.getElementById('tipscount' + txid).innerHTML = balanceString(tipscount + tipAmount, false);
+    let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount)+satsToUSD(tipAmount);;
+    document.getElementById('tipscount' + txid).dataset.amount = newAmount;
+    document.getElementById('tipscount' + txid).innerHTML = balanceString(newAmount, false);
 
     sendTipRaw(origtxid, tipAddress, tipAmount, privkey,
         function () {
