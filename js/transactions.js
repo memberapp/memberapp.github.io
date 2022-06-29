@@ -544,7 +544,7 @@ function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMe
     updateStatus(statusMessage);
     tq.queueTransaction(tx);
 }
-
+/*
 async function createSurrogateUser(name, buttonElement, surrogatelink) {
 
     //Clear old link if there is one
@@ -609,5 +609,5 @@ async function createSurrogateUser(name, buttonElement, surrogatelink) {
     //TODO: cleanup extra utxopool - destroy, free up memory, storage
     //TODO: disable, send updates to button text, re-enable button and create link to surrogate profile, update version
 
-}
+}*/
 

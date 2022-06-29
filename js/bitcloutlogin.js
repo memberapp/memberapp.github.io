@@ -678,7 +678,6 @@ async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForSt
 }
 
 async function pubkeyToBCaddress(publickey) {
-  if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
   return window.bs58check.encode(new Buffer('cd1400' + san(publickey), 'hex'));
 }
 

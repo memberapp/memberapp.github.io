@@ -60,17 +60,23 @@ async function userSearchChanged(searchbox, targetelement) {
 
 
 
-
+/*
 function createSurrogate() {
     var surrogateName = document.getElementById('surrogatename').value;
     createSurrogateUser(surrogateName, 'createsurrogatebutton', 'surrogatelink');
-}
+}*/
 
 async function postprivatemessage() {
 
+    var text = document.getElementById('newposttamessage').value;
+    if(!text){
+        alert(getSafeTranslation('noprivatemessagefound', "Message cannot be empty!"));
+        return;
+    }
+
     document.getElementById('newpostmessagebutton').disabled = true;
 
-    var text = document.getElementById('newposttamessage').value;
+    
     var status = "newpostmessagebutton";
     var stampAmount = document.getElementById("stampamount").value;
     if (stampAmount < 547) stampAmount = 547;
@@ -177,22 +183,28 @@ function sendFundsComplete() {
 async function membercoinToLegacy(address) {
     const { prefix, type, hash } = cashaddr.decode(address);
     let hashhex = Buffer.from(hash).toString('hex');
-    if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
     let toencode = new Buffer('00' + hashhex, 'hex');
     return window.bs58check.encode(toencode);
 }
 
 async function legacyToMembercoin(pubkey) {
-    if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
     let hash=Buffer.from(window.bs58check.decode(pubkey)).slice(1);
     return cashaddr.encode('member', 'P2PKH', hash)
 
     //const { prefix, type, hash } = cashaddr.decode(address);
     //let hashhex = Buffer.from(hash).toString('hex');
-    //if (!window.bs58check) { await loadScript("js/lib/bs58check.min.js"); } //need this for bs58check
     //let toencode = new Buffer('00' + hashhex, 'hex');
     //return window.bs58check.encode(toencode);
     //return 'not defined yet';
 }
+
+function getLegacyToHash160(address) {
+    let hash=Buffer.from(window.bs58check.decode(address)).slice(1);
+    return hash.toString('hex');
+    //if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
+    //don't want to make the above await, but want to load library
+    //the next function will fail if sdk is not loaded for some reason, but will work on retry
+    //return new bitboxSdk.Address().legacyToHash160(qaddress);
+  }
 
 

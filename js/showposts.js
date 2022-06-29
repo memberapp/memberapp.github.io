@@ -115,7 +115,12 @@ function getAndPopulateMessages(messagetype, start, limit) {
         messagetype = 'all';
     }
 
-    document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
+    try{
+        document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
+    }
+    catch(err){
+        console.log(err);
+    }
 
     var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey + '&messagetype=' + messagetype;
     getJSON(theURL).then(async function (data) {
@@ -162,10 +167,12 @@ function getAndPopulateThread(roottxid, txid, pageName) {
     if (txid === undefined || txid == "") { txid = roottxid; }
 
     var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkey + '&txid=' + txid;
-    getJSON(theURL).then(function (data) {
+    getJSON(theURL).then(async function (data) {
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
+
+        data = await removeDuplicatesFromDifferentNetworks(data);
 
         data = mergeRepliesToRepliesBySameAuthor(data, false);
 
@@ -837,6 +844,42 @@ function checkForMutedWords(data) {
 }
 
 //Threads
+async function removeDuplicatesFromDifferentNetworks(data) {
+    var replies = [];
+    for (var i = 0; i < data.length; i++) {
+        let messageWithReplacement=data[i].message.replace(/^https\:\/\/member\.cash\/p\/[0-9a-f]+\n\n/, '');
+        data[i].contentauthorhash=await digestMessage(data[i].address+messageWithReplacement);
+    }
+
+    //There is a lot of room to optimize this if it slows things down, and will on very large threads
+    for (var i = 0; i < data.length; i++) {
+        for (var j = 0; j < data.length; j++) {
+            //if the message is the same, and the author is the same, combine as a single post
+            if(i!=j && data[i] && data[i].network==3 && data[i].contentauthorhash==data[j].contentauthorhash){
+                //datai is on membercoin network(3) and dataj is an identical post so . . .
+                //change all references to dataj to datai
+                for (var k = 0; k < data.length; k++) {
+                    if(data[k].retxid==data[j].txid){
+                        data[k].retxid=data[i].txid;
+                    }
+                }
+                //remove dataj
+                data.splice(j, 1);
+                j--;
+            }
+        }
+    }
+    return data;
+}
+
+async function digestMessage(message) {
+    const msgUint8 = new TextEncoder().encode(message);                           // encode as (utf-8) Uint8Array
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);           // hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+    return hashHex;
+  }
+
 
 function removeDuplicates(data) {
     var replies = [];

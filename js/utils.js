@@ -493,12 +493,13 @@ function loadScript(src) {
   });
 }
 
+/*
 function getLegacyToHash160(qaddress) {
   if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
   //don't want to make the above await, but want to load library
   //the next function will fail if sdk is not loaded for some reason, but will work on retry
   return new bitboxSdk.Address().legacyToHash160(qaddress);
-}
+}*/
 
 function getBrowserLanguageCode() {
   const zhTraditional = ["zh-hk", "zh-tw", "zh-hant"];

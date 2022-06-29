@@ -395,9 +395,6 @@ var newpostHTML=`
 var messagesanchorHTML=`
 <div class="content">
     <div id="sendmessagecontainer">
-        <span id="messagerecipient" class="messagerecipient"></span>
-        <span id="messageaddress" class="messageaddress"></span>
-        <span id="messagepublickey" class="messagepublickey"></span>
         <div id="sendmessagebox" style="display: none;">
             <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain
                 (that's the
@@ -407,7 +404,11 @@ var messagesanchorHTML=`
                 messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
                 available to you if you wish to use it.
             </p>
-
+            <span class="messagerecipient">To:</span>
+            <span id="messagerecipient" class="messagerecipient"></span>
+            <span id="messageaddress" class="messageaddress" style="display:none;"></span>
+            <span id="messagepublickey" class="messagepublickey" style="display:none;"></span>
+            
             <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum 547)</label>
             <input id="stampamount" size="8" type="number" value="547">
             <div>

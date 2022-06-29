@@ -47,7 +47,7 @@ function getDataMember(qaddress) {
     document.getElementById('mcidmemberanchor').innerHTML = document.getElementById("loading").innerHTML;
     var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
-        if(data){
+        if (data) {
             getDataMemberFinally(data);
         }
     }, function (status) { //error detection....
@@ -82,20 +82,15 @@ function getPicURL(picurl, profilepicbase, qaddress, hivename) {
     return profilepicbase + san(qaddress) + `.128x128` + pictype;
 }
 
-async function getDataMemberFinally(data){
+async function getDataMemberFinally(data) {
 
-    let qaddress=null;
-    if(data[0] && data[0].bitcoinaddress){
-        qaddress=data[0].bitcoinaddress;
+    let qaddress = null;
+    if (data[0] && data[0].bitcoinaddress) {
+        qaddress = data[0].bitcoinaddress;
     }
-    
-    let cashaddress=null;
+
+    let cashaddress = null;
     if (qaddress) {
-        //On a member page, the cashaddress won't be available so we have to calculate
-        //todo, should make this async, so can return page immediately
-        //if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
-        //cashaddress = new bitboxSdk.Address().toCashAddress(qaddress);
-        //cashaddress = cashaddress.replace("bitcoincash:","member:")
         cashaddress = await legacyToMembercoin(qaddress);
     }
 
@@ -133,14 +128,7 @@ async function getDataMemberFinally(data){
         let theRatingRound = outOfFive(Number(data[0].sysrating));
         obj.membrain = theRatingRound + "/5";
 
-        //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
-        //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
-        //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
         document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
-        //setPageTitleRaw("@"+data[0].pagingid);
-
-        //jdenticonname = data[0].name;
-        //img/profilepics/`+san(address)+`128x128.jpg
     }
 
     if (data && (data.length < 1 || Number(data[0].isfollowing) == 0)) {
@@ -157,8 +145,8 @@ async function getDataMemberFinally(data){
 
 
     if (obj.picurl) {
-        let picstem=sane(data[0].address);
-        if(data[0].hivename){picstem=sane(data[0].hivename);}
+        let picstem = sane(data[0].address);
+        if (data[0].hivename) { picstem = sane(data[0].hivename); }
         obj.profilepiclargehtml = getProfilePicLargeHTML(profilepicbase + picstem + `.640x640.jpg`);
     }
 
@@ -175,11 +163,11 @@ async function getDataMemberFinally(data){
 
     document.getElementById('mcidmemberanchor').innerHTML = templateReplace(pages.member, obj);
 
-    if(data && data[0] && data[0].hivename){
+    if (data && data[0] && data[0].hivename) {
         document.getElementById('memberprofileactions').style.display = "none"; //no hive actions for now
         document.getElementById('walletaddress').style.display = "none"; //no hive actions for now
         document.getElementById('walletbcaddress').style.display = "none"; //no hive actions for now
-        
+
     }
 
     //This condition checks that the user being viewed is not the logged in user
@@ -214,16 +202,17 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         var picurl = getPicURL(data[0].picurl, profilepicbase, data[0].address, data[0].hivename);
         document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
         profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
-        document.getElementById('newpostprofilepic').innerHTML = profilepic;
+        try {
+            document.getElementById('newpostprofilepic').innerHTML = profilepic;
+        } catch (err) {
+            console.log("error newpostprofilepic");
+        }
     }
 
 
 
     if (qaddress && !cashaddress) {
         {
-            //On a member page, the cashaddress won't be available so we have to calculate
-            //if (!bitboxSdk) await loadScript("js/lib/bitboxsdk.js");
-            //cashaddress = new bitboxSdk.Address().toCashAddress(qaddress);
             await legacyToMembercoin(qaddress);
         }
     }
@@ -262,34 +251,13 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         let theRatingRound = outOfFive(Number(data[0].sysrating));
         obj.membrain = theRatingRound + "/5";
 
-        //document.getElementById(pre + 'nametext').innerHTML = escapeHTML(data[0].name) + sendEncryptedMessageHTML(qaddress, data[0].name, data[0].publickey);
-        //document.getElementById(pre + 'profiletext').innerHTML = escapeHTML(data[0].profile);
-        //document.getElementById(pre + 'pagingid').innerHTML = escapeHTML("@" + data[0].pagingid);
         document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
-        //setPageTitleRaw("@"+data[0].pagingid);
-
-        //jdenticonname = data[0].name;
-        //img/profilepics/`+san(address)+`128x128.jpg
-
-
-
-        /*if (data && (data.length < 1 || Number(data[0].isfollowing) == 0)) {
-            obj.followbuttonhtml = clickActionNamedHTML("follow", data[0].bitcoinaddress, "follow", obj.publickey);
-        } else {
-            obj.followbuttonhtml = clickActionNamedHTML("unfollow", data[0].bitcoinaddress, "unfollow", obj.publickey);
-        }
-
-        if (data && (data.length < 1 || Number(data[0].isblocked) == 0)) {
-            obj.mutebuttonhtml = clickActionNamedHTML("mute", data[0].bitcoinaddress, "mute", obj.publickey);
-        } else {
-            obj.mutebuttonhtml = clickActionNamedHTML("unmute", data[0].bitcoinaddress, "unmute", obj.publickey);
-        }*/
     }
 
 
     if (obj.picurl) {
-        let picstem=sane(data[0].address);
-        if(data[0].hivename){picstem=sane(data[0].hivename);}
+        let picstem = sane(data[0].address);
+        if (data[0].hivename) { picstem = sane(data[0].hivename); }
         obj.profilepiclargehtml = getProfilePicLargeHTML(profilepicbase + picstem + `.640x640.jpg`);
     }
 
@@ -349,7 +317,7 @@ async function populateTools() {
 
 
 async function getAndPopulateSettings() {
-    let cashaddr=await legacyToMembercoin(pubkey);
+    let cashaddr = await legacyToMembercoin(pubkey);
     getDataSettings(pubkey, cashaddr);
 }
 
@@ -368,11 +336,15 @@ function updateSettings() {
     for (var key in numbers) {
         if (key == 'defaulttip') continue;
         var theSetting = localStorageGet(localStorageSafe, key);
-        if (theSetting != undefined && theSetting != null) {
-            document.getElementById(key).value = theSetting;
-            numbers[key] = Number(theSetting);
-        } else {
-            document.getElementById(key).value = numbers[key];
+        try {
+            if (theSetting != undefined && theSetting != null) {
+                document.getElementById(key).value = theSetting;
+                numbers[key] = Number(theSetting);
+            } else {
+                document.getElementById(key).value = numbers[key];
+            }
+        } catch (err) {
+            console.log("setting error " + key);
         }
     }
 
