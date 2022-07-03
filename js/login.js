@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.0.14';
+var version = '8.1.1';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -11,6 +11,7 @@ var privkey = ""; //Private Key
 var privkeyhex = "";
 var privateKeyBuf;
 var chainheight = 0;
+var chainheighttime=0;
 
 //var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
@@ -302,6 +303,8 @@ async function login(loginkey) {
     document.getElementById('loginkey').value = "";
 
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
+    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, {bcaddress: pubkey, cashaddress: await legacyToMembercoin(pubkey)}, true);
+    
     updateSettings();
     getAndPopulateSettings();
 

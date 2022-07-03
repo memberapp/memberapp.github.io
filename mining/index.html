@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link id="pagestyle" rel="stylesheet" href="../css/feels.css?8.1.1">
+    <link id="pagestyle2" rel="stylesheet" href="../css/compact.css?8.1.1">
+    <script src="blake3.umd.min.js"></script>
+
+    <script>
+
+        //Note mining in the browser is very energy inefficient
+        //Returns will be less than 1/10 of the energy cost
+        //Mine for convenience only to get a few sats to get started on the Membercoin network
+
+        async function tryhash() {
+            var url = window.location.href;
+            if (url.indexOf('#') != -1) {
+                var addressHOSTILE = url.substring(url.indexOf('#') + 1); //be careful, can contain anything
+                //console.log(addressHOSTILE);
+            }
+
+            let mhps = document.getElementById("minemembercoin");
+            //mhps.disabled=true;
+            mhps.setAttribute('onclick','');
+            let oldtext = mhps.text;
+            let BLAKE3 = await hashwasm.createBLAKE3();
+
+            //1 Get hash from server
+            let hash="";
+            
+            
+
+            const response = await fetch("https://member.cash/v2/getminingcandidate/");
+            let json = await response.json();
+            let servertime=json.servertime;
+            //console.log(servertime);
+
+            if (!servertime) {
+                mhps.text = oldtext;
+                mhps.setAttribute('onclick','tryhash();');
+                return;
+            }
+            console.log(servertime);
+
+            let testhash = "1656778895-" + addressHOSTILE + "-999999";//new Uint8Array([0, 1, 2, 3]);
+
+            let starttime = new Date().getTime();
+            for (let i = 0; i < 1000; i++) {
+                BLAKE3.init();
+                BLAKE3.update(testhash);
+                hash = BLAKE3.digest();
+                if (hash.substring(0, 5) == '00000') {
+                    console.log(result);
+                    //exit, send to server
+                }
+            }
+
+            let endtime = new Date().getTime();
+            let elapsed = endtime - starttime;
+            mhps.text = (1 / elapsed + "").substring(0, 6) + " MH/s . . . Mining . . . Estimated Time " + elapsed/2 + " seconds";
+            //starttime = endtime;
+            await new Promise(r => setTimeout(r, 100)); //allow browser to refresh to show message
+
+            let hashstart = servertime + "-" + addressHOSTILE + "-";
+            let nonce = 0;
+            for (; ;) {
+                BLAKE3.init();
+                BLAKE3.update(hashstart + nonce);
+                hash = BLAKE3.digest();
+                if (hash.substring(0, 5) == '00000') {
+                    console.log(hash);
+                    const response = await fetch("https://member.cash/v2/submitminingsolution/"+hashstart+nonce);
+                    let json = await response.json();
+                    var event = new CustomEvent('miningtxreceived', {detail: {data: json}});
+                    try{
+                        window.parent.document.dispatchEvent(event);
+                    }catch(err){
+                        console.log(err);
+                    }
+                    //let servertime=json.servertime;
+                    //getJSON("https://member.cash/v2/submitminingsolution/"+hashstart+nonce).then(function (data) {
+                    //    console.log("https://member.cash/v2/submitminingsolution/"+hashstart+nonce);
+                    //});
+                    break;
+                    //exit, send to server
+                }
+                nonce++;
+            }
+            //sats will be 155540/diff
+            mhps.text = oldtext;
+            mhps.setAttribute('onclick','tryhash();');
+            console.log('BLAKE3:completed');
+
+
+
+
+
+        }
+
+    </script>
+</head>
+
+<body id="mainbody">
+    <br/>
+    <center><span class="allownotifications"><a data-vavilon="minemembercoin" class="memberlinkbutton" href="javascript:;"
+            onclick="tryhash();" id="minemembercoin">Mine Some Membercoin</a></span></center>
+</body>
+
+</html>

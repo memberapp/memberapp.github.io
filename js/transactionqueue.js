@@ -83,10 +83,10 @@ class UTXOPool {
     return true;
   }
 
-  getBalance(chainheight) {
+  getBalance(chainheight2) {
     var total = 0;
     for (let i = 0; i < this.utxoPool.length; i++) {
-      total = total + getSatsWithInterest(this.utxoPool[i].satoshis,this.utxoPool[i].height,chainheight+1);
+      total = total + getSatsWithInterest(this.utxoPool[i].satoshis,this.utxoPool[i].height,chainheight2+1);
     }
     return total;
   }
@@ -95,7 +95,7 @@ class UTXOPool {
 
 
 
-  updateBalance(chainheight) {
+  updateBalance(chainheight2) {
 
     try {
       if (this.storageObject != undefined && this.storageObject != null) {
@@ -104,10 +104,10 @@ class UTXOPool {
     } catch (err) {
     }
 
-    var total = this.getBalance(chainheight);
+    var total = this.getBalance(chainheight2);
 
 
-    document.getElementById('balancesatoshis').innerHTML=total;
+    document.getElementById('balancesatoshis').innerHTML=Math.round(total);
     document.getElementById('balancebch').innerHTML=(total/ 100000000).toFixed(5);
 
     var usd = ((Number(total) * numbers.usdrate) / 100000000).toFixed(2);
@@ -119,9 +119,9 @@ class UTXOPool {
     
     
     
-    /*
+    
     if (this.onscreenElementName != null) {
-      document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
+      //document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
 
       if(document.getElementById('satoshiamount'))
         document.getElementById('satoshiamount').innerHTML = total;
@@ -131,7 +131,7 @@ class UTXOPool {
         var lowfundsElement=document.getElementById('lowfundswarning');
         if(lowfundsElement){
           document.getElementById('lowfundswarning').style.display = 'block';
-          showQRCode('lowfundsaddress', 100);
+          //showQRCode('lowfundsaddress', 100);
           //only show this message once per app load
           this.showwarning = false;
         }
@@ -139,7 +139,7 @@ class UTXOPool {
       if (total >= 2000) {
         document.getElementById('lowfundswarning').style.display = 'none';
       }
-    }*/
+    }
 
     return total;
   }
@@ -174,6 +174,7 @@ class UTXOPool {
         utxos[i].height = sane(utxos[i].height);
         if(utxos[i].chainheight){
           chainheight=utxos[i].chainheight;
+          chainheighttime=new Date().getTime();
         }
         if(utxos[i].usdrate){
           numbers.usdrate=utxos[i].usdrate;
@@ -601,12 +602,12 @@ class TransactionQueue {
     theUTXOPool.updateBalance(chainheight);
   }
 
-  updateBalance(address) {
-    return this.utxopools[address].updateBalance(chainheight);
+  updateBalance(address,chainheight2) {
+    return this.utxopools[address].updateBalance(chainheight2);
   }
 
-  getBalance(address,chainheight) {
-    return this.utxopools[address].getBalance(chainheight);
+  getBalance(address,chainheight2) {
+    return this.utxopools[address].getBalance(chainheight2);
   }
 
 }

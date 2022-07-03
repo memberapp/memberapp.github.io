@@ -135,7 +135,7 @@ async function sendfunds() {
         alert(getSafeTranslation('547orlarger', "Amount has to be 547 satoshis or larger."));
         return;
     }
-    var totalAmountPossible = tq.updateBalance(pubkey);
+    var totalAmountPossible = tq.updateBalance(pubkey,chainheight);
     if (sendAmount > totalAmountPossible) {
         alert(getSafeTranslation('largerthanbalance', "This amount is larger than your balance.") + ' ' + totalAmountPossible);
         return;
@@ -206,5 +206,21 @@ function getLegacyToHash160(address) {
     //the next function will fail if sdk is not loaded for some reason, but will work on retry
     //return new bitboxSdk.Address().legacyToHash160(qaddress);
   }
+
+function setBalanceWithInterest(){
+    let elapsed = (new Date().getTime()-chainheighttime)/(78*1000);
+    let membalance=tq.updateBalance(pubkey,chainheight+elapsed);
+    let mem=(membalance/100000000)+"";
+    while(mem.length<10){
+        mem=mem+"0";
+    }
+    //M̈ m̈
+    document.getElementById("membalance").value="m̈"+mem.substring(0,10);
+}
+
+setInterval(setBalanceWithInterest,500);
+
+
+
 
 

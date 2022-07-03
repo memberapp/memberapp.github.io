@@ -389,8 +389,10 @@ function addDynamicHTMLElements(data) {
         updateStatus("QT:" + qt);
         document.getElementById("version").title=qt;
 
-        if(data[0].chainheight)
+        if(data[0].chainheight){
             chainheight=data[0].chainheight;
+            chainheighttime=new Date().getTime();
+        }
         if(data[0].usdrate)
             numbers.usdrate=data[0].usdrate;
         //}

@@ -759,10 +759,10 @@ img {
   display: flex;
   align-items: center;
   height: 100%;
-  grid-gap: 39px;
+  grid-gap: 10px;
 }
 .newheader .headerrightgroup .usersearchclass {
-  width: 12.5rem;
+  width: 7rem;
 }
 .memberlogo {
   padding-top: 8px;
@@ -851,7 +851,7 @@ img {
 
 /* user search input and humberger wrapper div */
 .newheader .searchwrapper {
-  justify-content: space-evenly;
+  justify-content: right;
   display: flex;
   width: 100%;
   height: 100%;
@@ -1724,6 +1724,7 @@ table tbody tr:nth-child(even){
   background: #61aff0;
 }
 
+.headerrightgroup input,
 #settingsanchor input,
 #settingsanchor select,
 .formgroup input {
@@ -1815,10 +1816,6 @@ footer{
     margin-left: 10px;
   }
   .newheader .headercentergroup {
-    max-width: 260px;
-    min-width: 260px;
-  }
-  .newheader .headerrightgroup {
     max-width: 260px;
     min-width: 260px;
   }

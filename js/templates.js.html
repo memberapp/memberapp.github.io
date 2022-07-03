@@ -106,7 +106,7 @@ var mainbodyHTML=`
         <div class="loading"></div>
     </div>
 
-    <!--<div id="lowfundswarning" class="alert" style="display: none;"></div>-->
+    <div id="lowfundswarning" class="alert" style="display: none;"></div>
 
     <div id="toolsanchor" class="tools" style="display: none;"></div>
 
@@ -204,27 +204,19 @@ var loginboxHTML=`
 
 var lowfundswarningHTML=`
 <div class="content">
-    <span class="lowfundsaddressdiv" id="lowfundsaddressdiv"></span><br />
-    <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span data-vavilon="VV0021">satoshis
+    <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span data-vavilon="satoshisinaccount">satoshis
         exist in your member.cash account - each
         action (posting, liking, subscribing, following, messaging etc)
         requires a small amount of Membercoin. Add some funds, a few cents is enough.</span>
     <br />
     <br />
-    <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress"></span>
+    <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
     <br />
     <br />
-    <span data-vavilon="VV0023">Send Nuggets your address for a few cents if you're
-        finding it difficult to get some.</span>
-    <br />
-    BitClout <a rel='noopener noreferrer' href="https://bitclout.com/amazingnuggets">@amazingnuggets</a><br />
-    Twitter <a rel='noopener noreferrer' href="https://twitter.com/chickenorgold">@chickenorgold</a><br />
-    Reddit <a rel='noopener noreferrer'
-        href="https://www.reddit.com/user/theamazingnuggets">/u/theamazingnuggets</a><br />
-    <span data-vavilon="VV0024">Email</span> <a rel='noopener noreferrer'
-        href="mailto:nuggetcoins@gmail.com">nuggetcoins@gmail.com</a><br />
+    <span data-vavilon="minemembercoin">Mine some Membercoin here with your processing power - It may take a few seconds.</span>
     <br />
     <br />
+    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html#{bcaddress}"></iframe>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -789,6 +781,10 @@ pages.settings = `
         </select>
     </div>-->
     <div>
+        <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html#{address}"></iframe>
+    </div>
+    <div>
         <label data-vavilon="VVrssfeed" for="rssfeed">RSS Feed</label>
         <input class="sendfundsaddress" id="rssfeed" maxlength="200" size="60">
         <button data-vavilon="VVaddrssfeedbutton" class="memberstandardbutton" id="addrssfeedbutton" type="button"
@@ -985,6 +981,7 @@ var headerHTML = `
     <nav id="majornavbuttons" class="majornavbuttonsclass"></nav>
 </div>
 <div class="headerrightgroup">
+    <input class="balance" id="membalance" maxlength="11" size="11" disabled value="0.00000000M̈" style="text-align: right;">
     <div class="searchwrapper">
         <nav id="usersearch" class="usersearchclass"></nav>
         <nav id="hamburgermenu" class="hamburgermenuclass"></nav>
