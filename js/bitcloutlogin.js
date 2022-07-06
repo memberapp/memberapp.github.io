@@ -192,11 +192,14 @@ function submitSignedTransaction(signedTrx, id) {
 
 async function checkIfBitcloutUser(pubkeyhex1) {
   var bcAddress = await pubkeyToBCaddress(pubkeyhex1);
-  var submitpayload = `{"PublicKeyBase58Check":"` + bcAddress + `"}`;
-  var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-single-profile";
+  //var submitpayload = `{"PublicKeyBase58Check":"` + bcAddress + `"}`;
+  //var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-single-profile";
+  var submitpayload = `{"PublicKeysBase58Check":["` + bcAddress + `"]}`;
+  var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-users-stateless";
+  
   getJSON(url2, "&payload=" + encodeURIComponent(submitpayload)).then(function (data) {
     console.log(data);
-    if (data.Profile && data.Profile.Username) {
+    if (data.UserList[0].BalanceNanos > 0) {
       //This is a BC user
       bitCloutUser = bcAddress;
       localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);

@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.1.2';
+var version = '8.1.3';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -229,6 +229,7 @@ async function login(loginkey) {
             } else if (loginkey.startsWith("BC1")) {
                 var preslice = window.bs58check.decode(loginkey);
                 var bcpublicKey = preslice.slice(3);
+                checkIfBitcloutUser(new Buffer(bcpublicKey).toString('hex'));
                 var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
                 publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
             } else if (loginkey.startsWith("bitcoincash:")) {

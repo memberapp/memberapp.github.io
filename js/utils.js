@@ -331,7 +331,7 @@ function usdString(total, includeSymbol) {
 }
 
 
-function balanceString(total, includeSymbol) {
+function balanceString(total) {
   if (numbers.usdrate === undefined || numbers.usdrate === 0) {
     //var balString = (Number(total) / 1000).toFixed(3);
     //balString = Number(balString.substr(0, balString.length - 4)).toLocaleString() + "<span class='sats'>" + balString.substr(balString.length - 3, 3) + "</span>";
@@ -340,12 +340,6 @@ function balanceString(total, includeSymbol) {
       balString = Number(balString.substr(0, balString.length - 3)).toLocaleString() + "k";
     } else {
       balString = Number(total);
-    }
-
-    if (includeSymbol) {
-      return "₿" + balString;
-    } else {
-      return balString + " sats ";
     }
   }
   var usd = ((Number(total) * numbers.usdrate) / 100000000).toFixed(2);

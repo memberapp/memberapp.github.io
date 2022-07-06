@@ -207,16 +207,16 @@ var lowfundswarningHTML=`
     <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span data-vavilon="satoshisinaccount">satoshis
         exist in your member.cash account - each
         action (posting, liking, subscribing, following, messaging etc)
-        requires a small amount of Membercoin. Add some funds, a few cents is enough.</span>
+        requires a small amount of Membercoin.</span>
     <br />
     <br />
     <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
     <br />
     <br />
-    <span data-vavilon="minemembercoin">Mine some Membercoin here with your processing power - It may take a few seconds.</span>
+    <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a few seconds.</span>
     <br />
     <br />
-    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.2#{bcaddress}"></iframe>
+    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.3#{bcaddress}"></iframe>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -782,7 +782,7 @@ pages.settings = `
     </div>-->
     <div>
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
-        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.2#{address}"></iframe>
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.3#{address}"></iframe>
     </div>
     <div>
         <label data-vavilon="VVrssfeed" for="rssfeed">RSS Feed</label>
@@ -981,7 +981,8 @@ var headerHTML = `
     <nav id="majornavbuttons" class="majornavbuttonsclass"></nav>
 </div>
 <div class="headerrightgroup">
-    <input class="balance" id="membalance" maxlength="11" size="11" disabled value="0.00000000M̈" style="text-align: right;">
+    <!--<input class="balance" id="membalance" maxlength="11" size="11" disabled value="0.00000000M̈" style="text-align: right;">-->
+    <span href="#wallet" onclick="nlc();"><b>m̈</b><span id="membalance" style="word-break: normal; cursor:pointer;"></span></span>
     <div class="searchwrapper">
         <nav id="usersearch" class="usersearchclass"></nav>
         <nav id="hamburgermenu" class="hamburgermenuclass"></nav>
