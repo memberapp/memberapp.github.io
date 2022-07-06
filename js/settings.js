@@ -352,35 +352,43 @@ function updateSettings() {
     for (var key in settings) {
         var theSetting = localStorageGet(localStorageSafe, key);
 
-        if (theSetting != undefined && theSetting != null) {
-            document.getElementById(key).checked = Boolean(theSetting == "true");
-            settings[key] = theSetting;
-        } else {
-            document.getElementById(key).checked = Boolean(settings[key] == "true");
+        try {
+            if (theSetting != undefined && theSetting != null) {
+                document.getElementById(key).checked = Boolean(theSetting == "true");
+                settings[key] = theSetting;
+            } else {
+                document.getElementById(key).checked = Boolean(settings[key] == "true");
+            }
+        } catch (err) {
+            console.log("setting error " + key);
         }
     }
 
     //Select boxes
     for (var key in dropdowns) {
         var theSetting = localStorageGet(localStorageSafe, key);
-        if (theSetting != null) {
-            dropdowns[key] = theSetting;
-        } else {
-            theSetting = dropdowns[key];
-        }
-        var selector = document.getElementById(key);
-
-        var opts = selector.options;
-        for (var i = 0; i < opts.length; i++) {
-            if (opts[i].value == theSetting) {
-                selector.selectedIndex = i;
+        try {
+            if (theSetting != null) {
+                dropdowns[key] = theSetting;
+            } else {
+                theSetting = dropdowns[key];
             }
-        }
+            var selector = document.getElementById(key);
 
-        if (key == "languageselector") {
-            if (dictionary[theSetting]) {
-                dictionary.live = dictionary[theSetting];
+            var opts = selector.options;
+            for (var i = 0; i < opts.length; i++) {
+                if (opts[i].value == theSetting) {
+                    selector.selectedIndex = i;
+                }
             }
+
+            if (key == "languageselector") {
+                if (dictionary[theSetting]) {
+                    dictionary.live = dictionary[theSetting];
+                }
+            }
+        } catch (err) {
+            console.log("setting error " + key);
         }
     }
 

@@ -865,12 +865,21 @@ async function removeDuplicatesFromDifferentNetworks(data) {
                         data[k].retxid=data[i].txid;
                     }
                 }
-                //remove dataj
-                data.splice(j, 1);
-                j--;
+                //remove dataj - this has unpredictable effects in the middle of a loop
+                //try not removing, these won't be referencing anything, so should not be shown.
+                //data.splice(j, 1);
+                //j--;
+                data[j].setforremoval=true;
             }
         }
     }
+    for (var j = 0; j < data.length; j++) {
+        if(data[j].setforremoval){
+            data.splice(j, 1);
+            j--;    
+        }
+    }
+
     return data;
 }
 

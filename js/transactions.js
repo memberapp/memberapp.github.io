@@ -318,7 +318,10 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
 
 
 function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
-
+    if(!tipAddress || tipAddress=='null'){
+        alert("No address for tip. Maybe the user needs to set a handle?");
+        return;
+    }
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6d04", "0x" + reversetx],

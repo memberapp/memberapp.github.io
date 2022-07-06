@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link id="pagestyle" rel="stylesheet" href="../css/feels.css?8.1.1">
-    <link id="pagestyle2" rel="stylesheet" href="../css/compact.css?8.1.1">
+    <link id="pagestyle" rel="stylesheet" href="../css/feels.css?8.1.2">
+    <link id="pagestyle2" rel="stylesheet" href="../css/compact.css?8.1.2">
     <script src="blake3.umd.min.js"></script>
 
     <script>
@@ -51,7 +51,8 @@
                 BLAKE3.init();
                 BLAKE3.update(testhash);
                 hash = BLAKE3.digest();
-                if (hash.substring(0, 5) == '00000') {
+                let diff=parseInt(hash.substring(0, 6), 16);
+                if (diff<8) { //8 - estimate 1MH, 4 for 2MH, 2 for 4MH, 1 for 8MH
                     console.log(result);
                     //exit, send to server
                 }
@@ -59,7 +60,7 @@
 
             let endtime = new Date().getTime();
             let elapsed = endtime - starttime;
-            mhps.text = (1 / elapsed + "").substring(0, 6) + " MH/s . . . Mining . . . Estimated Time " + elapsed/2 + " seconds";
+            mhps.text = (1 / elapsed + "").substring(0, 6) + " MH/s . . . Mining . . . Estimated Time " + elapsed + " seconds";
             //starttime = endtime;
             await new Promise(r => setTimeout(r, 100)); //allow browser to refresh to show message
 
@@ -69,7 +70,8 @@
                 BLAKE3.init();
                 BLAKE3.update(hashstart + nonce);
                 hash = BLAKE3.digest();
-                if (hash.substring(0, 5) == '00000') {
+                let diff=parseInt(hash.substring(0, 6), 16);
+                if (diff<8) { //8 - estimate 1MH, 4 for 2MH, 2 for 4MH, 1 for 8MH
                     console.log(hash);
                     const response = await fetch("https://member.cash/v2/submitminingsolution/"+hashstart+nonce);
                     let json = await response.json();

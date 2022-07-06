@@ -216,7 +216,7 @@ var lowfundswarningHTML=`
     <span data-vavilon="minemembercoin">Mine some Membercoin here with your processing power - It may take a few seconds.</span>
     <br />
     <br />
-    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html#{bcaddress}"></iframe>
+    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.2#{bcaddress}"></iframe>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -782,7 +782,7 @@ pages.settings = `
     </div>-->
     <div>
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
-        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html#{address}"></iframe>
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.2#{address}"></iframe>
     </div>
     <div>
         <label data-vavilon="VVrssfeed" for="rssfeed">RSS Feed</label>
@@ -812,10 +812,10 @@ pages.settings = `
         <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
         <label data-vavilon="VV0090" for="showtwitter" class="checkboxlabel">Show Tweets</label>
     </div>
-    <div class="customcheckbox">
+    <!--<div class="customcheckbox">
         <input type="checkbox" id="showlbry" onchange="updateSettingsCheckbox('showlbry');">
         <label data-vavilon="showlbry" for="showlbry" class="checkboxlabel">Show lbry.tv</label>
-    </div>
+    </div>-->
     <div class="customcheckbox">
         <input type="checkbox" id="showbitclout" onchange="updateSettingsCheckbox('showbitclout');">
         <label data-vavilon="showbitclout" for="showbitclout" class="checkboxlabel">Show BitClout Images</label>
