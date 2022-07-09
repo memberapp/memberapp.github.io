@@ -551,7 +551,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
             if (data[i].rating) {
                 ratingused = data[i].rating;
             }
-            var isMuted = (data[i].blockstxid != null || data[i].moderated != null);
+            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused<64);
 
             var obj = {
                 unmuteddisplay: (isMuted ? `none` : `block`),

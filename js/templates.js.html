@@ -216,7 +216,7 @@ var lowfundswarningHTML=`
     <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a few seconds.</span>
     <br />
     <br />
-    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.3#{bcaddress}"></iframe>
+    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.4#{bcaddress}"></iframe>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -782,7 +782,7 @@ pages.settings = `
     </div>-->
     <div>
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
-        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.3#{address}"></iframe>
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.1.4#{address}"></iframe>
     </div>
     <div>
         <label data-vavilon="VVrssfeed" for="rssfeed">RSS Feed</label>
@@ -982,7 +982,7 @@ var headerHTML = `
 </div>
 <div class="headerrightgroup">
     <!--<input class="balance" id="membalance" maxlength="11" size="11" disabled value="0.00000000M̈" style="text-align: right;">-->
-    <span href="#wallet" onclick="nlc();"><b>m̈</b><span id="membalance" style="word-break: normal; cursor:pointer;"></span></span>
+    <a href="#wallet" onclick="nlc();"><span id="membalance" style="word-break: normal; cursor:pointer; color: black;"></span></a>
     <div class="searchwrapper">
         <nav id="usersearch" class="usersearchclass"></nav>
         <nav id="hamburgermenu" class="hamburgermenuclass"></nav>

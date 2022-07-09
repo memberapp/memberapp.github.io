@@ -215,7 +215,8 @@ function setBalanceWithInterest(){
         mem=mem+"0";
     }
     //M̈ m̈
-    document.getElementById("membalance").textContent=mem.substring(0,10);
+    //document.getElementById("membalance").textContent=mem.substring(0,10);
+    document.getElementById("membalance").innerHTML=`<strong>m̈</strong>`+mem.substring(0,10);
 }
 
 setInterval(setBalanceWithInterest,500);

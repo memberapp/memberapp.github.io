@@ -317,7 +317,12 @@ async function populateTools() {
 
 
 async function getAndPopulateSettings() {
-    let cashaddr = await legacyToMembercoin(pubkey);
+    let cashaddr;
+    try{
+        cashaddr = await legacyToMembercoin(pubkey);
+    }catch(err){
+        console.log(err);
+    }
     getDataSettings(pubkey, cashaddr);
 }
 
