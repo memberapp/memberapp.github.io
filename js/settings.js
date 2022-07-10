@@ -91,7 +91,7 @@ async function getDataMemberFinally(data) {
 
     let cashaddress = null;
     if (qaddress) {
-        cashaddress = await legacyToMembercoin(qaddress);
+        cashaddress = legacyToMembercoin(qaddress);
     }
 
     //Note, data may not contain any rows, for new or unknown users.
@@ -213,7 +213,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
     if (qaddress && !cashaddress) {
         {
-            await legacyToMembercoin(qaddress);
+            legacyToMembercoin(qaddress);
         }
     }
 
@@ -302,7 +302,7 @@ async function populateTools() {
     var bcaddress = await pubkeyToBCaddress(pubkeyhex);
     var obj = {
         address: pubkey,
-        cashaddress: await legacyToMembercoin(pubkey),
+        cashaddress: legacyToMembercoin(pubkey),
         bcaddress: bcaddress
     };
 
@@ -319,7 +319,7 @@ async function populateTools() {
 async function getAndPopulateSettings() {
     let cashaddr;
     try{
-        cashaddr = await legacyToMembercoin(pubkey);
+        cashaddr = legacyToMembercoin(pubkey);
     }catch(err){
         console.log(err);
     }

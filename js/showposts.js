@@ -857,7 +857,7 @@ async function removeDuplicatesFromDifferentNetworks(data) {
     for (var i = 0; i < data.length; i++) {
         for (var j = 0; j < data.length; j++) {
             //if the message is the same, and the author is the same, combine as a single post
-            if(i!=j && data[i] && data[i].network==3 && data[i].contentauthorhash==data[j].contentauthorhash){
+            if(i!=j && data[i] && data[i].network==3 && data[j].network!=3 && data[i].contentauthorhash==data[j].contentauthorhash){
                 //datai is on membercoin network(3) and dataj is an identical post so . . .
                 //change all references to dataj to datai
                 for (var k = 0; k < data.length; k++) {

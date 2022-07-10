@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.1.4';
+var version = '8.1.5';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -304,7 +304,7 @@ async function login(loginkey) {
     document.getElementById('loginkey').value = "";
 
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
-    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, {bcaddress: pubkey, cashaddress: await legacyToMembercoin(pubkey)}, true);
+    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, {bcaddress: pubkey, cashaddress: legacyToMembercoin(pubkey)}, true);
     
     updateSettings();
     getAndPopulateSettings();

@@ -69,14 +69,14 @@ function createSurrogate() {
 async function postprivatemessage() {
 
     var text = document.getElementById('newposttamessage').value;
-    if(!text){
+    if (!text) {
         alert(getSafeTranslation('noprivatemessagefound', "Message cannot be empty!"));
         return;
     }
 
     document.getElementById('newpostmessagebutton').disabled = true;
 
-    
+
     var status = "newpostmessagebutton";
     var stampAmount = document.getElementById("stampamount").value;
     if (stampAmount < 547) stampAmount = 547;
@@ -135,7 +135,7 @@ async function sendfunds() {
         alert(getSafeTranslation('547orlarger', "Amount has to be 547 satoshis or larger."));
         return;
     }
-    var totalAmountPossible = tq.updateBalance(pubkey,chainheight);
+    var totalAmountPossible = tq.updateBalance(pubkey, chainheight);
     if (sendAmount > totalAmountPossible) {
         alert(getSafeTranslation('largerthanbalance', "This amount is larger than your balance.") + ' ' + totalAmountPossible);
         return;
@@ -145,13 +145,13 @@ async function sendfunds() {
     if (sendAddress == "") {
         alert(getSafeTranslation('enteranaddress', "Make sure to enter an address to send to."));
     }
-    
-    if(sendAddress.startsWith("q")){
-        sendAddress="member:"+sendAddress;
+
+    if (sendAddress.startsWith("q")) {
+        sendAddress = "member:" + sendAddress;
     }
 
     //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
-    if(sendAddress.startsWith("member:")){
+    if (sendAddress.startsWith("member:")) {
         sendAddress = await membercoinToLegacy(sendAddress);
     }
 
@@ -187,8 +187,8 @@ async function membercoinToLegacy(address) {
     return window.bs58check.encode(toencode);
 }
 
-async function legacyToMembercoin(pubkey) {
-    let hash=Buffer.from(window.bs58check.decode(pubkey)).slice(1);
+function legacyToMembercoin(pubkey) {
+    let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
     return cashaddr.encode('member', 'P2PKH', hash)
 
     //const { prefix, type, hash } = cashaddr.decode(address);
@@ -199,27 +199,32 @@ async function legacyToMembercoin(pubkey) {
 }
 
 function getLegacyToHash160(address) {
-    let hash=Buffer.from(window.bs58check.decode(address)).slice(1);
+    let hash = Buffer.from(window.bs58check.decode(address)).slice(1);
     return hash.toString('hex');
     //if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
     //don't want to make the above await, but want to load library
     //the next function will fail if sdk is not loaded for some reason, but will work on retry
     //return new bitboxSdk.Address().legacyToHash160(qaddress);
-  }
-
-function setBalanceWithInterest(){
-    let elapsed = (new Date().getTime()-chainheighttime)/(78*1000);
-    let membalance=tq.updateBalance(pubkey,chainheight+elapsed);
-    let mem=(membalance/100000000)+"";
-    while(mem.length<10){
-        mem=mem+"0";
-    }
-    //M̈ m̈
-    //document.getElementById("membalance").textContent=mem.substring(0,10);
-    document.getElementById("membalance").innerHTML=`<strong>m̈</strong>`+mem.substring(0,10);
 }
 
-setInterval(setBalanceWithInterest,500);
+function setBalanceWithInterest() {
+    try {
+        let elapsed = (new Date().getTime() - chainheighttime) / (78 * 1000);
+        let membalance = tq.updateBalance(pubkey, chainheight + elapsed);
+        let mem = (membalance / 100000000) + "";
+        while (mem.length < 10) {
+            mem = mem + "0";
+        }
+        //M̈ m̈
+        //document.getElementById("membalance").textContent=mem.substring(0,10);
+        document.getElementById("membalance").innerHTML = `<strong>m̈</strong>` + mem.substring(0, 10);
+    } catch (err) {
+        //console.log(err);
+        //Error probably caused by trying to set balance before UTXO set is loaded
+    }
+}
+
+setInterval(setBalanceWithInterest, 500);
 
 
 
