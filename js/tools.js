@@ -180,7 +180,7 @@ function sendFundsComplete() {
 
 }
 
-async function membercoinToLegacy(address) {
+function membercoinToLegacy(address) {
     const { prefix, type, hash } = cashaddr.decode(address);
     let hashhex = Buffer.from(hash).toString('hex');
     let toencode = new Buffer('00' + hashhex, 'hex');
@@ -201,10 +201,6 @@ function legacyToMembercoin(pubkey) {
 function getLegacyToHash160(address) {
     let hash = Buffer.from(window.bs58check.decode(address)).slice(1);
     return hash.toString('hex');
-    //if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
-    //don't want to make the above await, but want to load library
-    //the next function will fail if sdk is not loaded for some reason, but will work on retry
-    //return new bitboxSdk.Address().legacyToHash160(qaddress);
 }
 
 function setBalanceWithInterest() {

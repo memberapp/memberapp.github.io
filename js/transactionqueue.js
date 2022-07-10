@@ -148,12 +148,16 @@ class UTXOPool {
 
     let outputInfo = new Array();
     
-    const Address = bitboxSdk.Address;
-    let address = new Address();
-    address.restURL = dropdowns.mcutxoserver;
+    //const Address = bitboxSdk.Address;
+    //let address = new Address();
+    //address.restURL = dropdowns.mcutxoserver;
 
     (async () => {
-      outputInfo = await address.utxo(this.theAddress);
+      
+      const response = await fetch(dropdowns.mcutxoserver+"address/utxo/"+this.theAddress);
+      outputInfo = await response.json();
+
+      //outputInfo = await address.utxo(this.theAddress);
 
 
       //console.log(outputInfo);
@@ -427,48 +431,8 @@ class TransactionQueue {
       throw new Error(getSafeTranslation('insufficientfunds', "1001:Insufficient Funds (No Suitable UTXOs)"));
     }
 
-    //Try to use every utxo, everytime, to reduce onchain utxos.
-/*
-    let usableUTXOScount = utxos.length;
-    //Max size of a standard transaction is expected to be around 424 bytes - 1 input, 1 OP 220 bytes, 1 change output
-    //So in most cases, one single input should be enough to cover it
-    //Add 546 to try to ensure change, so none is lost due to dust limit
-    var ballparkAmountRequired = 450 * miningFeeMultiplier + 546;
 
-    //Add any larger outputs like tips etc
-    if (options.cash.to && Array.isArray(options.cash.to)) {
-      options.cash.to.forEach(
-        function (receiver) {
-          if (receiver.value >= DUSTLIMIT) {
-            ballparkAmountRequired = ballparkAmountRequired + receiver.value;
-          }
-        })
-    }
-
-    //Choose UTXOs at random until we have more than our ballpark figure
-    let totalUseUtxos = 0;
-    let useUtxos = new Array();
-    while (totalUseUtxos < ballparkAmountRequired && utxos.length > 0) {
-      let randomUTXOindex = Math.floor(Math.random() * utxos.length);
-      //Check we haven't already spent this utxo
-      if (!this.spentUTXO[utxos[randomUTXOindex].txid + utxos[randomUTXOindex].vout] == 1) {
-        totalUseUtxos = totalUseUtxos + utxos[randomUTXOindex].satoshis;
-        useUtxos.push(utxos[randomUTXOindex]);
-      }
-      utxos.splice(randomUTXOindex, 1);
-    }
-    //If we exit here because utxo.length is 0, we're trying sending with all the utxos even though our ballpark figure hasn't been reached
-    utxos = useUtxos;
-    this.updateStatus(usableUTXOScount + getSafeTranslation('utxosinpool', " utxo(s) in pool. Using ") + utxos.length);
-    if (utxos.length == 0) {
-      throw new Error(getSafeTranslation('alreadyspent', "2000:All UTXOs are already spent"));
-    }
-*/
     return utxos;
-
-    //        resolve(utxos);
-    //      })()
-    //    });
 
   }
 

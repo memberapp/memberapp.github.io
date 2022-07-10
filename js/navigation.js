@@ -69,6 +69,8 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
         showMember(sane(pubkey), '');
+    } else if (action.startsWith("membersonly")) {
+        showPostsNew('new', 'all', 'membersonly', 'everyone', 0, numbers.results, '');
     } else if (action.startsWith("member")) {
         showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {

@@ -47,6 +47,14 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         networkOnly = `&network=${dropdowns['contentnetwork']}`;
     }
 
+    //special membersonly topic - all content from member network
+    if (topicnameHOSTILE.toLowerCase() == "membersonly"){
+        networkOnly = `&network=3`;
+        setTopic('');
+        topicnameHOSTILE = '';
+    }
+    
+
     //Request content from the server and display it when received
     var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + networkOnly;
     getJSON(theURL).then(function (data) {

@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.1.5';
+var version = '8.1.6';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -220,7 +220,7 @@ async function login(loginkey) {
             }
 
             if (loginkey.startsWith("member:")) {
-                publicaddress = await membercoinToLegacy(loginkey);
+                publicaddress = membercoinToLegacy(loginkey);
             } else if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
                 let ecpair = new bitboxSdk.ECPair().fromWIF(loginkey);
                 publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
@@ -277,7 +277,7 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
-            await checkIfBitcloutUser(pubkeyhex);
+            checkIfBitcloutUser(pubkeyhex);
             //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
         }
 
@@ -320,7 +320,7 @@ async function login(loginkey) {
     //getLatestUSDrate();
 
     //Get latest rate and update balance
-    if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }
+    //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }
     tq.addUTXOPool(pubkey, localStorageSafe, "balance");
 
     if (!privkey) {
