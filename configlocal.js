@@ -29,6 +29,5 @@ var numbers = {
     "defaulttip": 1000,
     "oneclicktip": 0,
     "maxfee": 2,
-    "results": 25,
-    "usdrate": 0
+    "results": 25
 }
