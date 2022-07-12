@@ -208,7 +208,7 @@ function postmemorandum() {
         //Repost
         if (checkForNativeUserAndHasBalance()) {
             //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
-            postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", null, txid);
+            postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
             //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
             successFunction = null;
         }

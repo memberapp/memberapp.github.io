@@ -47,12 +47,6 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         networkOnly = `&network=${dropdowns['contentnetwork']}`;
     }
 
-    //special membersonly topic - all content from member network
-    if (topicnameHOSTILE.toLowerCase() == "membersonly"){
-        networkOnly = `&network=3`;
-        setTopic('');
-        topicnameHOSTILE = '';
-    }
     
 
     //Request content from the server and display it when received

@@ -23,7 +23,7 @@ class UTXOPool {
   constructor(address, statusMessageFunction, storageObject, onscreenElementName) {
     //This takes legacy address format
     this.theAddress = address;
-    
+
     this.utxoPool = {};
     this.statusMessageFunction = statusMessageFunction;
     this.storageObject = storageObject;
@@ -79,14 +79,14 @@ class UTXOPool {
       }
     }
     //add one additional block - assuming it will be included in next block
-    this.utxoPool.push({ satoshis: satoshis, vout: vout, txid: txid, height: chainheight+1 });
+    this.utxoPool.push({ satoshis: satoshis, vout: vout, txid: txid, height: chainheight + 1 });
     return true;
   }
 
   getBalance(chainheight2) {
     var total = 0;
     for (let i = 0; i < this.utxoPool.length; i++) {
-      total = total + getSatsWithInterest(this.utxoPool[i].satoshis,this.utxoPool[i].height,chainheight2+1);
+      total = total + getSatsWithInterest(this.utxoPool[i].satoshis, this.utxoPool[i].height, chainheight2 + 1);
     }
     return total;
   }
@@ -107,29 +107,29 @@ class UTXOPool {
     var total = this.getBalance(chainheight2);
 
 
-    document.getElementById('balancesatoshis').innerHTML=Math.round(total);
-    document.getElementById('balancebch').innerHTML=(total/ 100000000).toFixed(5);
+    document.getElementById('balancesatoshis').innerHTML = Math.round(total);
+    document.getElementById('balancebch').innerHTML = (total / 100000000).toFixed(5);
 
     var usd = ((Number(total) * numbers.usdrate) / 100000000).toFixed(2);
     if (usd < 1) {
-      document.getElementById('balanceusd').innerHTML=(usd * 100).toFixed(0) + "¢";
+      document.getElementById('balanceusd').innerHTML = (usd * 100).toFixed(0) + "¢";
     } else {
-      document.getElementById('balanceusd').innerHTML="$" + usd;
+      document.getElementById('balanceusd').innerHTML = "$" + usd;
     }
-    
-    
-    
-    
+
+
+
+
     if (this.onscreenElementName != null) {
       //document.getElementById(this.onscreenElementName).innerHTML = balanceString(total, true);
 
-      if(document.getElementById('satoshiamount'))
+      if (document.getElementById('satoshiamount'))
         document.getElementById('satoshiamount').innerHTML = total;
 
-      
+
       if (total < 2000 && this.showwarning) {
-        var lowfundsElement=document.getElementById('lowfundswarning');
-        if(lowfundsElement){
+        var lowfundsElement = document.getElementById('lowfundswarning');
+        if (lowfundsElement) {
           document.getElementById('lowfundswarning').style.display = 'block';
           //showQRCode('lowfundsaddress', 100);
           //only show this message once per app load
@@ -147,14 +147,14 @@ class UTXOPool {
   refreshPool() {
 
     let outputInfo = new Array();
-    
+
     //const Address = bitboxSdk.Address;
     //let address = new Address();
     //address.restURL = dropdowns.mcutxoserver;
 
     (async () => {
-      
-      const response = await fetch(dropdowns.mcutxoserver+"address/utxo/"+this.theAddress);
+
+      const response = await fetch(dropdowns.mcutxoserver + "address/utxo/" + this.theAddress);
       outputInfo = await response.json();
 
       //outputInfo = await address.utxo(this.theAddress);
@@ -176,12 +176,12 @@ class UTXOPool {
         utxos[i].vout = Number(utxos[i].tx_pos);
         utxos[i].txid = sane(utxos[i].tx_hash);
         utxos[i].height = sane(utxos[i].height);
-        if(utxos[i].chainheight){
-          chainheight=utxos[i].chainheight;
-          chainheighttime=new Date().getTime();
+        if (utxos[i].chainheight) {
+          chainheight = utxos[i].chainheight;
+          chainheighttime = new Date().getTime();
         }
-        if(utxos[i].usdrate){
-          numbers.usdrate=utxos[i].usdrate;
+        if (utxos[i].usdrate) {
+          numbers.usdrate = utxos[i].usdrate;
         }
       }
 
@@ -292,13 +292,22 @@ class TransactionQueue {
     }
   }
 
-  async serverResponseFunction(err, res, returnObject) {
+  async serverResponseFunction(HOSTILEerr, res, returnObject) {
+    //Possibly error message could have hostile code - must sanitize it
 
     returnObject.isSending = false;
-    if (err) {
-      console.log(err.code + " " + err.message);
-      let errorMessage = err.message;
-      returnObject.updateStatus(getSafeTranslation('error', "Error:") + err.code + " " + errorMessage);
+    if (HOSTILEerr) {
+      let errcode = "";
+      let errmessage = "";
+      try {
+        errcode = sane(HOSTILEerr.code);
+        errmessage = sane(HOSTILEerr.message);
+      } catch (noerr) {
+        //usually no err
+      }
+      console.log(errcode + " " + errmessage);
+      let errorMessage = errmessage;
+      returnObject.updateStatus(getSafeTranslation('error', "Error:") + errcode + " " + errorMessage);
       if (errorMessage === undefined) {
         errorMessage = getSafeTranslation('networkerror', "Network Error");
       }
@@ -364,9 +373,9 @@ class TransactionQueue {
     }
     resendWait = 2000;
     if (res.length > 10) {
-      returnObject.updateStatus("txid:" + san(res) );
+      returnObject.updateStatus("txid:" + san(res));
       //returnObject.updateStatus("<a  rel='noopener noreferrer' target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + san(res) + "'>txid:" + san(res) + "</a>");
-      
+
       //console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
       let successCallback = returnObject.onSuccessFunctionQueue.shift();
       returnObject.queue.shift();
@@ -405,15 +414,15 @@ class TransactionQueue {
       //Send to node
       this.broadcastTransaction(tx, utxos, options, callback);
 
-    } catch (err) {
+    } catch (HOSTILEerr) {
       this.transactionInProgress = false;
-      callback(err, null, this);
+      callback(HOSTILEerr, null, this);
       return;
     }
   }
 
   selectUTXOs(options) {
-    
+
     const ECPair = bitboxSdk.ECPair;
     let keyPair = new ECPair().fromWIF(options.cash.key);
     let theAddress = keyPair.getAddress();
@@ -463,7 +472,7 @@ class TransactionQueue {
     let fundsRemaining = 0;
     //Calculate sum of tx outputs and add inputs
     for (let i = 0; i < utxos.length; i++) {
-      let originalAmount = getSatsWithInterest(utxos[i].satoshis,utxos[i].height,chainheight+1);
+      let originalAmount = getSatsWithInterest(utxos[i].satoshis, utxos[i].height, chainheight + 1);
       fundsRemaining = fundsRemaining + originalAmount;
       // index of vout
       let vout = utxos[i].vout;
@@ -519,8 +528,8 @@ class TransactionQueue {
   broadcastTransaction(tx, utxos, options, callback) {
 
     let hex = tx.toHex();
-    let hash = tx.getHash().toString('hex');
-    let id = tx.getId();
+    //let hash = tx.getHash().toString('hex');
+    //let id = tx.getId();
 
     const RawTransactions = bitboxSdk.RawTransactions;
     let rawtransactions = new RawTransactions();
@@ -531,15 +540,19 @@ class TransactionQueue {
       //Remove unexpected input in result
       result = sane(result);
       callback(null, result, this);
-    }, (err) => {
+    }, (HOSTILEerr) => {
       //console.log(err);
       this.transactionInProgress = false;
       //Remove unexpected input in error message
-      err.message = sane(err.error);
-      if (err.message === undefined || err.message == "") {
-        err.message = getSafeTranslation('networkerror', "Network Error");
+      try {
+        HOSTILEerr.message = sane(HOSTILEerr.error);
+        if (HOSTILEerr.message === undefined || HOSTILEerr.message == "") {
+          HOSTILEerr.message = getSafeTranslation('networkerror', "Network Error");
+        }
+      } catch (err2) {
+        //may not be possible to change the err.message - immutable
       }
-      callback(err, null, this);
+      callback(HOSTILEerr, null, this);
     });
   }
 
@@ -566,11 +579,11 @@ class TransactionQueue {
     theUTXOPool.updateBalance(chainheight);
   }
 
-  updateBalance(address,chainheight2) {
+  updateBalance(address, chainheight2) {
     return this.utxopools[address].updateBalance(chainheight2);
   }
 
-  getBalance(address,chainheight2) {
+  getBalance(address, chainheight2) {
     return this.utxopools[address].getBalance(chainheight2);
   }
 
