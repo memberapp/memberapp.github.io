@@ -17,10 +17,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
     if (qaddress) {
         //hideAll();
-        if(filter!="list"){
+        if (filter != "list") {
             showOnly("mcidmemberheader");
             showOnly("mcidmembertabs");
-            var obj2 = {address: qaddress, profileclass: 'filteroff', reputationclass: 'filteroff', postsclass: 'filteron', bestiesclass: 'filteroff'};
+            var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteroff', postsclass: 'filteron', bestiesclass: 'filteroff' };
             document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
         }
         setPageTitleRaw("List");
@@ -47,7 +47,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         networkOnly = `&network=${dropdowns['contentnetwork']}`;
     }
 
-    
+
 
     //Request content from the server and display it when received
     var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + networkOnly;
@@ -55,15 +55,15 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         updateUSDRate(data);
 
-        if (qaddress && data[0] && data[0].pagingid && filter!="list") {
+        if (qaddress && data[0] && data[0].pagingid && filter != "list") {
             setPageTitleRaw("@" + data[0].pagingid);
         }
 
-        let end=start;
-        if(order=='new' && data.length && data[0]){
-            end=data[data.length-1].firstseen;
-        }else{
-            end=start+limit;
+        let end = start;
+        if (order == 'new' && data.length && data[0]) {
+            end = data[data.length - 1].firstseen;
+        } else {
+            end = start + limit;
         }
 
         var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
@@ -80,8 +80,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
 
-        if(!pubkey && order=='hot'){//Show member.cash explainer video
-            let membervid = {"address":"-2124810688269680833","message":"Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E","txid":"4828901585208465235","firstseen":1657702206,"retxid":"","roottxid":"4828901585208465235","likes":2,"dislikes":0,"tips":1500,"topic":"member","lat":null,"lon":null,"geohash":null,"repliesdirect":0,"repliesroot":0,"repliestree":0,"repliesuniquemembers":0,"repost":null,"canonicalid":"4828901585208465235","repostcount":0,"language":"","amount":0,"score":1500000,"score2":208943.26776183146,"network":3,"posttype":0,"memberscore":236,"weightedlikes":120721,"weighteddislikes":0,"weightedreposts":0,"weightedtips":0,"contentflags":1,"deleted":0,"hivelink":"c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a","format":null,"title":null,"scoretop":12007.604013087894,"isfollowing":null,"name":"member.cash","pagingid":"membercash","publickey":"02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17","picurl":"-8772705979516345993","tokens":55,"followers":5252,"following":1696,"blockers":2,"blocking":14,"profile":"Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nDeso, Bitcoin Cash and Hive\n\n@FreeTrade\n\n","nametime":1625985623,"lastactive":1657702333,"sysrating":236,"hivename":null,"bitcoinaddress":"19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6","rpname":null,"rppagingid":null,"rppublickey":null,"rppicurl":null,"rptokens":null,"rpfollowers":null,"rpfollowing":null,"rpblockers":null,"rpblocking":null,"rpprofile":null,"rpnametime":null,"rplastactive":null,"rpsysrating":null,"rphivename":null,"rpbitcoinaddress":null,"rating":null,"rprating":null,"replies":0,"likedtxid":null,"likeordislike":null,"rplikedtxid":null,"rplikeordislike":null,"rpaddress":null,"rpamount":null,"rpdislikes":null,"rpfirstseen":null,"rpgeohash":null,"rplanguage":null,"rplat":null,"rplikes":null,"rplon":null,"rpmessage":null,"rprepliestree":null,"rprepliesuniquemembers":null,"rprepost":null,"rprepostcount":null,"rpretxid":null,"rproottxid":null,"rptips":null,"rptopic":null,"rptxid":null,"rpreplies":null,"rprepliesroot":null,"rphivelink":null,"rpsourcenetwork":null};
+        if (!pubkey && order == 'hot') {//Show member.cash explainer video
+            let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nDeso, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
             contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
         }
 
@@ -96,14 +96,14 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         if (contents == "") {
-        
+
             contents = getDivClassHTML('message', getSafeTranslation("nothinghere2", "Nothing here yet"));
 
             if (filter == "mypeeps" || filter == "myfeed" || topicnameHOSTILE == "MyFeed" || topicnameHOSTILE == "MyTopics") {
                 contents = getDivClassHTML('message', getSafeTranslation("nothinginfeed2", "Nothing in your feed"));
             }
 
-            if(data && data[0] && data[0].interrupted=="query timed out"){
+            if (data && data[0] && data[0].interrupted == "query timed out") {
                 contents = getDivClassHTML('message', getSafeTranslation("servertimeout", "This request timed out - maybe it is too difficult or the server is under heavy load."));
             }
 
@@ -130,10 +130,10 @@ function getAndPopulateMessages(messagetype, start, limit) {
         messagetype = 'all';
     }
 
-    try{
+    try {
         document.getElementById('messageslist').innerHTML = document.getElementById("loading").innerHTML;
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 
@@ -230,7 +230,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
                 contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false, true));
-                
+
                 var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID)
 
                 if (commentTree == '<ul></ul>') {
@@ -248,7 +248,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
 
         //Repeat the title for article mode
-        document.querySelector('[id^="articleheader'+roottxid+'"]').innerHTML=document.querySelector('[id^="postbody'+roottxid+'"]').innerHTML;
+        document.querySelector('[id^="articleheader' + roottxid + '"]').innerHTML = document.querySelector('[id^="postbody' + roottxid + '"]').innerHTML;
 
         if (popup != undefined) {
             popup.setContent(getDivClassHTML('mapthread', contents));
@@ -256,7 +256,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         addDynamicHTMLElements(data);
         scrollToPosition();
 
-        if(!articlemode){
+        if (!articlemode) {
             showReplyBox(san(txid) + pageName);
         }
 
@@ -370,7 +370,7 @@ function getAndPopulateQuoteBox(txid) {
         if (data[0]) {
             contents = getHTMLForPost(data[0], 1, page, 0, null, true, true, false);
             document.getElementById(page).innerHTML = contents;
-            document.getElementById('quotetxidnetwork').value = data[0].network; 
+            document.getElementById('quotetxidnetwork').value = data[0].network;
         } else {
             throw error(getSafeTranslation('noresult', 'no result returned'));
         }
@@ -401,13 +401,13 @@ function addDynamicHTMLElements(data) {
 
     if (data != null && data != undefined && data[0]) {
         //if (data.length > 0) {
-        let qt=(Math.round(data[0].msc * 100) / 100).toFixed(2);
+        let qt = (Math.round(data[0].msc * 100) / 100).toFixed(2);
         updateStatus("QT:" + qt);
-        document.getElementById("version").title=qt;
+        document.getElementById("version").title = qt;
 
-        if(data[0].chainheight){
-            chainheight=data[0].chainheight;
-            chainheighttime=new Date().getTime();
+        if (data[0].chainheight) {
+            chainheight = data[0].chainheight;
+            chainheighttime = new Date().getTime();
         }
         updateUSDRate(data);
         //}
@@ -525,8 +525,8 @@ function addSingleStarsRating(theElement) {
 
     let disabledtext = theElement.dataset.disabledtext;
 
-    var theRatingRound = 0; 
-    if (rawRating) { 
+    var theRatingRound = 0;
+    if (rawRating) {
         theRatingRound = outOfFive(rawRating);
     }
     if (theElement.dataset.ratingsystem == 'systemscore') {
@@ -555,19 +555,19 @@ function addSingleStarsRating(theElement) {
     return starRating1;
 }
 
-function sendRating(rating, ratingText, pageName, theAddress){
+function sendRating(rating, ratingText, pageName, theAddress) {
     if (!checkForPrivKey()) return false;
-    var comment="";
+    var comment = "";
     if (ratingText) {
-        comment=ratingText.value;
+        comment = ratingText.value;
     }
 
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         rateCallbackAction(rating, comment, theAddress);
     }
-    
-    if(isBitCloutUser()){
-        sendBitCloutRating("user: @" + pageName + "\nrating:"+rating+"/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress , 'rating', null, null, {RatedMember:theAddress,RatingComment:comment,Rating:""+rating});
+
+    if (isBitCloutUser()) {
+        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
     }
 }
 
@@ -605,10 +605,10 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         //repost with no message
         retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
     }
-    if(includeArticleHeader){
-        retHTML += `<div id="articleheader`+san(data.txid)+`" class="articleheader"></div>`;
+    if (includeArticleHeader) {
+        retHTML += `<div id="articleheader` + san(data.txid) + `" class="articleheader"></div>`;
     }
-    
+
     if (dataReply != null) {
         retHTML += getHTMLForReply(dataReply, 0, page, starindex, null);
     }
@@ -685,17 +685,18 @@ function decreaseGUILikes(txid) {
     document.getElementById('score' + txid).textContent = likescount - 1;
 
     //Change classes
-    downarrow.className = "votearrowactivateddown rotate180";
-    uparrow.className = "votearrow";
+    if (downarrow && uparrow) { //If post is flagged or is main post, these arrows won't be present. skip.
+        downarrow.className = "votearrowactivateddown rotate180";
+        uparrow.className = "votearrow";
 
-    var dislikeElement = document.getElementById('dislikescount' + txid);
-    if (dislikeElement) {
-        var dislikescount = Number(dislikeElement.textContent);
-        dislikeElement.textContent = dislikescount + 1;
+        var dislikeElement = document.getElementById('dislikescount' + txid);
+        if (dislikeElement) {
+            var dislikescount = Number(dislikeElement.textContent);
+            dislikeElement.textContent = dislikescount + 1;
+        }
+        uparrow.className = "votearrow post-footer-upvote";
+        downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
     }
-    uparrow.className = "votearrow post-footer-upvote";
-    downarrow.className = "votearrowactivated rotate180 post-footer-downvote-activated";
-
 
 }
 
@@ -736,10 +737,10 @@ function increaseGUIReposts(txid) {
     document.getElementById('repostscount' + txid).innerHTML = repostscount + 1;
 }
 
-function pinpost(txid){
-//If bitclout user is logged in
+function pinpost(txid) {
+    //If bitclout user is logged in
     if (isBitCloutUser()) {
-        bitCloutPinPost(txid,pubkey);
+        bitCloutPinPost(txid, pubkey);
     }
 
     if (checkForNativeUserAndHasBalance()) {
@@ -748,8 +749,8 @@ function pinpost(txid){
 }
 
 function likePost(txid, origtxid, tipAddress, amountSats) {
-    if(amountSats==0){
-        amountSats=numbers.oneclicktip;
+    if (amountSats == 0) {
+        amountSats = numbers.oneclicktip;
     }
     //if no identity login, then check for priv key 
     if (!checkForPrivKey()) return false;
@@ -757,7 +758,7 @@ function likePost(txid, origtxid, tipAddress, amountSats) {
     //GUI update
     increaseGUILikes(txid);
     if (amountSats >= 547) {
-        let newAmount=Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(amountSats);
+        let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(amountSats);
         document.getElementById('tipscount' + txid).innerHTML = usdString(newAmount, false);
         document.getElementById('tipscount' + txid).dataset.amount = newAmount;
     }
@@ -785,13 +786,13 @@ function dislikePost(txid, origtxid) {
     sendDislike(origtxid);
 }
 
-function repostPost(txid,origtxid,sourcenetwork) {
+function repostPost(txid, origtxid, sourcenetwork) {
     if (!checkForPrivKey()) return false;
 
     increaseGUIReposts(txid);
 
     if (isBitCloutUser()) {
-        bitCloutRePost(origtxid,sourcenetwork);
+        bitCloutRePost(origtxid, sourcenetwork);
     }
 
     if (checkForNativeUserAndHasBalance()) {
@@ -818,7 +819,7 @@ function sendTip(txid, origtxid, tipAddress, page) {
     defaulttip = tipAmount;
 
     document.getElementById('tipstatus' + page + txid).value = getSafeTranslation('sendingtip', "Sending Tip . .") + ' ' + tipAmount;
-    let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount)+satsToUSD(tipAmount);;
+    let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(tipAmount);;
     document.getElementById('tipscount' + txid).dataset.amount = newAmount;
     document.getElementById('tipscount' + txid).innerHTML = balanceString(newAmount, false);
 
@@ -853,7 +854,7 @@ function checkForMutedWords(data) {
         var checkfor = mutedwords[i].toLowerCase();
         if (data.message != undefined && data.message.toLowerCase().contains(checkfor)) return true;
         if (data.name != undefined && data.name.toLowerCase().contains(checkfor)) return true;
-        data.address=data.address+"";//Ensure data address is a string.
+        data.address = data.address + "";//Ensure data address is a string.
         if (data.address != undefined && data.address.toLowerCase().contains(checkfor)) return true;
         if (data.topic != undefined && ("(" + data.topic.toLowerCase() + ")").contains(checkfor)) return true;
 
@@ -865,30 +866,30 @@ function checkForMutedWords(data) {
 async function removeDuplicatesFromDifferentNetworks(data) {
     //var replies = [];
     for (var i = 0; i < data.length; i++) {
-        let messageWithReplacement=data[i].message.replace(/^https\:\/\/member\.cash\/p\/[0-9a-f]+\n\n/, '');
-        data[i].contentauthorhash=await digestMessage(data[i].address+messageWithReplacement);
+        let messageWithReplacement = data[i].message.replace(/^https\:\/\/member\.cash\/p\/[0-9a-f]+\n\n/, '');
+        data[i].contentauthorhash = await digestMessage(data[i].address + messageWithReplacement);
     }
 
     //There is a lot of room to optimize this if it slows things down, and will on very large threads
     for (var i = 0; i < data.length; i++) {
         for (var j = 0; j < data.length; j++) {
             //if the message is the same, and the author is the same, combine as a single post
-            if(i!=j && data[i] && data[i].network==3 && data[j].network!=3 && data[i].contentauthorhash==data[j].contentauthorhash){
+            if (i != j && data[i] && data[i].network == 3 && data[j].network != 3 && data[i].contentauthorhash == data[j].contentauthorhash) {
                 //datai is on membercoin network(3) and dataj is an identical post and not on membercoin network so . . .
                 //change all references to dataj to datai
                 for (var k = 0; k < data.length; k++) {
-                    if(data[k].retxid==data[j].txid){
-                        data[k].retxid=data[i].txid;
+                    if (data[k].retxid == data[j].txid) {
+                        data[k].retxid = data[i].txid;
                     }
                 }
-                data[j].setforremoval=true;
+                data[j].setforremoval = true;
             }
         }
     }
     for (var j = 0; j < data.length; j++) {
-        if(data[j].setforremoval){
+        if (data[j].setforremoval) {
             data.splice(j, 1);
-            j--;    
+            j--;
         }
     }
 
@@ -901,7 +902,7 @@ async function digestMessage(message) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));                     // convert buffer to byte array
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
     return hashHex;
-  }
+}
 
 
 function removeDuplicates(data) {

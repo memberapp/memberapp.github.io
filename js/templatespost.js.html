@@ -109,6 +109,8 @@ var postCompactTemplate = `
                                 <div></div>
                             </div></button>
                         <div class="dropdown-content" id="dropdown-content">
+                            <a id="dislikepost{diff}{txid}" onclick="dislikePost('{txid}','{origtxid}')"
+                                href="javascript:;"><span data-vavilon="VV0161">Flag post</span></a>
                             <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
                                 href="javascript:;"><span data-vavilon="VV0147">likes and</span> <span
                                     data-vavilon="tips">tips</span></a>

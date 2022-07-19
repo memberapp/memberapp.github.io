@@ -284,7 +284,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     }
 
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
-    reloadImageEverywhere(obj.profilepiclargehtml);
+    //reloadImageEverywhere(obj.profilepiclargehtml);
 
 
     updateSettings();
