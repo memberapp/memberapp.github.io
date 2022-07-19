@@ -309,7 +309,6 @@ img {
 
 .imgurimage {
   background-color: white;
-  background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.12) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.12) 75%, rgba(0, 0, 0, 0.12)), linear-gradient(45deg, rgba(0, 0, 0, 0.12) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.12) 75%, rgba(0, 0, 0, 0.12));
   background-size: 50px 50px;
   background-position: 0 0, 25px 25px; }
 
@@ -1016,7 +1015,6 @@ hr {
 
 img {
   outline-offset: -1px;
-  outline: 1px solid rgba(0, 0, 0, 0.05);
   margin-top: 1rem;
   max-height: 640px;
   width: auto;
@@ -1721,7 +1719,7 @@ footer {
     @media (max-width: 768px) {
       footer .content {
         } }
-  footer #developmentversion {
+  footer .developmentversion {
     font-size: 1rem;
     text-align: center;
     color: #CC2936;
@@ -1730,7 +1728,7 @@ footer {
     margin-bottom: 2rem;
     border-radius: 0.25rem;
     border: 1px solid #CC2936; }
-    footer #developmentversion br {
+    footer .developmentversion br {
       display: none; }
   footer hr {
     display: none; }
@@ -2417,9 +2415,14 @@ footer {
         max-width: 200px;
         white-space: pre-wrap; }
       #topiclistanchor table .tlmessagescount, #topiclistanchor table .tlsubscount, #topiclistanchor table .tlmessagecount {
-        display: none; } }
-    #topiclistanchor table .tltopicname {
+        display: none; }
+      #topicmeta table .tltopicname {
+          display: none; }
+    }
+    .tltopicname {
       text-align: left; }
+
+    
 
 #topicmeta {
   width: 100%;

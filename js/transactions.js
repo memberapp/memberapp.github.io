@@ -58,17 +58,17 @@ function repost(txid, privkey) {
     tq.queueTransaction(tx);
 }
 
-function setPic() {
+function setTrxPic(callback) {
     if (!checkForNativeUser()) return false;
 
     document.getElementById('settingspicbutton').disabled = true;
     document.getElementById('settingspic').disabled = true;
 
     var newName = document.getElementById('settingspic').value;
-    if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
-        alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
-        return;
-    }
+    //if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
+    //    alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
+    //    return;
+    //}
     const tx = {
         data: ["0x6d0a", newName],
         cash: { key: privkey }
@@ -76,7 +76,7 @@ function setPic() {
     updateStatus(getSafeTranslation('settingpic', "Setting Profile Pic"));
 
     //TODO, on error, this should really enable the text field and text button again
-    tq.queueTransaction(tx);
+    tq.queueTransaction(tx,callback);
 }
 
 

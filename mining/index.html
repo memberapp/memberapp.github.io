@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <link id="pagestyle" rel="stylesheet" href="../css/feels.css?8.1.7">
-    <link id="pagestyle2" rel="stylesheet" href="../css/compact.css?8.1.7">
+    <link id="pagestyle" rel="stylesheet" href="../css/feels.css?8.2.1">
+    <link id="pagestyle2" rel="stylesheet" href="../css/compact.css?8.2.1">
     <script src="blake3.umd.min.js"></script>
 
     <script>
@@ -23,23 +23,23 @@
 
             let mhps = document.getElementById("minemembercoin");
             //mhps.disabled=true;
-            mhps.setAttribute('onclick','');
+            mhps.setAttribute('onclick', '');
             let oldtext = mhps.text;
             let BLAKE3 = await hashwasm.createBLAKE3();
 
             //1 Get hash from server
-            let hash="";
-            
-            
+            let hash = "";
+
+
 
             const response = await fetch("https://member.cash/v2/getminingcandidate/");
             let json = await response.json();
-            let servertime=json.servertime;
+            let servertime = json.servertime;
             //console.log(servertime);
 
             if (!servertime) {
                 mhps.text = oldtext;
-                mhps.setAttribute('onclick','tryhash();');
+                mhps.setAttribute('onclick', 'tryhash();');
                 return;
             }
             console.log(servertime);
@@ -51,8 +51,8 @@
                 BLAKE3.init();
                 BLAKE3.update(testhash);
                 hash = BLAKE3.digest();
-                let diff=parseInt(hash.substring(0, 6), 16);
-                if (diff<8) { //8 - estimate 1MH, 4 for 2MH, 2 for 4MH, 1 for 8MH
+                let diff = parseInt(hash.substring(0, 6), 16);
+                if (diff < 8) { //8 - estimate 1MH, 4 for 2MH, 2 for 4MH, 1 for 8MH
                     console.log(result);
                     //exit, send to server
                 }
@@ -62,23 +62,23 @@
             let elapsed = endtime - starttime;
             mhps.text = (1 / elapsed + "").substring(0, 6) + " MH/s . . . Mining . . . Estimated Time " + elapsed + " seconds";
             //starttime = endtime;
-            await new Promise(r => setTimeout(r, 100)); //allow browser to refresh to show message
+            await new Promise(r => setTimeout(r, 10)); //allow browser to refresh to show message
 
             let hashstart = servertime + "-" + addressHOSTILE + "-";
-            let nonce = 0;
+            let nonce = 1;
             for (; ;) {
                 BLAKE3.init();
                 BLAKE3.update(hashstart + nonce);
                 hash = BLAKE3.digest();
-                let diff=parseInt(hash.substring(0, 6), 16);
-                if (diff<8) { //8 - estimate 1MH, 4 for 2MH, 2 for 4MH, 1 for 8MH
+                let diff = parseInt(hash.substring(0, 6), 16);
+                if (diff < 8) { //8 - estimate 1MH, 4 for 2MH, 2 for 4MH, 1 for 8MH
                     console.log(hash);
-                    const response = await fetch("https://member.cash/v2/submitminingsolution/"+hashstart+nonce);
+                    const response = await fetch("https://member.cash/v2/submitminingsolution/" + hashstart + nonce);
                     let json = await response.json();
-                    var event = new CustomEvent('miningtxreceived', {detail: {data: json}});
-                    try{
+                    var event = new CustomEvent('miningtxreceived', { detail: { data: json } });
+                    try {
                         window.parent.document.dispatchEvent(event);
-                    }catch(err){
+                    } catch (err) {
                         console.log(err);
                     }
                     //let servertime=json.servertime;
@@ -88,11 +88,19 @@
                     break;
                     //exit, send to server
                 }
+                if (nonce % 100000==0) {
+                    let endtime = new Date().getTime();
+                    let elapsed = endtime - starttime;
+                    mhps.text = (100 / elapsed + "").substring(0, 6) + " MH/s . . . Mining . . . Estimated Time " + elapsed/100 + " seconds";
+                    //starttime = endtime;
+                    await new Promise(r => setTimeout(r, 1)); //allow browser to refresh to show message
+                    starttime = new Date().getTime();
+                }
                 nonce++;
             }
             //sats will be 155540/diff
             mhps.text = oldtext;
-            mhps.setAttribute('onclick','tryhash();');
+            mhps.setAttribute('onclick', 'tryhash();');
             console.log('BLAKE3:completed');
 
 
@@ -105,9 +113,9 @@
 </head>
 
 <body id="mainbody">
-    <br/>
-    <center><span class="allownotifications"><a data-vavilon="minemembercoin" class="memberlinkbutton" href="javascript:;"
-            onclick="tryhash();" id="minemembercoin">Mine Some Membercoin</a></span></center>
+    <br />
+    <center><span class="allownotifications"><a data-vavilon="minemembercoin" class="memberlinkbutton"
+                href="javascript:;" onclick="tryhash();" id="minemembercoin">Mine Some Membercoin</a></span></center>
 </body>
 
 </html>

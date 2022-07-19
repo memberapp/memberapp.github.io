@@ -165,6 +165,7 @@ class UTXOPool {
       let utxos = outputInfo;
       let utxosOriginalNumber = outputInfo.length;
 
+      updateUSDRate(utxos);
       //Check no unexpected data in the fields we care about
       for (let i = 0; i < utxos.length; i++) {
         utxos[i].satoshis = Number(utxos[i].satoshis);
@@ -179,9 +180,6 @@ class UTXOPool {
         if (utxos[i].chainheight) {
           chainheight = utxos[i].chainheight;
           chainheighttime = new Date().getTime();
-        }
-        if (utxos[i].usdrate) {
-          numbers.usdrate = utxos[i].usdrate;
         }
       }
 
@@ -372,7 +370,7 @@ class TransactionQueue {
       //return;
     }
     resendWait = 2000;
-    if (res.length > 10) {
+    if (res.length == 64) {
       returnObject.updateStatus("txid:" + san(res));
       //returnObject.updateStatus("<a  rel='noopener noreferrer' target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + san(res) + "'>txid:" + san(res) + "</a>");
 
@@ -538,8 +536,17 @@ class TransactionQueue {
       this.updateTransactionPool(utxos, options, tx);
       this.transactionInProgress = false;
       //Remove unexpected input in result
-      result = sane(result);
-      callback(null, result, this);
+      //result = sane(result);
+      if(result.error){
+        callback(new Error(sane(result.error)),null,this);
+      }else if(result.code){
+        callback(new Error(sane(result.code)),null,this);
+      }else if(result.txid){
+        callback(null,result.txid,this);
+      }else{
+        //old server sends a raw txid for compatiblity. update this in the server after Jan 2023 to send json result.txid
+        callback(null, sane(result), this);
+      }
     }, (HOSTILEerr) => {
       //console.log(err);
       this.transactionInProgress = false;

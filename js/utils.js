@@ -47,9 +47,11 @@ var ordinal_suffix_of = function (i) {
   return i + "th";
 }
 
-var getJSON = function (url, postparams) {
+var getJSON = function (url, postparams, oFormElement) {
   //force a reload by appending time so no cached versions
-  url += "&r=" + (new Date().getTime() % 100000);
+  if (url.contains('?')) {
+    url += "&r=" + (new Date().getTime() % 100000);
+  }
   try {
     updateStatus(getSafeTranslation('loading', "loading") + " " + url);
   } catch (noworries) { }
@@ -70,10 +72,16 @@ var getJSON = function (url, postparams) {
     };
 
     xhr.responseType = 'json';
-    if (postparams) {
+    if (postparams || oFormElement) {
       xhr.open('post', url, true);
-      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      xhr.send(postparams);
+
+      if (oFormElement) {
+        xhr.open(oFormElement.method, oFormElement.getAttribute("action"));
+        xhr.send(new FormData(oFormElement));
+      } else {
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send(postparams);
+      }
     } else {
       xhr.open('get', url, true);
       xhr.send();
@@ -94,6 +102,8 @@ function addListeners(xhr) {
 function handleEvent(e) {
   updateStatus(`${e.type}: ${e.loaded} ` + getSafeTranslation('bytestransferred', `bytes transferred`));
 }
+
+
 
 function ds(input) {
   //if (input === undefined) { return ""; };
@@ -130,19 +140,19 @@ function dslite(input) {
 function quoteattr(s, preserveCR) {
   preserveCR = preserveCR ? '&#13;' : '\n';
   return ('' + s) /* Forces the conversion to string. */
-      .replace(/&/g, '&amp;') /* This MUST be the 1st replacement. */
-      .replace(/'/g, '&apos;') /* The 4 other predefined entities, required. */
-      .replace(/"/g, '&quot;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      /*
-      You may add other replacements here for HTML only 
-      (but it's not necessary).
-      Or for XML, only if the named entities are defined in its DTD.
-      */ 
-      .replace(/\r\n/g, preserveCR) /* Must be before the next replacement. */
-      .replace(/[\r\n]/g, preserveCR);
-      ;
+    .replace(/&/g, '&amp;') /* This MUST be the 1st replacement. */
+    .replace(/'/g, '&apos;') /* The 4 other predefined entities, required. */
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    /*
+    You may add other replacements here for HTML only 
+    (but it's not necessary).
+    Or for XML, only if the named entities are defined in its DTD.
+    */
+    .replace(/\r\n/g, preserveCR) /* Must be before the next replacement. */
+    .replace(/[\r\n]/g, preserveCR);
+  ;
 }
 
 
@@ -297,32 +307,16 @@ function localStorageSet(theSO, itemName, theString) {
 }
 
 
-//var usdrate = 266.75;
-
-/*function getLatestUSDrate() {
-  getJSON(`https://markets.api.bitcoin.com/live/bitcoin?a=1`).then(function (data) {
-    document.getElementById("usdrate").value = Number(data.data.BCH);
-    updateSettingsNumber('usdrate');
-    updateStatus(getSafeTranslation('updatedforex', "Got updated exchange rate:") + numbers.usdrate);
-    try {
-      tq.updateBalance(pubkey);
-    } catch (err) { }
-  }, function (status) { //error detection....
-    console.log(getSafeTranslation('failedforex', 'Failed to get usd rate:') + status);
-    updateStatus(status);
-  });
-}*/
-
-function satsToUSD(sats){
-  return sats*numbers.usdrate/10000;
+function satsToUSD(sats) {
+  return sats * numbers.usdrate / 10000;
 }
 
-function satsToUSDString(sats){
-  return usdString(satsToUSD(sats),true);
+function satsToUSDString(sats) {
+  return usdString(satsToUSD(sats), true);
 }
 
 function usdString(total, includeSymbol) {
-  var usd = Number(total/10000).toFixed(2);
+  var usd = Number(total / 10000).toFixed(2);
   if (usd < 1) {
     return (usd * 100).toFixed(0) + "¢";
   } else {
@@ -330,6 +324,12 @@ function usdString(total, includeSymbol) {
   }
 }
 
+function updateUSDRate(data) {
+  if (data && data[0] && data[0].usdrate) {
+    document.getElementById('usdrate').value = data[0].usdrate;
+    updateSettingsNumber('usdrate');
+  }
+}
 
 function balanceString(total) {
   if (numbers.usdrate === undefined || numbers.usdrate === 0) {
@@ -414,7 +414,7 @@ function listenForTwitFrameResizes() {
     //onload doesn't seem to always have the tweet loaded, so return 133 as height
     //maybe could use readyState instead.
     element.onload = function () {
-        this.contentWindow.postMessage({ element: this.id, query: "height" }, "https://twitframe.com");
+      this.contentWindow.postMessage({ element: this.id, query: "height" }, "https://twitframe.com");
     };
   });
 
@@ -431,9 +431,9 @@ window.onmessage = (oe) => {
       //console.log("element "+oe.data.element);
       //console.log("prev height "+document.getElementById(oe.data.element).style.height);
       //console.log("new height "+parseInt(oe.data.height) + "px");
-      if(parseInt(oe.data.height)<140){
+      if (parseInt(oe.data.height) < 140) {
         console.log("Error, twitter resize height must be 140 or greater.");
-        
+
         /*
         //This attempt to repost the message doesn't work. I don't know why
         var that=document.getElementById(oe.data.element);
@@ -624,23 +624,23 @@ function transposeStarRating(rating) {
 function dropDownMenuAction(that) {
   //var ddmenu = that.parentElement.querySelector('#dropdown-content');
   var ddmenu = that.parentElement.querySelector("[id^='dropdown-content']");
-  
+
   ddmenu.style.display = 'block';
   var ddcover = document.getElementById('ddcover');
   ddcover.style.display = 'block';
   ddcover.onclick = ddmenu.onclick = function () { ddmenu.style.display = ddcover.style.display = 'none'; };
 }
 
-function getSatsWithInterest(principle,utxoheight,chainheight){
-  if(utxoheight==0 || !utxoheight){//not in blockchain yet. unconfirmed, no interest earned yet
+function getSatsWithInterest(principle, utxoheight, chainheight) {
+  if (utxoheight == 0 || !utxoheight) {//not in blockchain yet. unconfirmed, no interest earned yet
     return principle;
   }
-  if(!chainheight){//we don't know chainheight - we must or we may lose interest
+  if (!chainheight) {//we don't know chainheight - we must or we may lose interest
     throw Error('Chainheight not found - we must know this or may lose interest');
   }
   //Interest rate on each block 1+(1/2^22)
-  let blocksheld=chainheight-utxoheight;
-  let withInterest=principle * Math.pow(1+(1/Math.pow(2,22)),blocksheld);
+  let blocksheld = chainheight - utxoheight;
+  let withInterest = principle * Math.pow(1 + (1 / Math.pow(2, 22)), blocksheld);
   return Math.floor(withInterest);
 }
 
@@ -649,6 +649,11 @@ function handleMiningTXReceivedEvent(e) {
   //note - making a guess here the vout is 0, 50/50 chance. could get the full transaction data from server and parse but this should do for now
   tq.utxopools[pubkey].addUTXO(e.detail.data.txid, 0, e.detail.data.satoshis);
   //do proper update after 5 seconds, utxo should be availabe from electrum by then
-  setTimeout(refreshPool,5000);
+  setTimeout(refreshPool, 5000);
 }
+
+const reloadImageEverywhere = url =>
+  fetch(url, { cache: 'reload', mode: 'no-cors' })
+    .then(() => document.body.querySelectorAll(`img[src='${url}']`)
+      .forEach(img => img.src = url))
 

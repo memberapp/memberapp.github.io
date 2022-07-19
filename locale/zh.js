@@ -319,6 +319,25 @@ dictionary.zh=
     "rememberedyour":"已转发你的",
     "flagusertopic":"标记(话题用户)",
     "toyour":"到你的",
-    "areyousure": "你确定要退出吗？请确定你已写下 12 字种子短语或私钥以便再次登录，因为无法回复你的种子短语，它在设置页面上， It is on the Wallet page. 如果未写下种子短语或私钥请点击取消，或者点击确定以退出。" 
+    "areyousure": "你确定要退出吗？请确定你已写下 12 字种子短语或私钥以便再次登录，因为无法回复你的种子短语，它在设置页面上， It is on the Wallet page. 如果未写下种子短语或私钥请点击取消，或者点击确定以退出。",
+    "VVTop": "的热门",
+    "VVold": "老的",
+    "VVoldtitle": "最旧到最新",
+    "VVall": "全部",
+    "VVwallet": "钱包",
+    "VVreputation": "名声",
+    "VVlist": "列表",
+    "VV0094a": "我的人（您关注的人的最新帖子）",
+    "VVfirehose": "所有内容",
+    "VV0100a": "我的标签（您关注的标签的最新帖子）",
+    "VV0018u": "短语（12 个字）、用户名、公钥或私钥",
+    "satoshisinaccount": "satoshis 存在于您的 member.cash 帐户中 - 每个操作（发布、喜欢、订阅、关注、消息传递等）都需要少量的 Membercoin",
+    "minemembercoin": "在这里获取一些硬币以换取处理能力 - 这可能需要几秒钟。",
+    "VV0102a": "登录",
+    "VV0103a": "开始",
+    "VV0134a": "我的人",
+    "addimage": "添加图片",
+    "uploadimagestatus": "上传图片 . . .",
+    "chooseimage": "选择图片"
   }
   ;

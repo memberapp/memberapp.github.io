@@ -196,4 +196,8 @@ body {
     background-color: #090600;
     background: linear-gradient(to right, #000 12%, #090600 100%);
 }
+
+.membalance {
+    color: white;
+  }
   

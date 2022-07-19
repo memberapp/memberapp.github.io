@@ -328,6 +328,10 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         origTXID = sha256.create().update(hivelink).hex();
     }
 
+    if (!origTXID) {
+        updateStatus('Missing original TXID for post error - this is required for replies, tips etc'); return "";
+    }
+
     if (!address) {
         updateStatus('Missing address for post error - this should not happen.'); return "";
     }
@@ -463,6 +467,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
 
 
 function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, sourcenetwork, hivename, hivelink, bitcoinaddress) {
+    txid=txid+""; //ensure txid is a string. Sometimes it is returned as a number.
+
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
     if (sourcenetwork == 2) {
         try {
@@ -557,7 +563,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
                 unmuteddisplay: (isMuted ? `none` : `block`),
                 muteddisplay: (isMuted ? `block` : `none`),
                 txid: san(data[i].txid),
-                hightlightedclass: (data[i].txid.startsWith(highlighttxid) ? `highlightli` : ``),
+                hightlightedclass: ((data[i].txid+"").startsWith(highlighttxid) ? `highlightli` : ``),
                 replyHTML: getHTMLForReply(data[i], depth, pageName, i, highlighttxid),
                 nestedPostHTML: getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch"),
                 user: userFromDataBasic(data[i], data[i].ratingID, 0),
@@ -568,14 +574,6 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
             }
 
             contents += templateReplace(nestedPostTemplate, obj);
-            /*
-            contents += `<li style="display:` + (isMuted ? `none` : `block`) + `" id="LI` + san(data[i].txid) + `"` + (data[i].txid.startsWith(highlighttxid) ? `" class="highlightli" ` : ``) + `>` + getHTMLForReply(data[i], depth, pageName, i, highlighttxid) + getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch") + "</li>";
-            contents += `<li style="display:` + (isMuted ? `block` : `none`) + `" id="CollapsedLI` + san(data[i].txid) + `" class="collapsed"><div class="comhead"><a onclick="uncollapseComment('` + san(data[i].txid) + `');" href="javascript:;">[+] </a>`
-                + userFromDataBasic(data[i], data[i].ratingID, 0)
-                + getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips, i)
-                + ` ` + getAgeHTML(data[i].firstseen)
-                + `</div><div id="scoresexpanded` + san(data[i].txid) + i + `" class="scoreexpanded"></div>
-                <div id="remembersexpanded` + san(data[i].txid) + i + `" class="remembersexpanded"></div></li>`;*/
         }
     }
     contents = contents + "</ul>";
@@ -823,8 +821,12 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
         message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
 
-
     }
+
+    var membercoinRegex = global ?
+    /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/gi :
+    /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/i;
+    message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
 
 
     return message;
@@ -1130,10 +1132,6 @@ function getHTMLForTopicHeader(topicNameHOSTILE, contents) {
 
     return templateReplace(topicHeaderHTML, obj);
 
-    /*return "<div class='content'><h1 class='topicheader'>" + capitalizeFirstLetter(ds(topicNameHOSTILE)) + "</h1><table><thead><tr><td class='tltopicname'>Topic</td><td class='tlmessagescount'>Posts</td><td class='tlsubscount'>Subs</td><td class='tlaction'>Action</td></tr></thead><tbody>"
-        + contents
-        + "</tbody></table></div>";
-        */
 }
 
 //Private Messages

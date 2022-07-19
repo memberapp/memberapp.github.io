@@ -32,7 +32,7 @@ async function initMarkdownEditor() {
 }
 
 function getMemorandumText() {
-    if(!simplemde){
+    if (!simplemde) {
         return '';
     }
 
@@ -56,13 +56,53 @@ function switchToRegularMode() {
     }
 }
 
+//This is used for profile upload pic as well as file upload pic
+async function uploadFile(elementid, uploadURL, targettextarea, memorandumpreviewelement, uploadimagelink, uploadimagestatus, callback) {
+    const formData = document.getElementById(elementid);
+    //document.getElementById(memorandumpreviewelement).style.display = 'block';
+    document.getElementById(uploadimagelink).style.visibility = 'hidden';
+    if(uploadimagestatus){
+        document.getElementById(uploadimagestatus).style.display = 'block';
+    }
+    getJSON(uploadURL, null, formData).then(function (data) {
+        //formData.firstfile.value = null;
+        document.getElementById(uploadimagelink).style.visibility = 'visible';
+        if(uploadimagestatus){
+            document.getElementById(uploadimagestatus).style.display = 'none';
+        }
+        if(memorandumpreviewelement){
+            document.getElementById(memorandumpreviewelement).style.display = 'block';
+        }
+        console.log(data);
+        let textarea = document.getElementById(targettextarea);
+        let initValue= "\n" + textarea.value;
+        if(elementid=='profilepicfile'){
+            initValue="";
+        }
+        if (data.error) {
+            alert(sane(data.error));
+        } else if (data.arweaveid) {
+            textarea.value = "arweave:" + data.arweaveid + initValue;
+        } else if (data.memberurl) {
+            textarea.value = data.memberurl + initValue;
+        }
+        callback();
+    });
+}
+
+function showMemorandumPreview() {
+    document.getElementById('memorandumpreviewarea').style.display = 'block';
+    document.getElementById('memorandumpreviewareabutton').style.display = 'none';
+    memorandumPreview();
+}
+
 function memorandumPreview() {
     if (document.getElementById('memorandumpreviewarea').style.display == 'none') {
         //Only run the preview if the preview area is visible
         return;
     }
 
-    
+
     var time = new Date().getTime() / 1000;
 
     //Grab needed values from settings page
@@ -80,6 +120,7 @@ function memorandumPreview() {
     var tokens = document.getElementById('settingstokens').value;
     var nametime = document.getElementById('settingsnametime').value;
     var rating = document.getElementById('settingsrating').value;
+    var numberaddress = document.getElementById('settingsaddress').value;
 
     var isfollowing = true;
 
@@ -88,12 +129,12 @@ function memorandumPreview() {
 
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML('000', pubkey, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0, false, 0, 0, 'na', 'na', pubkey)
+        getHTMLForPostHTML('000', numberaddress, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0, false, 0, 3, '', '', pubkey)
         + `<div id="articleheader000" class="articleheader"></div>`
-        + getHTMLForReplyHTML('000', pubkey, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', '', null, 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, 0, 'na','na',pubkey);
+        + getHTMLForReplyHTML('000', numberaddress, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', '', null, 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, 3, '', '', pubkey);
 
-        //Repeat the title for article mode
-    document.querySelector('[id^="articleheader000"]').innerHTML=document.querySelector('[id^="postbody000"]').innerHTML;
+    //Repeat the title for article mode
+    document.querySelector('[id^="articleheader000"]').innerHTML = document.querySelector('[id^="postbody000"]').innerHTML;
 
     //document.getElementById('articleheader000').innerHTML=document.getElementById('postbody000').innerHTML;
 
@@ -151,7 +192,7 @@ function geopost() {
 
     let successFunction = geocompleted;
 
-    let taggedPostText=posttext + " \nhttps://member.cash/geotag/" + geohash;
+    let taggedPostText = posttext + " \nhttps://member.cash/geotag/" + geohash;
     if (checkForNativeUserAndHasBalance()) {
         //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
         postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
@@ -171,18 +212,18 @@ function postmemorandum() {
     var postbody = document.getElementById('newposttamemorandum').value;
     //var topic = document.getElementById('memorandumtopic').value;
 
-    var postLength=new Buffer(posttext).toString('hex').length/2;
-    var bodyLength=new Buffer(postbody).toString('hex').length/2;
-    if(postLength>20000){
-        alert("Post size is "+postLength+". Maximum size of 20,000 chars exceeded. This can't be posted.");
+    var postLength = new Buffer(posttext).toString('hex').length / 2;
+    var bodyLength = new Buffer(postbody).toString('hex').length / 2;
+    if (postLength > 20000) {
+        alert("Post size is " + postLength + ". Maximum size of 20,000 chars exceeded. This can't be posted.");
         return;
     }
-    if(bodyLength>20000){
-        alert("Body size is "+bodyLength+". Maximum size of 20,000 chars exceeded. This can't be posted.");
+    if (bodyLength > 20000) {
+        alert("Body size is " + bodyLength + ". Maximum size of 20,000 chars exceeded. This can't be posted.");
         return;
     }
 
-    var topic='';
+    var topic = '';
 
     if (!txid) {
         if (posttext.length == 0) {
@@ -218,8 +259,8 @@ function postmemorandum() {
     }
     else {
         //Don't post body if it is not visible - it may contain old elements that the user is not expecting to post
-        if(document.getElementById('memorandumtextarea').style.display == 'none'){
-            postbody='';
+        if (document.getElementById('memorandumtextarea').style.display == 'none') {
+            postbody = '';
         }
         if (checkForNativeUserAndHasBalance()) {
             postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);

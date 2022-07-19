@@ -546,7 +546,6 @@ img {
 
 .imgurimage {
   outline-offset: -1px;
-  outline: 1px solid rgba(0, 0, 0, 0.05);
   max-height: 640px;
   width: auto;
   max-width: 100%;
@@ -908,6 +907,7 @@ img {
 }
 a {
   color: #61aff0 !important;
+  cursor: pointer;
 }
 .imgurimage {
   object-fit: cover;
@@ -1599,6 +1599,13 @@ label#memberblockexplorer {
   top: 0px;
   left: -23px;
 }
+
+.membalance {
+  word-break: normal;
+  cursor:pointer;
+  color: black;
+}
+
 /* Private message 
 #messagesanchor #messageschoice {
   position: relative;

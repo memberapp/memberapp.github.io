@@ -114,8 +114,13 @@ function privateMessagePosted() {
 
 }
 
-function addRSSFeed() {
-    let rssURL = document.getElementById("rssfeed").value;
+function addRSSFeed(type,buttonelement) {
+    let rssURL;
+    document.getElementById(buttonelement).style.visibility = 'hidden';
+    if(type=='twitter') rssURL = 'https://nitter.net/'+document.getElementById("twitterfeed").value.replaceAll('@','');
+    if(type=='plain') rssURL = document.getElementById("rssfeed").value;
+
+    
     updateStatus("Fetching RSS");
     getJSON(dropdowns.txbroadcastserver + 'rss/add?address=' + encodeURIComponent(rssURL)).then(function (data) {
         updateStatus(sane(data.userid));

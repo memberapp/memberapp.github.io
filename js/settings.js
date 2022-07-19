@@ -47,6 +47,7 @@ function getDataMember(qaddress) {
     document.getElementById('mcidmemberanchor').innerHTML = document.getElementById("loading").innerHTML;
     var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
+        if(data[0] && !data[0].address) data[0].address=data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         if (data) {
             getDataMemberFinally(data);
         }
@@ -57,10 +58,11 @@ function getDataMember(qaddress) {
 
 function getDataSettings(qaddress, cashaddress) {
 
-    document.getElementById('settingsanchor').innerHTML = document.getElementById("loading").innerHTML;
+    //document.getElementById('settingsanchor').innerHTML = document.getElementById("loading").innerHTML;
 
     var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
+        if(data[0] && !data[0].address) data[0].address=data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         getDataSettingsFinally(qaddress, cashaddress, data);
     }, function (status) { //error detection....
         //If this fails, we still want to show settings page, so user can change server etc
@@ -72,10 +74,12 @@ function getDataSettings(qaddress, cashaddress) {
 function getPicURL(picurl, profilepicbase, qaddress, hivename) {
     var pictype = '.jpg';
     picurl = picurl + "";
-    if (picurl && picurl.toLowerCase().endsWith('.png') && !hivename) {
+    /*if (picurl && picurl.toLowerCase().endsWith('.png') && !hivename) {
         //some bch pics are stored as .png
         pictype = '.png';
     }
+    //not true anymore. also will transition all profile pics to webp
+    */
     if (hivename) {
         return profilepicbase + sane(hivename) + `.128x128` + pictype;
     }
@@ -207,6 +211,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         } catch (err) {
             console.log("error newpostprofilepic");
         }
+        reloadImageEverywhere(picurl);
     }
 
 
@@ -231,6 +236,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         pagingid: "",
         profilepiclargehtml: "",
         publickey: "",
+        fileuploadurl:dropdowns.txbroadcastserver+"uploadfile",
+        addressnumber:san(data[0].address)
     };
 
     if (data && data[0]) {
@@ -247,7 +254,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.tokens = Number(data[0].tokens);
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
-
+        
+        
         let theRatingRound = outOfFive(Number(data[0].sysrating));
         obj.membrain = theRatingRound + "/5";
 
@@ -276,7 +284,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     }
 
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
-
+    reloadImageEverywhere(obj.profilepiclargehtml);
 
 
     updateSettings();
@@ -295,6 +303,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     }
 
     addDynamicHTMLElements();
+    
 }
 
 async function populateTools() {
@@ -441,9 +450,9 @@ function updateSettingsNumber(settingsName) {
     numbers[settingsName] = Number(document.getElementById(settingsName).value);
 
     //No numbers are less than 2 except oneclicktip, which will be reset below
-    if (numbers[settingsName] < 2) {
+    /*if (numbers[settingsName] < 2) {
         numbers[settingsName] = 2;
-    }
+    }*/
 
     if (settingsName == "results" && numbers[settingsName] > 100) {
         numbers[settingsName] = 100;
@@ -512,6 +521,10 @@ function getAndPopulateFB(page, qaddress) {
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
+}
+
+function setPic() {
+    setTrxPic(getAndPopulateSettings);
 }
 
 

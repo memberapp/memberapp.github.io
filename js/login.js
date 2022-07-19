@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.1.7';
+var version = '8.2.1';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -11,7 +11,7 @@ var privkey = ""; //Private Key
 var privkeyhex = "";
 var privateKeyBuf;
 var chainheight = 0;
-var chainheighttime=0;
+var chainheighttime = 0;
 
 //var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
@@ -120,6 +120,7 @@ function init() {
         return;
     }
 
+
     loadBigLibs();
     displayContentBasedOnURLParameters();
 }
@@ -136,7 +137,7 @@ function getAndSetVersion() {
         });
 }
 
-function trylogin(loginkey,nextpage) {
+function trylogin(loginkey, nextpage) {
     try {
         login(loginkey);
         displayNotificationCount();
@@ -147,10 +148,16 @@ function trylogin(loginkey,nextpage) {
         loadBigLibs();
         return;
     }
+
+    //Show message if in read only mode
+    if (!privkey) {
+        document.getElementById('readonlyversion').style.display = 'block';
+    }
+
     //getAndPopulateTopicList(false);
     displayContentBasedOnURLParameters(nextpage);
     //make sure these get loaded
-    setTimeout(loadBigLibs, 10000);
+    setTimeout(loadBigLibs, 5000);
 
 }
 
@@ -215,8 +222,8 @@ async function login(loginkey) {
 
 
         try {
-            if(loginkey.startsWith("q")){
-                loginkey="member:"+loginkey;
+            if (loginkey.startsWith("q")) {
+                loginkey = "member:" + loginkey;
             }
 
             if (loginkey.startsWith("member:")) {
@@ -304,8 +311,8 @@ async function login(loginkey) {
     document.getElementById('loginkey').value = "";
 
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {}, true);
-    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, {bcaddress: pubkey, cashaddress: legacyToMembercoin(pubkey)}, true);
-    
+    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { bcaddress: pubkey, cashaddress: legacyToMembercoin(pubkey) }, true);
+
     updateSettings();
     getAndPopulateSettings();
 
@@ -316,8 +323,6 @@ async function login(loginkey) {
     getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkey + '?a=100').then(function (data) { }, function (status) { });
 
     loadStyle();
-
-    //getLatestUSDrate();
 
     //Get latest rate and update balance
     //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }
@@ -331,6 +336,7 @@ async function login(loginkey) {
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
+    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, {fileuploadurl:dropdowns.txbroadcastserver+"uploadfile"}, true);
 
 
 
@@ -365,13 +371,15 @@ function createNewAccount() {
 
 function logout() {
 
-    var exitreally = confirm(getSafeTranslation('areyousure', `Are you sure you want to logout? 
+    if (privkey) {//only warn if there is a privkey
+        var exitreally = confirm(getSafeTranslation('areyousure', `Are you sure you want to logout? 
     Make sure you have written down your 12 word seed phrase or private key to login again. 
     There is no other way to recover your seed phrase. It is on the wallet page.
     Click Cancel if you need to do that now.
     Click OK to logout.`));
-    if (!exitreally) {
-        return;
+        if (!exitreally) {
+            return;
+        }
     }
 
     if (localStorageSafe != null) {

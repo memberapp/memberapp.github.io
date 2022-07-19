@@ -70,7 +70,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("profile")) {
         showMember(sane(pubkey), '');
     } else if (action.startsWith("membersonly")) {
-        showPostsNew('new', 'all', 'membersonly', 'everyone', 0, numbers.results, '');
+        showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '');
     } else if (action.startsWith("member")) {
         showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -84,9 +84,9 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("rep")) {
         showReputation(safeGPBN("qaddress"));
     } else if (action.startsWith("posts")) {
-        showPFC(numberGPBN("start"), numberGPBN("limit"), 'posts');
+        showPFC(numberGPBN("start"), numberGPBN("limit"), 'both');
     } else if (action.startsWith("feed")) {
-        showPFC(numberGPBN("start"), numberGPBN("limit"), 'posts');
+        showPFC(numberGPBN("start"), numberGPBN("limit"), 'both');
     } else if (action.startsWith("comments")) {
         showPFC(numberGPBN("start"), numberGPBN("limit"), 'replies');
     } else if (action.startsWith("trustgraph")) {
@@ -110,11 +110,11 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("map")) {
         showMap(safeGPBN("geohash"), safeGPBN("post"));
     } else if (action.startsWith("myfeed") || action.startsWith("mypeople")) {
-        showPostsNew('new', 'posts', '', 'myfeed', 0, numbers.results, '');
+        showPostsNew('new', 'both', '', 'myfeed', 0, numbers.results, '');
     } else if (action.startsWith("mytags")) {
-        showPostsNew('new', 'posts', 'mytopics', 'everyone', 0, numbers.results, '');
+        showPostsNew('new', 'both', 'mytopics', 'everyone', 0, numbers.results, '');
     } else if (action.startsWith("firehose")) {
-        showPostsNew('hot', 'posts', '', 'everyone', 0, numbers.results, '');
+        showPostsNew('hot', 'both', '', 'everyone', 0, numbers.results, '');
     } else if (action.startsWith("wallet")) {
         showWallet();
     } else if (action.startsWith("custom")) {
@@ -123,7 +123,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         if (pubkey == "" || pubkey == null || pubkey == undefined) {
             showLogin();
         } else {
-            showPFC(0, numbers.results, 'posts');
+            showPFC(0, numbers.results, 'both');
         }
     } else {
         showPostsNew('hot', 'posts', '', 'everyone', 0, numbers.results, '');
