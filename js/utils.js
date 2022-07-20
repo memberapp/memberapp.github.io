@@ -325,8 +325,9 @@ function usdString(total, includeSymbol) {
 }
 
 function updateUSDRate(data) {
-  if (data && data[0] && data[0].usdrate) {
-    document.getElementById('usdrate').value = data[0].usdrate;
+  let element=document.getElementById('usdrate');
+  if (data && data[0] && data[0].usdrate && element) { 
+    element.value = data[0].usdrate;
     updateSettingsNumber('usdrate');
   }
 }

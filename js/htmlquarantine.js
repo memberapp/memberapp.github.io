@@ -528,25 +528,6 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
 
     return templateReplace(replyTemplate, obj);
 
-    /*return `<div ` + (txid.startsWith(highlighttxid) ? `class="reply highlight" id="highlightedcomment"` : `class="reply"`) + `>
-                <div`+ (blockstxid != null || moderatedtxid != null ? ` class="blocked"` : ``) + `>
-                    <div class="votelinks">` + voteButtons + `</div>
-                    <div class="commentdetails">
-                        <div class="comhead"> <a onclick="collapseComment('`+ san(txid) + `');" href="javascript:;">[-]</a> `
-        + author
-        + `</div>
-                        <div class="comment"><div class="commentbody">
-                            `+ message + `
-                            </div><div class="subtextbuttons">`+ scores
-        + ` ` + age + ` ` + replyAndTips + `</div>
-                            `+ replyDiv + `
-                        </div>
-                        <div id="scoresexpanded`+ san(txid) + differentiator + `" class="scoreexpanded"></div>
-                        <div id="remembersexpanded`+ san(txid) + differentiator + `" class="remembersexpanded"></div>
-                    </div>
-                </div>
-            </div>
-            `;*/
 }
 
 function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, firstreplytxid) {

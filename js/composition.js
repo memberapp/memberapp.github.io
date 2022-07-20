@@ -129,9 +129,9 @@ function memorandumPreview() {
 
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML('000', numberaddress, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0, false, 0, 3, '', '', pubkey)
+        getHTMLForPostHTML('000', numberaddress, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0, false, 0, 3, '', '000', pubkey)
         + `<div id="articleheader000" class="articleheader"></div>`
-        + getHTMLForReplyHTML('000', numberaddress, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', '', null, 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, 3, '', '', pubkey);
+        + getHTMLForReplyHTML('000', numberaddress, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', '', null, 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, 3, '', '000', pubkey);
 
     //Repeat the title for article mode
     document.querySelector('[id^="articleheader000"]').innerHTML = document.querySelector('[id^="postbody000"]').innerHTML;
