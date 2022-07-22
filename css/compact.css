@@ -211,6 +211,7 @@ a {
 .post-footer-downvote-activated,
 .post-footer-remembers-activated {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%);
+  display: none;
 }
 .post-footer-upvote-activated a span.likesbalance {
   color: #61aff0 !important;

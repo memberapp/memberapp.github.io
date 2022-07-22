@@ -248,7 +248,15 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
 
         //Repeat the title for article mode
-        document.querySelector('[id^="articleheader' + roottxid + '"]').innerHTML = document.querySelector('[id^="postbody' + roottxid + '"]').innerHTML;
+        //This doesn't seem essential, but was causing some problems when viewing thread directly after post, so put in a try/catch
+        try{
+            let articleheaderelement=document.querySelector('[id^="articleheader' + roottxid + '"]');
+            let postbodyroottxidelement=document.querySelector('[id^="postbody' + roottxid + '"]');
+            articleheaderelement.innerHTML = postbodyroottxidelement.innerHTML;
+        }catch(errortitle){
+            console.log("Article mode header set error");
+            console.log(errortitle);
+        }
 
         if (popup != undefined) {
             popup.setContent(getDivClassHTML('mapthread', contents));
