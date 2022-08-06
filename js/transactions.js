@@ -256,7 +256,7 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) 
 
 
 //var maxhexlength=368; //memo - 184*2
-var maxhexlength=2500*2;
+var maxhexlength=4000*2;
 var whitespacebreak=20;
 
 async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {

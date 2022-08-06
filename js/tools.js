@@ -117,7 +117,7 @@ function privateMessagePosted() {
 function addRSSFeed(type,buttonelement) {
     let rssURL;
     document.getElementById(buttonelement).style.visibility = 'hidden';
-    if(type=='twitter') rssURL = 'https://nitter.net/'+document.getElementById("twitterfeed").value.replaceAll('@','');
+    if(type=='twitter') rssURL = 'https://nitter.net/'+document.getElementById("twitterfeed").value.replace('@','');
     if(type=='plain') rssURL = document.getElementById("rssfeed").value;
 
     
@@ -210,6 +210,9 @@ function getLegacyToHash160(address) {
 
 function setBalanceWithInterest() {
     try {
+        if(chainheighttime==0){
+            return;
+        }
         let elapsed = (new Date().getTime() - chainheighttime) / (78 * 1000);
         let membalance = tq.updateBalance(pubkey, chainheight + elapsed);
         let mem = (membalance / 100000000) + "";

@@ -110,7 +110,7 @@ var postCompactTemplate = `
                             </div></button>
                         <div class="dropdown-content" id="dropdown-content">
                             <a id="dislikepost{diff}{txid}" onclick="dislikePost('{txid}','{origtxid}')"
-                                href="javascript:;"><span data-vavilon="VV0161">Flag post</span></a>
+                                href="javascript:;"><span data-vavilon="downvote">Downvote</span></a>
                             <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
                                 href="javascript:;"><span data-vavilon="VV0147">likes and</span> <span
                                     data-vavilon="tips">tips</span></a>
@@ -303,7 +303,7 @@ var replyDivTemplate = `
     </div>
     <div class="replyform">
     <br />
-    <textarea id="replytext{page}{txid}" rows="3" maxlength="2500"></textarea>
+    <textarea id="replytext{page}{txid}" rows="3" maxlength="4000"></textarea>
     <br />
     <input id="replybutton{page}{txid}" value="reply" type="submit"
         onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
@@ -369,7 +369,7 @@ var mapPostTemplate=`
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
         </a>
     </div>    
-    <textarea maxlength="2500" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
+    <textarea maxlength="4000" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
     <input data-vavilon_value="VV0164" id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
     <input data-vavilon_value="VV0165" id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit"
         disabled>

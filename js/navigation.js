@@ -19,6 +19,9 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         var url = window.location.href;
     }
 
+    //Clear highlighting of major nav buttons
+    highlightmajornavbutton(null);
+
     var action;
 
     if (url.indexOf('#') != -1) {

@@ -342,6 +342,7 @@ Use important, because we always want profile card pics to be this size*/
   display: inline-block;
   text-align: center;
   height: 1.65em;
+  margin-right: 0.1em;
 }
 
 /*Container that profile can be absolutely positioned against*/

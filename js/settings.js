@@ -47,7 +47,7 @@ function getDataMember(qaddress) {
     document.getElementById('mcidmemberanchor').innerHTML = document.getElementById("loading").innerHTML;
     var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
-        if(data[0] && !data[0].address) data[0].address=data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
+        if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         if (data) {
             getDataMemberFinally(data);
         }
@@ -62,8 +62,14 @@ function getDataSettings(qaddress, cashaddress) {
 
     var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
-        if(data[0] && !data[0].address) data[0].address=data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
-        getDataSettingsFinally(qaddress, cashaddress, data);
+        if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
+        try {
+            getDataSettingsFinally(qaddress, cashaddress, data);
+        } catch (error) {
+            console.log("Setting settings failed");
+            console.log(error);
+        }
+
     }, function (status) { //error detection....
         //If this fails, we still want to show settings page, so user can change server etc
         getDataSettingsFinally(qaddress, cashaddress, null);
@@ -236,11 +242,11 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         pagingid: "",
         profilepiclargehtml: "",
         publickey: "",
-        fileuploadurl:dropdowns.txbroadcastserver+"uploadfile",
-        addressnumber:san(data[0].address)
+        fileuploadurl: dropdowns.txbroadcastserver + "uploadfile"
     };
 
     if (data && data[0]) {
+        obj.addressnumber = san(data[0].address);
         obj.followers = Number(data[0].followers);
         obj.following = Number(data[0].following);
         obj.muters = Number(data[0].blockers);
@@ -254,8 +260,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.tokens = Number(data[0].tokens);
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
-        
-        
+
+
         let theRatingRound = outOfFive(Number(data[0].sysrating));
         obj.membrain = theRatingRound + "/5";
 
@@ -303,7 +309,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     }
 
     addDynamicHTMLElements();
-    
+
 }
 
 async function populateTools() {
@@ -327,15 +333,17 @@ async function populateTools() {
 
 async function getAndPopulateSettings() {
     let cashaddr;
-    try{
+    try {
         cashaddr = legacyToMembercoin(pubkey);
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
     getDataSettings(pubkey, cashaddr);
 }
 
 function updateSettings() {
+
+
 
     //These may already be switched to qrcodes, so try/catch necessary
     //try { document.getElementById('lowfundsaddress').innerHTML = qpubkey; } catch (err) { }
@@ -464,7 +472,9 @@ function updateSettingsNumber(settingsName) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
-    updateStatus(getSafeTranslation('updated', "Updated.") + " " + numbers[settingsName]);
+    if(settingsName!='usdrate'){
+        updateStatus(getSafeTranslation('updated', "Updated.") + " " + numbers[settingsName]);
+    }
 }
 
 function showQRCode(spanid, size) {

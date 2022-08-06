@@ -405,6 +405,7 @@ class TransactionQueue {
       let tx = this.constructTransaction(utxos, 0, options);
       let transactionSize = tx.byteLength();
       //Add extra satoshis for safety
+      console.log("Transaction size:"+transactionSize);
       let fees = Math.round(transactionSize * miningFeeMultiplier) + extraSatoshis;
       //Make the trx again, with fees included
       tx = this.constructTransaction(utxos, fees, options);
@@ -532,7 +533,7 @@ class TransactionQueue {
     const RawTransactions = bitboxSdk.RawTransactions;
     let rawtransactions = new RawTransactions();
     rawtransactions.restURL = dropdowns.txbroadcastserver;
-    rawtransactions.sendRawTransaction(hex).then((result) => {
+    rawtransactions.sendRawTransaction([hex]).then((result) => {
       this.updateTransactionPool(utxos, options, tx);
       this.transactionInProgress = false;
       //Remove unexpected input in result

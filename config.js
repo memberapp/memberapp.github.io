@@ -32,5 +32,5 @@ var numbers = {
     "oneclicktip": 0,
     "maxfee": 2,
     "results": 25,
-    "usdrate": 0
+    "usdrate": .50
 }

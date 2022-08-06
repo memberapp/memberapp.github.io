@@ -2581,7 +2581,7 @@ var RawTransactions = /** @class */ (function () {
                         ];
                     case 2:
                         if (!Array.isArray(hex)) return [3 /*break*/, 4];
-                        return [4 /*yield*/, axios_1.default.post(this.restURL + "rawtransactions/sendRawTransaction", {
+                        return [4 /*yield*/, axios_1.default.post(this.restURL + "rawtransactions/sendRawTransactionPost", {
                                 hexes: hex
                             })];
                     case 3:

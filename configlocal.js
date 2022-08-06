@@ -4,7 +4,7 @@ var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 2;
 var pathpermalinks = 'https://member.cash/';
-var profilepicbase = 'img/profilepics/';
+var profilepicbase = '../../notsync/serverdata/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var siteTitle = 'Ember';
 var theStyle = 'feels compact';
@@ -29,5 +29,6 @@ var numbers = {
     "defaulttip": 1000,
     "oneclicktip": 0,
     "maxfee": 2,
-    "results": 25
+    "results": 25,
+    "usdrate": .50
 }
