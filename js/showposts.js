@@ -409,9 +409,9 @@ function addDynamicHTMLElements(data) {
 
     if (data != null && data != undefined && data[0]) {
         //if (data.length > 0) {
-        let qt = (Math.round(data[0].msc * 100) / 100).toFixed(2);
-        updateStatus("QT:" + qt);
-        document.getElementById("version").title = qt;
+        //let qt = (Math.round(data[0].msc * 100) / 100).toFixed(2);
+        updateStatus(`QT: ${data[0].msc-data[0].qtmsc}/${data[0].qtmsc}`);
+        //document.getElementById("version").title = qt;
 
         if (data[0].chainheight) {
             chainheight = data[0].chainheight;

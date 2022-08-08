@@ -169,7 +169,12 @@ function getAndPopulateTrustGraph(member, target) {
         cy.fit();
 
         cy.on('tap', 'node', function () {
-            window.location.href = "#rep?qaddress=" + this.data('id');
+            //window.location.href = "#rep?qaddress=" + this.data('id');
+            //must add txid of rating to db first before can enable this
+        });
+
+        cy.on('tap', 'edge', function () {
+            window.location.href = "#thread?root=" + this.data('id');
         });
 
         cy.on('mouseover', 'node', function (event) {

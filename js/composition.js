@@ -207,6 +207,11 @@ function geopost() {
 function postmemorandum() {
     if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
+    if(!posttext.includes('#')){
+        if(!confirm(getSafeTranslation('notagareyousure', `Are you sure you want to post this without a #hashtag?  Include a #hashtag to help members find your post. Click OK to post or Cancel to add a #hashtag.`))){
+            return false;
+        }
+    }
     var txid = document.getElementById('quotetxid').value;
     var network = document.getElementById('quotetxidnetwork').value;
     var postbody = document.getElementById('newposttamemorandum').value;

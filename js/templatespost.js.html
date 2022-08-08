@@ -1,7 +1,7 @@
 var postCompactTemplate = `
 <div class="post" onmouseover="changeClass(this,'post highlighted')" onmouseout="changeClass(this,'post')">
     {directlink}
-        <div class="post-content">
+    <div class="post-content">
         <div class="post-side-bar" onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
         </div>
@@ -46,8 +46,9 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvotecontainer{txid}">
-                        <a id="upvoteaction{txid}" href="javascript:;" onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0)"
-                            class="btn-icon" data-action="like">
+                        <a id="upvoteaction{txid}" href="javascript:;"
+                            onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0)" class="btn-icon"
+                            data-action="like">
                             <span class="likeicon">
                                 <span class="emojiicon">💙</span>
                             </span>
@@ -60,7 +61,8 @@ var postCompactTemplate = `
                             <span data-vavilon="likes" class="text footerlabel">likes</span>
                         </a>
                     </span>
-                    <span class="post-footer-downvote{dislikeactivated} post-footer-relative" id="downvotecontainer{txid}">
+                    <span class="post-footer-downvote{dislikeactivated} post-footer-relative"
+                        id="downvotecontainer{txid}">
                         <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{origtxid}')"
                             class="btn-icon" data-action="dislike">
                             <span class="dislikeicon">
@@ -73,44 +75,58 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-remembers{rememberactivated} post-footer-relative" id="remembers{txid}">
-                        <a id="quotelinkposts{diff}{txid}" class="btn-icon" data-action="remember" onclick="dropDownMenuAction(this);">
+                        <a id="quotelinkposts{diff}{txid}" class="btn-icon" data-action="remember"
+                            onclick="dropDownMenuAction(this);">
                             <span class="remembersicon">
                                 <span class="emojiicon">♻</span>
                             </span>
                             <span class="iconcount" id="repostscount{txid}">{remembers}</span>
                             <span data-vavilon="VV0156" class="text footerlabel">remembers</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
-                                <a onclick="repostPost('{txid}','{origtxid}','{sourcenetwork}');"><span data-vavilon="remember">remember</span></a>
-                                <a onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={origtxid}';"><span data-vavilon="VV0158">quote</span></a>
+                                <a onclick="repostPost('{txid}','{origtxid}','{sourcenetwork}');"><span
+                                        data-vavilon="remember">remember</span></a>
+                                <a
+                                    onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={origtxid}';"><span
+                                        data-vavilon="VV0158">quote</span></a>
                             </div>
                         </a>
                     </span>
                     <span class="post-footer-tips post-footer-relative">
-                        <a id="tiplinkposts{diff}{txid}" class="btn-icon" data-action="tip" onclick="dropDownMenuAction(this);">
+                        <a id="tiplinkposts{diff}{txid}" class="btn-icon" data-action="tip"
+                            onclick="dropDownMenuAction(this);">
                             <span class="tipicon">
                                 <span class="emojiicon">💰</span>
                             </span>
                             <span id="tipscount{txid}" class="iconcount" data-amount="{tipsinsatoshis}">{tips}</span>
                             <span data-vavilon="tips" class="text footerlabel">tips</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1 M3M ({MEMUSD1})</span></a>
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5 M3M ({MEMUSD5})</span></a>
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10 M3M ({MEMUSD10})</span></a>
-                                <a onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
-                                <a onclick="if (confirm('Tip 50 M3M ({MEMUSD50})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    5000000000);}"><span data-vavilon="remember">50 M3M ({MEMUSD50})</span></a>
-                                <a onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span
+                                        data-vavilon="remember">1 M3M ({MEMUSD1})</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span
+                                        data-vavilon="remember">5 M3M ({MEMUSD5})</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span
+                                        data-vavilon="remember">10 M3M ({MEMUSD10})</span></a>
+                                <a
+                                    onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
+                                        data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
+                                <a
+                                    onclick="if (confirm('Tip 50 M3M ({MEMUSD50})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    5000000000);}"><span
+                                        data-vavilon="remember">50 M3M ({MEMUSD50})</span></a>
+                                <a
+                                    onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
+                                        data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
                             </div>
                         </a>
                     </span>
                     <span class="dropdown">
-                        <button onclick="dropDownMenuAction(this);" class="dropbtn"><div class="options">
+                        <button onclick="dropDownMenuAction(this);" class="dropbtn">
+                            <div class="options">
                                 <div></div>
                                 <div></div>
                                 <div></div>
-                            </div></button>
+                            </div>
+                        </button>
                         <div class="dropdown-content" id="dropdown-content">
-                            <a id="dislikepost{diff}{txid}" onclick="dislikePost('{txid}','{origtxid}')"
-                                href="javascript:;"><span data-vavilon="downvote">Downvote</span></a>
                             <a onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')"
                                 href="javascript:;"><span data-vavilon="VV0147">likes and</span> <span
                                     data-vavilon="tips">tips</span></a>
@@ -120,6 +136,9 @@ var postCompactTemplate = `
                                     data-vavilon="permalink">Permalink</span></a>
                             <a id="articlelinkposts{diff}{txid}" href="{articlelink}"><span
                                     data-vavilon="article">Article</span></a>
+                            <a id="dislikepost{diff}{txid}" onclick="dislikePost('{txid}','{origtxid}')"
+                                href="javascript:;"><span data-vavilon="downvote">Downvote</span></a>
+
                             <!--<a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
                                 href="javascript:;"><span data-vavilon="VV0161">Flag post</span></a>
                             <a id="hideuserlinkposts{diff}{txid}"
@@ -185,8 +204,9 @@ var userCompactTemplate=`
         </a>
     </span>
     <span class="starratingcompact">
-        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingaddress="{bitcoinaddress}" data-ratingraw="{rating}" id="ratingposts{diff}"
-        data-ratingsystem={systemscoreclass} class="star-rating-compact"></span>
+        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingaddress="{bitcoinaddress}"
+            data-ratingraw="{rating}" id="ratingposts{diff}" data-ratingsystem={systemscoreclass}
+            class="star-rating-compact"></span>
     </span>
     {flair}
     {profilecard}
@@ -209,7 +229,7 @@ var userProfileCompactTemplate=`
             </a>
             <span class="starrating">
                 <span data-ratingsize="16" data-ratingaddress="{bitcoinaddress}" data-ratingraw="{rating}"
-                data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" class="star-rating"></span>
+                    data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" class="star-rating"></span>
             </span>
             {flair}
             <br />
@@ -297,19 +317,19 @@ var replyTemplate=`
 var replyDivTemplate = `
 <div id="reply{txid}{page}" style="display:none">
     <div class="replyprofilepic">
-    <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
-        <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
-    </a>
+        <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
+            <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
+        </a>
     </div>
     <div class="replyform">
-    <br />
-    <textarea id="replytext{page}{txid}" rows="3" maxlength="4000"></textarea>
-    <br />
-    <input id="replybutton{page}{txid}" value="reply" type="submit"
-        onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
-    <input data-vavilon_value="VV0154" id="replystatus{page}{txid}" value="sending..." type="submit"
-        style="display:none" disabled />
-    <div id="replycompleted{page}{txid}" value=""></div>
+        <br />
+        <textarea id="replytext{page}{txid}" rows="3" maxlength="4000"></textarea>
+        <br />
+        <input id="replybutton{page}{txid}" value="reply" type="submit"
+            onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
+        <input data-vavilon_value="VV0154" id="replystatus{page}{txid}" value="sending..." type="submit"
+            style="display:none" disabled />
+        <div id="replycompleted{page}{txid}" value=""></div>
     </div>
 </div>`;
 
@@ -329,12 +349,21 @@ var replyAndTipsTemplate = `
 <a id="tiplinkposts{diff}{txid}" class="btn-icon" onclick="dropDownMenuAction(this);">
     <span data-vavilon="VV0157">tip</span>
     <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}" style="position: relative;">
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1 M3M ({MEMUSD1})</span></a>
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5 M3M ({MEMUSD5})</span></a>
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10 M3M ({MEMUSD10})</span></a>
-        <a onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
-        <a onclick="if (confirm('Tip 50 M3M ({MEMUSD50})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    5000000000);}"><span data-vavilon="remember">50 M3M ({MEMUSD50})</span></a>
-        <a onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1
+                M3M ({MEMUSD1})</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5
+                M3M ({MEMUSD5})</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10
+                M3M ({MEMUSD10})</span></a>
+        <a
+            onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
+                data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
+        <a
+            onclick="if (confirm('Tip 50 M3M ({MEMUSD50})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    5000000000);}"><span
+                data-vavilon="remember">50 M3M ({MEMUSD50})</span></a>
+        <a
+            onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
+                data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
     </div>
 </a>
 
@@ -344,7 +373,7 @@ var replyAndTipsTemplate = `
 <span id="more{page}{txid}" style="display:none">
     <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
     {articlelink2}
-    {sourceNetworkHTML}    
+    {sourceNetworkHTML}
     <a data-vavilon="VV0161" id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');"
         href="javascript:;">flag(post)</a>
     {hideuser}
@@ -368,7 +397,7 @@ var mapPostTemplate=`
         <a href="#member?qaddress={address}" onclick="nlc();" class="hnuser">
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
         </a>
-    </div>    
+    </div>
     <textarea maxlength="4000" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
     <input data-vavilon_value="VV0164" id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
     <input data-vavilon_value="VV0165" id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit"

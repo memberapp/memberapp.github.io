@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.2.6';
+var version = '8.2.8';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -75,7 +75,7 @@ function setLanguage() {
 async function init() {
 
     if(window.location.protocol=="file:"){
-        await loadScript("configlocal.js?8.2.6");
+        await loadScript("configlocal.js?8.2.8");
     }
 
     setLanguage();
