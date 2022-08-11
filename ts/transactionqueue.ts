@@ -38,22 +38,38 @@ class UTXOPool {
   statusMessageFunction: Function;
   chainheight: number;
   chainheighttime: number;
-  getSafeTranslation: Function;
   resendWait = 2000;
   miningFeeMultiplier = 1;
+  translationFunction: Function;
+  updateBalanceFunction: Function;
 
-
-  constructor(address: string, statusMessageFunction: Function, utxoServer: string) {
+  constructor(address: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function) {
     //address is the legacy address of the account
-    //status message function is a function to call with progress updates
     //utxoServer is server that will send utxo set
+    //status message function is a function to call with progress updates
+    //translation function will return localized string for identifier
+    //updateBalanceFunction will be called when the pool refreshes and may have different utxos
 
     this.utxoPool = new Array();
     this.theAddress = address;
-    this.statusMessageFunction = statusMessageFunction;
     this.utxoServer = utxoServer;
     this.chainheight = 0;
     this.chainheighttime = 0;
+    this.statusMessageFunction = statusMessageFunction;
+    this.translationFunction = translationFunction;
+    this.updateBalanceFunction = updateBalanceFunction;
+  }
+
+  getSafeTranslation(id: string, defaultstring: string) {
+    if (this.translationFunction) {
+      return this.translationFunction(id, defaultstring);
+    } else {
+      return defaultstring;
+    }
+  }
+
+  setUTXOServer(utxoServer: string) {
+    this.utxoServer = utxoServer;
   }
 
   updateStatus(message: string) {
@@ -114,6 +130,7 @@ class UTXOPool {
       let utxos = outputInfo;
       let utxosOriginalNumber = outputInfo.length;
 
+      this.utxoPool = new Array();
       //Check no unexpected data in the fields we care about
       for (let i = 0; i < utxos.length; i++) {
         utxos[i].satoshis = Number(utxos[i].satoshis);
@@ -129,18 +146,18 @@ class UTXOPool {
           this.chainheight = utxos[i].chainheight;
           this.chainheighttime = new Date().getTime();
         }
-      }
-
-      //Remove any utxos with less or equal to dust limit, they may be SLP tokens
-      for (let i = 0; i < utxos.length; i++) {
-        if (utxos[i].satoshis <= this.DUSTLIMIT) {
-          utxos.splice(i, 1);
-          i--;
+        if (utxos[i].satoshis > this.DUSTLIMIT) {
+          //Remove any utxos with less or equal to dust limit, they may be SLP tokens
+          this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
         }
       }
-      let usableUTXOScount = utxos.length;
+
+      let usableUTXOScount = this.utxoPool.length;
       this.updateStatus(utxosOriginalNumber + this.getSafeTranslation('utxosreceived', " utxo(s) received. usable") + ' ' + usableUTXOScount);
-      this.utxoPool = utxos;
+
+      if (this.updateBalanceFunction) {
+        this.updateBalanceFunction(this.chainheight, this.chainheighttime);
+      }
     })();
   }
 
@@ -168,6 +185,9 @@ class TransactionData {
 class TransactionQueue extends UTXOPool {
 
   readonly OP_RETURN = 106;
+  readonly SIGHASH_BITCOINCASHBIP143 = 0x40;
+  readonly SIGHASH_ALL = 0x01
+  readonly BCH_SIGHASH_ALL = this.SIGHASH_ALL | this.SIGHASH_BITCOINCASHBIP143;
   queue: Array<TransactionData>;
   isSending: boolean; //Sending from the queue
   transactionInProgress: boolean; //Transaction sending, not necessarily from queue
@@ -176,8 +196,8 @@ class TransactionQueue extends UTXOPool {
   keyPair: any;
   BitcoinJS: any;
 
-  constructor(address: string, statusMessageFunction: Function, utxoServer: string, BitcoinJS: any, privateKey: string, broadcastServer: string) {
-    super(address, statusMessageFunction, utxoServer);
+  constructor(address: string, privateKey: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, BitcoinJS: any, broadcastServer: string) {
+    super(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction);
     this.BitcoinJS = BitcoinJS;
     this.queue = new Array();
     this.isSending = false; //Sending from the queue
@@ -187,6 +207,10 @@ class TransactionQueue extends UTXOPool {
     if (this.privateKey) {
       this.keyPair = this.BitcoinJS.ECPair.fromWIF(this.privateKey);
     }
+  }
+
+  setbroadcastServer(broadcastServer: string) {
+    this.broadcastServer = broadcastServer;
   }
 
   // compose script
@@ -233,130 +257,29 @@ class TransactionQueue extends UTXOPool {
     this.sendNextTransaction();
   }
 
-  sendNextTransaction() {
-    //If the queue has run out of transactions
-    if (this.queue.length == 0) {
-      this.isSending = false;
-      return;
+  async sendNextTransaction() {
+
+    if (!this.privateKey) {
+      throw new Error(this.getSafeTranslation('noprivatekey', "1000:No Private Key, Cannot Make Transaction"));
     }
 
     //If the queue is already sending
-    if (this.isSending) {
+    if (this.transactionInProgress) {
       return;
-    }
-
-    //else
-    this.isSending = true;
-    this.memberBoxSend(this.queue[0], this.serverResponseFunction);
-
-  }
-
-  async serverResponseFunction(HOSTILEerr, res, returnObject: TransactionQueue) {
-    //Possibly error message could have hostile code - must sanitize it
-
-    returnObject.isSending = false;
-    if (HOSTILEerr) {
-      let errcode = "";
-      let errmessage = "";
-      try {
-        errcode = this.sane(HOSTILEerr.code);
-        errmessage = this.sane(HOSTILEerr.message);
-      } catch (noerr) {
-        //usually no err
-      }
-      console.log(errcode + " " + errmessage);
-      let errorMessage = errmessage;
-      returnObject.updateStatus(this.getSafeTranslation('error', "Error:") + errcode + " " + errorMessage);
-      if (errorMessage === undefined) {
-        errorMessage = this.getSafeTranslation('networkerror', "Network Error");
-      }
-
-      if (errorMessage.startsWith("64")) {
-        //Error:64: 
-        //May mean not enough mining fee was provided or chained trx limit reached 
-        returnObject.updateStatus(errorMessage + " (" + returnObject.queue.length + " " + this.getSafeTranslation('transactionstillqueued', "Transaction(s) Still Queued. Waiting for new block, Retry in 60 seconds)"));
-        await this.sleep(60000);
-        returnObject.updateStatus(this.getSafeTranslation('sending again', "Sending Again . . ."));
-        await this.sleep(1000);
-        returnObject.sendNextTransaction();
-        return;
-      }
-
-      if (errorMessage.startsWith("1000")) { //Covers 1000
-        //1000 No Private Key
-        returnObject.updateStatus(errorMessage + " " + this.getSafeTranslation('removefromqueue', "Removing Transaction From Queue."));
-        //returnObject.onSuccessFunctionQueue.shift();
-        returnObject.queue.shift();
-        returnObject.sendNextTransaction();
-        return;
-      }
-
-      if (errorMessage.startsWith("66")) {
-        if (this.miningFeeMultiplier < this.maxfee) {
-          //Insufficient Priority - not enough transaction fee provided. Let's try increasing fee.
-          this.miningFeeMultiplier = this.miningFeeMultiplier * 1.1;
-          returnObject.updateStatus(this.getSafeTranslation('surgepricing', "Error: Transaction rejected because fee too low. Increasing and retrying. Surge Pricing now ") + Math.round(this.miningFeeMultiplier * 10) / 10);
-          await this.sleep(1000);
-          returnObject.sendNextTransaction();
-          return;
-        }
-      }
-
-      //if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("1001") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
-      //1001 No UTXOs
-      //Error:258: txn-mempool-conflict 
-      //2000, all fetched UTXOs already spend
-      //2001, insuffiencent funds from unspent UTXOs. Add funds
-
-      returnObject.updateStatus(errorMessage + " " + returnObject.queue.length + this.getSafeTranslation('stillqueued', " Transaction(s) Still Queued, Try changing UTXO server on settings page. Retry in (seconds)") + " " + (this.resendWait / 1000));
-      await this.sleep(this.resendWait);
-      this.resendWait = this.resendWait * 1.5;
-      try {
-        //Try refreshing the utxo pool
-        //let keyPair = new ECPair().fromWIF(returnObject.queue[0].cash.key);
-        let theAddress = this.theAddress;
-        returnObject.refreshPool();
-      } catch (err) {
-        returnObject.updateStatus(err);
-        console.log(err);
-      }
-      await this.sleep(1000);
-      returnObject.updateStatus(this.getSafeTranslation('sendingagain', "Sending Again . . ."));
-      await this.sleep(1000);
-      returnObject.sendNextTransaction();
+    } else if (this.queue.length == 0) {
+      //If the queue has run out of transactions
       return;
-      //}
-      //alert("There was an error processing the transaction required for this action. Make sure you have sufficient funds in your account and try again. Error:" + errorMessage);
-      //return;
-    }
-    this.resendWait = 2000;
-    if (res.length == 64) {
-      returnObject.updateStatus("txid:" + this.sane(res));
-      //returnObject.updateStatus("<a  rel='noopener noreferrer' target='blockchair' href='https://blockchair.com/bitcoin-cash/transaction/" + san(res) + "'>txid:" + san(res) + "</a>");
-
-      //console.log("https://blockchair.com/bitcoin-cash/transaction/" + res);
-      //let successCallback = returnObject.onSuccessFunctionQueue.shift();
-      let completedtrx = returnObject.queue.shift();
-      if (completedtrx && completedtrx.successFunction) {
-        completedtrx.successFunction(res);
-      };
-      //1 second wait to avoid mem-pool confusion
-      await this.sleep(1000);
-      returnObject.sendNextTransaction();
     } else {
-      returnObject.updateStatus(res);
-    }
-  }
-
-  async memberBoxSend(txdata: TransactionData, callback: Function) {
-
-    if (!this.privateKey) {
-      callback(new Error(this.getSafeTranslation('noprivatekey', "1000:No Private Key, Cannot Make Transaction")), null, this);
-      return;
-    }
-
-    try {
       this.transactionInProgress = true;
+    }
+
+    //let callback = this.serverResponseFunction;
+
+
+
+    for (; ;) {
+      //Use the first transaction from the queue. Leave it on the queue until it is successfully sent
+      let txdata = this.queue[0];
 
       //Choose the UTXOs to use
       let utxos = this.selectUTXOs();
@@ -371,14 +294,84 @@ class TransactionQueue extends UTXOPool {
       tx = this.constructTransaction(utxos, fees, txdata);
 
       //Send to node
-      this.broadcastTransaction(tx, utxos, txdata, callback);
+      let response;
+      try {
+        response = await fetch(this.broadcastServer, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+          body: JSON.stringify({ hexes: [tx.toHex()] })
+        });
+      } catch (err) {
+        console.log(err);
+      }
 
-    } catch (HOSTILEerr) {
-      this.transactionInProgress = false;
-      callback(HOSTILEerr, null, this);
-      return;
+      //This is the only success condition
+      if (response && response.ok) {
+        let resulttxid;
+        let resptext;
+        try {
+          resptext = await response.text();
+          resulttxid = this.sane(resptext);
+        } catch (err) {
+          console.log(err);
+        }
+        if (resulttxid && resulttxid.length == 64) {
+          this.updateStatus(resulttxid);
+          //successful transaction, update the transaction pool
+          this.updateTransactionPool(utxos, txdata, tx);
+          //remove the transaction from front of queue
+          this.queue.shift();
+          //ready for next transaction
+          this.transactionInProgress = false;
+          //call the transactions callback success function
+          if (txdata.successFunction) {
+            txdata.successFunction(resulttxid);
+          }
+          this.resendWait = 2000;
+          break;
+        }
+        //otherwise failure of some kind
+        this.updateStatus(this.sane(response.ok) + " " + this.sane(response.status) + " " + this.sane(response.statusText) + " " + this.sane(resptext));
+      }
+      //TODO - should look for specific errors here and take appropriate action rather than just refreshing pool and sending again.
+      //Try refreshing the utxo pool
+      this.refreshPool();
+      await this.sleep(this.resendWait);
+      this.resendWait = this.resendWait * 1.5;
+      this.updateStatus(this.queue.length + this.getSafeTranslation('stillqueued', " Transaction(s) Still Queued, Try changing UTXO server on settings page. Retry in (seconds)") + " " + (this.resendWait / 1000));
+      this.sleep(1000);
+      this.updateStatus(this.getSafeTranslation('sendingagain', "Sending Again . . ."));
+    }
+
+    //Send the next transaction after a short pause
+    this.sleep(1000);
+    if (this.queue.length > 0) {
+      this.sendNextTransaction();
     }
   }
+  /*
+    //error code info to consider
+        if (errorMessage.startsWith("64")) {
+          //Error:64: 
+          //May mean not enough mining fee was provided or chained trx limit reached 
+        if (errorMessage.startsWith("66")) {
+          if (this.miningFeeMultiplier < this.maxfee) {
+            //Insufficient Priority - not enough transaction fee provided. Let's try increasing fee.
+            this.miningFeeMultiplier = this.miningFeeMultiplier * 1.1;
+            returnObject.updateStatus(this.getSafeTranslation('surgepricing', "Error: Transaction rejected because fee too low. Increasing and retrying. Surge Pricing now ") + Math.round(this.miningFeeMultiplier * 10) / 10);
+            await this.sleep(1000);
+            returnObject.sendNextTransaction();
+            return;
+          }
+        }
+  
+        //if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("1001") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
+        //1001 No UTXOs
+        //Error:258: txn-mempool-conflict 
+        //2000, all fetched UTXOs already spend
+        //2001, insuffiencent funds from unspent UTXOs. Add funds
+      
+    }*/
 
   selectUTXOs() {
     let utxos = this.getUTXOs();
@@ -401,7 +394,11 @@ class TransactionQueue extends UTXOPool {
     //ESTIMATE TRX FEE REQUIRED
     let changeAmount = 0;
 
+    //let txnBuilder = new bchlib.TransactionBuilder(bchlib.networks.bitcoincash);
+    //txnBuilder.enableBitcoinCash(true);
     let transactionBuilder = new this.BitcoinJS.TransactionBuilder();
+    transactionBuilder.enableBitcoinCash(true);
+    //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
     if (scriptArray.length > 0) {
       transactionBuilder.addOutput(script2, 0);
     }
@@ -450,8 +447,10 @@ class TransactionQueue extends UTXOPool {
       let originalAmount = utxos[i].satoshis;
       // sign w/ HDNode
       let redeemScript;
-      transactionBuilder.sign(i, this.keyPair, redeemScript, transactionBuilder.hashTypes.SIGHASH_ALL, originalAmount);
+      transactionBuilder.sign(i, this.keyPair, redeemScript, this.BCH_SIGHASH_ALL, originalAmount, null);
+      //, originalAmount, null, 0
     }
+    //transactionBuilder.sign(0, this.keyPair);
 
     // build tx
     let tx = transactionBuilder.build();
@@ -460,28 +459,6 @@ class TransactionQueue extends UTXOPool {
 
   }
 
-  async broadcastTransaction(tx: any, utxos: Array<UTXO>, txdata: TransactionData, callback: Function) {
-
-    const response = await fetch(this.broadcastServer, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify([tx.toHex()])
-    });
-    if (!response.ok) {
-      this.transactionInProgress = false;
-      callback(new Error(this.sane(response.status + " " + response.statusText)), null, this);
-      return;
-    }
-    let result = await response.json();
-    if (result.txid) {
-      this.updateTransactionPool(utxos, txdata, tx);
-      this.transactionInProgress = false;
-      callback(null, result.txid, this);
-    } else {
-      this.transactionInProgress = false;
-      callback(new Error(this.sane(response.status + " " + response.statusText)), null, this);
-    }
-  }
 
   updateTransactionPool(utxos: Array<UTXO>, txdata: TransactionData, tx: any) {
     for (let i = 0; i < utxos.length; i++) {
