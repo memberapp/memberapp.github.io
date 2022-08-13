@@ -529,7 +529,7 @@ async function sendBitCloutRating(posttext, topic, divForStatus, successFunction
 
 
 
-async function sendBitCloutReply(txid, replytext, divForStatus, successFunction, parentSourceNetwork) {
+async function sendBitCloutReply(txid, replytext, divForStatus, successFunction, parentSourceNetwork, membertxid) {
   let postExtraData;
   /*if (parentSourceNetwork != 1) {
     //Bitclout does not allow a reply to post that does not exist on its network
@@ -544,9 +544,12 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
+  replytext="https://member.cash/p/"+membertxid.substr(0,10);
+
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
-    replytext="https://member.cash/p/"+txid.substr(0,10)+"\n\n"+replytext;
+    //replytext="https://member.cash/p/"+txid.substr(0,10)+"\n\n"+replytext;
+    //replytext="https://member.cash/p/"+txid.substr(0,10);
   }else{
     payload.ParentStakeID = txid;
   }

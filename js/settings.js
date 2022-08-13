@@ -442,6 +442,7 @@ function updateSettingsDropdown(settingsName) {
     //    tq.updateBalance(pubkey);
     //}
     if (settingsName == "mcutxoserver") {
+        tq.setUTXOServer(dropdowns.mcutxoserver + "address/utxo/");
         refreshPool();
     }
     if (settingsName == "languageselector") {
@@ -451,6 +452,10 @@ function updateSettingsDropdown(settingsName) {
             translatePage();
         }
     }
+    if (settingsName == "txbroadcastserver"){
+        tq.setbroadcastServer(dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost");
+    }
+
     updateStatus(getSafeTranslation('updated', "Updated.") + " " + dropdowns[settingsName]);
 }
 

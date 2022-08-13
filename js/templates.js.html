@@ -68,7 +68,7 @@ var indirectRatingHTML=`
     </td>
     <td data-vavilon_data_label="VV0012" data-label='Rate as'>
         <span class='trustratingintermediate'>
-            <div id='trust{memberid}{interid}'></div>
+            <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'"; id='trust{memberid}{interid}'></div>
         </span>
     </td>
     <td data-vavilon_data_label="VV0013" align='center' data-label='Member'>
@@ -76,7 +76,7 @@ var indirectRatingHTML=`
     </td>
     <td data-vavilon_data_label="VV0014" data-label='Who Rates as'>
         <span class='trustratingbyintermediate'>
-            <div id='trust{interid}{targetid}'></div>
+            <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'"; id='trust{interid}{targetid}'></div>
         </span>
     </td>
     <td data-vavilon_data_label="VV0007" data-label='Member'>
@@ -219,7 +219,7 @@ var lowfundswarningHTML=`
         seconds.</span>
     <br />
     <br />
-    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.2.8#{bcaddress}"></iframe>
+    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.3.0#{bcaddress}"></iframe>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -803,7 +803,7 @@ pages.settings = `
     </div>-->
     <div>
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
-        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.2.8#{address}"></iframe>
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.3.0#{address}"></iframe>
     </div>
     <div>
         <label data-vavilon="VVtwitterfeed" for="twitterfeed">Twitter User</label>

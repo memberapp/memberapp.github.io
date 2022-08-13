@@ -955,8 +955,10 @@ function getIndirectRatingHTML(data) {
         //These must all be HTML safe.
         member: getMemberLink(data.member, data.membername),
         memberid: san(data.member),
+        membertxid: san(data.membertxid),
         inter: getMemberLink(data.inter, data.intername),
         interid: san(data.inter),
+        intertxid: san(data.intertxid),
         target: getMemberLink(data.target, data.targetname),
         targetid: san(data.target)
     }

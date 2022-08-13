@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.2.8';
+var version = '8.3.0';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -17,12 +17,13 @@ var chainheighttime = 0;
 var pubkeyhex = ""; //Public Key, full hex
 var bitcloutaddress = ""; //Bitclout address
 
-let tq = new TransactionQueue(updateStatus);
+let tq = null;
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
-var bitboxSdk = null;
 var cytoscape = null;
+var bip39 = null;
 //var twitterEmbeds=new Array();
 var profilepic = "";
+var Buffer = buffer.Buffer;
 
 
 
@@ -74,8 +75,8 @@ function setLanguage() {
 
 async function init() {
 
-    if(window.location.protocol=="file:"){
-        await loadScript("configlocal.js?8.2.8");
+    if (window.location.protocol == "file:") {
+        await loadScript("configlocal.js?8.3.0");
     }
 
     setLanguage();
@@ -170,7 +171,9 @@ async function loadBigLibs() {
     if (loadBigLibsStarted) return;
     loadBigLibsStarted = true;
     //Load big libraries that may not be immediately needed.
-    if (!bitboxSdk) loadScript("js/lib/bitboxsdk.js");
+
+    if (!bip39) { loadScript("js/lib/bip39.browser.js"); }
+    if (!window.bitcoinjs) { loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.js"); }
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) { loadScript("js/lib/elliptic.min.js"); }
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
@@ -201,54 +204,39 @@ async function login(loginkey) {
         //check valid private or public key
         var publicaddress = "";
 
-        if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }
+        if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
+        if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.js"); }
 
-        if (new bitboxSdk.Mnemonic().validate(loginkey) == "Valid mnemonic") {
-
-            /* Not sure why this isn't working, but gives different results to read.cash
-            // Will change the bitbox method instead
-            // create seed buffer from mnemonic
-            let seedBuffer = new bitboxSdk.Mnemonic().toSeed(loginkey);
-            // create HDNode from seed buffer
-            let hdNode = new bitboxSdk.HDNode().fromSeed(seedBuffer);
-            hdNode = new bitboxSdk.HDNode().derivePath(hdNode, "m/44'/0'/0'/0");
-            // to legacy address
-            var newloginkey = new bitboxSdk.HDNode().toWIF(hdNode);
-            */
-            //this might be the correct derivation path for above code
-            //hdNode = new bitboxSdk.HDNode().derivePath(hdNode, "44'/0'/0'/0/0");
-
-            var newloginkey = new bitboxSdk.Mnemonic().toKeypairs(loginkey, 1, false, "44'/0'/0'/0/")[0].privateKeyWIF;
+        if (bip39.validateMnemonic(loginkey)) {
+            let seed = bip39.mnemonicToSeedSync(loginkey);
+            let root = window.bitcoinjs.bip32.fromSeed(seed);
+            let child1 = root.derivePath("44'/0'/0'/0/0");
+            let newloginkey = child1.toWIF();
             localStorageSet(localStorageSafe, "mnemonic", loginkey);
             mnemonic = loginkey;
             loginkey = newloginkey;
         }
 
-
         try {
             if (loginkey.startsWith("q")) {
                 loginkey = "member:" + loginkey;
             }
-
-            if (loginkey.startsWith("member:")) {
+            if (loginkey.startsWith("member:") || loginkey.startsWith("bitcoincash:")) {
                 publicaddress = membercoinToLegacy(loginkey);
             } else if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
-                let ecpair = new bitboxSdk.ECPair().fromWIF(loginkey);
-                publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
+                let ecpair = window.bitcoinjs.ECPair.fromWIF(loginkey);
+                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
                 privkey = loginkey;
                 document.getElementById('loginkey').value = "";
             } else if (loginkey.startsWith("BC1")) {
                 var preslice = window.bs58check.decode(loginkey);
                 var bcpublicKey = preslice.slice(3);
                 checkIfBitcloutUser(new Buffer(bcpublicKey).toString('hex'));
-                var ecpair = new bitboxSdk.ECPair().fromPublicKey(Buffer.from(bcpublicKey));
-                publicaddress = new bitboxSdk.ECPair().toLegacyAddress(ecpair);
-            } else if (loginkey.startsWith("bitcoincash:")) {
-                publicaddress = new bitboxSdk.Address().toLegacyAddress(loginkey);
+                var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(bcpublicKey));
+                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
             } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
-                if (new bitboxSdk.Address().isLegacyAddress(loginkey)) {
-                    publicaddress = loginkey;
-                }
+                window.bitcoinjs.address.toOutputScript(loginkey);//this will throw error if address is not valid
+                publicaddress = loginkey;
             } else {
                 throw Error('No login key recognized');
             }
@@ -275,14 +263,12 @@ async function login(loginkey) {
         }
 
         pubkey = publicaddress.toString();
-        //qpubkey = new bitboxSdk.Address().toCashAddress(pubkey);
         localStorageSet(localStorageSafe, "pubkey", pubkey);
-        //localStorageSet(localStorageSafe, "qpubkey", qpubkey);
 
         if (privkey) {
-            let ecpair = new bitboxSdk.ECPair().fromWIF(privkey);
-            pubkeyhex = ecpair.getPublicKeyBuffer().toString('hex');
-            privkeyhex = ecpair.d.toHex();
+            let ecpair = new window.bitcoinjs.ECPair.fromWIF(privkey);
+            pubkeyhex = ecpair.publicKey.toString('hex');
+            privkeyhex = ecpair.privateKey.toString('hex');
 
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
@@ -328,19 +314,20 @@ async function login(loginkey) {
 
     loadStyle();
 
-    //Get latest rate and update balance
-    //if (!bitboxSdk) { await loadScript("js/lib/bitboxsdk.js"); }
-    tq.addUTXOPool(pubkey, localStorageSafe, "balance");
+    //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
+    if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.js"); }
+    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost");
+    tq.refreshPool();
 
     if (!privkey) {
-        tq.utxopools[pubkey].showwarning = false;
+        //tq.utxopools[pubkey].showwarning = false;
         //document.getElementById('lowfundswarning').style.display = 'none';
         updateStatus(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
     }
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
-    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, {fileuploadurl:dropdowns.txbroadcastserver+"uploadfile"}, true);
+    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { fileuploadurl: dropdowns.txbroadcastserver + "uploadfile" }, true);
 
 
 
@@ -360,12 +347,9 @@ function loadStyle() {
     }
 }
 
-function createNewAccount() {
-    mnemonic = new bitboxSdk.Mnemonic().generate(128);
-    //var loginkey = new bitboxSdk.Mnemonic().toKeypairs(mnemonic, 1)[0].privateKeyWIF;
-    //login(mnemonic);
-    //show('settingsanchor');
-    //alert("Send a small amount of BCH to your address to start using your account. Remember to make a note of your private key to login again.");
+async function createNewAccount() {
+    if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
+    mnemonic = bip39.generateMnemonic();
     document.getElementById('newseedphrasedescription').style.display = "inline";
     document.getElementById('newseedphrase').textContent = mnemonic;
     document.getElementById('loginkey').value = mnemonic;
@@ -436,5 +420,5 @@ function setBodyStyle(newStyle) {
 
 
 function refreshPool() {
-    tq.utxopools[pubkey].refreshPool();
+    tq.refreshPool();
 }

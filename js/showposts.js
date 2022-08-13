@@ -66,10 +66,12 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             end = start + limit;
         }
 
-        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        //var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length);
+        //var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
@@ -652,14 +654,19 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
 
-    var successFunction = function () { replySuccessFunction(page, txid); };
+    var successFunction = 
+    function (membertxid) { 
+        replySuccessFunction(page, txid);
+        if (isBitCloutUser()) {
+            sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+        }
+    };
+    
     if (checkForNativeUserAndHasBalance()) {
         sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
         successFunction = null;
     }
-    if (isBitCloutUser()) {
-        sendBitCloutReply(origtxid, replytext, divForStatus, successFunction, parentSourceNetwork);
-    }
+    
     return true;
 }
 

@@ -114,13 +114,13 @@ function privateMessagePosted() {
 
 }
 
-function addRSSFeed(type,buttonelement) {
+function addRSSFeed(type, buttonelement) {
     let rssURL;
     document.getElementById(buttonelement).style.visibility = 'hidden';
-    if(type=='twitter') rssURL = 'https://nitter.net/'+document.getElementById("twitterfeed").value.replace('@','');
-    if(type=='plain') rssURL = document.getElementById("rssfeed").value;
+    if (type == 'twitter') rssURL = 'https://nitter.net/' + document.getElementById("twitterfeed").value.replace('@', '');
+    if (type == 'plain') rssURL = document.getElementById("rssfeed").value;
 
-    
+
     updateStatus("Fetching RSS");
     getJSON(dropdowns.txbroadcastserver + 'rss/add?address=' + encodeURIComponent(rssURL)).then(function (data) {
         updateStatus(sane(data.userid));
@@ -210,11 +210,11 @@ function getLegacyToHash160(address) {
 
 function setBalanceWithInterest() {
     try {
-        if(chainheighttime==0){
+        if (chainheighttime == 0) {
             return;
         }
         let elapsed = (new Date().getTime() - chainheighttime) / (78 * 1000);
-        let membalance = tq.updateBalance(pubkey, chainheight + elapsed);
+        let membalance = updateBalance(chainheight + elapsed, chainheighttime);
         let mem = (membalance / 100000000) + "";
         while (mem.length < 10) {
             mem = mem + "0";
@@ -230,6 +230,43 @@ function setBalanceWithInterest() {
 
 setInterval(setBalanceWithInterest, 500);
 
+//utxopool will call this after utxos updated
+function updateChainHeight(chainheight2,chainheighttime2){
+    chainheight=chainheight2;
+    chainheighttime=chainheighttime2;
+}
+
+function updateBalance(chainheight2) {
+
+    var total = tq.getBalance(chainheight2);
+    document.getElementById('balancesatoshis').innerHTML = Math.round(total);
+    document.getElementById('balancebch').innerHTML = (total / 100000000).toFixed(5);
+
+    var usd = ((Number(total) * numbers.usdrate) / 100000000).toFixed(2);
+    if (usd < 1) {
+        document.getElementById('balanceusd').innerHTML = (usd * 100).toFixed(0) + "¢";
+    } else {
+        document.getElementById('balanceusd').innerHTML = "$" + usd;
+    }
+
+    if (document.getElementById('satoshiamount'))
+        document.getElementById('satoshiamount').innerHTML = total;
+
+    if (total < 2000 && this.showwarning) {
+        var lowfundsElement = document.getElementById('lowfundswarning');
+        if (lowfundsElement) {
+            document.getElementById('lowfundswarning').style.display = 'block';
+            //showQRCode('lowfundsaddress', 100);
+            //only show this message once per app load
+            this.showwarning = false;
+        }
+    }
+    if (total >= 2000) {
+        document.getElementById('lowfundswarning').style.display = 'none';
+    }
+
+    return total;
+}
 
 
 

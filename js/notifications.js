@@ -11,23 +11,27 @@ function displayNotificationCount() {
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
     var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
     getJSON(theURL).then(function (data) {
+        try {
+            if (data[0].count == null) {
+                return;
+            }
 
-        if (data[0].count == null) {
-            return;
+            setAlertCount("alertcount", Number(data[0].count));
+            setAlertCount("alertcountpm", Number(data[0].countpm));
+
+            var pageTitleCount = Number(data[0].count) + Number(data[0].countpm);
+            var pageTitle = "";
+            if (pageTitleCount > 0) {
+                pageTitle = "(" + pageTitleCount + ") ";
+            }
+            document.title = pageTitle + siteTitle;
+        }catch(err){
+            console.log(err);
         }
-
-        setAlertCount("alertcount", Number(data[0].count));
-        setAlertCount("alertcountpm", Number(data[0].countpm));
-
-        var pageTitleCount = Number(data[0].count) + Number(data[0].countpm);
-        var pageTitle = "";
-        if (pageTitleCount > 0) {
-            pageTitle = "(" + pageTitleCount + ") ";
-        }
-        document.title = pageTitle + siteTitle;
         setTimeout(displayNotificationCount, 60000);
     }, function (status) { //error detection....
         showErrorMessage(status, null, theURL);
+        setTimeout(displayNotificationCount, 60000);
     });
 }
 
@@ -123,7 +127,8 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid, nfilter
     var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
-        var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length);
+        //var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length > 0 ? data[0].unduplicatedlength : 0);
         //var navbuttons = getNavButtonsHTML(start, limit, page, 'new', qaddress, "", "getAndPopulateNotifications", data.length > 0 ? data[0].unduplicatedlength : 0);
 
         var contents = ``;
@@ -231,11 +236,11 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
 
     postRatingID = starindex + page + ds(data.raddress) + type;
     if (type != "rating") { //this is inelegant, quick fix
-        
+
         if (type == "like" || type == "repost") {
             postRatingID = starindex + page + ds(data.address) + type;
             referencedPostHTML = getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive, true, data.originsysrating, data.lsourcenetwork, data.lhivename, data.lhivelink, data.userbitcoinaddress);
-        }else{
+        } else {
             referencedPostHTML = getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive, true, data.originsysrating, data.rsourcenetwork, data.rhivename, data.rhivelink, data.originbitcoinaddress);
         }
     }
