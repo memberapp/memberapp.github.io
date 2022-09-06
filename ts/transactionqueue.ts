@@ -42,8 +42,9 @@ class UTXOPool {
   miningFeeMultiplier = 1;
   translationFunction: Function;
   updateBalanceFunction: Function;
+  fetchFunction: Function;
 
-  constructor(address: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function) {
+  constructor(address: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function) {
     //address is the legacy address of the account
     //utxoServer is server that will send utxo set
     //status message function is a function to call with progress updates
@@ -58,6 +59,7 @@ class UTXOPool {
     this.statusMessageFunction = statusMessageFunction;
     this.translationFunction = translationFunction;
     this.updateBalanceFunction = updateBalanceFunction;
+    this.fetchFunction = fetchFunction;
   }
 
   getSafeTranslation(id: string, defaultstring: string) {
@@ -118,46 +120,53 @@ class UTXOPool {
     return total;
   }
 
-  refreshPool() {
+refreshPool() {
 
     let outputInfo = new Array();
 
     (async () => {
 
-      const response = await fetch(this.utxoServer + this.theAddress);
-      outputInfo = await response.json();
+    var response;
+    if (this.fetchFunction) {
+      response = await this.fetchFunction(this.utxoServer + this.theAddress);
+    } else {
+      response = await fetch(this.utxoServer + this.theAddress);
+    }
+    outputInfo = await response.json();
 
-      let utxos = outputInfo;
-      let utxosOriginalNumber = outputInfo.length;
+    let utxos = outputInfo;
+    let utxosOriginalNumber = outputInfo.length;
 
-      this.utxoPool = new Array();
-      //Check no unexpected data in the fields we care about
-      for (let i = 0; i < utxos.length; i++) {
-        utxos[i].satoshis = Number(utxos[i].satoshis);
-        utxos[i].vout = Number(utxos[i].vout);
-        utxos[i].txid = this.sane(utxos[i].txid);
+    this.utxoPool = new Array();
+    //Check no unexpected data in the fields we care about
+    for (let i = 0; i < utxos.length; i++) {
+      utxos[i].satoshis = Number(utxos[i].satoshis);
+      utxos[i].vout = Number(utxos[i].vout);
+      utxos[i].txid = this.sane(utxos[i].txid);
 
-        //Electrum format
-        utxos[i].satoshis = Number(utxos[i].value);
-        utxos[i].vout = Number(utxos[i].tx_pos);
-        utxos[i].txid = this.sane(utxos[i].tx_hash);
-        utxos[i].height = this.sane(utxos[i].height);
-        if (utxos[i].chainheight) {
-          this.chainheight = utxos[i].chainheight;
-          this.chainheighttime = new Date().getTime();
-        }
-        if (utxos[i].satoshis > this.DUSTLIMIT) {
-          //Remove any utxos with less or equal to dust limit, they may be SLP tokens
-          this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
-        }
+      //Electrum format
+      utxos[i].satoshis = Number(utxos[i].value);
+      utxos[i].vout = Number(utxos[i].tx_pos);
+      utxos[i].txid = this.sane(utxos[i].tx_hash);
+      utxos[i].height = this.sane(utxos[i].height);
+      if (utxos[i].chainheight) {
+        this.chainheight = utxos[i].chainheight;
+        this.chainheighttime = new Date().getTime();
       }
-
-      let usableUTXOScount = this.utxoPool.length;
-      this.updateStatus(utxosOriginalNumber + this.getSafeTranslation('utxosreceived', " utxo(s) received. usable") + ' ' + usableUTXOScount);
-
-      if (this.updateBalanceFunction) {
-        this.updateBalanceFunction(this.chainheight, this.chainheighttime);
+      if (utxos[i].satoshis > this.DUSTLIMIT) {
+        //Remove any utxos with less or equal to dust limit, they may be SLP tokens
+        this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
       }
+    }
+
+    let usableUTXOScount = this.utxoPool.length;
+    this.updateStatus(utxosOriginalNumber + this.getSafeTranslation('utxosreceived', " utxo(s) received. usable") + ' ' + usableUTXOScount);
+
+    if (this.updateBalanceFunction) {
+      this.updateBalanceFunction(this.chainheight, this.chainheighttime);
+    }
+
+    return this.getBalance(this.chainheight);
     })();
   }
 
@@ -195,9 +204,10 @@ class TransactionQueue extends UTXOPool {
   broadcastServer: string;
   keyPair: any;
   BitcoinJS: any;
+  transactionsPossible: boolean;
 
-  constructor(address: string, privateKey: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, BitcoinJS: any, broadcastServer: string) {
-    super(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction);
+  constructor(address: string, privateKey: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function, BitcoinJS: any, broadcastServer: string) {
+    super(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction);
     this.BitcoinJS = BitcoinJS;
     this.queue = new Array();
     this.isSending = false; //Sending from the queue
@@ -207,6 +217,8 @@ class TransactionQueue extends UTXOPool {
     if (this.privateKey) {
       this.keyPair = this.BitcoinJS.ECPair.fromWIF(this.privateKey);
     }
+    let transactionBuilder = new this.BitcoinJS.TransactionBuilder();
+    this.transactionsPossible = transactionBuilder.enableBitcoinCash;
   }
 
   setbroadcastServer(broadcastServer: string) {
@@ -244,17 +256,21 @@ class TransactionQueue extends UTXOPool {
   }
 
   queueTransaction(transaction, onSuccessFunction: Function) {
+    if (!this.transactionsPossible) {
+      return 'Bitcoin Cash Style Transactions Not Possible with this bitcoin library';
+    }
     let toAddress = '';
     let toAmount = 0;
     try {
-      toAmount = transaction.cash.to.value;
-      toAddress = transaction.cash.to.address;
+      toAmount = transaction.cash.to[0].value;
+      toAddress = transaction.cash.to[0].address;
     } catch (err) {
       //usually no recipient, send change to self.
     }
     let data = transaction.data;
     this.queue.push(new TransactionData(toAddress, toAmount, data, onSuccessFunction));
     this.sendNextTransaction();
+    return 'Sent';
   }
 
   async sendNextTransaction() {
@@ -262,6 +278,10 @@ class TransactionQueue extends UTXOPool {
     if (!this.privateKey) {
       throw new Error(this.getSafeTranslation('noprivatekey', "1000:No Private Key, Cannot Make Transaction"));
     }
+
+    /*if(this.utxoPool.length==0){
+      await this.refreshPool();
+    }*/
 
     //If the queue is already sending
     if (this.transactionInProgress) {
@@ -278,29 +298,41 @@ class TransactionQueue extends UTXOPool {
 
 
     for (; ;) {
-      //Use the first transaction from the queue. Leave it on the queue until it is successfully sent
-      let txdata = this.queue[0];
-
-      //Choose the UTXOs to use
-      let utxos = this.selectUTXOs();
-
-      //Make the trx and estimate the fees
-      let tx = this.constructTransaction(utxos, 0, txdata);
-      let transactionSize = tx.byteLength();
-      //Add extra satoshis for safety
-      console.log("Transaction size:" + transactionSize);
-      let fees = Math.round(transactionSize * this.miningFeeMultiplier) + this.extraSatoshis;
-      //Make the trx again, with fees included
-      tx = this.constructTransaction(utxos, fees, txdata);
-
       //Send to node
       let response;
+      let txdata;
+      let utxos;
+      let tx;
+
       try {
-        response = await fetch(this.broadcastServer, {
-          method: 'POST',
-          headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-          body: JSON.stringify({ hexes: [tx.toHex()] })
-        });
+        //Use the first transaction from the queue. Leave it on the queue until it is successfully sent
+        txdata = this.queue[0];
+
+        //Choose the UTXOs to use
+        utxos = this.selectUTXOs();
+
+        //Make the trx and estimate the fees
+        tx = this.constructTransaction(utxos, 0, txdata);
+        let transactionSize = tx.byteLength();
+        //Add extra satoshis for safety
+        console.log("Transaction size:" + transactionSize);
+        let fees = Math.round(transactionSize * this.miningFeeMultiplier) + this.extraSatoshis;
+        //Make the trx again, with fees included
+        tx = this.constructTransaction(utxos, fees, txdata);
+
+        if (this.fetchFunction) {
+          response = await this.fetchFunction(this.broadcastServer, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ hexes: [tx.toHex()] })
+          });
+        } else {
+          response = await fetch(this.broadcastServer, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ hexes: [tx.toHex()] })
+          });
+        }
       } catch (err) {
         console.log(err);
       }
@@ -481,4 +513,4 @@ class TransactionQueue extends UTXOPool {
   }
 }
 
-
+module.exports = TransactionQueue;

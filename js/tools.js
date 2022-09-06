@@ -140,7 +140,7 @@ async function sendfunds() {
         alert(getSafeTranslation('547orlarger', "Amount has to be 547 satoshis or larger."));
         return;
     }
-    var totalAmountPossible = tq.updateBalance(pubkey, chainheight);
+    var totalAmountPossible = updateBalance(chainheight);
     if (sendAmount > totalAmountPossible) {
         alert(getSafeTranslation('largerthanbalance', "This amount is larger than your balance.") + ' ' + totalAmountPossible);
         return;
@@ -214,7 +214,7 @@ function setBalanceWithInterest() {
             return;
         }
         let elapsed = (new Date().getTime() - chainheighttime) / (78 * 1000);
-        let membalance = updateBalance(chainheight + elapsed, chainheighttime);
+        let membalance = updateBalance(chainheight + elapsed);
         let mem = (membalance / 100000000) + "";
         while (mem.length < 10) {
             mem = mem + "0";
@@ -234,8 +234,10 @@ setInterval(setBalanceWithInterest, 500);
 function updateChainHeight(chainheight2,chainheighttime2){
     chainheight=chainheight2;
     chainheighttime=chainheighttime2;
+    updateBalance(chainheight2);
 }
 
+var showwarning=true;
 function updateBalance(chainheight2) {
 
     var total = tq.getBalance(chainheight2);
@@ -252,13 +254,13 @@ function updateBalance(chainheight2) {
     if (document.getElementById('satoshiamount'))
         document.getElementById('satoshiamount').innerHTML = total;
 
-    if (total < 2000 && this.showwarning) {
+    if (total < 2000 && showwarning) {
         var lowfundsElement = document.getElementById('lowfundswarning');
         if (lowfundsElement) {
             document.getElementById('lowfundswarning').style.display = 'block';
             //showQRCode('lowfundsaddress', 100);
             //only show this message once per app load
-            this.showwarning = false;
+            showwarning = false;
         }
     }
     if (total >= 2000) {

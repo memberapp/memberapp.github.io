@@ -648,7 +648,8 @@ function getSatsWithInterest(principle, utxoheight, chainheight) {
 window.document.addEventListener('miningtxreceived', handleMiningTXReceivedEvent, false);
 function handleMiningTXReceivedEvent(e) {
   //note - making a guess here the vout is 0, 50/50 chance. could get the full transaction data from server and parse but this should do for now
-  tq.utxopools[pubkey].addUTXO(e.detail.data.txid, 0, e.detail.data.satoshis);
+  tq.addUTXO(e.detail.data.txid, 0, e.detail.data.satoshis, 0);
+  //addUTXO(txid: string, vout: number, satoshis: number, height: number)
   //do proper update after 5 seconds, utxo should be availabe from electrum by then
   setTimeout(refreshPool, 5000);
 }

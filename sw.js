@@ -10,7 +10,7 @@ const PRECACHE_URLS = [
 ];
 
 //If updating version here, also update version in login.js
-const version = '8.3.0';
+const version = '8.3.5';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;

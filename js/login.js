@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.3.0';
+var version = '8.3.5';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -76,7 +76,7 @@ function setLanguage() {
 async function init() {
 
     if (window.location.protocol == "file:") {
-        await loadScript("configlocal.js?8.3.0");
+        await loadScript("configlocal.js?8.3.5");
     }
 
     setLanguage();
@@ -316,7 +316,7 @@ async function login(loginkey) {
 
     //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
     if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.js"); }
-    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost");
+    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost");
     tq.refreshPool();
 
     if (!privkey) {

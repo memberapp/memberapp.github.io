@@ -241,7 +241,10 @@ function showNewPost(txid,sourcenetwork) {
     highlightmajornavbutton("newbutton");
     show("newpost");
     setPageTitleFromID("VV0096");
-    document.getElementById('memorandumpreview').innerHTML = "";
+    let mpelement=document.getElementById('memorandumpreview')
+    if(mpelement && mpelement.innerHTML){
+        mpelement.innerHTML = "";
+    }
     //let topicNameHOSTILE = "";
     //document.getElementById('memorandumtopic').value = topicNameHOSTILE;
     /*if (topicNameHOSTILE != "") {

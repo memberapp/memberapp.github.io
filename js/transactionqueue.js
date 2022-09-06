@@ -72,7 +72,7 @@ var UTXO = /** @class */ (function () {
     return UTXO;
 }());
 var UTXOPool = /** @class */ (function () {
-    function UTXOPool(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction) {
+    function UTXOPool(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction) {
         //address is the legacy address of the account
         //utxoServer is server that will send utxo set
         //status message function is a function to call with progress updates
@@ -91,6 +91,7 @@ var UTXOPool = /** @class */ (function () {
         this.statusMessageFunction = statusMessageFunction;
         this.translationFunction = translationFunction;
         this.updateBalanceFunction = updateBalanceFunction;
+        this.fetchFunction = fetchFunction;
     }
     UTXOPool.prototype.getSafeTranslation = function (id, defaultstring) {
         if (this.translationFunction) {
@@ -152,11 +153,18 @@ var UTXOPool = /** @class */ (function () {
             var response, utxos, utxosOriginalNumber, i, usableUTXOScount;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, fetch(this.utxoServer + this.theAddress)];
+                    case 0:
+                        if (!this.fetchFunction) return [3 /*break*/, 2];
+                        return [4 /*yield*/, this.fetchFunction(this.utxoServer + this.theAddress)];
                     case 1:
                         response = _a.sent();
-                        return [4 /*yield*/, response.json()];
-                    case 2:
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, fetch(this.utxoServer + this.theAddress)];
+                    case 3:
+                        response = _a.sent();
+                        _a.label = 4;
+                    case 4: return [4 /*yield*/, response.json()];
+                    case 5:
                         outputInfo = _a.sent();
                         utxos = outputInfo;
                         utxosOriginalNumber = outputInfo.length;
@@ -185,7 +193,7 @@ var UTXOPool = /** @class */ (function () {
                         if (this.updateBalanceFunction) {
                             this.updateBalanceFunction(this.chainheight, this.chainheighttime);
                         }
-                        return [2 /*return*/];
+                        return [2 /*return*/, this.getBalance(this.chainheight)];
                 }
             });
         }); })();
@@ -210,8 +218,8 @@ var TransactionData = /** @class */ (function () {
 }());
 var TransactionQueue = /** @class */ (function (_super) {
     __extends(TransactionQueue, _super);
-    function TransactionQueue(address, privateKey, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, BitcoinJS, broadcastServer) {
-        var _this = _super.call(this, address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction) || this;
+    function TransactionQueue(address, privateKey, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, BitcoinJS, broadcastServer) {
+        var _this = _super.call(this, address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction) || this;
         _this.OP_RETURN = 106;
         _this.SIGHASH_BITCOINCASHBIP143 = 0x40;
         _this.SIGHASH_ALL = 0x01;
@@ -225,6 +233,8 @@ var TransactionQueue = /** @class */ (function (_super) {
         if (_this.privateKey) {
             _this.keyPair = _this.BitcoinJS.ECPair.fromWIF(_this.privateKey);
         }
+        var transactionBuilder = new _this.BitcoinJS.TransactionBuilder();
+        _this.transactionsPossible = transactionBuilder.enableBitcoinCash;
         return _this;
     }
     TransactionQueue.prototype.setbroadcastServer = function (broadcastServer) {
@@ -261,11 +271,14 @@ var TransactionQueue = /** @class */ (function (_super) {
         }
     };
     TransactionQueue.prototype.queueTransaction = function (transaction, onSuccessFunction) {
+        if (!this.transactionsPossible) {
+            return 'Bitcoin Cash Style Transactions Not Possible with this bitcoin library';
+        }
         var toAddress = '';
         var toAmount = 0;
         try {
-            toAmount = transaction.cash.to.value;
-            toAddress = transaction.cash.to.address;
+            toAmount = transaction.cash.to[0].value;
+            toAddress = transaction.cash.to[0].address;
         }
         catch (err) {
             //usually no recipient, send change to self.
@@ -273,16 +286,20 @@ var TransactionQueue = /** @class */ (function (_super) {
         var data = transaction.data;
         this.queue.push(new TransactionData(toAddress, toAmount, data, onSuccessFunction));
         this.sendNextTransaction();
+        return 'Sent';
     };
     TransactionQueue.prototype.sendNextTransaction = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var txdata, utxos, tx, transactionSize, fees, response, err_1, resulttxid, resptext, err_2;
+            var response, txdata, utxos, tx, transactionSize, fees, err_1, resulttxid, resptext, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (!this.privateKey) {
                             throw new Error(this.getSafeTranslation('noprivatekey', "1000:No Private Key, Cannot Make Transaction"));
                         }
+                        /*if(this.utxoPool.length==0){
+                          await this.refreshPool();
+                        }*/
                         //If the queue is already sending
                         if (this.transactionInProgress) {
                             return [2 /*return*/];
@@ -296,8 +313,18 @@ var TransactionQueue = /** @class */ (function (_super) {
                         }
                         _a.label = 1;
                     case 1:
+                        response = void 0;
+                        txdata = void 0;
+                        utxos = void 0;
+                        tx = void 0;
+                        _a.label = 2;
+                    case 2:
+                        _a.trys.push([2, 7, , 8]);
+                        //Use the first transaction from the queue. Leave it on the queue until it is successfully sent
                         txdata = this.queue[0];
+                        //Choose the UTXOs to use
                         utxos = this.selectUTXOs();
+                        //Make the trx and estimate the fees
                         tx = this.constructTransaction(utxos, 0, txdata);
                         transactionSize = tx.byteLength();
                         //Add extra satoshis for safety
@@ -305,39 +332,45 @@ var TransactionQueue = /** @class */ (function (_super) {
                         fees = Math.round(transactionSize * this.miningFeeMultiplier) + this.extraSatoshis;
                         //Make the trx again, with fees included
                         tx = this.constructTransaction(utxos, fees, txdata);
-                        response = void 0;
-                        _a.label = 2;
-                    case 2:
-                        _a.trys.push([2, 4, , 5]);
-                        return [4 /*yield*/, fetch(this.broadcastServer, {
+                        if (!this.fetchFunction) return [3 /*break*/, 4];
+                        return [4 /*yield*/, this.fetchFunction(this.broadcastServer, {
                                 method: 'POST',
                                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ hexes: [tx.toHex()] })
                             })];
                     case 3:
                         response = _a.sent();
-                        return [3 /*break*/, 5];
-                    case 4:
+                        return [3 /*break*/, 6];
+                    case 4: return [4 /*yield*/, fetch(this.broadcastServer, {
+                            method: 'POST',
+                            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ hexes: [tx.toHex()] })
+                        })];
+                    case 5:
+                        response = _a.sent();
+                        _a.label = 6;
+                    case 6: return [3 /*break*/, 8];
+                    case 7:
                         err_1 = _a.sent();
                         console.log(err_1);
-                        return [3 /*break*/, 5];
-                    case 5:
-                        if (!(response && response.ok)) return [3 /*break*/, 10];
+                        return [3 /*break*/, 8];
+                    case 8:
+                        if (!(response && response.ok)) return [3 /*break*/, 13];
                         resulttxid = void 0;
                         resptext = void 0;
-                        _a.label = 6;
-                    case 6:
-                        _a.trys.push([6, 8, , 9]);
+                        _a.label = 9;
+                    case 9:
+                        _a.trys.push([9, 11, , 12]);
                         return [4 /*yield*/, response.text()];
-                    case 7:
+                    case 10:
                         resptext = _a.sent();
                         resulttxid = this.sane(resptext);
-                        return [3 /*break*/, 9];
-                    case 8:
+                        return [3 /*break*/, 12];
+                    case 11:
                         err_2 = _a.sent();
                         console.log(err_2);
-                        return [3 /*break*/, 9];
-                    case 9:
+                        return [3 /*break*/, 12];
+                    case 12:
                         if (resulttxid && resulttxid.length == 64) {
                             this.updateStatus(resulttxid);
                             //successful transaction, update the transaction pool
@@ -351,25 +384,25 @@ var TransactionQueue = /** @class */ (function (_super) {
                                 txdata.successFunction(resulttxid);
                             }
                             this.resendWait = 2000;
-                            return [3 /*break*/, 13];
+                            return [3 /*break*/, 16];
                         }
                         //otherwise failure of some kind
                         this.updateStatus(this.sane(response.ok) + " " + this.sane(response.status) + " " + this.sane(response.statusText) + " " + this.sane(resptext));
-                        _a.label = 10;
-                    case 10:
+                        _a.label = 13;
+                    case 13:
                         //TODO - should look for specific errors here and take appropriate action rather than just refreshing pool and sending again.
                         //Try refreshing the utxo pool
                         this.refreshPool();
                         return [4 /*yield*/, this.sleep(this.resendWait)];
-                    case 11:
+                    case 14:
                         _a.sent();
                         this.resendWait = this.resendWait * 1.5;
                         this.updateStatus(this.queue.length + this.getSafeTranslation('stillqueued', " Transaction(s) Still Queued, Try changing UTXO server on settings page. Retry in (seconds)") + " " + (this.resendWait / 1000));
                         this.sleep(1000);
                         this.updateStatus(this.getSafeTranslation('sendingagain', "Sending Again . . ."));
-                        _a.label = 12;
-                    case 12: return [3 /*break*/, 1];
-                    case 13:
+                        _a.label = 15;
+                    case 15: return [3 /*break*/, 1];
+                    case 16:
                         //Send the next transaction after a short pause
                         this.sleep(1000);
                         if (this.queue.length > 0) {
@@ -491,3 +524,4 @@ var TransactionQueue = /** @class */ (function (_super) {
     };
     return TransactionQueue;
 }(UTXOPool));
+module.exports = TransactionQueue;
