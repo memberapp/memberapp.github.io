@@ -219,7 +219,7 @@ var lowfundswarningHTML=`
         seconds.</span>
     <br />
     <br />
-    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.3.5#{bcaddress}"></iframe>
+    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.3.6#{bcaddress}"></iframe>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -794,16 +794,16 @@ pages.settings = `
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
         <p data-vavilon="VV0084">(Max results to show per page. Maximum 100)</p>
     </div>
+    <div>
+        <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.3.6#{address}"></iframe>
+    </div>
     <!--<div>
         <label data-vavilon="VV0085" for="currencydisplay">Currency Display</label>
         <select id="currencydisplay" onchange="updateSettingsDropdown('currencydisplay');">
             <option value="USD">USD</option>
             <option value="BCH">BCH</option>
         </select>
-    </div>-->
-    <div>
-        <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
-        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.3.5#{address}"></iframe>
     </div>
     <div>
         <label data-vavilon="VVtwitterfeed" for="twitterfeed">Twitter User</label>
@@ -816,7 +816,7 @@ pages.settings = `
         <input class="sendfundsaddress" id="rssfeed" maxlength="200" size="60">
         <button data-vavilon="VVaddrssfeedbutton" class="memberstandardbutton" id="addrssfeedbutton" type="button"
             onclick="addRSSFeed('plain','addrssfeedbutton');">Add RSS Feed</button>
-    </div>
+    </div>-->
     <br />
     <br />
     <div>
@@ -1039,23 +1039,14 @@ var footerHTML = `
         <hr />
     </span>
     <span class="footerlinks">
-        <span data-vavilon="VV0139">Supporters</span>&nbsp;∙&nbsp;
-        <a rel='noopener noreferrer' target="memo"
-            href="https://memo.cash/token/766f9f56ac0a3f0e4c64cb3453d0c45336a20685827801b2188d237c2a6ffc43?balances">BCH</a>&nbsp;∙&nbsp;
-        <a rel='noopener noreferrer' target="bitclout"
-            href="https://bitclout.com/u/membercash?tab=creator-coin">BCLT</a>
-        <span class="separatorwide"></span>
-        <a data-vavilon="VV0140" rel='noopener noreferrer' target="member"
-            href="https://member.cash/#member?qaddress=16gs2oeLVJJT3YTL8uHLoRyLQtaWfEDxh1">Donate</a>
+        <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
         <span class="separatorwide"></span>
         <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/memberapp.github.io">Github</a>
-        <span class="separatorwide"></span>
-        <a rel='noopener noreferrer' target="bitcoin" href="https://www.bitcoin.com">Bitcoin</a>
         <span class="separatorwide"></span>
         <a data-vavilon="VV0141" rel='noopener noreferrer' target="github"
             href="https://github.com/memberapp/protocol">Protocol</a>
         <span class="separatorwide"></span>
-        <a data-vavilon="VV0142" href="mailto:freetrade.mc@gmail.com">Contact</a>
+        <a data-vavilon="VV0142" onclick="populateSendMessage('1M77BV2DExpLY6mepv86CTGpGMSoL2pLa9','\x46\x72\x65\x65\x54\x72\x61\x64\x65','03cd56864fe8b0533e9d0ad36001c5ee50d2fa5264e57c7a46d4a05fb0881609db');" href="javascript:;">Contact</a>
         <span class="separatorwide"></span>
         <span data-vavilon="VV0143">version</span> <span id="version" title="version">loading</span>.<u>9</u>
     </span>

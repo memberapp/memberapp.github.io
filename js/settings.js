@@ -297,10 +297,10 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     document.getElementById('settingsnametextbutton').disabled = true;
     document.getElementById('settingsprofiletextbutton').disabled = true;
     document.getElementById('settingspicbutton').disabled = true;
-    //After 3 ratings, members cannot change their handle
-    if (data && data[0] && data[0].ratingnumber > 2) {
-        document.getElementById('settingsnametext').disabled = true;
-    }
+    //After 9 ratings, members cannot change their handle
+    //if (data && data[0] && data[0].ratingnumber > 9) { note - ratingnumber is not being returned in data
+    //    document.getElementById('settingsnametext').disabled = true;
+    //}
 
     if (qaddress) {
         document.getElementById('settingsloggedin').style.display = "block";

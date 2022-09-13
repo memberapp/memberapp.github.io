@@ -74,6 +74,8 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         showMember(sane(pubkey), '');
     } else if (action.startsWith("membersonly")) {
         showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '');
+    } else if (action.startsWith("topinfluencers")) {
+        showPostsNew('top50', 'both', '', '', 0, 50, '');
     } else if (action.startsWith("member")) {
         showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -414,6 +416,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
 
     getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress);
 }
+
 
 
 //Topics
