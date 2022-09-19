@@ -402,7 +402,7 @@ async function bitCloutPinPost(pinPostHashHex, pubkey) {
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
 
-/*
+
 async function sendBitCloutFollow(followpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
@@ -421,7 +421,7 @@ async function sendBitCloutUnFollow(unfollowpubkey) {
       "MinFeeRateNanosPerKB":1000
     }`;
   return await sendBitCloutTransaction(payload, "create-follow-txn-stateless");
-}*/
+}
 
 
 async function sendBitCloutSub(topicHOSTILE) {
@@ -480,6 +480,7 @@ async function sendBitCloutUnMute(followpubkey) {
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
 }
 
+/*
 async function sendBitCloutFollow(followpubkey) {
   var bcAddress = await pubkeyToBCaddress(followpubkey);
   var payload = {
@@ -506,7 +507,7 @@ async function sendBitCloutUnFollow(followpubkey) {
   payload.PostExtraData = { UnFollow: bcAddress };
 
   return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", null);
-}
+}*/
 
 
 async function sendBitCloutRating(posttext, topic, divForStatus, successFunction, postExtraData) {

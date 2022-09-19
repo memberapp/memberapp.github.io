@@ -426,9 +426,9 @@ function unfollow(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
     }
-    if(isBitCloutUser()){
-        sendBitCloutUnFollow(targetpublickey);
-    }
+    //if(isBitCloutUser()){
+    //    sendBitCloutUnFollow(targetpublickey);
+    //}
 }
 
 function mute(qaddress,targetpublickey) {

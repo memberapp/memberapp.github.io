@@ -1182,6 +1182,10 @@ a {
    margin-bottom: unset !important;
 }
 
+.replyinmainfeed {
+  margin-left: 3rem;
+}
+
 #loginbox .content {
   position: absolute;
   width: 100%;

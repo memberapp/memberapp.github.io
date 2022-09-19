@@ -3,7 +3,7 @@
 
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-var version = '8.3.6';
+var version = '8.4.2';
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
@@ -76,7 +76,7 @@ function setLanguage() {
 async function init() {
 
     if (window.location.protocol == "file:") {
-        await loadScript("configlocal.js?8.3.6");
+        await loadScript("configlocal.js?8.4.2");
     }
 
     setLanguage();
@@ -173,7 +173,7 @@ async function loadBigLibs() {
     //Load big libraries that may not be immediately needed.
 
     if (!bip39) { loadScript("js/lib/bip39.browser.js"); }
-    if (!window.bitcoinjs) { loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.js"); }
+    if (!window.bitcoinjs) { loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) { loadScript("js/lib/elliptic.min.js"); }
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
@@ -205,7 +205,7 @@ async function login(loginkey) {
         var publicaddress = "";
 
         if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
-        if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.js"); }
+        if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
 
         if (bip39.validateMnemonic(loginkey)) {
             let seed = bip39.mnemonicToSeedSync(loginkey);
@@ -315,7 +315,7 @@ async function login(loginkey) {
     loadStyle();
 
     //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
-    if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.js"); }
+    if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
     tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost");
     tq.refreshPool();
 

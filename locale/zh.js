@@ -338,6 +338,17 @@ dictionary.zh=
     "VV0134a": "我的人",
     "addimage": "添加图片",
     "uploadimagestatus": "上传图片 . . .",
-    "chooseimage": "选择图片"
+    "chooseimage": "选择图片",
+    "notificationall": "全部",
+    "notificationlikes": "喜欢", 
+    "notificationfollows": "关注", 
+    "notificationunfollows": "取消关注", 
+    "notificationreplies": "回复", 
+    "notificationratings": "评分", 
+    "notificationmentions": "寻呼", 
+    "notificationremembers": "已转发", 
+    "notificationpurchase": "购买", 
+    "notificationsale": "销售"
+ 
   }
   ;

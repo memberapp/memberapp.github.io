@@ -25,7 +25,7 @@ function displayNotificationCount() {
                 pageTitle = "(" + pageTitleCount + ") ";
             }
             document.title = pageTitle + siteTitle;
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
         setTimeout(displayNotificationCount, 60000);
@@ -63,7 +63,7 @@ function populateNotificationTab(limit, nfilter, minrating) {
     <span class="separator"></span>
     <a data-vavilon="notificationratings" data-vavilon_title="notificationratings" title="See only ratings" class="`+ (nfilter == 'rating' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=rating` + options + `">Ratings</a>
     <span class="separator"></span>
-    <a data-vavilon="notificationpages" data-vavilon_title="notificationpages" title="See only pages" class="`+ (nfilter == 'page' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=page` + options + `">Pages</a>
+    <a data-vavilon="notificationmentions" data-vavilon_title="notificationmentions" title="See only mentions" class="`+ (nfilter == 'page' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=page` + options + `">Mentions</a>
     <span class="separator"></span>
     <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+ (nfilter == 'repost' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=repost` + options + `">Remembers</a>
     <span class="separator"></span>
@@ -213,7 +213,7 @@ notificationFilter.limit = 25;
 
 
 function userFromData(data, mainRatingID) {
-    return userHTML(data.origin, data.originname, mainRatingID, data.raterrating, 16, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, true, data.originlastactive, data.originsysrating, data.originhivename, data.originbitcoinaddress);
+    return (new Member(data.origin, data.originname, mainRatingID, data.raterrating, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, data.originlastactive, data.originsysrating, data.originhivename, data.originbitcoinaddress)).userHTML(true);
 }
 
 
@@ -239,9 +239,26 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
 
         if (type == "like" || type == "repost") {
             postRatingID = starindex + page + ds(data.address) + type;
-            referencedPostHTML = getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive, true, data.originsysrating, data.lsourcenetwork, data.lhivename, data.lhivelink, data.userbitcoinaddress);
+            //data.useraddress=data.laddress;
+            let member = MemberFromData(data, 'user', postRatingID);
+            referencedPostHTML = getHTMLForPostHTML3(member, data, 'l', page, starindex, '', true);
+            //referencedPostHTML = getHTMLForPostHTML(data.ltxid, data.laddress, data.username, data.llikes, data.ldislikes, data.ltips, data.lfirstseen, data.lmessage, data.lroottxid, data.ltopic, data.lreplies, data.lgeohash, page, postRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.selfrating, starindex, data.lrepostcount, data.lrepostidtxid, data.userpagingid, data.userpublickey, data.userpicurl, data.usertokens, data.userfollowers, data.userfollowing, data.userblockers, data.userblocking, data.userprofile, data.userisfollowing, data.usernametime, '', data.originlastactive, true, data.originsysrating, data.lsourcenetwork, data.lhivename, data.lhivelink, data.userbitcoinaddress);
+        } else if (type == "page") {
+            //data.originaddress=data.raddress;
+            let member = MemberFromData(data, 'origin', postRatingID);
+            //referencedPostHTML = getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive, true, data.originsysrating, data.rsourcenetwork, data.rhivename, data.rhivelink, data.originbitcoinaddress);
+            referencedPostHTML = getHTMLForPostHTML3(member, data, 'r', page, starindex, '', true);
         } else {
-            referencedPostHTML = getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive, true, data.originsysrating, data.rsourcenetwork, data.rhivename, data.rhivelink, data.originbitcoinaddress);
+
+            //data.useraddress=data.opaddress;
+            let opmember = MemberFromData(data, 'user', postRatingID);
+            referencedPostHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex, '', true);
+
+            //data.originaddress=data.raddress;
+            let member = MemberFromData(data, 'origin', postRatingID);
+            //referencedPostHTML = getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive, true, data.originsysrating, data.rsourcenetwork, data.rhivename, data.rhivelink, data.originbitcoinaddress);
+            referencedPostHTML += `<div class="replyinmainfeed">` + getHTMLForPostHTML3(member, data, 'r', page, starindex, '', true) + `</div>`;            
+
         }
     }
 

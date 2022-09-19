@@ -17,9 +17,160 @@
 
 
 //Members
+function MemberFromData(data, stub, ratingID) {
+    return new Member(
+        data[stub + "address"],
+        data[stub + "name"],
+        ratingID,
+        data[stub + "rating"],
+        data[stub + "pagingid"],
+        data[stub + "publickey"],
+        data[stub + "picurl"],
+        data[stub + "tokens"],
+        data[stub + "followers"],
+        data[stub + "following"],
+        data[stub + "blockers"],
+        data[stub + "blocking"],
+        data[stub + "profile"],
+        data[stub + "isfollowing"],
+        data[stub + "nametime"],
+        data[stub + "lastactive"],
+        data[stub + "sysrating"],
+        data[stub + "hivename"],
+        data[stub + "bitcoinaddress"]
+
+    );
+}
+
+function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress) {
+
+    if (!address) {
+        updateStatus('Missing address for post error - this should not happen.'); return "";
+    }
+
+    if (!bitcoinaddress) {
+        updateStatus('Missing legacy address for post error - this can happen if server does not have public key for user.');
+    }
+
+    address = "" + address;//always treat address like a string.
+    if (this.name == "" || this.name == null) {
+        this.name = address.substring(0, 10);
+    }
+
+    /*if (!name) {
+        if (sourcenetwork == 2) {//get the hive name
+            name = hivelink.split('/')[0];
+        } else {
+            name = address.substring(0, 10);
+        }
+    }*/
+    this.address = address;
+    this.name = name;
+    this.ratingID = ratingID;
+    this.ratingRawScore = ratingRawScore;
+    this.pagingid = pagingid;
+    this.publickey = publickey;
+    this.picurl = picurl;
+    this.tokens = tokens;
+    this.followers = followers;
+    this.following = following;
+    this.blockers = blockers;
+    this.blocking = blocking;
+    this.profile = profile;
+    this.isfollowing = isfollowing;
+    this.nametime = nametime;
+    this.lastactive = lastactive;
+    this.sysrating = sysrating;
+    this.hivename = hivename;
+    this.bitcoinaddress = bitcoinaddress;
+}
+
+Member.prototype.userHTML = function (includeProfile) {
+    if (!this.address) {
+        return "error:no address for user";
+    }
+
+    let userclass = "hnuser";
+    let profilemeta = "profile-meta";
+    let curTime = new Date().getTime() / 1000;
+
+    if (!this.nametime || curTime - this.nametime < 60 * 60 * 24 * 7 * 2) {
+        //if the user has changed name in the past two weeks
+        userclass = "hnuser newuser";
+        profilemeta = "profile-meta newuser";
+    }
+
+    let memberpic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(this.address) + `"></svg>`;
+    if (this.picurl) {
+        var picurlfull = getPicURL(this.picurl, profilepicbase, this.address, this.hivename);
+        memberpic = `<img class="memberpicturesmall" src='` + picurlfull + `'/>`;
+    }
+
+    //let linkStart = `<a href="#member?qaddress=` + san(this.address) + `" onclick="nlc();" class="` + userclass + `">`;
+    //let linkEnd = `</a> `;
+    let flair = " ";
+    if (this.tokens > 0) {
+        flair = ` <span data-vavilon_title="TopIndex" class="flair" title="TopIndex">` + ordinal_suffix_of(Number(this.tokens)) + ` </span> `;
+    }
+    let followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('` + sane(this.bitcoinaddress) + `','` + sane(this.publickey) + `'); this.style.display='none';">follow</a>`;
+    if (this.isfollowing) {
+        followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('` + sane(this.bitcoinaddress) + `','` + sane(this.publickey) + `'); this.style.display='none';">unfollow</a>`;
+    }
+
+    if (this.ratingID == undefined) {
+        this.ratingID = 'test';
+    }
+
+    let onlineStatus = "";
+    //var lastonlineseconds=curTime - lastactive;
+    onlineStatus = timeSince(this.lastactive, true);
+    /*if (lastactive &&  lastonlineseconds < 60 * 10) {
+        //if the user took an action in the past 3 minutes
+        onlineStatus="🟠";
+    }
+    if (lastactive && lastonlineseconds < 60 * 3) {
+        //if the user took an action in the past 3 minutes
+        onlineStatus="🟢";
+    }*/
+
+    let directlink = "";
+
+    let systemScoreClass = '';
+    if (!this.ratingRawScore) {
+        this.ratingRawScore = this.sysrating;
+        systemScoreClass = 'systemscore';
+    }
+
+    let obj = {
+        //These must all be HTML safe.
+        address: san(this.address),
+        profilepicsmall: memberpic,
+        handle: ds(this.name),
+        pagingidattrib: ds(this.pagingid),
+        pagingid: ds(this.pagingid),
+        flair: flair,
+        rating: Number(this.ratingRawScore),
+        followbutton: followButton,
+        following: Number(this.following),
+        followers: Number(this.followers),
+        profile: getSafeMessage(this.profile, 'profilecard', false),
+        diff: this.ratingID,
+        onlinestatus: onlineStatus,
+        systemscoreclass: systemScoreClass,
+        directlink: directlink,
+        bitcoinaddress: sane(this.bitcoinaddress)
+    }
+
+    obj.profilecard = "";
+    if (includeProfile) {
+        obj.authorsidebar = "";
+        obj.profilecard = templateReplace(userProfileCompactTemplate, obj);
+    }
+    return templateReplace(userCompactTemplate, obj);
+};
 
 //Get html for a user, given their address and name
-function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, includeProfile, lastactive, sysrating, hivename, bitcoinaddress) {
+/*function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, includeProfile, lastactive, sysrating, hivename, bitcoinaddress) {
     if (!address) {
         return "error:no address for user";
     }
@@ -61,14 +212,6 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     var onlineStatus = "";
     //var lastonlineseconds=curTime - lastactive;
     onlineStatus = timeSince(lastactive, true);
-    /*if (lastactive &&  lastonlineseconds < 60 * 10) {
-        //if the user took an action in the past 3 minutes
-        onlineStatus="🟠";
-    }
-    if (lastactive && lastonlineseconds < 60 * 3) {
-        //if the user took an action in the past 3 minutes
-        onlineStatus="🟢";
-    }*/
 
     var directlink = "";
 
@@ -106,11 +249,11 @@ function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagin
     return templateReplace(userCompactTemplate, obj);
 
 
-}
+}*/
 
-function userFromDataBasic(data, mainRatingID, size) {
+function userFromDataBasic(data, mainRatingID) {
     if (!data.raterrating) { data.raterrating = data.rating; }//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return userHTML(data.address, data.name, mainRatingID, data.raterrating, size, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, true, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.bitcoinaddress);
+    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.bitcoinaddress).userHTML(true);
 }
 
 //Posts and Replies
@@ -194,11 +337,11 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         sourceNetworkHTML: sourceNetworkHTML,
         origtxid: san(origtxid),
         bitcoinaddress: bitcoinaddress,
-        MEMUSD1: satsToUSDString(    100000000),
-        MEMUSD5: satsToUSDString(    500000000),
-        MEMUSD10: satsToUSDString(  1000000000),
-        MEMUSD20: satsToUSDString(  2000000000),
-        MEMUSD50: satsToUSDString(  5000000000),
+        MEMUSD1: satsToUSDString(100000000),
+        MEMUSD5: satsToUSDString(500000000),
+        MEMUSD10: satsToUSDString(1000000000),
+        MEMUSD20: satsToUSDString(2000000000),
+        MEMUSD50: satsToUSDString(5000000000),
         MEMUSD100: satsToUSDString(10000000000)
     }
 
@@ -321,7 +464,40 @@ function getSafeMessage(messageHTML, differentiator, includeMajorMedia) {
 
 }
 
-function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate, sysrating, sourcenetwork, hivename, hivelink, bitcoinaddress) {
+/*function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, ratingID, likedtxid, likeordislike, repliesroot, rating, differentiator, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, lastactive, truncate, sysrating, sourcenetwork, hivename, hivelink, bitcoinaddress) {
+    let theMember= new Member(address, name, ratingID, rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress);
+    return getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, likedtxid, likeordislike, repliesroot, differentiator, repostcount, repostidtxid, repostedHTML, truncate, sourcenetwork, hivelink);
+}*/
+function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repostedHTML, truncate) {
+    return getHTMLForPostHTML2(
+        theMember,
+        data[stub + "txid"],
+        data[stub + "likes"],
+        data[stub + "dislikes"],
+        data[stub + "tips"],
+        data[stub + "firstseen"],
+        data[stub + "message"],
+        data[stub + "roottxid"],
+        data[stub + "topic"],
+        data[stub + "replies"],
+        data[stub + "geohash"],
+        page,
+        data[stub + "likedtxid"],
+        data[stub + "likeordislike"],
+        data[stub + "repliesroot"],
+        differentiator,
+        data[stub + "repostcount"],
+        data[stub + "repostidtxid"],
+        repostedHTML,
+        truncate,
+        data[stub + "network"],
+        data[stub + "hivelink"]);
+}
+
+
+function getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, likedtxid, likeordislike, repliesroot, differentiator, repostcount, repostidtxid, repostedHTML, truncate, sourcenetwork, hivelink) {
+    var theAuthorHTML = theMember.userHTML(true);
+    var theAuthor2HTML = theMember.userHTML(false);
 
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
     if (sourcenetwork == 2 || sourcenetwork == 99) {
@@ -332,22 +508,6 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         updateStatus('Missing original TXID for post error - this is required for replies, tips etc'); return "";
     }
 
-    if (!address) {
-        updateStatus('Missing address for post error - this should not happen.'); return "";
-    }
-
-    if (!bitcoinaddress) {
-        updateStatus('Missing legacy address for post error - this can happen if server does not have public key for user.');
-    }
-
-    if (!name) {
-        if (sourcenetwork == 2) {//get the hive name
-            name = hivelink.split('/')[0];
-        } else {
-            name = address.substring(0, 10);
-        }
-    }
-
     if (truncate && message.length > 800) { //to do, try to break on a whitespace
         message = message.substring(0, 400) + '...';
     }
@@ -355,9 +515,6 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     let messageLinksHTML = getSafeMessage(message, differentiator, true);
 
     //let messageLinksHTML = ShowdownConverter.makeHtml(message);
-
-
-
     repliesroot = Number(repliesroot);
     replies = Number(replies);
     var isReply = (roottxid != txid);
@@ -368,14 +525,12 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         }
     }
 
-    var theAuthorHTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive, sysrating, hivename, bitcoinaddress);
-    var theAuthor2HTML = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, false, lastactive, sysrating, hivename, bitcoinaddress);
 
-    var votelinks = getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
+    var votelinks = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
     var age = getAgeHTML(firstseen);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var tipsandlinks = '';//getReplyAndTipLinksHTML(page, txid, address, true, geohash, differentiator, topic, repostcount, repostidtxid, sourcenetwork, hivelink, origTXID, bitcoinaddress);
-    var replydiv = getReplyDiv(txid, page, differentiator, address, sourcenetwork, origTXID);
+    var replydiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID);
 
     var santxid = san(txid);
     var permalink = `p/` + santxid;
@@ -407,7 +562,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
     }
 
     let pinnedpostHTML = '';
-    if (bitcoinaddress == pubkey) {
+    if (theMember.bitcoinaddress == pubkey) {
         pinnedpostHTML = `<a data-vavilon="VVpinpost" href="javascript:;" onclick="pinpost('${san(origTXID)}')">Pin Post</a>`;
     }
 
@@ -430,7 +585,7 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         topic: topic ? getTopicHTML(topic, getSafeTranslation('totopic', ' #')) : "",
         topicescaped: unicodeEscape(topic),
         quote: repostedHTML,
-        address: address,
+        address: theMember.address,
         votelinks: votelinks,
         age: age,
         roottxid: roottxid,
@@ -450,14 +605,14 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
         origtxid: san(origTXID),
         sourcenetwork: san(sourcenetwork),
         page: page,
-        bitcoinaddress: bitcoinaddress,
-        MEMUSD1: satsToUSDString(    100000000),
-        MEMUSD5: satsToUSDString(    500000000),
-        MEMUSD10: satsToUSDString(  1000000000),
-        MEMUSD20: satsToUSDString(  2000000000),
-        MEMUSD50: satsToUSDString(  5000000000),
+        bitcoinaddress: theMember.bitcoinaddress,
+        MEMUSD1: satsToUSDString(100000000),
+        MEMUSD5: satsToUSDString(500000000),
+        MEMUSD10: satsToUSDString(1000000000),
+        MEMUSD20: satsToUSDString(2000000000),
+        MEMUSD50: satsToUSDString(5000000000),
         MEMUSD100: satsToUSDString(10000000000)
-        
+
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -466,8 +621,8 @@ function getHTMLForPostHTML(txid, address, name, likes, dislikes, tips, firstsee
 }
 
 
-function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstseen, message, depth, page, ratingID, highlighttxid, likedtxid, likeordislike, blockstxid, rating, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, sourcenetwork, hivename, hivelink, bitcoinaddress) {
-    txid=txid+""; //ensure txid is a string. Sometimes it is returned as a number.
+function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink) {
+    txid = txid + ""; //ensure txid is a string. Sometimes it is returned as a number.
 
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
     if (sourcenetwork == 2) {
@@ -479,13 +634,14 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
         }
     }
 
+    /*
     if (!name) {
         if (sourcenetwork == 2 && hivelink) {//hive
             name = hivelink.split('/')[0];
         } else {
             name = address.substring(0, 10);
         }
-    }
+    }*/
 
     message = getSafeMessage(message, differentiator, true);
 
@@ -502,19 +658,20 @@ function getHTMLForReplyHTML(txid, address, name, likes, dislikes, tips, firstse
 
     message = addImageAndYoutubeMarkdown(message, differentiator, true);
 */
-    var voteButtons = getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
-    var author = userHTML(address, name, ratingID, rating, 8, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, true, lastactive, sysrating, hivename, bitcoinaddress);
+    var voteButtons = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
+    var author = theMember.userHTML(true);
+    //new Member(address, name, ratingID, rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress).userHTML(true);
     var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var age = getAgeHTML(firstseen);
-    var replyAndTips = getReplyAndTipLinksHTML(page, txid, address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork, hivelink, origTXID, bitcoinaddress);
-    var replyDiv = getReplyDiv(txid, page, differentiator, address, sourcenetwork, origTXID);
+    var replyAndTips = getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, repostcount, repostidtxid, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress);
+    var replyDiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID);
 
 
     var obj = {
         //These must all be HTML safe 
         txid: san(txid),
-        highlighted: (txid.startsWith(highlighttxid) ? ` highlight` : ``),
-        id: (txid.startsWith(highlighttxid) ? `highlightedcomment` : ``),
+        highlighted: (ishighlighted ? ` highlight` : ``),
+        id: (ishighlighted ? `highlightedcomment` : ``),
         blocked: (blockstxid != null || moderatedtxid != null ? `blocked` : ``),
         votebuttons: voteButtons,
         author: author,
@@ -538,13 +695,13 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
             if (data[i].rating) {
                 ratingused = data[i].rating;
             }
-            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused<64);
+            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused < 64);
 
             var obj = {
                 unmuteddisplay: (isMuted ? `none` : `block`),
                 muteddisplay: (isMuted ? `block` : `none`),
                 txid: san(data[i].txid),
-                hightlightedclass: ((data[i].txid+"").startsWith(highlighttxid) ? `highlightli` : ``),
+                hightlightedclass: ((data[i].txid + "").startsWith(highlighttxid) ? `highlightli` : ``),
                 replyHTML: getHTMLForReply(data[i], depth, pageName, i, highlighttxid),
                 nestedPostHTML: getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch"),
                 user: userFromDataBasic(data[i], data[i].ratingID, 0),
@@ -748,6 +905,7 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
         message = message.replace(imgurRegex, replaceImgur);
     }
+    
 
     /*if (settings["showprism"] == "true") {
         //Prism
@@ -805,9 +963,31 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     }
 
     var membercoinRegex = global ?
-    /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/gi :
-    /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/i;
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/i;
     message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
+
+    var memberlinksRegex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})*.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})*.*?<\/a>/i;
+    message = message.replace(memberlinksRegex, replaceDiamondApp);
+
+
+    var giphyRegex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?giphy\.com\/embed\/([a-z0-9A-Z]{5,20})*.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?giphy\.com\/embed\/([a-z0-9A-Z]{5,20})*.*?<\/a>/i;
+    message = message.replace(giphyRegex, `<a href="https://i.giphy.com/media/$1/giphy.webp" rel="noopener noreferrer" target="_giphy" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://i.giphy.com/media/$1/giphy.webp"></img></div></a>`);
+
+
+    var pearlRegex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/i;
+    message = message.replace(pearlRegex, `<a href="https://cdn.pearl.app/$1.webp" rel="noopener noreferrer" target="_pearl" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://cdn.pearl.app/$1.webp"></img></div></a>`);
+
+    var diamondappRegex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/)([a-z0-9]{64})*.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/)([a-z0-9]{64})*.*?<\/a>/i;
+    message = message.replace(diamondappRegex, replaceDiamondApp);
 
 
     return message;
@@ -834,6 +1014,9 @@ async function populatelbry(lbrylink,elementid){
     //set contents
     //
 }*/
+function replaceDiamondApp(match, p1, p2){
+    return `<a onclick="event.stopPropagation();nlc();location.href='#thread?post=${p2}'; " href="javascript:">https://member.cash/p/${p2.substring(0,10)}</a>`;
+}
 
 function replaceImgur(match, p1, p2, p3, p4, offset, string) {
     //return p1 + `<a href="#member?pagingid=` + encodeURIComponent(p2) + `" onclick="nlc();">@` + ds(p2) + `</a>`;
@@ -1068,7 +1251,7 @@ function getHTMLForTopicArray(data, elementStem) {
         if (data[i].existingmod == pubkey) continue;
         if (data[i].existingmod != null) {
             if (data[i].existingmodaddress != null) {
-                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, getSafeTranslation('removefilter', 'remove filter'), "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, getSafeTranslation('removefilter', 'remove filter'), "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + Member(data[i].existingmod, data[i].existingmodname, "", "").userHTML(false) + ")</span></div>";
             } else {
                 var userName = "";
                 try {
@@ -1078,7 +1261,7 @@ function getHTMLForTopicArray(data, elementStem) {
                 if (!data[i].existingmodname) data[i].existingmodname = "";
                 var modIsGroupFilter = data[i].existingmodname.toLowerCase().endsWith("filter") || data[i].existingmodname.toLowerCase().endsWith("group");
                 if (userIsGroupFilter != modIsGroupFilter) {
-                    ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, getSafeTranslation('addfilter', 'add filter'), "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + userHTML(data[i].existingmod, data[i].existingmodname, "", "", 0) + ")</span></div>";
+                    ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, getSafeTranslation('addfilter', 'add filter'), "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + Member(data[i].existingmod, data[i].existingmodname, "", "").userHTML(false) + ")</span></div>";
                 }
             }
         }
@@ -1140,7 +1323,7 @@ function populateSendMessage(address, name, publickey) {
 function getMessageHTML(data, count) {
     //You sent a message
     if (data.bitcoinaddress == pubkey && data.address != data.toaddress) {
-        return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + userHTML(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, 0, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, true, data.recipientlastactive, data.recipientsysrating, data.hivename, data.bitcoinaddress) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
+        return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, data.bitcoinaddress)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     } else {
         return "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.bitcoinaddress, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }

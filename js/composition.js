@@ -127,11 +127,12 @@ function memorandumPreview() {
     var repostedHTML = document.getElementById('quotepost').outerHTML;
 
 
+    let member= new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey);
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML('000', numberaddress, name, 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, "MAINRATINGID", '000', 1, 0, rating, 'preview', 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, repostedHTML, 0, false, 0, 3, '', '000', pubkey)
+        getHTMLForPostHTML2(member,'000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, '000', 1, 0, 'preview', 0, '', repostedHTML, false, 3, '000')
         + `<div id="articleheader000" class="articleheader"></div>`
-        + getHTMLForReplyHTML('000', numberaddress, name, 1, 0, 0, time, getMemorandumText(), '', 'page', "MAINRATINGID", null, '000', 1, null, rating, 'preview', '', null, 0, '', pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, 3, '', '000', pubkey);
+        + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000');
 
     //Repeat the title for article mode
     document.querySelector('[id^="articleheader000"]').innerHTML = document.querySelector('[id^="postbody000"]').innerHTML;

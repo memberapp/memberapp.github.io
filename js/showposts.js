@@ -190,7 +190,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
 
-        data = await removeDuplicatesFromDifferentNetworks(data);
+        data = await removeDuplicatesFromDifferentNetworks(data, txid);
 
         data = mergeRepliesToRepliesBySameAuthor(data, false);
 
@@ -600,7 +600,10 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID, 8));
-        repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '', data.rplastactive, truncate, data.rpsysrating, data.rpsourcenetwork, data.rphivename, data.rphivelink, data.rpbitcoinaddress);
+        let member = MemberFromData(data, "rp", mainRatingID + "qr");
+        //repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '', data.rplastactive, truncate, data.rpsysrating, data.rpsourcenetwork, data.rphivename, data.rphivelink, data.rpbitcoinaddress);
+        repostHTML2 = getHTMLForPostHTML3(member, data, 'rp', page, starindex, '', truncate);
+        
         //if (repostHTML2) {
         //    repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         //}
@@ -611,7 +614,18 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         if (repostHTML2) {
             repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         }
-        retHTML = getHTMLForPostHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, data.roottxid, data.topic, data.replies, data.geohash, page, mainRatingID, data.likedtxid, data.likeordislike, data.repliesroot, data.rating, starindex, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, repostHTML2, data.lastactive, truncate, data.sysrating, data.network, data.hivename, data.hivelink, data.bitcoinaddress);
+        
+        let member = MemberFromData(data, "", mainRatingID);
+        retHTML = getHTMLForPostHTML3(member, data, '', page, starindex, repostHTML2, truncate);
+        
+        if(data.opaddress){
+            let opmember = MemberFromData(data, "op", mainRatingID+'op');
+            retHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex, repostHTML2, truncate) +
+            `<div class="replyinmainfeed">` + retHTML + `</div>`;
+        }
+
+        
+
     } else {
         //repost with no message
         retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
@@ -629,7 +643,13 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    return getHTMLForReplyHTML(data.txid, data.address, data.name, data.likes, data.dislikes, data.tips, data.firstseen, data.message, depth, page, mainRatingID, highlighttxid, data.likedtxid, data.likeordislike, data.blockstxid, data.rating, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, data.lastactive, data.sysrating, data.network, data.hivename, data.hivelink, data.bitcoinaddress);
+    let member = MemberFromData(data,'',mainRatingID);
+    let ishighlighted=false;
+    if(data.highlighted || data.txid.startsWith(highlighttxid)){
+        ishighlighted=true;
+    }
+
+    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, ishighlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -659,7 +679,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
     function (membertxid) { 
         replySuccessFunction(page, txid);
         if (isBitCloutUser()) {
-            sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+            //sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+            sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
         }
     };
     
@@ -879,7 +900,7 @@ function checkForMutedWords(data) {
 }
 
 //Threads
-async function removeDuplicatesFromDifferentNetworks(data) {
+async function removeDuplicatesFromDifferentNetworks(data, highlightedtxid) {
     //var replies = [];
     for (var i = 0; i < data.length; i++) {
         //for duplicates with message
@@ -906,6 +927,9 @@ async function removeDuplicatesFromDifferentNetworks(data) {
                 for (var k = 0; k < data.length; k++) {
                     if (data[k].retxid == data[j].txid) {
                         data[k].retxid = data[i].txid;
+                        if(data[j].txid==highlightedtxid){//if tx is highlighted, highlight duplicate tx.
+                            data[k].highlighted=true;
+                        }
                     }
                 }
                 data[j].setforremoval = true;
@@ -1008,13 +1032,19 @@ function uncollapseComment(commentid) {
 }
 
 function uncollapseCommentRecursive(commentid) {
+    
     let targetElement=document.getElementById('LI' + commentid);
+    //let targetElement=document.querySelector(`[id^="LI"+${commentid}]`)
     while(targetElement){
-        //console.log(targetElement.id);
         if(targetElement.id && targetElement.id.startsWith('LI')){
             targetElement.style.display = 'block';
             let collapsedElement=document.getElementById('Collapsed' + targetElement.id);
             collapsedElement.style.display = 'none';
+            
+            //Also move this element to the top
+            let parentNode=targetElement.parentNode;
+            parentNode.insertBefore(parentNode.removeChild(targetElement),parentNode.firstChild);
+            
         }
         targetElement=targetElement.parentNode;
     }
