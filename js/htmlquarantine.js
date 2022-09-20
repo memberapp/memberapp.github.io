@@ -687,7 +687,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
 
 }
 
-function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, firstreplytxid) {
+function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
     var contents = "<ul>";
     for (var i = 0; i < data.length; i++) {
         if ((data[i].retxid == targettxid || data[i].retxid == firstreplytxid) && data[i].txid != firstreplytxid) {
@@ -701,9 +701,9 @@ function getNestedPostHTML(data, targettxid, depth, pageName, highlighttxid, fir
                 unmuteddisplay: (isMuted ? `none` : `block`),
                 muteddisplay: (isMuted ? `block` : `none`),
                 txid: san(data[i].txid),
-                hightlightedclass: ((data[i].txid + "").startsWith(highlighttxid) ? `highlightli` : ``),
-                replyHTML: getHTMLForReply(data[i], depth, pageName, i, highlighttxid),
-                nestedPostHTML: getNestedPostHTML(data, data[i].txid, depth + 1, pageName, highlighttxid, "dontmatch"),
+                hightlightedclass: (data[i].highlighted ? `highlightli` : ``),
+                replyHTML: getHTMLForReply(data[i], depth, pageName, i),
+                nestedPostHTML: getNestedPostHTML(data, data[i].txid, depth + 1, pageName, "dontmatch"),
                 user: userFromDataBasic(data[i], data[i].ratingID, 0),
                 scores: getScoresHTML(data[i].txid, data[i].likes, data[i].dislikes, data[i].tips, i),
                 age: getAgeHTML(data[i].firstseen),

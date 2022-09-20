@@ -325,7 +325,7 @@ function memocompleted() {
     document.getElementById('newpostcompleted').innerHTML = getSafeTranslation('messagesent', "Message Sent.");
 }
 
-function geocompleted() {
+function geocompleted() { 
     document.getElementById('newgeopostta').value = "";
     document.getElementById('newpostgeostatus').style.display = "none";
     document.getElementById('newpostgeobutton').style.display = "block";

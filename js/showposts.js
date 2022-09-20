@@ -189,8 +189,10 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
+        
+        txid = setHighlightedPost(data, txid); //set the highlight posts - also use the number id for txid rather than hex if txid is hex
 
-        data = await removeDuplicatesFromDifferentNetworks(data, txid);
+        data = await removeDuplicatesFromDifferentNetworks(data);
 
         data = mergeRepliesToRepliesBySameAuthor(data, false);
 
@@ -233,7 +235,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             if (data[i].txid == roottxid) {
                 contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false, true));
 
-                var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, txid, earliestReplyTXID)
+                var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, earliestReplyTXID)
 
                 if (commentTree == '<ul></ul>') {
                     commentTree = getNoCommentsYetHTML();
@@ -635,21 +637,16 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
     }
 
     if (dataReply != null) {
-        retHTML += getHTMLForReply(dataReply, 0, page, starindex, null);
+        retHTML += getHTMLForReply(dataReply, 0, page, starindex);
     }
     return retHTML;
 }
 
-function getHTMLForReply(data, depth, page, starindex, highlighttxid) {
+function getHTMLForReply(data, depth, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
     let member = MemberFromData(data,'',mainRatingID);
-    let ishighlighted=false;
-    if(data.highlighted || data.txid.startsWith(highlighttxid)){
-        ishighlighted=true;
-    }
-
-    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, ishighlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink);
+    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -900,7 +897,7 @@ function checkForMutedWords(data) {
 }
 
 //Threads
-async function removeDuplicatesFromDifferentNetworks(data, highlightedtxid) {
+async function removeDuplicatesFromDifferentNetworks(data) {
     //var replies = [];
     for (var i = 0; i < data.length; i++) {
         //for duplicates with message
@@ -927,7 +924,7 @@ async function removeDuplicatesFromDifferentNetworks(data, highlightedtxid) {
                 for (var k = 0; k < data.length; k++) {
                     if (data[k].retxid == data[j].txid) {
                         data[k].retxid = data[i].txid;
-                        if(data[j].txid==highlightedtxid){//if tx is highlighted, highlight duplicate tx.
+                        if(data[j].highlighted){//if tx is highlighted, highlight duplicate tx.
                             data[k].highlighted=true;
                         }
                     }
@@ -954,6 +951,16 @@ async function digestMessage(message) {
     return hashHex;
 }
 
+function setHighlightedPost(data,highlightedtxid) {
+    for (var i = 0; i < data.length; i++) {
+        data[i].txid=data[i].txid+""; //ensure it is a string.
+        if (data[i].txid == highlightedtxid || data[i].hivelink.startsWith(highlightedtxid)) {
+            data[i].highlighted=true;
+            return data[i].txid+"";
+        }
+    }
+    return highlightedtxid;
+}
 
 function removeDuplicates(data) {
     var replies = [];

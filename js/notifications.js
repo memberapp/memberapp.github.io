@@ -248,6 +248,14 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             let member = MemberFromData(data, 'origin', postRatingID);
             //referencedPostHTML = getHTMLForPostHTML(data.rtxid, data.raddress, data.originname, data.rlikes, data.rdislikes, data.rtips, data.rfirstseen, data.rmessage, data.rroottxid, data.rtopic, data.rreplies, data.rgeohash, page, postRatingID, data.rlikedtxid, data.rlikeordislike, data.repliesroot, data.raterrating, starindex, data.rrepostcount, data.rrepostidtxid, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, '', data.originlastactive, true, data.originsysrating, data.rsourcenetwork, data.rhivename, data.rhivelink, data.originbitcoinaddress);
             referencedPostHTML = getHTMLForPostHTML3(member, data, 'r', page, starindex, '', true);
+        } else  if (type == "thread")  {
+
+            let opmember = MemberFromData(data, 'op', postRatingID);
+            referencedPostHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex, '', true);
+
+            let member = MemberFromData(data, 'origin', postRatingID);
+            referencedPostHTML += `<div class="replyinmainfeed">` + getHTMLForPostHTML3(member, data, 'r', page, starindex, '', true) + `</div>`;            
+
         } else {
 
             //data.useraddress=data.opaddress;
@@ -354,7 +362,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 `img/icons/notification/follow.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'purchasecoin', `purchased your creator coin. ~${usdString(data.ccamount)} `),
                 timeSince(Number(data.time), true),
-                `<a  rel="noopener noreferrer" target="signal" href='https://bitcloutsignal.com/history/${data.userpagingid}'>Coin Transactions From Signal</a>`,
+                ``,
                 data.txid, highlighted
             );
             break;
@@ -366,7 +374,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 `img/icons/notification/follow.png`,
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'soldcoin', `sold your creator coin. ~${usdString(data.ccamount * 1.33)} `),
                 timeSince(Number(data.time), true),
-                `<a  rel="noopener noreferrer" target="signal" href='https://bitcloutsignal.com/history/${data.userpagingid}'>Coin Transactions From Signal</a>`,
+                ``,
                 data.txid, highlighted
             );
             break;
