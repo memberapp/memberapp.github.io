@@ -219,7 +219,7 @@ var lowfundswarningHTML=`
         seconds.</span>
     <br />
     <br />
-    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.4.4#{bcaddress}"></iframe>
+    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -343,7 +343,7 @@ var newpostHTML=`
     <div>
         <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="4000"
             onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
-            oninput="this.onchange();">
+            oninput="this.onchange();">#newmember
 </textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
     </div>
@@ -582,7 +582,7 @@ var membertabsHTML=`
         href="#list?qaddress={address}">List</a>
     <span class="separator"></span>
     <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
-        href="#show?start=0&limit=25&order=new&content=posts&filter=everyone&qaddress={address}&topicname=">Posts</a>
+        href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&topicname=">Posts</a>
 </div>
 `;
 
@@ -792,7 +792,7 @@ pages.settings = `
     </div>
     <div>
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
-        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?8.4.4#{address}"></iframe>
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{address}"></iframe>
     </div>
     <!--<div>
         <label data-vavilon="VV0085" for="currencydisplay">Currency Display</label>

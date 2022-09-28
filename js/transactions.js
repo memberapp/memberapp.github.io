@@ -436,9 +436,9 @@ function mute(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
     }
-    if(isBitCloutUser()){
-        sendBitCloutMute(targetpublickey);
-    }
+    //if(isBitCloutUser()){
+    //    sendBitCloutMute(targetpublickey);
+    //}
 }
 
 function unmute(qaddress,targetpublickey) {
@@ -446,9 +446,9 @@ function unmute(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
     }
-    if(isBitCloutUser()){
-        sendBitCloutUnMute(targetpublickey);
-    }
+    //if(isBitCloutUser()){
+    //    sendBitCloutUnMute(targetpublickey);
+    //}
 }
 
 function sub(topicHOSTILE) {
@@ -456,9 +456,9 @@ function sub(topicHOSTILE) {
     if(checkForNativeUserAndHasBalance()){
         subTransaction(topicHOSTILE);
     }
-    if(isBitCloutUser()){
-        sendBitCloutSub(topicHOSTILE);
-    }
+    //if(isBitCloutUser()){
+    //    sendBitCloutSub(topicHOSTILE);
+    //}
 }
 
 function unsub(topicHOSTILE) {
@@ -466,9 +466,9 @@ function unsub(topicHOSTILE) {
     if(checkForNativeUserAndHasBalance()){
         unsubTransaction(topicHOSTILE);
     }
-    if(isBitCloutUser()){
-        sendBitCloutUnSub(topicHOSTILE);
-    }
+    //if(isBitCloutUser()){
+    //    sendBitCloutUnSub(topicHOSTILE);
+    //}
 }
 
 

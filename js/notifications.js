@@ -212,9 +212,7 @@ notificationFilter.start = 0;
 notificationFilter.limit = 25;
 
 
-function userFromData(data, mainRatingID) {
-    return (new Member(data.origin, data.originname, mainRatingID, data.raterrating, data.originpagingid, data.originpublickey, data.originpicurl, data.origintokens, data.originfollowers, data.originfollowing, data.originblockers, data.originblocking, data.originprofile, data.originisfollowing, data.originnametime, data.originlastactive, data.originsysrating, data.originhivename, data.originbitcoinaddress)).userHTML(true);
-}
+
 
 
 function getHTMLForNotification(data, rank, page, starindex, highlighted) {
@@ -380,10 +378,10 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             break;
 
         case "like":
-            if (data.llikedtxid == null) {
+            //if (data.llikedtxid == null) {
                 //Server returns empty likes sometimes, probably if a like is superceeded by another like
-                return "";
-            }
+            //    return "";
+            //}
             var postHTML = "";
             var messageType = postlinkHTML(data.likeretxid, "remember");
             if (data.lmessage) {

@@ -6,7 +6,7 @@ async function userSearchChanged(searchbox, targetelement) {
 
     var searchtermHOSTILE = document.getElementById(searchbox).value;
 
-    if (searchtermHOSTILE.length < 3) {
+    if (searchtermHOSTILE.length < 1) {
         return;
     }
 

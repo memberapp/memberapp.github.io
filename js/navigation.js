@@ -75,7 +75,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("membersonly")) {
         showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '');
     } else if (action.startsWith("topinfluencers")) {
-        showPostsNew('top50', 'both', '', '', 0, 50, '');
+        getAndPopulateNew('top50', 'both', '', '', 0, 50, 'posts', '', false);
     } else if (action.startsWith("member")) {
         showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -414,7 +414,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
         highlightmajornavbutton("firehosebutton");
     }
 
-    getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress);
+    getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress, true);
 }
 
 
@@ -423,7 +423,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
 function showTopic(start, limit, topicname, type) {
     setTopic(topicname);
     if (!type) type = "new";
-    getAndPopulateNew(type, 'both', topicname, 'everyone', start, limit, 'posts', '');
+    getAndPopulateNew(type, 'both', topicname, 'everyone', start, limit, 'posts', '', true);
 }
 
 function showTopicList() {

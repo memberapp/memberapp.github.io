@@ -15,7 +15,36 @@
 
 "use strict";
 
+function userFromDataBasic(data, mainRatingID) {
+    if (!data.raterrating) { data.raterrating = data.rating; }//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
+    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.bitcoinaddress).userHTML(true);
+}
 
+function userFromData(data, mainRatingID) {
+    return MemberFromData(data, 'origin', mainRatingID).userHTML(true);
+    //data.origin should be data.originaddress
+    //data.raterrating should be data.originrating
+    /*return (new Member(
+        data.origin, 
+        data.originname, 
+        mainRatingID, 
+        data.raterrating, 
+        data.originpagingid, 
+        data.originpublickey, 
+        data.originpicurl, 
+        data.origintokens, 
+        data.originfollowers, 
+        data.originfollowing, 
+        data.originblockers, 
+        data.originblocking, 
+        data.originprofile, 
+        data.originisfollowing, 
+        data.originnametime, 
+        data.originlastactive, 
+        data.originsysrating, 
+        data.originhivename, 
+        data.originbitcoinaddress)).userHTML(true);*/
+}
 //Members
 function MemberFromData(data, stub, ratingID) {
     return new Member(
@@ -251,10 +280,7 @@ Member.prototype.userHTML = function (includeProfile) {
 
 }*/
 
-function userFromDataBasic(data, mainRatingID) {
-    if (!data.raterrating) { data.raterrating = data.rating; }//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.bitcoinaddress).userHTML(true);
-}
+
 
 //Posts and Replies
 function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxid) {
@@ -621,7 +647,7 @@ function getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, 
 }
 
 
-function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink) {
+function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted) {
     txid = txid + ""; //ensure txid is a string. Sometimes it is returned as a number.
 
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
@@ -672,7 +698,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         txid: san(txid),
         highlighted: (ishighlighted ? ` highlight` : ``),
         id: (ishighlighted ? `highlightedcomment` : ``),
-        blocked: (blockstxid != null || moderatedtxid != null ? `blocked` : ``),
+        blocked: (blockstxid != null ? `blocked` : ``),
         votebuttons: voteButtons,
         author: author,
         message: message,
@@ -680,7 +706,8 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         age: age,
         replyandtips: replyAndTips,
         replydiv: replyDiv,
-        diff: differentiator
+        diff: differentiator,
+        deleted: (deleted=='1' ? ' deleted':'')
     };
 
     return templateReplace(replyTemplate, obj);
@@ -972,11 +999,10 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})*.*?<\/a>/i;
     message = message.replace(memberlinksRegex, replaceDiamondApp);
 
-
     var giphyRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?giphy\.com\/embed\/([a-z0-9A-Z]{5,20})*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?giphy\.com\/embed\/([a-z0-9A-Z]{5,20})*.*?<\/a>/i;
-    message = message.replace(giphyRegex, `<a href="https://i.giphy.com/media/$1/giphy.webp" rel="noopener noreferrer" target="_giphy" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://i.giphy.com/media/$1/giphy.webp"></img></div></a>`);
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(giphy\.com\/embed\/|media1\.giphy\.com\/media\/)([a-z0-9A-Z]{5,20})*.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(giphy\.com\/embed\/|media1\.giphy\.com\/media\/)([a-z0-9A-Z]{5,20})*.*?<\/a>/i;
+    message = message.replace(giphyRegex, `<a href="https://i.giphy.com/media/$2/giphy.webp" rel="noopener noreferrer" target="_giphy" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://i.giphy.com/media/$2/giphy.webp"></img></div></a>`);
 
 
     var pearlRegex = global ?
@@ -985,8 +1011,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     message = message.replace(pearlRegex, `<a href="https://cdn.pearl.app/$1.webp" rel="noopener noreferrer" target="_pearl" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://cdn.pearl.app/$1.webp"></img></div></a>`);
 
     var diamondappRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/)([a-z0-9]{64})*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/)([a-z0-9]{64})*.*?<\/a>/i;
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/i;
     message = message.replace(diamondappRegex, replaceDiamondApp);
 
 
@@ -1251,7 +1277,7 @@ function getHTMLForTopicArray(data, elementStem) {
         if (data[i].existingmod == pubkey) continue;
         if (data[i].existingmod != null) {
             if (data[i].existingmodaddress != null) {
-                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, getSafeTranslation('removefilter', 'remove filter'), "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + Member(data[i].existingmod, data[i].existingmodname, "", "").userHTML(false) + ")</span></div>";
+                ret += `<div class="filterprovider">` + clickActionTopicHTML("dismiss", data[i].existingmod, data[i].topicname, getSafeTranslation('removefilter', 'remove filter'), "dismiss" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + (new Member(data[i].existingmod, data[i].existingmodname, "", "")).userHTML(false) + ")</span></div>";
             } else {
                 var userName = "";
                 try {
@@ -1261,7 +1287,7 @@ function getHTMLForTopicArray(data, elementStem) {
                 if (!data[i].existingmodname) data[i].existingmodname = "";
                 var modIsGroupFilter = data[i].existingmodname.toLowerCase().endsWith("filter") || data[i].existingmodname.toLowerCase().endsWith("group");
                 if (userIsGroupFilter != modIsGroupFilter) {
-                    ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, getSafeTranslation('addfilter', 'add filter'), "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + Member(data[i].existingmod, data[i].existingmodname, "", "").userHTML(false) + ")</span></div>";
+                    ret += `<div class="filterprovider">` + clickActionTopicHTML("designate", data[i].existingmod, data[i].topicname, getSafeTranslation('addfilter', 'add filter'), "designate" + data[i].existingmod + Number(data[i].mostrecent)) + "<span class='mib'>( " + (new Member(data[i].existingmod, data[i].existingmodname, "", "")).userHTML(false) + ")</span></div>";
                 }
             }
         }

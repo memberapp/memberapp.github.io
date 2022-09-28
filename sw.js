@@ -9,8 +9,10 @@ const PRECACHE_URLS = [
   //'locale/en.json'
 ];
 
-//If updating version here, also update version in login.js
-const version = '8.4.4';
+//If updating version here, also update version in index.html
+//Preferable to grab this from sw.js, maybe with messages
+//So must be entered in two places
+const version = '8.4.8';
 
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;

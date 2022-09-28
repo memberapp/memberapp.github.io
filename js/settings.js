@@ -291,7 +291,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         var bcaddress = await pubkeyToBCaddress(pubkeyhex);
         obj.bcaddress = bcaddress;
     }
-
+    obj.version = version;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 

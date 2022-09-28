@@ -294,11 +294,11 @@ var notificationCompactTemplate=`
 
 var replyTemplate=`
 <div class="reply{highlighted}" id="{id}">
-    <div class="{blocked}">
+    <div class="{blocked} {deleted}">
         <div class="votelinks">{votebuttons}</div>
         <div class="commentdetails">
             <div class="comhead"> <a onclick="collapseComment('{txid}');" href="javascript:;">[-]</a>
-                {author}
+                {author}{deleted}
             </div>
             <div class="comment">
                 <div class="commentbody">

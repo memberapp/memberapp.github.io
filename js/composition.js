@@ -132,7 +132,7 @@ function memorandumPreview() {
     document.getElementById('memorandumpreview').innerHTML =
         getHTMLForPostHTML2(member,'000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, '000', 1, 0, 'preview', 0, '', repostedHTML, false, 3, '000')
         + `<div id="articleheader000" class="articleheader"></div>`
-        + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000');
+        + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false);
 
     //Repeat the title for article mode
     document.querySelector('[id^="articleheader000"]').innerHTML = document.querySelector('[id^="postbody000"]').innerHTML;
