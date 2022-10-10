@@ -524,4 +524,6 @@ var TransactionQueue = /** @class */ (function (_super) {
     };
     return TransactionQueue;
 }(UTXOPool));
-module.exports = TransactionQueue;
+if (typeof module !== 'undefined') {
+    module.exports = TransactionQueue;
+}

@@ -154,7 +154,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
         lastViewOfNotificationspm = parseInt(new Date().getTime() / 1000);
         localStorageSet(localStorageSafe, "lastViewOfNotificationspm", lastViewOfNotificationspm);
         setAlertCount("alertcountpm", 0);
-        document.title = "member.cash";
+        //document.title = "member.cash";
 
 
         data = mergeRepliesToRepliesBySameAuthor(data, true);
@@ -475,10 +475,10 @@ function setDisplayNone() {
 }
 
 function showScoresExpanded(retxid, profileelement) {
-    if (this) {
+    /*if (this) {
         var profileelement = this.id.replace('scores', 'scoresexpanded');
         var retxid = profileelement.substr(14, 64);
-    }
+    }*/
     var closeHTML = getCloseButtonHTML(profileelement);
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
@@ -617,6 +617,13 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
     }
 
     if (data.message) {
+
+        //this is a quick hack to filter out multiple edits
+        //a genuine response to self is also removed. look at this when revisiting edited posts
+        if(data.address==data.opaddress){ 
+            return ''; 
+        }
+
         //post with message
         if (repostHTML2) {
             repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
@@ -682,8 +689,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
     function (membertxid) { 
         replySuccessFunction(page, txid);
         if (isBitCloutUser()) {
-            //sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-            sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+            sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+            //sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
         }
     };
     

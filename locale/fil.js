@@ -125,7 +125,7 @@ dictionary.fil=
   "VV0157": "tip",
   "VV0158": "punahin",
   "VV0159": "+more",
-  "VV0161": "I-flag(post)",
+  "VV0161": "i-flag",
   "VV0162": "tip",
   "VV0163": "ipinapadala",
   "VV0165": "Ipinapadala . . .",

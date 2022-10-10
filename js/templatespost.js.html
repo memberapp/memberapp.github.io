@@ -100,6 +100,8 @@ var postCompactTemplate = `
                             <span id="tipscount{txid}" class="iconcount" data-amount="{tipsinsatoshis}">{tips}</span>
                             <span data-vavilon="tips" class="text footerlabel">tips</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
+                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span
+                                    data-vavilon="remember">0.1 M3M ({MEMUSD1C})</span></a>
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span
                                         data-vavilon="remember">1 M3M ({MEMUSD1})</span></a>
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span
@@ -109,9 +111,6 @@ var postCompactTemplate = `
                                 <a
                                     onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
                                         data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
-                                <a
-                                    onclick="if (confirm('Tip 50 M3M ({MEMUSD50})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    5000000000);}"><span
-                                        data-vavilon="remember">50 M3M ({MEMUSD50})</span></a>
                                 <a
                                     onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
                                         data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
@@ -183,16 +182,7 @@ var completedPostTemplate=`
 `;
 
 
-var scoresTemplate=`
-<span onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')" id="scores{txid}{diff}" class="score">
-    <span class="likescounttext">
-        <span id="likescount{txid}">{likesbalance}</span>
-        <span data-vavilon="VV0147">likes and</span>
-    </span>
-    <span class="tipscounttext">
-        <span id="tipscount{txid}" data-amount="{tips}">{balancestring}</span>
-    </span>
-</span>`;
+
 
 var userCompactTemplate=`
 <span class="membercompact" onclick="event.stopPropagation();">
@@ -262,11 +252,10 @@ var userProfileCompactTemplate=`
 var nestedPostTemplate= `
 <li style="display:{unmuteddisplay};" id="LI{txid}" class="{hightlightedclass}">{replyHTML}{nestedPostHTML}</li>
 <li style="display:{muteddisplay};" id="CollapsedLI{txid}" class="collapsed">
-    <div class="comhead">
+    <div class="subtext2">
         <a onclick="uncollapseComment('{txid}');" href="javascript:;">[+] </a>
         {user}
-        {scores}
-        {age}
+        <span class='subtextbuttons2'>{age}</span>
     </div>
     <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
     <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
@@ -298,13 +287,13 @@ var replyTemplate=`
         <div class="votelinks">{votebuttons}</div>
         <div class="commentdetails">
             <div class="comhead"> <a onclick="collapseComment('{txid}');" href="javascript:;">[-]</a>
-                {author}{deleted}
+                {author}<span class="subtextbuttons2">{likes}{age}</span>{retracted}
             </div>
             <div class="comment">
                 <div class="commentbody">
                     {message}
                 </div>
-                <div class="subtextbuttons">{scores} {age} {replyandtips}</div>
+                <div class="subtextbuttons2">{replyandtips} {tips}{remembers}</div>
                 {replydiv}
             </div>
             <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
@@ -333,22 +322,31 @@ var replyDivTemplate = `
     </div>
 </div>`;
 
+var remembersTemplate=`
+<span {display} onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" id="repostlink{page}{txid}" class="subtextremembers">
+    <a href="javascript:"><span id="repostscount{txid}">{repostcount}</span>&hairsp;<span data-vavilon="VV0156">remembers</span></a>
+</span>`;
+
+var likesTemplate=`
+<span {display} onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')" id="scores{txid}{diff}" class="subtextlikes">
+    <a href="javascript:"><span id="likescount{txid}">{likesbalance}</span>&hairsp;<span data-vavilon="likes">likes</span></a>
+</span>`;
+
+var tipsTemplate=`
+<span {display} onclick="showScoresExpanded('{txid}','scoresexpanded{txid}{diff}')" id="scores{txid}{diff}" class="subtexttips">
+    <a href="javascript:"><span id="tipscount{txid}" data-amount="{tips}">{balancestring}</span>&hairsp;<span data-vavilon="tips">tips</span></a>
+</span>`;
+
+
 var replyAndTipsTemplate = `
-{maplink}
 <a data-vavilon="VV0155" id="replylink{txid}{page}" onclick="showReplyBox('{txid}{page}');"
     href="javascript:;">reply</a>
-<span class="rememberscounttext">
-    <a class="{remembersactive}" id="repostlink{page}{txid}" {remembersonclick}></a>
-    <span onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" class="repostscount">
-        <span id="repostscount{txid}">{repostcount}</span>
-        <span data-vavilon="VV0156">remembers</span>
-    </span>
-</span>
 <!--<a data-vavilon="VV0157" id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>-->
 
 <a id="tiplinkposts{diff}{txid}" class="btn-icon" onclick="dropDownMenuAction(this);">
-    <span data-vavilon="VV0157">tip</span>
-    <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}" style="position: relative;">
+    <span data-vavilon="VV0157">tip</span><div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}" style="position: relative;">
+        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span data-vavilon="remember">0.1
+            M3M ({MEMUSD1C})</span></a>
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1
                 M3M ({MEMUSD1})</span></a>
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5
@@ -359,25 +357,20 @@ var replyAndTipsTemplate = `
             onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
                 data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
         <a
-            onclick="if (confirm('Tip 50 M3M ({MEMUSD50})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    5000000000);}"><span
-                data-vavilon="remember">50 M3M ({MEMUSD50})</span></a>
-        <a
             onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
                 data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
-    </div>
-</a>
-
+    </div></a>
 <a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
+<a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
+<!--<a data-vavilon="VV0161" id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');" href="javascript:;">flag</a>
+
 <a data-vavilon="VV0159" id="morelink{page}{txid}" onclick="showMore('more{page}{txid}','morelink{page}{txid}');"
     href="javascript:;">+more</a>
 <span id="more{page}{txid}" style="display:none">
-    <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
     {articlelink2}
     {sourceNetworkHTML}
-    <a data-vavilon="VV0161" id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');"
-        href="javascript:;">flag(post)</a>
     {hideuser}
-</span>
+</span>-->
 
 <span id="tipbox{page}{txid}" style="display:none">
     <input id="tipamount{page}{txid}" type="number" value="0" min="0" style="width: 6em;" step="1000" />

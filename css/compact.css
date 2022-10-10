@@ -1,8 +1,19 @@
 body {
   background: #fff;
   word-break: break-word;
+
 }
 
+.commentbody{
+  line-height: 1.45;
+}
+  
+
+
+p {
+  margin-top: 0;
+  margin-bottom: 0.35em;
+}
 
 .mcapplicationpage {
   max-width: 800px;
@@ -240,14 +251,6 @@ a {
   left: 0;
 }
 
-.age::before {
-  content: "\00a0• ";
-}
-
-.age::after {
-  content: "\00a0";
-}
-
 .handle-label, .pagingid-label{
   display:none;
 }
@@ -297,7 +300,7 @@ a {
   height: 1.25rem;
   width: 1.25rem;
   border-radius: 100%;
-  top: 0.125rem;
+  top: 0.2rem;
   position: relative;
   object-fit: cover;
 }
@@ -400,6 +403,7 @@ Use important, because we always want profile card pics to be this size*/
 /*No margin on age*/
 .plaintext, .age {
   margin-right: 0rem;
+  word-spacing: 0;
 }
 /*Remove border on posts*/
 .mainbodywrapper #posts .itemlist ol.posts li {
@@ -539,6 +543,34 @@ Use important, because we always want profile card pics to be this size*/
   border-radius: 100%;
   outline: none;
 }
+
+.subtextbuttons2 {
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.54);
+    font-weight: bold;
+    word-spacing: 5px;
+}
+
+.subtextbuttons2 a {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.subtextbuttons2 a:hover {
+  text-decoration: underline;
+}
+
+.subtexttips a {
+  color:rgb(0, 170, 0) !important;
+}
+
+.subtextremembers a {
+  color:#61aff0 !important;
+}
+
+.retracted {
+  color:red;
+}
+
 /*Remove generally bad img defaults*/
 
 img {
@@ -2187,6 +2219,10 @@ tbody tr td:first-of-type {
   background: unset;
 }
 
+.votelinks {
+  padding: 0.4rem 0.5rem;
+}
+
 #newpost br {
   display: unset;
 }
@@ -2208,6 +2244,15 @@ tbody tr td:first-of-type {
 .comment-tree ul li.collapsed {
   padding-top: 0px;
   padding-bottom: 0px;
+}
+
+.comment-tree {
+  margin-bottom: 0;
+}
+
+.comment-tree ul li .reply div:only-child .commentdetails {
+  padding: 0 0.875rem 0 0;
+  width: 100%;
 }
 
 /* Article Mode Stuff */

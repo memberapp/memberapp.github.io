@@ -194,7 +194,7 @@ function membercoinToLegacy(address) {
 
 function legacyToMembercoin(pubkey) {
     let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
-    return cashaddr.encode('member', 'P2PKH', hash)
+    return cashaddr.encode('member', 'P2PKH', hash);
 
     //const { prefix, type, hash } = cashaddr.decode(address);
     //let hashhex = Buffer.from(hash).toString('hex');
@@ -240,6 +240,9 @@ function updateChainHeight(chainheight2,chainheighttime2){
 var showwarning=true;
 function updateBalance(chainheight2) {
 
+    if(tq.chainheighttime==0){
+        return 0;
+    }
     var total = tq.getBalance(chainheight2);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);
     document.getElementById('balancebch').innerHTML = (total / 100000000).toFixed(5);

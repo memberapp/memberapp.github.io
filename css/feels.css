@@ -1227,15 +1227,6 @@ video {
     .comment-tree ul li .reply div .subtextbuttons span.rememberscounttext .likescounttext,
     .comment-tree ul li .reply div .subtextbuttons span.rememberscounttext .tipscounttext {
       margin-right: 0.25rem; }
-  .postdetails .subtextbuttons [id^="permalinkposts"]::before,
-  .postdetails .subtextbuttons [id^="permalinkthread"]::before,
-  .postdetails .subtextbuttons [id^="permalinknotifications"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="permalinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="permalinkthread"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="permalinknotifications"]::before {
-    background: url(../img/feelstheme/link-45deg.svg);
-    background-size: 0.875rem 0.875rem;
-    display: inline-block; }
   .postdetails .subtextbuttons .rememberscounttext,
   .comment-tree ul li .reply div .subtextbuttons .rememberscounttext {
     margin-right: 0.25rem;
@@ -1246,11 +1237,7 @@ video {
     .postdetails .subtextbuttons .rememberscounttext a.remembersactive,
     .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersactive {
       margin-right: 0; }
-      .postdetails .subtextbuttons .rememberscounttext a.remembersactive::before,
-      .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersactive::before {
-        background: url(../img/feelstheme/re-member.svg);
-        background-size: 0.875rem 0.875rem;
-        display: inline-block; }
+      
     .postdetails .subtextbuttons .rememberscounttext a.remembersinactive,
     .comment-tree ul li .reply div .subtextbuttons .rememberscounttext a.remembersinactive {
       color: #2291EB; }
@@ -1260,41 +1247,12 @@ video {
     .postdetails .subtextbuttons .rememberscounttext .repostscount,
     .comment-tree ul li .reply div .subtextbuttons .rememberscounttext .repostscount {
       margin-right: 0.25rem; }
-  .postdetails .subtextbuttons [id^="replylinkposts"]::before,
-  .postdetails .subtextbuttons [id^="replylinkmemberposts"]::before,
-  .postdetails .subtextbuttons [id^="replylink"]::before,
-  .postdetails .subtextbuttons [id^="replylinknotifications"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="replylinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="replylinkmemberposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="replylink"]::before,
-  .comment-tree ul li .reply div .subtextbuttons [id^="replylinknotifications"]::before {
-    background: url(../img/feelstheme/chat-right-fill.svg);
-    background-size: 0.875rem 0.875rem;
-    display: inline-block; }
+
   .postdetails .subtextbuttons a[href^="#thread?"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[href^="#thread?"]::before {
     background: url(../img/feelstheme/chat-left-fill.svg);
     background-size: 0.875rem 0.875rem;
     display: inline-block; }
-  .postdetails .subtextbuttons a[id^="quotelinkthread"]::before,
-  .postdetails .subtextbuttons a[id^="quotelinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons a[id^="quotelinkthread"]::before,
-  .comment-tree ul li .reply div .subtextbuttons a[id^="quotelinkposts"]::before {
-    background: url(../img/feelstheme/quote.svg);
-    background-size: 0.875rem 0.875rem;
-    display: inline-block; }
-  .postdetails .subtextbuttons a[id^="tiplinkposts"]::before,
-  .postdetails .subtextbuttons a[id^="tiplinkthread"]::before,
-  .postdetails .subtextbuttons a[id^="tiplinkmemberposts"]::before,
-  .postdetails .subtextbuttons a[id^="tiplinknotifications"]::before,
-  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkthread"]::before,
-  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinkmemberposts"]::before,
-  .comment-tree ul li .reply div .subtextbuttons a[id^="tiplinknotifications"]::before {
-    background: url(../img/feelstheme/tip.svg);
-    background-size: 0.875rem 0.875rem;
-    display: inline-block;
-    -webkit-transition: filter 1s ease-in-out; }
   .postdetails .subtextbuttons a[id^="articlelinkposts"]::before,
   .postdetails .subtextbuttons a[id^="articlelinkthread"]::before,
   .comment-tree ul li .reply div .subtextbuttons a[id^="articlelinkposts"]::before,
@@ -1388,12 +1346,7 @@ video {
         color: rgba(0, 0, 0, 0.54);
         margin-bottom: 0.5rem;
         font-weight: bold;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-align: center;
-        align-items: center;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap; }
+         }
         .comment-tree ul li .comhead .score {
           margin-right: 0.25rem; }
         .comment-tree ul li .comhead .memberfilter {
@@ -1405,11 +1358,11 @@ video {
         font-weight: bold;
         left: 0.85em;
         position: relative;
-        top: 0.65em; }
+         }
       .comment-tree ul li .highlight {
         background-color: #ddeefc; }
       .comment-tree ul li .reply {
-        margin-bottom: 0.875rem; }
+        margin-bottom: 0.4rem; }
         .comment-tree ul li .reply div:only-child {
           display: -ms-flexbox;
           display: flex;

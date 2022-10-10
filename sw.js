@@ -12,8 +12,8 @@ const PRECACHE_URLS = [
 //If updating version here, also update version in index.html
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-const version = '8.4.8';
-
+const version = '8.5.1';
+const siteurl = 'https://member.cash';
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;
 
@@ -342,16 +342,16 @@ self.addEventListener('notificationclick', function (event) {
 
     for (let i = 0; i < windowClients.length; i++) {
       const windowClient = windowClients[i];
-      if (windowClient.url.startsWith("https://member.cash") && windowClient.url.includes('#notifications')) {
+      if (windowClient.url.startsWith(siteurl) && windowClient.url.includes('#notifications')) {
         matchingClient = windowClient;
         break;
       }
     }
 
     if (matchingClient) {
-      //matchingClient.url = "https://member.cash" + page;
+      //matchingClient.url = siteurl + page;
       matchingClient.postMessage({
-        notificationpage: "https://member.cash" + page
+        notificationpage: siteurl + page
       });
       return matchingClient.focus();
     } else {

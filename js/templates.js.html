@@ -326,7 +326,7 @@ var newpostHTML=`
 <div id="memorandumarea">
     <input type="hidden" name="quotetxid" value="" id="quotetxid">
     <input type="hidden" name="quotetxidnetwork" value="" id="quotetxidnetwork">
-
+    <input type="hidden" name="memberimageurl" value="" id="memberimageurl">
     <!-- //Remove topic - use tags to introduce a topic
     <div id="memorandumtopicbutton">
         <a data-vavilon="VV0037" href=""
@@ -343,14 +343,13 @@ var newpostHTML=`
     <div>
         <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="4000"
             onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
-            oninput="this.onchange();">#newmember
-</textarea>
+            oninput="this.onchange();">#newmember</textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
     </div>
     <form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
         <label>
             <input name='firstfile' type="file" style="display: none;"
-                onchange="uploadFile('memorandumtitlefile','{fileuploadurl}','memorandumtitle','memorandumpreviewarea','uploadimagelink','uploadimagestatus',showMemorandumPreview);"
+                onchange="uploadFile('memorandumtitlefile','{fileuploadurl}','memorandumtitle','memorandumpreviewarea','uploadimagelink','uploadimagestatus',showMemorandumPreview,'memberimageurl');"
                 accept="image/*">
             <a id="uploadimagelink" data-vavilon="addimage">+add image</a>
         </label>
@@ -707,7 +706,7 @@ pages.settings = `
             <form id="profilepicfile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
                 <label>
                     <input style="display: none;" name='firstfile' type="file" id="uploadprofilepicinput"
-                        onchange="uploadFile('profilepicfile','{fileuploadurl}','settingspic','memorandumpreviewarea','chooseimagebutton','uploadimagestatus',setPic);"
+                        onchange="uploadFile('profilepicfile','{fileuploadurl}','settingspic','memorandumpreviewarea','chooseimagebutton','uploadimagestatus',setPic,null);"
                         accept="image/*">
                     <a data-vavilon="chooseimage" id="chooseimagebutton" class="memberlinkbutton">Choose Image</a>
                 </label>
@@ -940,25 +939,25 @@ var majorNavButtonsHTML=`
     <span id="loggedin" class="loggedin" style="display:none;">
         <a data-vavilon_title="VV0095" onclick="nlc();" id="notificationsbutton" title="Notifications"
             href="#notifications">
-            <img src="img/icons/notification.png" alt="notificatons">
+            <img src="img/icons/notification.png" width="32" height="32" alt="notificatons">
             <span class="alertcount noselect" id="alertcount"></span></a>
         <a data-vavilon_title="VV0094a" onclick="nlc();" id="myfeedbutton"
             title="My People (Latest posts from your follows)" href="#mypeople">
-            <img src="img/icons/group.png" alt="MyFeed">
+            <img src="img/icons/group.png" width="32" height="32" alt="MyFeed">
         </a>
         <a data-vavilon_title="VVfirehose" onclick="nlc();" id="firehosebutton" title="Firehose (Everything)"
             href="#firehose">
-            <img src="img/icons/fire-hose.png" alt="FireHose">
+            <img src="img/icons/fire-hose.png" width="32" height="32" alt="FireHose">
         </a>
         <a data-vavilon_title="VV0100a" onclick="nlc();" id="topiclistbutton"
             title="My Tags  (Latest posts from your tags)" href="#mytags">
-            <img src="img/icons/hashtaglarge.png" alt="MyFeed">
+            <img src="img/icons/hashtaglarge.png" width="32" height="32" alt="MyFeed">
         </a>
         <a data-vavilon_title="VV0097" onclick="nlc();" id="privatemessagesbutton" title="Messages" href="#messages">
-            <img src="img/icons/messages.png" alt="message">
+            <img src="img/icons/messages.png" width="32" height="32" alt="message">
             <span class="alertcount noselect" id="alertcountpm"></span></a>
         <a data-vavilon_title="VV0096" onclick="nlc();" id="newbutton" title="New Post" href="#new">
-            <img src="img/icons/plus.png" alt="newpost">
+            <img src="img/icons/plus.png" width="32" height="32" alt="newpost">
         </a>
     </span>
     <span id="loggedout" class="loggedout">
@@ -966,7 +965,7 @@ var majorNavButtonsHTML=`
             title="Firehose (Everything)"
             href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
             <!-- 📰 -->
-            <img src="img/icons/fire-hose.png" alt="firehose">
+            <img src="img/icons/fire-hose.png" width="32" height="32" alt="firehose">
         </a>
         <a data-vavilon="VV0102a" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">Login</a>
         <span class="separatorwide"></span>

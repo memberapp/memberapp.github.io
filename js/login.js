@@ -122,11 +122,13 @@ async function init() {
     }
 
 
-    loadBigLibs();
+    
     displayContentBasedOnURLParameters();
+    loadBigLibs();
 }
 
 //This method doesn't appear to be in use, also doesn't seem to work
+/*
 function getAndSetVersion() {
     fetch('/version')
         .then(function (response) {
@@ -136,7 +138,7 @@ function getAndSetVersion() {
             let ver_split = version.lastIndexOf('.');
             document.getElementById('version').innerHTML = version.substring(0, ver_split) + ".<u>" + version.substring(ver_split + 1) + "</u>";
         });
-}
+}*/
 
 function trylogin(loginkey, nextpage) {
     try {
@@ -323,7 +325,7 @@ async function login(loginkey) {
 
     document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
     document.getElementById('newpost').innerHTML = newpostHTML;
-    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { fileuploadurl: dropdowns.txbroadcastserver + "uploadfile" }, true);
+    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { fileuploadurl: dropdowns.imageuploadserver + "uploadfile" }, true);
 
 
 

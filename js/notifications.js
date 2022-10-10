@@ -21,10 +21,10 @@ function displayNotificationCount() {
 
             var pageTitleCount = Number(data[0].count) + Number(data[0].countpm);
             var pageTitle = "";
-            if (pageTitleCount > 0) {
-                pageTitle = "(" + pageTitleCount + ") ";
-            }
-            document.title = pageTitle + siteTitle;
+            //if (pageTitleCount > 0) {
+            //    pageTitle = "(" + pageTitleCount + ") ";
+            //}
+            //document.title = pageTitle + siteTitle;
         } catch (err) {
             console.log(err);
         }
@@ -168,7 +168,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid, nfilter
             lastViewOfNotifications = parseInt(new Date().getTime() / 1000);
             localStorageSet(localStorageSafe, "lastViewOfNotifications", lastViewOfNotifications);
             setAlertCount("alertcount", 0);
-            document.title = siteTitle;
+            //document.title = siteTitle;
         }
 
 

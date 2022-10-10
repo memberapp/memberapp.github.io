@@ -1,4 +1,3 @@
-
 //markdown editor
 var SimpleMDE = null;
 var simplemde;
@@ -57,7 +56,7 @@ function switchToRegularMode() {
 }
 
 //This is used for profile upload pic as well as file upload pic
-async function uploadFile(elementid, uploadURL, targettextarea, memorandumpreviewelement, uploadimagelink, uploadimagestatus, callback) {
+async function uploadFile(elementid, uploadURL, targettextarea, memorandumpreviewelement, uploadimagelink, uploadimagestatus, callback, hiddeninput) {
     const formData = document.getElementById(elementid);
     //document.getElementById(memorandumpreviewelement).style.display = 'block';
     document.getElementById(uploadimagelink).style.visibility = 'hidden';
@@ -84,7 +83,11 @@ async function uploadFile(elementid, uploadURL, targettextarea, memorandumprevie
         } else if (data.arweaveid) {
             textarea.value = "arweave:" + data.arweaveid + initValue;
         } else if (data.memberurl) {
+            if(hiddeninput){
+                document.getElementById(hiddeninput).value=data.memberurl;
+            }
             textarea.value = data.memberurl + initValue;
+            
         }
         callback();
     });
@@ -141,28 +144,6 @@ function memorandumPreview() {
 
     addDynamicHTMLElements();
 }
-
-/*
-function topictitleChanged() {
-
-    //emojis are of length 4, although treated as length 2, so got to turn into hex to discover real length
-    const titlelength = new Buffer(document.getElementById('memorandumtitle').value).toString('hex').length / 2;
-    const topiclength = new Buffer(document.getElementById('memorandumtopic').value).toString('hex').length / 2;
-
-    var maxlength = 217;
-    if (topiclength) {
-        maxlength -= 3;
-    }
-    if (document.getElementById('quotetxid').value) {
-        maxlength -= 35;
-    }
-
-    document.getElementById('memorandumtitle').maxLength = Math.max(0, maxlength - topiclength);
-    document.getElementById('memorandumtopic').maxLength = Math.max(0, maxlength - titlelength);
-    document.getElementById('newpostmemorandumbutton').disabled = (topiclength + titlelength > maxlength);
-    document.getElementById('memorandumtitlelengthadvice').innerHTML = "(" + titlelength + "/" + document.getElementById('memorandumtitle').maxLength + ")";
-    document.getElementById('memorandumtopiclengthadvice').innerHTML = "(" + topiclength + "/" + document.getElementById('memorandumtopic').maxLength + ")";
-}*/
 
 function geopost() {
     if (!checkForPrivKey()) return false;
@@ -232,8 +213,8 @@ function postmemorandum() {
     var topic = '';
 
     if (!txid) {
-        if (posttext.length == 0) {
-            alert(getSafeTranslation('nomemo', "No Memo - Try adding something in the memo box"));
+        if (posttext == '#newmember' || posttext.length == 0) {
+            alert(getSafeTranslation('nomemo', "No Post - Try adding some text"));
             return false;
         }
     }/*else{
@@ -251,6 +232,8 @@ function postmemorandum() {
 
     var successFunction = memorandumpostcompleted;
 
+    let memberImageURL = document.getElementById('memberimageurl').value
+
     if (txid) {
         //Repost
         if (checkForNativeUserAndHasBalance()) {
@@ -260,7 +243,7 @@ function postmemorandum() {
             successFunction = null;
         }
         if (isBitCloutUser()) {
-            sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network);
+            sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
         }
     }
     else {
@@ -273,7 +256,7 @@ function postmemorandum() {
             successFunction = null;
         }
         if (isBitCloutUser()) {
-            sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
+            sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
         }
     }
 
@@ -282,6 +265,7 @@ function postmemorandum() {
     //}
 }
 
+/*
 function sendRepostNotification(txid, divForStatus, topic, newtxid) {
 
     var replytext = getSafeTranslation('postremembered', "Your post was remembered");
@@ -292,7 +276,7 @@ function sendRepostNotification(txid, divForStatus, topic, newtxid) {
     var replyHex = new Buffer(replytext).toString('hex');
 
     sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, function (txidnew) { memorandumpostcompleted(newtxid); });
-}
+}*/
 
 function memorandumpostcompleted(txid) {
     txid = san(txid);
@@ -307,7 +291,9 @@ function memorandumpostcompleted(txid) {
     */
     //iframe not allowed by twitter
     //document.getElementById('newpostmemorandumcompleted').innerHTML = `Sent. <a rel='noopener noreferrer' onclick="createiframe('`+encodedURL+`','posttotwitter');return false;" href="">Also Post To Twitter</a><div id="posttotwitter"></div>`;
-
+    document.getElementById('quotetxid').value = "";
+    document.getElementById('quotetxidnetwork').value = "";
+    document.getElementById('memberimageurl').value = "";
     document.getElementById('memorandumtitle').value = "";
     document.getElementById('newposttamemorandum').value = "";
     document.getElementById('newpostmemorandumstatus').style.display = "none";

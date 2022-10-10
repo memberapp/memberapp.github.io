@@ -513,4 +513,6 @@ class TransactionQueue extends UTXOPool {
   }
 }
 
-module.exports = TransactionQueue;
+if(typeof module !== 'undefined'){
+  module.exports = TransactionQueue;
+}

@@ -17,31 +17,48 @@
         content="member.cash is a fully decentralized public platform for discussion and reputation">
     <meta property="og:image" content="https://member.cash/img/logos/logowide.png">
 
-    <!--  Only scripts from this website, inline script needed for operation -->
-    <!--  Call Memberjs for content -->
-    <!--  Call localhost for content -->
-    <!--  Allow BitBox for UTXOs, Sending Transactions -->
-    <!--  IMG SRC for inline images, rating star image -->
-    <!--  Openstreetmap for map tiles -->
-    <!--  Youtube/Imgur for content -->
-    <!--  bitcoin.com for latest price -->
-
     <!--  Anything above this line will not be reproduced automatically if the page is loaded from the server -->
     <!--INSERTMETADATA-->
 
     <meta http-equiv="Content-Security-Policy"
-        content="default-src 'self' 'unsafe-inline'; connect-src 'self' https://member.cash/ http://127.0.0.1:3123/ http://localhost:3123/; media-src https://imgur.com https://i.imgur.com/; img-src * 'self' https://member.cash/ https://imgur.com https://i.imgur.com/ https://img.youtube.com/vi/ https://images.bitclout.com/ data: https://tile.openstreetmap.org/; frame-src 'self' https://identity.love4src.com/ https://identity.bitclout.com/ https://www.youtube.com/  https://nitter.net/ https://twitframe.com/ https://img.youtube.com/vi/;">
+        content=" 
+        script-src 
+            'self' 
+            'unsafe-inline' 
+            https://www.google-analytics.com 
+            https://ssl.google-analytics.com 
+            https://www.googletagmanager.com;
+        connect-src 
+            'self' 
+            https://member.cash/ 
+            http://127.0.0.1:3123/ 
+            http://localhost:3123/ 
+            https://www.google-analytics.com; 
+        media-src 
+            https://imgur.com 
+            https://i.imgur.com/; 
+        img-src
+            *
+            data:; 
+        frame-src 
+            'self' 
+            https://identity.love4src.com/ 
+            https://identity.bitclout.com/ 
+            https://www.youtube.com/  
+            https://nitter.net/ 
+            https://twitframe.com/ 
+            https://img.youtube.com/vi/;">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--  Progressive Web App Service Worker -->
     <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
-    <script src="pwa/pwa2.js?8.4.8"></script>
+    <script src="pwa/pwa2.js?8.5.1"></script>
 
     <!-- DNS-prefetch resource hints  -->
     <link rel="preconnect" href="https://twitframe.com" />
     <link rel="preconnect" href="https://tile.openstreetmap.org" />
-    
+
     <!--  Progressive Web App -->
     <meta name="msapplication-config" content="pwa/browserconfig.xml" />
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -57,9 +74,9 @@
     <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
     <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
 
-    <link id="pagestyle" rel="stylesheet" href="css/feels.css?8.4.8">
-    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?8.4.8">
-    <link id="pagestyle3" rel="stylesheet" href="css/none.css?8.4.8">
+    <link id="pagestyle" rel="stylesheet" href="css/feels.css?8.5.1">
+    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?8.5.1">
+    <link id="pagestyle3" rel="stylesheet" href="css/none.css?8.5.1">
 
 </head>
 
@@ -68,71 +85,39 @@
         <!--INSERTCONTENT-->
     </div>
 
-    
-    <!--  External Libraries -->
-    <script src="js/lib/buffer.js"></script>
-    <script src="js/lib/anchorme.min.js"></script>
-    <!-- https://github.com/fredolss/rater-js  -->
-    <script src='js/lib/rater/rating.js'></script>
-    <script src='js/lib/geohash.js'></script>
-    <!-- https://github.com/davidshimjs/qrcodejs -->
-    <script src="js/lib/qrcode.min.js"></script>
-    <!-- https://github.com/showdownjs/showdown -->
-    <script src="js/lib/showdown.1.9.1.min.patched.js"></script>
-    <!-- https://github.com/cure53/DOMPurify -->
-    <script src="js/lib/purify.min.js"></script>
-    <!-- https://github.com/dmester/jdenticon -->
-    <script src="js/lib/jdenticon.min.js"></script>
-    <!-- https://github.com/emn178/js-sha256 -->
-    <script src="js/lib/sha256.min.js"></script>
-    <!-- https://github.com/mixmark-io/turndown -->
-    <script src="js/lib/turndown.7.1.1.js"></script>
-    <!-- https://www.npmjs.com/package/cashaddrjs -->
-    <script src="js/lib/cashaddrjs-0.4.4.patched.min.js"></script>
-    <!-- https://github.com/bitcoinjs/bs58check -->
-    <script src="js/lib/bs58check.min.js"></script>
-    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-243798555-1"></script>
 
-    <!--  Member Minified Code. 
-    <script src="js/lib/member.min.js"></script>-->
+    <!-- Light External Libs -->
+    <script src="js/lib/memberextlibs.js?8.5.1"></script>
     
+    <!-- https://github.com/fredolss/rater-js  -->
+    <script src='js/lib/rater/rating.js?8.5.1'></script>
     
-    <!--  Member Code. In separate files for development convenience -->
-    <!--  Can be mininfied and amalgamated for releases -->
-    <!--  Load Translations -->
+    <!-- Load Translations -->
     <script>var dictionary = [];</script>
-    <script src="locale/en.js?8.4.8"></script>
-    <script src="locale/es.js?8.4.8"></script>
-    <script src="locale/zh.js?8.4.8"></script>
-    <script src="locale/fil.js?8.4.8"></script>
-    <script src="config.js?8.4.8"></script>
-    <script src="js/bitcloutlogin.js?8.4.8"></script>
-    <script src="js/utils.js?8.4.8"></script>
-    <script src="js/showposts.js?8.4.8"></script>
-    <script src="js/composition.js?8.4.8"></script>
-    <script src="js/settings.js?8.4.8"></script>
-    <script src="js/navigation.js?8.4.8"></script>
-    <script src="js/transactions.js?8.4.8"></script>
-    <script src="js/transactionqueue.js?8.4.8"></script>
-    <script src="js/map.js?8.4.8"></script>
-    <script src="js/trustgraph.js?8.4.8"></script>
-    <script src="js/login.js?8.4.8"></script>
-    <script src="js/notifications.js?8.4.8"></script>
-    <script src="js/htmlquarantine.js?8.4.8"></script>
-    <script src="js/tools.js?8.4.8"></script>
-    <script src="js/templates.js.html?8.4.8"></script>
-    <script src="js/templatespost.js.html?8.4.8"></script>
+    <script src="locale/localization.js?8.5.1"></script>
+    
+    <!--  Config -->
+    <script src="config.js?8.5.1"></script>
+
+    <!--  Member Minified Code. -->
+    <script src="js/memberlibs.js?8.5.1"></script>
 
     <div id="map" style="width:100%; height:100%;display:none;z-index: 50;"></div>
-    <!--[if lte IE 9]><p data-vavilon="VV0001" class="browserupgrade">You are using an outdated browser. Please upgrade your browser to improve your experience and security.</p><![endif]-->
     <div class="mainbodywrapper" id="mainbodywrapper"></div>
     <footer id="footer"></footer>
     <div id="status" class="status"></div>
-    <div id="tweet-container"></div>
     <div id="bitcloutframe"></div>
     <script>
-        var version = '8.4.8';
-        if(init){init();}
+        var version = '8.5.1';
+        if (init) { init(); }
+    </script>    
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-243798555-1');
     </script>
 </body>
 

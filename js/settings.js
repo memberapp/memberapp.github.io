@@ -138,7 +138,7 @@ async function getDataMemberFinally(data) {
         let theRatingRound = outOfFive(Number(data[0].sysrating));
         obj.membrain = theRatingRound + "/5";
 
-        document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
+        //document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
     }
 
     if (data && (data.length < 1 || Number(data[0].isfollowing) == 0)) {
@@ -245,7 +245,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         pagingid: "",
         profilepiclargehtml: "",
         publickey: "",
-        fileuploadurl: dropdowns.txbroadcastserver + "uploadfile"
+        fileuploadurl: dropdowns.imageuploadserver + "uploadfile"
     };
 
     if (data && data[0]) {
@@ -268,7 +268,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         let theRatingRound = outOfFive(Number(data[0].sysrating));
         obj.membrain = theRatingRound + "/5";
 
-        document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
+        //document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
     }
 
 

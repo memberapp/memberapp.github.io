@@ -319,12 +319,14 @@ async function sendBitCloutTransaction(payload, action, divForStatus) {
 
     if (confirmation && confirmation.includes('RuleErrorFollowingNonexistentProfile')) {
       //alert('Oops. This user does not exist on BitClout. Cannot Follow. RuleErrorFollowingNonexistentProfile');
-      throw new Error('RuleErrorFollowingNonexistentProfile');
+      //throw new Error('RuleErrorFollowingNonexistentProfile');
+      return confirmation;
     }
 
     if (confirmation && confirmation.includes('RuleErrorCannotLikeNonexistentPost')) {
       //alert('Oops. This post no longer exists on BitClout. Cannot like it. RuleErrorCannotLikeNonexistentPost');
-      throw new Error('RuleErrorCannotLikeNonexistentPost');
+      //throw new Error('RuleErrorCannotLikeNonexistentPost');
+      return confirmation;
     }
 
     if (confirmation && confirmation.includes('RuleErrorSubmitPostParentNotFound')) {
@@ -530,7 +532,7 @@ async function sendBitCloutRating(posttext, topic, divForStatus, successFunction
 
 
 
-async function sendBitCloutReply(txid, replytext, divForStatus, successFunction, parentSourceNetwork, membertxid) {
+async function sendBitCloutReply(txid, replytext, divForStatus, successFunction, parentSourceNetwork, membertxid, imageURL=null) {
   let postExtraData;
   /*if (parentSourceNetwork != 1) {
     //Bitclout does not allow a reply to post that does not exist on its network
@@ -556,8 +558,9 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
   }
 
   var body = { Body: replytext, ImageURLs: [] };
+  if(imageURL){body.ImageURLs[0]=imageURL;}
   payload.BodyObj = body;
-
+  
   var txid = await sendBitCloutTransaction(JSON.stringify(payload), "submit-post", divForStatus);
   if (successFunction) { successFunction(txid, replytext) };
   return txid;
@@ -565,11 +568,12 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
 
 
 //todo check if special characters work in posttext
-async function sendBitCloutPost(posttext, topic, divForStatus, successFunction, postExtraData) {
+async function sendBitCloutPost(posttext, topic, divForStatus, successFunction, postExtraData, imageURL=null) {
   if (topic) {
     posttext = posttext + " #" + topic;
   }
   var body = { Body: posttext, ImageURLs: [] };
+  if(imageURL){body.ImageURLs[0]=imageURL;}
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     BodyObj: body,
@@ -585,13 +589,13 @@ async function sendBitCloutPost(posttext, topic, divForStatus, successFunction, 
   return txid;
 }
 
-async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, successFunction, network) {
+async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, successFunction, network, imageURL=null) {
   if (network == 1) {
     if (topic) {
       posttext = posttext + " #" + topic;
     }
     var body = { Body: posttext, ImageURLs: [] };
-
+    if(imageURL){body.ImageURLs[0]=imageURL;}
     var payload = {
       UpdaterPublicKeyBase58Check: bitCloutUser,
       RepostedPostHashHex: txid,
@@ -607,10 +611,10 @@ async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, succes
   }
 }
 
-async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction) {
-  var txid = await sendBitCloutPost(posttext, topic, divForStatus, null, null);
+async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null) {
+  var txid = await sendBitCloutPost(posttext, topic, divForStatus, null, null, imageURL);
   if (postbody) {
-    return await sendBitCloutReply(txid, postbody, divForStatus, successFunction);
+    return await sendBitCloutReply(txid, postbody, divForStatus, successFunction, imageURL);
   } else {
     if (successFunction) { successFunction(txid, posttext) };
     return txid;

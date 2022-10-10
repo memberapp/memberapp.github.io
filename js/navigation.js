@@ -15,9 +15,27 @@ function displayContentBasedOnURLParameters(suggestedurl) {
 
     if (suggestedurl) {
         var url = suggestedurl;
+        try {
+            if (gtag && url.indexOf('#') != -1) {
+                gtag('set', 'page_path', '/#' + url.split('#')[1]);
+                gtag('event', 'page_view');
+            }else{
+                console.log('no tracking info error');
+            }
+        } catch (err) { }
     } else {
         var url = window.location.href;
+        try {
+            if (gtag) {
+                gtag('set', 'page_path', window.location.pathname);
+                gtag('event', 'page_view');
+            }
+        } catch (err) { }
     }
+
+    //https://developers.google.com/analytics/devguides/collection/gtagjs/single-page-applications
+
+
 
     //Clear highlighting of major nav buttons
     highlightmajornavbutton(null);
@@ -30,12 +48,12 @@ function displayContentBasedOnURLParameters(suggestedurl) {
 
     } else if (url.indexOf('/p/') != -1) {
         //var postid = sane(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
-        let postid=document.getElementById('threadid').innerHTML; 
+        let postid = document.getElementById('threadid').innerHTML;
         showThread(sane(postid), sane(postid), 'thread');
         return;
     } else if (url.indexOf('/a/') != -1) {
         //var postid = sane(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
-        let postid=document.getElementById('threadid').innerHTML; 
+        let postid = document.getElementById('threadid').innerHTML;
         showThread(sane(postid), sane(postid), 'article');
         return;
     } else if (url.indexOf('/m/') != -1) {
@@ -239,12 +257,12 @@ function hideMap() {
     document.getElementById('map').style.display = "none";
 }
 
-function showNewPost(txid,sourcenetwork) {
+function showNewPost(txid, sourcenetwork) {
     highlightmajornavbutton("newbutton");
     show("newpost");
     setPageTitleFromID("VV0096");
-    let mpelement=document.getElementById('memorandumpreview')
-    if(mpelement && mpelement.innerHTML){
+    let mpelement = document.getElementById('memorandumpreview')
+    if (mpelement && mpelement.innerHTML) {
         mpelement.innerHTML = "";
     }
     //let topicNameHOSTILE = "";
@@ -262,7 +280,7 @@ function showNewPost(txid,sourcenetwork) {
     if (txid) {
         getAndPopulateQuoteBox(txid);
 
-        document.getElementById('quotetxid').value = txid;       
+        document.getElementById('quotetxid').value = txid;
         document.getElementById('memorandumtextarea').style.display = 'none';
         document.getElementById('memorandumtextbutton').style.display = 'none';
 
@@ -406,11 +424,11 @@ function showPFC(start, limit, page) {
 
 function showPostsNew(order, content, topicname, filter, start, limit, qaddress) {
     //setTopic('');
-    if(topicname=='mytopics'){
+    if (topicname == 'mytopics') {
         highlightmajornavbutton("topiclistbutton");
-    }else if(filter=='myfeed'){
+    } else if (filter == 'myfeed') {
         highlightmajornavbutton("myfeedbutton");
-    }else if(filter=='everyone'){
+    } else if (filter == 'everyone') {
         highlightmajornavbutton("firehosebutton");
     }
 
