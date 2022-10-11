@@ -133,7 +133,7 @@ function memorandumPreview() {
     let member= new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey);
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML2(member,'000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, '000', 1, 0, 'preview', 0, '', repostedHTML, false, 3, '000')
+        getHTMLForPostHTML2(member, null, 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0,  '000', 1, 0,  0, '',  3, '000', false)
         + `<div id="articleheader000" class="articleheader"></div>`
         + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false);
 

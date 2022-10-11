@@ -528,6 +528,10 @@ function getSafeMessage(messageHTML, differentiator, includeMajorMedia) {
 function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repostedHTML, truncate) {
     return getHTMLForPostHTML2(
         theMember,
+        page,
+        differentiator,
+        repostedHTML,
+        truncate,
         data[stub + "txid"],
         data[stub + "likes"],
         data[stub + "dislikes"],
@@ -538,21 +542,19 @@ function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repost
         data[stub + "topic"],
         data[stub + "replies"],
         data[stub + "geohash"],
-        page,
         data[stub + "likedtxid"],
         data[stub + "likeordislike"],
         data[stub + "repliesroot"],
-        differentiator,
         data[stub + "repostcount"],
         data[stub + "repostidtxid"],
-        repostedHTML,
-        truncate,
         data[stub + "network"],
-        data[stub + "hivelink"]);
+        data[stub + "hivelink"],
+        data[stub + "deleted"]
+        );
 }
 
 
-function getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, likedtxid, likeordislike, repliesroot, differentiator, repostcount, repostidtxid, repostedHTML, truncate, sourcenetwork, hivelink) {
+function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, truncate, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash,  likedtxid, likeordislike, repliesroot,  repostcount, repostidtxid,  sourcenetwork, hivelink, deleted) {
     var theAuthorHTML = theMember.userHTML(true);
     var theAuthor2HTML = theMember.userHTML(false);
 
@@ -668,8 +670,9 @@ function getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, 
         MEMUSD10: satsToUSDString(1000000000),
         MEMUSD20: satsToUSDString(2000000000),
         MEMUSD50: satsToUSDString(5000000000),
-        MEMUSD100: satsToUSDString(10000000000)
-
+        MEMUSD100: satsToUSDString(10000000000),
+        deleted: (deleted=='1' ? ` deleted`:''),
+        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:'')
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -748,7 +751,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID),
         diff: differentiator,
         deleted: (deleted=='1' ? ` deleted`:''),
-        retracted:(deleted=='1' ? ` <span class='retracted'>retracted</span>`:'')
+        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:'')
     };
 
     return templateReplace(replyTemplate, obj);
@@ -786,7 +789,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
 }
 
 function getAgeHTML(firstseen, compress=false, link=null) {
-    let agehtml = `<span class="age">•` + timeSince(Number(firstseen), compress) + `</span>`;
+    let agehtml = `<span class="age">&hairsp;•&hairsp;` + timeSince(Number(firstseen), compress) + `</span>`;
     if(link){
         agehtml=`<a href='${link}'>${agehtml}</a>`;
     }

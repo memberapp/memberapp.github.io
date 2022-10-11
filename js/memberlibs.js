@@ -920,7 +920,7 @@ var hamburgerMenuHTML=`
             <span data-vavilon="VV0101">Map</span></a>
         <a data-vavilon_title="VV0098" id="settingsbutton" title="Settings" class="hamburgerbutton" href="#settings"
             onclick="nlc();">
-            <img src="img//Icons/settings.png" alt="settings">
+            <img src="img/icons/settings.png" alt="settings">
             <span data-vavilon="VV0098">Settings</span></a>
         <a data-vavilon_title="VV0078" id="logoutbutton" title="Logout" class="hamburgerbutton" href="#logout"
             onclick="logout();" style="display:none;">
@@ -939,25 +939,25 @@ var majorNavButtonsHTML=`
     <span id="loggedin" class="loggedin" style="display:none;">
         <a data-vavilon_title="VV0095" onclick="nlc();" id="notificationsbutton" title="Notifications"
             href="#notifications">
-            <img src="img/icons/notification.png" alt="notificatons">
+            <img src="img/icons/notification.png" width="32" height="32" alt="notificatons">
             <span class="alertcount noselect" id="alertcount"></span></a>
         <a data-vavilon_title="VV0094a" onclick="nlc();" id="myfeedbutton"
             title="My People (Latest posts from your follows)" href="#mypeople">
-            <img src="img/icons/group.png" alt="MyFeed">
+            <img src="img/icons/group.png" width="32" height="32" alt="MyFeed">
         </a>
         <a data-vavilon_title="VVfirehose" onclick="nlc();" id="firehosebutton" title="Firehose (Everything)"
             href="#firehose">
-            <img src="img/icons/fire-hose.png" alt="FireHose">
+            <img src="img/icons/fire-hose.png" width="32" height="32" alt="FireHose">
         </a>
         <a data-vavilon_title="VV0100a" onclick="nlc();" id="topiclistbutton"
             title="My Tags  (Latest posts from your tags)" href="#mytags">
-            <img src="img/icons/hashtaglarge.png" alt="MyFeed">
+            <img src="img/icons/hashtaglarge.png" width="32" height="32" alt="MyFeed">
         </a>
         <a data-vavilon_title="VV0097" onclick="nlc();" id="privatemessagesbutton" title="Messages" href="#messages">
-            <img src="img/icons/messages.png" alt="message">
+            <img src="img/icons/messages.png" width="32" height="32" alt="message">
             <span class="alertcount noselect" id="alertcountpm"></span></a>
         <a data-vavilon_title="VV0096" onclick="nlc();" id="newbutton" title="New Post" href="#new">
-            <img src="img/icons/plus.png" alt="newpost">
+            <img src="img/icons/plus.png" width="32" height="32" alt="newpost">
         </a>
     </span>
     <span id="loggedout" class="loggedout">
@@ -965,7 +965,7 @@ var majorNavButtonsHTML=`
             title="Firehose (Everything)"
             href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
             <!-- 📰 -->
-            <img src="img/icons/fire-hose.png" alt="firehose">
+            <img src="img/icons/fire-hose.png" width="32" height="32" alt="firehose">
         </a>
         <a data-vavilon="VV0102a" id="loginbutton" class="btn vavilon" href="#login" onclick="nlc();">Login</a>
         <span class="separatorwide"></span>
@@ -1051,7 +1051,7 @@ var footerHTML = `
 `;var postCompactTemplate = `
 <div class="post" onmouseover="changeClass(this,'post highlighted')" onmouseout="changeClass(this,'post')">
     {directlink}
-    <div class="post-content">
+    <div class="post-content {deleted}">
         <div class="post-side-bar" onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
         </div>
@@ -1069,6 +1069,7 @@ var footerHTML = `
                     <span class="topic">
                         {topic}
                     </span>
+                    {retracted}
                 </span>
                 <span class="network-source">
                     {sourceNetworkImage}
@@ -4049,7 +4050,7 @@ function memorandumPreview() {
     let member= new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey);
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML2(member,'000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, null, '000', 1, 0, 'preview', 0, '', repostedHTML, false, 3, '000')
+        getHTMLForPostHTML2(member, null, 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0,  '000', 1, 0,  0, '',  3, '000', false)
         + `<div id="articleheader000" class="articleheader"></div>`
         + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false);
 
@@ -8485,6 +8486,10 @@ function getSafeMessage(messageHTML, differentiator, includeMajorMedia) {
 function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repostedHTML, truncate) {
     return getHTMLForPostHTML2(
         theMember,
+        page,
+        differentiator,
+        repostedHTML,
+        truncate,
         data[stub + "txid"],
         data[stub + "likes"],
         data[stub + "dislikes"],
@@ -8495,21 +8500,19 @@ function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repost
         data[stub + "topic"],
         data[stub + "replies"],
         data[stub + "geohash"],
-        page,
         data[stub + "likedtxid"],
         data[stub + "likeordislike"],
         data[stub + "repliesroot"],
-        differentiator,
         data[stub + "repostcount"],
         data[stub + "repostidtxid"],
-        repostedHTML,
-        truncate,
         data[stub + "network"],
-        data[stub + "hivelink"]);
+        data[stub + "hivelink"],
+        data[stub + "deleted"]
+        );
 }
 
 
-function getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, likedtxid, likeordislike, repliesroot, differentiator, repostcount, repostidtxid, repostedHTML, truncate, sourcenetwork, hivelink) {
+function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, truncate, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash,  likedtxid, likeordislike, repliesroot,  repostcount, repostidtxid,  sourcenetwork, hivelink, deleted) {
     var theAuthorHTML = theMember.userHTML(true);
     var theAuthor2HTML = theMember.userHTML(false);
 
@@ -8625,8 +8628,9 @@ function getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, 
         MEMUSD10: satsToUSDString(1000000000),
         MEMUSD20: satsToUSDString(2000000000),
         MEMUSD50: satsToUSDString(5000000000),
-        MEMUSD100: satsToUSDString(10000000000)
-
+        MEMUSD100: satsToUSDString(10000000000),
+        deleted: (deleted=='1' ? ` deleted`:''),
+        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:'')
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -8705,7 +8709,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID),
         diff: differentiator,
         deleted: (deleted=='1' ? ` deleted`:''),
-        retracted:(deleted=='1' ? ` <span class='retracted'>retracted</span>`:'')
+        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:'')
     };
 
     return templateReplace(replyTemplate, obj);
@@ -8743,7 +8747,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
 }
 
 function getAgeHTML(firstseen, compress=false, link=null) {
-    let agehtml = `<span class="age">•` + timeSince(Number(firstseen), compress) + `</span>`;
+    let agehtml = `<span class="age">&hairsp;•&hairsp;` + timeSince(Number(firstseen), compress) + `</span>`;
     if(link){
         agehtml=`<a href='${link}'>${agehtml}</a>`;
     }
@@ -9769,22 +9773,22 @@ function setBalanceWithInterest() {
     }
 }
 
+//This just set visual display of balance plus interest earned
 setInterval(setBalanceWithInterest, 500);
 
+
 //utxopool will call this after utxos updated
-function updateChainHeight(chainheight2,chainheighttime2){
-    chainheight=chainheight2;
-    chainheighttime=chainheighttime2;
-    updateBalance(chainheight2);
+function updateChainHeight(){
+    updateBalance();
 }
 
 var showwarning=true;
-function updateBalance(chainheight2) {
+function updateBalance() {
 
     if(tq.chainheighttime==0){
         return 0;
     }
-    var total = tq.getBalance(chainheight2);
+    var total = tq.getBalance(tq.chainheight);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);
     document.getElementById('balancebch').innerHTML = (total / 100000000).toFixed(5);
 

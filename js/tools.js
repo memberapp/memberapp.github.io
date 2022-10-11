@@ -228,22 +228,22 @@ function setBalanceWithInterest() {
     }
 }
 
+//This just set visual display of balance plus interest earned
 setInterval(setBalanceWithInterest, 500);
 
+
 //utxopool will call this after utxos updated
-function updateChainHeight(chainheight2,chainheighttime2){
-    chainheight=chainheight2;
-    chainheighttime=chainheighttime2;
-    updateBalance(chainheight2);
+function updateChainHeight(){
+    updateBalance();
 }
 
 var showwarning=true;
-function updateBalance(chainheight2) {
+function updateBalance() {
 
     if(tq.chainheighttime==0){
         return 0;
     }
-    var total = tq.getBalance(chainheight2);
+    var total = tq.getBalance(tq.chainheight);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);
     document.getElementById('balancebch').innerHTML = (total / 100000000).toFixed(5);
 

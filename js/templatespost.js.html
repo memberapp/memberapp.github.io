@@ -1,7 +1,7 @@
 var postCompactTemplate = `
 <div class="post" onmouseover="changeClass(this,'post highlighted')" onmouseout="changeClass(this,'post')">
     {directlink}
-    <div class="post-content">
+    <div class="post-content {deleted}">
         <div class="post-side-bar" onclick="nlc();location.href='#thread?root={roottxid}&amp;post={txid}';">
             {authorsidebar}
         </div>
@@ -19,6 +19,7 @@ var postCompactTemplate = `
                     <span class="topic">
                         {topic}
                     </span>
+                    {retracted}
                 </span>
                 <span class="network-source">
                     {sourceNetworkImage}

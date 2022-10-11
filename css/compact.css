@@ -162,7 +162,7 @@ button:hover {
 .replyicon {
   width: 1rem;
   height: 1rem;
-  background: url(../img/Icons/comment.png);
+  background: url(../img/icons/comment.png);
   filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
   background-size: 1rem 1rem;
   display: inline-block;
@@ -171,7 +171,7 @@ button:hover {
 .remembersicon {
   width: 1rem;
   height: 1rem;
-  background: url(../img/Icons/retweet.png);
+  background: url(../img/icons/retweet.png);
   filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
   background-size: 1rem 1rem;
   display: inline-block;
@@ -180,20 +180,20 @@ button:hover {
 .likeicon {
   width: 1rem;
   height: 1rem;
-  background: url(../img/Icons/like.png);
+  background: url(../img/icons/like.png);
   filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
   background-size: 1rem 1rem;
   display: inline-block;
 }
 /* a.btn-icon>.likeicon:active, a.btn-icon>.likeicon:focus a.btn-icon>.likeicon:target{ */
 .likeicon:target {
-  background-image: url(../img/Icons/liked.png) !important;
+  background-image: url(../img/icons/liked.png) !important;
   transition-delay: 0s;
 }
 .tipicon {
   width: 1rem;
   height: 1rem;
-  background: url(../img/Icons/money.png);
+  background: url(../img/icons/money.png);
   filter: invert(55%) sepia(6%) saturate(12%) hue-rotate(358deg) brightness(90%) contrast(93%);
   background-size: 1rem 1rem;
   display: inline-block;
@@ -228,11 +228,11 @@ a {
   color: #61aff0 !important;
 }
 .post-footer-upvote-activated a .likeicon {
-  background-image: url(../img/Icons/liked.png) !important;
+  background-image: url(../img/icons/liked.png) !important;
   filter: unset;
 }
 .post-footer-remembers-activated a .remembersicon {
-  background-image: url(../img/Icons/retweeted.png) !important;
+  background-image: url(../img/icons/retweeted.png) !important;
   color: red !important;
 }
 
@@ -689,7 +689,7 @@ img {
 .post-footer-remembers-activated:hover .remembersicon {
   filter: unset;
   background-color: rgb(11 143 255 /25%);
-  /* background: url(../img/Icons/money.png); */
+  /* background: url(../img/icons/money.png); */
 }
 .post-footer-tips:hover .tipicon,
 .post-footer-tips-activated:hover .tipicon {
@@ -700,7 +700,7 @@ img {
 .post-footer-remembers:target .remembersicon,
 .post-footer-remembers-activated:target .remembersicon {
   filter: unset;
-  background: url(../img/Icons/money.png);
+  background: url(../img/icons/money.png);
 }
 /* make the number links grey*/
 .post-footer-relative a {
@@ -1629,7 +1629,7 @@ label#memberblockexplorer {
   text-align: left !important;
 }
 #walletblockexplorer a::before {
-  content: url("../img/Icons/link.png");
+  content: url("../img/icons/link.png");
   position: absolute;
   display: block;
   width: 16px;
