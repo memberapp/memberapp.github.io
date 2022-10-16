@@ -6034,7 +6034,10 @@ var UTXO = /** @class */ (function () {
         this.txid = txid;
         this.height = height;
     }
-    UTXO.prototype.getSatsWithInterest = function (chainheight) {
+    UTXO.prototype.getSatsWithInterest = function (chainheight, interestexponent) {
+        if (interestexponent == 0) {
+            return this.satoshis;
+        }
         if (this.height == 0 || !this.height) { //not in blockchain yet. unconfirmed, no interest earned yet
             return this.satoshis;
         }
@@ -6049,17 +6052,19 @@ var UTXO = /** @class */ (function () {
     return UTXO;
 }());
 var UTXOPool = /** @class */ (function () {
-    function UTXOPool(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction) {
+    function UTXOPool(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit) {
         //address is the legacy address of the account
         //utxoServer is server that will send utxo set
         //status message function is a function to call with progress updates
         //translation function will return localized string for identifier
         //updateBalanceFunction will be called when the pool refreshes and may have different utxos
-        this.DUSTLIMIT = 546;
+        if (interestexponent === void 0) { interestexponent = 22; }
+        if (dustlimit === void 0) { dustlimit = 546; }
         this.extraSatoshis = 5;
         this.maxfee = 5;
         this.resendWait = 2000;
-        this.miningFeeMultiplier = 1;
+        this.interestexponent = 22;
+        this.dustlimit = 546;
         this.utxoPool = new Array();
         this.theAddress = address;
         this.utxoServer = utxoServer;
@@ -6069,6 +6074,8 @@ var UTXOPool = /** @class */ (function () {
         this.translationFunction = translationFunction;
         this.updateBalanceFunction = updateBalanceFunction;
         this.fetchFunction = fetchFunction;
+        this.interestexponent = interestexponent;
+        this.dustlimit = dustlimit;
     }
     UTXOPool.prototype.getSafeTranslation = function (id, defaultstring) {
         if (this.translationFunction) {
@@ -6119,7 +6126,7 @@ var UTXOPool = /** @class */ (function () {
     UTXOPool.prototype.getBalance = function (chainheight2) {
         var total = 0;
         for (var i = 0; i < this.utxoPool.length; i++) {
-            total = total + this.utxoPool[i].getSatsWithInterest(chainheight2 + 1);
+            total = total + this.utxoPool[i].getSatsWithInterest(chainheight2 + 1, this.interestexponent);
         }
         return total;
     };
@@ -6160,7 +6167,7 @@ var UTXOPool = /** @class */ (function () {
                                 this.chainheight = utxos[i].chainheight;
                                 this.chainheighttime = new Date().getTime();
                             }
-                            if (utxos[i].satoshis > this.DUSTLIMIT) {
+                            if (utxos[i].satoshis > this.dustlimit) {
                                 //Remove any utxos with less or equal to dust limit, they may be SLP tokens
                                 this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
                             }
@@ -6195,12 +6202,17 @@ var TransactionData = /** @class */ (function () {
 }());
 var TransactionQueue = /** @class */ (function (_super) {
     __extends(TransactionQueue, _super);
-    function TransactionQueue(address, privateKey, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, BitcoinJS, broadcastServer) {
-        var _this = _super.call(this, address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction) || this;
+    function TransactionQueue(address, privateKey, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, BitcoinJS, broadcastServer, miningFeeSats, interestexponent, dustlimit) {
+        if (miningFeeSats === void 0) { miningFeeSats = 1; }
+        if (interestexponent === void 0) { interestexponent = 22; }
+        if (dustlimit === void 0) { dustlimit = 546; }
+        var _this = _super.call(this, address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit) || this;
         _this.OP_RETURN = 106;
         _this.SIGHASH_BITCOINCASHBIP143 = 0x40;
         _this.SIGHASH_ALL = 0x01;
         _this.BCH_SIGHASH_ALL = _this.SIGHASH_ALL | _this.SIGHASH_BITCOINCASHBIP143;
+        _this.miningFeeSats = 1;
+        _this.sighashtouse = _this.SIGHASH_ALL;
         _this.BitcoinJS = BitcoinJS;
         _this.queue = new Array();
         _this.isSending = false; //Sending from the queue
@@ -6211,7 +6223,8 @@ var TransactionQueue = /** @class */ (function (_super) {
             _this.keyPair = _this.BitcoinJS.ECPair.fromWIF(_this.privateKey);
         }
         var transactionBuilder = new _this.BitcoinJS.TransactionBuilder();
-        _this.transactionsPossible = transactionBuilder.enableBitcoinCash;
+        _this.transactionsPossible = true; //transactionBuilder.enableBitcoinCash;
+        _this.miningFeeSats = miningFeeSats;
         return _this;
     }
     TransactionQueue.prototype.setbroadcastServer = function (broadcastServer) {
@@ -6306,7 +6319,7 @@ var TransactionQueue = /** @class */ (function (_super) {
                         transactionSize = tx.byteLength();
                         //Add extra satoshis for safety
                         console.log("Transaction size:" + transactionSize);
-                        fees = Math.round(transactionSize * this.miningFeeMultiplier) + this.extraSatoshis;
+                        fees = Math.round(transactionSize * this.miningFeeSats) + this.extraSatoshis;
                         //Make the trx again, with fees included
                         tx = this.constructTransaction(utxos, fees, txdata);
                         if (!this.fetchFunction) return [3 /*break*/, 4];
@@ -6431,7 +6444,10 @@ var TransactionQueue = /** @class */ (function (_super) {
         //let txnBuilder = new bchlib.TransactionBuilder(bchlib.networks.bitcoincash);
         //txnBuilder.enableBitcoinCash(true);
         var transactionBuilder = new this.BitcoinJS.TransactionBuilder();
-        transactionBuilder.enableBitcoinCash(true);
+        if (transactionBuilder.enableBitcoinCash) { //if enableBitcoinCash is present, assume we want to use it
+            transactionBuilder.enableBitcoinCash(true);
+            this.sighashtouse = this.BCH_SIGHASH_ALL;
+        }
         //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
         if (scriptArray.length > 0) {
             transactionBuilder.addOutput(script2, 0);
@@ -6439,7 +6455,7 @@ var TransactionQueue = /** @class */ (function (_super) {
         var fundsRemaining = 0;
         //Calculate sum of tx outputs and add inputs
         for (var i = 0; i < utxos.length; i++) {
-            var originalAmount = utxos[i].getSatsWithInterest(this.chainheight + 1);
+            var originalAmount = utxos[i].getSatsWithInterest(this.chainheight + 1, this.interestexponent);
             fundsRemaining = fundsRemaining + originalAmount;
             // index of vout
             var vout = utxos[i].vout;
@@ -6452,7 +6468,7 @@ var TransactionQueue = /** @class */ (function (_super) {
         var transactionOutputTotal = 0;
         //Add recipient
         if (txdata.to && txdata.toAmount) {
-            if (txdata.toAmount >= this.DUSTLIMIT) {
+            if (txdata.toAmount >= this.dustlimit) {
                 fundsRemaining = fundsRemaining - txdata.toAmount;
                 transactionOutputTotal += txdata.toAmount;
                 transactionBuilder.addOutput(txdata.to, txdata.toAmount);
@@ -6464,7 +6480,7 @@ var TransactionQueue = /** @class */ (function (_super) {
         }
         var hasChange = false;
         //Add funds remaining as change if larger than dust
-        if (changeAmount >= this.DUSTLIMIT) {
+        if (changeAmount >= this.dustlimit) {
             transactionBuilder.addOutput(changeAddress, changeAmount);
             hasChange = true;
         }
@@ -6473,7 +6489,9 @@ var TransactionQueue = /** @class */ (function (_super) {
             var originalAmount = utxos[i].satoshis;
             // sign w/ HDNode
             var redeemScript = void 0;
-            transactionBuilder.sign(i, this.keyPair, redeemScript, this.BCH_SIGHASH_ALL, originalAmount, null);
+            //this.sighashtouse=this.BCH_SIGHASH_ALL
+            //this.SIGHASH_ALL
+            transactionBuilder.sign(i, this.keyPair, redeemScript, this.sighashtouse, originalAmount, null);
             //, originalAmount, null, 0
         }
         //transactionBuilder.sign(0, this.keyPair);
@@ -7412,7 +7430,7 @@ async function login(loginkey) {
 
     //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
     if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
-    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost");
+    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost",1,22,546);
     tq.refreshPool();
 
     if (!privkey) {
@@ -9755,11 +9773,11 @@ function getLegacyToHash160(address) {
 
 function setBalanceWithInterest() {
     try {
-        if (chainheighttime == 0) {
+        if (tq.chainheighttime == 0) {
             return;
         }
-        let elapsed = (new Date().getTime() - chainheighttime) / (78 * 1000);
-        let membalance = updateBalance(chainheight + elapsed);
+        let elapsed = (new Date().getTime() - tq.chainheighttime) / (78 * 1000);
+        let membalance = updateBalance(tq.chainheight + elapsed);
         let mem = (membalance / 100000000) + "";
         while (mem.length < 10) {
             mem = mem + "0";
@@ -9778,17 +9796,17 @@ setInterval(setBalanceWithInterest, 500);
 
 
 //utxopool will call this after utxos updated
-function updateChainHeight(){
-    updateBalance();
+function updateChainHeight(chainHeight, chainHeightTime){
+    updateBalance(null,true);
 }
 
 var showwarning=true;
-function updateBalance() {
+function updateBalance(dynamicChainHeight, showLowFunds=false) {
 
-    if(tq.chainheighttime==0){
-        return 0;
+    if(!dynamicChainHeight){
+        dynamicChainHeight=tq.chainheighttime;
     }
-    var total = tq.getBalance(tq.chainheight);
+    var total = tq.getBalance(dynamicChainHeight);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);
     document.getElementById('balancebch').innerHTML = (total / 100000000).toFixed(5);
 
@@ -9802,7 +9820,7 @@ function updateBalance() {
     if (document.getElementById('satoshiamount'))
         document.getElementById('satoshiamount').innerHTML = total;
 
-    if (total < 2000 && showwarning) {
+    if (showLowFunds && total < 2000 && showwarning) {
         var lowfundsElement = document.getElementById('lowfundswarning');
         if (lowfundsElement) {
             document.getElementById('lowfundswarning').style.display = 'block';

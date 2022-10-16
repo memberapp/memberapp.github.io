@@ -210,11 +210,11 @@ function getLegacyToHash160(address) {
 
 function setBalanceWithInterest() {
     try {
-        if (chainheighttime == 0) {
+        if (tq.chainheighttime == 0) {
             return;
         }
-        let elapsed = (new Date().getTime() - chainheighttime) / (78 * 1000);
-        let membalance = updateBalance(chainheight + elapsed);
+        let elapsed = (new Date().getTime() - tq.chainheighttime) / (78 * 1000);
+        let membalance = updateBalance(tq.chainheight + elapsed);
         let mem = (membalance / 100000000) + "";
         while (mem.length < 10) {
             mem = mem + "0";
@@ -233,17 +233,17 @@ setInterval(setBalanceWithInterest, 500);
 
 
 //utxopool will call this after utxos updated
-function updateChainHeight(){
-    updateBalance();
+function updateChainHeight(chainHeight, chainHeightTime){
+    updateBalance(null,true);
 }
 
 var showwarning=true;
-function updateBalance() {
+function updateBalance(dynamicChainHeight, showLowFunds=false) {
 
-    if(tq.chainheighttime==0){
-        return 0;
+    if(!dynamicChainHeight){
+        dynamicChainHeight=tq.chainheighttime;
     }
-    var total = tq.getBalance(tq.chainheight);
+    var total = tq.getBalance(dynamicChainHeight);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);
     document.getElementById('balancebch').innerHTML = (total / 100000000).toFixed(5);
 
@@ -257,7 +257,7 @@ function updateBalance() {
     if (document.getElementById('satoshiamount'))
         document.getElementById('satoshiamount').innerHTML = total;
 
-    if (total < 2000 && showwarning) {
+    if (showLowFunds && total < 2000 && showwarning) {
         var lowfundsElement = document.getElementById('lowfundswarning');
         if (lowfundsElement) {
             document.getElementById('lowfundswarning').style.display = 'block';

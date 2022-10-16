@@ -13,7 +13,10 @@ class UTXO {
     this.height = height;
   }
 
-  getSatsWithInterest(chainheight: number) {
+  getSatsWithInterest(chainheight: number, interestexponent:number) {
+    if(interestexponent==0){
+      return this.satoshis;
+    }
     if (this.height == 0 || !this.height) {//not in blockchain yet. unconfirmed, no interest earned yet
       return this.satoshis;
     }
@@ -28,7 +31,6 @@ class UTXO {
 }
 
 class UTXOPool {
-  readonly DUSTLIMIT = 546;
   readonly extraSatoshis = 5;
   readonly maxfee = 5;
 
@@ -39,12 +41,13 @@ class UTXOPool {
   chainheight: number;
   chainheighttime: number;
   resendWait = 2000;
-  miningFeeMultiplier = 1;
   translationFunction: Function;
   updateBalanceFunction: Function;
   fetchFunction: Function;
+  interestexponent = 22;
+  dustlimit = 546;
 
-  constructor(address: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function) {
+  constructor(address: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function, interestexponent:number = 22, dustlimit:number = 546) {
     //address is the legacy address of the account
     //utxoServer is server that will send utxo set
     //status message function is a function to call with progress updates
@@ -60,6 +63,8 @@ class UTXOPool {
     this.translationFunction = translationFunction;
     this.updateBalanceFunction = updateBalanceFunction;
     this.fetchFunction = fetchFunction;
+    this.interestexponent = interestexponent;
+    this.dustlimit = dustlimit;
   }
 
   getSafeTranslation(id: string, defaultstring: string) {
@@ -115,7 +120,7 @@ class UTXOPool {
   getBalance(chainheight2: number) {
     var total = 0;
     for (let i = 0; i < this.utxoPool.length; i++) {
-      total = total + this.utxoPool[i].getSatsWithInterest(chainheight2 + 1);
+      total = total + this.utxoPool[i].getSatsWithInterest(chainheight2 + 1, this.interestexponent);
     }
     return total;
   }
@@ -153,7 +158,7 @@ refreshPool() {
         this.chainheight = utxos[i].chainheight;
         this.chainheighttime = new Date().getTime();
       }
-      if (utxos[i].satoshis > this.DUSTLIMIT) {
+      if (utxos[i].satoshis > this.dustlimit) {
         //Remove any utxos with less or equal to dust limit, they may be SLP tokens
         this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
       }
@@ -205,9 +210,11 @@ class TransactionQueue extends UTXOPool {
   keyPair: any;
   BitcoinJS: any;
   transactionsPossible: boolean;
-
-  constructor(address: string, privateKey: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function, BitcoinJS: any, broadcastServer: string) {
-    super(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction);
+  miningFeeSats = 1;
+  sighashtouse = this.SIGHASH_ALL;
+  
+  constructor(address: string, privateKey: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function, BitcoinJS: any, broadcastServer: string, miningFeeSats:number = 1, interestexponent:number = 22, dustlimit:number = 546) {
+    super(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit);
     this.BitcoinJS = BitcoinJS;
     this.queue = new Array();
     this.isSending = false; //Sending from the queue
@@ -218,7 +225,9 @@ class TransactionQueue extends UTXOPool {
       this.keyPair = this.BitcoinJS.ECPair.fromWIF(this.privateKey);
     }
     let transactionBuilder = new this.BitcoinJS.TransactionBuilder();
-    this.transactionsPossible = transactionBuilder.enableBitcoinCash;
+    this.transactionsPossible = true;//transactionBuilder.enableBitcoinCash;
+    this.miningFeeSats = miningFeeSats;
+  
   }
 
   setbroadcastServer(broadcastServer: string) {
@@ -316,7 +325,7 @@ class TransactionQueue extends UTXOPool {
         let transactionSize = tx.byteLength();
         //Add extra satoshis for safety
         console.log("Transaction size:" + transactionSize);
-        let fees = Math.round(transactionSize * this.miningFeeMultiplier) + this.extraSatoshis;
+        let fees = Math.round(transactionSize * this.miningFeeSats) + this.extraSatoshis;
         //Make the trx again, with fees included
         tx = this.constructTransaction(utxos, fees, txdata);
 
@@ -429,7 +438,10 @@ class TransactionQueue extends UTXOPool {
     //let txnBuilder = new bchlib.TransactionBuilder(bchlib.networks.bitcoincash);
     //txnBuilder.enableBitcoinCash(true);
     let transactionBuilder = new this.BitcoinJS.TransactionBuilder();
-    transactionBuilder.enableBitcoinCash(true);
+    if(transactionBuilder.enableBitcoinCash){ //if enableBitcoinCash is present, assume we want to use it
+      transactionBuilder.enableBitcoinCash(true);
+      this.sighashtouse=this.BCH_SIGHASH_ALL;
+    }
     //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
     if (scriptArray.length > 0) {
       transactionBuilder.addOutput(script2, 0);
@@ -439,7 +451,7 @@ class TransactionQueue extends UTXOPool {
     let fundsRemaining = 0;
     //Calculate sum of tx outputs and add inputs
     for (let i = 0; i < utxos.length; i++) {
-      let originalAmount = utxos[i].getSatsWithInterest(this.chainheight + 1);
+      let originalAmount = utxos[i].getSatsWithInterest(this.chainheight + 1, this.interestexponent);
       fundsRemaining = fundsRemaining + originalAmount;
       // index of vout
       let vout = utxos[i].vout;
@@ -454,7 +466,7 @@ class TransactionQueue extends UTXOPool {
 
     //Add recipient
     if (txdata.to && txdata.toAmount) {
-      if (txdata.toAmount >= this.DUSTLIMIT) {
+      if (txdata.toAmount >= this.dustlimit) {
         fundsRemaining = fundsRemaining - txdata.toAmount;
         transactionOutputTotal += txdata.toAmount;
         transactionBuilder.addOutput(txdata.to, txdata.toAmount);
@@ -469,7 +481,7 @@ class TransactionQueue extends UTXOPool {
 
     var hasChange = false;
     //Add funds remaining as change if larger than dust
-    if (changeAmount >= this.DUSTLIMIT) {
+    if (changeAmount >= this.dustlimit) {
       transactionBuilder.addOutput(changeAddress, changeAmount);
       hasChange = true;
     }
@@ -479,7 +491,9 @@ class TransactionQueue extends UTXOPool {
       let originalAmount = utxos[i].satoshis;
       // sign w/ HDNode
       let redeemScript;
-      transactionBuilder.sign(i, this.keyPair, redeemScript, this.BCH_SIGHASH_ALL, originalAmount, null);
+      //this.sighashtouse=this.BCH_SIGHASH_ALL
+      //this.SIGHASH_ALL
+      transactionBuilder.sign(i, this.keyPair, redeemScript, this.sighashtouse, originalAmount, null);
       //, originalAmount, null, 0
     }
     //transactionBuilder.sign(0, this.keyPair);
