@@ -101,7 +101,7 @@ async function getDataMemberFinally(data) {
 
     let cashaddress = null;
     if (qaddress) {
-        cashaddress = legacyToMembercoin(qaddress);
+        cashaddress = legacyToNativeCoin(qaddress);
     }
 
     //Note, data may not contain any rows, for new or unknown users.
@@ -227,7 +227,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
     if (qaddress && !cashaddress) {
         {
-            legacyToMembercoin(qaddress);
+            legacyToNativeCoin(qaddress);
         }
     }
 
@@ -292,6 +292,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.bcaddress = bcaddress;
     }
     obj.version = version;
+    obj.dust=nativeCoin.dust;
+    obj.maxprofilelength=maxprofilelength;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -320,8 +322,9 @@ async function populateTools() {
     var bcaddress = await pubkeyToBCaddress(pubkeyhex);
     var obj = {
         address: pubkey,
-        cashaddress: legacyToMembercoin(pubkey),
-        bcaddress: bcaddress
+        cashaddress: legacyToNativeCoin(pubkey),
+        bcaddress: bcaddress,
+        ticker: nativeCoin.ticker
     };
 
     obj.privatekey = privkey;
@@ -337,7 +340,7 @@ async function populateTools() {
 async function getAndPopulateSettings() {
     let cashaddr;
     try {
-        cashaddr = legacyToMembercoin(pubkey);
+        cashaddr = legacyToNativeCoin(pubkey);
     } catch (err) {
         console.log(err);
     }
@@ -476,7 +479,7 @@ function updateSettingsNumber(settingsName) {
     if (settingsName == "maxfee" && numbers[settingsName] < 2) {
         numbers[settingsName] = 2;
     }
-    if (settingsName == "oneclicktip" && numbers[settingsName] < 547) {
+    if (settingsName == "oneclicktip" && numbers[settingsName] < nativeCoin.dust) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);

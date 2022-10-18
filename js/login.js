@@ -23,6 +23,7 @@ var Buffer = buffer.Buffer;
 
 
 
+
 var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }
 
@@ -79,7 +80,8 @@ async function init() {
 
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
-    document.getElementById('header').innerHTML = headerHTML;
+    //document.getElementById('header').innerHTML = headerHTML;
+    document.getElementById('header').innerHTML = templateReplace(headerHTML, {logowide:logowide, logoicon:logoicon}, true);
 
     document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
     document.getElementById('pagetitle').innerHTML = pageTitleHTML;
@@ -171,7 +173,7 @@ async function loadBigLibs() {
     //Load big libraries that may not be immediately needed.
 
     if (!bip39) { loadScript("js/lib/bip39.browser.js"); }
-    if (!window.bitcoinjs) { loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
+    if (!window.bitcoinjs) { loadScript(bitcoinjslib); }
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) { loadScript("js/lib/elliptic.min.js"); }
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
@@ -203,15 +205,16 @@ async function login(loginkey) {
         var publicaddress = "";
 
         if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
-        if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
+        if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
 
-        if (bip39.validateMnemonic(loginkey)) {
-            let seed = bip39.mnemonicToSeedSync(loginkey);
+        let loginkeylowercase=loginkey.toLowerCase();
+        if (bip39.validateMnemonic(loginkeylowercase)) {
+            let seed = bip39.mnemonicToSeedSync(loginkeylowercase);
             let root = window.bitcoinjs.bip32.fromSeed(seed);
             let child1 = root.derivePath("44'/0'/0'/0/0");
             let newloginkey = child1.toWIF();
-            localStorageSet(localStorageSafe, "mnemonic", loginkey);
-            mnemonic = loginkey;
+            localStorageSet(localStorageSafe, "mnemonic", loginkeylowercase);
+            mnemonic = loginkeylowercase;
             loginkey = newloginkey;
         }
 
@@ -272,7 +275,9 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
-            checkIfBitcloutUser(pubkeyhex);
+            if(allowBitcloutUser){
+                checkIfBitcloutUser(pubkeyhex);
+            }
             //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
         }
 
@@ -298,8 +303,8 @@ async function login(loginkey) {
     document.getElementById('newseedphrase').textContent = "";
     document.getElementById('loginkey').value = "";
 
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version}, true);
-    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { version:version, bcaddress: pubkey, cashaddress: legacyToMembercoin(pubkey) }, true);
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength}, true);
+    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
 
     updateSettings();
     getAndPopulateSettings();
@@ -313,8 +318,8 @@ async function login(loginkey) {
     loadStyle();
 
     //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
-    if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
-    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost",1,22,546);
+    if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
+    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost",nativeCoin.satsPerByte,nativeCoin.interestExponent,nativeCoin.dust);
     tq.refreshPool();
 
     if (!privkey) {
@@ -323,9 +328,9 @@ async function login(loginkey) {
         updateStatus(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
     }
 
-    document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
-    document.getElementById('newpost').innerHTML = newpostHTML;
-    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { fileuploadurl: dropdowns.imageuploadserver + "uploadfile" }, true);
+    document.getElementById('messagesanchor').innerHTML = templateReplace(messagesanchorHTML, { dust: nativeCoin.dust }, true);
+    //document.getElementById('newpost').innerHTML = newpostHTML;
+    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { fileuploadurl: dropdowns.imageuploadserver + "uploadfile", defaulttag: defaultTag, maxlength: maxlength }, true);
 
 
 

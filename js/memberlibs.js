@@ -68,7 +68,8 @@ var indirectRatingHTML=`
     </td>
     <td data-vavilon_data_label="VV0012" data-label='Rate as'>
         <span class='trustratingintermediate'>
-            <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'"; id='trust{memberid}{interid}'></div>
+            <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'" ;
+                id='trust{memberid}{interid}'></div>
         </span>
     </td>
     <td data-vavilon_data_label="VV0013" align='center' data-label='Member'>
@@ -76,7 +77,8 @@ var indirectRatingHTML=`
     </td>
     <td data-vavilon_data_label="VV0014" data-label='Who Rates as'>
         <span class='trustratingbyintermediate'>
-            <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'"; id='trust{interid}{targetid}'></div>
+            <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'" ;
+                id='trust{interid}{targetid}'></div>
         </span>
     </td>
     <td data-vavilon_data_label="VV0007" data-label='Member'>
@@ -207,19 +209,22 @@ var lowfundswarningHTML=`
 <div class="content">
     <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span
         data-vavilon="satoshisinaccount">satoshis
-        exist in your member.cash account - each
+        exist in your account - each
         action (posting, liking, subscribing, following, messaging etc)
-        requires a small amount of Membercoin.</span>
+        requires a small amount of </span>{coinname}
     <br />
     <br />
     <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
     <br />
     <br />
-    <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a few
-        seconds.</span>
-    <br />
-    <br />
-    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
+    <span class="showmembercoinmining">
+        <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a
+            few
+            seconds.</span>
+        <br />
+        <br />
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
+    </span>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -234,7 +239,7 @@ var walletanchorHTML=`
     <div id="walletbalance">
         <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
         <span class="balancebch" id="balancebch">0</span>
-        <span class="satoshis">(M3M)</span>
+        <span class="satoshis">({ticker})</span>
         <span class="balancesatoshis" id="balancesatoshis">0</span>
         <span class="satoshis">(satoshis)</span>
         <span class="approximatelyequal" style="display: none;">≈</span>
@@ -272,17 +277,13 @@ var walletanchorHTML=`
 
     <div id="walletsendfunds">
         <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
-        <p data-vavilon="VV0029">You can send funds to another Membercoin address.</p>
-
-        <label data-vavilon="VV0031" for="fundsamount">Membercoin Address (Any format)</label>
-        <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
-
+        <p data-vavilon="VV0029">You can send funds to another address.</p>
+        <label data-vavilon="VV0031" for="fundsamount">Address (Any format)</label>
+        <input class="sendfundsaddress" id="sendfundsaddress" maxlength="60" size="60">
         <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
-        <input id="fundsamount" size="12" type="number" maxlength="12" onchange="sendFundsAmountChanged();"
+        <input id="fundsamount" size="16" type="number" maxlength="16" onchange="sendFundsAmountChanged();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-
         <span class="sendusd" id="sendusd">($0.00 USD)</span>
-
         <button data-vavilon="VV0032" class="memberstandardbutton" id="sendfundsbutton" type="button"
             onclick="sendfunds();">Send
             Funds</button>
@@ -341,9 +342,9 @@ var newpostHTML=`
     </div>
     -->
     <div>
-        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="4000"
-            onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
-            oninput="this.onchange();">#newmember</textarea>
+        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="{maxlength}"
+            onchange="checkLength('memorandumtitle',{maxlength});memorandumPreview();" onkeypress="this.onchange();"
+            onpaste="this.onchange();" oninput="this.onchange();">{defaulttag}</textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
     </div>
     <form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
@@ -355,10 +356,12 @@ var newpostHTML=`
         </label>
         <span style="display:none;" id="uploadimagestatus">uploading image . . .</span>
     </form>
-    <div id="memorandumtextbutton">
-        <a data-vavilon="VV0039" href=""
-            onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
-            article</a>
+    <div class="articlebutton">
+        <div id="memorandumtextbutton">
+            <a data-vavilon="VV0039" href=""
+                onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
+                article</a>
+        </div>
     </div>
     <div id="memorandumtextarea" style="display: none;">
         <label data-vavilon="VV0040" for="newposttamemorandum">article (optional)</label>
@@ -374,20 +377,22 @@ var newpostHTML=`
         <div id="newpostmemorandumcompleted"></div>
     </div>
     <br />
-    <div id="memorandumpreviewareabutton">
-        <br />
-        <a data-vavilon="VV0043" href="javascript:;" onclick="showMemorandumPreview(); return false;">+see
-            preview</a>
-    </div>
-    <div id="memorandumpreviewarea" style="display: none;">
-        <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
-        <label for="memorandumpreview">
-            <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045" href='javascript:;'
-                    onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
-            <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046" href='javascript:;'
-                    onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
-        </label>
-        <div id="memorandumpreview" class="fatitem">
+    <div class="memorandumpreviewbuttonanddisplay">
+        <div id="memorandumpreviewareabutton">
+            <br />
+            <a data-vavilon="VV0043" href="javascript:;" onclick="showMemorandumPreview(); return false;">+see
+                preview</a>
+        </div>
+        <div id="memorandumpreviewarea" style="display: none;">
+            <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
+            <label for="memorandumpreview">
+                <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045" href='javascript:;'
+                        onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
+                <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046" href='javascript:;'
+                        onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
+            </label>
+            <div id="memorandumpreview" class="fatitem">
+            </div>
         </div>
     </div>
 </div>
@@ -410,8 +415,8 @@ var messagesanchorHTML=`
             <span id="messageaddress" class="messageaddress" style="display:none;"></span>
             <span id="messagepublickey" class="messagepublickey" style="display:none;"></span>
 
-            <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum 547)</label>
-            <input id="stampamount" size="8" type="number" value="547">
+            <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum {dust})</label>
+            <input id="stampamount" size="8" type="number" value="{dust}">
             <div>
                 <label data-vavilon="VV0054" for="newposttamessage">Message</label>
                 <textarea id="newposttamessage" name="text" rows="20" cols="80"></textarea>
@@ -605,16 +610,27 @@ pages.member = `
         <span class="dropdown">
             <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
             <div class="dropdown-content mainhamburger" id="dropdown-content">
-                <a data-vavilon="VV0061" class="populate-send-message"
-                    onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');"
-                    href="javascript:;">Send Message</a>
+                <span class="populate-send-message">
+                    <a data-vavilon="VV0061"
+                        onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');"
+                        href="javascript:;">Send Message</a>
+                </span>
                 {mutebuttonhtml}
-                <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
-                    class="separatorwide"></span><a rel="noopener noreferrer" target="memo"
-                    href="https://memo.cash/profile/{address}" id="membermemoprofilelink">Memo</a><span
-                    class="separatorwide"></span><a rel="noopener noreferrer" target="bitclout"
-                    href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
-                    class="separatorwide"></span>
+                <span class="memberprofilelink">
+                    <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
+                        class="separatorwide"></span>
+                </span>
+                <span class="dogehairprofilelink">
+                    <a href="https://doge.hair/#member?qaddress={address}" id="dogehairprofilelink">doge.hair</a><span
+                        class="separatorwide"></span>
+                </span>
+                <span class="membermemoprofilelink">
+                    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
+                        id="membermemoprofilelink">Memo</a><span class="separatorwide"></span>
+                </span>
+                <span class="bitcloutprofilelink">
+                    <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/u/{pagingid}"
+                        id="bitcloutprofilelink">BitClout</a><span class="separatorwide"></span></span>
             </div>
         </span>
     </div>
@@ -670,7 +686,7 @@ pages.member = `
             </span>
         </div>
     </div>
-    <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')">
+    <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')" class="bitcloutaddress">
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="memberbcformat">{bcaddress}</span>
         <div id="memberbcformatdiv">
@@ -701,8 +717,8 @@ pages.settings = `
             <!--<label id="settingspiclargelabel" for="settingspic" style="display:inline;">
                 <span data-vavilon="VV0076" class="profilepicdirections">(Must be imgur link in this format or .png
                     format)</span></label>-->
-                    <label data-vavilon="VV0059" id="settingspiclargelabel"  style="display:inline;">Profile
-                        Picture</label><br><br>
+            <label data-vavilon="VV0059" id="settingspiclargelabel" style="display:inline;">Profile
+                Picture</label><br><br>
             <form id="profilepicfile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
                 <label>
                     <input style="display: none;" name='firstfile' type="file" id="uploadprofilepicinput"
@@ -726,7 +742,7 @@ pages.settings = `
         <div>
             <label data-vavilon="VV0060" for="settingsnametext">Handle</label>
             <div class="formgroup">
-                <input maxlength="217" size="30" id="settingsnametext" value="{handle}"
+                <input maxlength="50" size="30" id="settingsnametext" value="{handle}"
                     onchange="document.getElementById('settingsnametextbutton').disabled=false;"
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 <button data-vavilon="VV0077" id="settingsnametextbutton" type="button"
@@ -738,8 +754,8 @@ pages.settings = `
         <div>
             <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
             <div class="formgroup">
-                <input maxlength="217" size="30" id="settingsprofiletext" value="{profile}"
-                    onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
+                <input maxlength="{maxprofilelength}" size="30" id="settingsprofiletext" value="{profile}"
+                    onchange="checkLength('settingsprofiletext',{maxprofilelength});document.getElementById('settingsprofiletextbutton').disabled=false;"
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 <button data-vavilon="VV0077" id="settingsprofiletextbutton" type="button" onclick="setProfile();"
                     data-vavilon="update" disabled="">update</button>
@@ -752,19 +768,25 @@ pages.settings = `
                     Notifications</a></span>
         </div>
         <div>
+            <label data-vavilon="installapp" for="installappbutton">Install</label>
+            <span class="installappbutton"><a data-vavilon="installapp" class="memberlinkbutton" id="installbutton"
+                    href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
+        </div>
+        <div>
             <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
             <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-            <p data-vavilon="VV0177">(Amount to tip when clicking up arrow. Minimum 547)</p>
+            <span data-vavilon="VV0177">(Amount to tip when clicking up arrow. Minimum </span>{dust})
         </div>
-        <div>
+        <!--<div>
             <label data-vavilon="maxfee" for="maxfee">Max Fee</label>
             <input id="maxfee" size="3" type="number" step="1" onchange="updateSettingsNumber('maxfee');"
                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
             <p data-vavilon="VV0083">(Max satoshis per byte to pay during network congestion. Minimum 2)</p>
-        </div>
+        </div>-->
     </div>
-    <input type="hidden" id="usdrate" step="1" onchange="updateSettingsNumber('usdrate');" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+    <input type="hidden" id="usdrate" step="1" onchange="updateSettingsNumber('usdrate');" onkeypress="this.onchange();"
+        onpaste="this.onchange();" oninput="this.onchange();">
     <div>
         <label for="languageselector">Language / 语言 / Idioma / Lengguwahe</label>
         <select id="languageselector" onchange="updateSettingsDropdown('languageselector');">
@@ -780,7 +802,7 @@ pages.settings = `
             <option data-vavilon="VV0167" value="feels compact">Choose Theme</option>
             <option value="feels compact">Feels Compact</option>
             <option value="feels-night compact compactnight">Feels Compact Night Mode</option>
-            <option data-vavilon="VV0168" value="none">None</option>
+            <!--<option data-vavilon="VV0168" value="none">None</option>-->
         </select>
     </div>
     <div>
@@ -789,7 +811,7 @@ pages.settings = `
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
         <p data-vavilon="VV0084">(Max results to show per page. Maximum 100)</p>
     </div>
-    <div>
+    <div class="displaymining">
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
         <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{address}"></iframe>
     </div>
@@ -812,8 +834,7 @@ pages.settings = `
         <button data-vavilon="VVaddrssfeedbutton" class="memberstandardbutton" id="addrssfeedbutton" type="button"
             onclick="addRSSFeed('plain','addrssfeedbutton');">Add RSS Feed</button>
     </div>-->
-    <br />
-    <br />
+
     <div>
         <label data-vavilon="VV0086" for="mutedwords">Muted Words (Comma Separate)</label>
         <textarea id="mutedwords" name="text" rows="4" cols="60" onchange="updatemutedwords();"
@@ -822,14 +843,14 @@ pages.settings = `
     <div>
         <label data-vavilon="VV0087" for="mediasettings" class="labelheader">Media Settings</label>
     </div>
-    <div class="customcheckbox">
+    <!--<div class="customcheckbox">
         <input type="checkbox" id="showyoutube" onchange="updateSettingsCheckbox('showyoutube');">
         <label data-vavilon="VV0088" for="showyoutube" class="checkboxlabel">Show YouTube Preview Images</label>
     </div>
     <div class="customcheckbox">
         <input type="checkbox" id="showimgur" onchange="updateSettingsCheckbox('showimgur');">
         <label data-vavilon="VV0089" for="showimgur" class="checkboxlabel">Show Imgur Images</label>
-    </div>
+    </div>-->
     <div class="customcheckbox">
         <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
         <label data-vavilon="VV0090" for="showtwitter" class="checkboxlabel">Show Tweets</label>
@@ -837,14 +858,14 @@ pages.settings = `
     <!--<div class="customcheckbox">
         <input type="checkbox" id="showlbry" onchange="updateSettingsCheckbox('showlbry');">
         <label data-vavilon="showlbry" for="showlbry" class="checkboxlabel">Show lbry.tv</label>
-    </div>-->
+    </div>
     <div class="customcheckbox">
         <input type="checkbox" id="showbitclout" onchange="updateSettingsCheckbox('showbitclout');">
         <label data-vavilon="showbitclout" for="showbitclout" class="checkboxlabel">Show BitClout Images</label>
-    </div>
+    </div>-->
 
 
-    <!-- Too slow on server side-->
+    <!-- Too slow on server side
 
     <div>
         <label data-vavilon="VV0181" for="filtersettings" class="labelheader">Filter Settings</label>
@@ -865,28 +886,29 @@ pages.settings = `
             <option value="-1">All Networks</option>
             <option value="3">Membercoin (M3M)</option>
         </select>
-    </div>
-    <div>
-        <label data-vavilon="VV0091" for="contentserver">Content Server</label>
-        <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
-            <option value="https://member.cash/v2/member.js">member.cash</option>
-            <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
-        </select>
-    </div>
-    <div>
-        <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
-        <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
-            <option value="https://member.cash/v2/">member.cash</option>
-            <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-        </select>
-    </div>
-
-    <div>
-        <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
-        <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
-            <option value="https://member.cash/v2/">member.cash</option>
-            <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-        </select>
+    </div>-->
+    <div class="displayservers">
+        <div>
+            <label data-vavilon="VV0091" for="contentserver">Content Server</label>
+            <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
+                <option value="https://member.cash/v2/member.js">member.cash</option>
+                <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
+            </select>
+        </div>
+        <div>
+            <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
+            <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
+                <option value="https://member.cash/v2/">member.cash</option>
+                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+            </select>
+        </div>
+        <div>
+            <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
+            <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
+                <option value="https://member.cash/v2/">member.cash</option>
+                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+            </select>
+        </div>
     </div>
     <div>
         <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
@@ -992,9 +1014,8 @@ var headerHTML = `
 <div class="headerleftgroup">
     <span class="memberlogo">
         <a href="./index.html">
-            <img class="memberlogoimagefull" src="img/logos/logowide.svg" width="130" height="26"
-                alt="Site Logo Full" />
-            <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26" alt="Site Logo Icon" />
+            <img class="memberlogoimagefull" src="{logowide}" width="130" height="26" alt="Site Logo Full" />
+            <img class="memberlogoimage" src="{logoicon}" width="26" height="26" alt="Site Logo Icon" />
         </a>
     </span>
     <a class="profilepicwrapper" href="#profile" onclick="nlc();"><span id="profilepicheader"
@@ -1034,15 +1055,26 @@ var footerHTML = `
         <hr />
     </span>
     <span class="footerlinks">
-        <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
-        <span class="separatorwide"></span>
-        <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/memberapp.github.io">Github</a>
-        <span class="separatorwide"></span>
-        <a data-vavilon="VV0141" rel='noopener noreferrer' target="github"
-            href="https://github.com/memberapp/protocol">Protocol</a>
-        <span class="separatorwide"></span>
-        <a data-vavilon="VV0142" onclick="populateSendMessage('1M77BV2DExpLY6mepv86CTGpGMSoL2pLa9','\x46\x72\x65\x65\x54\x72\x61\x64\x65','03cd56864fe8b0533e9d0ad36001c5ee50d2fa5264e57c7a46d4a05fb0881609db');" href="javascript:;">Contact</a>
-        <span class="separatorwide"></span>
+        <span class="displayinfluencers">
+            <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
+            <span class="separatorwide"></span>
+        </span>
+        <span class="displaygithub">
+            <a rel='noopener noreferrer' target="github"
+                href="https://github.com/memberapp/memberapp.github.io">Github</a>
+            <span class="separatorwide"></span>
+        </span>
+        <span class="displayprotocol">
+            <a data-vavilon="VV0141" rel='noopener noreferrer' target="github"
+                href="https://github.com/memberapp/protocol">Protocol</a>
+            <span class="separatorwide"></span>
+        </span>
+        <span class="displaycontact">
+            <a data-vavilon="VV0142"
+                onclick="populateSendMessage('1M77BV2DExpLY6mepv86CTGpGMSoL2pLa9','\x46\x72\x65\x65\x54\x72\x61\x64\x65','03cd56864fe8b0533e9d0ad36001c5ee50d2fa5264e57c7a46d4a05fb0881609db');"
+                href="javascript:;">Contact</a>
+            <span class="separatorwide"></span>
+        </span>
         <span data-vavilon="VV0143">version</span> <span id="version" title="version">loading</span>.<u>9</u>
     </span>
     <br />
@@ -1152,19 +1184,19 @@ var footerHTML = `
                             <span data-vavilon="tips" class="text footerlabel">tips</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span
-                                    data-vavilon="remember">0.1 M3M ({MEMUSD1C})</span></a>
+                                    data-vavilon="remember">0.1 {ticker} ({MEMUSD1C})</span></a>
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span
-                                        data-vavilon="remember">1 M3M ({MEMUSD1})</span></a>
+                                        data-vavilon="remember">1 {ticker} ({MEMUSD1})</span></a>
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span
-                                        data-vavilon="remember">5 M3M ({MEMUSD5})</span></a>
+                                        data-vavilon="remember">5 {ticker} ({MEMUSD5})</span></a>
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span
-                                        data-vavilon="remember">10 M3M ({MEMUSD10})</span></a>
+                                        data-vavilon="remember">10 {ticker} ({MEMUSD10})</span></a>
                                 <a
-                                    onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
-                                        data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
+                                    onclick="if (confirm('Tip 20 {ticker} ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
+                                        data-vavilon="remember">20 {ticker} ({MEMUSD20})</span></a>
                                 <a
-                                    onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
-                                        data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
+                                    onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
+                                        data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
                             </div>
                         </a>
                     </span>
@@ -1363,7 +1395,8 @@ var replyDivTemplate = `
     </div>
     <div class="replyform">
         <br />
-        <textarea id="replytext{page}{txid}" rows="3" maxlength="4000"></textarea>
+        <textarea id="replytext{page}{txid}" rows="3" maxlength="{maxreplylength}" onchange="checkLength('replytext{page}{txid}',{maxreplylength});" onkeypress="this.onchange();" onpaste="this.onchange();"
+        oninput="this.onchange();"></textarea>
         <br />
         <input id="replybutton{page}{txid}" value="reply" type="submit"
             onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
@@ -1374,7 +1407,7 @@ var replyDivTemplate = `
 </div>`;
 
 var remembersTemplate=`
-<span {display} onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" id="repostlink{page}{txid}" class="subtextremembers">
+<span {display} onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" id="repostlink{txid}{diff}" class="subtextremembers">
     <a href="javascript:"><span id="repostscount{txid}">{repostcount}</span>&hairsp;<span data-vavilon="VV0156">remembers</span></a>
 </span>`;
 
@@ -1397,19 +1430,19 @@ var replyAndTipsTemplate = `
 <a id="tiplinkposts{diff}{txid}" class="btn-icon" onclick="dropDownMenuAction(this);">
     <span data-vavilon="VV0157">tip</span><div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}" style="position: relative;">
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span data-vavilon="remember">0.1
-            M3M ({MEMUSD1C})</span></a>
+            {ticker} ({MEMUSD1C})</span></a>
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1
-                M3M ({MEMUSD1})</span></a>
+                {ticker} ({MEMUSD1})</span></a>
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5
-                M3M ({MEMUSD5})</span></a>
+                {ticker} ({MEMUSD5})</span></a>
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10
-                M3M ({MEMUSD10})</span></a>
+                {ticker} ({MEMUSD10})</span></a>
         <a
-            onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
-                data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
+            onclick="if (confirm('Tip 20 {ticker} ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
+                data-vavilon="remember">20 {ticker} ({MEMUSD20})</span></a>
         <a
-            onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
-                data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
+            onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
+                data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
     </div></a>
 <a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
 <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
@@ -1442,7 +1475,8 @@ var mapPostTemplate=`
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
         </a>
     </div>
-    <textarea maxlength="4000" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
+    <textarea maxlength="{maxgeolength}" onchange="checkLength('newgeopostta',{maxgeolength});" onkeypress="this.onchange();" onpaste="this.onchange();"
+    oninput="this.onchange();" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
     <input data-vavilon_value="VV0164" id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
     <input data-vavilon_value="VV0165" id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit"
         disabled>
@@ -2844,8 +2878,30 @@ const reloadImageEverywhere = url =>
   fetch(url, { cache: 'reload', mode: 'no-cors' })
     .then(() => document.body.querySelectorAll(`img[src='${url}']`)
       .forEach(img => img.src = url))
+      
+//Install app
 
-//Some refactoring is possible in these functions
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt", (e) => {
+  // Prevent Chrome 67 and earlier from automatically showing the prompt
+  // e.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+});
+
+function installApp() {
+  // Show the prompt
+  deferredPrompt.prompt();
+  // Wait for the user to respond to the prompt
+  deferredPrompt.userChoice.then((choiceResult) => {
+    if (choiceResult.outcome === "accepted") {
+      console.log("User accepted the A2HS prompt");
+    } else {
+      console.log("User dismissed the A2HS prompt");
+    }
+    deferredPrompt = null;
+  });
+}//Some refactoring is possible in these functions
 
 "use strict";
 
@@ -2934,7 +2990,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var contents = "";
 
         
-        if (!pubkey && order == 'hot' && !qaddress && Math.random()<0.05) {//Show member.cash explainer video
+        if (!pubkey && order == 'hot' && !qaddress && Math.random()<adfrequency) {//Show member.cash explainer video
             let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nDeso, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
             contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
         }
@@ -3651,7 +3707,7 @@ function likePost(txid, origtxid, tipAddress, amountSats) {
 
     //GUI update
     increaseGUILikes(txid);
-    if (amountSats >= 547) {
+    if (amountSats >= nativeCoin.dust) {
         let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(amountSats);
         document.getElementById('tipscount' + txid).innerHTML = usdString(newAmount, false);
         document.getElementById('tipscount' + txid).dataset.amount = newAmount;
@@ -3664,7 +3720,7 @@ function likePost(txid, origtxid, tipAddress, amountSats) {
 
     //If memo user is logged in
     if (checkForNativeUserAndHasBalance()) {
-        if (amountSats >= 547) {
+        if (amountSats >= nativeCoin.dust) {
             sendTipRaw(origtxid, tipAddress, amountSats, privkey, null);
         } else {
             sendLike(origtxid, privkey);
@@ -3706,8 +3762,8 @@ function sendTip(txid, origtxid, tipAddress, page) {
     document.getElementById('tipstatus' + page + txid).style.display = "block";
 
     var tipAmount = parseInt(document.getElementById("tipamount" + page + txid).value);
-    if (tipAmount < 547) {
-        alert(getSafeTranslation('547min', "547 (dust+1) is the minimum tip possible"));
+    if (tipAmount < nativeCoin.dust) {
+        alert(nativeCoin.dust + getSafeTranslation('547min', " is the minimum tip possible"));
         return false;
     }
     defaulttip = tipAmount;
@@ -4010,6 +4066,17 @@ async function uploadFile(elementid, uploadURL, targettextarea, memorandumprevie
     });
 }
 
+function checkLength(elementName, maxcharlength){
+    let element= document.getElementById(elementName);
+    let text=element.value;
+    let hextext = new Buffer(text).toString('hex');
+    let length = hextext.length;
+    if(length>maxcharlength*2){
+        //alert('too long');
+        element.value=Buffer.from(hextext.substring(0,maxcharlength*2),'hex').toString();
+    }
+}
+
 function showMemorandumPreview() {
     document.getElementById('memorandumpreviewarea').style.display = 'block';
     document.getElementById('memorandumpreviewareabutton').style.display = 'none';
@@ -4050,7 +4117,7 @@ function memorandumPreview() {
     let member= new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey);
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML2(member, null, 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0,  '000', 1, 0,  0, '',  3, '000', false)
+        getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0,  '000', 1, 0,  0, '',  3, '000', false)
         + `<div id="articleheader000" class="articleheader"></div>`
         + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false);
 
@@ -4130,7 +4197,7 @@ function postmemorandum() {
     var topic = '';
 
     if (!txid) {
-        if (posttext == '#newmember' || posttext.length == 0) {
+        if (posttext == defaultTag || posttext.length == 0) {
             alert(getSafeTranslation('nomemo', "No Post - Try adding some text"));
             return false;
         }
@@ -4336,7 +4403,7 @@ async function getDataMemberFinally(data) {
 
     let cashaddress = null;
     if (qaddress) {
-        cashaddress = legacyToMembercoin(qaddress);
+        cashaddress = legacyToNativeCoin(qaddress);
     }
 
     //Note, data may not contain any rows, for new or unknown users.
@@ -4462,7 +4529,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
     if (qaddress && !cashaddress) {
         {
-            legacyToMembercoin(qaddress);
+            legacyToNativeCoin(qaddress);
         }
     }
 
@@ -4527,6 +4594,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.bcaddress = bcaddress;
     }
     obj.version = version;
+    obj.dust=nativeCoin.dust;
+    obj.maxprofilelength=maxprofilelength;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -4555,8 +4624,9 @@ async function populateTools() {
     var bcaddress = await pubkeyToBCaddress(pubkeyhex);
     var obj = {
         address: pubkey,
-        cashaddress: legacyToMembercoin(pubkey),
-        bcaddress: bcaddress
+        cashaddress: legacyToNativeCoin(pubkey),
+        bcaddress: bcaddress,
+        ticker: nativeCoin.ticker
     };
 
     obj.privatekey = privkey;
@@ -4572,7 +4642,7 @@ async function populateTools() {
 async function getAndPopulateSettings() {
     let cashaddr;
     try {
-        cashaddr = legacyToMembercoin(pubkey);
+        cashaddr = legacyToNativeCoin(pubkey);
     } catch (err) {
         console.log(err);
     }
@@ -4711,7 +4781,7 @@ function updateSettingsNumber(settingsName) {
     if (settingsName == "maxfee" && numbers[settingsName] < 2) {
         numbers[settingsName] = 2;
     }
-    if (settingsName == "oneclicktip" && numbers[settingsName] < 547) {
+    if (settingsName == "oneclicktip" && numbers[settingsName] < nativeCoin.dust) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
@@ -5442,8 +5512,8 @@ function checkForNativeUser() {
         return false;
     }
 
-    if (tq.getBalance(chainheight) < 547) {
-        alert(getSafeTranslation('notenough2', "This is a Membercoin Action only and you do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
+    if (tq.getBalance(chainheight) < nativeCoin.dust) {
+        alert(getSafeTranslation('notenough2', "You do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
         return false;
     }
 
@@ -5451,7 +5521,7 @@ function checkForNativeUser() {
 }
 
 function checkForNativeUserAndHasBalance(){
-    return (privkey && tq.getBalance(chainheight) > 546);
+    return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
 }
 
 //var waitForTransactionToComplete = false;
@@ -5681,9 +5751,7 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) 
 }*/
 
 
-//var maxhexlength=368; //memo - 184*2
-var maxhexlength=4000*2;
-var whitespacebreak=20;
+
 
 async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {
 
@@ -6059,12 +6127,12 @@ var UTXOPool = /** @class */ (function () {
         //translation function will return localized string for identifier
         //updateBalanceFunction will be called when the pool refreshes and may have different utxos
         if (interestexponent === void 0) { interestexponent = 22; }
-        if (dustlimit === void 0) { dustlimit = 546; }
+        if (dustlimit === void 0) { dustlimit = 547; }
         this.extraSatoshis = 5;
         this.maxfee = 5;
         this.resendWait = 2000;
         this.interestexponent = 22;
-        this.dustlimit = 546;
+        this.dustlimit = 547;
         this.utxoPool = new Array();
         this.theAddress = address;
         this.utxoServer = utxoServer;
@@ -6167,8 +6235,8 @@ var UTXOPool = /** @class */ (function () {
                                 this.chainheight = utxos[i].chainheight;
                                 this.chainheighttime = new Date().getTime();
                             }
-                            if (utxos[i].satoshis > this.dustlimit) {
-                                //Remove any utxos with less or equal to dust limit, they may be SLP tokens
+                            if (utxos[i].satoshis && utxos[i].txid && utxos[i].satoshis != 546) {
+                                //Don't use outputs of 546 they may be SLP tokens. Note this may be different to the dust amount.
                                 this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
                             }
                         }
@@ -6205,7 +6273,7 @@ var TransactionQueue = /** @class */ (function (_super) {
     function TransactionQueue(address, privateKey, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, BitcoinJS, broadcastServer, miningFeeSats, interestexponent, dustlimit) {
         if (miningFeeSats === void 0) { miningFeeSats = 1; }
         if (interestexponent === void 0) { interestexponent = 22; }
-        if (dustlimit === void 0) { dustlimit = 546; }
+        if (dustlimit === void 0) { dustlimit = 547; }
         var _this = _super.call(this, address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit) || this;
         _this.OP_RETURN = 106;
         _this.SIGHASH_BITCOINCASHBIP143 = 0x40;
@@ -6448,6 +6516,7 @@ var TransactionQueue = /** @class */ (function (_super) {
             transactionBuilder.enableBitcoinCash(true);
             this.sighashtouse = this.BCH_SIGHASH_ALL;
         }
+        transactionBuilder.maximumFeeRate = 10000; //For dogecoin
         //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
         if (scriptArray.length > 0) {
             transactionBuilder.addOutput(script2, 0);
@@ -7139,6 +7208,7 @@ var Buffer = buffer.Buffer;
 
 
 
+
 var localStorageSafe = null;
 try { var localStorageSafe = localStorage; } catch (err) { }
 
@@ -7195,7 +7265,8 @@ async function init() {
 
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
-    document.getElementById('header').innerHTML = headerHTML;
+    //document.getElementById('header').innerHTML = headerHTML;
+    document.getElementById('header').innerHTML = templateReplace(headerHTML, {logowide:logowide, logoicon:logoicon}, true);
 
     document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
     document.getElementById('pagetitle').innerHTML = pageTitleHTML;
@@ -7287,7 +7358,7 @@ async function loadBigLibs() {
     //Load big libraries that may not be immediately needed.
 
     if (!bip39) { loadScript("js/lib/bip39.browser.js"); }
-    if (!window.bitcoinjs) { loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
+    if (!window.bitcoinjs) { loadScript(bitcoinjslib); }
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) { loadScript("js/lib/elliptic.min.js"); }
     if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
@@ -7319,15 +7390,16 @@ async function login(loginkey) {
         var publicaddress = "";
 
         if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
-        if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
+        if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
 
-        if (bip39.validateMnemonic(loginkey)) {
-            let seed = bip39.mnemonicToSeedSync(loginkey);
+        let loginkeylowercase=loginkey.toLowerCase();
+        if (bip39.validateMnemonic(loginkeylowercase)) {
+            let seed = bip39.mnemonicToSeedSync(loginkeylowercase);
             let root = window.bitcoinjs.bip32.fromSeed(seed);
             let child1 = root.derivePath("44'/0'/0'/0/0");
             let newloginkey = child1.toWIF();
-            localStorageSet(localStorageSafe, "mnemonic", loginkey);
-            mnemonic = loginkey;
+            localStorageSet(localStorageSafe, "mnemonic", loginkeylowercase);
+            mnemonic = loginkeylowercase;
             loginkey = newloginkey;
         }
 
@@ -7388,7 +7460,9 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             //dropdowns.utxoserver
-            checkIfBitcloutUser(pubkeyhex);
+            if(allowBitcloutUser){
+                checkIfBitcloutUser(pubkeyhex);
+            }
             //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
         }
 
@@ -7414,8 +7488,8 @@ async function login(loginkey) {
     document.getElementById('newseedphrase').textContent = "";
     document.getElementById('loginkey').value = "";
 
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version}, true);
-    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { version:version, bcaddress: pubkey, cashaddress: legacyToMembercoin(pubkey) }, true);
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength}, true);
+    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
 
     updateSettings();
     getAndPopulateSettings();
@@ -7429,8 +7503,8 @@ async function login(loginkey) {
     loadStyle();
 
     //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
-    if (!window.bitcoinjs) { await loadScript("js/lib/bitcoincashjs-lib-5.2.0.min.patched.js"); }
-    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost",1,22,546);
+    if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
+    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost",nativeCoin.satsPerByte,nativeCoin.interestExponent,nativeCoin.dust);
     tq.refreshPool();
 
     if (!privkey) {
@@ -7439,9 +7513,9 @@ async function login(loginkey) {
         updateStatus(getSafeTranslation('publickeymode', "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc."));
     }
 
-    document.getElementById('messagesanchor').innerHTML = messagesanchorHTML;
-    document.getElementById('newpost').innerHTML = newpostHTML;
-    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { fileuploadurl: dropdowns.imageuploadserver + "uploadfile" }, true);
+    document.getElementById('messagesanchor').innerHTML = templateReplace(messagesanchorHTML, { dust: nativeCoin.dust }, true);
+    //document.getElementById('newpost').innerHTML = newpostHTML;
+    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { fileuploadurl: dropdowns.imageuploadserver + "uploadfile", defaulttag: defaultTag, maxlength: maxlength }, true);
 
 
 
@@ -8269,7 +8343,8 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
         profilepicsmall: profilepic,
         address: pubkey,
         sourcenetwork: sourcenetwork,
-        origtxid: origtxid
+        origtxid: origtxid,
+        maxreplylength: maxreplylength
     }
 
     return templateReplace(replyDivTemplate, obj);
@@ -8335,7 +8410,8 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         MEMUSD10: satsToUSDString(1000000000),
         MEMUSD20: satsToUSDString(2000000000),
         MEMUSD50: satsToUSDString(5000000000),
-        MEMUSD100: satsToUSDString(10000000000)
+        MEMUSD100: satsToUSDString(10000000000),
+        ticker: nativeCoin.ticker
     }
 
     return templateReplace(replyAndTipsTemplate, obj);
@@ -8591,6 +8667,9 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     } else if (sourcenetwork == 3) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="memberp" href="${permalink}">member.cash</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="memberp" href="${permalink}"><img src='img/networks/3.png'></a>`;
+    } else if (sourcenetwork == 4) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img src='img/networks/4.png'></a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img src='img/networks/99.png'></a>`;
@@ -8648,7 +8727,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         MEMUSD50: satsToUSDString(5000000000),
         MEMUSD100: satsToUSDString(10000000000),
         deleted: (deleted=='1' ? ` deleted`:''),
-        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:'')
+        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:''),
+        ticker: nativeCoin.ticker
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -8742,7 +8822,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
             if (data[i].rating) {
                 ratingused = data[i].rating;
             }
-            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused < 64);
+            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused < maxScoreToCollapseComment);
 
             var obj = {
                 unmuteddisplay: (isMuted ? `none` : `block`),
@@ -9115,7 +9195,8 @@ function getMapPostHTML(lat, lng, requireLogin) {
         lat: Number(lat),
         lng: Number(lng),
         profilepicsmall: profilepic,
-        address: pubkey
+        address: pubkey,
+        maxgeolength:maxgeolength
     }
 
     return templateReplace(mapPostTemplate, obj);
@@ -9225,7 +9306,7 @@ function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, ra
 }
 
 function getRatingComment(data) {
-    return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="190" id="memberratingcommentinputbox${san(data.bitcoinaddress)}" value="${ds(data.ratingreason)}" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+    return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="${maxratinglength}" id="memberratingcommentinputbox${san(data.bitcoinaddress)}" value="${ds(data.ratingreason)}" onchange="checkLength('memberratingcommentinputbox${san(data.bitcoinaddress)}',${maxratinglength});" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
 function getMemberRatingHTML(bitcoinaddress, ratingScore, pagingid) {
@@ -9642,7 +9723,7 @@ async function postprivatemessage() {
 
     var status = "newpostmessagebutton";
     var stampAmount = document.getElementById("stampamount").value;
-    if (stampAmount < 547) stampAmount = 547;
+    if (stampAmount < nativeCoin.dust) stampAmount = nativeCoin.dust;
 
     var messageRecipient = document.getElementById("messageaddress").textContent;
     var publickey = document.getElementById("messagepublickey").textContent;
@@ -9699,8 +9780,8 @@ function sendFundsAmountChanged() {
 
 async function sendfunds() {
     var sendAmount = Number(document.getElementById("fundsamount").value);
-    if (sendAmount < 547) {
-        alert(getSafeTranslation('547orlarger', "Amount has to be 547 satoshis or larger."));
+    if (sendAmount < nativeCoin.dust) {
+        alert(nativeCoin.dust + getSafeTranslation('547orlarger', " satoshis or larger."));
         return;
     }
     var totalAmountPossible = updateBalance(chainheight);
@@ -9721,6 +9802,10 @@ async function sendfunds() {
     //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
     if (sendAddress.startsWith("member:")) {
         sendAddress = await membercoinToLegacy(sendAddress);
+    }
+
+    if (sendAddress.startsWith("D")) {
+        sendAddress = await dogecoinToLegacy(sendAddress);
     }
 
     document.getElementById("fundsamount").disabled = true;
@@ -9755,6 +9840,30 @@ function membercoinToLegacy(address) {
     return window.bs58check.encode(toencode);
 }
 
+function legacyToNativeCoin(pubkey){
+    if(nativeCoin.name=="Membercoin"){
+        return legacyToMembercoin(pubkey);
+    }else if(nativeCoin.name=="Dogecoin"){
+        return legacyToDogecoin(pubkey);
+    }
+}
+
+function legacyToDogecoin(pubkey) {
+    let result=window.bs58check.decode(pubkey);
+    result[0]=0x1E; //Dogecoin
+    let hash = Buffer.from(result);
+    let toencode = new Buffer(hash, 'hex');
+    return window.bs58check.encode(toencode);
+}
+
+function dogecoinToLegacy(pubkey) {
+    let result=window.bs58check.decode(pubkey);
+    result[0]=0x00; //Bitcoin
+    let hash = Buffer.from(result);
+    let toencode = new Buffer(hash, 'hex');
+    return window.bs58check.encode(toencode);
+}
+
 function legacyToMembercoin(pubkey) {
     let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
     return cashaddr.encode('member', 'P2PKH', hash);
@@ -9784,7 +9893,7 @@ function setBalanceWithInterest() {
         }
         //M̈ m̈
         //document.getElementById("membalance").textContent=mem.substring(0,10);
-        document.getElementById("membalance").innerHTML = `<strong>m̈</strong>` + mem.substring(0, 10);
+        document.getElementById("membalance").innerHTML = `<strong>${nativeCoin.symbol}</strong>` + mem.substring(0, 10);
     } catch (err) {
         //console.log(err);
         //Error probably caused by trying to set balance before UTXO set is loaded
@@ -9839,3 +9948,5 @@ function updateBalance(dynamicChainHeight, showLowFunds=false) {
 
 
 
+var version = '8.6.1'; 
+if (init) { init(); } 

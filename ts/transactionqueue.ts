@@ -45,9 +45,9 @@ class UTXOPool {
   updateBalanceFunction: Function;
   fetchFunction: Function;
   interestexponent = 22;
-  dustlimit = 546;
+  dustlimit = 547;
 
-  constructor(address: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function, interestexponent:number = 22, dustlimit:number = 546) {
+  constructor(address: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function, interestexponent:number = 22, dustlimit:number = 547) {
     //address is the legacy address of the account
     //utxoServer is server that will send utxo set
     //status message function is a function to call with progress updates
@@ -158,8 +158,8 @@ refreshPool() {
         this.chainheight = utxos[i].chainheight;
         this.chainheighttime = new Date().getTime();
       }
-      if (utxos[i].satoshis > this.dustlimit) {
-        //Remove any utxos with less or equal to dust limit, they may be SLP tokens
+      if (utxos[i].satoshis && utxos[i].txid && utxos[i].satoshis != 546) {
+        //Don't use outputs of 546 they may be SLP tokens. Note this may be different to the dust amount.
         this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
       }
     }
@@ -213,7 +213,7 @@ class TransactionQueue extends UTXOPool {
   miningFeeSats = 1;
   sighashtouse = this.SIGHASH_ALL;
   
-  constructor(address: string, privateKey: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function, BitcoinJS: any, broadcastServer: string, miningFeeSats:number = 1, interestexponent:number = 22, dustlimit:number = 546) {
+  constructor(address: string, privateKey: string, utxoServer: string, statusMessageFunction: Function, translationFunction: Function, updateBalanceFunction: Function, fetchFunction: Function, BitcoinJS: any, broadcastServer: string, miningFeeSats:number = 1, interestexponent:number = 22, dustlimit:number = 547) {
     super(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit);
     this.BitcoinJS = BitcoinJS;
     this.queue = new Array();
@@ -442,6 +442,9 @@ class TransactionQueue extends UTXOPool {
       transactionBuilder.enableBitcoinCash(true);
       this.sighashtouse=this.BCH_SIGHASH_ALL;
     }
+
+    transactionBuilder.maximumFeeRate=10000; //For dogecoin
+    
     //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
     if (scriptArray.length > 0) {
       transactionBuilder.addOutput(script2, 0);

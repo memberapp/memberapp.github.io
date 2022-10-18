@@ -17,11 +17,10 @@
         content="member.cash is a fully decentralized public platform for discussion and reputation">
     <meta property="og:image" content="https://member.cash/img/logos/logowide.png">
 
-    <!--  Anything above this line will not be reproduced automatically if the page is loaded from the server -->
+    <!--  Anything above this line will be written by the server script -->
     <!--INSERTMETADATA-->
 
-    <meta http-equiv="Content-Security-Policy"
-        content=" 
+    <meta http-equiv="Content-Security-Policy" content=" 
         script-src 
             'self' 
             'unsafe-inline' 
@@ -30,7 +29,8 @@
             https://www.googletagmanager.com;
         connect-src 
             'self' 
-            https://member.cash/ 
+            https://member.cash/
+            https://doge.hair/ 
             http://127.0.0.1:3123/ 
             http://localhost:3123/ 
             https://www.google-analytics.com; 
@@ -47,13 +47,15 @@
             https://www.youtube.com/  
             https://nitter.net/ 
             https://twitframe.com/ 
-            https://img.youtube.com/vi/;">
+            https://img.youtube.com/vi/;
+        object-src 
+            'none';">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--  Progressive Web App Service Worker -->
     <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
-    <script src="pwa/pwa2.js?8.5.3"></script>
+    <script src="pwa/pwa2.js?8.6.1"></script>
 
     <!-- DNS-prefetch resource hints  -->
     <link rel="preconnect" href="https://twitframe.com" />
@@ -74,9 +76,24 @@
     <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
     <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
 
-    <link id="pagestyle" rel="stylesheet" href="css/feels.css?8.5.3">
-    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?8.5.3">
-    <link id="pagestyle3" rel="stylesheet" href="css/none.css?8.5.3">
+    <link id="pagestyle" rel="stylesheet" href="css/feels.css?8.6.1">
+    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?8.6.1">
+    <link id="pagestyle3" rel="stylesheet" href="css/none.css?8.6.1">
+
+    <!--  Config -->
+    <script src="config.js?8.6.1"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js"></script>
+
+    <!-- Light External Libs -->
+    <script src="js/lib/memberextlibs.js?8.6.1"></script>
+
+    <!-- https://github.com/fredolss/rater-js  -->
+    <script src='js/lib/rater/rating.js?8.6.1'></script>
+
+    <!-- Load Translations -->
+    <script src="locale/localization.js?8.6.1"></script>
 
 </head>
 
@@ -84,41 +101,13 @@
     <div id="previewcontent" class="previewcontent">
         <!--INSERTCONTENT-->
     </div>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-243798555-1"></script>
-
-    <!-- Light External Libs -->
-    <script src="js/lib/memberextlibs.js?8.5.3"></script>
-    
-    <!-- https://github.com/fredolss/rater-js  -->
-    <script src='js/lib/rater/rating.js?8.5.3'></script>
-    
-    <!-- Load Translations -->
-    <script>var dictionary = [];</script>
-    <script src="locale/localization.js?8.5.3"></script>
-    
-    <!--  Config -->
-    <script src="config.js?8.5.3"></script>
-
-    <!--  Member Minified Code. -->
-    <script src="js/memberlibs.js?8.5.3"></script>
-
     <div id="map" style="width:100%; height:100%;display:none;z-index: 50;"></div>
     <div class="mainbodywrapper" id="mainbodywrapper"></div>
     <footer id="footer"></footer>
     <div id="status" class="status"></div>
     <div id="bitcloutframe"></div>
-    <script>
-        var version = '8.5.3';
-        if (init) { init(); }
-    </script>    
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-        gtag('config', 'UA-243798555-1');
-    </script>
+    <!--  Member Minified Code. -->
+    <script src="js/memberlibs.js?8.6.1"></script>
 </body>
 
 </html>

@@ -16,8 +16,8 @@ function checkForNativeUser() {
         return false;
     }
 
-    if (tq.getBalance(chainheight) < 547) {
-        alert(getSafeTranslation('notenough2', "This is a Membercoin Action only and you do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
+    if (tq.getBalance(chainheight) < nativeCoin.dust) {
+        alert(getSafeTranslation('notenough2', "You do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
         return false;
     }
 
@@ -25,7 +25,7 @@ function checkForNativeUser() {
 }
 
 function checkForNativeUserAndHasBalance(){
-    return (privkey && tq.getBalance(chainheight) > 546);
+    return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
 }
 
 //var waitForTransactionToComplete = false;
@@ -255,9 +255,7 @@ function postgeoRaw(posttext, privkey, geohash, newpostgeostatus, geocompleted) 
 }*/
 
 
-//var maxhexlength=368; //memo - 184*2
-var maxhexlength=4000*2;
-var whitespacebreak=20;
+
 
 async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, divForStatus, completionFunction) {
 

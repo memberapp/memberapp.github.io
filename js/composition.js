@@ -93,6 +93,17 @@ async function uploadFile(elementid, uploadURL, targettextarea, memorandumprevie
     });
 }
 
+function checkLength(elementName, maxcharlength){
+    let element= document.getElementById(elementName);
+    let text=element.value;
+    let hextext = new Buffer(text).toString('hex');
+    let length = hextext.length;
+    if(length>maxcharlength*2){
+        //alert('too long');
+        element.value=Buffer.from(hextext.substring(0,maxcharlength*2),'hex').toString();
+    }
+}
+
 function showMemorandumPreview() {
     document.getElementById('memorandumpreviewarea').style.display = 'block';
     document.getElementById('memorandumpreviewareabutton').style.display = 'none';
@@ -133,7 +144,7 @@ function memorandumPreview() {
     let member= new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey);
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML2(member, null, 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0,  '000', 1, 0,  0, '',  3, '000', false)
+        getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0,  '000', 1, 0,  0, '',  3, '000', false)
         + `<div id="articleheader000" class="articleheader"></div>`
         + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false);
 
@@ -213,7 +224,7 @@ function postmemorandum() {
     var topic = '';
 
     if (!txid) {
-        if (posttext == '#newmember' || posttext.length == 0) {
+        if (posttext == defaultTag || posttext.length == 0) {
             alert(getSafeTranslation('nomemo', "No Post - Try adding some text"));
             return false;
         }

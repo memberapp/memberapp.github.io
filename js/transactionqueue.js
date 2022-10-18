@@ -82,12 +82,12 @@ var UTXOPool = /** @class */ (function () {
         //translation function will return localized string for identifier
         //updateBalanceFunction will be called when the pool refreshes and may have different utxos
         if (interestexponent === void 0) { interestexponent = 22; }
-        if (dustlimit === void 0) { dustlimit = 546; }
+        if (dustlimit === void 0) { dustlimit = 547; }
         this.extraSatoshis = 5;
         this.maxfee = 5;
         this.resendWait = 2000;
         this.interestexponent = 22;
-        this.dustlimit = 546;
+        this.dustlimit = 547;
         this.utxoPool = new Array();
         this.theAddress = address;
         this.utxoServer = utxoServer;
@@ -190,8 +190,8 @@ var UTXOPool = /** @class */ (function () {
                                 this.chainheight = utxos[i].chainheight;
                                 this.chainheighttime = new Date().getTime();
                             }
-                            if (utxos[i].satoshis > this.dustlimit) {
-                                //Remove any utxos with less or equal to dust limit, they may be SLP tokens
+                            if (utxos[i].satoshis && utxos[i].txid && utxos[i].satoshis != 546) {
+                                //Don't use outputs of 546 they may be SLP tokens. Note this may be different to the dust amount.
                                 this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
                             }
                         }
@@ -228,7 +228,7 @@ var TransactionQueue = /** @class */ (function (_super) {
     function TransactionQueue(address, privateKey, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, BitcoinJS, broadcastServer, miningFeeSats, interestexponent, dustlimit) {
         if (miningFeeSats === void 0) { miningFeeSats = 1; }
         if (interestexponent === void 0) { interestexponent = 22; }
-        if (dustlimit === void 0) { dustlimit = 546; }
+        if (dustlimit === void 0) { dustlimit = 547; }
         var _this = _super.call(this, address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit) || this;
         _this.OP_RETURN = 106;
         _this.SIGHASH_BITCOINCASHBIP143 = 0x40;
@@ -471,6 +471,7 @@ var TransactionQueue = /** @class */ (function (_super) {
             transactionBuilder.enableBitcoinCash(true);
             this.sighashtouse = this.BCH_SIGHASH_ALL;
         }
+        transactionBuilder.maximumFeeRate = 10000; //For dogecoin
         //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
         if (scriptArray.length > 0) {
             transactionBuilder.addOutput(script2, 0);

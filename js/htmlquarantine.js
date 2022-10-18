@@ -293,7 +293,8 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
         profilepicsmall: profilepic,
         address: pubkey,
         sourcenetwork: sourcenetwork,
-        origtxid: origtxid
+        origtxid: origtxid,
+        maxreplylength: maxreplylength
     }
 
     return templateReplace(replyDivTemplate, obj);
@@ -359,7 +360,8 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         MEMUSD10: satsToUSDString(1000000000),
         MEMUSD20: satsToUSDString(2000000000),
         MEMUSD50: satsToUSDString(5000000000),
-        MEMUSD100: satsToUSDString(10000000000)
+        MEMUSD100: satsToUSDString(10000000000),
+        ticker: nativeCoin.ticker
     }
 
     return templateReplace(replyAndTipsTemplate, obj);
@@ -615,6 +617,9 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     } else if (sourcenetwork == 3) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="memberp" href="${permalink}">member.cash</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="memberp" href="${permalink}"><img src='img/networks/3.png'></a>`;
+    } else if (sourcenetwork == 4) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img src='img/networks/4.png'></a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img src='img/networks/99.png'></a>`;
@@ -672,7 +677,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         MEMUSD50: satsToUSDString(5000000000),
         MEMUSD100: satsToUSDString(10000000000),
         deleted: (deleted=='1' ? ` deleted`:''),
-        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:'')
+        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:''),
+        ticker: nativeCoin.ticker
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -766,7 +772,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
             if (data[i].rating) {
                 ratingused = data[i].rating;
             }
-            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused < 64);
+            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused < maxScoreToCollapseComment);
 
             var obj = {
                 unmuteddisplay: (isMuted ? `none` : `block`),
@@ -1139,7 +1145,8 @@ function getMapPostHTML(lat, lng, requireLogin) {
         lat: Number(lat),
         lng: Number(lng),
         profilepicsmall: profilepic,
-        address: pubkey
+        address: pubkey,
+        maxgeolength:maxgeolength
     }
 
     return templateReplace(mapPostTemplate, obj);
@@ -1249,7 +1256,7 @@ function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, ra
 }
 
 function getRatingComment(data) {
-    return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="190" id="memberratingcommentinputbox${san(data.bitcoinaddress)}" value="${ds(data.ratingreason)}" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+    return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="${maxratinglength}" id="memberratingcommentinputbox${san(data.bitcoinaddress)}" value="${ds(data.ratingreason)}" onchange="checkLength('memberratingcommentinputbox${san(data.bitcoinaddress)}',${maxratinglength});" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
 function getMemberRatingHTML(bitcoinaddress, ratingScore, pagingid) {

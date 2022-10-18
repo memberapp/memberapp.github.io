@@ -1,0 +1,17 @@
+#articlebutton, 
+#memorandumpreviewbuttonanddisplay, 
+#topiclistbutton, 
+#privatemessagesbutton, 
+#mapbutton,
+.bitcloutaddress, 
+.populate-send-message,
+.displayservers,
+.displaymining,
+.membermemoprofilelink,
+.bitcloutprofilelink,
+.showmembercoinmining,
+.displayinfluencers,
+.displaycontact
+ {
+  display: none;
+}

@@ -102,19 +102,19 @@ var postCompactTemplate = `
                             <span data-vavilon="tips" class="text footerlabel">tips</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span
-                                    data-vavilon="remember">0.1 M3M ({MEMUSD1C})</span></a>
+                                    data-vavilon="remember">0.1 {ticker} ({MEMUSD1C})</span></a>
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span
-                                        data-vavilon="remember">1 M3M ({MEMUSD1})</span></a>
+                                        data-vavilon="remember">1 {ticker} ({MEMUSD1})</span></a>
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span
-                                        data-vavilon="remember">5 M3M ({MEMUSD5})</span></a>
+                                        data-vavilon="remember">5 {ticker} ({MEMUSD5})</span></a>
                                 <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span
-                                        data-vavilon="remember">10 M3M ({MEMUSD10})</span></a>
+                                        data-vavilon="remember">10 {ticker} ({MEMUSD10})</span></a>
                                 <a
-                                    onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
-                                        data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
+                                    onclick="if (confirm('Tip 20 {ticker} ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
+                                        data-vavilon="remember">20 {ticker} ({MEMUSD20})</span></a>
                                 <a
-                                    onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
-                                        data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
+                                    onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
+                                        data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
                             </div>
                         </a>
                     </span>
@@ -313,7 +313,8 @@ var replyDivTemplate = `
     </div>
     <div class="replyform">
         <br />
-        <textarea id="replytext{page}{txid}" rows="3" maxlength="4000"></textarea>
+        <textarea id="replytext{page}{txid}" rows="3" maxlength="{maxreplylength}" onchange="checkLength('replytext{page}{txid}',{maxreplylength});" onkeypress="this.onchange();" onpaste="this.onchange();"
+        oninput="this.onchange();"></textarea>
         <br />
         <input id="replybutton{page}{txid}" value="reply" type="submit"
             onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
@@ -324,7 +325,7 @@ var replyDivTemplate = `
 </div>`;
 
 var remembersTemplate=`
-<span {display} onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" id="repostlink{page}{txid}" class="subtextremembers">
+<span {display} onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" id="repostlink{txid}{diff}" class="subtextremembers">
     <a href="javascript:"><span id="repostscount{txid}">{repostcount}</span>&hairsp;<span data-vavilon="VV0156">remembers</span></a>
 </span>`;
 
@@ -347,19 +348,19 @@ var replyAndTipsTemplate = `
 <a id="tiplinkposts{diff}{txid}" class="btn-icon" onclick="dropDownMenuAction(this);">
     <span data-vavilon="VV0157">tip</span><div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}" style="position: relative;">
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span data-vavilon="remember">0.1
-            M3M ({MEMUSD1C})</span></a>
+            {ticker} ({MEMUSD1C})</span></a>
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1
-                M3M ({MEMUSD1})</span></a>
+                {ticker} ({MEMUSD1})</span></a>
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5
-                M3M ({MEMUSD5})</span></a>
+                {ticker} ({MEMUSD5})</span></a>
         <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10
-                M3M ({MEMUSD10})</span></a>
+                {ticker} ({MEMUSD10})</span></a>
         <a
-            onclick="if (confirm('Tip 20 M3M ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
-                data-vavilon="remember">20 M3M ({MEMUSD20})</span></a>
+            onclick="if (confirm('Tip 20 {ticker} ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
+                data-vavilon="remember">20 {ticker} ({MEMUSD20})</span></a>
         <a
-            onclick="if (confirm('Tip 100 M3M ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
-                data-vavilon="remember">100 M3M ({MEMUSD100})</span></a>
+            onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
+                data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
     </div></a>
 <a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
 <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
@@ -392,7 +393,8 @@ var mapPostTemplate=`
             <span class="memberpicsmallcompact" style="display:inline;">{profilepicsmall}</span>
         </a>
     </div>
-    <textarea maxlength="4000" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
+    <textarea maxlength="{maxgeolength}" onchange="checkLength('newgeopostta',{maxgeolength});" onkeypress="this.onchange();" onpaste="this.onchange();"
+    oninput="this.onchange();" class="geoposttextarea" id="newgeopostta" name="text" rows="4"></textarea><br />
     <input data-vavilon_value="VV0164" id="newpostgeobutton" value="Post" type="submit" onclick="geopost();">
     <input data-vavilon_value="VV0165" id="newpostgeostatus" style="display: none;" value="Sending . . ." type="submit"
         disabled>

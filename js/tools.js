@@ -79,7 +79,7 @@ async function postprivatemessage() {
 
     var status = "newpostmessagebutton";
     var stampAmount = document.getElementById("stampamount").value;
-    if (stampAmount < 547) stampAmount = 547;
+    if (stampAmount < nativeCoin.dust) stampAmount = nativeCoin.dust;
 
     var messageRecipient = document.getElementById("messageaddress").textContent;
     var publickey = document.getElementById("messagepublickey").textContent;
@@ -136,8 +136,8 @@ function sendFundsAmountChanged() {
 
 async function sendfunds() {
     var sendAmount = Number(document.getElementById("fundsamount").value);
-    if (sendAmount < 547) {
-        alert(getSafeTranslation('547orlarger', "Amount has to be 547 satoshis or larger."));
+    if (sendAmount < nativeCoin.dust) {
+        alert(nativeCoin.dust + getSafeTranslation('547orlarger', " satoshis or larger."));
         return;
     }
     var totalAmountPossible = updateBalance(chainheight);
@@ -158,6 +158,10 @@ async function sendfunds() {
     //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
     if (sendAddress.startsWith("member:")) {
         sendAddress = await membercoinToLegacy(sendAddress);
+    }
+
+    if (sendAddress.startsWith("D")) {
+        sendAddress = await dogecoinToLegacy(sendAddress);
     }
 
     document.getElementById("fundsamount").disabled = true;
@@ -192,6 +196,30 @@ function membercoinToLegacy(address) {
     return window.bs58check.encode(toencode);
 }
 
+function legacyToNativeCoin(pubkey){
+    if(nativeCoin.name=="Membercoin"){
+        return legacyToMembercoin(pubkey);
+    }else if(nativeCoin.name=="Dogecoin"){
+        return legacyToDogecoin(pubkey);
+    }
+}
+
+function legacyToDogecoin(pubkey) {
+    let result=window.bs58check.decode(pubkey);
+    result[0]=0x1E; //Dogecoin
+    let hash = Buffer.from(result);
+    let toencode = new Buffer(hash, 'hex');
+    return window.bs58check.encode(toencode);
+}
+
+function dogecoinToLegacy(pubkey) {
+    let result=window.bs58check.decode(pubkey);
+    result[0]=0x00; //Bitcoin
+    let hash = Buffer.from(result);
+    let toencode = new Buffer(hash, 'hex');
+    return window.bs58check.encode(toencode);
+}
+
 function legacyToMembercoin(pubkey) {
     let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
     return cashaddr.encode('member', 'P2PKH', hash);
@@ -221,7 +249,7 @@ function setBalanceWithInterest() {
         }
         //M̈ m̈
         //document.getElementById("membalance").textContent=mem.substring(0,10);
-        document.getElementById("membalance").innerHTML = `<strong>m̈</strong>` + mem.substring(0, 10);
+        document.getElementById("membalance").innerHTML = `<strong>${nativeCoin.symbol}</strong>` + mem.substring(0, 10);
     } catch (err) {
         //console.log(err);
         //Error probably caused by trying to set balance before UTXO set is loaded

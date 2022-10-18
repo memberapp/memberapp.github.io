@@ -1430,7 +1430,6 @@ div#status {
   text-align: center; }
   @media (min-width: 1025px) {
     div#status {
-      width: auto;
       float: right;
       text-align: right;
       background: rgba(0, 0, 0, 0.28);

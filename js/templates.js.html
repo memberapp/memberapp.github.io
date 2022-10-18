@@ -68,7 +68,8 @@ var indirectRatingHTML=`
     </td>
     <td data-vavilon_data_label="VV0012" data-label='Rate as'>
         <span class='trustratingintermediate'>
-            <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'"; id='trust{memberid}{interid}'></div>
+            <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'" ;
+                id='trust{memberid}{interid}'></div>
         </span>
     </td>
     <td data-vavilon_data_label="VV0013" align='center' data-label='Member'>
@@ -76,7 +77,8 @@ var indirectRatingHTML=`
     </td>
     <td data-vavilon_data_label="VV0014" data-label='Who Rates as'>
         <span class='trustratingbyintermediate'>
-            <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'"; id='trust{interid}{targetid}'></div>
+            <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'" ;
+                id='trust{interid}{targetid}'></div>
         </span>
     </td>
     <td data-vavilon_data_label="VV0007" data-label='Member'>
@@ -207,19 +209,22 @@ var lowfundswarningHTML=`
 <div class="content">
     <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span
         data-vavilon="satoshisinaccount">satoshis
-        exist in your member.cash account - each
+        exist in your account - each
         action (posting, liking, subscribing, following, messaging etc)
-        requires a small amount of Membercoin.</span>
+        requires a small amount of </span>{coinname}
     <br />
     <br />
     <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
     <br />
     <br />
-    <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a few
-        seconds.</span>
-    <br />
-    <br />
-    <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
+    <span class="showmembercoinmining">
+        <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a
+            few
+            seconds.</span>
+        <br />
+        <br />
+        <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
+    </span>
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -234,7 +239,7 @@ var walletanchorHTML=`
     <div id="walletbalance">
         <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
         <span class="balancebch" id="balancebch">0</span>
-        <span class="satoshis">(M3M)</span>
+        <span class="satoshis">({ticker})</span>
         <span class="balancesatoshis" id="balancesatoshis">0</span>
         <span class="satoshis">(satoshis)</span>
         <span class="approximatelyequal" style="display: none;">≈</span>
@@ -272,17 +277,13 @@ var walletanchorHTML=`
 
     <div id="walletsendfunds">
         <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
-        <p data-vavilon="VV0029">You can send funds to another Membercoin address.</p>
-
-        <label data-vavilon="VV0031" for="fundsamount">Membercoin Address (Any format)</label>
-        <input class="sendfundsaddress" id="sendfundsaddress" maxlength="200" size="60">
-
+        <p data-vavilon="VV0029">You can send funds to another address.</p>
+        <label data-vavilon="VV0031" for="fundsamount">Address (Any format)</label>
+        <input class="sendfundsaddress" id="sendfundsaddress" maxlength="60" size="60">
         <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
-        <input id="fundsamount" size="12" type="number" maxlength="12" onchange="sendFundsAmountChanged();"
+        <input id="fundsamount" size="16" type="number" maxlength="16" onchange="sendFundsAmountChanged();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-
         <span class="sendusd" id="sendusd">($0.00 USD)</span>
-
         <button data-vavilon="VV0032" class="memberstandardbutton" id="sendfundsbutton" type="button"
             onclick="sendfunds();">Send
             Funds</button>
@@ -341,9 +342,9 @@ var newpostHTML=`
     </div>
     -->
     <div>
-        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="4000"
-            onchange="memorandumPreview();" onkeypress="this.onchange();" onpaste="this.onchange();"
-            oninput="this.onchange();">#newmember</textarea>
+        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="{maxlength}"
+            onchange="checkLength('memorandumtitle',{maxlength});memorandumPreview();" onkeypress="this.onchange();"
+            onpaste="this.onchange();" oninput="this.onchange();">{defaulttag}</textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
     </div>
     <form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
@@ -355,10 +356,12 @@ var newpostHTML=`
         </label>
         <span style="display:none;" id="uploadimagestatus">uploading image . . .</span>
     </form>
-    <div id="memorandumtextbutton">
-        <a data-vavilon="VV0039" href=""
-            onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
-            article</a>
+    <div class="articlebutton">
+        <div id="memorandumtextbutton">
+            <a data-vavilon="VV0039" href=""
+                onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
+                article</a>
+        </div>
     </div>
     <div id="memorandumtextarea" style="display: none;">
         <label data-vavilon="VV0040" for="newposttamemorandum">article (optional)</label>
@@ -374,20 +377,22 @@ var newpostHTML=`
         <div id="newpostmemorandumcompleted"></div>
     </div>
     <br />
-    <div id="memorandumpreviewareabutton">
-        <br />
-        <a data-vavilon="VV0043" href="javascript:;" onclick="showMemorandumPreview(); return false;">+see
-            preview</a>
-    </div>
-    <div id="memorandumpreviewarea" style="display: none;">
-        <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
-        <label for="memorandumpreview">
-            <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045" href='javascript:;'
-                    onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
-            <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046" href='javascript:;'
-                    onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
-        </label>
-        <div id="memorandumpreview" class="fatitem">
+    <div class="memorandumpreviewbuttonanddisplay">
+        <div id="memorandumpreviewareabutton">
+            <br />
+            <a data-vavilon="VV0043" href="javascript:;" onclick="showMemorandumPreview(); return false;">+see
+                preview</a>
+        </div>
+        <div id="memorandumpreviewarea" style="display: none;">
+            <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
+            <label for="memorandumpreview">
+                <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045" href='javascript:;'
+                        onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
+                <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046" href='javascript:;'
+                        onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
+            </label>
+            <div id="memorandumpreview" class="fatitem">
+            </div>
         </div>
     </div>
 </div>
@@ -410,8 +415,8 @@ var messagesanchorHTML=`
             <span id="messageaddress" class="messageaddress" style="display:none;"></span>
             <span id="messagepublickey" class="messagepublickey" style="display:none;"></span>
 
-            <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum 547)</label>
-            <input id="stampamount" size="8" type="number" value="547">
+            <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum {dust})</label>
+            <input id="stampamount" size="8" type="number" value="{dust}">
             <div>
                 <label data-vavilon="VV0054" for="newposttamessage">Message</label>
                 <textarea id="newposttamessage" name="text" rows="20" cols="80"></textarea>
@@ -605,16 +610,27 @@ pages.member = `
         <span class="dropdown">
             <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
             <div class="dropdown-content mainhamburger" id="dropdown-content">
-                <a data-vavilon="VV0061" class="populate-send-message"
-                    onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');"
-                    href="javascript:;">Send Message</a>
+                <span class="populate-send-message">
+                    <a data-vavilon="VV0061"
+                        onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');"
+                        href="javascript:;">Send Message</a>
+                </span>
                 {mutebuttonhtml}
-                <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
-                    class="separatorwide"></span><a rel="noopener noreferrer" target="memo"
-                    href="https://memo.cash/profile/{address}" id="membermemoprofilelink">Memo</a><span
-                    class="separatorwide"></span><a rel="noopener noreferrer" target="bitclout"
-                    href="https://bitclout.com/u/{pagingid}" id="bitcloutprofilelink">BitClout</a><span
-                    class="separatorwide"></span>
+                <span class="memberprofilelink">
+                    <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
+                        class="separatorwide"></span>
+                </span>
+                <span class="dogehairprofilelink">
+                    <a href="https://doge.hair/#member?qaddress={address}" id="dogehairprofilelink">doge.hair</a><span
+                        class="separatorwide"></span>
+                </span>
+                <span class="membermemoprofilelink">
+                    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
+                        id="membermemoprofilelink">Memo</a><span class="separatorwide"></span>
+                </span>
+                <span class="bitcloutprofilelink">
+                    <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/u/{pagingid}"
+                        id="bitcloutprofilelink">BitClout</a><span class="separatorwide"></span></span>
             </div>
         </span>
     </div>
@@ -670,7 +686,7 @@ pages.member = `
             </span>
         </div>
     </div>
-    <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')">
+    <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')" class="bitcloutaddress">
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="memberbcformat">{bcaddress}</span>
         <div id="memberbcformatdiv">
@@ -701,8 +717,8 @@ pages.settings = `
             <!--<label id="settingspiclargelabel" for="settingspic" style="display:inline;">
                 <span data-vavilon="VV0076" class="profilepicdirections">(Must be imgur link in this format or .png
                     format)</span></label>-->
-                    <label data-vavilon="VV0059" id="settingspiclargelabel"  style="display:inline;">Profile
-                        Picture</label><br><br>
+            <label data-vavilon="VV0059" id="settingspiclargelabel" style="display:inline;">Profile
+                Picture</label><br><br>
             <form id="profilepicfile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
                 <label>
                     <input style="display: none;" name='firstfile' type="file" id="uploadprofilepicinput"
@@ -726,7 +742,7 @@ pages.settings = `
         <div>
             <label data-vavilon="VV0060" for="settingsnametext">Handle</label>
             <div class="formgroup">
-                <input maxlength="217" size="30" id="settingsnametext" value="{handle}"
+                <input maxlength="50" size="30" id="settingsnametext" value="{handle}"
                     onchange="document.getElementById('settingsnametextbutton').disabled=false;"
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 <button data-vavilon="VV0077" id="settingsnametextbutton" type="button"
@@ -738,8 +754,8 @@ pages.settings = `
         <div>
             <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
             <div class="formgroup">
-                <input maxlength="217" size="30" id="settingsprofiletext" value="{profile}"
-                    onchange="document.getElementById('settingsprofiletextbutton').disabled=false;"
+                <input maxlength="{maxprofilelength}" size="30" id="settingsprofiletext" value="{profile}"
+                    onchange="checkLength('settingsprofiletext',{maxprofilelength});document.getElementById('settingsprofiletextbutton').disabled=false;"
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 <button data-vavilon="VV0077" id="settingsprofiletextbutton" type="button" onclick="setProfile();"
                     data-vavilon="update" disabled="">update</button>
@@ -752,19 +768,25 @@ pages.settings = `
                     Notifications</a></span>
         </div>
         <div>
+            <label data-vavilon="installapp" for="installappbutton">Install</label>
+            <span class="installappbutton"><a data-vavilon="installapp" class="memberlinkbutton" id="installbutton"
+                    href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
+        </div>
+        <div>
             <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
             <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-            <p data-vavilon="VV0177">(Amount to tip when clicking up arrow. Minimum 547)</p>
+            <span data-vavilon="VV0177">(Amount to tip when clicking up arrow. Minimum </span>{dust})
         </div>
-        <div>
+        <!--<div>
             <label data-vavilon="maxfee" for="maxfee">Max Fee</label>
             <input id="maxfee" size="3" type="number" step="1" onchange="updateSettingsNumber('maxfee');"
                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
             <p data-vavilon="VV0083">(Max satoshis per byte to pay during network congestion. Minimum 2)</p>
-        </div>
+        </div>-->
     </div>
-    <input type="hidden" id="usdrate" step="1" onchange="updateSettingsNumber('usdrate');" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+    <input type="hidden" id="usdrate" step="1" onchange="updateSettingsNumber('usdrate');" onkeypress="this.onchange();"
+        onpaste="this.onchange();" oninput="this.onchange();">
     <div>
         <label for="languageselector">Language / 语言 / Idioma / Lengguwahe</label>
         <select id="languageselector" onchange="updateSettingsDropdown('languageselector');">
@@ -780,7 +802,7 @@ pages.settings = `
             <option data-vavilon="VV0167" value="feels compact">Choose Theme</option>
             <option value="feels compact">Feels Compact</option>
             <option value="feels-night compact compactnight">Feels Compact Night Mode</option>
-            <option data-vavilon="VV0168" value="none">None</option>
+            <!--<option data-vavilon="VV0168" value="none">None</option>-->
         </select>
     </div>
     <div>
@@ -789,7 +811,7 @@ pages.settings = `
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
         <p data-vavilon="VV0084">(Max results to show per page. Maximum 100)</p>
     </div>
-    <div>
+    <div class="displaymining">
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
         <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{address}"></iframe>
     </div>
@@ -812,8 +834,7 @@ pages.settings = `
         <button data-vavilon="VVaddrssfeedbutton" class="memberstandardbutton" id="addrssfeedbutton" type="button"
             onclick="addRSSFeed('plain','addrssfeedbutton');">Add RSS Feed</button>
     </div>-->
-    <br />
-    <br />
+
     <div>
         <label data-vavilon="VV0086" for="mutedwords">Muted Words (Comma Separate)</label>
         <textarea id="mutedwords" name="text" rows="4" cols="60" onchange="updatemutedwords();"
@@ -822,14 +843,14 @@ pages.settings = `
     <div>
         <label data-vavilon="VV0087" for="mediasettings" class="labelheader">Media Settings</label>
     </div>
-    <div class="customcheckbox">
+    <!--<div class="customcheckbox">
         <input type="checkbox" id="showyoutube" onchange="updateSettingsCheckbox('showyoutube');">
         <label data-vavilon="VV0088" for="showyoutube" class="checkboxlabel">Show YouTube Preview Images</label>
     </div>
     <div class="customcheckbox">
         <input type="checkbox" id="showimgur" onchange="updateSettingsCheckbox('showimgur');">
         <label data-vavilon="VV0089" for="showimgur" class="checkboxlabel">Show Imgur Images</label>
-    </div>
+    </div>-->
     <div class="customcheckbox">
         <input type="checkbox" id="showtwitter" onchange="updateSettingsCheckbox('showtwitter');">
         <label data-vavilon="VV0090" for="showtwitter" class="checkboxlabel">Show Tweets</label>
@@ -837,14 +858,14 @@ pages.settings = `
     <!--<div class="customcheckbox">
         <input type="checkbox" id="showlbry" onchange="updateSettingsCheckbox('showlbry');">
         <label data-vavilon="showlbry" for="showlbry" class="checkboxlabel">Show lbry.tv</label>
-    </div>-->
+    </div>
     <div class="customcheckbox">
         <input type="checkbox" id="showbitclout" onchange="updateSettingsCheckbox('showbitclout');">
         <label data-vavilon="showbitclout" for="showbitclout" class="checkboxlabel">Show BitClout Images</label>
-    </div>
+    </div>-->
 
 
-    <!-- Too slow on server side-->
+    <!-- Too slow on server side
 
     <div>
         <label data-vavilon="VV0181" for="filtersettings" class="labelheader">Filter Settings</label>
@@ -865,28 +886,29 @@ pages.settings = `
             <option value="-1">All Networks</option>
             <option value="3">Membercoin (M3M)</option>
         </select>
-    </div>
-    <div>
-        <label data-vavilon="VV0091" for="contentserver">Content Server</label>
-        <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
-            <option value="https://member.cash/v2/member.js">member.cash</option>
-            <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
-        </select>
-    </div>
-    <div>
-        <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
-        <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
-            <option value="https://member.cash/v2/">member.cash</option>
-            <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-        </select>
-    </div>
-
-    <div>
-        <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
-        <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
-            <option value="https://member.cash/v2/">member.cash</option>
-            <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-        </select>
+    </div>-->
+    <div class="displayservers">
+        <div>
+            <label data-vavilon="VV0091" for="contentserver">Content Server</label>
+            <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
+                <option value="https://member.cash/v2/member.js">member.cash</option>
+                <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
+            </select>
+        </div>
+        <div>
+            <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
+            <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
+                <option value="https://member.cash/v2/">member.cash</option>
+                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+            </select>
+        </div>
+        <div>
+            <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
+            <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
+                <option value="https://member.cash/v2/">member.cash</option>
+                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+            </select>
+        </div>
     </div>
     <div>
         <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
@@ -992,9 +1014,8 @@ var headerHTML = `
 <div class="headerleftgroup">
     <span class="memberlogo">
         <a href="./index.html">
-            <img class="memberlogoimagefull" src="img/logos/logowide.svg" width="130" height="26"
-                alt="Site Logo Full" />
-            <img class="memberlogoimage" src="img/logos/membericon.svg" width="26" height="26" alt="Site Logo Icon" />
+            <img class="memberlogoimagefull" src="{logowide}" width="130" height="26" alt="Site Logo Full" />
+            <img class="memberlogoimage" src="{logoicon}" width="26" height="26" alt="Site Logo Icon" />
         </a>
     </span>
     <a class="profilepicwrapper" href="#profile" onclick="nlc();"><span id="profilepicheader"
@@ -1034,15 +1055,26 @@ var footerHTML = `
         <hr />
     </span>
     <span class="footerlinks">
-        <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
-        <span class="separatorwide"></span>
-        <a rel='noopener noreferrer' target="github" href="https://github.com/memberapp/memberapp.github.io">Github</a>
-        <span class="separatorwide"></span>
-        <a data-vavilon="VV0141" rel='noopener noreferrer' target="github"
-            href="https://github.com/memberapp/protocol">Protocol</a>
-        <span class="separatorwide"></span>
-        <a data-vavilon="VV0142" onclick="populateSendMessage('1M77BV2DExpLY6mepv86CTGpGMSoL2pLa9','\x46\x72\x65\x65\x54\x72\x61\x64\x65','03cd56864fe8b0533e9d0ad36001c5ee50d2fa5264e57c7a46d4a05fb0881609db');" href="javascript:;">Contact</a>
-        <span class="separatorwide"></span>
+        <span class="displayinfluencers">
+            <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
+            <span class="separatorwide"></span>
+        </span>
+        <span class="displaygithub">
+            <a rel='noopener noreferrer' target="github"
+                href="https://github.com/memberapp/memberapp.github.io">Github</a>
+            <span class="separatorwide"></span>
+        </span>
+        <span class="displayprotocol">
+            <a data-vavilon="VV0141" rel='noopener noreferrer' target="github"
+                href="https://github.com/memberapp/protocol">Protocol</a>
+            <span class="separatorwide"></span>
+        </span>
+        <span class="displaycontact">
+            <a data-vavilon="VV0142"
+                onclick="populateSendMessage('1M77BV2DExpLY6mepv86CTGpGMSoL2pLa9','\x46\x72\x65\x65\x54\x72\x61\x64\x65','03cd56864fe8b0533e9d0ad36001c5ee50d2fa5264e57c7a46d4a05fb0881609db');"
+                href="javascript:;">Contact</a>
+            <span class="separatorwide"></span>
+        </span>
         <span data-vavilon="VV0143">version</span> <span id="version" title="version">loading</span>.<u>9</u>
     </span>
     <br />
