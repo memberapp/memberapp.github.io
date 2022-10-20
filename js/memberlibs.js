@@ -1,3 +1,1341 @@
+var dictionary = [];
+dictionary.en= 
+{
+  "VV0169": "Oops. This request failed.",
+  "VV0170": "There may be a problem with your internet connection, or the server may be having problems.",
+  "VV0171": "The error code is",
+  "VV0172": "The resource was",
+  "VV0003": "Tag",
+  "VV0004": "Posts",
+  "VV0005": "Subs",
+  "VV0006": "Action",
+  "VV0010": "Overall Rating:",
+  "VV0016": "Make New Phrase",
+  "VV0173": "Here is your password. It is a phrase. Write it down.",
+  "VV0017": "12 Word Seed Phrase",
+  "VV0018": "Phrase (12 words)",
+  "VV0174": "login",
+  "VV0019": "*Memo Users. You can also login with your key (Compressed WIF: Starts with 'L..' or 'K..').",
+  "VV0020": "Fetch from Memo",
+  "VV0021": "satoshis exist in your account - each action (posting, liking, subscribing, following, messaging etc) requires a small amount of Membercoin. Add some funds, a few cents is enough.",
+  "VV0022": "Your address is",
+  "VV0023": "Send Nuggets your address for a few cents if you're finding it difficult to get some.",
+  "VV0024": "Email",
+  "VV0025": "Refresh your balance",
+  "VV0026": "Dismiss this message",
+  "VV0027": "Tools",
+  "VV0028": "Send Funds To Another Address",
+  "VV0029": "You can send funds to another address.",
+  "VV0030": "Amount (In Satoshi)",
+  "VV0031": "Address (Any format)",
+  "VV0032": "Send Funds",
+  "VV0033": "Create Surrogate Member Account",
+  "VV0034": "You can create a Surrogate Member account if you want to rate a user or organization that does not have their own Member account yet. '(Surrogate)' will follow the handle to indicate the account is not claiming the identity, just acting as a receptacle for reputational information. ",
+  "VV0035": "Create",
+  "VV0036": "Token Recycler (External link)",
+  "VV0037": "+add tag",
+  "VV0038": "tag (optional)",
+  "VV0039": "+add article",
+  "VV0040": "article (optional)",
+  "VV0041": "Post",
+  "VV0042": "Sending . . .",
+  "VV0043": "+see preview",
+  "VV0044": "Preview",
+  "VV0045": "(Switch to Article Mode)",
+  "VV0046": "(Switch to Regular Mode)",
+  "VV0047": "Private Messages",
+  "VV0048": "Warning: The metadata of your private messages will be public on the blockchain (that's the sender, recipient, size and time of your message). Additionally, if the recipient's private key is made public in the future, the recipient's messages will become public. Using the blockchain for messaging is generally not advised. Nevertheless, you're a big boy and this facility is made available to you if you wish to use it. ",
+  "VV0049": "Member Search",
+  "VV0050": "Send Encrypted Message",
+  "VV0051": "To",
+  "VV0052": "(Search for user above)",
+  "VV0053": "Stamp Amount (in sats, minimum ",
+  "VV0054": "Message",
+  "VV0055": "Send Message",
+  "VV0175": "Sending . . .",
+  "VV0007": "Member",
+  "VV0056": "Rates",
+  "VV0057": "Trust Graph",
+  "VV0058": "*Notes: A mute is interpreted as a 2-star rating.",
+  "VV0059": "Profile Picture",
+  "VV0060": "Handle",
+  "VV0061": "Send Message",
+  "VV0062": "Paging ID",
+  "VV0063": "Profile",
+  "VV0064": "Profile Links",
+  "VV0065": "Address",
+  "VV0066": "Click to enlarge QR code",
+  "VV0067": "Block Explorers",
+  "VV0068": "Legacy Address",
+  "VV0069": "Follow",
+  "VV0070": "Mute",
+  "VV0071": "Followers",
+  "VV0072": "Following",
+  "VV0073": "Muters",
+  "VV0074": "Muting",
+  "VV0075": "You Rate",
+  "VV0166": "Settings",
+  "VV0076": "(Must be imgur link in this format or .png format)",
+  "VV0077": "update",
+  "VV0078": "Logout",
+  "VV0079": "Notifications",
+  "VV0080": "Allow Notifications",
+  "VV0176": "Seed Phrase / Private Key / WIF",
+  "VV0081": "Theme",
+  "VV0167": "Choose Theme",
+  "VV0168": "None",
+  "VV0082": "One-Click Tip Amount",
+  "VV0177": "(Amount to tip when clicking up arrow. Minimum ",
+  "VV0083": "(Max satoshis per byte to pay during network congestion. Minimum 2)",
+  "VV0084": "(Max results to show per page. Maximum 100)",
+  "VV0085": "Currency Display",
+  "VV0086": "Muted Words (Comma Separate)",
+  "VV0087": "Media Settings",
+  "VV0088": "Show YouTube Preview Images",
+  "VV0089": "Show Imgur Images",
+  "VV0090": "Show Tweets",
+  "VV0091": "Content Server",
+  "VV0092": "TX Broadcast Server",
+  "VV0093": "UTXO Server",
+  "VV0094": "My Feed (Latest posts from your topics or peeps)",
+  "VV0095": "Notifications",
+  "VV0096": "New Post",
+  "VV0097": "Messages",
+  "VV0098": "Settings",
+  "VV0099": "Tools",
+  "VV0100": "Tag List",
+  "VV0101": "Map",
+  "VV0102": "login",
+  "VV0103": "start",
+  "VV0104": "Hot",
+  "VV0105": "Hottest posts",
+  "VV0106": "New",
+  "VV0107": "Latest posts",
+  "VV0108": "Day",
+  "VV0109": "Top posts from the past Day",
+  "VV0110": "48hrs",
+  "VV0111": "Top posts from the past 48 Hours",
+  "VV0112": "Week",
+  "VV0113": "Top posts from the past Week",
+  "VV0114": "Month",
+  "VV0115": "Top posts from the past Month",
+  "VV0116": "Year",
+  "VV0117": "Top posts from the past Year",
+  "VV0118": "All",
+  "VV0119": "Top posts from all time",
+  "VV0120": "Posts",
+  "VV0121": "See only posts",
+  "VV0122": "Replies",
+  "VV0123": "See only replies",
+  "VV0124": "In Both",
+  "VV0125": "See both posts and replies",
+  "VV0126": "All Tags",
+  "VV0127": "From all tags",
+  "VV0128": "My Tags",
+  "VV0129": "From tags you are subscribed to",
+  "VV0130": "My Feed",
+  "VV0131": "From tags you are subscribed to or people you follow",
+  "VV0132": "Everyone",
+  "VV0133": "From everyone",
+  "VV0134": "My Peeps",
+  "VV0135": "From people you follow",
+  "VV0136": "Refresh Content",
+  "VV0137": "You're viewing the development preview version of Member You may need to SHIFT + Reload to get the very latest changes. Generally, It's recommended to",
+  "VV0138": "use the stable version at https://member.cash",
+  "VV0139": "Top Supporters ",
+  "VV0140": "Donate",
+  "VV0141": "Protocol",
+  "VV0142": "Contact",
+  "VV0143": "version",
+  "VV0144": "loading",
+  "VV0145": "View It",
+  "VV0146": "Also Post To Twitter (opens a new window)",
+  "VV0147": "likes and",
+  "VV0148": "Top MEMBER Token Holder",
+  "VV0149": "followers",
+  "VV0150": "following",
+  "VV0151": "submitted",
+  "VV0152": "by",
+  "VV0153": "comments",
+  "VV0154": "sending...",
+  "VV0155": "reply",
+  "VV0156": "remembers",
+  "VV0157": "tip",
+  "VV0158": "quote",
+  "VV0159": "+more",
+  "VV0160": "permalink",
+  "VV0161": "flag",
+  "VV0162": "tip",
+  "VV0163": "sending",
+  "VV0164": "Post",
+  "VV0165": "Sending . . .",
+  "nomessagebody": "No Message Body",
+  "posting": "Posting...",
+  "nomemo": "No Memo - Try adding something in the memo box",
+  "nopost": "No post or tag. Try a regular remember instead.",
+  "sendingtitle": "Sending Title...",
+  "postremembered": "Your post was remembered",
+  "intopic": "in tag",
+  "messagesent": "Message Sent.",
+  "up": "up",
+  "down": "down",
+  "close": "close",
+  "tipped": "tipped",
+  "disliked": "disliked",
+  "quoteremembered": "quote remembered",
+  "remembered": "remembered",
+  "totopic": "#",
+  "loading": "loading",
+  "showpriv": "Show private key",
+  "unsubscribe": "unsubscribe",
+  "resign": "resign as moderator",
+  "volunteer": "volunteer as moderator",
+  "removefilter": "remove filter",
+  "more": "more",
+  "sendmessage": "send message",
+  "publickeynotavailable": "Public key is not available - maybe the user hasn't set their name/handle.",
+  "yousent": "you sent",
+  "processing": "processing",
+  "unabledecrypt": "Try again later: Unable to decrypt message: ",
+  "warnonexit": "Are you sure? There are still transaction(s) in progress. They will be lost if you close the page or reload via the browser.",
+  "uncompressed": "Uncompressed WIF not supported yet, please use a compressed WIF (starts with 'L' or 'K')",
+  "keynotrecognized": "Key not recognized, use a valid 12 word BIP39 seed phrase, or a compressed WIF (starts with 'L' or 'K')",
+  "publickeymode": "You are logging in with a public key. This is a read-only mode. You won't be able to make posts or likes etc.",
+  "pagingidnotfount": "This paging id not found.",
+  "seedphrase": "Seed Phrase:",
+  "cpk": "Compressed Private Key:",
+  "updated": "Updated.",
+  "noresult": "no result returned",
+  "nothinghere": "Nothing here yet",
+  "nothinginfeed": "Nothing in your feed",
+  "nomessagesfound": "No messages found.",
+  "thisuserrates": "This user rates",
+  "547min": " is the minimum tip possible",
+  "sendingtip": "Sending Tip . .",
+  "547orlarger": " satoshis or larger.",
+  "largerthanbalance": "This amount is larger than your balance.",
+  "enteranaddress": "Make sure to enter an address to send to.",
+  "utxosreceived": " utxo(s) received. usable",
+  "error": "Error:",
+  "transactionstillqueued": "Transaction(s) Still Queued. Waiting for new block, Retry in 60 seconds)",
+  "sending again": "Sending Again . . .",
+  "removefromqueue": "Removing Transaction From Queue.",
+  "surgepricing": "Error: Transaction rejected because fee too low. Increasing and retrying. Surge Pricing now ",
+  "stillqueued": " Transaction(s) Still Queued, Try changing UTXO server on settings page. Retry in (seconds)",
+  "sendingagain": "Sending Again . . .",
+  "noprivatekey": "1000:No Private Key, Cannot Make Transaction",
+  "insufficientfunds": "1001:Insufficient Funds (No Suitable UTXOs)",
+  "utxosinpool": " utxo(s) in pool. Using ",
+  "alreadyspent": "2000:All UTXOs are already spent",
+  "availableamount": "available but required amount is",
+  "networkerror": "Network Error",
+  "readonlymode": "You may be logged in with a public key in read only mode. You must login with a private key to make this action.",
+  "mustlogin": "You must login to do this.",
+  "notenough": "You do not have enough satoshis to do this. You can click on your balance to refresh it.",
+  "remembering": "Remembering",
+  "picformat": "Profile pic must of of the format",
+  "settingpic": "Setting Profile Pic",
+  "settingname": "Setting Name",
+  "bytesremaining": "Sending Message . . . bytes remaining . .",
+  "waiting": "Seconds to wait",
+  "quoting": "Quoting",
+  "sendinggeotag": "Sending Geotagged Post",
+  "sendinglike": "Sending Like",
+  "settingprofile": "Setting Profile",
+  "sendingsub": "Sending Subscribe",
+  "sendingunsub": "Sending Unsubscribe",
+  "sendingfollow": "Sending Follow",
+  "sendingunfollow": "Sending Unfollow",
+  "sendingmute": "Sending Mute",
+  "sendingunmute": "Sending Unmute",
+  "sendingdislike": "Sending Dislike",
+  "sendinghidepost": "Sending Hide Post",
+  "sendingunhidepost": "Sending Unhide Post",
+  "sendingrating": "Sending Rating",
+  "sendingaddfilter": "Sending Add Filter",
+  "sendingremovefilter": "Sending Remove Filter",
+  "sendinghidemember": "Sending Hide Member",
+  "sendingunhidemember": "Sending Unhide Member",
+  "creatingprivatekey": "Creating Private Key",
+  "waitafew": "Wait a few seconds for funds to arrive",
+  "trytoset": "Try to set surrogate name -",
+  "fetchutxos": "Fetch UTXOs",
+  "createsurrogate": "Create Surrogate Account",
+  "rates": "rates",
+  "updatedforex": "Got updated exchange rate:",
+  "failedforex": "Failed to get usd rate:",
+  "requestingpermission": "Requesting permission",
+  "permissionnotgranted": "Permission not granted for Notification",
+  "subscribing": "Subscribing",
+  "bytestransferred": "bytes transferred",
+  "results": "Results",
+  "y": "y",
+  "yearsago": "years ago",
+  "m": "m",
+  "monthsago": "months ago",
+  "d": "d",
+  "daysago": "days ago",
+  "h": "h",
+  "hoursago": "hours ago",
+  "min": "m",
+  "minutesago": "minutes ago",
+  "s": "s",
+  "secondsago": "seconds ago",
+  "VV0180": "Language",
+  "refreshbalance": "Refresh Balance",
+  "post": "post",
+  "posted": "posted",
+  "replied": "replied",
+  "replytostart": "No comments yet . . . reply to start a conversation",
+  "VV0008": "Rates As",
+  "VV0009": "Commenting...",
+  "VV0011": "You",
+  "VV0012": "Rate as",
+  "VV0013": "Member",
+  "VV0014": "Who Rates as",
+  "VV0015": "Rates as",
+  "follow":"follow",
+  "unfollow":"unfollow",
+  "mute":"mute",
+  "unmute":"unmute",
+  "maxfee":"Max Fee",
+  "resultsnumber":"Number Of Results To Show",
+  "likes":"likes",
+  "dislikes":"dislikes",
+  "tips":"tips",
+  "permalink":"Permalink",
+  "article":"Article",
+  "moderate":"Moderate",
+  "flaguser":"Flag User",
+  "sub":"sub",
+  "unsub":"unsub",
+  "next":"next",
+  "inatopic":"in a tag you're subscribed to",
+  "discussion":"in a discussion you're in",
+  "mentionedyou":"mentioned you in a",
+  "followedyou":"followed you",
+  "ratedyou":"rated you as",
+  "starscommenting":"stars, commenting ...",
+  "likedyour":"liked your",
+  "rememberedyour":"remembered your",
+  "flagusertopic":"Flag User For Tag",
+  "toyour":"to your",
+  "areyousure": "Are you sure you want to logout? Make sure you have written down your 12 word seed phrase or private key to login again. There is no other way to recover your seed phrase. It is on the Wallet page. Click Cancel if you need to do that now. Click OK to logout.",
+  "hace":" ",
+  "existen":" ",
+  "VV0181":"Filter Settings",
+  "VV0182":"Show Posts From Members With No Handle",
+  "VV0183":"Show Posts From Members With No Picture",
+  "showlbry": "Show lbry.tv",
+  "showbitclout": "Show BitClout Images",
+  "debuginfo": "Debug Info",
+  "VVfirehose": "Firehose",
+  "VV0134a": "My People",
+  "VV0102a": "Login",
+  "VV0103a": "Start",
+  "VVwallet": "Wallet",
+  "nothinghere2": "Nothing here yet, Subscribe to some more tags!",
+  "nothinginfeed2": "Nothing in your feed, Follow some more people!",
+  "VVratinginstruction":"Add a comment and click on a star rating to rate this member..."
+};dictionary.es= 
+{
+  "VV0169": "Ups. Falló la solicitud.",
+  "VV0170": "Puede que haya un problema con tu conexión a Internet o que haya problemas con el servidor.",
+  "VV0171": "El código de error es",
+  "VV0172": "El recurso era",
+  "VV0003": "Tópico",
+  "VV0004": "Publicaciones",
+  "VV0005": "Suscriptores",
+  "VV0006": "Acción",
+  "VV0010": "Calificación general:",
+  "VV0016": "Crear nueva frase",
+  "VV0173": "Aquí está tu nueva contraseña. Es una frase. Anótala.",
+  "VV0017": "Frase de recuperación de 12 palabras",
+  "VV0018": "Frase (12 palabras)",
+  "VV0174": "iniciar sesión",
+  "VV0019": "*Los usuarios de Memo también pueden iniciar sesión con su clave (WIF comprimida: Comienza con 'L..' o 'K..').",
+  "VV0020": "Obtener de Memo",
+  "VV0021": "Existen satoshis en tu cuenta de member.cash. Cada acción (publicar, dar me gusta, suscribirse, seguir, enviar mensaje, etc.) requiere una pequeña cantidad de Membercoin. Agrega algo de fondos, algunos centavos es suficiente.",
+  "VV0022": "Tu dirección es",
+  "VV0023": "Envía a Nuggets tu dirección para pedir unos centavos si se te complica conseguirlos.",
+  "VV0024": "Email",
+  "VV0025": "Actualizar tu saldo",
+  "VV0026": "Descartar este mensaje",
+  "VV0027": "Herramientas",
+  "VV0028": "Enviar fondos a otra dirección",
+  "VV0029": "Puedes enviar fondos a otra dirección.",
+  "VV0030": "Cantidad (en satoshis)",
+  "VV0031": "Dirección (cualquier formato)",
+  "VV0032": "Enviar fondos",
+  "VV0033": "Crear cuenta de Member sustituta",
+  "VV0034": "Puedes crear una cuenta de Member sustituta si quieres calificar a un usuario u organización que no tiene su propia cuenta de Member aún. '(El sustituto)' llevará ese alias para indicar que la cuenta no está reclamando la identidad, sino simplemente actuando como receptáculo para información de reputación. ",
+  "VV0035": "Crear",
+  "VV0036": "Reciclador de token (enlace externo)",
+  "VV0037": "+añadir tópico",
+  "VV0038": "tópico (opcional)",
+  "VV0039": "+añadir texto",
+  "VV0040": "texto (opcional)",
+  "VV0041": "Publicar",
+  "VV0042": "Enviando . . .",
+  "VV0043": "+ver vista previa",
+  "VV0044": "Previsualizar",
+  "VV0045": "(Cambiar a modo artículo)",
+  "VV0046": "(Cambiar a modo regular)",
+  "VV0047": "Mensajes privados",
+  "VV0048": "Advertencia: Los metadatos de tus mensajes privados serán públicos en la blockchain (emisor, receptor, tamaño y horario de tu mensaje). Además, si la clave privada del receptor se vuelve pública en el futuro, los mensajes del receptor se volverán públicos. Usar la blockchain para mensajería generalmente no se recomienda. Sin embargo, ya estás grande y esta facilidad está disponible para ti si deseas usarla. ",
+  "VV0049": "Búsqueda de Member",
+  "VV0050": "Enviar mensaje encriptado",
+  "VV0051": "Para",
+  "VV0052": "(Buscar el usuario de arriba)",
+  "VV0053": "Cantidad de estampilla (en sats, ",
+  "VV0054": "Mensaje",
+  "VV0055": "Enviar mensaje",
+  "VV0175": "Enviando . . .",
+  "VV0007": "Member",
+  "VV0056": "Calificaciones",
+  "VV0057": "Gráfico de confianza",
+  "VV0058": "*Notas: Un mute es interpretado como una calificación de 2 estrellas.",
+  "VV0059": "Foto de perfil",
+  "VV0060": "Alias",
+  "VV0061": "Enviar mensaje",
+  "VV0062": "ID de paginado",
+  "VV0063": "Perfil",
+  "VV0064": "Enlaces de perfil",
+  "VV0065": "Dirección",
+  "VV0066": "Haz clic para agrandar el código QR",
+  "VV0067": "Exploradores de bloques",
+  "VV0068": "Dirección legacy",
+  "VV0069": "Seguir",
+  "VV0070": "Mutear",
+  "VV0071": "Seguidores",
+  "VV0072": "Siguiendo",
+  "VV0073": "Muteadores",
+  "VV0074": "Muteando",
+  "VV0075": "Tu calificación",
+  "VV0166": "Ajustes",
+  "VV0076": "(Debe ser un enlace de imgur en este formato o en .png)",
+  "VV0077": "actualizar",
+  "VV0078": "Cerrar sesión",
+  "VV0079": "Notificaciones",
+  "VV0080": "Permitir notificaciones",
+  "VV0176": "Frase de recuperación / Clave privada / WIF",
+  "VV0081": "Tema",
+  "VV0167": "Elegir tema",
+  "VV0168": "Ninguno",
+  "VV0082": "Cantidad de propina de un clic",
+  "VV0177": "(Cantidad a dar como propina al hacer clic en la flecha de arriba. Mínimo ",
+  "VV0083": "(Satoshis máximos por byte a pagar durante congestión de red. Mínimo 2)",
+  "VV0084": "(Resultados máximos a mostrar por página. Máximo 100)",
+  "VV0085": "Moneda exhibida",
+  "VV0086": "Palabras muteadas (separadas por coma)",
+  "VV0087": "Ajustes de contenido",
+  "VV0088": "Mostrar imágenes previas de YouTube",
+  "VV0089": "Mostrar imágenes de Imgur",
+  "VV0090": "Mostrar tweets",
+  "VV0091": "Servidor de contenido",
+  "VV0092": "Servidor de transmisión TX",
+  "VV0093": "Servidor de UTXO",
+  "VV0094": "Mi inicio (Últimas publicaciones de tus tópicos o conocidos)",
+  "VV0095": "Notificaciones",
+  "VV0096": "Nueva publicación",
+  "VV0097": "Mensajes",
+  "VV0098": "Ajustes",
+  "VV0099": "Herramientas",
+  "VV0100": "Lista de tópicos",
+  "VV0101": "Mapa",
+  "VV0102": "iniciar sesión",
+  "VV0103": "comenzar",
+  "VV0104": "de moda",
+  "VV0105": "publicaciones de moda",
+  "VV0106": "Nuevo",
+  "VV0107": "Últimas publicaciones",
+  "VV0108": "Día",
+  "VV0109": "Principales publicaciones del último día",
+  "VV0110": "48 hrs",
+  "VV0111": "Principales publicaciones de las últimas 48 horas",
+  "VV0112": "Semana",
+  "VV0113": "Principales publicaciones de la última semana",
+  "VV0114": "Mes",
+  "VV0115": "Principales publicaciones del último mes",
+  "VV0116": "Año",
+  "VV0117": "Principales publicaciones del último año",
+  "VV0118": "Todo",
+  "VV0119": "Principales publicaciones de todos los tiempos",
+  "VV0120": "Publicaciones",
+  "VV0121": "Ver solo publicaciones",
+  "VV0122": "Respuestas",
+  "VV0123": "Ver solo respuestas",
+  "VV0124": "En ambos",
+  "VV0125": "Ver tanto publicaciones como respuestas",
+  "VV0126": "Todos los tópicos",
+  "VV0127": "De todos los tópicos",
+  "VV0128": "Mis tópicos",
+  "VV0129": "De tópicos a los cuales estás suscrito",
+  "VV0130": "Mi inicio",
+  "VV0131": "De tópicos a los cuales estás suscrito o gente que sigues",
+  "VV0132": "Todos",
+  "VV0133": "De todos",
+  "VV0134": "Mis conocidos",
+  "VV0135": "De gente que sigues",
+  "VV0136": "Actualizar contenido",
+  "VV0137": "Estás viendo la versión previa de desarrollo de Member. Puede que necesites teclear SHIFT + recargar para obtener los últimos cambios. Generalmente, se recomienda ",
+  "VV0138": "usar la versión estable en https://member.cash",
+  "VV0139": "Principales financistas ",
+  "VV0140": "Donar",
+  "VV0141": "Protocolo",
+  "VV0142": "Contactar",
+  "VV0143": "versión",
+  "VV0144": "cargando",
+  "VV0145": "Verlo",
+  "VV0146": "También publicar en Twitter (abre una nueva ventana)",
+  "VV0147": "me gusta y",
+  "VV0148": "Principal poseedor de token MEMBER",
+  "VV0149": "seguidores",
+  "VV0150": "siguiendo",
+  "VV0151": "enviado",
+  "VV0152": "por",
+  "VV0153": "comentarios",
+  "VV0154": "enviando...",
+  "VV0155": "responder",
+  "VV0156": "recuerdo",
+  "VV0157": "propina",
+  "VV0158": "cita",
+  "VV0159": "+más",
+  "VV0160": "enlace permanente",
+  "VV0161": "reportar",
+  "VV0162": "propina",
+  "VV0163": "enviando",
+  "VV0164": "Publicación",
+  "VV0165": "Enviando . . .",
+  "nomessagebody": "Sin cuerpo de mensaje",
+  "posting": "Publicando...",
+  "nomemo": "Sin Memo - Intenta agregar algo en el cuadro de memo",
+  "nopost": "Sin publicación o tópico. Prueba en cambio un recuerdo común.",
+  "sendingtitle": "Enviando título...",
+  "postremembered": "Tu publicación fue recordada",
+  "intopic": "en tópico",
+  "messagesent": "Mensaje enviado.",
+  "up": "arriba",
+  "down": "abajo",
+  "close": "cerrado",
+  "tipped": "dio propina de",
+  "disliked": "no me gusta",
+  "quoteremembered": "cita recordada",
+  "remembered": "recordado",
+  "totopic": "#",
+  "loading": "cargando",
+  "showpriv": "Mostrar clave privada",
+  "unsubscribe": "desuscribirse",
+  "resign": "renunciar a moderador",
+  "volunteer": "ofrecerse como moderador",
+  "removefilter": "quitar filtro",
+  "more": "más",
+  "sendmessage": "enviar mensaje",
+  "publickeynotavailable": "La clave pública no está disponible. Tal vez el usuario no fijó su nombre/alias.",
+  "yousent": "enviaste",
+  "processing": "procesando",
+  "unabledecrypt": "Intenta de nuevo más tarde: No se pudo desencriptar el mensaje: ",
+  "warnonexit": "¿Estás seguro? Todavía hay una o más transacciones en progreso. Se perderán si cierras la página o la actualizas con el navegador.",
+  "uncompressed": "Las WIF sin compresión aún no están soportadas, por favor utiliza una WIF comprimida (comienza con L o K)",
+  "keynotrecognized": "Clave no reconocida, usa una frase de recuperación BIP39 válida de 12 palabras, o una comprimida WIF (comienza con L o K)",
+  "publickeymode": "Estás iniciando sesión con una clave pública. Este es un modo de solo lectura. No podrás hacer publicaciones o dar me gusta, etc.",
+  "pagingidnotfount": "No se encontró el id de paginado.",
+  "seedphrase": "Frase de recuperación:",
+  "cpk": "Clave privada comprimida:",
+  "updated": "Actualizado.",
+  "noresult": "no se devolvieron resultados",
+  "nothinghere": "No hay nada aquí todavía",
+  "nothinginfeed": "No hay nada en tu inicio",
+  "nomessagesfound": "No se encontraron mensajes.",
+  "thisuserrates": "Este usuario califica",
+  "547min": " es la propina más baja posible",
+  "sendingtip": "Enviando propina . .",
+  "547orlarger": " satoshis o mayor.",
+  "largerthanbalance": "Esta cantidad es mayor a tu saldo.",
+  "enteranaddress": "Asegúrate de ingresar una dirección a la cual enviar.",
+  "utxosreceived": " utxo(s) recibido(s). utilizable",
+  "error": "Error:",
+  "transactionstillqueued": "Transacción(es) aún en cola. Esperando un nuevo bloque, reintenta en 60 segundos)",
+  "sending again": "Enviando de nuevo . . .",
+  "removefromqueue": "Eliminando transacción de la cola.",
+  "surgepricing": "Error: Transacción rechazada porque la tarifa es demasiado baja. Auméntala y reinténtalo. En alza de precios ahora ",
+  "stillqueued": " Transacción(es) aún en cola, intenta cambiar el servidor UTXO en la página de ajustes. Reintenta en (segundos)",
+  "sendingagain": "Enviando de nuevo . . .",
+  "noprivatekey": "1000:Sin clave privada, no se puede realizar la transacción",
+  "insufficientfunds": "1001:Fondos insuficientes (Sin UTXOs adecuados)",
+  "utxosinpool": " utxo(s) en el pool. Utilizando ",
+  "alreadyspent": "2000:Ya se gastaron todos los UTXOs",
+  "availableamount": "disponibles pero la cantidad requerida es",
+  "networkerror": "Error de red",
+  "readonlymode": "Puede que tengas la sesión abierta con una clave pública en modo de solo lectura. Debes iniciar sesión con una clave privada para realizar esta acción.",
+  "mustlogin": "Debes iniciar sesión para hacer esto.",
+  "notenough": "No tienes suficientes satoshis para hacer esto. Puedes hacer clic en tu saldo para actualizarlo.",
+  "remembering": "Recordando",
+  "picformat": "La imagen de perfil debe ser en formato",
+  "settingpic": "Fijando imagen de perfil",
+  "settingname": "Fijando nombre",
+  "bytesremaining": "Enviando mensaje . . . bytes restantes . .",
+  "waiting": "Segundos de espera",
+  "quoting": "Citando",
+  "sendinggeotag": "Enviando publicación geolocalizada",
+  "sendinglike": "Enviando me gusta",
+  "settingprofile": "Fijando perfil",
+  "sendingsub": "Enviando suscripción",
+  "sendingunsub": "Enviando desuscripción",
+  "sendingfollow": "Enviando seguimiento",
+  "sendingunfollow": "Enviando dejar de seguir",
+  "sendingmute": "Enviando muteo",
+  "sendingunmute": "Enviando desmuteo",
+  "sendingdislike": "Enviando no me gusta",
+  "sendinghidepost": "Enviando ocultar publicación",
+  "sendingunhidepost": "Enviando desocultar publicación",
+  "sendingrating": "Enviando calificación",
+  "sendingaddfilter": "Enviando añadir filtro",
+  "sendingremovefilter": "Enviando eliminar filtro",
+  "sendinghidemember": "Enviando ocultar Member",
+  "sendingunhidemember": "Enviando desocultar Member",
+  "creatingprivatekey": "Creando clave privada",
+  "waitafew": "Espera unos segundos para que lleguen los fondos",
+  "trytoset": "Intenta fijar el nombre sustituto -",
+  "fetchutxos": "Obtener UTXOs",
+  "createsurrogate": "Crear cuenta sustituta",
+  "rates": "calificaciones",
+  "updatedforex": "Se obtuvo la tasa de intercambio actualizada:",
+  "failedforex": "Fallo al obtener la tasa en USD:",
+  "requestingpermission": "Solicitando permiso",
+  "permissionnotgranted": "Permiso para notificaciones no concedido",
+  "subscribing": "Suscribiendo",
+  "bytestransferred": "bytes transferidos",
+  "results": "Resultados",
+  "y": "y",
+  "yearsago": "años",
+  "m": "m",
+  "monthsago": "meses",
+  "d": "d",
+  "daysago": "días",
+  "h": "h",
+  "hoursago": "horas",
+  "min": "m",
+  "minutesago": "minutos",
+  "s": "s",
+  "secondsago": "segundos",
+  "VV0180": "Idioma",
+  "refreshbalance": "Actualizar saldo",
+  "post": "publicación",
+  "posted": "publicado",
+  "replied": "respondido",
+  "replytostart": "Aún no hay comentarios . . . responde para iniciar una conversación",
+  "VV0008": "Califica como",
+  "VV0009": "Comentando...",
+  "VV0011": "Tú",
+  "VV0012": "Calificar como",
+  "VV0013": "Member",
+  "VV0014": "Quien califica como",
+  "VV0015": "Califica como",
+  "follow":"seguir",
+  "unfollow":"dejar de seguir",
+  "mute":"mutear",
+  "unmute":"desmutear",
+  "maxfee":"Tarifa máxima",
+  "resultsnumber":"Cantidad de resultados a mostrar",
+  "likes":"me gusta",
+  "dislikes":"no me gusta",
+  "tips":"propinas",
+  "permalink":"Enlace permanente",
+  "article":"Artículo",
+  "moderate":"Moderar",
+  "flaguser":"reportar(usuario)",
+  "sub":"suscribirse",
+  "unsub":"desuscribirse",
+  "next":"siguiente",
+  "inatopic":"en un tópico al que estás suscrito",
+  "discussion":"en una discusión de la que eres parte",
+  "mentionedyou":"te mencionó en un(a)",
+  "followedyou":"te empezó a seguir",
+  "ratedyou":"te calificó como",
+  "starscommenting":"estrellas, comentando ...",
+  "likedyour":"le gustó tu",
+  "rememberedyour":"recordó tu",
+  "flagusertopic":"reportar(usuario por tópico)",
+  "toyour":"a tu",
+  "areyousure": "¿Estás seguro de cerrar sesión? Asegúrate de haber escrito tu frase de recuperación de 12 palabras o tu clave privada para inciar sesión de nuevo. No hay otra forma de recuperar tu frase de recuperación. Está en la página de Wallet. Haz clic en cancelar si necesitas hacerlo ahora. Haz clic en OK para cerrar sesión.",
+  "hace":"hace ",
+  "existen":"Existen"
+};dictionary.zh= 
+{
+  "VV0169": "哎呀，这个请求失败。",
+  "VV0170": "你的网络连线可能有问题，或者服务器可能有问题。",
+  "VV0171": "错误码为",
+  "VV0172": "资源为",
+  "VV0003": "话题",
+  "VV0004": "文章数",
+  "VV0005": "订阅数",
+  "VV0006": "操作",
+  "VV0010": "总评分:",
+  "VV0016": "生成新短语",
+  "VV0173": "这是你的密码，这是一个短语，请写下来。",
+  "VV0017": "12 字种子短语",
+  "VV0018": "短语 (12 字)",
+  "VV0174": "登录",
+  "VV0019": "*Memo 用户。你也可以用你的密钥登录 (已压缩的 WIF: 开头为 'L..' 或 'K..')",
+  "VV0020": "从 Memo 提取",
+  "VV0021": "Satoshis 与你的 member.cash 帐户息息相关 - 每个操作 (贴文、喜欢、订阅、关注、发送消息等) 都需要少量的。添加一些资金，只需几美分就够了。",
+  "VV0022": "你的地址是",
+  "VV0023": "如果你觉得很难取得一些资金，请将你的地址发送给 Nuggets。",
+  "VV0024": "电子邮件",
+  "VV0025": "刷新余额",
+  "VV0026": "关闭此消息",
+  "VV0027": "工具",
+  "VV0028": "发送资金到另一个地址",
+  "VV0029": "你可以发送资金到另一个地址",
+  "VV0030": "金额 (单位是 Satoshi)",
+  "VV0031": "地址 (任何格式)",
+  "VV0032": "发送资金",
+  "VV0033": "创建代理成员帐号",
+  "VV0034": "如果要对没有成员帐户的用户或组织进行评分，则可以创建代理成员帐户 '(代理)' 将跟随用户代号指出该帐户未声明身份，只是充当信誉信息的容器。",
+  "VV0035": "创建",
+  "VV0036": "代币回收器 (外部链接)",
+  "VV0037": "+添加话题",
+  "VV0038": "话题 (可选)",
+  "VV0039": "+添加文字",
+  "VV0040": "文字 (可选)",
+  "VV0041": "发布",
+  "VV0042": "发送中 . . .",
+  "VV0043": "+查看预览",
+  "VV0044": "预览",
+  "VV0045": "(切换到文章模式)",
+  "VV0046": "(切换到一般模式)",
+  "VV0047": "私人消息",
+  "VV0048": "警告：你私人消息的元数据将在区块链上公开 (即消息的发送者、接收者、大小和时间)。此外，如果接收者的私钥在未来公开，则接收者的消息将变为公开。通常不建议使用区块链进行消息发送。不过，你是个大男孩，如果你想要用这个功能，就尽情使用吧。",
+  "VV0049": "成员搜索",
+  "VV0050": "发送加密消息",
+  "VV0051": "接收者",
+  "VV0052": "(在上方搜索用户)",
+  "VV0053": "邮票金额 (单位为 Satoshi, 至少 ",
+  "VV0054": "消息",
+  "VV0055": "发送消息",
+  "VV0175": "发送中 . . .",
+  "VV0007": "成员",
+  "VV0056": "评分",
+  "VV0057": "信任图谱",
+  "VV0058": "*注意: 静音将被定义为2星评分。",
+  "VV0059": "个人资料照片",
+  "VV0060": "用户代号",
+  "VV0061": "发送消息",
+  "VV0062": "寻呼 ID",
+  "VV0063": "个人资料",
+  "VV0064": "个人资料链接",
+  "VV0065": "地址",
+  "VV0066": "点击以放大二维码",
+  "VV0067": "区块浏览器",
+  "VV0068": "旧地址",
+  "VV0069": "关注",
+  "VV0070": "静音",
+  "VV0071": "粉丝",
+  "VV0072": "关注",
+  "VV0073": "被静音",
+  "VV0074": "设为静音",
+  "VV0075": "你的评分",
+  "VV0166": "设置",
+  "VV0076": "(Imgur 链接必须使用此格式或 .png 格式)",
+  "VV0077": "更新",
+  "VV0078": "退出",
+  "VV0079": "通知",
+  "VV0080": "允许通知",
+  "VV0176": "种子短语 / 私钥 / WIF",
+  "VV0081": "主题",
+  "VV0167": "选择主题",
+  "VV0168": "无",
+  "VV0082": "一键式小费金额",
+  "VV0177": "(点击向上箭头时的小费金额，至少 ",
+  "VV0083": "(网络壅塞期间每字节支付的最多 Satoshis，至少 2)",
+  "VV0084": "(每页显示的最多结果，最大值为 100)",
+  "VV0085": "货币显示",
+  "VV0086": "静音文字 (以逗号分隔)",
+  "VV0087": "媒体设置",
+  "VV0088": "显示 YouTube 预览图片",
+  "VV0089": "显示 Imgur 图片",
+  "VV0090": "显示推文",
+  "VV0091": "内容服务器",
+  "VV0092": "TX 广播服务器",
+  "VV0093": "UTXO 服务器",
+  "VV0094": "我的摘要 (来自你的话题或视角的最新文章)",
+  "VV0095": "通知",
+  "VV0096": "新文章",
+  "VV0097": "消息",
+  "VV0098": "设置",
+  "VV0099": "工具",
+  "VV0100": "话题清单",
+  "VV0101": "地图",
+  "VV0102": "登录",
+  "VV0103": "开始",
+  "VV0104": "热门",
+  "VV0105": "热门文章",
+  "VV0106": "最新",
+  "VV0107": "最新文章",
+  "VV0108": "当天",
+  "VV0109": "过去一天的热门文章",
+  "VV0110": "48小时",
+  "VV0111": "过去48小时的热门文章",
+  "VV0112": "当周",
+  "VV0113": "过去一周的热门文章",
+  "VV0114": "当月",
+  "VV0115": "过去一个月的热门文章",
+  "VV0116": "当年",
+  "VV0117": "过去一年的热门文章",
+  "VV0118": "全部",
+  "VV0119": "全部热门文章",
+  "VV0120": "文章",
+  "VV0121": "只显示文章",
+  "VV0122": "回复",
+  "VV0123": "只查看回复",
+  "VV0124": "全部",
+  "VV0125": "显示文章和回复",
+  "VV0126": "全部话题",
+  "VV0127": "来自所有话题",
+  "VV0128": "我的话题",
+  "VV0129": "来自你订阅的话题",
+  "VV0130": "我的摘要",
+  "VV0131": "来自你订阅的话题或你关注的人",
+  "VV0132": "所有人",
+  "VV0133": "来自所有人",
+  "VV0134": "我的视角",
+  "VV0135": "来自你关注的人",
+  "VV0136": "刷新内容",
+  "VV0137": "你正在查看 Member 的开发预览版本，你可能需要使用 SHIFT + Reload 来获取最新的更改。一般来说，建议",
+  "VV0138": "使用 https://member.cash 的稳定版本",
+  "VV0139": "主要支持者 ",
+  "VV0140": "捐献",
+  "VV0141": "协议",
+  "VV0142": "联系",
+  "VV0143": "版本",
+  "VV0144": "加载中",
+  "VV0145": "查看它",
+  "VV0146": "也张贴到 Twitter (打开新窗口)",
+  "VV0147": "个喜欢和",
+  "VV0148": "最佳 MEMBER 持币者",
+  "VV0149": "粉丝",
+  "VV0150": "关注",
+  "VV0151": "已提交",
+  "VV0152": "由",
+  "VV0153": "评论",
+  "VV0154": "发送中...",
+  "VV0155": "回复",
+  "VV0156": "转发",
+  "VV0157": "小费",
+  "VV0158": "引用",
+  "VV0159": "+更多",
+  "VV0160": "永久链接",
+  "VV0161": "标记",
+  "VV0162": "小费",
+  "VV0163": "发送中",
+  "VV0164": "张贴",
+  "VV0165": "发送中 . . .",
+  "nomessagebody": "没有消息正文",
+  "posting": "张贴中...",
+  "nomemo": "没有 Memo - 请试著在 memo 框中添加一些东西",
+  "nopost": "没有文章或话题，请试著使用转发",
+  "sendingtitle": "正在发送标题...",
+  "postremembered": "已转发你的文章",
+  "intopic": "在话题中",
+  "messagesent": "消息已发送。",
+  "up": "喜欢",
+  "down": "不喜欢",
+  "close": "关闭",
+  "tipped": "已给小费",
+  "disliked": "已标记不喜欢",
+  "quoteremembered": "引用已转发",
+  "remembered": "已转发",
+  "totopic": "前往话题/",
+  "loading": "加载中",
+  "showpriv": "显示私钥",
+  "unsubscribe": "取消订阅",
+  "resign": "辞去主持人",
+  "volunteer": "自愿成为主持人",
+  "removefilter": "移除筛选器",
+  "more": "更多",
+  "sendmessage": "发送消息",
+  "publickeynotavailable": "公钥无法使用 - 可能用户尚未设置其名称/用户代号",
+  "yousent": "你已发送",
+  "processing": "处理中",
+  "unabledecrypt": "请稍后再试: 无法解密消息: ",
+  "warnonexit": "你确定吗？仍有交易正在进行，如果你关闭页面或通过浏览器重新加载，将丢失交易。",
+  "uncompressed": "尚未支援未压缩的 WIF，请使用已压缩的 WIF (开头为 L 或 K)",
+  "keynotrecognized": "无法识别的密钥，请使用有效的 12 字 BIP39 种子短语或已压缩的 WIF (开头为 L 或 K)",
+  "publickeymode": "你正在使用公钥登录，这是只读模式，无法张贴文章或标记喜欢等操作。",
+  "pagingidnotfount": "找不到这个寻呼 ID。",
+  "seedphrase": "种子短语:",
+  "cpk": "已压缩的私钥:",
+  "updated": "已更新",
+  "noresult": "没有返回结果",
+  "nothinghere": "这里什么都没有",
+  "nothinginfeed": "你的摘要中没有内容",
+  "nomessagesfound": "找不到消息。",
+  "thisuserrates": "此用户评分",
+  "547min": " 是最少的小费金额",
+  "sendingtip": "正在发送小费 . .",
+  "547orlarger": "金额必须是 Satoshis 或更多。",
+  "largerthanbalance": "此金额大于你的余额。",
+  "enteranaddress": "确定输入要发送的地址。",
+  "utxosreceived": " utxo 已接收，可用的",
+  "error": "错误:",
+  "transactionstillqueued": "交易已排入队列，等待新区块，60秒后重试)",
+  "sending again": "再次发送 . . .",
+  "removefromqueue": "正在从队列中移除交易。",
+  "surgepricing": "错误: 因为费用太低导致交易被拒绝。增加并重试，立即提高价格 ",
+  "stillqueued": " 交易已排入队列，试著在设置页面中变更 UTXO 服务器。几秒后重试",
+  "sendingagain": "再次发送 . . .",
+  "noprivatekey": "1000:没有私钥，无法执行交易",
+  "insufficientfunds": "1001:资金不足 (没有合适的 UTXO)",
+  "utxosinpool": " utxo 在池中，使用 ",
+  "alreadyspent": "2000:所有 UTXO 已用尽",
+  "availableamount": "可用但所需金额为",
+  "networkerror": "网络错误",
+  "readonlymode": "你可能在只读模式下使用公钥登录，必须使用私钥才能执行此操作。",
+  "mustlogin": "你必须登入才能执行此操作。",
+  "notenough": "你没有足够的 Satoshis 来执行此操作，你可以点击余额来刷新它。",
+  "remembering": "正在转发",
+  "picformat": "个人资料照片必须为此格式",
+  "settingpic": "正在设置个人资料照片",
+  "settingname": "正在设置名称",
+  "bytesremaining": "正在发送消息 . . . 字节剩余 . .",
+  "waiting": "等待的秒数",
+  "quoting": "正在引用",
+  "sendinggeotag": "正在发送地理标记文章",
+  "sendinglike": "正在发送喜欢",
+  "settingprofile": "正在设置个人资料",
+  "sendingsub": "正在发送订阅",
+  "sendingunsub": "正在发送取消订阅",
+  "sendingfollow": "正在发送关注",
+  "sendingunfollow": "正在发送取消关注",
+  "sendingmute": "正在发送静音",
+  "sendingunmute": "正在发送取消静音",
+  "sendingdislike": "正在发送不喜欢",
+  "sendinghidepost": "正在发送隐藏文章",
+  "sendingunhidepost": "正在发送取消隐藏文章",
+  "sendingrating": "正在发送评分",
+  "sendingaddfilter": "正在发送添加筛选器",
+  "sendingremovefilter": "正在发送移除筛选器",
+  "sendinghidemember": "正在发送隐藏成员",
+  "sendingunhidemember": "正在发送取消隐藏成员",
+  "creatingprivatekey": "创建私钥",
+  "waitafew": "等待几秒钟，资金就会到达",
+  "trytoset": "试著设置代理名 -",
+  "fetchutxos": "提取 UTXO",
+  "createsurrogate": "创建代理帐户",
+  "rates": "费率",
+  "updatedforex": "获取已更新汇率:",
+  "failedforex": "无法获取 USD 汇率:",
+  "requestingpermission": "正在请求权限",
+  "permissionnotgranted": "未授与通知权限",
+  "subscribing": "正在订阅",
+  "bytestransferred": "字节已传送",
+  "results": "结果",
+  "y": "年",
+  "yearsago": "年前",
+  "m": "月",
+  "monthsago": "个月前",
+  "d": "天",
+  "daysago": "天前",
+  "h": "小时",
+  "hoursago": "小时前",
+  "min": "分钟",
+  "minutesago": "分钟前",
+  "s": "秒",
+  "secondsago": "秒前",
+  "VV0180": "语言",
+  "refreshbalance": "刷新余额",
+  "post": "张贴",
+  "posted": "已张贴",
+  "replied": "已回复",
+  "replytostart": "还没有评论 . . . 回复以开始对话",
+  "VV0008": "评分为",
+  "VV0009": "正在评论...",
+  "VV0011": "你",
+  "VV0012": "评分为",
+  "VV0013": "成员",
+  "VV0014": "评分为",
+  "VV0015": "评分为",
+  "follow": "关注",
+  "unfollow": "取消关注",
+  "mute": "静音",
+  "unmute": "取消静音",
+  "maxfee": "最大费用",
+  "resultsnumber": "显示的结果数",
+  "likes": "喜欢",
+  "dislikes": "不喜欢",
+  "tips": "小费",
+  "permalink": "永久链接",
+  "article": "文章",
+  "moderate": "主持",
+  "flaguser": "标记(用户)",
+  "sub": "订阅",
+  "unsub": "取消订阅",
+  "next": "下一页",
+  "inatopic": "在你订阅的主题中",
+  "discussion": "在你所在的讨论中",
+  "mentionedyou": "已提及你于",
+  "followedyou": "已关注你",
+  "ratedyou": "将你评分为",
+  "starscommenting": "星, 评论 ...",
+  "likedyour": "已喜欢你",
+  "rememberedyour": "已转发你的",
+  "flagusertopic": "标记(话题用户)",
+  "toyour": "到你的",
+  "areyousure": "你确定要退出吗？请确定你已写下 12 字种子短语或私钥以便再次登录，因为无法回复你的种子短语，它在设置页面上， It is on the Wallet page. 如果未写下种子短语或私钥请点击取消，或者点击确定以退出。",
+  "VVTop": "的热门",
+  "VVold": "老的",
+  "VVoldtitle": "最旧到最新",
+  "VVall": "全部",
+  "VVwallet": "钱包",
+  "VVreputation": "名声",
+  "VVlist": "列表",
+  "VV0094a": "我的人（您关注的人的最新帖子）",
+  "VVfirehose": "所有内容",
+  "VV0100a": "我的标签（您关注的标签的最新帖子）",
+  "VV0018u": "短语（12 个字）、用户名、公钥或私钥",
+  "satoshisinaccount": "satoshis 存在于您的 member.cash 帐户中 - 每个操作（发布、喜欢、订阅、关注、消息传递等）都需要少量的 ",
+  "minemembercoin": "在这里获取一些硬币以换取处理能力 - 这可能需要几秒钟。",
+  "VV0102a": "登录",
+  "VV0103a": "开始",
+  "VV0134a": "我的人",
+  "addimage": "添加图片",
+  "uploadimagestatus": "上传图片 . . .",
+  "chooseimage": "选择图片",
+  "notificationall": "全部",
+  "notificationlikes": "喜欢", 
+  "notificationfollows": "关注", 
+  "notificationunfollows": "取消关注", 
+  "notificationreplies": "回复", 
+  "notificationratings": "评分", 
+  "notificationmentions": "寻呼", 
+  "notificationremembers": "已转发", 
+  "notificationpurchase": "购买", 
+  "notificationsale": "销售"
+};dictionary.fil= 
+{
+  "547min": " ang pinakamababang tip na maaaring ibigay",
+  "547orlarger": " satoshis o higit pa.",
+  "VV0003": "Paksa",
+  "VV0006": "Aksyon",
+  "VV0010": "Kabuuang réyting:",
+  "VV0016": "Gumawa ng Bagong Kataga",
+  "VV0017": "12 Salitang Seed Phrase",
+  "VV0018": "Kataga (12 salita)",
+  "VV0019": "*Sa mga gumagamit ng Memo, maaaring gamitin ang Compressed WIF: (Nagsisimula sa 'L' o 'K'.)",
+  "VV0020": "Kunin mula sa Memo",
+  "VV0021": "satoshis ang nasa iyong member.cash account - ang bawat aksyon (pag-post, like, subscribe, at pag send ng mensahe at iba pa) ay nangangailangan ng maliit na halaga ng Membercoin. Magdagdag ng pondo, kahit na maliit na halaga. ",
+  "VV0022": "Ang iyong address ay ",
+  "VV0023": "Ipadala kay Nuggets ang iyong address kung ikaw ay nahihirapang makahanap ng pondo. ",
+  "VV0024": "E-mail",
+  "VV0025": "I-refresh ang iyong balanse",
+  "VV0026": "Tanggalin ang mensaheng ito",
+  "VV0027": "Mga Kagamitan",
+  "VV0028": "Magpadala ng Pondo sa Ibang Address",
+  "VV0029": "Maaari kang magpadala ng pondo sa ibang Address.",
+  "VV0030": "Halaga (sa Satoshi)",
+  "VV0031": "Address (kahit anong format)",
+  "VV0032": "Mag padala ng pondo",
+  "VV0033": "Gumawa ng Kahaliling Member Account",
+  "VV0034": "Maaari kang gumawa ng Kahaliling Member Account para kumatawan sa isang tao o organisasyong wala pa nito. Ang salitang 'Surrogate' ay dapat karugtong ng pangalan ng tao o organisasyong gagawan upang matiyak na hindi nagkakaroon ng pagnanakaw ng pag kakakilanlan. ",
+  "VV0035": "Gumawa",
+  "VV0037": "+magdagdag ng paksa",
+  "VV0038": "paksa (optional)",
+  "VV0039": "+magdagdag ng teksto",
+  "VV0040": "teksto (optional)",
+  "VV0041": "Post",
+  "VV0042": "Ipinapadala . . .",
+  "VV0043": "+ipakita",
+  "VV0045": "(Gamitin ang Article Mode)",
+  "VV0046": "(Gamitin ang Regular Mode)",
+  "VV0047": "Mga Pribadong Mensahe",
+  "VV0048": "Babala: Ang metadata (nagpadala, sukat, at oras) ng mga pribadong mensahe ay nasa pampublikong blockchain. Kung maisapubliko ng pinadalhan ng mensahe ang kanyang pribadong key, ang mga mensaheng ipinadala ay maisasapubliko rin. ",
+  "VV0049": "Humanap ng Miyembro",
+  "VV0050": "Magpada ng encrypted na mensahe",
+  "VV0051": "Para kay",
+  "VV0052": "(Humanap ng Member mula sa itaas)",
+  "VV0053": "Halaga ng Selyo (sa sats, bilang pinakamababa ",
+  "VV0054": "Mensahe",
+  "VV0055": "Magpadala ng Mensahe",
+  "VV0056": "Mga Reyting",
+  "VV0057": "Graph ng Pagtititwala",
+  "VV0058": "*Paunawa: Ang pag-mute ay nangangahulugang 2-star na reyting. ",
+  "VV0060": "Bansag",
+  "VV0061": "Ipadala ang Mensahe",
+  "VV0062": "Paging ID",
+  "VV0066": "Pindutin upang mapalaki ang QR Code",
+  "VV0067": "Block Explorers",
+  "VV0069": "I-follow",
+  "VV0071": "Tagasunod",
+  "VV0072": "Sinusundan",
+  "VV0073": "Taga-mute",
+  "VV0074": "Naka-mute",
+  "VV0075": "I-reyt ng...",
+  "VV0076": "(Kailangang imgur link sa ganitong format o .png format)",
+  "VV0081": "Tema",
+  "VV0082": "Isang pindutang halaga ng tip",
+  "VV0083": "(Pinakamataas na halagang babayaran kada byte sa netwrok congestion. Pinakamababang halaga ay 2)",
+  "VV0084": "(Pinaka madaming resulta kada pahina. Pinakamarami ay 100)",
+  "VV0086": "Mga salitang nakamute (nakahiwalay gamit ang comma)",
+  "VV0087": "Mga Opsyon para sa Media",
+  "VV0088": "Ipakita ang Youtube Preview",
+  "VV0089": "Ipakita ang mga larawang Imgur",
+  "VV0090": "Ipakita ang mga Tweets",
+  "VV0094": "Aking Feed (pinakabagong posts mula sa sisunsudang tao at paksa)",
+  "VV0096": "Mag post",
+  "VV0097": "Mga Mensahe",
+  "VV0098": "Mga Opsyon",
+  "VV0099": "Mga Kagamitan",
+  "VV0100": "Mga Paksa",
+  "VV0101": "Mapa",
+  "VV0103": "Magsimula",
+  "VV0106": "Pinakabago",
+  "VV0107": "Mga pinakabagong post",
+  "VV0108": "Araw",
+  "VV0109": "Mga pinakasikat na post kahapon",
+  "VV0110": "48hrs",
+  "VV0111": "Mga pinakasikat na post 48 oras ang nakalipas",
+  "VV0112": "Linggo",
+  "VV0113": "Ma pinakasikat na post sa nakaraang linggo",
+  "VV0114": "Buwan",
+  "VV0115": "Mga pinakasikat na post sa nakaraang buwan",
+  "VV0116": "Taon",
+  "VV0117": "Mga pinakasikat na post sa nakaraang taon",
+  "VV0118": "Lahat",
+  "VV0119": "Mga pinakasikat na post ",
+  "VV0121": "Posts lamang",
+  "VV0122": "Kumento",
+  "VV0123": "Mga kumento lamang",
+  "VV0124": "Sa Parehas",
+  "VV0125": "Ipakita ang mga post at kumento",
+  "VV0126": "Lahat ng Paksa",
+  "VV0127": "Galing sa lahat ng paksa",
+  "VV0128": "Aking mga Paksa",
+  "VV0129": "Mula sa mga paksang sinusundan mo",
+  "VV0130": "Aking Feed",
+  "VV0131": "Mula sa mga paksa at taong iyong sinusundan",
+  "VV0132": "Lahat",
+  "VV0133": "Mula sa Lahat",
+  "VV0134": "Sinusundan",
+  "VV0135": "Mula sa mga taong iyong sinusundan",
+  "VV0137": "Ikaw ay nasa Development Preview Version ng Member. Pindutin ang SHIFT+ Reload upang makita ang pinakabagong bersyon. Inirerekomenda na",
+  "VV0138": "gamitin ang matatag na bersyon sa https://member.cash",
+  "VV0139": "Mga tagasuporta",
+  "VV0140": "Magbigay ng Donasyon",
+  "VV0141": "Protocol",
+  "VV0142": "Makipag-ugnayan",
+  "VV0145": "Tingnan",
+  "VV0146": "I-post rin sa Twitter (nagbubukas ng bagong window)",
+  "VV0147": "likes at",
+  "VV0148": "Nangungunang MEMBER Token Holder",
+  "VV0149": "Mga Tagasunod",
+  "VV0150": "Sinusundan",
+  "VV0151": "isinumite",
+  "VV0152": "ni",
+  "VV0153": "mga kumento",
+  "VV0154": "Ipinapadala...",
+  "VV0155": "tumugon",
+  "VV0156": "muling i-post",
+  "VV0157": "tip",
+  "VV0158": "punahin",
+  "VV0159": "+more",
+  "VV0161": "i-flag",
+  "VV0162": "tip",
+  "VV0163": "ipinapadala",
+  "VV0165": "Ipinapadala . . .",
+  "VV0166": "Mga opsyon",
+  "VV0167": "Pumili ng Tema",
+  "VV0168": "Wala",
+  "VV0169": "Oops. Hindi magawa ang kahilingan.",
+  "VV0170": "Maaaring may problema sa iyong internet o sa server.",
+  "VV0171": "Ang error code ay",
+  "VV0172": "Ang resource ay",
+  "VV0173": "Ito ang iyong password. Isulat ang kataga upang hindi mawala. ",
+  "VV0175": "Ipinapadala . . .",
+  "VV0177": "(Halaga ng tip kung pipindutin ang up arrow. Pinakamababa ang ",
+  "VV0180": "Lengguwahe",
+  "alreadyspent": "2000: Lahat ng UTXO ay nagamit na. ",
+  "availableamount": "maaari ngunit ang kailangang halaga ay",
+  "bytesremaining": "Ipinapadala ang mensahe . . . naititirang byte ay . . ",
+  "bytestransferred": "naisaling bytes",
+  "close": "isara",
+  "createsurrogate": "Gumawa ng Kahaliling Account",
+  "creatingprivatekey": "Gumawa ng Pribadong Key",
+  "d": "d",
+  "daysago": "araw ang nakaalipas",
+  "disliked": "hindi nagustuhan",
+  "down": "ibaba",
+  "enteranaddress": "Tiyaking nailagay ang address ng nais padalhan. ",
+  "failedforex": "Nabigong kunin ang palitan sa USD:",
+  "fetchutxos": "Kunin ang UTXOs",
+  "hoursago": "oras ang nakalipas",
+  "insufficientfunds": "1001: Hindi sapat ang Pondo (walang angkop na UTXOs)",
+  "intopic": "sa paksang",
+  "keynotrecognized": "Hindi tumugma ang Key, gumamit ng angkop na 12 salitang BIP36 seed phrase o ang compressed WIF (nagsisimula sa letrang L o K)",
+  "largerthanbalance": "Ang halagang ito ay mas mataas sa iyong balanse. ",
+  "messagesent": "Naipadala ang mensahe.",
+  "minutesago": "minuto ang nakalipas",
+  "monthsago": "buwan ang nakalipas",
+  "mustlogin": "Kailangan mong mag-login upang magawa ito. ",
+  "networkerror": "May problema sa Network",
+  "nomemo": "Walang Memo - Subukang lagyan ang memo box. ",
+  "nomessagebody": "Walang Mensahe",
+  "nomessagesfound": "Wala ka pang mga mensahe.",
+  "nopost": "Walang post o paksa. Subukan ang regular na muling pag-post",
+  "noprivatekey": "1000: Walang Pribadong Key, Hindi magawa ang Transaksiyon",
+  "noresult": "walang resultang nahanap",
+  "notenough": "Kulang ang iyong satoshis. Pindutin ang iyong balanse upang marefresh ito. ",
+  "nothinghere": "Wala pa",
+  "nothinginfeed": "Wala pang laman ang iyong feed",
+  "pagingidnotfount": "Hindi mahanap ang paging id na ito. ",
+  "permissionnotgranted": "Ang Notification ay hindi pinahintulutan. ",
+  "picformat": "Ang format ng Profile pic ay kailangang ",
+  "posted": "na i-post",
+  "posting": "Ipino-post...",
+  "postremembered": "Muling na i-post ang iyong mensahe",
+  "processing": "pinoproseso",
+  "publickeymode": "Ikaw ay nag-login gamit ang public key. Hindi ka maaring makapag-post o like at iba pa, makakabasa lamang. ",
+  "publickeynotavailable": "Ang Public Key ay hindi magamit - maaaring ang user ay hindi pa nakapaglalagay ng pangalan/ bansag.",
+  "quoteremembered": "muling na i-post nang may kumento",
+  "rates": "nag reyt ng",
+  "readonlymode": "Kailangang mag login gamit ang pribadong key upang magawa ito. Ikaw ay makakabasa lamang gamit ang pampublikong key. ",
+  "refreshbalance": "I-refresh ang balanse",
+  "removefilter": "tanggalin ang filter",
+  "removefromqueue": "Tinatanggal na ang Transaksyong ito",
+  "replied": "tumugon",
+  "replytostart": "Wala pang kumento . . . tumugon upang makapag simula ng diskusyon",
+  "requestingpermission": "Humihingi ng permiso",
+  "resign": "Bumitiw bilang moderator",
+  "results": "Mga resulta",
+  "secondsago": "segundo ang nakalipas",
+  "sending again": "Muling Ipinapadala . . .",
+  "sendingaddfilter": "Ipinapadala nag pag dagdag ng Filter",
+  "sendingagain": "Muling ipinapadala",
+  "sendingdislike": "Ipipapadala ang Dislike",
+  "sendingfollow": "Ipinapadala ang Pagsunod",
+  "sendinggeotag": "Ipinapadala ang Geotagged na Post",
+  "sendinghidemember": "Ipinapadala ang Hide Member",
+  "sendinghidepost": "Ipinapadala ang Hide Post",
+  "sendinglike": "Ipinapadala ang Like",
+  "sendingmute": "Ipinapadala ang Mute",
+  "sendingrating": "Ipinapadala ang Reyting",
+  "sendingremovefilter": "Ipinapadala ang Pagtanggal ng Filter",
+  "sendingsub": "Ipinapadala ang Pagsubscribe",
+  "sendingtip": "Ipinapadala ang Tip . . . ",
+  "sendingtitle": "Ipinapadala ang Pamagat",
+  "sendingunfollow": "Ipinapadala ang Pag-unfollow",
+  "sendingunhidemember": "Ipinapadala ang Unhide Member",
+  "sendingunhidepost": "Ipinapadala ang Unhide Post",
+  "sendingunmute": "Ipinapadala ang Pag-Unmute",
+  "sendingunsub": "Ipinapadala ang Pag-Unsubscribe",
+  "sendmessage": "magpadala ng mensahe",
+  "settingname": "Pag-set ng Pangalan",
+  "settingpic": "Pag-set ng Profile Pic",
+  "settingprofile": "Pag-set ng Profile",
+  "showpriv": "Ipakita ang Pribadong Key",
+  "stillqueued": "Kasalukuyang nakapila ang mga transaksiyon, subukang paliatan ang UTXO server sa Mga Opsiyon. Subukang muli sa (ilang segundo)",
+  "subscribing": "Subscribing",
+  "surgepricing": "Error: Hindi tinanggap ang Transaksiyon dahil sa masyadong mababang fee. Tinataasan at muling sinusubukan. Muling itinataas ang presyo. ",
+  "thisuserrates": "Nag-reyt kay",
+  "tipped": "nagtip ng",
+  "totopic": "#",
+  "transactionstillqueued": "Nakapila ang transaksiyon. Naghihintay ng bagong block, muling subukan sa (60 segundo)",
+  "trytoset": "Subukang mag-set ng kahaliling pangalan - ",
+  "unabledecrypt": "Muling subukan: Hindi maibalik sa orihinal na format ang mensahe:",
+  "uncompressed": "Uncompressed WIF ay hindi pa nasusuportahan, gamitin ang compressed WIF (nagsisimula sa 'L' o 'K')",
+  "up": "taas",
+  "updated": "Pinakabago.",
+  "updatedforex": "Nakuha ang pinakabagong reyt ng palitan: ",
+  "utxosinpool": "utxo(s) sa pool. Gumagamit ng ",
+  "utxosreceived": "utxo(s) natanggap. Maaring gamitin ",
+  "volunteer": "Mag  boluntaryo bilang Moderator",
+  "waitafew": "Maghintay ng ilang segundo para sa pagdating ng pondo",
+  "waiting": "Segundong hihintayin ",
+  "warnonexit": "Sigurado ka ba? May mga transaksiyon pa na ipinoproseso. Mawawala ang lahat ng ito kung isasara ang page o irereload ang gamit na browser. ",
+  "yearsago": "taon ang nakalipas",
+  "yousent": "ikaw ang nagpadala ng ",
+  "VV0011": "Ikaw",
+  "VV0012": " ay nag reyt ng",
+  "VV0014": "na nag reyt ng",
+  "VV0015": "nag reyt ng",
+  "VV0070": "I-mute",
+  "VV0077": "Baguhin",
+  "VV0104": "Hot",
+  "VV0176": "Seed Phrase / Pribadong key / WIF",
+  "areyousure": "Sigurado ka bang nais mo nang mag-logout? Siguraduhing naisulat ang 12 salitang seed phrase o pribadong key upang makapag login muli. Walang ibang paraang para marecover ito. Nasa Mga Opsyon ang 12 salitang seed pharse. It is on the Wallet page. Pindutin ang cancel kung nais mo itong kunin. Pindutin ang OK kung nais mag logout. ",
+  "discussion": "sa diskusiyong kabilang ka",
+  "follow": "sundan",
+  "followedyou": "sinundan ka",
+  "inatopic": "sa paksang naka-subscribe ka",
+  "likedyour": "ni-like ang iyong",
+  "maxfee": "Pinakamataas na bayad",
+  "mentionedyou": "ay binanggit ka sa ",
+  "next": "sunod",
+  "ratedyou": "ay ni-yet ka ng ",
+  "remembered": "remembered",
+  "resultsnumber": "Bilang ng resultang nais ipakita",
+  "starscommenting": "stars, nagsasabing...",
+  "toyour": "sa iyong",
+  "unfollow": "I-unfollow",
+  "unmute": "I-unmute",
+  "unsub": "I-unsub",
+  "unsubscribe": "I-unsubscribe",
+  "VV0078": "Mag-logout",
+  "VV0174": "mag-login",
+  "VV0004": "Posts",
+  "VV0005": "Subs",
+  "VV0007": "Member",
+  "VV0008": "Rates As",
+  "VV0009": "Commenting...",
+  "VV0013": "Member",
+  "VV0036": "Token Recycler (External link)",
+  "VV0044": "Preview",
+  "VV0059": "Profile Picture",
+  "VV0063": "Profile",
+  "VV0064": "Profile Links",
+  "VV0065": "Address",
+  "VV0068": "Legacy Address",
+  "VV0079": "Notifications",
+  "VV0080": "I-allow ang notifications",
+  "VV0085": "Currency Display",
+  "VV0091": "Content Server",
+  "VV0092": "TX Broadcast Server",
+  "VV0093": "UTXO Server",
+  "VV0095": "Notifications",
+  "VV0102": "login",
+  "VV0105": "Hottest posts",
+  "VV0120": "Posts",
+  "VV0136": "Refresh Content",
+  "VV0143": "version",
+  "VV0144": "loading",
+  "VV0160": "permalink",
+  "VV0164": "Post",
+  "article": "Article",
+  "cpk": "Compressed Private Key:",
+  "dislikes": "dislikes",
+  "error": "Error:",
+  "flaguser": "flag(user)",
+  "flagusertopic": "flag(user for topic)",
+  "h": "h",
+  "likes": "likes",
+  "loading": "loading",
+  "m": "m",
+  "min": "m",
+  "moderate": "Moderate",
+  "more": "more",
+  "mute": "mute",
+  "permalink": "Permalink",
+  "post": "post",
+  "quoting": "Quoting",
+  "rememberedyour": "remembered your",
+  "remembering": "Remembering",
+  "s": "s",
+  "seedphrase": "Seed Phrase:",
+  "sub": "sub",
+  "tips": "tips",
+  "y": "y"
+}
+
 var errorTemplate=`
 <p>
     <span class='connectionerror'>
@@ -192,7 +1530,7 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n2">*Deso/BitClout Users. Use your 'BC...' address or username for read only
+        <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
             access.</span><br />
     </div>
     <div class="loginnotes">
@@ -608,7 +1946,7 @@ pages.member = `
     <div class="profileactions" id="memberprofileactions"><br /><br />
         {followbuttonhtml}
         <span class="dropdown">
-            <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
+            <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
             <div class="dropdown-content mainhamburger" id="dropdown-content">
                 <span class="populate-send-message">
                     <a data-vavilon="VV0061"
@@ -750,7 +2088,7 @@ pages.settings = `
             </div>
         </div>
         <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
-        <div id="settingspagingid">@{pagingid}</div>
+        <div id="settingspagingidhtml">@{pagingid}</div>
         <div>
             <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
             <div class="formgroup">
@@ -923,7 +2261,7 @@ pages.settings = `
 
 var hamburgerMenuHTML=`
 <span class="dropdown">
-    <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
+    <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
         <a data-vavilon_title="VV0063" id="profilebutton" title="Profile" class="hamburgerbutton" href="#profile"
             onclick="nlc();" style="display:none;">
@@ -933,7 +2271,7 @@ var hamburgerMenuHTML=`
             onclick="nlc();" style="display:none;">
             <img src="img/icons/wallet.png" alt="wallet">
             <span data-vavilon="VVwallet">Wallet</span></a>
-        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Tag List" class="hamburgerbutton" href="#topiclist"
+        <a data-vavilon_title="VV0100" id="topiclistbuttonmenu" title="Tag List" class="hamburgerbutton" href="#topiclist"
             onclick="nlc();">
             <img src="img/icons/hashtag.png" alt="MyFeed">
             <span data-vavilon="VV0100">Tag List</span></a>
@@ -1201,7 +2539,7 @@ var footerHTML = `
                         </a>
                     </span>
                     <span class="dropdown">
-                        <button onclick="dropDownMenuAction(this);" class="dropbtn">
+                        <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">
                             <div class="options">
                                 <div></div>
                                 <div></div>
@@ -1350,7 +2688,7 @@ var notificationCompactTemplate=`
     <div class="notificationdetails">
         <div class="notificationminheight">
             <span class="notificationIcon">
-                <img src='{iconHTML}'>
+                <img width='24' height='24' alt='{alttext}' src='{iconHTML}' >
             </span>
             <div class="notificationtitlecompact">
                 {title}
@@ -1376,7 +2714,7 @@ var replyTemplate=`
                 <div class="commentbody">
                     {message}
                 </div>
-                <div class="subtextbuttons2">{replyandtips} {tips}{remembers}</div>
+                <div class="subtextbuttons2">{replyandtips} {remembers} {tips}</div>
                 {replydiv}
             </div>
             <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
@@ -1407,6 +2745,7 @@ var replyDivTemplate = `
 </div>`;
 
 var remembersTemplate=`
+<a onclick="repostPost('{txid}','{origtxid}','{network}');"><span data-vavilon="remember">remember</span></a>
 <span {display} onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" id="repostlink{txid}{diff}" class="subtextremembers">
     <a href="javascript:"><span id="repostscount{txid}">{repostcount}</span>&hairsp;<span data-vavilon="VV0156">remembers</span></a>
 </span>`;
@@ -1444,8 +2783,9 @@ var replyAndTipsTemplate = `
             onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
                 data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
     </div></a>
-<a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
-<a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
+    <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
+    {sourceNetworkHTML}
+    <a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
 <!--<a data-vavilon="VV0161" id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');" href="javascript:;">flag</a>
 
 <a data-vavilon="VV0159" id="morelink{page}{txid}" onclick="showMore('more{page}{txid}','morelink{page}{txid}');"
@@ -2030,11 +3370,11 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
-  replytext="https://member.cash/p/"+membertxid.substr(0,10);
-
+  //replytext="https://member.cash/p/"+membertxid.substr(0,10);
+  replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
+    
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
-    //replytext="https://member.cash/p/"+txid.substr(0,10)+"\n\n"+replytext;
     //replytext="https://member.cash/p/"+txid.substr(0,10);
   }else{
     payload.ParentStakeID = txid;
@@ -2991,7 +4331,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         
         if (!pubkey && order == 'hot' && !qaddress && Math.random()<adfrequency) {//Show member.cash explainer video
-            let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nDeso, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
+            let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
             contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
         }
 
@@ -3027,7 +4367,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
 
-        displayItemListandNavButtonsHTML(navheader + contents, navbuttons, page, data, "posts", start, true);
+        displayItemListandNavButtonsHTML(navheader, contents, navbuttons, page, data, "posts", start, true);
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -3157,7 +4497,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
 
         //Threads have no navbuttons
-        displayItemListandNavButtonsHTML(contents, "", pageName, data, "", 0, false);
+        displayItemListandNavButtonsHTML('',contents, "", pageName, data, "", 0, false);
 
         //Repeat the title for article mode
         //This doesn't seem essential, but was causing some problems when viewing thread directly after post, so put in a try/catch
@@ -3302,8 +4642,8 @@ function getAndPopulateQuoteBox(txid) {
 }
 
 
-function displayItemListandNavButtonsHTML(contents, navbuttons, page, data, styletype, start, adddynamic) {
-    contents = getItemListandNavButtonsHTML(contents, navbuttons, styletype, start);
+function displayItemListandNavButtonsHTML(navheader, contents, navbuttons, page, data, styletype, start, adddynamic) {
+    contents = getItemListandNavButtonsHTML(navheader, contents, navbuttons, styletype, start);
     var pageElement = document.getElementById(page);
     pageElement.innerHTML = contents; //display the result in the HTML element
     listenForTwitFrameResizes();
@@ -3975,11 +5315,15 @@ function uncollapseCommentRecursive(commentid) {
 var SimpleMDE = null;
 var simplemde;
 
-async function initMarkdownEditor() {
+async function loadMDE(){
     if (!SimpleMDE) {
+        document.getElementById("mde1style").setAttribute("href", "js/lib/mde/simplemde.min.css");
+        document.getElementById("mde2style").setAttribute("href", "js/lib/mde/fareplacements.css");
         await loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     }
-
+}
+async function initMarkdownEditor() {
+    await loadMDE();
     if (simplemde == null) {
         simplemde = new SimpleMDE({
             element: document.getElementById("newposttamemorandum"),
@@ -4515,8 +5859,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     if (data && data[0]) {
         profilepic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(data[0].address) + `"></svg>`;
         var picurl = getPicURL(data[0].picurl, profilepicbase, data[0].address, data[0].hivename);
-        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
-        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
+        document.getElementById('profilepicheader').innerHTML = `<img alt="Profile pic" class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
+        profilepic = `<img alt="Profile Picture" class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
         try {
             document.getElementById('newpostprofilepic').innerHTML = profilepic;
         } catch (err) {
@@ -6601,6 +7945,13 @@ var firstload = true;
 var mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var L=null;
 
+async function loadMap(){
+    if(!L){
+        document.getElementById("leafletcss").setAttribute("href", "js/lib/leaflet/leaflet.css");
+        await loadScript("js/lib/leaflet/leaflet.js");
+    }
+}
+
 async function getAndPopulateMap(geohash, posttrxid) {
 
     geohash = san(geohash);
@@ -6608,10 +7959,7 @@ async function getAndPopulateMap(geohash, posttrxid) {
 
     if (map == null) {
 
-        if(!L){
-            await loadScript("js/lib/leaflet/leaflet.js");
-        }
-
+        await loadMap();
         map = L.map('map', { attributionControl: false });
 
         //Use attribution control as a close button
@@ -7357,14 +8705,14 @@ async function loadBigLibs() {
     loadBigLibsStarted = true;
     //Load big libraries that may not be immediately needed.
 
-    if (!bip39) { loadScript("js/lib/bip39.browser.js"); }
-    if (!window.bitcoinjs) { loadScript(bitcoinjslib); }
+    if (!bip39) loadScript("js/lib/bip39.browser.js");
+    if (!window.bitcoinjs) loadScript(bitcoinjslib);
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
-    if (!window.elliptic) { loadScript("js/lib/elliptic.min.js"); }
-    if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
+    if (!window.elliptic) loadScript("js/lib/elliptic.min.js");
+    loadMDE();
     if (!cytoscape) loadScript("js/lib/cytoscape3.19.patched.min.js");
     if (!bcdecrypt) loadScript("js/lib/identityencryption.js");
-    if (!L) loadScript("js/lib/leaflet/leaflet.js");
+    loadMap();
 }
 
 
@@ -7898,7 +9246,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext', 'discussion', `in a discussion you're in'`),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Discussion'
             );
             break;
         case "topic":
@@ -7908,7 +9256,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + getSpanHTML('plaintext', 'inatopic', `in a tag you're subscribed to`),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Post'
             );
             break;
         case "page":
@@ -7918,7 +9266,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'mentionedyou', 'mentioned you in a') + postlinkHTML(data.txid, `post`),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Mention'
             );
             break;
         case "reply":
@@ -7928,7 +9276,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext', 'toyour', 'to your') + postlinkHTML(data.rretxid, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Reply'
             );
             break;
         case "rating":
@@ -7942,7 +9290,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'ratedyou', 'rated you as') + theRating + getSpanHTML('plaintext', 'starscommenting', 'stars, commenting ...') + getSpanClassHTML("plaintext", escapeHTML(data.reason)),
                 timeSince(Number(data.time), true),
                 "",
-                data.txid, highlighted
+                data.txid, highlighted, 'Rating'
             );
             break;
         case "follow":
@@ -7952,7 +9300,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'followedyou', 'followed you'),
                 timeSince(Number(data.time), true),
                 "",
-                data.txid, highlighted
+                data.txid, highlighted, 'Follow'
             );
             break;
         case "unfollow":
@@ -7962,7 +9310,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'unfollowedyou', 'unfollowed you'),
                 timeSince(Number(data.time), true),
                 "",
-                data.txid, highlighted
+                data.txid, highlighted, 'Unfollow'
             );
             break;
         case "purchase":
@@ -7972,7 +9320,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'purchasecoin', `purchased your creator coin. ~${usdString(data.ccamount)} `),
                 timeSince(Number(data.time), true),
                 ``,
-                data.txid, highlighted
+                data.txid, highlighted, 'Purchase'
             );
             break;
 
@@ -7984,7 +9332,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'soldcoin', `sold your creator coin. ~${usdString(data.ccamount * 1.33)} `),
                 timeSince(Number(data.time), true),
                 ``,
-                data.txid, highlighted
+                data.txid, highlighted, 'Sale'
             );
             break;
 
@@ -8006,7 +9354,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'likedyour', 'liked your') + messageType + getSpanClassHTML("plaintext", (Number(data.amount) > 0 ? usdString(Number(data.amount), false) : "")),
                 timeSince(Number(data.time), true),
                 postHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Like'
             );
             break;
         case "repost":
@@ -8016,7 +9364,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'rememberedyour', 'remembered your') + postlinkHTML(data.likeretxid, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Remember'
             );
             break;
         case "quoterepost":
@@ -8026,7 +9374,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'quoterememberedyour', 'quote remembered your') + postlinkHTML(data.likeretxid, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Quote Remember'
             );
             break;
 
@@ -8182,7 +9530,7 @@ Member.prototype.userHTML = function (includeProfile) {
     let memberpic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(this.address) + `"></svg>`;
     if (this.picurl) {
         var picurlfull = getPicURL(this.picurl, profilepicbase, this.address, this.hivename);
-        memberpic = `<img class="memberpicturesmall" src='` + picurlfull + `'/>`;
+        memberpic = `<img alt="Profile Picture" class="memberpicturesmall" src='` + picurlfull + `'/>`;
     }
 
     //let linkStart = `<a href="#member?qaddress=` + san(this.address) + `" onclick="nlc();" class="` + userclass + `">`;
@@ -8379,15 +9727,15 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
 
     let sourceNetworkHTML = '';
     if (sourcenetwork == 0) {
-        sourceNetworkHTML = '<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/' + san(hivelink) + '">Memo</a>';
+        sourceNetworkHTML = '<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/' + san(hivelink) + '">memo</a>';
     } else if (sourcenetwork == 1) {
-        sourceNetworkHTML = '<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/' + san(hivelink) + '">BitClout</a>';
+        sourceNetworkHTML = '<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/' + san(hivelink) + '">bitclout</a>';
     } else if (sourcenetwork == 2) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@' + sanhl(hivelink) + '">hive.blog</a>';
     } else if (sourcenetwork == 3) {
-        sourceNetworkHTML = '<a rel="noopener noreferrer" href="' + permalink + '">member.cash</a>';
+        //sourceNetworkHTML = '<a rel="noopener noreferrer" href="' + permalink + '">member.cash</a>';
     } else if (sourcenetwork == 99) {
-        sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">RSS Link</a>';
+        sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">rss</a>';
     }
 
     var obj = {
@@ -8438,20 +9786,22 @@ function getTipsHTML(txid, tips, differentiator, display) {
         diff: differentiator,
         tips: Number(tips),
         balancestring: usdString(Number(tips), false),
-        display: (display?``:` style="display:none" `)
+        display: (display ? `` : ` style="display:none" `)
     }
     return templateReplace(tipsTemplate, obj);
 }
 
 
-function getRemembersHTML(txid, differentiator, repostcount, display) {
+function getRemembersHTML(txid, differentiator, repostcount, display, origtxid, network) {
 
     var obj = {
         //These must all be HTML safe.
         txid: san(txid),
         diff: differentiator,
         repostcount: Number(repostcount),
-        display: (display?``:` style="display:none" `)
+        display: (display ? `` : ` style="display:none" `),
+        origtxid: origtxid,
+        network: network
     }
     return templateReplace(remembersTemplate, obj);
 }
@@ -8462,7 +9812,7 @@ function getLikesHTML(txid, likesbalance, differentiator, display) {
         txid: san(txid),
         diff: differentiator,
         likesbalance: likesbalance,
-        display: (display?``:` style="display:none" `)
+        display: (display ? `` : ` style="display:none" `)
     }
     return templateReplace(likesTemplate, obj);
 }
@@ -8472,8 +9822,8 @@ function replacePageNamesWithLinks(target) {
     //return target.replace(/(^|\s|>)@([^,\/#!$%\^&\*;:{}=`~()'"@<>\ \n?]{1,217})/g, replacePageName);
     //return target.replace(/(^|\s|>)@([A-Za-z0-9\-_\.]{1,217})/g, replacePageName);
     //we won't store . - in pagenames, but where a page includes . -, the page will be recognized.
-    return target.replace(/(^|\s|>)@([0-9\-_\.\u0041-\u005A\u0061-\u007A\u00AA\u00B5\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]{1,217})/g, replacePageName); 
-            
+    return target.replace(/(^|\s|>)@([0-9\-_\.\u0041-\u005A\u0061-\u007A\u00AA\u00B5\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]{1,217})/g, replacePageName);
+
 
 }
 
@@ -8602,11 +9952,11 @@ function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repost
         data[stub + "network"],
         data[stub + "hivelink"],
         data[stub + "deleted"]
-        );
+    );
 }
 
 
-function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, truncate, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash,  likedtxid, likeordislike, repliesroot,  repostcount, repostidtxid,  sourcenetwork, hivelink, deleted) {
+function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, truncate, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, likedtxid, likeordislike, repliesroot, repostcount, repostidtxid, sourcenetwork, hivelink, deleted) {
     var theAuthorHTML = theMember.userHTML(true);
     var theAuthor2HTML = theMember.userHTML(false);
 
@@ -8657,22 +10007,22 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     let sourceNetworkImage;
     if (sourcenetwork == 0) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}">Memo</a>`;
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}"><img src='img/networks/0.png'></a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}"><img width='15' height='15' alt='Memo' src='img/networks/0.png'></a>`;
     } else if (sourcenetwork == 1) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/${san(hivelink)}">BitClout</a>`;
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/${san(hivelink)}"><img src='img/networks/1.png'></a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/${san(hivelink)}"><img width='15' height='15' alt='BitClout' src='img/networks/1.png'></a>`;
     } else if (sourcenetwork == 2) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}">hive.blog</a>`;
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}"><img src='img/networks/2.png'></a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}"><img width='15' height='15' alt='Hive' src='img/networks/2.png'></a>`;
     } else if (sourcenetwork == 3) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="memberp" href="${permalink}">member.cash</a>`;
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="memberp" href="${permalink}"><img src='img/networks/3.png'></a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="memberp" href="${permalink}"><img width='15' height='15' alt='member.cash' src='img/networks/3.png'></a>`;
     } else if (sourcenetwork == 4) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img src='img/networks/4.png'></a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img width='15' height='15' alt='doge.hair' src='img/networks/4.png'></a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img src='img/networks/99.png'></a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
     }
 
     let pinnedpostHTML = '';
@@ -8726,8 +10076,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         MEMUSD20: satsToUSDString(2000000000),
         MEMUSD50: satsToUSDString(5000000000),
         MEMUSD100: satsToUSDString(10000000000),
-        deleted: (deleted=='1' ? ` deleted`:''),
-        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:''),
+        deleted: (deleted == '1' ? ` deleted` : ''),
+        retracted: (deleted == '1' ? ` <span class='retracted'>removed</span>` : ''),
         ticker: nativeCoin.ticker
     };
 
@@ -8782,7 +10132,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
     //var replyAndTips = getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, repostidtxid, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress);
     //var replyDiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID);
 
-    let likesbalance=Number(likes) - Number(dislikes);
+    let likesbalance = Number(likes) - Number(dislikes);
     let santxid = san(txid);
     let permalink = `?` + santxid.substring(0, 4) + `#thread?post=` + santxid;
     let articlelink = `?` + santxid.substring(0, 4) + `#article?post=` + santxid;
@@ -8799,15 +10149,15 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         votebuttons: getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID),
         author: theMember.userHTML(true),
         message: message,
-        likes: getLikesHTML(txid, likesbalance, differentiator, (likes>0)),
-        tips: getTipsHTML(txid, tips, differentiator, (tips>0)),
-        remembers: getRemembersHTML(txid, differentiator, repostcount, (repostcount>0)),
+        likes: getLikesHTML(txid, likesbalance, differentiator, (likes > 0)),
+        tips: getTipsHTML(txid, tips, differentiator, (tips > 0)),
+        remembers: getRemembersHTML(txid, differentiator, repostcount, (repostcount > 0), origTXID, sourcenetwork),
         age: getAgeHTML(firstseen, false, permalink),
         replyandtips: getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress, permalink, articlelink),
         replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID),
         diff: differentiator,
-        deleted: (deleted=='1' ? ` deleted`:''),
-        retracted:(deleted=='1' ? ` <span class='retracted'>removed</span>`:'')
+        deleted: (deleted == '1' ? ` deleted` : ''),
+        retracted: (deleted == '1' ? ` <span class='retracted'>removed</span>` : '')
     };
 
     return templateReplace(replyTemplate, obj);
@@ -8844,10 +10194,10 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
     return contents;
 }
 
-function getAgeHTML(firstseen, compress=false, link=null) {
+function getAgeHTML(firstseen, compress = false, link = null) {
     let agehtml = `<span class="age">&hairsp;•&hairsp;` + timeSince(Number(firstseen), compress) + `</span>`;
-    if(link){
-        agehtml=`<a href='${link}'>${agehtml}</a>`;
+    if (link) {
+        agehtml = `<a href='${link}'>${agehtml}</a>`;
     }
     return agehtml;
 }
@@ -8932,9 +10282,9 @@ function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, l
 }
 
 
-function getItemListandNavButtonsHTML(contentsHTML, navbuttonsHTML, styletype, start) {
+function getItemListandNavButtonsHTML(navheader, contentsHTML, navbuttonsHTML, styletype, start) {
     if (styletype != "") {
-        return `<div class="itemlist"><ol start="` + (Number(start) + 1) + `" class="` + styletype + `">` + contentsHTML + `</ol></div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
+        return `<div class="itemlist">${navheader}<ol start="` + (Number(start) + 1) + `" class="` + styletype + `">` + contentsHTML + `</ol></div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
     } else {
         return `<div class="itemlist">` + contentsHTML + `</div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
     }
@@ -9035,7 +10385,7 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
         message = message.replace(imgurRegex, replaceImgur);
     }
-    
+
 
     /*if (settings["showprism"] == "true") {
         //Prism
@@ -9083,19 +10433,19 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         var bitcloutRegex = global ?
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
+        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Bitclout)" class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
 
         var bitcloutRegex = global ?
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
             /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
+        message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Deso)" class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
 
     }
 
     var membercoinRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/gi :
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/i;
-    message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
+    message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (member.cash)" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
 
     var memberlinksRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})*.*?<\/a>/gi :
@@ -9105,13 +10455,13 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     var giphyRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(giphy\.com\/embed\/|media1\.giphy\.com\/media\/)([a-z0-9A-Z]{5,20})*.*?<\/a>/gi :
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(giphy\.com\/embed\/|media1\.giphy\.com\/media\/)([a-z0-9A-Z]{5,20})*.*?<\/a>/i;
-    message = message.replace(giphyRegex, `<a href="https://i.giphy.com/media/$2/giphy.webp" rel="noopener noreferrer" target="_giphy" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://i.giphy.com/media/$2/giphy.webp"></img></div></a>`);
+    message = message.replace(giphyRegex, `<a href="https://i.giphy.com/media/$2/giphy.webp" rel="noopener noreferrer" target="_giphy" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy"  alt="Post's Image (Giphy)" class="imgurimage" src="https://i.giphy.com/media/$2/giphy.webp"></img></div></a>`);
 
 
     var pearlRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/gi :
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/i;
-    message = message.replace(pearlRegex, `<a href="https://cdn.pearl.app/$1.webp" rel="noopener noreferrer" target="_pearl" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://cdn.pearl.app/$1.webp"></img></div></a>`);
+    message = message.replace(pearlRegex, `<a href="https://cdn.pearl.app/$1.webp" rel="noopener noreferrer" target="_pearl" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Pearl)" class="imgurimage" src="https://cdn.pearl.app/$1.webp"></img></div></a>`);
 
     var diamondappRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/gi :
@@ -9143,8 +10493,8 @@ async function populatelbry(lbrylink,elementid){
     //set contents
     //
 }*/
-function replaceDiamondApp(match, p1, p2){
-    return `<a onclick="event.stopPropagation();nlc();location.href='#thread?post=${p2}'; " href="javascript:">https://member.cash/p/${p2.substring(0,10)}</a>`;
+function replaceDiamondApp(match, p1, p2) {
+    return `<a onclick="event.stopPropagation();nlc();location.href='#thread?post=${p2}'; " href="javascript:">https://member.cash/p/${p2.substring(0, 10)}</a>`;
 }
 
 function replaceImgur(match, p1, p2, p3, p4, offset, string) {
@@ -9154,7 +10504,7 @@ function replaceImgur(match, p1, p2, p3, p4, offset, string) {
         return `<a href='javascript:;'><video controls class="imgurimage" draggable="false" playsinline="true" loop="true"><source loading="lazy" type="video/mp4" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></video></a>`;
     }
 
-    return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur" onclick="event.stopPropagation();"><div class="imgurcontainer"><img loading="lazy" class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
+    return `<a href="https://i.imgur.com` + p2 + p3 + `" rel="noopener noreferrer" target="_imgur" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Imgur)" class="imgurimage" src="https://i.imgur.com` + p2 + p3 + p4 + `" alt="imgur post ` + p2 + `"></img></div></a>`;
 }
 
 //Notifications
@@ -9167,7 +10517,7 @@ function getNotificationsTableHTML(contents, navbuttons) {
     return `<ul class="notificationslist">` + contents + `</ul>` + navbuttons;
 }
 
-function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML, txid, highlighted) {
+function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextHTML, addendumHTML, txid, highlighted, alttext) {
     //icon, mainbody and subtext should already be escaped and HTML formatted
 
     var obj = {
@@ -9178,7 +10528,8 @@ function notificationItemHTML(notificationtype, iconHTML, mainbodyHTML, subtextH
         title: mainbodyHTML,
         age: subtextHTML,
         post: addendumHTML,
-        iconHTML: iconHTML
+        iconHTML: iconHTML,
+        alttext: alttext
     }
 
     return templateReplace(notificationCompactTemplate, obj);
@@ -9196,7 +10547,7 @@ function getMapPostHTML(lat, lng, requireLogin) {
         lng: Number(lng),
         profilepicsmall: profilepic,
         address: pubkey,
-        maxgeolength:maxgeolength
+        maxgeolength: maxgeolength
     }
 
     return templateReplace(mapPostTemplate, obj);
@@ -9948,5 +11299,5 @@ function updateBalance(dynamicChainHeight, showLowFunds=false) {
 
 
 
-var version = '8.6.1'; 
+var version = '8.6.5'; 
 if (init) { init(); } 

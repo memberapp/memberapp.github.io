@@ -547,11 +547,11 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
-  replytext="https://member.cash/p/"+membertxid.substr(0,10);
-
+  //replytext="https://member.cash/p/"+membertxid.substr(0,10);
+  replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
+    
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
-    //replytext="https://member.cash/p/"+txid.substr(0,10)+"\n\n"+replytext;
     //replytext="https://member.cash/p/"+txid.substr(0,10);
   }else{
     payload.ParentStakeID = txid;

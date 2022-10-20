@@ -213,8 +213,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     if (data && data[0]) {
         profilepic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(data[0].address) + `"></svg>`;
         var picurl = getPicURL(data[0].picurl, profilepicbase, data[0].address, data[0].hivename);
-        document.getElementById('profilepicheader').innerHTML = `<img class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
-        profilepic = `<img class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
+        document.getElementById('profilepicheader').innerHTML = `<img alt="Profile pic" class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
+        profilepic = `<img alt="Profile Picture" class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
         try {
             document.getElementById('newpostprofilepic').innerHTML = profilepic;
         } catch (err) {

@@ -55,14 +55,14 @@
 
     <!--  Progressive Web App Service Worker -->
     <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
-    <script src="pwa/pwa2.js?8.6.1"></script>
+    <script src="pwa/pwa2.js?8.6.5"></script>
 
-    <!-- DNS-prefetch resource hints  -->
+    <!-- DNS-prefetch resource hints  
     <link rel="preconnect" href="https://twitframe.com" />
-    <link rel="preconnect" href="https://tile.openstreetmap.org" />
+    <link rel="preconnect" href="https://tile.openstreetmap.org" />-->
 
     <!--  Progressive Web App -->
-    <meta name="msapplication-config" content="pwa/browserconfig.xml" />
+    <meta name="msapplication-config" content="pwa/browserconfig.xml" >
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Member">
@@ -71,29 +71,23 @@
     <link rel="icon" type="image/png" href="img/logos/favicon-16x16.png">
     <link rel="icon" type="image/png" sizes="32x32" href="img/logos/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="img/logos/favicon-16x16.png">
-    <meta name="theme-color" content="#2291EB" />
-    <link rel="stylesheet" href="js/lib/leaflet/leaflet.css" />
-    <link rel="stylesheet" href="js/lib/mde/simplemde.min.css" />
-    <link rel="stylesheet" href="js/lib/mde/fareplacements.css" />
+    <meta name="theme-color" content="#2291EB" >
+    <link id="leafletcss" rel="stylesheet" >
+    <link id="mde1style" rel="stylesheet" >
+    <link id="mde2style" rel="stylesheet" >
 
-    <link id="pagestyle" rel="stylesheet" href="css/feels.css?8.6.1">
-    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?8.6.1">
-    <link id="pagestyle3" rel="stylesheet" href="css/none.css?8.6.1">
+    <link id="pagestyle" rel="stylesheet" href="css/feels.css?8.6.5">
+    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?8.6.5">
+    <link id="pagestyle3" rel="stylesheet" >
 
     <!--  Config -->
-    <script src="config.js?8.6.1"></script>
+    <script src="config.js?8.6.5"></script>
+
+    <!-- Light External Libs -->
+    <script src="js/lib/memberextlibs.js?8.6.5"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js"></script>
-
-    <!-- Light External Libs -->
-    <script src="js/lib/memberextlibs.js?8.6.1"></script>
-
-    <!-- https://github.com/fredolss/rater-js  -->
-    <script src='js/lib/rater/rating.js?8.6.1'></script>
-
-    <!-- Load Translations -->
-    <script src="locale/localization.js?8.6.1"></script>
 
 </head>
 
@@ -107,7 +101,7 @@
     <div id="status" class="status"></div>
     <div id="bitcloutframe"></div>
     <!--  Member Minified Code. -->
-    <script src="js/memberlibs.js?8.6.1"></script>
+    <script src="js/memberlibs.js?8.6.5"></script>
 </body>
 
 </html>

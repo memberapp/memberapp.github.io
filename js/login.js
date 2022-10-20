@@ -172,14 +172,14 @@ async function loadBigLibs() {
     loadBigLibsStarted = true;
     //Load big libraries that may not be immediately needed.
 
-    if (!bip39) { loadScript("js/lib/bip39.browser.js"); }
-    if (!window.bitcoinjs) { loadScript(bitcoinjslib); }
+    if (!bip39) loadScript("js/lib/bip39.browser.js");
+    if (!window.bitcoinjs) loadScript(bitcoinjslib);
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
-    if (!window.elliptic) { loadScript("js/lib/elliptic.min.js"); }
-    if (!SimpleMDE) loadScript("js/lib/mde/simplemde.1.11.2.min.js");
+    if (!window.elliptic) loadScript("js/lib/elliptic.min.js");
+    loadMDE();
     if (!cytoscape) loadScript("js/lib/cytoscape3.19.patched.min.js");
     if (!bcdecrypt) loadScript("js/lib/identityencryption.js");
-    if (!L) loadScript("js/lib/leaflet/leaflet.js");
+    loadMap();
 }
 
 

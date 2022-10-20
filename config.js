@@ -14,7 +14,7 @@ var bitcoinjslib = "js/lib/bitcoincashjs-lib-5.2.0.min.patched.js";
 var allowBitcloutUser = true;
 var defaultTag="#newmember";
 var logowide="img/logos/logowide.svg";
-var logoicon="img/logos/siteicon.svg";
+var logoicon="img/logos/membericon.svg";
 var customCSS="";
 var adfrequency = 0.10; //value between 0 and 1
 
@@ -25,7 +25,8 @@ var nativeCoin = {
     "satsPerByte": 1,
     "name": 'Membercoin',
     "ticker": 'M3M',
-    "opreturnsize": 4000
+    "opreturnsize": 4000,
+    "symbol":'m̈'
 }
 
 

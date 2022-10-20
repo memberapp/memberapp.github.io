@@ -303,6 +303,10 @@ a {
   top: 0.2rem;
   position: relative;
   object-fit: cover;
+  /*These 3 hide the alt text which may disrupt layout if image not available*/  
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .memberpicsmallcompact,
 img.memberpicturesmallpost {

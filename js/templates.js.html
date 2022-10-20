@@ -192,7 +192,7 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n2">*Deso/BitClout Users. Use your 'BC...' address or username for read only
+        <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
             access.</span><br />
     </div>
     <div class="loginnotes">
@@ -608,7 +608,7 @@ pages.member = `
     <div class="profileactions" id="memberprofileactions"><br /><br />
         {followbuttonhtml}
         <span class="dropdown">
-            <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
+            <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
             <div class="dropdown-content mainhamburger" id="dropdown-content">
                 <span class="populate-send-message">
                     <a data-vavilon="VV0061"
@@ -750,7 +750,7 @@ pages.settings = `
             </div>
         </div>
         <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
-        <div id="settingspagingid">@{pagingid}</div>
+        <div id="settingspagingidhtml">@{pagingid}</div>
         <div>
             <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
             <div class="formgroup">
@@ -923,7 +923,7 @@ pages.settings = `
 
 var hamburgerMenuHTML=`
 <span class="dropdown">
-    <button onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
+    <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
         <a data-vavilon_title="VV0063" id="profilebutton" title="Profile" class="hamburgerbutton" href="#profile"
             onclick="nlc();" style="display:none;">
@@ -933,7 +933,7 @@ var hamburgerMenuHTML=`
             onclick="nlc();" style="display:none;">
             <img src="img/icons/wallet.png" alt="wallet">
             <span data-vavilon="VVwallet">Wallet</span></a>
-        <a data-vavilon_title="VV0100" id="topiclistbutton" title="Tag List" class="hamburgerbutton" href="#topiclist"
+        <a data-vavilon_title="VV0100" id="topiclistbuttonmenu" title="Tag List" class="hamburgerbutton" href="#topiclist"
             onclick="nlc();">
             <img src="img/icons/hashtag.png" alt="MyFeed">
             <span data-vavilon="VV0100">Tag List</span></a>

@@ -287,7 +287,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext', 'discussion', `in a discussion you're in'`),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Discussion'
             );
             break;
         case "topic":
@@ -297,7 +297,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "posted") + getSpanHTML('plaintext', 'inatopic', `in a tag you're subscribed to`),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Post'
             );
             break;
         case "page":
@@ -307,7 +307,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'mentionedyou', 'mentioned you in a') + postlinkHTML(data.txid, `post`),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Mention'
             );
             break;
         case "reply":
@@ -317,7 +317,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + ` ` + postlinkHTML(data.txid, "replied") + getSpanHTML('plaintext', 'toyour', 'to your') + postlinkHTML(data.rretxid, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Reply'
             );
             break;
         case "rating":
@@ -331,7 +331,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'ratedyou', 'rated you as') + theRating + getSpanHTML('plaintext', 'starscommenting', 'stars, commenting ...') + getSpanClassHTML("plaintext", escapeHTML(data.reason)),
                 timeSince(Number(data.time), true),
                 "",
-                data.txid, highlighted
+                data.txid, highlighted, 'Rating'
             );
             break;
         case "follow":
@@ -341,7 +341,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'followedyou', 'followed you'),
                 timeSince(Number(data.time), true),
                 "",
-                data.txid, highlighted
+                data.txid, highlighted, 'Follow'
             );
             break;
         case "unfollow":
@@ -351,7 +351,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'unfollowedyou', 'unfollowed you'),
                 timeSince(Number(data.time), true),
                 "",
-                data.txid, highlighted
+                data.txid, highlighted, 'Unfollow'
             );
             break;
         case "purchase":
@@ -361,7 +361,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'purchasecoin', `purchased your creator coin. ~${usdString(data.ccamount)} `),
                 timeSince(Number(data.time), true),
                 ``,
-                data.txid, highlighted
+                data.txid, highlighted, 'Purchase'
             );
             break;
 
@@ -373,7 +373,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'soldcoin', `sold your creator coin. ~${usdString(data.ccamount * 1.33)} `),
                 timeSince(Number(data.time), true),
                 ``,
-                data.txid, highlighted
+                data.txid, highlighted, 'Sale'
             );
             break;
 
@@ -395,7 +395,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'likedyour', 'liked your') + messageType + getSpanClassHTML("plaintext", (Number(data.amount) > 0 ? usdString(Number(data.amount), false) : "")),
                 timeSince(Number(data.time), true),
                 postHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Like'
             );
             break;
         case "repost":
@@ -405,7 +405,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'rememberedyour', 'remembered your') + postlinkHTML(data.likeretxid, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Remember'
             );
             break;
         case "quoterepost":
@@ -415,7 +415,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
                 userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'quoterememberedyour', 'quote remembered your') + postlinkHTML(data.likeretxid, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
-                data.txid, highlighted
+                data.txid, highlighted, 'Quote Remember'
             );
             break;
 

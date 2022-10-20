@@ -119,7 +119,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="dropdown">
-                        <button onclick="dropDownMenuAction(this);" class="dropbtn">
+                        <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">
                             <div class="options">
                                 <div></div>
                                 <div></div>
@@ -268,7 +268,7 @@ var notificationCompactTemplate=`
     <div class="notificationdetails">
         <div class="notificationminheight">
             <span class="notificationIcon">
-                <img src='{iconHTML}'>
+                <img width='24' height='24' alt='{alttext}' src='{iconHTML}' >
             </span>
             <div class="notificationtitlecompact">
                 {title}
@@ -294,7 +294,7 @@ var replyTemplate=`
                 <div class="commentbody">
                     {message}
                 </div>
-                <div class="subtextbuttons2">{replyandtips} {tips}{remembers}</div>
+                <div class="subtextbuttons2">{replyandtips} {remembers} {tips}</div>
                 {replydiv}
             </div>
             <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
@@ -325,6 +325,7 @@ var replyDivTemplate = `
 </div>`;
 
 var remembersTemplate=`
+<a onclick="repostPost('{txid}','{origtxid}','{network}');"><span data-vavilon="remember">remember</span></a>
 <span {display} onclick="showRemembersExpanded('{txid}','remembersexpanded{txid}{diff}')" id="repostlink{txid}{diff}" class="subtextremembers">
     <a href="javascript:"><span id="repostscount{txid}">{repostcount}</span>&hairsp;<span data-vavilon="VV0156">remembers</span></a>
 </span>`;
@@ -362,8 +363,9 @@ var replyAndTipsTemplate = `
             onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
                 data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
     </div></a>
-<a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
-<a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
+    <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
+    {sourceNetworkHTML}
+    <a data-vavilon="VV0158" id="quotelink{page}{txid}" href="#new?txid={origtxid}">quote</a>
 <!--<a data-vavilon="VV0161" id="hidepostlink{page}{txid}" onclick="sendHidePost('{txid}');" href="javascript:;">flag</a>
 
 <a data-vavilon="VV0159" id="morelink{page}{txid}" onclick="showMore('more{page}{txid}','morelink{page}{txid}');"

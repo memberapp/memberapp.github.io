@@ -8,6 +8,13 @@ var firstload = true;
 var mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var L=null;
 
+async function loadMap(){
+    if(!L){
+        document.getElementById("leafletcss").setAttribute("href", "js/lib/leaflet/leaflet.css");
+        await loadScript("js/lib/leaflet/leaflet.js");
+    }
+}
+
 async function getAndPopulateMap(geohash, posttrxid) {
 
     geohash = san(geohash);
@@ -15,10 +22,7 @@ async function getAndPopulateMap(geohash, posttrxid) {
 
     if (map == null) {
 
-        if(!L){
-            await loadScript("js/lib/leaflet/leaflet.js");
-        }
-
+        await loadMap();
         map = L.map('map', { attributionControl: false });
 
         //Use attribution control as a close button

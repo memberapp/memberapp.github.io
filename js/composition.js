@@ -2,11 +2,15 @@
 var SimpleMDE = null;
 var simplemde;
 
-async function initMarkdownEditor() {
+async function loadMDE(){
     if (!SimpleMDE) {
+        document.getElementById("mde1style").setAttribute("href", "js/lib/mde/simplemde.min.css");
+        document.getElementById("mde2style").setAttribute("href", "js/lib/mde/fareplacements.css");
         await loadScript("js/lib/mde/simplemde.1.11.2.min.js");
     }
-
+}
+async function initMarkdownEditor() {
+    await loadMDE();
     if (simplemde == null) {
         simplemde = new SimpleMDE({
             element: document.getElementById("newposttamemorandum"),
