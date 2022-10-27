@@ -48,7 +48,7 @@ async function userSearchChanged(searchbox, targetelement) {
         //var contents = `<label for="usersearchresults">` + getSafeTranslation('results', 'Results') + `</label>`;
         var contents = '';
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getDivClassHTML('usersearchresult', userFromDataBasic(data[i], i + searchbox + data[i].address, 16));
+            contents = contents + getDivClassHTML('usersearchresult', userFromDataBasic(data[i], i + searchbox + data[i].address));
         }
         document.getElementById(targetelement).innerHTML = contents;
         addDynamicHTMLElements(data);

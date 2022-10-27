@@ -402,7 +402,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "repost",
                 `img/icons/notification/repost.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'rememberedyour', 'remembered your') + postlinkHTML(data.likeretxid, "post"),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'rememberedyour', 'remembered your') + postlinkHTML(data.rhivelink, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
                 data.txid, highlighted, 'Remember'

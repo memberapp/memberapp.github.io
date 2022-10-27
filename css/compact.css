@@ -575,6 +575,10 @@ Use important, because we always want profile card pics to be this size*/
   color:red;
 }
 
+.revision {
+  color:darkred;
+}
+
 /*Remove generally bad img defaults*/
 
 img {

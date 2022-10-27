@@ -72,9 +72,9 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length);
         //var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
-        if(!hasNavButtons){
-            navheader='';
-            navbuttons='';
+        if (!hasNavButtons) {
+            navheader = '';
+            navbuttons = '';
         }
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
@@ -86,8 +86,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
 
-        
-        if (!pubkey && order == 'hot' && !qaddress && Math.random()<adfrequency) {//Show member.cash explainer video
+
+        if (!pubkey && order == 'hot' && !qaddress && Math.random() < adfrequency) {//Show member.cash explainer video
             let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
             contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
         }
@@ -194,7 +194,9 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
-        
+
+        data = manageRevisions(data);
+
         txid = setHighlightedPost(data, txid); //set the highlight posts - also use the number id for txid rather than hex if txid is hex
 
         data = await removeDuplicatesFromDifferentNetworks(data);
@@ -206,24 +208,27 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
         //setTopic(data[0].topic);
 
-        //Find who started the thread
-        var threadstarter = null;
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].txid == roottxid) {
-                threadstarter = data[i].address;
-            }
-        }
 
-        //Find the first reply by the thread starter
-        var earliestReply = "none";
-        var earliestReplyTXID = "none";
-        var earliestReplyTime = 9999999999;
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].retxid == roottxid && data[i].address == threadstarter) {
-                if (data[i].firstseen < earliestReplyTime) {
-                    earliestReply = i;
-                    earliestReplyTime = data[i].firstseen;
-                    earliestReplyTXID = data[i].txid
+
+        //Find the first reply by the thread starter, but only for article style
+        let earliestReply = "none";
+        let earliestReplyTXID = "none";
+        if (pageName == 'article') {
+            let earliestReplyTime = 9999999999;    
+            //Find who started the thread
+            let threadstarter = null;
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].txid == roottxid) {
+                    threadstarter = data[i].address;
+                }
+            }
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].retxid == roottxid && data[i].address == threadstarter) {
+                    if (data[i].firstseen < earliestReplyTime) {
+                        earliestReply = i;
+                        earliestReplyTime = data[i].firstseen;
+                        earliestReplyTXID = data[i].txid
+                    }
                 }
             }
         }
@@ -254,15 +259,15 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
 
         //Threads have no navbuttons
-        displayItemListandNavButtonsHTML('',contents, "", pageName, data, "", 0, false);
+        displayItemListandNavButtonsHTML('', contents, "", pageName, data, "", 0, false);
 
         //Repeat the title for article mode
         //This doesn't seem essential, but was causing some problems when viewing thread directly after post, so put in a try/catch
-        try{
-            let articleheaderelement=document.querySelector('[id^="articleheader' + roottxid + '"]');
-            let postbodyroottxidelement=document.querySelector('[id^="postbody' + roottxid + '"]');
+        try {
+            let articleheaderelement = document.querySelector('[id^="articleheader' + roottxid + '"]');
+            let postbodyroottxidelement = document.querySelector('[id^="postbody' + roottxid + '"]');
             articleheaderelement.innerHTML = postbodyroottxidelement.innerHTML;
-        }catch(errortitle){
+        } catch (errortitle) {
             console.log("Article mode header set error");
             console.log(errortitle);
         }
@@ -420,7 +425,7 @@ function addDynamicHTMLElements(data) {
     if (data != null && data != undefined && data[0]) {
         //if (data.length > 0) {
         //let qt = (Math.round(data[0].msc * 100) / 100).toFixed(2);
-        updateStatus(`QT: ${data[0].msc-data[0].qtmsc}/${data[0].qtmsc}`);
+        updateStatus(`QT: ${data[0].msc - data[0].qtmsc}/${data[0].qtmsc}`);
         //document.getElementById("version").title = qt;
 
         if (data[0].chainheight) {
@@ -488,7 +493,7 @@ function showScoresExpanded(retxid, profileelement) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += getTipDetailsHTML(userFromDataBasic(data[i], san(retxid) + i, 16), amount, data[i].type);
+            contents += getTipDetailsHTML(userFromDataBasic(data[i], san(retxid) + i), amount, data[i].type);
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements();
@@ -507,7 +512,7 @@ function showRemembersExpanded(retxid, profileelement) {
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents += getRememberDetailsHTML(userFromDataBasic(data[i], san(retxid) + i, 16), data[i].message, data[i].topic, data[i].txid);
+            contents += getRememberDetailsHTML(userFromDataBasic(data[i], san(retxid) + i), data[i].message, data[i].topic, data[i].txid);
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements();
@@ -606,11 +611,11 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
     if (data.repost) {
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
-        repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID, 8));
+        repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID));
         let member = MemberFromData(data, "rp", mainRatingID + "qr");
         //repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '', data.rplastactive, truncate, data.rpsysrating, data.rpsourcenetwork, data.rphivename, data.rphivelink, data.rpbitcoinaddress);
         repostHTML2 = getHTMLForPostHTML3(member, data, 'rp', page, starindex, '', truncate);
-        
+
         //if (repostHTML2) {
         //    repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         //}
@@ -620,26 +625,26 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 
         //this is a quick hack to filter out multiple edits
         //a genuine response to self is also removed. look at this when revisiting edited posts
-        if(data.address==data.opaddress){ 
-            return ''; 
+        if (data.address == data.opaddress) {
+            return '';
         }
 
         //post with message
         if (repostHTML2) {
             repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         }
-        
+
         let member = MemberFromData(data, "", mainRatingID);
         retHTML = getHTMLForPostHTML3(member, data, '', page, starindex, repostHTML2, truncate);
-        
+
         //reply post, include original post
-        if(data.opaddress){
-            let opmember = MemberFromData(data, "op", mainRatingID+'op');
-            retHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex+'op', repostHTML2, truncate) +
-            `<div class="replyinmainfeed">` + retHTML + `</div>`;
+        if (data.opaddress) {
+            let opmember = MemberFromData(data, "op", mainRatingID + 'op');
+            retHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex + 'op', repostHTML2, truncate) +
+                `<div class="replyinmainfeed">` + retHTML + `</div>`;
         }
 
-        
+
 
     } else {
         //repost with no message
@@ -658,8 +663,8 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 function getHTMLForReply(data, depth, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    let member = MemberFromData(data,'',mainRatingID);
-    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted);
+    let member = MemberFromData(data, '', mainRatingID);
+    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -685,20 +690,20 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
 
-    var successFunction = 
-    function (membertxid) { 
-        replySuccessFunction(page, txid);
-        if (isBitCloutUser()) {
-            sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-            //sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
-        }
-    };
-    
+    var successFunction =
+        function (membertxid) {
+            replySuccessFunction(page, txid);
+            if (isBitCloutUser()) {
+                sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+                //sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+            }
+        };
+
     if (checkForNativeUserAndHasBalance()) {
         sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
         successFunction = null;
     }
-    
+
     return true;
 }
 
@@ -919,7 +924,7 @@ async function removeDuplicatesFromDifferentNetworks(data) {
 
         //duplicates with just link
         let matches = data[i].message.match(/^https\:\/\/member\.cash\/p\/([0-9a-f]{10})+$/, '$2');
-        if(matches){
+        if (matches) {
             data[i].permalinkstub = matches[1];
         }
 
@@ -929,16 +934,16 @@ async function removeDuplicatesFromDifferentNetworks(data) {
     for (var i = 0; i < data.length; i++) {
         for (var j = 0; j < data.length; j++) {
             //if the message is the same, and the author is the same, combine as a single post
-            if (i != j && data[i] && data[i].network == 3 && data[j].network != 3 && 
-                ((data[i].contentauthorhash == data[j].contentauthorhash) 
-                || (data[j].permalinkstub && (data[j].permalinkstub == data[i].hivelink.substr(0,10) ) ))) {
+            if (i != j && data[i] && data[i].network == 3 && data[j].network != 3 &&
+                ((data[i].contentauthorhash == data[j].contentauthorhash)
+                    || (data[j].permalinkstub && (data[j].permalinkstub == data[i].hivelink.substr(0, 10))))) {
                 //datai is on membercoin network(3) and dataj is an identical post and not on membercoin network so . . .
                 //change all references to dataj to datai
                 for (var k = 0; k < data.length; k++) {
                     if (data[k].retxid == data[j].txid) {
                         data[k].retxid = data[i].txid;
-                        if(data[j].highlighted){//if tx is highlighted, highlight duplicate tx.
-                            data[k].highlighted=true;
+                        if (data[j].highlighted) {//if tx is highlighted, highlight duplicate tx.
+                            data[k].highlighted = true;
                         }
                     }
                 }
@@ -964,16 +969,18 @@ async function digestMessage(message) {
     return hashHex;
 }
 
-function setHighlightedPost(data,highlightedtxid) {
+function setHighlightedPost(data, highlightedtxid) {
     for (var i = 0; i < data.length; i++) {
-        data[i].txid=data[i].txid+""; //ensure it is a string.
+        data[i].txid = data[i].txid + ""; //ensure it is a string.
         if (data[i].txid == highlightedtxid || data[i].hivelink.startsWith(highlightedtxid)) {
-            data[i].highlighted=true;
-            return data[i].txid+"";
+            data[i].highlighted = true;
+            return data[i].txid + "";
         }
     }
     return highlightedtxid;
 }
+
+
 
 function removeDuplicates(data) {
     var replies = [];
@@ -987,6 +994,40 @@ function removeDuplicates(data) {
     }
     return data;
 }
+
+function manageRevisions(data) {
+    /*var replies = [];
+    for (var i = 0; i < data.length; i++) {
+        if (replies[data[i].txid] == null) {
+            replies[data[i].txid] = 1;
+        } else {
+            data.splice(i, 1);
+            i--;
+        }
+    }*/
+    
+    //iterate through all data.
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].edit<0) {//where edit < 1, 
+            for (var j = 0; j < data.length; j++) {
+                if (data[j].edit==data[i].edit*-1 && data[j].retxid==data[i].txid) {//find the child with with revision edit*-1
+                    let temp = data[i].message;//switch the content, date
+                    let temptime = data[i].firstseen;//switch the content, date 
+                    data[i].message=data[j].message;
+                    data[j].message=temp;
+                    data[i].firstseen=data[j].firstseen;
+                    data[j].firstseen=temptime;
+                    data[i].edit=data[j].edit;
+                    data[j].edit=0;                    
+                }
+            }
+        } 
+    }
+    //change edit to 'rev00' 
+    
+    return data;
+}
+
 
 function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
 
@@ -1052,20 +1093,20 @@ function uncollapseComment(commentid) {
 }
 
 function uncollapseCommentRecursive(commentid) {
-    
-    let targetElement=document.getElementById('LI' + commentid);
+
+    let targetElement = document.getElementById('LI' + commentid);
     //let targetElement=document.querySelector(`[id^="LI"+${commentid}]`)
-    while(targetElement){
-        if(targetElement.id && targetElement.id.startsWith('LI')){
+    while (targetElement) {
+        if (targetElement.id && targetElement.id.startsWith('LI')) {
             targetElement.style.display = 'block';
-            let collapsedElement=document.getElementById('Collapsed' + targetElement.id);
+            let collapsedElement = document.getElementById('Collapsed' + targetElement.id);
             collapsedElement.style.display = 'none';
-            
+
             //Also move this element to the top
-            let parentNode=targetElement.parentNode;
-            parentNode.insertBefore(parentNode.removeChild(targetElement),parentNode.firstChild);
-            
+            let parentNode = targetElement.parentNode;
+            parentNode.insertBefore(parentNode.removeChild(targetElement), parentNode.firstChild);
+
         }
-        targetElement=targetElement.parentNode;
+        targetElement = targetElement.parentNode;
     }
 }

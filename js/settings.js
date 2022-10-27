@@ -120,6 +120,8 @@ async function getDataMemberFinally(data) {
         publickey: "",
     };
 
+    obj.membrain = 1;
+
     if (data && data[0]) {
         obj.followers = Number(data[0].followers);
         obj.following = Number(data[0].following);
@@ -135,8 +137,8 @@ async function getDataMemberFinally(data) {
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
 
-        let theRatingRound = outOfFive(Number(data[0].sysrating));
-        obj.membrain = theRatingRound + "/5";
+        
+        if (data[0].sysrating) { obj.membrain = outOfFive(Number(data[0].sysrating)) + "/5"; }
 
         //document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
     }
@@ -169,7 +171,7 @@ async function getDataMemberFinally(data) {
     obj.profile = getSafeMessage(obj.profile, 'profile', false);
     if (data && data[0]) {
         //data[0].rname=data[0].name;
-        let member = MemberFromData(data[0],'','???mainratingid');
+        let member = MemberFromData(data[0], '', '???mainratingid');
         //obj.pinnedpostHTML = getHTMLForPostHTML(data[0].rtxid, data[0].raddress, data[0].name, data[0].rlikes, data[0].rdislikes, data[0].rtips, data[0].rfirstseen, data[0].rmessage, data[0].rroottxid, data[0].rtopic, data[0].rreplies, data[0].rgeohash, 'memberpage', '???mainratingid', data[0].likedtxid, data[0].likeordislike, data[0].rrepliesroot, data[0].rating, 0, data[0].rrepostcount, data[0].repostidtxid, data[0].pagingid, data[0].publickey, data[0].picurl, data[0].tokens, data[0].followers, data[0].following, data[0].blockers, data[0].blocking, data[0].profile, data[0].isfollowing, data[0].nametime, '', data[0].lastactive, false, data[0].sysrating, data[0].rsourcenetwork, data[0].hivename, data[0].hivelink, data[0].bitcoinaddress);
         obj.pinnedpostHTML = getHTMLForPostHTML3(member, data[0], 'r', 'memberpage', 0, '', false);
     }
@@ -188,20 +190,21 @@ async function getDataMemberFinally(data) {
         document.getElementById('memberratinggroup').style.display = "none";
     } else {
 
-        document.getElementById('memberratinggroup').style.display = "block";
-        document.getElementById('memberratingcomment').innerHTML = getRatingComment(data[0]);
-        document.getElementById('memberratingcommentinputbox' + data[0].bitcoinaddress).onchange = function () { starRating1.setRating(0); };
+        if (data[0]) {
+            document.getElementById('memberratinggroup').style.display = "block";
+            document.getElementById('memberratingcomment').innerHTML = getRatingComment(data[0]);
+            document.getElementById('memberratingcommentinputbox' + data[0].bitcoinaddress).onchange = function () { starRating1.setRating(0); };
 
-        var ratingScore = 0;
-        if (data.length > 0) {
-            ratingScore = Number(data[0].rating);
+            var ratingScore = 0;
+            if (data.length > 0) {
+                ratingScore = Number(data[0].rating);
+            }
+            document.getElementById('memberrating').innerHTML = getMemberRatingHTML(data[0].bitcoinaddress, ratingScore, data[0].pagingid);
+
+            var theElement = document.getElementById(`memberrating` + data[0].bitcoinaddress);
+            var starRating1 = addSingleStarsRating(theElement);
+            setPageTitleRaw("@" + data[0].pagingid);
         }
-        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(data[0].bitcoinaddress, ratingScore, data[0].pagingid);
-
-        var theElement = document.getElementById(`memberrating` + data[0].bitcoinaddress);
-        var starRating1 = addSingleStarsRating(theElement);
-        setPageTitleRaw("@" + data[0].pagingid);
-
     }
 
     addDynamicHTMLElements();
@@ -248,6 +251,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         fileuploadurl: dropdowns.imageuploadserver + "uploadfile"
     };
 
+    obj.membrain = 1;
+    
     if (data && data[0]) {
         obj.addressnumber = san(data[0].address);
         obj.followers = Number(data[0].followers);
@@ -265,8 +270,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.rating = Number(data[0].rating);
 
 
-        let theRatingRound = outOfFive(Number(data[0].sysrating));
-        obj.membrain = theRatingRound + "/5";
+        
+        if (data[0].sysrating) { obj.membrain = outOfFive(Number(data[0].sysrating)) + "/5"; }
 
         //document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
     }
@@ -292,8 +297,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.bcaddress = bcaddress;
     }
     obj.version = version;
-    obj.dust=nativeCoin.dust;
-    obj.maxprofilelength=maxprofilelength;
+    obj.dust = nativeCoin.dust;
+    obj.maxprofilelength = maxprofilelength;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -458,7 +463,7 @@ function updateSettingsDropdown(settingsName) {
             translatePage();
         }
     }
-    if (settingsName == "txbroadcastserver"){
+    if (settingsName == "txbroadcastserver") {
         tq.setbroadcastServer(dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost");
     }
 
@@ -483,7 +488,7 @@ function updateSettingsNumber(settingsName) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
-    if(settingsName!='usdrate'){
+    if (settingsName != 'usdrate') {
         updateStatus(getSafeTranslation('updated', "Updated.") + " " + numbers[settingsName]);
     }
 }
@@ -533,7 +538,7 @@ function getAndPopulateFB(page, qaddress) {
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getMembersWithRatingHTML(i, page, data[i], '', false);
+            contents = contents + getMembersWithRatingHTML(i, page, data[i]);
         }
 
         document.getElementById(page + 'table').innerHTML = contents;

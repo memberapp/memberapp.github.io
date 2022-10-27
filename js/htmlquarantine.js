@@ -22,28 +22,6 @@ function userFromDataBasic(data, mainRatingID) {
 
 function userFromData(data, mainRatingID) {
     return MemberFromData(data, 'origin', mainRatingID).userHTML(true);
-    //data.origin should be data.originaddress
-    //data.raterrating should be data.originrating
-    /*return (new Member(
-        data.origin, 
-        data.originname, 
-        mainRatingID, 
-        data.raterrating, 
-        data.originpagingid, 
-        data.originpublickey, 
-        data.originpicurl, 
-        data.origintokens, 
-        data.originfollowers, 
-        data.originfollowing, 
-        data.originblockers, 
-        data.originblocking, 
-        data.originprofile, 
-        data.originisfollowing, 
-        data.originnametime, 
-        data.originlastactive, 
-        data.originsysrating, 
-        data.originhivename, 
-        data.originbitcoinaddress)).userHTML(true);*/
 }
 //Members
 function MemberFromData(data, stub, ratingID) {
@@ -165,8 +143,9 @@ Member.prototype.userHTML = function (includeProfile) {
     let directlink = "";
 
     let systemScoreClass = '';
-    if (!this.ratingRawScore) {
-        this.ratingRawScore = this.sysrating;
+    let useScore=this.ratingRawScore
+    if (!useScore) { //If the user hasn't rated the user, use a system score
+        useScore = this.sysrating;
         systemScoreClass = 'systemscore';
     }
 
@@ -178,7 +157,7 @@ Member.prototype.userHTML = function (includeProfile) {
         pagingidattrib: ds(this.pagingid),
         pagingid: ds(this.pagingid),
         flair: flair,
-        rating: Number(this.ratingRawScore),
+        rating: Number(useScore),
         followbutton: followButton,
         following: Number(this.following),
         followers: Number(this.followers),
@@ -197,90 +176,6 @@ Member.prototype.userHTML = function (includeProfile) {
     }
     return templateReplace(userCompactTemplate, obj);
 };
-
-//Get html for a user, given their address and name
-/*function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, includeProfile, lastactive, sysrating, hivename, bitcoinaddress) {
-    if (!address) {
-        return "error:no address for user";
-    }
-    if (name == "" || name == null) {
-        name = address.substring(0, 10);
-    }
-
-    var userclass = "hnuser";
-    var profilemeta = "profile-meta";
-    var curTime = new Date().getTime() / 1000;
-
-    if (!nametime || curTime - nametime < 60 * 60 * 24 * 7 * 2) {
-        //if the user has changed name in the past two weeks
-        userclass = "hnuser newuser";
-        profilemeta = "profile-meta newuser";
-    }
-
-    var memberpic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
-    if (picurl) {
-        var picurlfull = getPicURL(picurl, profilepicbase, address, hivename);
-        memberpic = `<img class="memberpicturesmall" src='` + picurlfull + `'/>`;
-    }
-
-    var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="` + userclass + `">`;
-    var linkEnd = `</a> `;
-    var flair = " ";
-    if (tokens > 0) {
-        flair = ` <span data-vavilon_title="TopIndex" class="flair" title="TopIndex">` + ordinal_suffix_of(Number(tokens)) + ` </span> `;
-    }
-    var followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('` + sane(bitcoinaddress) + `','` + sane(publickey) + `'); this.style.display='none';">follow</a>`;
-    if (isfollowing) {
-        followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('` + sane(bitcoinaddress) + `','` + sane(publickey) + `'); this.style.display='none';">unfollow</a>`;
-    }
-
-    if (ratingID == undefined) {
-        ratingID = 'test';
-    }
-
-    var onlineStatus = "";
-    //var lastonlineseconds=curTime - lastactive;
-    onlineStatus = timeSince(lastactive, true);
-
-    var directlink = "";
-
-    var systemScoreClass = '';
-    if (!ratingRawScore) {
-        ratingRawScore = sysrating;
-        systemScoreClass = 'systemscore';
-    }
-
-    var obj = {
-        //These must all be HTML safe.
-        address: san(address),
-        profilepicsmall: memberpic,
-        handle: ds(name),
-        pagingidattrib: ds(pagingid),
-        pagingid: ds(pagingid),
-        flair: flair,
-        rating: Number(ratingRawScore),
-        followbutton: followButton,
-        following: Number(following),
-        followers: Number(followers),
-        profile: getSafeMessage(profile, 'profilecard', false),
-        diff: ratingID,
-        onlinestatus: onlineStatus,
-        systemscoreclass: systemScoreClass,
-        directlink: directlink,
-        bitcoinaddress: sane(bitcoinaddress)
-    }
-
-    obj.profilecard = "";
-    if (includeProfile) {
-        obj.authorsidebar = "";
-        obj.profilecard = templateReplace(userProfileCompactTemplate, obj);
-    }
-    return templateReplace(userCompactTemplate, obj);
-
-
-}*/
-
-
 
 //Posts and Replies
 function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxid) {
@@ -689,7 +584,7 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
 }
 
 
-function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted) {
+function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted, edit) {
     txid = txid + ""; //ensure txid is a string. Sometimes it is returned as a number.
 
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
@@ -759,7 +654,8 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID),
         diff: differentiator,
         deleted: (deleted == '1' ? ` deleted` : ''),
-        retracted: (deleted == '1' ? ` <span class='retracted'>removed</span>` : '')
+        retracted: (deleted == '1' ? ` removed` : ''),
+        revision: (Number(edit)>0 ? ' edit'+Number(edit) : '')
     };
 
     return templateReplace(replyTemplate, obj);
@@ -774,7 +670,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
             if (data[i].rating) {
                 ratingused = data[i].rating;
             }
-            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused < maxScoreToCollapseComment);
+            var isMuted = (data[i].edit > 0 || data[i].blockstxid != null || data[i].moderated != null || ratingused < maxScoreToCollapseComment);
 
             var obj = {
                 unmuteddisplay: (isMuted ? `none` : `block`),
@@ -783,9 +679,12 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
                 hightlightedclass: (data[i].highlighted ? `highlightli` : ``),
                 replyHTML: getHTMLForReply(data[i], depth, pageName, i),
                 nestedPostHTML: getNestedPostHTML(data, data[i].txid, depth + 1, pageName, "dontmatch"),
-                user: userFromDataBasic(data[i], data[i].ratingID, 0),
+                user: userFromDataBasic(data[i], data[i].ratingID),
                 age: getAgeHTML(data[i].firstseen),
-                diff: i
+                diff: i,
+                deleted: (data[i].deleted == '1' ? ` deleted` : ''),
+                retracted: (data[i].deleted == '1' ? ` removed` : ''),
+                revision: (Number(data[i].edit)>0 ? ' edit'+Number(data[i].edit) : '')
                 //These must all be HTML safe.
             }
 
@@ -1170,14 +1069,16 @@ function mapThreadLoadingHTML(previewHTML) {
 }
 
 //Trust graph and Rating
-function getMembersWithRatingHTML(i, page, data, action, reverse) {
+function getMembersWithRatingHTML(i, page, data) {
     var directlink = "";
-    var field1 = `<td>` + directlink + userFromDataBasic(data, i + page + data.address, 8) + `</td>`;
-    var field2 = `<td>` + getMemberLink(data.address2, data.name2) + `</td>`;
+    var field1 = `<td>` + directlink + userFromDataBasic(data, i + page + data.address) + getAgeHTML((data.lastactive ? data.lastactive : data.pictime), true) + `</td>`;
+    //return field1;
+    /*var field2 = `<td>` + getMemberLink(data.address2, data.name2) + `</td>`;
     if (reverse) {
         return `<tr>` + field2 + `<td>` + action + `</td>` + field1 + `</tr>`;
-    }
-    return `<tr>` + field1 + `<td>` + action + `</td>` + field2 + `</tr>`;
+    }*/
+    //return `<tr>` + field1 + `<td>` + action + `</td>` + field2 + `</tr>`;
+    return `<tr>` + field1 + `</tr>`;
 }
 
 function getMemberLink(address, name) {
@@ -1394,7 +1295,7 @@ function getMessageHTML(data, count) {
     if (data.bitcoinaddress == pubkey && data.address != data.toaddress) {
         return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, data.bitcoinaddress)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     } else {
-        return "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.bitcoinaddress, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
+        return "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.bitcoinaddress, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }
 }
 
@@ -1561,6 +1462,12 @@ function showErrorMessage(status, page, theURL) {
     status = san(status);
     console.log(`Error:${status}`);
     var theElement = document.getElementById(page);
+    if(status==499){
+        //Google error status, probably caused by google bot being unable to 
+        //load content due to robot.txt restrictions. show the preview content text instead
+        theElement.innerHTML = document.getElementById('previewcontent').innerHTML;
+        return;
+    }
     if (theElement) {
         var obj = {
             //These must all be HTML safe.
@@ -1568,7 +1475,6 @@ function showErrorMessage(status, page, theURL) {
             url: ds(theURL)
         }
         theElement.innerHTML = templateReplace(errorTemplate, obj);
-        //theElement.innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
     }
     updateStatus(`Error:${status}` + ds(theURL));
     updateStatus(`Error:${status}`);

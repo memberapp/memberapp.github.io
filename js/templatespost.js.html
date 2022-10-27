@@ -256,7 +256,7 @@ var nestedPostTemplate= `
     <div class="subtext2">
         <a onclick="uncollapseComment('{txid}');" href="javascript:;">[+] </a>
         {user}
-        <span class='subtextbuttons2'>{age}</span>
+        <span class='subtextbuttons2'>{age}</span><span class='retracted'>{retracted}</span><span class='revision'>{revision}</span>
     </div>
     <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
     <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
@@ -288,7 +288,7 @@ var replyTemplate=`
         <div class="votelinks">{votebuttons}</div>
         <div class="commentdetails">
             <div class="comhead"> <a onclick="collapseComment('{txid}');" href="javascript:;">[-]</a>
-                {author}<span class="subtextbuttons2">{likes}{age}</span>{retracted}
+                {author}<span class="subtextbuttons2">{likes}{age}</span><span class='retracted'>{retracted}</span><span class='revision'>{revision}</span>
             </div>
             <div class="comment">
                 <div class="commentbody">

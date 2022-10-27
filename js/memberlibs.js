@@ -1790,8 +1790,6 @@ fbHTML.followers=`
         <thead>
             <tr>
                 <th data-vavilon="VV0007">Member</th>
-                <th></th>
-                <th data-vavilon="VV0007">Member</th>
             </tr>
         </thead>
         <tbody id="followerstable">
@@ -1807,8 +1805,6 @@ fbHTML.following=`
     <table class="table">
         <thead>
             <tr>
-                <th data-vavilon="VV0007">Member</th>
-                <th></th>
                 <th data-vavilon="VV0007">Member</th>
             </tr>
         </thead>
@@ -1826,8 +1822,6 @@ fbHTML.blockers=`
         <thead>
             <tr>
                 <th data-vavilon="VV0007">Member</th>
-                <th></th>
-                <th data-vavilon="VV0007">Member</th>
             </tr>
         </thead>
         <tbody id="blockerstable">
@@ -1843,8 +1837,6 @@ fbHTML.blocking=`
     <table class="table">
         <thead>
             <tr>
-                <th data-vavilon="VV0007">Member</th>
-                <th></th>
                 <th data-vavilon="VV0007">Member</th>
             </tr>
         </thead>
@@ -2676,7 +2668,7 @@ var nestedPostTemplate= `
     <div class="subtext2">
         <a onclick="uncollapseComment('{txid}');" href="javascript:;">[+] </a>
         {user}
-        <span class='subtextbuttons2'>{age}</span>
+        <span class='subtextbuttons2'>{age}</span><span class='retracted'>{retracted}</span><span class='revision'>{revision}</span>
     </div>
     <div id="scoresexpanded{txid}{diff}" class="scoreexpanded"></div>
     <div id="remembersexpanded{txid}{diff}" class="remembersexpanded"></div>
@@ -2708,7 +2700,7 @@ var replyTemplate=`
         <div class="votelinks">{votebuttons}</div>
         <div class="commentdetails">
             <div class="comhead"> <a onclick="collapseComment('{txid}');" href="javascript:;">[-]</a>
-                {author}<span class="subtextbuttons2">{likes}{age}</span>{retracted}
+                {author}<span class="subtextbuttons2">{likes}{age}</span><span class='retracted'>{retracted}</span><span class='revision'>{revision}</span>
             </div>
             <div class="comment">
                 <div class="commentbody">
@@ -4315,9 +4307,9 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length);
         //var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
-        if(!hasNavButtons){
-            navheader='';
-            navbuttons='';
+        if (!hasNavButtons) {
+            navheader = '';
+            navbuttons = '';
         }
 
         //Server bug will sometimes return duplicates if a post is liked twice for example,
@@ -4329,8 +4321,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
 
-        
-        if (!pubkey && order == 'hot' && !qaddress && Math.random()<adfrequency) {//Show member.cash explainer video
+
+        if (!pubkey && order == 'hot' && !qaddress && Math.random() < adfrequency) {//Show member.cash explainer video
             let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
             contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
         }
@@ -4437,7 +4429,9 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Server bug will sometimes return duplicates if a post is liked twice for example,
         // this is a workaround, better if fixed server side.
         data = removeDuplicates(data);
-        
+
+        data = manageRevisions(data);
+
         txid = setHighlightedPost(data, txid); //set the highlight posts - also use the number id for txid rather than hex if txid is hex
 
         data = await removeDuplicatesFromDifferentNetworks(data);
@@ -4449,24 +4443,27 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
         //setTopic(data[0].topic);
 
-        //Find who started the thread
-        var threadstarter = null;
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].txid == roottxid) {
-                threadstarter = data[i].address;
-            }
-        }
 
-        //Find the first reply by the thread starter
-        var earliestReply = "none";
-        var earliestReplyTXID = "none";
-        var earliestReplyTime = 9999999999;
-        for (var i = 0; i < data.length; i++) {
-            if (data[i].retxid == roottxid && data[i].address == threadstarter) {
-                if (data[i].firstseen < earliestReplyTime) {
-                    earliestReply = i;
-                    earliestReplyTime = data[i].firstseen;
-                    earliestReplyTXID = data[i].txid
+
+        //Find the first reply by the thread starter, but only for article style
+        let earliestReply = "none";
+        let earliestReplyTXID = "none";
+        if (pageName == 'article') {
+            let earliestReplyTime = 9999999999;    
+            //Find who started the thread
+            let threadstarter = null;
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].txid == roottxid) {
+                    threadstarter = data[i].address;
+                }
+            }
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].retxid == roottxid && data[i].address == threadstarter) {
+                    if (data[i].firstseen < earliestReplyTime) {
+                        earliestReply = i;
+                        earliestReplyTime = data[i].firstseen;
+                        earliestReplyTXID = data[i].txid
+                    }
                 }
             }
         }
@@ -4497,15 +4494,15 @@ function getAndPopulateThread(roottxid, txid, pageName) {
 
 
         //Threads have no navbuttons
-        displayItemListandNavButtonsHTML('',contents, "", pageName, data, "", 0, false);
+        displayItemListandNavButtonsHTML('', contents, "", pageName, data, "", 0, false);
 
         //Repeat the title for article mode
         //This doesn't seem essential, but was causing some problems when viewing thread directly after post, so put in a try/catch
-        try{
-            let articleheaderelement=document.querySelector('[id^="articleheader' + roottxid + '"]');
-            let postbodyroottxidelement=document.querySelector('[id^="postbody' + roottxid + '"]');
+        try {
+            let articleheaderelement = document.querySelector('[id^="articleheader' + roottxid + '"]');
+            let postbodyroottxidelement = document.querySelector('[id^="postbody' + roottxid + '"]');
             articleheaderelement.innerHTML = postbodyroottxidelement.innerHTML;
-        }catch(errortitle){
+        } catch (errortitle) {
             console.log("Article mode header set error");
             console.log(errortitle);
         }
@@ -4663,7 +4660,7 @@ function addDynamicHTMLElements(data) {
     if (data != null && data != undefined && data[0]) {
         //if (data.length > 0) {
         //let qt = (Math.round(data[0].msc * 100) / 100).toFixed(2);
-        updateStatus(`QT: ${data[0].msc-data[0].qtmsc}/${data[0].qtmsc}`);
+        updateStatus(`QT: ${data[0].msc - data[0].qtmsc}/${data[0].qtmsc}`);
         //document.getElementById("version").title = qt;
 
         if (data[0].chainheight) {
@@ -4731,7 +4728,7 @@ function showScoresExpanded(retxid, profileelement) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             var amount = Number(data[i].amount);
-            contents += getTipDetailsHTML(userFromDataBasic(data[i], san(retxid) + i, 16), amount, data[i].type);
+            contents += getTipDetailsHTML(userFromDataBasic(data[i], san(retxid) + i), amount, data[i].type);
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements();
@@ -4750,7 +4747,7 @@ function showRemembersExpanded(retxid, profileelement) {
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents += getRememberDetailsHTML(userFromDataBasic(data[i], san(retxid) + i, 16), data[i].message, data[i].topic, data[i].txid);
+            contents += getRememberDetailsHTML(userFromDataBasic(data[i], san(retxid) + i), data[i].message, data[i].topic, data[i].txid);
         }
         document.getElementById(profileelement).innerHTML = closeHTML + contents;
         addDynamicHTMLElements();
@@ -4849,11 +4846,11 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
     if (data.repost) {
         //repost
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
-        repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID, 8));
+        repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID));
         let member = MemberFromData(data, "rp", mainRatingID + "qr");
         //repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '', data.rplastactive, truncate, data.rpsysrating, data.rpsourcenetwork, data.rphivename, data.rphivelink, data.rpbitcoinaddress);
         repostHTML2 = getHTMLForPostHTML3(member, data, 'rp', page, starindex, '', truncate);
-        
+
         //if (repostHTML2) {
         //    repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         //}
@@ -4863,26 +4860,26 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 
         //this is a quick hack to filter out multiple edits
         //a genuine response to self is also removed. look at this when revisiting edited posts
-        if(data.address==data.opaddress){ 
-            return ''; 
+        if (data.address == data.opaddress) {
+            return '';
         }
 
         //post with message
         if (repostHTML2) {
             repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
         }
-        
+
         let member = MemberFromData(data, "", mainRatingID);
         retHTML = getHTMLForPostHTML3(member, data, '', page, starindex, repostHTML2, truncate);
-        
+
         //reply post, include original post
-        if(data.opaddress){
-            let opmember = MemberFromData(data, "op", mainRatingID+'op');
-            retHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex+'op', repostHTML2, truncate) +
-            `<div class="replyinmainfeed">` + retHTML + `</div>`;
+        if (data.opaddress) {
+            let opmember = MemberFromData(data, "op", mainRatingID + 'op');
+            retHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex + 'op', repostHTML2, truncate) +
+                `<div class="replyinmainfeed">` + retHTML + `</div>`;
         }
 
-        
+
 
     } else {
         //repost with no message
@@ -4901,8 +4898,8 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 function getHTMLForReply(data, depth, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
-    let member = MemberFromData(data,'',mainRatingID);
-    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted);
+    let member = MemberFromData(data, '', mainRatingID);
+    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -4928,20 +4925,20 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
 
-    var successFunction = 
-    function (membertxid) { 
-        replySuccessFunction(page, txid);
-        if (isBitCloutUser()) {
-            sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-            //sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
-        }
-    };
-    
+    var successFunction =
+        function (membertxid) {
+            replySuccessFunction(page, txid);
+            if (isBitCloutUser()) {
+                sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+                //sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+            }
+        };
+
     if (checkForNativeUserAndHasBalance()) {
         sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
         successFunction = null;
     }
-    
+
     return true;
 }
 
@@ -5162,7 +5159,7 @@ async function removeDuplicatesFromDifferentNetworks(data) {
 
         //duplicates with just link
         let matches = data[i].message.match(/^https\:\/\/member\.cash\/p\/([0-9a-f]{10})+$/, '$2');
-        if(matches){
+        if (matches) {
             data[i].permalinkstub = matches[1];
         }
 
@@ -5172,16 +5169,16 @@ async function removeDuplicatesFromDifferentNetworks(data) {
     for (var i = 0; i < data.length; i++) {
         for (var j = 0; j < data.length; j++) {
             //if the message is the same, and the author is the same, combine as a single post
-            if (i != j && data[i] && data[i].network == 3 && data[j].network != 3 && 
-                ((data[i].contentauthorhash == data[j].contentauthorhash) 
-                || (data[j].permalinkstub && (data[j].permalinkstub == data[i].hivelink.substr(0,10) ) ))) {
+            if (i != j && data[i] && data[i].network == 3 && data[j].network != 3 &&
+                ((data[i].contentauthorhash == data[j].contentauthorhash)
+                    || (data[j].permalinkstub && (data[j].permalinkstub == data[i].hivelink.substr(0, 10))))) {
                 //datai is on membercoin network(3) and dataj is an identical post and not on membercoin network so . . .
                 //change all references to dataj to datai
                 for (var k = 0; k < data.length; k++) {
                     if (data[k].retxid == data[j].txid) {
                         data[k].retxid = data[i].txid;
-                        if(data[j].highlighted){//if tx is highlighted, highlight duplicate tx.
-                            data[k].highlighted=true;
+                        if (data[j].highlighted) {//if tx is highlighted, highlight duplicate tx.
+                            data[k].highlighted = true;
                         }
                     }
                 }
@@ -5207,16 +5204,18 @@ async function digestMessage(message) {
     return hashHex;
 }
 
-function setHighlightedPost(data,highlightedtxid) {
+function setHighlightedPost(data, highlightedtxid) {
     for (var i = 0; i < data.length; i++) {
-        data[i].txid=data[i].txid+""; //ensure it is a string.
+        data[i].txid = data[i].txid + ""; //ensure it is a string.
         if (data[i].txid == highlightedtxid || data[i].hivelink.startsWith(highlightedtxid)) {
-            data[i].highlighted=true;
-            return data[i].txid+"";
+            data[i].highlighted = true;
+            return data[i].txid + "";
         }
     }
     return highlightedtxid;
 }
+
+
 
 function removeDuplicates(data) {
     var replies = [];
@@ -5230,6 +5229,40 @@ function removeDuplicates(data) {
     }
     return data;
 }
+
+function manageRevisions(data) {
+    /*var replies = [];
+    for (var i = 0; i < data.length; i++) {
+        if (replies[data[i].txid] == null) {
+            replies[data[i].txid] = 1;
+        } else {
+            data.splice(i, 1);
+            i--;
+        }
+    }*/
+    
+    //iterate through all data.
+    for (var i = 0; i < data.length; i++) {
+        if (data[i].edit<0) {//where edit < 1, 
+            for (var j = 0; j < data.length; j++) {
+                if (data[j].edit==data[i].edit*-1 && data[j].retxid==data[i].txid) {//find the child with with revision edit*-1
+                    let temp = data[i].message;//switch the content, date
+                    let temptime = data[i].firstseen;//switch the content, date 
+                    data[i].message=data[j].message;
+                    data[j].message=temp;
+                    data[i].firstseen=data[j].firstseen;
+                    data[j].firstseen=temptime;
+                    data[i].edit=data[j].edit;
+                    data[j].edit=0;                    
+                }
+            }
+        } 
+    }
+    //change edit to 'rev00' 
+    
+    return data;
+}
+
 
 function mergeRepliesToRepliesBySameAuthor(data, isPrivateMessage) {
 
@@ -5295,21 +5328,21 @@ function uncollapseComment(commentid) {
 }
 
 function uncollapseCommentRecursive(commentid) {
-    
-    let targetElement=document.getElementById('LI' + commentid);
+
+    let targetElement = document.getElementById('LI' + commentid);
     //let targetElement=document.querySelector(`[id^="LI"+${commentid}]`)
-    while(targetElement){
-        if(targetElement.id && targetElement.id.startsWith('LI')){
+    while (targetElement) {
+        if (targetElement.id && targetElement.id.startsWith('LI')) {
             targetElement.style.display = 'block';
-            let collapsedElement=document.getElementById('Collapsed' + targetElement.id);
+            let collapsedElement = document.getElementById('Collapsed' + targetElement.id);
             collapsedElement.style.display = 'none';
-            
+
             //Also move this element to the top
-            let parentNode=targetElement.parentNode;
-            parentNode.insertBefore(parentNode.removeChild(targetElement),parentNode.firstChild);
-            
+            let parentNode = targetElement.parentNode;
+            parentNode.insertBefore(parentNode.removeChild(targetElement), parentNode.firstChild);
+
         }
-        targetElement=targetElement.parentNode;
+        targetElement = targetElement.parentNode;
     }
 }//markdown editor
 var SimpleMDE = null;
@@ -5463,7 +5496,7 @@ function memorandumPreview() {
     document.getElementById('memorandumpreview').innerHTML =
         getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0,  '000', 1, 0,  0, '',  3, '000', false)
         + `<div id="articleheader000" class="articleheader"></div>`
-        + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false);
+        + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false, 0);
 
     //Repeat the title for article mode
     document.querySelector('[id^="articleheader000"]').innerHTML = document.querySelector('[id^="postbody000"]').innerHTML;
@@ -5766,6 +5799,8 @@ async function getDataMemberFinally(data) {
         publickey: "",
     };
 
+    obj.membrain = 1;
+
     if (data && data[0]) {
         obj.followers = Number(data[0].followers);
         obj.following = Number(data[0].following);
@@ -5781,8 +5816,8 @@ async function getDataMemberFinally(data) {
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
 
-        let theRatingRound = outOfFive(Number(data[0].sysrating));
-        obj.membrain = theRatingRound + "/5";
+        
+        if (data[0].sysrating) { obj.membrain = outOfFive(Number(data[0].sysrating)) + "/5"; }
 
         //document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
     }
@@ -5815,7 +5850,7 @@ async function getDataMemberFinally(data) {
     obj.profile = getSafeMessage(obj.profile, 'profile', false);
     if (data && data[0]) {
         //data[0].rname=data[0].name;
-        let member = MemberFromData(data[0],'','???mainratingid');
+        let member = MemberFromData(data[0], '', '???mainratingid');
         //obj.pinnedpostHTML = getHTMLForPostHTML(data[0].rtxid, data[0].raddress, data[0].name, data[0].rlikes, data[0].rdislikes, data[0].rtips, data[0].rfirstseen, data[0].rmessage, data[0].rroottxid, data[0].rtopic, data[0].rreplies, data[0].rgeohash, 'memberpage', '???mainratingid', data[0].likedtxid, data[0].likeordislike, data[0].rrepliesroot, data[0].rating, 0, data[0].rrepostcount, data[0].repostidtxid, data[0].pagingid, data[0].publickey, data[0].picurl, data[0].tokens, data[0].followers, data[0].following, data[0].blockers, data[0].blocking, data[0].profile, data[0].isfollowing, data[0].nametime, '', data[0].lastactive, false, data[0].sysrating, data[0].rsourcenetwork, data[0].hivename, data[0].hivelink, data[0].bitcoinaddress);
         obj.pinnedpostHTML = getHTMLForPostHTML3(member, data[0], 'r', 'memberpage', 0, '', false);
     }
@@ -5834,20 +5869,21 @@ async function getDataMemberFinally(data) {
         document.getElementById('memberratinggroup').style.display = "none";
     } else {
 
-        document.getElementById('memberratinggroup').style.display = "block";
-        document.getElementById('memberratingcomment').innerHTML = getRatingComment(data[0]);
-        document.getElementById('memberratingcommentinputbox' + data[0].bitcoinaddress).onchange = function () { starRating1.setRating(0); };
+        if (data[0]) {
+            document.getElementById('memberratinggroup').style.display = "block";
+            document.getElementById('memberratingcomment').innerHTML = getRatingComment(data[0]);
+            document.getElementById('memberratingcommentinputbox' + data[0].bitcoinaddress).onchange = function () { starRating1.setRating(0); };
 
-        var ratingScore = 0;
-        if (data.length > 0) {
-            ratingScore = Number(data[0].rating);
+            var ratingScore = 0;
+            if (data.length > 0) {
+                ratingScore = Number(data[0].rating);
+            }
+            document.getElementById('memberrating').innerHTML = getMemberRatingHTML(data[0].bitcoinaddress, ratingScore, data[0].pagingid);
+
+            var theElement = document.getElementById(`memberrating` + data[0].bitcoinaddress);
+            var starRating1 = addSingleStarsRating(theElement);
+            setPageTitleRaw("@" + data[0].pagingid);
         }
-        document.getElementById('memberrating').innerHTML = getMemberRatingHTML(data[0].bitcoinaddress, ratingScore, data[0].pagingid);
-
-        var theElement = document.getElementById(`memberrating` + data[0].bitcoinaddress);
-        var starRating1 = addSingleStarsRating(theElement);
-        setPageTitleRaw("@" + data[0].pagingid);
-
     }
 
     addDynamicHTMLElements();
@@ -5894,6 +5930,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         fileuploadurl: dropdowns.imageuploadserver + "uploadfile"
     };
 
+    obj.membrain = 1;
+    
     if (data && data[0]) {
         obj.addressnumber = san(data[0].address);
         obj.followers = Number(data[0].followers);
@@ -5911,8 +5949,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.rating = Number(data[0].rating);
 
 
-        let theRatingRound = outOfFive(Number(data[0].sysrating));
-        obj.membrain = theRatingRound + "/5";
+        
+        if (data[0].sysrating) { obj.membrain = outOfFive(Number(data[0].sysrating)) + "/5"; }
 
         //document.title = "@" + data[0].pagingid + " (" + data[0].name + ") at " + siteTitle;
     }
@@ -5938,8 +5976,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.bcaddress = bcaddress;
     }
     obj.version = version;
-    obj.dust=nativeCoin.dust;
-    obj.maxprofilelength=maxprofilelength;
+    obj.dust = nativeCoin.dust;
+    obj.maxprofilelength = maxprofilelength;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -6104,7 +6142,7 @@ function updateSettingsDropdown(settingsName) {
             translatePage();
         }
     }
-    if (settingsName == "txbroadcastserver"){
+    if (settingsName == "txbroadcastserver") {
         tq.setbroadcastServer(dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost");
     }
 
@@ -6129,7 +6167,7 @@ function updateSettingsNumber(settingsName) {
         numbers[settingsName] = 0;
     }
     localStorageSet(localStorageSafe, settingsName, numbers[settingsName]);
-    if(settingsName!='usdrate'){
+    if (settingsName != 'usdrate') {
         updateStatus(getSafeTranslation('updated', "Updated.") + " " + numbers[settingsName]);
     }
 }
@@ -6179,7 +6217,7 @@ function getAndPopulateFB(page, qaddress) {
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getMembersWithRatingHTML(i, page, data[i], '', false);
+            contents = contents + getMembersWithRatingHTML(i, page, data[i]);
         }
 
         document.getElementById(page + 'table').innerHTML = contents;
@@ -9361,7 +9399,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             return notificationItemHTML(
                 "repost",
                 `img/icons/notification/repost.png`,
-                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'rememberedyour', 'remembered your') + postlinkHTML(data.likeretxid, "post"),
+                userFromData(data, mainRatingID) + getSpanHTML('plaintext', 'rememberedyour', 'remembered your') + postlinkHTML(data.rhivelink, "post"),
                 timeSince(Number(data.time), true),
                 referencedPostHTML,
                 data.txid, highlighted, 'Remember'
@@ -9420,28 +9458,6 @@ function userFromDataBasic(data, mainRatingID) {
 
 function userFromData(data, mainRatingID) {
     return MemberFromData(data, 'origin', mainRatingID).userHTML(true);
-    //data.origin should be data.originaddress
-    //data.raterrating should be data.originrating
-    /*return (new Member(
-        data.origin, 
-        data.originname, 
-        mainRatingID, 
-        data.raterrating, 
-        data.originpagingid, 
-        data.originpublickey, 
-        data.originpicurl, 
-        data.origintokens, 
-        data.originfollowers, 
-        data.originfollowing, 
-        data.originblockers, 
-        data.originblocking, 
-        data.originprofile, 
-        data.originisfollowing, 
-        data.originnametime, 
-        data.originlastactive, 
-        data.originsysrating, 
-        data.originhivename, 
-        data.originbitcoinaddress)).userHTML(true);*/
 }
 //Members
 function MemberFromData(data, stub, ratingID) {
@@ -9563,8 +9579,9 @@ Member.prototype.userHTML = function (includeProfile) {
     let directlink = "";
 
     let systemScoreClass = '';
-    if (!this.ratingRawScore) {
-        this.ratingRawScore = this.sysrating;
+    let useScore=this.ratingRawScore
+    if (!useScore) { //If the user hasn't rated the user, use a system score
+        useScore = this.sysrating;
         systemScoreClass = 'systemscore';
     }
 
@@ -9576,7 +9593,7 @@ Member.prototype.userHTML = function (includeProfile) {
         pagingidattrib: ds(this.pagingid),
         pagingid: ds(this.pagingid),
         flair: flair,
-        rating: Number(this.ratingRawScore),
+        rating: Number(useScore),
         followbutton: followButton,
         following: Number(this.following),
         followers: Number(this.followers),
@@ -9595,90 +9612,6 @@ Member.prototype.userHTML = function (includeProfile) {
     }
     return templateReplace(userCompactTemplate, obj);
 };
-
-//Get html for a user, given their address and name
-/*function userHTML(address, name, ratingID, ratingRawScore, ratingStarSize, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, includeProfile, lastactive, sysrating, hivename, bitcoinaddress) {
-    if (!address) {
-        return "error:no address for user";
-    }
-    if (name == "" || name == null) {
-        name = address.substring(0, 10);
-    }
-
-    var userclass = "hnuser";
-    var profilemeta = "profile-meta";
-    var curTime = new Date().getTime() / 1000;
-
-    if (!nametime || curTime - nametime < 60 * 60 * 24 * 7 * 2) {
-        //if the user has changed name in the past two weeks
-        userclass = "hnuser newuser";
-        profilemeta = "profile-meta newuser";
-    }
-
-    var memberpic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(address) + `"></svg>`;
-    if (picurl) {
-        var picurlfull = getPicURL(picurl, profilepicbase, address, hivename);
-        memberpic = `<img class="memberpicturesmall" src='` + picurlfull + `'/>`;
-    }
-
-    var linkStart = `<a href="#member?qaddress=` + san(address) + `" onclick="nlc();" class="` + userclass + `">`;
-    var linkEnd = `</a> `;
-    var flair = " ";
-    if (tokens > 0) {
-        flair = ` <span data-vavilon_title="TopIndex" class="flair" title="TopIndex">` + ordinal_suffix_of(Number(tokens)) + ` </span> `;
-    }
-    var followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('` + sane(bitcoinaddress) + `','` + sane(publickey) + `'); this.style.display='none';">follow</a>`;
-    if (isfollowing) {
-        followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('` + sane(bitcoinaddress) + `','` + sane(publickey) + `'); this.style.display='none';">unfollow</a>`;
-    }
-
-    if (ratingID == undefined) {
-        ratingID = 'test';
-    }
-
-    var onlineStatus = "";
-    //var lastonlineseconds=curTime - lastactive;
-    onlineStatus = timeSince(lastactive, true);
-
-    var directlink = "";
-
-    var systemScoreClass = '';
-    if (!ratingRawScore) {
-        ratingRawScore = sysrating;
-        systemScoreClass = 'systemscore';
-    }
-
-    var obj = {
-        //These must all be HTML safe.
-        address: san(address),
-        profilepicsmall: memberpic,
-        handle: ds(name),
-        pagingidattrib: ds(pagingid),
-        pagingid: ds(pagingid),
-        flair: flair,
-        rating: Number(ratingRawScore),
-        followbutton: followButton,
-        following: Number(following),
-        followers: Number(followers),
-        profile: getSafeMessage(profile, 'profilecard', false),
-        diff: ratingID,
-        onlinestatus: onlineStatus,
-        systemscoreclass: systemScoreClass,
-        directlink: directlink,
-        bitcoinaddress: sane(bitcoinaddress)
-    }
-
-    obj.profilecard = "";
-    if (includeProfile) {
-        obj.authorsidebar = "";
-        obj.profilecard = templateReplace(userProfileCompactTemplate, obj);
-    }
-    return templateReplace(userCompactTemplate, obj);
-
-
-}*/
-
-
 
 //Posts and Replies
 function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxid) {
@@ -10087,7 +10020,7 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
 }
 
 
-function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted) {
+function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted, edit) {
     txid = txid + ""; //ensure txid is a string. Sometimes it is returned as a number.
 
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
@@ -10157,7 +10090,8 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID),
         diff: differentiator,
         deleted: (deleted == '1' ? ` deleted` : ''),
-        retracted: (deleted == '1' ? ` <span class='retracted'>removed</span>` : '')
+        retracted: (deleted == '1' ? ` removed` : ''),
+        revision: (Number(edit)>0 ? ' edit'+Number(edit) : '')
     };
 
     return templateReplace(replyTemplate, obj);
@@ -10172,7 +10106,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
             if (data[i].rating) {
                 ratingused = data[i].rating;
             }
-            var isMuted = (data[i].blockstxid != null || data[i].moderated != null || ratingused < maxScoreToCollapseComment);
+            var isMuted = (data[i].edit > 0 || data[i].blockstxid != null || data[i].moderated != null || ratingused < maxScoreToCollapseComment);
 
             var obj = {
                 unmuteddisplay: (isMuted ? `none` : `block`),
@@ -10181,9 +10115,12 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
                 hightlightedclass: (data[i].highlighted ? `highlightli` : ``),
                 replyHTML: getHTMLForReply(data[i], depth, pageName, i),
                 nestedPostHTML: getNestedPostHTML(data, data[i].txid, depth + 1, pageName, "dontmatch"),
-                user: userFromDataBasic(data[i], data[i].ratingID, 0),
+                user: userFromDataBasic(data[i], data[i].ratingID),
                 age: getAgeHTML(data[i].firstseen),
-                diff: i
+                diff: i,
+                deleted: (data[i].deleted == '1' ? ` deleted` : ''),
+                retracted: (data[i].deleted == '1' ? ` removed` : ''),
+                revision: (Number(data[i].edit)>0 ? ' edit'+Number(data[i].edit) : '')
                 //These must all be HTML safe.
             }
 
@@ -10568,14 +10505,16 @@ function mapThreadLoadingHTML(previewHTML) {
 }
 
 //Trust graph and Rating
-function getMembersWithRatingHTML(i, page, data, action, reverse) {
+function getMembersWithRatingHTML(i, page, data) {
     var directlink = "";
-    var field1 = `<td>` + directlink + userFromDataBasic(data, i + page + data.address, 8) + `</td>`;
-    var field2 = `<td>` + getMemberLink(data.address2, data.name2) + `</td>`;
+    var field1 = `<td>` + directlink + userFromDataBasic(data, i + page + data.address) + getAgeHTML((data.lastactive ? data.lastactive : data.pictime), true) + `</td>`;
+    //return field1;
+    /*var field2 = `<td>` + getMemberLink(data.address2, data.name2) + `</td>`;
     if (reverse) {
         return `<tr>` + field2 + `<td>` + action + `</td>` + field1 + `</tr>`;
-    }
-    return `<tr>` + field1 + `<td>` + action + `</td>` + field2 + `</tr>`;
+    }*/
+    //return `<tr>` + field1 + `<td>` + action + `</td>` + field2 + `</tr>`;
+    return `<tr>` + field1 + `</tr>`;
 }
 
 function getMemberLink(address, name) {
@@ -10792,7 +10731,7 @@ function getMessageHTML(data, count) {
     if (data.bitcoinaddress == pubkey && data.address != data.toaddress) {
         return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, data.bitcoinaddress)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     } else {
-        return "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address, 16) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.bitcoinaddress, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
+        return "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.bitcoinaddress, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }
 }
 
@@ -10959,6 +10898,12 @@ function showErrorMessage(status, page, theURL) {
     status = san(status);
     console.log(`Error:${status}`);
     var theElement = document.getElementById(page);
+    if(status==499){
+        //Google error status, probably caused by google bot being unable to 
+        //load content due to robot.txt restrictions. show the preview content text instead
+        theElement.innerHTML = document.getElementById('previewcontent').innerHTML;
+        return;
+    }
     if (theElement) {
         var obj = {
             //These must all be HTML safe.
@@ -10966,7 +10911,6 @@ function showErrorMessage(status, page, theURL) {
             url: ds(theURL)
         }
         theElement.innerHTML = templateReplace(errorTemplate, obj);
-        //theElement.innerHTML = `<p><span class='connectionerror'>Oops. This request failed.<br/>There may be a problem with your internet connection, or the server may be having problems.<br/>The error code is ${status}<br/>The resource was ` + ds(theURL) + `</span></p>`;
     }
     updateStatus(`Error:${status}` + ds(theURL));
     updateStatus(`Error:${status}`);
@@ -11043,7 +10987,7 @@ async function userSearchChanged(searchbox, targetelement) {
         //var contents = `<label for="usersearchresults">` + getSafeTranslation('results', 'Results') + `</label>`;
         var contents = '';
         for (var i = 0; i < data.length; i++) {
-            contents = contents + getDivClassHTML('usersearchresult', userFromDataBasic(data[i], i + searchbox + data[i].address, 16));
+            contents = contents + getDivClassHTML('usersearchresult', userFromDataBasic(data[i], i + searchbox + data[i].address));
         }
         document.getElementById(targetelement).innerHTML = contents;
         addDynamicHTMLElements(data);
@@ -11299,5 +11243,5 @@ function updateBalance(dynamicChainHeight, showLowFunds=false) {
 
 
 
-var version = '8.6.5'; 
+var version = '8.6.6'; 
 if (init) { init(); } 

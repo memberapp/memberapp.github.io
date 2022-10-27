@@ -1,5 +1,6 @@
 var pathpermalinks = 'https://member.cash/';
-var profilepicbase = '../../notsync/serverdata/profilepics/';
+//var profilepicbase = '../../notsync/serverdata/profilepics/';
+var profilepicbase = 'https://member.cash/img/profilepics/';
 
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",
