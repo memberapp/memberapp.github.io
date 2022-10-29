@@ -1017,8 +1017,8 @@ function manageRevisions(data) {
                     data[j].message=temp;
                     data[i].firstseen=data[j].firstseen;
                     data[j].firstseen=temptime;
-                    data[i].edit=data[j].edit;
-                    data[j].edit=0;                    
+                    //data[i].edit=data[j].edit;
+                    //data[j].edit=0;                    
                 }
             }
         } 
