@@ -10,7 +10,7 @@ You can try it online here - https://member.cash
 ## Networks
 
 | Network           | Read  | Write | Notes |
-| ----------------  |:------| -----:||
+| ----------------  |:-----:| :----:|------:|
 | 0 - Bitcoin Cash  | yes   | no    | Memo network|
 | 1 - Bitclout      | yes   | yes   ||
 | 2 - Hive          | soon  | no    | Importing . . available to read soon|
