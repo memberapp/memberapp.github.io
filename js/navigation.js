@@ -441,7 +441,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
 function showTopic(start, limit, topicname, type) {
     setTopic(topicname);
     if (!type) type = "new";
-    getAndPopulateNew(type, 'both', topicname, 'everyone', start, limit, 'posts', '', true);
+    getAndPopulateNew(type, 'posts', topicname, 'everyone', start, limit, 'posts', '', true);
 }
 
 function showTopicList() {

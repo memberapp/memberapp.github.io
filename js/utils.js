@@ -312,14 +312,17 @@ function satsToUSD(sats) {
 }
 
 function satsToUSDString(sats) {
-  return usdString(satsToUSD(sats), true);
+  return usdString(satsToUSD(sats), false);
 }
 
-function usdString(total, includeSymbol) {
+function usdString(total, truncate=false) {
   var usd = Number(total / 10000).toFixed(2);
   if (usd < 1) {
     return (usd * 100).toFixed(0) + "¢";
   } else {
+    if(truncate){
+      return "$" + parseInt(usd);
+    }
     return "$" + usd;
   }
 }
@@ -681,4 +684,24 @@ function installApp() {
     }
     deferredPrompt = null;
   });
+}
+
+function showBitcloutLinkText() {
+  let legacyaddress=document.getElementById('linkbitcloutaccount').value.trim();
+
+  if (legacyaddress.startsWith("member:") || legacyaddress.startsWith("bitcoincash:")) {
+    legacyaddress = membercoinToLegacy(legacyaddress);
+  }else if (legacyaddress.startsWith("BC1")) {
+    legacyaddress = bitcloutToLegacy(legacyaddress);
+  }
+  
+  window.bitcoinjs.address.toOutputScript(legacyaddress);//this will throw error if address is not valid
+  let message=`membercashlink:${legacyaddress}:${pubkeyhex}`;
+
+  //let bcaddress=document.getElementById('linkbitcloutaccount').value.trim();
+  document.getElementById('bitcloutlinktext').style.display='block';
+  let keyPair = new window.bitcoinjs.ECPair.fromWIF(privkey);
+  var privateKey = keyPair.privateKey;
+  var signature = window.bitcoinmessage.sign(message, privateKey, keyPair.compressed, "member.cash link request", { extraEntropy: eccryptoJs.randomBytes(32) });
+  document.getElementById('bitcloutlinktextarea').value=message+':'+signature.toString('base64');
 }

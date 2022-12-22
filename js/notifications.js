@@ -378,10 +378,10 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             break;
 
         case "like":
-            //if (data.llikedtxid == null) {
+            if (data.likeretxid == null) {
                 //Server returns empty likes sometimes, probably if a like is superceeded by another like
-            //    return "";
-            //}
+                return "";
+            }
             var postHTML = "";
             var messageType = postlinkHTML(data.likeretxid, "remember");
             if (data.lmessage) {

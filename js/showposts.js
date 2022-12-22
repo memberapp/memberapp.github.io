@@ -59,12 +59,19 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             setPageTitleRaw("@" + data[0].pagingid);
         }
 
-        let end = start;
-        if (order == 'new' && data.length && data[0]) {
-            end = data[data.length - 1].firstseen;
-        } else {
-            end = start + limit;
-        }
+        let end = start + limit;
+        if (data.length && data[0]) {
+            if (order == 'new' || order == 'old') {
+                end = data[data.length - 1].firstseen;
+            }else if (order == 'hot') {
+                end = data[data.length - 1].score2;
+            }else if (order == 'topd') {
+                end = data[data.length - 1].scoretop;
+            }else if (order == 'topa') {
+                end = data[data.length - 1].score;
+            }
+        
+        } 
 
         //var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
         var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length);
@@ -214,7 +221,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         let earliestReply = "none";
         let earliestReplyTXID = "none";
         if (pageName == 'article') {
-            let earliestReplyTime = 9999999999;    
+            let earliestReplyTime = 9999999999;
             //Find who started the thread
             let threadstarter = null;
             for (var i = 0; i < data.length; i++) {
@@ -694,8 +701,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
         function (membertxid) {
             replySuccessFunction(page, txid);
             if (isBitCloutUser()) {
-                sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-                //sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+                //sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+                sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
             }
         };
 
@@ -811,7 +818,7 @@ function likePost(txid, origtxid, tipAddress, amountSats) {
     increaseGUILikes(txid);
     if (amountSats >= nativeCoin.dust) {
         let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(amountSats);
-        document.getElementById('tipscount' + txid).innerHTML = usdString(newAmount, false);
+        document.getElementById('tipscount' + txid).innerHTML = usdString(newAmount, true);
         document.getElementById('tipscount' + txid).dataset.amount = newAmount;
     }
 
@@ -1005,26 +1012,26 @@ function manageRevisions(data) {
             i--;
         }
     }*/
-    
+
     //iterate through all data.
     for (var i = 0; i < data.length; i++) {
-        if (data[i].edit<0) {//where edit < 1, 
+        if (data[i].edit < 0) {//where edit < 1, 
             for (var j = 0; j < data.length; j++) {
-                if (data[j].edit==data[i].edit*-1 && data[j].retxid==data[i].txid) {//find the child with with revision edit*-1
+                if (data[j].edit == data[i].edit * -1 && data[j].retxid == data[i].txid) {//find the child with with revision edit*-1
                     let temp = data[i].message;//switch the content, date
                     let temptime = data[i].firstseen;//switch the content, date 
-                    data[i].message=data[j].message;
-                    data[j].message=temp;
-                    data[i].firstseen=data[j].firstseen;
-                    data[j].firstseen=temptime;
+                    data[i].message = data[j].message;
+                    data[j].message = temp;
+                    data[i].firstseen = data[j].firstseen;
+                    data[j].firstseen = temptime;
                     //data[i].edit=data[j].edit;
                     //data[j].edit=0;                    
                 }
             }
-        } 
+        }
     }
     //change edit to 'rev00' 
-    
+
     return data;
 }
 

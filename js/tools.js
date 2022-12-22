@@ -196,25 +196,25 @@ function membercoinToLegacy(address) {
     return window.bs58check.encode(toencode);
 }
 
-function legacyToNativeCoin(pubkey){
-    if(nativeCoin.name=="Membercoin"){
+function legacyToNativeCoin(pubkey) {
+    if (nativeCoin.name == "Membercoin") {
         return legacyToMembercoin(pubkey);
-    }else if(nativeCoin.name=="Dogecoin"){
+    } else if (nativeCoin.name == "Dogecoin") {
         return legacyToDogecoin(pubkey);
     }
 }
 
 function legacyToDogecoin(pubkey) {
-    let result=window.bs58check.decode(pubkey);
-    result[0]=0x1E; //Dogecoin
+    let result = window.bs58check.decode(pubkey);
+    result[0] = 0x1E; //Dogecoin
     let hash = Buffer.from(result);
     let toencode = new Buffer(hash, 'hex');
     return window.bs58check.encode(toencode);
 }
 
 function dogecoinToLegacy(pubkey) {
-    let result=window.bs58check.decode(pubkey);
-    result[0]=0x00; //Bitcoin
+    let result = window.bs58check.decode(pubkey);
+    result[0] = 0x00; //Bitcoin
     let hash = Buffer.from(result);
     let toencode = new Buffer(hash, 'hex');
     return window.bs58check.encode(toencode);
@@ -234,6 +234,13 @@ function legacyToMembercoin(pubkey) {
 function getLegacyToHash160(address) {
     let hash = Buffer.from(window.bs58check.decode(address)).slice(1);
     return hash.toString('hex');
+}
+
+function bitcloutToLegacy(bitcloutaddress) {
+    var preslice = window.bs58check.decode(bitcloutaddress);
+    var bcpublicKey = preslice.slice(3);
+    var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(bcpublicKey));
+    return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
 }
 
 function setBalanceWithInterest() {
@@ -261,15 +268,15 @@ setInterval(setBalanceWithInterest, 500);
 
 
 //utxopool will call this after utxos updated
-function updateChainHeight(chainHeight, chainHeightTime){
-    updateBalance(null,true);
+function updateChainHeight(chainHeight, chainHeightTime) {
+    updateBalance(null, true);
 }
 
-var showwarning=true;
-function updateBalance(dynamicChainHeight, showLowFunds=false) {
+var showwarning = true;
+function updateBalance(dynamicChainHeight, showLowFunds = false) {
 
-    if(!dynamicChainHeight){
-        dynamicChainHeight=tq.chainheighttime;
+    if (!dynamicChainHeight) {
+        dynamicChainHeight = tq.chainheighttime;
     }
     var total = tq.getBalance(dynamicChainHeight);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);

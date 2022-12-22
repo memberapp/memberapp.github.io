@@ -1950,10 +1950,10 @@ pages.member = `
                     <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
                         class="separatorwide"></span>
                 </span>
-                <span class="dogehairprofilelink">
+                <!--<span class="dogehairprofilelink">
                     <a href="https://doge.hair/#member?qaddress={address}" id="dogehairprofilelink">doge.hair</a><span
                         class="separatorwide"></span>
-                </span>
+                </span>-->
                 <span class="membermemoprofilelink">
                     <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
                         id="membermemoprofilelink">Memo</a><span class="separatorwide"></span>
@@ -2102,6 +2102,24 @@ pages.settings = `
             <span class="installappbutton"><a data-vavilon="installapp" class="memberlinkbutton" id="installbutton"
                     href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
         </div>
+        <div>
+            <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout Account</span> 
+            <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
+            <div class="formgroup">
+                <input id="linkbitcloutaccount" placeholder="BC...."
+                    onchange="document.getElementById('linkbitcloutaccountbutton').disabled=false;"
+                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                <button data-vavilon="link" id="linkbitcloutaccountbutton" type="button" onclick="showBitcloutLinkText();"
+                    data-vavilon="link" disabled="">link</button>
+            </div>
+            <div id="bitcloutlinktext" style="display:none;">
+                <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
+                <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
+            </div>
+        </div>
+        
+        
+
         <div>
             <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
             <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
@@ -2814,7 +2832,7 @@ var mapPostTemplate=`
         disabled>
     <div id="newpostgeocompleted"></div>
 </div>`;
-var lastidprovider = 'https://identity.bitclout.com';
+var lastidprovider = 'https://identity.deso.org/';
 function bitcloutlogin(idprovider) {
   lastidprovider = idprovider;
   insertBitcloutIdentityFrame(idprovider);
@@ -2825,9 +2843,22 @@ function bitcloutlogin(idprovider) {
   );
 }
 
-function insertBitcloutIdentityFrame(idprovider) {
+/*function insertBitcloutIdentityFrame(idprovider) {
   document.getElementById('bitcloutframe').innerHTML = `<iframe id="identity" frameborder="0" class="" src="${idprovider}/embed?v=2" style="height: 100vh; width: 100vw; display: none;"></iframe>`;
+}*/
+
+function insertBitcloutIdentityFrame(idprovider) {
+  document.getElementById('bitcloutframe').innerHTML = `<iframe
+  id="identity"
+  frameborder="0"
+  src="${idprovider}/embed"
+  style="height: 100vh; width: 100vw; display: none; position: fixed; 
+    z-index: 1000; left: 0; top: 0;"
+></iframe>`;
 }
+
+
+
 
 function showBitcloutIdentityFrame() {
   document.getElementById('bitcloutframe').style.display = 'block';
@@ -2856,9 +2887,9 @@ function handleInit(e) {
     //uniqueid = e.data.id;
 
     postMessage({
-      id: 'testpermissions',
+      id: e.data.id,
       service: 'identity',
-      method: 'info'
+      //method: 'info'
     });
 
     for (const e of pendingRequests) {
@@ -2882,7 +2913,7 @@ function getBitCloutLoginFromLocalStorage() {
     bitCloutIDProvider = bitCloutIDProvider.replace(/\"/g, '');
   }
   if (!bitCloutIDProvider) { //legacy
-    bitCloutIDProvider = 'https://identity.bitclout.com';
+    bitCloutIDProvider = 'https://identity.deso.org';
   }
 
   if (bitCloutUserData) {
@@ -2910,7 +2941,7 @@ function handleLoginBitclout(payload) {
     localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
     localStorageSet(localStorageSafe, "bitcloutuserdata", JSON.stringify(bitCloutUserData));
     localStorageSet(localStorageSafe, "bitcloutidprovider", bitCloutIDProvider);
-    trylogin(payload.publicKeyAdded);
+    //trylogin(payload.publicKeyAdded);
   }
 }
 
@@ -2936,16 +2967,23 @@ function postMessage(e) {
 
 // const childWindow = document.getElementById('identity').contentWindow;
 window.addEventListener("message", (message) => {
-  console.log("bitclout message: ");
-  console.log(message);
+
+  if (message.data.height){
+    //twitframe message, skip
+    return;
+  }
+  console.log("received message: ");
+  //console.log(message);
+  console.log(message.data);
+  
 
   const {
     data: { id: id, method: method, payload: payload },
   } = message;
 
-  console.log(id);
-  console.log(method);
-  console.log(payload);
+  //console.log(id);
+  //console.log(method);
+  //console.log(payload);
   //localStorage.setItem("identity", JSON.stringify(payload));
 
   if (method == "initialize") {
@@ -2959,23 +2997,33 @@ window.addEventListener("message", (message) => {
       showBitcloutIdentityFrame();
     }
     if (payload.browserSupported == false) {
-      alert("This browser does not support BitClout Identity login.");
+      alert("This browser does not support Identity login. Logging out.");
+      bitcloutlogout();
     }
-  } else if (method == "login") {
-    handleLoginBitclout(payload);
   } else if (payload && payload.signedTransactionHex) {
     console.log(payload.signedTransactionHex);
     submitSignedTransaction(payload.signedTransactionHex, id);
+  } else if (method == "login") {
+    handleLoginBitclout(payload);
   } else if (payload && payload.decryptedHexes) {
     for (var key in payload.decryptedHexes) {
       identityresponses.set(id, payload.decryptedHexes[key]);
     }
   } else if (payload && payload.approvalRequired) {
+    /*let errmessage="Your OS/Browser may not be compatible with Write Mode Identity Service - Identity returned error " + JSON.stringify(payload)+" Logging out.";
+    console.log(errmessage);
     if (!alertShown) {
-      alert("Your OS/Browser may not be compatible with Write Mode BitClout Identity Service - identity.bitclout.com returned error " + JSON.stringify(payload));
+      alert(errmessage);
       alertShown = true;
     }
-    identityresponses.set(id, "identity.bitclout.com returned error " + JSON.stringify(payload));
+    identityresponses.set(id, "Identity returned error " + JSON.stringify(payload));
+    bitcloutlogout();*/
+    
+    identityWindow = window.open(
+      lastidprovider + "/approve?tx="+idtrxpairs.get(message.data.id),
+      null,
+      "toolbar=no, width=800, height=1000, top=0, left=0"
+    );
   } else if(payload && payload.encryptedMessage) {
     identityresponses.set(id, payload.encryptedMessage);
   } else {
@@ -3033,6 +3081,7 @@ var bitCloutIDProvider = null;
 
 let identityresponses = new Map();
 let serverresponses = new Map();
+let idtrxpairs = new Map();
 
 
 
@@ -3042,9 +3091,16 @@ async function putBitCloutDecryptedMessageInElement(message, elementid, publicKe
   document.getElementById(elementid).textContent = decryptedMessage;
 }
 
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+  });
+}
+
 async function bitcloutDecryptMessage(message, publicKeySender) {
 
-  var uniqueid = getRandomInt(1000000000);
+  var uniqueid = uuid();
 
   //Not sure if message is v1 or v2, try both and the wrong one should error out harmlessly 
 
@@ -3099,7 +3155,7 @@ async function waitForResponse(key) {
     await sleep(200);
   }
   //alert("Error: identity.bitclout.com Service did not return a value.");
-  throw Error("Error: identity.bitclout.com Service did not return a value.");
+  throw Error("Error: Identity Service did not return a value.");
 }
 
 async function waitForServerResponse(key) {
@@ -3110,7 +3166,7 @@ async function waitForServerResponse(key) {
     await sleep(200);
   }
   //alert("Error: identity.bitclout.com Service did not return a value.");
-  throw Error("Error: bitclout.com Server did not return a value.");
+  throw Error("Error: Identity Server did not return a value.");
 }
 
 async function sendBitCloutTransaction(payload, action, divForStatus) {
@@ -3162,7 +3218,7 @@ async function constructAndSendBitCloutTransaction(payload, action, divForStatus
   if (divForStatus) {
     var statusElement = document.getElementById(divForStatus);
   }
-  var uniqueid = getRandomInt(1000000000);
+  var uniqueid = uuid();
   var url = dropdowns.txbroadcastserver + "bitclout?bcaction=" + action;
   //var url = dropdowns.txbroadcastserver + "bitclout";
   if (statusElement) statusElement.value = "Constructing BitClout Tx";
@@ -3178,6 +3234,7 @@ async function constructAndSendBitCloutTransaction(payload, action, divForStatus
     if (bitCloutUserData) {
       //Use identity
       if (statusElement) statusElement.value = "Signing Tx With Identity";
+      idtrxpairs.set(uniqueid,data.TransactionHex);
       postMessage({
         id: uniqueid,
         service: 'identity',
@@ -3362,8 +3419,8 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
-  //replytext="https://member.cash/p/"+membertxid.substr(0,10);
-  replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
+  replytext="https://member.cash/p/"+membertxid.substr(0,10);
+  //replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
     
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
@@ -3463,7 +3520,7 @@ async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForSt
     encryptedMessage = preEncryptedMessage;
   } else if (bitCloutUserData) {
     //First encrypt the message with identity
-    let uniqueid = getRandomInt(1000000000);
+    let uniqueid = uuid();
     if (divForStatus) divForStatus.value = "Encrypting Message With Identity";
     postMessage({
       id: uniqueid,
@@ -3864,14 +3921,17 @@ function satsToUSD(sats) {
 }
 
 function satsToUSDString(sats) {
-  return usdString(satsToUSD(sats), true);
+  return usdString(satsToUSD(sats), false);
 }
 
-function usdString(total, includeSymbol) {
+function usdString(total, truncate=false) {
   var usd = Number(total / 10000).toFixed(2);
   if (usd < 1) {
     return (usd * 100).toFixed(0) + "¢";
   } else {
+    if(truncate){
+      return "$" + parseInt(usd);
+    }
     return "$" + usd;
   }
 }
@@ -4233,6 +4293,26 @@ function installApp() {
     }
     deferredPrompt = null;
   });
+}
+
+function showBitcloutLinkText() {
+  let legacyaddress=document.getElementById('linkbitcloutaccount').value.trim();
+
+  if (legacyaddress.startsWith("member:") || legacyaddress.startsWith("bitcoincash:")) {
+    legacyaddress = membercoinToLegacy(legacyaddress);
+  }else if (legacyaddress.startsWith("BC1")) {
+    legacyaddress = bitcloutToLegacy(legacyaddress);
+  }
+  
+  window.bitcoinjs.address.toOutputScript(legacyaddress);//this will throw error if address is not valid
+  let message=`membercashlink:${legacyaddress}:${pubkeyhex}`;
+
+  //let bcaddress=document.getElementById('linkbitcloutaccount').value.trim();
+  document.getElementById('bitcloutlinktext').style.display='block';
+  let keyPair = new window.bitcoinjs.ECPair.fromWIF(privkey);
+  var privateKey = keyPair.privateKey;
+  var signature = window.bitcoinmessage.sign(message, privateKey, keyPair.compressed, "member.cash link request", { extraEntropy: eccryptoJs.randomBytes(32) });
+  document.getElementById('bitcloutlinktextarea').value=message+':'+signature.toString('base64');
 }//Some refactoring is possible in these functions
 
 "use strict";
@@ -4294,12 +4374,19 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             setPageTitleRaw("@" + data[0].pagingid);
         }
 
-        let end = start;
-        if (order == 'new' && data.length && data[0]) {
-            end = data[data.length - 1].firstseen;
-        } else {
-            end = start + limit;
-        }
+        let end = start + limit;
+        if (data.length && data[0]) {
+            if (order == 'new' || order == 'old') {
+                end = data[data.length - 1].firstseen;
+            }else if (order == 'hot') {
+                end = data[data.length - 1].score2;
+            }else if (order == 'topd') {
+                end = data[data.length - 1].scoretop;
+            }else if (order == 'topa') {
+                end = data[data.length - 1].score;
+            }
+        
+        } 
 
         //var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
         var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length);
@@ -4449,7 +4536,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         let earliestReply = "none";
         let earliestReplyTXID = "none";
         if (pageName == 'article') {
-            let earliestReplyTime = 9999999999;    
+            let earliestReplyTime = 9999999999;
             //Find who started the thread
             let threadstarter = null;
             for (var i = 0; i < data.length; i++) {
@@ -4929,8 +5016,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
         function (membertxid) {
             replySuccessFunction(page, txid);
             if (isBitCloutUser()) {
-                sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-                //sendBitCloutQuotePost("https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+                //sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+                sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
             }
         };
 
@@ -5046,7 +5133,7 @@ function likePost(txid, origtxid, tipAddress, amountSats) {
     increaseGUILikes(txid);
     if (amountSats >= nativeCoin.dust) {
         let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(amountSats);
-        document.getElementById('tipscount' + txid).innerHTML = usdString(newAmount, false);
+        document.getElementById('tipscount' + txid).innerHTML = usdString(newAmount, true);
         document.getElementById('tipscount' + txid).dataset.amount = newAmount;
     }
 
@@ -5240,26 +5327,26 @@ function manageRevisions(data) {
             i--;
         }
     }*/
-    
+
     //iterate through all data.
     for (var i = 0; i < data.length; i++) {
-        if (data[i].edit<0) {//where edit < 1, 
+        if (data[i].edit < 0) {//where edit < 1, 
             for (var j = 0; j < data.length; j++) {
-                if (data[j].edit==data[i].edit*-1 && data[j].retxid==data[i].txid) {//find the child with with revision edit*-1
+                if (data[j].edit == data[i].edit * -1 && data[j].retxid == data[i].txid) {//find the child with with revision edit*-1
                     let temp = data[i].message;//switch the content, date
                     let temptime = data[i].firstseen;//switch the content, date 
-                    data[i].message=data[j].message;
-                    data[j].message=temp;
-                    data[i].firstseen=data[j].firstseen;
-                    data[j].firstseen=temptime;
+                    data[i].message = data[j].message;
+                    data[j].message = temp;
+                    data[i].firstseen = data[j].firstseen;
+                    data[j].firstseen = temptime;
                     //data[i].edit=data[j].edit;
                     //data[j].edit=0;                    
                 }
             }
-        } 
+        }
     }
     //change edit to 'rev00' 
-    
+
     return data;
 }
 
@@ -6677,7 +6764,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
 function showTopic(start, limit, topicname, type) {
     setTopic(topicname);
     if (!type) type = "new";
-    getAndPopulateNew(type, 'both', topicname, 'everyone', start, limit, 'posts', '', true);
+    getAndPopulateNew(type, 'posts', topicname, 'everyone', start, limit, 'posts', '', true);
 }
 
 function showTopicList() {
@@ -8679,7 +8766,7 @@ async function init() {
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
-    //getBitCloutLoginFromLocalStorage();
+    getBitCloutLoginFromLocalStorage();
 
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 
@@ -9375,10 +9462,10 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
             break;
 
         case "like":
-            //if (data.llikedtxid == null) {
+            if (data.likeretxid == null) {
                 //Server returns empty likes sometimes, probably if a like is superceeded by another like
-            //    return "";
-            //}
+                return "";
+            }
             var postHTML = "";
             var messageType = postlinkHTML(data.likeretxid, "remember");
             if (data.lmessage) {
@@ -9698,19 +9785,6 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     return templateReplace(replyAndTipsTemplate, obj);
 
 }
-/*
-function getScoresHTML(txid, likes, dislikes, tips, differentiator, repostcount) {
-    var obj = {
-        //These must all be HTML safe.
-        txid: san(txid),
-        diff: differentiator,
-        likesbalance: (Number(likes) - Number(dislikes)),
-        tips: Number(tips),
-        balancestring: usdString(Number(tips), false),
-        repostcount: Number(repostcount)
-    }
-    return templateReplace(scoresTemplate, obj);
-}*/
 
 function getTipsHTML(txid, tips, differentiator, display) {
     var obj = {
@@ -9953,6 +10027,9 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     } else if (sourcenetwork == 4) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img width='15' height='15' alt='doge.hair' src='img/networks/4.png'></a>`;
+    } else if (sourcenetwork == 5) {
+        sourceNetworkHTML = `nostr`;
+        sourceNetworkImage = `<img width='15' height='15' alt='nostr' src='img/networks/5.png'>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
@@ -9968,11 +10045,11 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         author: theAuthorHTML,
         authorsidebar: theAuthor2HTML,
         message: messageLinksHTML,
-        replies: Number(replies) < 0 ? 0 : Number(replies),
-        likesbalance: (Number(likes) - Number(dislikes)),
-        likes: Number(likes),
-        dislikes: Number(dislikes),
-        remembers: Number(repostcount),
+        replies: Number(replies) < 0 ? 0 : truncateNumber(Number(replies)),
+        likesbalance: truncateNumber((Number(likes) - Number(dislikes))),
+        likes: truncateNumber(Number(likes)),
+        dislikes: truncateNumber(Number(dislikes)),
+        remembers: truncateNumber(Number(repostcount)),
         tips: usdString(Number(tips), true),
         tipsinsatoshis: Number(tips),
         txid: san(txid),
@@ -10017,6 +10094,13 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     return templateReplace(postCompactTemplate, obj);
 
 
+}
+
+function truncateNumber(theNumber){
+    if(theNumber>999){
+        return parseInt(theNumber/100)/10+'k';
+    }
+    return theNumber;
 }
 
 
@@ -10274,7 +10358,7 @@ function getCloseButtonHTML(profileelement) {
 
 function getTipDetailsHTML(user, amount, type) {
     var theclass = "tipdetailscompact";
-    return `<div class="` + theclass + `">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + usdString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
+    return `<div class="` + theclass + `">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + usdString(amount, false) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
 }
 
 function getRememberDetailsHTML(user, message, topic, txid) {
@@ -11135,25 +11219,25 @@ function membercoinToLegacy(address) {
     return window.bs58check.encode(toencode);
 }
 
-function legacyToNativeCoin(pubkey){
-    if(nativeCoin.name=="Membercoin"){
+function legacyToNativeCoin(pubkey) {
+    if (nativeCoin.name == "Membercoin") {
         return legacyToMembercoin(pubkey);
-    }else if(nativeCoin.name=="Dogecoin"){
+    } else if (nativeCoin.name == "Dogecoin") {
         return legacyToDogecoin(pubkey);
     }
 }
 
 function legacyToDogecoin(pubkey) {
-    let result=window.bs58check.decode(pubkey);
-    result[0]=0x1E; //Dogecoin
+    let result = window.bs58check.decode(pubkey);
+    result[0] = 0x1E; //Dogecoin
     let hash = Buffer.from(result);
     let toencode = new Buffer(hash, 'hex');
     return window.bs58check.encode(toencode);
 }
 
 function dogecoinToLegacy(pubkey) {
-    let result=window.bs58check.decode(pubkey);
-    result[0]=0x00; //Bitcoin
+    let result = window.bs58check.decode(pubkey);
+    result[0] = 0x00; //Bitcoin
     let hash = Buffer.from(result);
     let toencode = new Buffer(hash, 'hex');
     return window.bs58check.encode(toencode);
@@ -11173,6 +11257,13 @@ function legacyToMembercoin(pubkey) {
 function getLegacyToHash160(address) {
     let hash = Buffer.from(window.bs58check.decode(address)).slice(1);
     return hash.toString('hex');
+}
+
+function bitcloutToLegacy(bitcloutaddress) {
+    var preslice = window.bs58check.decode(bitcloutaddress);
+    var bcpublicKey = preslice.slice(3);
+    var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(bcpublicKey));
+    return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
 }
 
 function setBalanceWithInterest() {
@@ -11200,15 +11291,15 @@ setInterval(setBalanceWithInterest, 500);
 
 
 //utxopool will call this after utxos updated
-function updateChainHeight(chainHeight, chainHeightTime){
-    updateBalance(null,true);
+function updateChainHeight(chainHeight, chainHeightTime) {
+    updateBalance(null, true);
 }
 
-var showwarning=true;
-function updateBalance(dynamicChainHeight, showLowFunds=false) {
+var showwarning = true;
+function updateBalance(dynamicChainHeight, showLowFunds = false) {
 
-    if(!dynamicChainHeight){
-        dynamicChainHeight=tq.chainheighttime;
+    if (!dynamicChainHeight) {
+        dynamicChainHeight = tq.chainheighttime;
     }
     var total = tq.getBalance(dynamicChainHeight);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);
@@ -11243,5 +11334,5 @@ function updateBalance(dynamicChainHeight, showLowFunds=false) {
 
 
 
-var version = '8.6.7'; 
+var version = '8.9.0'; 
 if (init) { init(); } 

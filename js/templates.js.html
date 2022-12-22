@@ -612,10 +612,10 @@ pages.member = `
                     <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
                         class="separatorwide"></span>
                 </span>
-                <span class="dogehairprofilelink">
+                <!--<span class="dogehairprofilelink">
                     <a href="https://doge.hair/#member?qaddress={address}" id="dogehairprofilelink">doge.hair</a><span
                         class="separatorwide"></span>
-                </span>
+                </span>-->
                 <span class="membermemoprofilelink">
                     <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
                         id="membermemoprofilelink">Memo</a><span class="separatorwide"></span>
@@ -764,6 +764,24 @@ pages.settings = `
             <span class="installappbutton"><a data-vavilon="installapp" class="memberlinkbutton" id="installbutton"
                     href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
         </div>
+        <div>
+            <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout Account</span> 
+            <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
+            <div class="formgroup">
+                <input id="linkbitcloutaccount" placeholder="BC...."
+                    onchange="document.getElementById('linkbitcloutaccountbutton').disabled=false;"
+                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                <button data-vavilon="link" id="linkbitcloutaccountbutton" type="button" onclick="showBitcloutLinkText();"
+                    data-vavilon="link" disabled="">link</button>
+            </div>
+            <div id="bitcloutlinktext" style="display:none;">
+                <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
+                <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
+            </div>
+        </div>
+        
+        
+
         <div>
             <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
             <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"

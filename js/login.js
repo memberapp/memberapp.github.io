@@ -108,7 +108,7 @@ async function init() {
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
     var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
 
-    //getBitCloutLoginFromLocalStorage();
+    getBitCloutLoginFromLocalStorage();
 
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 

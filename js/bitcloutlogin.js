@@ -1,5 +1,5 @@
 
-var lastidprovider = 'https://identity.bitclout.com';
+var lastidprovider = 'https://identity.deso.org/';
 function bitcloutlogin(idprovider) {
   lastidprovider = idprovider;
   insertBitcloutIdentityFrame(idprovider);
@@ -10,9 +10,22 @@ function bitcloutlogin(idprovider) {
   );
 }
 
-function insertBitcloutIdentityFrame(idprovider) {
+/*function insertBitcloutIdentityFrame(idprovider) {
   document.getElementById('bitcloutframe').innerHTML = `<iframe id="identity" frameborder="0" class="" src="${idprovider}/embed?v=2" style="height: 100vh; width: 100vw; display: none;"></iframe>`;
+}*/
+
+function insertBitcloutIdentityFrame(idprovider) {
+  document.getElementById('bitcloutframe').innerHTML = `<iframe
+  id="identity"
+  frameborder="0"
+  src="${idprovider}/embed"
+  style="height: 100vh; width: 100vw; display: none; position: fixed; 
+    z-index: 1000; left: 0; top: 0;"
+></iframe>`;
 }
+
+
+
 
 function showBitcloutIdentityFrame() {
   document.getElementById('bitcloutframe').style.display = 'block';
@@ -41,9 +54,9 @@ function handleInit(e) {
     //uniqueid = e.data.id;
 
     postMessage({
-      id: 'testpermissions',
+      id: e.data.id,
       service: 'identity',
-      method: 'info'
+      //method: 'info'
     });
 
     for (const e of pendingRequests) {
@@ -67,7 +80,7 @@ function getBitCloutLoginFromLocalStorage() {
     bitCloutIDProvider = bitCloutIDProvider.replace(/\"/g, '');
   }
   if (!bitCloutIDProvider) { //legacy
-    bitCloutIDProvider = 'https://identity.bitclout.com';
+    bitCloutIDProvider = 'https://identity.deso.org';
   }
 
   if (bitCloutUserData) {
@@ -95,7 +108,7 @@ function handleLoginBitclout(payload) {
     localStorageSet(localStorageSafe, "bitcloutuser", bitCloutUser);
     localStorageSet(localStorageSafe, "bitcloutuserdata", JSON.stringify(bitCloutUserData));
     localStorageSet(localStorageSafe, "bitcloutidprovider", bitCloutIDProvider);
-    trylogin(payload.publicKeyAdded);
+    //trylogin(payload.publicKeyAdded);
   }
 }
 
@@ -121,16 +134,23 @@ function postMessage(e) {
 
 // const childWindow = document.getElementById('identity').contentWindow;
 window.addEventListener("message", (message) => {
-  console.log("bitclout message: ");
-  console.log(message);
+
+  if (message.data.height){
+    //twitframe message, skip
+    return;
+  }
+  console.log("received message: ");
+  //console.log(message);
+  console.log(message.data);
+  
 
   const {
     data: { id: id, method: method, payload: payload },
   } = message;
 
-  console.log(id);
-  console.log(method);
-  console.log(payload);
+  //console.log(id);
+  //console.log(method);
+  //console.log(payload);
   //localStorage.setItem("identity", JSON.stringify(payload));
 
   if (method == "initialize") {
@@ -144,23 +164,33 @@ window.addEventListener("message", (message) => {
       showBitcloutIdentityFrame();
     }
     if (payload.browserSupported == false) {
-      alert("This browser does not support BitClout Identity login.");
+      alert("This browser does not support Identity login. Logging out.");
+      bitcloutlogout();
     }
-  } else if (method == "login") {
-    handleLoginBitclout(payload);
   } else if (payload && payload.signedTransactionHex) {
     console.log(payload.signedTransactionHex);
     submitSignedTransaction(payload.signedTransactionHex, id);
+  } else if (method == "login") {
+    handleLoginBitclout(payload);
   } else if (payload && payload.decryptedHexes) {
     for (var key in payload.decryptedHexes) {
       identityresponses.set(id, payload.decryptedHexes[key]);
     }
   } else if (payload && payload.approvalRequired) {
+    /*let errmessage="Your OS/Browser may not be compatible with Write Mode Identity Service - Identity returned error " + JSON.stringify(payload)+" Logging out.";
+    console.log(errmessage);
     if (!alertShown) {
-      alert("Your OS/Browser may not be compatible with Write Mode BitClout Identity Service - identity.bitclout.com returned error " + JSON.stringify(payload));
+      alert(errmessage);
       alertShown = true;
     }
-    identityresponses.set(id, "identity.bitclout.com returned error " + JSON.stringify(payload));
+    identityresponses.set(id, "Identity returned error " + JSON.stringify(payload));
+    bitcloutlogout();*/
+    
+    identityWindow = window.open(
+      lastidprovider + "/approve?tx="+idtrxpairs.get(message.data.id),
+      null,
+      "toolbar=no, width=800, height=1000, top=0, left=0"
+    );
   } else if(payload && payload.encryptedMessage) {
     identityresponses.set(id, payload.encryptedMessage);
   } else {
@@ -218,6 +248,7 @@ var bitCloutIDProvider = null;
 
 let identityresponses = new Map();
 let serverresponses = new Map();
+let idtrxpairs = new Map();
 
 
 
@@ -227,9 +258,16 @@ async function putBitCloutDecryptedMessageInElement(message, elementid, publicKe
   document.getElementById(elementid).textContent = decryptedMessage;
 }
 
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+  });
+}
+
 async function bitcloutDecryptMessage(message, publicKeySender) {
 
-  var uniqueid = getRandomInt(1000000000);
+  var uniqueid = uuid();
 
   //Not sure if message is v1 or v2, try both and the wrong one should error out harmlessly 
 
@@ -284,7 +322,7 @@ async function waitForResponse(key) {
     await sleep(200);
   }
   //alert("Error: identity.bitclout.com Service did not return a value.");
-  throw Error("Error: identity.bitclout.com Service did not return a value.");
+  throw Error("Error: Identity Service did not return a value.");
 }
 
 async function waitForServerResponse(key) {
@@ -295,7 +333,7 @@ async function waitForServerResponse(key) {
     await sleep(200);
   }
   //alert("Error: identity.bitclout.com Service did not return a value.");
-  throw Error("Error: bitclout.com Server did not return a value.");
+  throw Error("Error: Identity Server did not return a value.");
 }
 
 async function sendBitCloutTransaction(payload, action, divForStatus) {
@@ -347,7 +385,7 @@ async function constructAndSendBitCloutTransaction(payload, action, divForStatus
   if (divForStatus) {
     var statusElement = document.getElementById(divForStatus);
   }
-  var uniqueid = getRandomInt(1000000000);
+  var uniqueid = uuid();
   var url = dropdowns.txbroadcastserver + "bitclout?bcaction=" + action;
   //var url = dropdowns.txbroadcastserver + "bitclout";
   if (statusElement) statusElement.value = "Constructing BitClout Tx";
@@ -363,6 +401,7 @@ async function constructAndSendBitCloutTransaction(payload, action, divForStatus
     if (bitCloutUserData) {
       //Use identity
       if (statusElement) statusElement.value = "Signing Tx With Identity";
+      idtrxpairs.set(uniqueid,data.TransactionHex);
       postMessage({
         id: uniqueid,
         service: 'identity',
@@ -547,8 +586,8 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
-  //replytext="https://member.cash/p/"+membertxid.substr(0,10);
-  replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
+  replytext="https://member.cash/p/"+membertxid.substr(0,10);
+  //replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
     
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
@@ -648,7 +687,7 @@ async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForSt
     encryptedMessage = preEncryptedMessage;
   } else if (bitCloutUserData) {
     //First encrypt the message with identity
-    let uniqueid = getRandomInt(1000000000);
+    let uniqueid = uuid();
     if (divForStatus) divForStatus.value = "Encrypting Message With Identity";
     postMessage({
       id: uniqueid,

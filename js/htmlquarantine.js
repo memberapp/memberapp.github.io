@@ -262,19 +262,6 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     return templateReplace(replyAndTipsTemplate, obj);
 
 }
-/*
-function getScoresHTML(txid, likes, dislikes, tips, differentiator, repostcount) {
-    var obj = {
-        //These must all be HTML safe.
-        txid: san(txid),
-        diff: differentiator,
-        likesbalance: (Number(likes) - Number(dislikes)),
-        tips: Number(tips),
-        balancestring: usdString(Number(tips), false),
-        repostcount: Number(repostcount)
-    }
-    return templateReplace(scoresTemplate, obj);
-}*/
 
 function getTipsHTML(txid, tips, differentiator, display) {
     var obj = {
@@ -517,6 +504,9 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     } else if (sourcenetwork == 4) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img width='15' height='15' alt='doge.hair' src='img/networks/4.png'></a>`;
+    } else if (sourcenetwork == 5) {
+        sourceNetworkHTML = `nostr`;
+        sourceNetworkImage = `<img width='15' height='15' alt='nostr' src='img/networks/5.png'>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
@@ -532,11 +522,11 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         author: theAuthorHTML,
         authorsidebar: theAuthor2HTML,
         message: messageLinksHTML,
-        replies: Number(replies) < 0 ? 0 : Number(replies),
-        likesbalance: (Number(likes) - Number(dislikes)),
-        likes: Number(likes),
-        dislikes: Number(dislikes),
-        remembers: Number(repostcount),
+        replies: Number(replies) < 0 ? 0 : truncateNumber(Number(replies)),
+        likesbalance: truncateNumber((Number(likes) - Number(dislikes))),
+        likes: truncateNumber(Number(likes)),
+        dislikes: truncateNumber(Number(dislikes)),
+        remembers: truncateNumber(Number(repostcount)),
         tips: usdString(Number(tips), true),
         tipsinsatoshis: Number(tips),
         txid: san(txid),
@@ -581,6 +571,13 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     return templateReplace(postCompactTemplate, obj);
 
 
+}
+
+function truncateNumber(theNumber){
+    if(theNumber>999){
+        return parseInt(theNumber/100)/10+'k';
+    }
+    return theNumber;
 }
 
 
@@ -838,7 +835,7 @@ function getCloseButtonHTML(profileelement) {
 
 function getTipDetailsHTML(user, amount, type) {
     var theclass = "tipdetailscompact";
-    return `<div class="` + theclass + `">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + usdString(amount) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
+    return `<div class="` + theclass + `">` + user + (amount > 0 ? ` ` + getSafeTranslation('tipped', 'tipped') + ` ` + usdString(amount, false) : ``) + (Number(type) == -1 ? ` ` + getSafeTranslation('disliked', 'disliked') : ``) + `</div>`;
 }
 
 function getRememberDetailsHTML(user, message, topic, txid) {
