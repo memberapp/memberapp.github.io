@@ -16,7 +16,7 @@ You can try it online here - https://member.cash
 | 2 - Hive          | soon  | no    | Importing . . available to read soon|
 | 3 - Membercoin    | yes   | yes   ||
 | 4 - Doge          | no    | no    | [Defunct - see here](https://www.reddit.com/r/dogecoindev/comments/y4apo0/new_project_on_the_doge_chain_decentralized/iteckgy/)|
-| 5 - Nostr         | yes   | soon  ||
+| 5 - Nostr         | yes   | yes   |[Guide](https://member.cash/p/b31b9ebb3f)|
 | 6 - Farcaster     | soon  | ?     | Awaiting hubs release |
 | 7 - Lens          | ?     | ?     | Legibility problems |
 
