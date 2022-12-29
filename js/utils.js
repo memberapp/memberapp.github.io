@@ -686,6 +686,25 @@ function installApp() {
   });
 }
 
+function linkNostrAccount(useNOS2Xifavailable=true) {
+  let nostrpublickey='02'+nostrPubKeyHex;
+  let element=document.getElementById('linknostraccount');
+  if(element){
+    let nostrpublickey='02'+element.value.trim();
+  }
+
+  let legacyaddress=pubkeyhexToLegacy(nostrpublickey);
+  //note legacyaddress from Nostr account is internal identifier and should not be used for anything external.
+  //as mixing signature schemes may weaken security.
+  let fullmessage = getLinkMessage(legacyaddress);
+
+  sendNostrPost(fullmessage, '', '', "newpostmemorandumstatus", nostrLinkSuccessMessage, useNOS2Xifavailable);
+}
+
+function nostrLinkSuccessMessage(){
+  updateStatus('Nostr Link Request submitted');
+}
+
 function showBitcloutLinkText() {
   let legacyaddress=document.getElementById('linkbitcloutaccount').value.trim();
 
@@ -695,13 +714,32 @@ function showBitcloutLinkText() {
     legacyaddress = bitcloutToLegacy(legacyaddress);
   }
   
-  window.bitcoinjs.address.toOutputScript(legacyaddress);//this will throw error if address is not valid
-  let message=`membercashlink:${legacyaddress}:${pubkeyhex}`;
+  let fullmessage = getLinkMessage(legacyaddress);
 
   //let bcaddress=document.getElementById('linkbitcloutaccount').value.trim();
+  document.getElementById('bitcloutlinktextarea').value=fullmessage;
   document.getElementById('bitcloutlinktext').style.display='block';
+}
+
+function getLinkMessage(legacyaddress){
+  window.bitcoinjs.address.toOutputScript(legacyaddress);//this will throw error if address is not valid
+  var time = parseInt(new Date().getTime() / 1000);
+  let message=`membercashlink:${legacyaddress}:${pubkeyhex}:${time}`;
   let keyPair = new window.bitcoinjs.ECPair.fromWIF(privkey);
   var privateKey = keyPair.privateKey;
   var signature = window.bitcoinmessage.sign(message, privateKey, keyPair.compressed, "member.cash link request", { extraEntropy: eccryptoJs.randomBytes(32) });
-  document.getElementById('bitcloutlinktextarea').value=message+':'+signature.toString('base64');
+  return message+':'+signature.toString('base64');
+}
+
+function switchNostrKey(){
+  try{
+    let hexprivkey=document.getElementById('usenostrkeyaccount').value.trim();
+    //let ecpair = new window.bitcoinjs.ECPair.fromWIF(hexprivkey);
+    let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexprivkey,'hex'));
+    setNostrKeys(ecpair);
+    updateStatus("New Nostr Public Key:"+nostrPubKeyHex);
+  }catch(err){
+    updateStatus("Nostr Private Key Not Recognized"+err);
+  }
+  
 }

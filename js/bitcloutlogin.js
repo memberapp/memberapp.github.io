@@ -53,7 +53,7 @@ function handleInit(e) {
     iframe = document.getElementById("identity");
     //uniqueid = e.data.id;
 
-    postMessage({
+    postMessageBitClout({
       id: e.data.id,
       service: 'identity',
       //method: 'info'
@@ -123,7 +123,8 @@ function respond(e, t, n) {
   );
 }
 
-function postMessage(e) {
+
+function postMessageBitClout(e) {
   console.log("post message: ");
   console.log(e);
 
@@ -272,7 +273,7 @@ async function bitcloutDecryptMessage(message, publicKeySender) {
   //Not sure if message is v1 or v2, try both and the wrong one should error out harmlessly 
 
   //v1
-  postMessage({
+  postMessageBitClout({
     id: uniqueid,
     service: 'identity',
     method: 'decrypt',
@@ -295,7 +296,7 @@ async function bitcloutDecryptMessage(message, publicKeySender) {
   }
 
   //v2
-  postMessage({
+  postMessageBitClout({
     id: uniqueid,
     service: 'identity',
     method: 'decrypt',
@@ -402,7 +403,7 @@ async function constructAndSendBitCloutTransaction(payload, action, divForStatus
       //Use identity
       if (statusElement) statusElement.value = "Signing Tx With Identity";
       idtrxpairs.set(uniqueid,data.TransactionHex);
-      postMessage({
+      postMessageBitClout({
         id: uniqueid,
         service: 'identity',
         method: 'sign',
@@ -689,7 +690,7 @@ async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForSt
     //First encrypt the message with identity
     let uniqueid = uuid();
     if (divForStatus) divForStatus.value = "Encrypting Message With Identity";
-    postMessage({
+    postMessageBitClout({
       id: uniqueid,
       service: 'identity',
       method: 'encrypt',

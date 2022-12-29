@@ -6,6 +6,9 @@ var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
 var privkeyhex = "";
 var privateKeyBuf;
+var nostrPrivKeyHex = "";
+var nostrPubKeyHex = "";
+
 var chainheight = 0;
 var chainheighttime = 0;
 
@@ -172,6 +175,7 @@ async function loadBigLibs() {
     loadBigLibsStarted = true;
     //Load big libraries that may not be immediately needed.
 
+    if (!window.NostrTools)  loadScript("js/lib/nostr.bundle.1.0.1.js");
     if (!bip39) loadScript("js/lib/bip39.browser.js");
     if (!window.bitcoinjs) loadScript(bitcoinjslib);
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
@@ -192,9 +196,11 @@ async function login(loginkey) {
     pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
     privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
     bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
+    nostrPrivKeyHex = localStorageGet(localStorageSafe, "nostrprivkeyhex");
+    nostrPubKeyHex = localStorageGet(localStorageSafe, "nostrpubkeyhex");
 
 
-    if (!(pubkey) || (privkey && !privkeyhex)) {
+    if (!(pubkey) || (privkey && !privkeyhex) || (mnemonic && !nostrPrivKeyHex)) {
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
@@ -216,6 +222,14 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "mnemonic", loginkeylowercase);
             mnemonic = loginkeylowercase;
             loginkey = newloginkey;
+
+            let nostrKey = root.derivePath("44'/1237'/0'/0/0");
+            setNostrKeys(nostrKey);
+
+
+            //pubkeyhex = ecpair.publicKey.toString('hex');
+            //privkeyhex = ecpair.privateKey.toString('hex');
+            
         }
 
         try {
@@ -274,6 +288,10 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
+            
+            if(newlygeneratedaccount){
+                linkNostrAccount(false); //link the nostr public key to the member key
+            }
             //dropdowns.utxoserver
             if(allowBitcloutUser){
                 checkIfBitcloutUser(pubkeyhex);
@@ -303,7 +321,7 @@ async function login(loginkey) {
     document.getElementById('newseedphrase').textContent = "";
     document.getElementById('loginkey').value = "";
 
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength}, true);
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength, nostrpubkey:nostrPubKeyHex}, true);
     document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
 
     updateSettings();
@@ -350,14 +368,25 @@ function loadStyle() {
     }
 }
 
+var newlygeneratedaccount=false;
 async function createNewAccount() {
     if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
-    mnemonic = bip39.generateMnemonic();
+    let mnemonictemp = bip39.generateMnemonic();
     document.getElementById('newseedphrasedescription').style.display = "inline";
-    document.getElementById('newseedphrase').textContent = mnemonic;
-    document.getElementById('loginkey').value = mnemonic;
+    document.getElementById('newseedphrase').textContent = mnemonictemp;
+    document.getElementById('loginkey').value = mnemonictemp;
+    newlygeneratedaccount=true;
+}
 
-
+function setNostrKeys(nostrKey){
+    nostrPrivKeyHex = nostrKey.privateKey.toString('hex');
+    nostrPubKeyHex = nostrKey.publicKey.toString('hex').slice(2);
+    localStorageSet(localStorageSafe, "nostrprivkeyhex", nostrPrivKeyHex);
+    localStorageSet(localStorageSafe, "nostrpubkeyhex", nostrPubKeyHex);
+    let keyelement = document.getElementById('linknostraccount');
+    if(keyelement){
+      keyelement.value=nostrPubKeyHex;
+    }
 }
 
 function logout() {
@@ -382,6 +411,13 @@ function logout() {
     privkey = "";
     pubkey = "";
     mnemonic = "";
+    privateKeyBuf = "";
+    nostrPrivKeyHex = "";
+    nostrPubKeyHex = "";
+    pubkeyhex = ""; //Public Key, full hex
+    bitcloutaddress = ""; //Bitclout address
+    tq = null;
+    
     document.getElementById('loggedout').style.display = "flex";
     document.getElementById('loggedin').style.display = "none";
     document.getElementById('profilebutton').style.display = "none";

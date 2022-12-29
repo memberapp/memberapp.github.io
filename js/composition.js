@@ -2,7 +2,7 @@
 var SimpleMDE = null;
 var simplemde;
 
-async function loadMDE(){
+async function loadMDE() {
     if (!SimpleMDE) {
         document.getElementById("mde1style").setAttribute("href", "js/lib/mde/simplemde.min.css");
         document.getElementById("mde2style").setAttribute("href", "js/lib/mde/fareplacements.css");
@@ -64,47 +64,47 @@ async function uploadFile(elementid, uploadURL, targettextarea, memorandumprevie
     const formData = document.getElementById(elementid);
     //document.getElementById(memorandumpreviewelement).style.display = 'block';
     document.getElementById(uploadimagelink).style.visibility = 'hidden';
-    if(uploadimagestatus){
+    if (uploadimagestatus) {
         document.getElementById(uploadimagestatus).style.display = 'block';
     }
     getJSON(uploadURL, null, formData).then(function (data) {
         //formData.firstfile.value = null;
         document.getElementById(uploadimagelink).style.visibility = 'visible';
-        if(uploadimagestatus){
+        if (uploadimagestatus) {
             document.getElementById(uploadimagestatus).style.display = 'none';
         }
-        if(memorandumpreviewelement){
+        if (memorandumpreviewelement) {
             document.getElementById(memorandumpreviewelement).style.display = 'block';
         }
         console.log(data);
         let textarea = document.getElementById(targettextarea);
-        let initValue= "\n" + textarea.value;
-        if(elementid=='profilepicfile'){
-            initValue="";
+        let initValue = "\n" + textarea.value;
+        if (elementid == 'profilepicfile') {
+            initValue = "";
         }
         if (data.error) {
             alert(sane(data.error));
         } else if (data.arweaveid) {
             textarea.value = "arweave:" + data.arweaveid + initValue;
         } else if (data.memberurl) {
-            if(hiddeninput){
-                document.getElementById(hiddeninput).value=data.memberurl;
+            if (hiddeninput) {
+                document.getElementById(hiddeninput).value = data.memberurl;
             }
             textarea.value = data.memberurl + initValue;
-            
+
         }
         callback();
     });
 }
 
-function checkLength(elementName, maxcharlength){
-    let element= document.getElementById(elementName);
-    let text=element.value;
+function checkLength(elementName, maxcharlength) {
+    let element = document.getElementById(elementName);
+    let text = element.value;
     let hextext = new Buffer(text).toString('hex');
     let length = hextext.length;
-    if(length>maxcharlength*2){
+    if (length > maxcharlength * 2) {
         //alert('too long');
-        element.value=Buffer.from(hextext.substring(0,maxcharlength*2),'hex').toString();
+        element.value = Buffer.from(hextext.substring(0, maxcharlength * 2), 'hex').toString();
     }
 }
 
@@ -145,12 +145,12 @@ function memorandumPreview() {
     var repostedHTML = document.getElementById('quotepost').outerHTML;
 
 
-    let member= new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey);
+    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey, null);
 
     document.getElementById('memorandumpreview').innerHTML =
-        getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0,  '000', 1, 0,  0, '',  3, '000', false)
+        getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, '000', 1, 0, 0, '', 3, '000', false)
         + `<div id="articleheader000" class="articleheader"></div>`
-        + getHTMLForReplyHTML2(member,'000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false, 0);
+        + getHTMLForReplyHTML2(member, '000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false, 0);
 
     //Repeat the title for article mode
     document.querySelector('[id^="articleheader000"]').innerHTML = document.querySelector('[id^="postbody000"]').innerHTML;
@@ -199,13 +199,15 @@ function geopost() {
         sendBitCloutPost(posttext + " \nmember.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
     }
 
+    sendNostrPost(posttext + " \nmember.cash/geotag/" + geohash, '', null, "newpostgeostatus", successFunction);
+
 }
 
 function postmemorandum() {
     if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
-    if(!posttext.includes('#')){
-        if(!confirm(getSafeTranslation('notagareyousure', `Are you sure you want to post this without a #hashtag?  Include a #hashtag to help members find your post. Click OK to post or Cancel to add a #hashtag.`))){
+    if (!posttext.includes('#')) {
+        if (!confirm(getSafeTranslation('notagareyousure', `Are you sure you want to post this without a #hashtag?  Include a #hashtag to help members find your post. Click OK to post or Cancel to add a #hashtag.`))) {
             return false;
         }
     }
@@ -260,12 +262,16 @@ function postmemorandum() {
         if (isBitCloutUser()) {
             sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
         }
+
+        sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction);
+        
     }
     else {
         //Don't post body if it is not visible - it may contain old elements that the user is not expecting to post
         if (document.getElementById('memorandumtextarea').style.display == 'none') {
             postbody = '';
         }
+
         if (checkForNativeUserAndHasBalance()) {
             postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
             successFunction = null;
@@ -273,12 +279,18 @@ function postmemorandum() {
         if (isBitCloutUser()) {
             sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
         }
+        
+        //Should always be possible to send Nostr event if user is logged in.
+        sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
+        
     }
 
     //if (typeof popupOverlay !== "undefined") {
     //    popupOverlay.hide();
     //}
 }
+
+
 
 /*
 function sendRepostNotification(txid, divForStatus, topic, newtxid) {
@@ -326,7 +338,7 @@ function memocompleted() {
     document.getElementById('newpostcompleted').innerHTML = getSafeTranslation('messagesent', "Message Sent.");
 }
 
-function geocompleted() { 
+function geocompleted() {
     document.getElementById('newgeopostta').value = "";
     document.getElementById('newpostgeostatus').style.display = "none";
     document.getElementById('newpostgeobutton').style.display = "block";

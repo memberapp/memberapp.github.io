@@ -17,7 +17,7 @@
 
 function userFromDataBasic(data, mainRatingID) {
     if (!data.raterrating) { data.raterrating = data.rating; }//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.bitcoinaddress).userHTML(true);
+    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.bitcoinaddress, data.messageaddress).userHTML(true);
 }
 
 function userFromData(data, mainRatingID) {
@@ -44,15 +44,20 @@ function MemberFromData(data, stub, ratingID) {
         data[stub + "lastactive"],
         data[stub + "sysrating"],
         data[stub + "hivename"],
-        data[stub + "bitcoinaddress"]
-
+        data[stub + "bitcoinaddress"],
+        data[stub + "messageaddress"]
     );
 }
 
-function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress) {
+function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress, messageaddress=null) {
 
-    if (!address) {
-        updateStatus('Missing address for post error - this should not happen.'); return "";
+    if (!address || address=='null') {
+        if(messageaddress){
+            address=messageaddress; //This happens if the server has no profile data for the member.
+        }else{
+            console.log('Missing address for post error - this should not happen.');
+            updateStatus('Missing address for post error - this should not happen.'); return "";
+        }
     }
 
     if (!bitcoinaddress) {
@@ -60,9 +65,7 @@ function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, pi
     }
 
     address = "" + address;//always treat address like a string.
-    if (this.name == "" || this.name == null) {
-        this.name = address.substring(0, 10);
-    }
+    
 
     /*if (!name) {
         if (sourcenetwork == 2) {//get the hive name
@@ -73,6 +76,11 @@ function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, pi
     }*/
     this.address = address;
     this.name = name;
+
+    if (this.name == "" || this.name == null) {
+        this.name = address.substring(0, 10);
+    }
+    
     this.ratingID = ratingID;
     this.ratingRawScore = ratingRawScore;
     this.pagingid = pagingid;
@@ -231,7 +239,11 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@' + sanhl(hivelink) + '">hive.blog</a>';
     } else if (sourcenetwork == 3) {
         //sourceNetworkHTML = '<a rel="noopener noreferrer" href="' + permalink + '">member.cash</a>';
-    } else if (sourcenetwork == 99) {
+    } else if (sourcenetwork == 4) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
+    } else if (sourcenetwork == 5) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}">astral.ninja</a>`; 
+    }else if (sourcenetwork == 99) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">rss</a>';
     }
 
@@ -505,8 +517,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img width='15' height='15' alt='doge.hair' src='img/networks/4.png'></a>`;
     } else if (sourcenetwork == 5) {
-        sourceNetworkHTML = `nostr`;
-        sourceNetworkImage = `<img width='15' height='15' alt='nostr' src='img/networks/5.png'>`;
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}">astral.ninja</a>`; 
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
@@ -1290,7 +1302,7 @@ function populateSendMessage(address, name, publickey) {
 function getMessageHTML(data, count) {
     //You sent a message
     if (data.bitcoinaddress == pubkey && data.address != data.toaddress) {
-        return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, data.bitcoinaddress)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
+        return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, data.bitcoinaddress, null)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     } else {
         return "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.bitcoinaddress, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }

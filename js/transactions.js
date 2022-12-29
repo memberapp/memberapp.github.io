@@ -16,10 +16,10 @@ function checkForNativeUser() {
         return false;
     }
 
-    if (tq.getBalance(chainheight) < nativeCoin.dust) {
-        alert(getSafeTranslation('notenough2', "You do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
-        return false;
-    }
+    //if (tq.getBalance(chainheight) < nativeCoin.dust) {
+    //    alert(getSafeTranslation('notenough2', "You do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
+    //    return false;
+    //}
 
     return true;
 }
@@ -58,13 +58,8 @@ function repost(txid, privkey) {
     tq.queueTransaction(tx);
 }
 
-function setTrxPic(callback) {
+function setTrxPic(newName,callback) {
     if (!checkForNativeUser()) return false;
-
-    document.getElementById('settingspicbutton').disabled = true;
-    document.getElementById('settingspic').disabled = true;
-
-    var newName = document.getElementById('settingspic').value;
     //if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
     //    alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
     //    return;
@@ -81,13 +76,16 @@ function setTrxPic(callback) {
 
 
 function setName() {
+    var newName = document.getElementById('settingsnametext').value;
+    
+    //setNostrProfile('name',newName);
+    setNostrProfile();
+
     if (!checkForNativeUser()) return false;
 
 
     document.getElementById('settingsnametextbutton').disabled = true;
     document.getElementById('settingsnametext').disabled = true;
-
-    var newName = document.getElementById('settingsnametext').value;
 
     const tx = {
         data: ["0x6d01", newName],
@@ -353,11 +351,15 @@ function memoPinPost(txid, privkey){
 }
 
 function setProfile() {
+
+    var newProfile = document.getElementById('settingsprofiletext').value;
+    setNostrProfile();
+    //setNostrProfile('about',newProfile);
+
     if (!checkForNativeUser()) return false;
 
-
     document.getElementById('settingsprofiletextbutton').disabled = true;
-    var newProfile = document.getElementById('settingsprofiletext').value;
+    
 
     const tx = {
         data: ["0x6d05", newProfile],
@@ -417,6 +419,7 @@ function follow(qaddress,targetpublickey) {
     if(isBitCloutUser()){
         sendBitCloutFollow(targetpublickey);
     }
+    sendNostrFollow(targetpublickey);
 }
 
 function unfollow(qaddress,targetpublickey) {
@@ -427,6 +430,7 @@ function unfollow(qaddress,targetpublickey) {
     //if(isBitCloutUser()){
     //    sendBitCloutUnFollow(targetpublickey);
     //}
+    sendNostrUnFollow(targetpublickey);
 }
 
 function mute(qaddress,targetpublickey) {
@@ -434,6 +438,7 @@ function mute(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
     }
+    sendNostrMute(targetpublickey);
     //if(isBitCloutUser()){
     //    sendBitCloutMute(targetpublickey);
     //}
@@ -444,6 +449,7 @@ function unmute(qaddress,targetpublickey) {
     if(checkForNativeUserAndHasBalance()){
         addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
     }
+    sendNostrUnMute(targetpublickey);
     //if(isBitCloutUser()){
     //    sendBitCloutUnMute(targetpublickey);
     //}
@@ -454,6 +460,7 @@ function sub(topicHOSTILE) {
     if(checkForNativeUserAndHasBalance()){
         subTransaction(topicHOSTILE);
     }
+    sendNostrSub(topicHOSTILE);
     //if(isBitCloutUser()){
     //    sendBitCloutSub(topicHOSTILE);
     //}
@@ -464,6 +471,8 @@ function unsub(topicHOSTILE) {
     if(checkForNativeUserAndHasBalance()){
         unsubTransaction(topicHOSTILE);
     }
+    sendNostrUnSub(topicHOSTILE);
+    
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);
     //}

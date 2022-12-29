@@ -2540,3 +2540,18 @@ a.memberlinkbutton:hover{
     }
 
 
+    /* temp nostr features off */
+
+    #articlebutton, 
+#memorandumpreviewbuttonanddisplay, 
+#privatemessagesbutton, 
+#mapbutton,
+.populate-send-message,
+.displaymining,
+.showmembercoinmining,
+.displayinfluencers,
+.displaycontact
+ {
+  display: none;
+}
+

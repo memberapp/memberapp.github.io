@@ -103,7 +103,11 @@ async function postprivatemessage() {
 
     if (isBitCloutUser()) {
         sendBitCloutPrivateMessage(publickey, text, status, successFunction, preEncryptedMessage);
+        successFunction = null;
     }
+
+    sendNostrPrivateMessage(publickey, text, status, successFunction);
+    
 }
 
 function privateMessagePosted() {
@@ -220,6 +224,13 @@ function dogecoinToLegacy(pubkey) {
     return window.bs58check.encode(toencode);
 }
 
+function pubkeyhexToLegacy(pubkeyhex2) {
+    var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
+    return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+    //return window.bitcoinjs.payments.p2pkh({ pubkey: Buffer.from(pubkeyhex2) }).address;
+}
+
+
 function legacyToMembercoin(pubkey) {
     let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
     return cashaddr.encode('member', 'P2PKH', hash);
@@ -256,7 +267,9 @@ function setBalanceWithInterest() {
         }
         //M̈ m̈
         //document.getElementById("membalance").textContent=mem.substring(0,10);
-        document.getElementById("membalance").innerHTML = `<strong>${nativeCoin.symbol}</strong>` + mem.substring(0, 10);
+        if(membalance){ //only show balance if it is not zero
+            document.getElementById("membalance").innerHTML = `<strong>${nativeCoin.symbol}</strong>` + mem.substring(0, 10);
+        }
     } catch (err) {
         //console.log(err);
         //Error probably caused by trying to set balance before UTXO set is loaded
@@ -292,6 +305,7 @@ function updateBalance(dynamicChainHeight, showLowFunds = false) {
     if (document.getElementById('satoshiamount'))
         document.getElementById('satoshiamount').innerHTML = total;
 
+    showLowFunds=false; //remove to show low funds warning
     if (showLowFunds && total < 2000 && showwarning) {
         var lowfundsElement = document.getElementById('lowfundswarning');
         if (lowfundsElement) {

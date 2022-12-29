@@ -11,6 +11,7 @@ var siteTitle = 'member.cash';
 var theStyle = 'feels compact';
 var maxScoreToCollapseComment = 64;
 var bitcoinjslib = "js/lib/bitcoincashjs-lib-5.2.0-bitcoinmessage.min.js";
+//var bitcoinjslib = "js/lib/bitcoinjs-lib-5.2.0.js";
 var allowBitcloutUser = true;
 var defaultTag="#newmember";
 var logowide="img/logos/logowide.svg";

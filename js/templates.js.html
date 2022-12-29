@@ -604,7 +604,7 @@ pages.member = `
             <div class="dropdown-content mainhamburger" id="dropdown-content">
                 <span class="populate-send-message">
                     <a data-vavilon="VV0061"
-                        onclick="populateSendMessage('{address}','{handlefunction}','{publickey}');"
+                        onclick="populateSendMessage('{qaddress}','{handlefunction}','{publickey}');"
                         href="javascript:;">Send Message</a>
                 </span>
                 {mutebuttonhtml}
@@ -617,7 +617,7 @@ pages.member = `
                         class="separatorwide"></span>
                 </span>-->
                 <span class="membermemoprofilelink">
-                    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{address}"
+                    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{bcaddress}"
                         id="membermemoprofilelink">Memo</a><span class="separatorwide"></span>
                 </span>
                 <span class="bitcloutprofilelink">
@@ -765,6 +765,26 @@ pages.settings = `
                     href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
         </div>
         <div>
+            <label for="usenostrkeyaccount"><span data-vavilon="usenostrkeyaccount">Use Different Nostr Account (Private Key)</span> 
+                <div class="formgroup">
+                <input id="usenostrkeyaccount" placeholder="nostr private key hex">
+                <button data-vavilon="nostrkey" id="linkbitcloutaccountbutton" type="button" onclick="switchNostrKey();"
+                    data-vavilon="nostrkey">switch</button>
+                </div>
+        </div>
+        <div>
+            <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public Key)</span> 
+            <div class="formgroup">
+                <input id="linknostraccount" value={nostrpubkey}>
+                <button data-vavilon="link" id="linknostraccountbutton" type="button" onclick="linkNostrAccount();"
+                    data-vavilon="link">link</button>
+            </div>
+            <div id="bitcloutlinktext" style="display:none;">
+                <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
+                <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
+            </div>
+        </div>
+        <div>
             <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout Account</span> 
             <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
             <div class="formgroup">
@@ -772,7 +792,7 @@ pages.settings = `
                     onchange="document.getElementById('linkbitcloutaccountbutton').disabled=false;"
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 <button data-vavilon="link" id="linkbitcloutaccountbutton" type="button" onclick="showBitcloutLinkText();"
-                    data-vavilon="link" disabled="">link</button>
+                    data-vavilon="link">link</button>
             </div>
             <div id="bitcloutlinktext" style="display:none;">
                 <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>

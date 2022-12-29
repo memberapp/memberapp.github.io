@@ -100,14 +100,15 @@ async function getDataMemberFinally(data) {
     }
 
     let cashaddress = null;
-    if (qaddress) {
+    if (qaddress && qaddress!='null') {
         cashaddress = legacyToNativeCoin(qaddress);
     }
 
     //Note, data may not contain any rows, for new or unknown users.
 
     var obj = {
-        address: qaddress,
+        address: data[0]?data[0].address:null,
+        qaddress: qaddress,
         cashaddress: cashaddress,
         followers: 0,
         following: 0,
@@ -299,6 +300,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     obj.version = version;
     obj.dust = nativeCoin.dust;
     obj.maxprofilelength = maxprofilelength;
+    obj.nostrpubkey = nostrPubKeyHex;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -550,8 +552,11 @@ function getAndPopulateFB(page, qaddress) {
 }
 
 function setPic() {
-    setTrxPic(getAndPopulateSettings);
+    document.getElementById('settingspicbutton').disabled = true;
+    document.getElementById('settingspic').disabled = true;
+
+    var newName = document.getElementById('settingspic').value;
+    setTrxPic(newName,getAndPopulateSettings);
+    //setNostrProfile("picture",newName);
+    setNostrProfile();
 }
-
-
-

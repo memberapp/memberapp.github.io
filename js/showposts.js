@@ -632,7 +632,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 
         //this is a quick hack to filter out multiple edits
         //a genuine response to self is also removed. look at this when revisiting edited posts
-        if (data.address == data.opaddress) {
+        if (data.address && (data.address == data.opaddress)) {
             return '';
         }
 
@@ -710,6 +710,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
         sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
         successFunction = null;
     }
+
+    sendNostrReply(origtxid, replytext, divForStatus, successFunction, parentSourceNetwork);
 
     return true;
 }
@@ -835,6 +837,8 @@ function likePost(txid, origtxid, tipAddress, amountSats) {
             sendLike(origtxid, privkey);
         }
     }
+
+    nostrLikePost(origtxid);
 }
 
 function dislikePost(txid, origtxid) {
@@ -857,6 +861,8 @@ function repostPost(txid, origtxid, sourcenetwork) {
     if (checkForNativeUserAndHasBalance()) {
         repost(origtxid, privkey);
     }
+
+    nostrRePost(origtxid);
 
 }
 
