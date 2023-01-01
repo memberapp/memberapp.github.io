@@ -41,6 +41,13 @@ async function broadcastEvent(event,successFunction,useNOS2Xifavailable=true){
     relays.push("wss://nostr.openchain.fr");
     relays.push("wss://relay.nostr.ch");
     relays.push("wss://nostr-pub.wellorder.net");
+    relays.push("wss://relay.damus.io");
+    relays.push("wss://nostr-relay.wlvs.space");
+    relays.push("wss://nostr.fmt.wiz.biz");
+    relays.push("wss://relay.nostr.bg");
+    relays.push("wss://nostr.oxtr.dev");
+    relays.push("wss://nostr.v0l.io");
+    relays.push("wss://nostr-2.zebedee.cloud");
     /*
     relays.push("wss://relay.nostr.info");
     relays.push("wss://nostr-relay.wlvs.space");
@@ -145,27 +152,36 @@ async function nostrLikePost(origtxid){
     signAndBroadcastEvent(event, null);
 }
 
-async function sendNostrReply(txid, replytext, divForStatus, successFunction){
+async function sendNostrReply(txid, replytext, divForStatus, successFunction, roottxid){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
+    //note incorrect roottxid provide currently, must update db
     let event = {
         kind: 1,
         pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
-        tags: [["e", txid,'','reply']],
+        tags: [
+            //["e", roottxid,'','root'],
+            ["e", txid,'','reply']
+        ],
+        //tags: [["e", txid]],
         content: replytext
     }
 
     signAndBroadcastEvent(event, successFunction);
 }
 
-async function sendNostrQuotePost(posttext, topic, txid, divForStatus, successFunction){
+async function sendNostrQuotePost(posttext, topic, txid, divForStatus, successFunction, roottxid){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    //note incorrect roottxid provide currently, must update db
     let event = {
         kind: 1,
         pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
-        tags: [["e", txid, '', 'repost']],
+        tags: [
+            //["e", roottxid,'','root'],
+            ["e", txid, '', 'repost']
+        ],
         content: posttext
     }
     signAndBroadcastEvent(event, successFunction);
@@ -291,7 +307,7 @@ User Rating 	0x6da5 	address(20),message(196)
 async function sendNostrFollow(followpubkey){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype='p';
-    if(followpubkey.length=33){
+    if(followpubkey.length==66){
         keytype='cecdsa';
     }
     let event = {
@@ -308,7 +324,7 @@ async function sendNostrFollow(followpubkey){
 async function sendNostrUnFollow(followpubkey){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype='p';
-    if(followpubkey.length=33){
+    if(followpubkey.length==66){
         keytype='cecdsa';
     }
     let event = {

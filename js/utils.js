@@ -690,7 +690,7 @@ function linkNostrAccount(useNOS2Xifavailable=true) {
   let nostrpublickey='02'+nostrPubKeyHex;
   let element=document.getElementById('linknostraccount');
   if(element){
-    let nostrpublickey='02'+element.value.trim();
+    nostrpublickey='02'+element.value.trim();
   }
 
   let legacyaddress=pubkeyhexToLegacy(nostrpublickey);

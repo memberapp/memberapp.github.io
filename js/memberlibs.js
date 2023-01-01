@@ -1530,6 +1530,9 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
+        <span data-vavilon="VV0019n3">*New and Nostr Users. Click 'Make New Phrase'.</span><br />
+    </div>
+    <div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
             access.</span><br />
     </div>
@@ -2209,6 +2212,18 @@ pages.settings = `
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
     </div>
     <div>
+        <label data-vavilon="mutednetworks">Muted Networks</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="mutebitclout" onchange="updateSettingsCheckbox('mutebitclout');">
+        <label data-vavilon="mutebitclout" for="mutebitclout" class="checkboxlabel">Mute Bitclout</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="mutenostr" onchange="updateSettingsCheckbox('mutenostr');">
+        <label data-vavilon="mutenostr" for="mutenostr" class="checkboxlabel">Mute Nostr</label>
+    </div>
+
+    <div>
         <label data-vavilon="VV0087" for="mediasettings" class="labelheader">Media Settings</label>
     </div>
     <!--<div class="customcheckbox">
@@ -2498,7 +2513,7 @@ var footerHTML = `
                     </span>
                     <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvotecontainer{txid}">
                         <a id="upvoteaction{txid}" href="javascript:;"
-                            onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0)" class="btn-icon"
+                            onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0,'{roottxid}')" class="btn-icon"
                             data-action="like">
                             <span class="likeicon">
                                 <span class="emojiicon">💙</span>
@@ -2767,7 +2782,7 @@ var replyDivTemplate = `
         oninput="this.onchange();"></textarea>
         <br />
         <input id="replybutton{page}{txid}" value="reply" type="submit"
-            onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
+            onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}','{origroottxid}');" />
         <input data-vavilon_value="VV0154" id="replystatus{page}{txid}" value="sending..." type="submit"
             style="display:none" disabled />
         <div id="replycompleted{page}{txid}" value=""></div>
@@ -3075,7 +3090,7 @@ function submitSignedTransaction(signedTrx, id) {
 }
 
 async function checkIfBitcloutUser(pubkeyhex1) {
-  var bcAddress = await pubkeyToBCaddress(pubkeyhex1);
+  var bcAddress =pubkeyToBitcloutAddress(pubkeyhex1);
   //var submitpayload = `{"PublicKeyBase58Check":"` + bcAddress + `"}`;
   //var url2 = dropdowns.txbroadcastserver + "bitclout?bcaction=get-single-profile";
   var submitpayload = `{"PublicKeysBase58Check":["` + bcAddress + `"]}`;
@@ -3144,7 +3159,7 @@ async function bitcloutDecryptMessage(message, publicKeySender) {
   let messageObj = {
     EncryptedHex: message,
     IsSender: false,
-    PublicKey: await pubkeyToBCaddress(publicKeySender),
+    PublicKey:pubkeyToBitcloutAddress(publicKeySender),
     V2: true
   }
 
@@ -3301,7 +3316,7 @@ async function bitCloutPinPost(pinPostHashHex, pubkey) {
 async function sendBitCloutFollow(followpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
-      "FollowedPublicKeyBase58Check":"`+ await pubkeyToBCaddress(followpubkey) + `",
+      "FollowedPublicKeyBase58Check":"`+pubkeyToBitcloutAddress(followpubkey) + `",
       "IsUnfollow      ":false,
       "MinFeeRateNanosPerKB":1000
     }`;
@@ -3311,7 +3326,7 @@ async function sendBitCloutFollow(followpubkey) {
 async function sendBitCloutUnFollow(unfollowpubkey) {
   var payload = `{
       "FollowerPublicKeyBase58Check":"`+ bitCloutUser + `",
-      "FollowedPublicKeyBase58Check":"`+ await pubkeyToBCaddress(unfollowpubkey) + `",
+      "FollowedPublicKeyBase58Check":"`+pubkeyToBitcloutAddress(unfollowpubkey) + `",
       "IsUnfollow":true,
       "MinFeeRateNanosPerKB":1000
     }`;
@@ -3348,7 +3363,7 @@ async function sendBitCloutUnSub(topicHOSTILE) {
 
 
 async function sendBitCloutMute(followpubkey) {
-  var bcAddress = await pubkeyToBCaddress(followpubkey);
+  var bcAddress =pubkeyToBitcloutAddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
@@ -3362,7 +3377,7 @@ async function sendBitCloutMute(followpubkey) {
 }
 
 async function sendBitCloutUnMute(followpubkey) {
-  var bcAddress = await pubkeyToBCaddress(followpubkey);
+  var bcAddress =pubkeyToBitcloutAddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
@@ -3377,7 +3392,7 @@ async function sendBitCloutUnMute(followpubkey) {
 
 /*
 async function sendBitCloutFollow(followpubkey) {
-  var bcAddress = await pubkeyToBCaddress(followpubkey);
+  var bcAddress =pubkeyToBitcloutAddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
@@ -3391,7 +3406,7 @@ async function sendBitCloutFollow(followpubkey) {
 }
 
 async function sendBitCloutUnFollow(followpubkey) {
-  var bcAddress = await pubkeyToBCaddress(followpubkey);
+  var bcAddress =pubkeyToBitcloutAddress(followpubkey);
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: 'b943df7fb091a3b403d8f2d33ffa7f5331d54b340aa8e5641eb8d0a65a9068d3',
@@ -3533,7 +3548,7 @@ async function bitCloutRePost(txid, sourcenetwork) {
 
 async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForStatus, successFunction, preEncryptedMessage) {
 
-  let recipient = await pubkeyToBCaddress(messageRecipientpubkey);
+  let recipient =pubkeyToBitcloutAddress(messageRecipientpubkey);
   let payload;
   let encryptedMessage;
 
@@ -3581,7 +3596,10 @@ async function sendBitCloutPrivateMessage(messageRecipientpubkey, text, divForSt
   return txid;
 }
 
-async function pubkeyToBCaddress(publickey) {
+function pubkeyToBitcloutAddress(publickey) {
+  if(publickey.length!='66'){ //This must be 66 chars in length. If it is only 64, there is not enough information
+    return '';
+  }
   return window.bs58check.encode(new Buffer('cd1400' + san(publickey), 'hex'));
 }
 
@@ -4320,7 +4338,7 @@ function linkNostrAccount(useNOS2Xifavailable=true) {
   let nostrpublickey='02'+nostrPubKeyHex;
   let element=document.getElementById('linknostraccount');
   if(element){
-    let nostrpublickey='02'+element.value.trim();
+    nostrpublickey='02'+element.value.trim();
   }
 
   let legacyaddress=pubkeyhexToLegacy(nostrpublickey);
@@ -4473,14 +4491,24 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
         }
 
+        let filtereditems=0;
         for (var i = 0; i < data.length; i++) {
             try {
                 if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
                 if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
-                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1, page, i, null, false, true, false));
+                let postHTML=getHTMLForPost(data[i], i + 1, page, i, null, false, true, false);
+                if(postHTML){
+                    contents = contents + getPostListItemHTML(postHTML);
+                }else{
+                    filtereditems++;
+                }
             } catch (err) {
                 console.log(err);
             }
+        }
+
+        if(filtereditems){
+            contents += getDivClassHTML('message', filtereditems + getSafeTranslation("filtereditems", " posts have been hidden based on your content and network filters."));
         }
 
         if (contents == "") {
@@ -4981,6 +5009,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
     //Always show if post is directly requested
     if (!alwaysShow) {
         if (checkForMutedWords(data)) return "";
+        if (checkForMutedNetworks(data)) return "";
         if (data.moderated != null) return "";
     }
 
@@ -5006,9 +5035,9 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 
         //this is a quick hack to filter out multiple edits
         //a genuine response to self is also removed. look at this when revisiting edited posts
-        if (data.address && (data.address == data.opaddress)) {
+        /*if (data.address && (data.address == data.opaddress)) {
             return '';
-        }
+        }*/
 
         //post with message
         if (repostHTML2) {
@@ -5045,7 +5074,7 @@ function getHTMLForReply(data, depth, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
     let member = MemberFromData(data, '', mainRatingID);
-    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit);
+    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit, data.roottxid);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -5053,7 +5082,7 @@ function showReplyButton(txid, page, divForStatus) {
     document.getElementById("replytext" + page + txid).value = "";
 }
 
-function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, network) {
+function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
     if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
@@ -5075,8 +5104,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
         function (membertxid) {
             replySuccessFunction(page, txid);
             if (isBitCloutUser()) {
-                //sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-                sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+                sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+                //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
             }
         };
 
@@ -5085,7 +5114,7 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
         successFunction = null;
     }
 
-    sendNostrReply(origtxid, replytext, divForStatus, successFunction, parentSourceNetwork);
+    sendNostrReply(origtxid, replytext, divForStatus, successFunction, origroottxid);
 
     return true;
 }
@@ -5183,7 +5212,7 @@ function pinpost(txid) {
     }
 }
 
-function likePost(txid, origtxid, tipAddress, amountSats) {
+function likePost(txid, origtxid, tipAddress, amountSats, roottxid=null) {
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
@@ -5212,7 +5241,7 @@ function likePost(txid, origtxid, tipAddress, amountSats) {
         }
     }
 
-    nostrLikePost(origtxid);
+    nostrLikePost(origtxid, roottxid);
 }
 
 function dislikePost(txid, origtxid) {
@@ -5288,16 +5317,29 @@ function showMore(show, hide) {
 }
 
 function checkForMutedWords(data) {
+    
     for (var i = 0; i < mutedwords.length; i++) {
         if (mutedwords[i] == "") continue;
         var checkfor = mutedwords[i].toLowerCase();
-        if (data.message != undefined && data.message.toLowerCase().contains(checkfor)) return true;
-        if (data.name != undefined && data.name.toLowerCase().contains(checkfor)) return true;
+        if (data.message && data.message.toLowerCase().contains(checkfor)) return true;
+        if (data.name && data.name.toLowerCase().contains(checkfor)) return true;
         data.address = data.address + "";//Ensure data address is a string.
-        if (data.address != undefined && data.address.toLowerCase().contains(checkfor)) return true;
-        if (data.topic != undefined && ("(" + data.topic.toLowerCase() + ")").contains(checkfor)) return true;
+        if (data.address && data.address.toLowerCase().contains(checkfor)) return true;
+        if (data.topic && ("(" + data.topic.toLowerCase() + ")").contains(checkfor)) return true;
 
     }
+    return false;
+}
+
+function checkForMutedNetworks(data) {
+    
+    if(settings["mutebitclout"] == "true" && data.network==1){
+        return true;
+    }
+    if(settings["mutenostr"] == "true" && data.network==5){
+        return true;
+    }
+
     return false;
 }
 
@@ -5648,7 +5690,7 @@ function memorandumPreview() {
     document.getElementById('memorandumpreview').innerHTML =
         getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, '000', 1, 0, 0, '', 3, '000', false)
         + `<div id="articleheader000" class="articleheader"></div>`
-        + getHTMLForReplyHTML2(member, '000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false, 0);
+        + getHTMLForReplyHTML2(member, '000', 1, 0, 0, time, getMemorandumText(), 'page', false, 1, null, null, 'preview', '', null, 0, '', 3, '000', false, 0,'000');
 
     //Repeat the title for article mode
     document.querySelector('[id^="articleheader000"]').innerHTML = document.querySelector('[id^="postbody000"]').innerHTML;
@@ -5761,7 +5803,7 @@ function postmemorandum() {
             sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
         }
 
-        sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction);
+        sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
         
     }
     else {
@@ -6007,7 +6049,7 @@ async function getDataMemberFinally(data) {
     }
 
     if (data && data[0] && !data[0].hivename && data[0].publickey) { //don't show bcaddress for hivename - publickey is not correct yet
-        var bcaddress = await pubkeyToBCaddress(data[0].publickey);
+        var bcaddress =pubkeyToBitcloutAddress(data[0].publickey);
         obj.bcaddress = bcaddress;
     }
 
@@ -6134,10 +6176,10 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
 
     if (data && data[0] && data[0].publickey) {
-        var bcaddress = await pubkeyToBCaddress(data[0].publickey);
+        var bcaddress =pubkeyToBitcloutAddress(data[0].publickey);
         obj.bcaddress = bcaddress;
     } else if (qaddress == pubkey && pubkeyhex) {
-        var bcaddress = await pubkeyToBCaddress(pubkeyhex);
+        var bcaddress =pubkeyToBitcloutAddress(pubkeyhex);
         obj.bcaddress = bcaddress;
     }
     obj.version = version;
@@ -6169,7 +6211,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
 async function populateTools() {
 
-    var bcaddress = await pubkeyToBCaddress(pubkeyhex);
+    var bcaddress =pubkeyToBitcloutAddress(pubkeyhex);
     var obj = {
         address: pubkey,
         cashaddress: legacyToNativeCoin(pubkey),
@@ -7048,7 +7090,7 @@ function scrollToPosition(theElement) {
 "use strict";
 
 function checkForPrivKey() {
-    if(isBitCloutUser()){
+    if (isBitCloutUser()) {
         return true;
     }
     return checkForNativeUser();
@@ -7071,7 +7113,7 @@ function checkForNativeUser() {
     return true;
 }
 
-function checkForNativeUserAndHasBalance(){
+function checkForNativeUserAndHasBalance() {
     return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
 }
 
@@ -7105,7 +7147,7 @@ function repost(txid, privkey) {
     tq.queueTransaction(tx);
 }
 
-function setTrxPic(newName,callback) {
+function setTrxPic(newName, callback) {
     if (!checkForNativeUser()) return false;
     //if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
     //    alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
@@ -7118,13 +7160,13 @@ function setTrxPic(newName,callback) {
     updateStatus(getSafeTranslation('settingpic', "Setting Profile Pic"));
 
     //TODO, on error, this should really enable the text field and text button again
-    tq.queueTransaction(tx,callback);
+    tq.queueTransaction(tx, callback);
 }
 
 
 function setName() {
     var newName = document.getElementById('settingsnametext').value;
-    
+
     //setNostrProfile('name',newName);
     setNostrProfile();
 
@@ -7199,19 +7241,19 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
     let postTitleHex = new Buffer(posttext).toString('hex');
     let replyHex = new Buffer(postbody).toString('hex');
 
-    var maxPostLength=maxhexlength;
-    if(topic){
-        maxPostLength=maxPostLength-4-topic.toString('hex').length;
+    var maxPostLength = maxhexlength;
+    if (topic) {
+        maxPostLength = maxPostLength - 4 - topic.toString('hex').length;
     }
-    if(quotetxid){
+    if (quotetxid) {
         var reversetx = quotetxid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
-        maxPostLength=maxPostLength-4-reversetx.toString('hex').length;
+        maxPostLength = maxPostLength - 4 - reversetx.toString('hex').length;
     }
 
     //If the title is too long, put the excess in the reply. todo - find a natural breakpoint, see sendreplyraw for code
     if (postTitleHex.length > maxPostLength) {
-        replyHex=postTitleHex.substr(maxPostLength)+replyHex;
-        postTitleHex=postTitleHex.substr(0,maxPostLength);
+        replyHex = postTitleHex.substr(maxPostLength) + replyHex;
+        postTitleHex = postTitleHex.substr(0, maxPostLength);
     }
 
     var tx = {
@@ -7226,8 +7268,8 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
         }
     }
 
-    if(quotetxid){
-        
+    if (quotetxid) {
+
         tx = {
             data: ["0x6d0b", "0x" + reversetx, "0x" + postTitleHex],
             cash: { key: privkey }
@@ -7242,11 +7284,11 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
     }
 
 
-    let finishFunction=memorandumpostcompleted;
-    if(replyHex){
-        finishFunction=function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); };
+    let finishFunction = memorandumpostcompleted;
+    if (replyHex) {
+        finishFunction = function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); };
     }
-    
+
     tq.queueTransaction(tx, finishFunction, null);
 }
 
@@ -7307,10 +7349,10 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
     document.getElementById(divForStatus).value = getSafeTranslation('bytesremaining', "Sending Reply . . . bytes remaining . . ") + replyHex.length / 2;
 
     var sendHex = "";
-    
+
     if (replyHex.length > maxhexlength) {
         //Search for whitespace - try to break at a whitespace
-        var whitespaceIndex = maxhexlength-whitespacebreak;
+        var whitespaceIndex = maxhexlength - whitespacebreak;
         var spaceIndex = replyHex.lastIndexOf("20", maxhexlength);
         if (spaceIndex % 2 == 0 && spaceIndex > whitespaceIndex) {
             whitespaceIndex = spaceIndex;
@@ -7324,7 +7366,7 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
             whitespaceIndex = crIndex;
         }
 
-        if (whitespaceIndex > maxhexlength-whitespacebreak) {
+        if (whitespaceIndex > maxhexlength - whitespacebreak) {
             sendHex = replyHex.substring(0, whitespaceIndex);
             replyHex = replyHex.substring(whitespaceIndex);
         } else {
@@ -7361,7 +7403,7 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
 
 
 function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
-    if(!tipAddress || tipAddress=='null'){
+    if (!tipAddress || tipAddress == 'null') {
         alert("No address for tip. Maybe the user needs to set a handle?");
         return;
     }
@@ -7377,7 +7419,7 @@ function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
     tq.queueTransaction(tx, successFunction, null);
 }
 
-function sendLike(txid,privkey) {
+function sendLike(txid, privkey) {
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6d04", "0x" + reversetx],
@@ -7387,7 +7429,7 @@ function sendLike(txid,privkey) {
     tq.queueTransaction(tx);
 }
 
-function memoPinPost(txid, privkey){
+function memoPinPost(txid, privkey) {
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6da9", "0x" + reversetx],
@@ -7406,7 +7448,7 @@ function setProfile() {
     if (!checkForNativeUser()) return false;
 
     document.getElementById('settingsprofiletextbutton').disabled = true;
-    
+
 
     const tx = {
         data: ["0x6d05", newProfile],
@@ -7447,31 +7489,34 @@ function unsubTransaction(topicHOSTILE) {
 }
 
 function addressTransaction(removeElementID, qaddress, actionCode, statusMessage) {
-    
-    //document.getElementById(removeElementID).style.display = "none";
-    var addressraw = getLegacyToHash160(qaddress);
-    const tx = {
-        data: [actionCode, "0x" + addressraw],
-        cash: { key: privkey }
+    try {
+        //document.getElementById(removeElementID).style.display = "none";
+        var addressraw = getLegacyToHash160(qaddress);
+        const tx = {
+            data: [actionCode, "0x" + addressraw],
+            cash: { key: privkey }
+        }
+        updateStatus(statusMessage);
+        tq.queueTransaction(tx);
+    } catch (err) {
+        console.log(err);
     }
-    updateStatus(statusMessage);
-    tq.queueTransaction(tx);
 }
 
-function follow(qaddress,targetpublickey) {
+function follow(qaddress, targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
     }
-    if(isBitCloutUser()){
+    if (isBitCloutUser()) {
         sendBitCloutFollow(targetpublickey);
     }
     sendNostrFollow(targetpublickey);
 }
 
-function unfollow(qaddress,targetpublickey) {
+function unfollow(qaddress, targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
     }
     //if(isBitCloutUser()){
@@ -7480,9 +7525,9 @@ function unfollow(qaddress,targetpublickey) {
     sendNostrUnFollow(targetpublickey);
 }
 
-function mute(qaddress,targetpublickey) {
+function mute(qaddress, targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
     }
     sendNostrMute(targetpublickey);
@@ -7491,9 +7536,9 @@ function mute(qaddress,targetpublickey) {
     //}
 }
 
-function unmute(qaddress,targetpublickey) {
+function unmute(qaddress, targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
     }
     sendNostrUnMute(targetpublickey);
@@ -7504,7 +7549,7 @@ function unmute(qaddress,targetpublickey) {
 
 function sub(topicHOSTILE) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         subTransaction(topicHOSTILE);
     }
     sendNostrSub(topicHOSTILE);
@@ -7515,11 +7560,11 @@ function sub(topicHOSTILE) {
 
 function unsub(topicHOSTILE) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
     }
     sendNostrUnSub(topicHOSTILE);
-    
+
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);
     //}
@@ -8912,7 +8957,11 @@ function trylogin(loginkey, nextpage) {
     }
 
     //getAndPopulateTopicList(false);
-    displayContentBasedOnURLParameters(nextpage);
+    if(newlygeneratedaccount){
+        displayContentBasedOnURLParameters('#settings');
+    }else{
+        displayContentBasedOnURLParameters(nextpage);
+    }
     //make sure these get loaded
     setTimeout(loadBigLibs, 5000);
 
@@ -9836,7 +9885,7 @@ Member.prototype.userHTML = function (includeProfile) {
 };
 
 //Posts and Replies
-function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxid) {
+function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxid, origroottxid) {
     page = page + differentiator;
     var obj = {
         //These must all be HTML safe.
@@ -9847,7 +9896,8 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
         address: pubkey,
         sourcenetwork: sourcenetwork,
         origtxid: origtxid,
-        maxreplylength: maxreplylength
+        maxreplylength: maxreplylength,
+        origroottxid: origroottxid
     }
 
     return templateReplace(replyDivTemplate, obj);
@@ -10133,11 +10183,11 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     }
 
 
-    var votelinks = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
+    var votelinks = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid);
     var age = getAgeHTML(firstseen);
     //var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var tipsandlinks = '';
-    var replydiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID);
+    var replydiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID, roottxid);
 
     var santxid = san(txid);
     var permalink = `p/` + santxid;
@@ -10243,7 +10293,7 @@ function truncateNumber(theNumber){
 }
 
 
-function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted, edit) {
+function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted, edit, roottxid) {
     txid = txid + ""; //ensure txid is a string. Sometimes it is returned as a number.
 
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
@@ -10302,7 +10352,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         highlighted: (ishighlighted ? ` highlight` : ``),
         id: (ishighlighted ? `highlightedcomment` : ``),
         blocked: (blockstxid != null ? `blocked` : ``),
-        votebuttons: getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID),
+        votebuttons: getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid),
         author: theMember.userHTML(true),
         message: message,
         likes: getLikesHTML(txid, likesbalance, differentiator, (likes > 0)),
@@ -10310,7 +10360,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         remembers: getRemembersHTML(txid, differentiator, repostcount, (repostcount > 0), origTXID, sourcenetwork),
         age: getAgeHTML(firstseen, false, permalink),
         replyandtips: getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress, permalink, articlelink),
-        replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID),
+        replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID, roottxid),
         diff: differentiator,
         deleted: (deleted == '1' ? ` deleted` : ''),
         retracted: (deleted == '1' ? ` removed` : ''),
@@ -10377,11 +10427,11 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
     //Caution topicname may contain hostile characters/code
 
     var navheader = `<nav class="filters">`;
-    navheader += `<a data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts" class="` + (order == 'new' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
+    navheader += `<a data-vavilon="VV0106" onclick="nlc();" data-vavilon_title="VV0107" value="new" title="Latest posts" class="` + (order == 'new' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts" class="` + (order == 'hot' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
+    navheader += `<a data-vavilon="VV0104" onclick="nlc();" data-vavilon_title="VV0105" value="hot" title="Hottest posts" class="` + (order == 'hot' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVTop" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="` + (order == 'topd' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Top</a> `;
+    navheader += `<a data-vavilon="VVTop" onclick="nlc();" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="` + (order == 'topd' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Top</a> `;
     navheader += `<span class="separator"></span>`;
     //navheader += `<a data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw" title="Top posts from the past Week" class="` + (order == 'topw' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topw&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Week</a> `;
     //navheader += `<span class="separator"></span>`;
@@ -10389,16 +10439,16 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
     //navheader += `<span class="separator"></span>`;
     //navheader += `<a data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy" title="Top posts from the past Year" class="`+(order=='topy'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topy&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
     //navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="` + (order == 'topa' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
+    navheader += `<a data-vavilon="VV0118" onclick="nlc();" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="` + (order == 'topa' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVold" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="` + (order == 'old' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=old&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Old</a> `;
+    navheader += `<a data-vavilon="VVold" onclick="nlc();" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="` + (order == 'old' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=old&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Old</a> `;
 
     navheader += `<nav class="filterssecondset">`;
-    navheader += `<a data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" class="` + (content == 'posts' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
+    navheader += `<a data-vavilon="VV0120" onclick="nlc();" data-vavilon_title="VV0121" title="See only posts" class="` + (content == 'posts' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" class="` + (content == 'replies' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
+    navheader += `<a data-vavilon="VV0122" onclick="nlc();" data-vavilon_title="VV0123" title="See only replies" class="` + (content == 'replies' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVall" data-vavilon_title="VV0125" title="See both posts and replies" class="` + (content == 'both' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
+    navheader += `<a data-vavilon="VVall" onclick="nlc();" data-vavilon_title="VV0125" title="See both posts and replies" class="` + (content == 'both' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
     navheader += "</nav>";
     navheader += "</nav>";
     return navheader;
@@ -10450,7 +10500,7 @@ function getItemListandNavButtonsHTML(navheader, contentsHTML, navbuttonsHTML, s
     }
 }
 
-function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID) {
+function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID, roottxid) {
 
     var upvoteHTML;
     let scoreHTML = `<span class="betweenvotesscore" id="score` + san(txid) + `">` + Number(score) + `</span>`;
@@ -10460,7 +10510,7 @@ function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, o
         upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a>`;
         scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
     } else {
-        upvoteHTML = `<a id="upvoteaction${san(txid)}" href="javascript:;" onclick="likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0)"><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a>`;
+        upvoteHTML = `<a id="upvoteaction${san(txid)}" href="javascript:;" onclick="likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0,${san(roottxid)})"><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a>`;
     }
 
     if (likeordislike == "-1") {
@@ -10608,8 +10658,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (member.cash)" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
 
     var memberlinksRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})*.*?<\/a>/i;
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})?.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})?.*?<\/a>/i;
     message = message.replace(memberlinksRegex, replaceDiamondApp);
 
     var giphyRegex = global ?
@@ -11530,6 +11580,13 @@ async function broadcastEvent(event,successFunction,useNOS2Xifavailable=true){
     relays.push("wss://nostr.openchain.fr");
     relays.push("wss://relay.nostr.ch");
     relays.push("wss://nostr-pub.wellorder.net");
+    relays.push("wss://relay.damus.io");
+    relays.push("wss://nostr-relay.wlvs.space");
+    relays.push("wss://nostr.fmt.wiz.biz");
+    relays.push("wss://relay.nostr.bg");
+    relays.push("wss://nostr.oxtr.dev");
+    relays.push("wss://nostr.v0l.io");
+    relays.push("wss://nostr-2.zebedee.cloud");
     /*
     relays.push("wss://relay.nostr.info");
     relays.push("wss://nostr-relay.wlvs.space");
@@ -11634,27 +11691,36 @@ async function nostrLikePost(origtxid){
     signAndBroadcastEvent(event, null);
 }
 
-async function sendNostrReply(txid, replytext, divForStatus, successFunction){
+async function sendNostrReply(txid, replytext, divForStatus, successFunction, roottxid){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
+    //note incorrect roottxid provide currently, must update db
     let event = {
         kind: 1,
         pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
-        tags: [["e", txid,'','reply']],
+        tags: [
+            //["e", roottxid,'','root'],
+            ["e", txid,'','reply']
+        ],
+        //tags: [["e", txid]],
         content: replytext
     }
 
     signAndBroadcastEvent(event, successFunction);
 }
 
-async function sendNostrQuotePost(posttext, topic, txid, divForStatus, successFunction){
+async function sendNostrQuotePost(posttext, topic, txid, divForStatus, successFunction, roottxid){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    //note incorrect roottxid provide currently, must update db
     let event = {
         kind: 1,
         pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
-        tags: [["e", txid, '', 'repost']],
+        tags: [
+            //["e", roottxid,'','root'],
+            ["e", txid, '', 'repost']
+        ],
         content: posttext
     }
     signAndBroadcastEvent(event, successFunction);
@@ -11780,7 +11846,7 @@ User Rating 	0x6da5 	address(20),message(196)
 async function sendNostrFollow(followpubkey){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype='p';
-    if(followpubkey.length=33){
+    if(followpubkey.length==66){
         keytype='cecdsa';
     }
     let event = {
@@ -11797,7 +11863,7 @@ async function sendNostrFollow(followpubkey){
 async function sendNostrUnFollow(followpubkey){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype='p';
-    if(followpubkey.length=33){
+    if(followpubkey.length==66){
         keytype='cecdsa';
     }
     let event = {
@@ -11856,5 +11922,5 @@ async function sendNostrUnSub(topicHOSTILE){
 // skip for now
 //async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null)
 
-var version = '8.10.11'; 
+var version = '8.10.16'; 
 if (init) { init(); } 

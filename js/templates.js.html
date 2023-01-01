@@ -192,6 +192,9 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
+        <span data-vavilon="VV0019n3">*New and Nostr Users. Click 'Make New Phrase'.</span><br />
+    </div>
+    <div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
             access.</span><br />
     </div>
@@ -870,6 +873,18 @@ pages.settings = `
         <textarea id="mutedwords" name="text" rows="4" cols="60" onchange="updatemutedwords();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
     </div>
+    <div>
+        <label data-vavilon="mutednetworks">Muted Networks</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="mutebitclout" onchange="updateSettingsCheckbox('mutebitclout');">
+        <label data-vavilon="mutebitclout" for="mutebitclout" class="checkboxlabel">Mute Bitclout</label>
+    </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="mutenostr" onchange="updateSettingsCheckbox('mutenostr');">
+        <label data-vavilon="mutenostr" for="mutenostr" class="checkboxlabel">Mute Nostr</label>
+    </div>
+
     <div>
         <label data-vavilon="VV0087" for="mediasettings" class="labelheader">Media Settings</label>
     </div>

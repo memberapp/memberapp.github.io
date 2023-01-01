@@ -163,7 +163,11 @@ function trylogin(loginkey, nextpage) {
     }
 
     //getAndPopulateTopicList(false);
-    displayContentBasedOnURLParameters(nextpage);
+    if(newlygeneratedaccount){
+        displayContentBasedOnURLParameters('#settings');
+    }else{
+        displayContentBasedOnURLParameters(nextpage);
+    }
     //make sure these get loaded
     setTimeout(loadBigLibs, 5000);
 

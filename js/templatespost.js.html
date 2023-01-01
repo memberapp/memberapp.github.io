@@ -48,7 +48,7 @@ var postCompactTemplate = `
                     </span>
                     <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvotecontainer{txid}">
                         <a id="upvoteaction{txid}" href="javascript:;"
-                            onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0)" class="btn-icon"
+                            onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0,'{roottxid}')" class="btn-icon"
                             data-action="like">
                             <span class="likeicon">
                                 <span class="emojiicon">💙</span>
@@ -317,7 +317,7 @@ var replyDivTemplate = `
         oninput="this.onchange();"></textarea>
         <br />
         <input id="replybutton{page}{txid}" value="reply" type="submit"
-            onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}');" />
+            onclick="sendReply('{txid}','{page}','replystatus{page}{txid}','{sourcenetwork}','{origtxid}','{origroottxid}');" />
         <input data-vavilon_value="VV0154" id="replystatus{page}{txid}" value="sending..." type="submit"
             style="display:none" disabled />
         <div id="replycompleted{page}{txid}" value=""></div>

@@ -1,7 +1,7 @@
 "use strict";
 
 function checkForPrivKey() {
-    if(isBitCloutUser()){
+    if (isBitCloutUser()) {
         return true;
     }
     return checkForNativeUser();
@@ -24,7 +24,7 @@ function checkForNativeUser() {
     return true;
 }
 
-function checkForNativeUserAndHasBalance(){
+function checkForNativeUserAndHasBalance() {
     return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
 }
 
@@ -58,7 +58,7 @@ function repost(txid, privkey) {
     tq.queueTransaction(tx);
 }
 
-function setTrxPic(newName,callback) {
+function setTrxPic(newName, callback) {
     if (!checkForNativeUser()) return false;
     //if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
     //    alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
@@ -71,13 +71,13 @@ function setTrxPic(newName,callback) {
     updateStatus(getSafeTranslation('settingpic', "Setting Profile Pic"));
 
     //TODO, on error, this should really enable the text field and text button again
-    tq.queueTransaction(tx,callback);
+    tq.queueTransaction(tx, callback);
 }
 
 
 function setName() {
     var newName = document.getElementById('settingsnametext').value;
-    
+
     //setNostrProfile('name',newName);
     setNostrProfile();
 
@@ -152,19 +152,19 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
     let postTitleHex = new Buffer(posttext).toString('hex');
     let replyHex = new Buffer(postbody).toString('hex');
 
-    var maxPostLength=maxhexlength;
-    if(topic){
-        maxPostLength=maxPostLength-4-topic.toString('hex').length;
+    var maxPostLength = maxhexlength;
+    if (topic) {
+        maxPostLength = maxPostLength - 4 - topic.toString('hex').length;
     }
-    if(quotetxid){
+    if (quotetxid) {
         var reversetx = quotetxid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
-        maxPostLength=maxPostLength-4-reversetx.toString('hex').length;
+        maxPostLength = maxPostLength - 4 - reversetx.toString('hex').length;
     }
 
     //If the title is too long, put the excess in the reply. todo - find a natural breakpoint, see sendreplyraw for code
     if (postTitleHex.length > maxPostLength) {
-        replyHex=postTitleHex.substr(maxPostLength)+replyHex;
-        postTitleHex=postTitleHex.substr(0,maxPostLength);
+        replyHex = postTitleHex.substr(maxPostLength) + replyHex;
+        postTitleHex = postTitleHex.substr(0, maxPostLength);
     }
 
     var tx = {
@@ -179,8 +179,8 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
         }
     }
 
-    if(quotetxid){
-        
+    if (quotetxid) {
+
         tx = {
             data: ["0x6d0b", "0x" + reversetx, "0x" + postTitleHex],
             cash: { key: privkey }
@@ -195,11 +195,11 @@ function postmemorandumRaw(posttext, postbody, privkey, topic, newpostmemorandum
     }
 
 
-    let finishFunction=memorandumpostcompleted;
-    if(replyHex){
-        finishFunction=function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); };
+    let finishFunction = memorandumpostcompleted;
+    if (replyHex) {
+        finishFunction = function (newtxid) { sendReplyRaw(privkey, newtxid, replyHex, 5000, newpostmemorandumstatus, memorandumpostcompleted); };
     }
-    
+
     tq.queueTransaction(tx, finishFunction, null);
 }
 
@@ -260,10 +260,10 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
     document.getElementById(divForStatus).value = getSafeTranslation('bytesremaining', "Sending Reply . . . bytes remaining . . ") + replyHex.length / 2;
 
     var sendHex = "";
-    
+
     if (replyHex.length > maxhexlength) {
         //Search for whitespace - try to break at a whitespace
-        var whitespaceIndex = maxhexlength-whitespacebreak;
+        var whitespaceIndex = maxhexlength - whitespacebreak;
         var spaceIndex = replyHex.lastIndexOf("20", maxhexlength);
         if (spaceIndex % 2 == 0 && spaceIndex > whitespaceIndex) {
             whitespaceIndex = spaceIndex;
@@ -277,7 +277,7 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
             whitespaceIndex = crIndex;
         }
 
-        if (whitespaceIndex > maxhexlength-whitespacebreak) {
+        if (whitespaceIndex > maxhexlength - whitespacebreak) {
             sendHex = replyHex.substring(0, whitespaceIndex);
             replyHex = replyHex.substring(whitespaceIndex);
         } else {
@@ -314,7 +314,7 @@ async function sendReplyRaw(privatekey, txid, replyHex, waitTimeMilliseconds, di
 
 
 function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
-    if(!tipAddress || tipAddress=='null'){
+    if (!tipAddress || tipAddress == 'null') {
         alert("No address for tip. Maybe the user needs to set a handle?");
         return;
     }
@@ -330,7 +330,7 @@ function sendTipRaw(txid, tipAddress, tipAmount, privkey, successFunction) {
     tq.queueTransaction(tx, successFunction, null);
 }
 
-function sendLike(txid,privkey) {
+function sendLike(txid, privkey) {
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6d04", "0x" + reversetx],
@@ -340,7 +340,7 @@ function sendLike(txid,privkey) {
     tq.queueTransaction(tx);
 }
 
-function memoPinPost(txid, privkey){
+function memoPinPost(txid, privkey) {
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
         data: ["0x6da9", "0x" + reversetx],
@@ -359,7 +359,7 @@ function setProfile() {
     if (!checkForNativeUser()) return false;
 
     document.getElementById('settingsprofiletextbutton').disabled = true;
-    
+
 
     const tx = {
         data: ["0x6d05", newProfile],
@@ -400,31 +400,34 @@ function unsubTransaction(topicHOSTILE) {
 }
 
 function addressTransaction(removeElementID, qaddress, actionCode, statusMessage) {
-    
-    //document.getElementById(removeElementID).style.display = "none";
-    var addressraw = getLegacyToHash160(qaddress);
-    const tx = {
-        data: [actionCode, "0x" + addressraw],
-        cash: { key: privkey }
+    try {
+        //document.getElementById(removeElementID).style.display = "none";
+        var addressraw = getLegacyToHash160(qaddress);
+        const tx = {
+            data: [actionCode, "0x" + addressraw],
+            cash: { key: privkey }
+        }
+        updateStatus(statusMessage);
+        tq.queueTransaction(tx);
+    } catch (err) {
+        console.log(err);
     }
-    updateStatus(statusMessage);
-    tq.queueTransaction(tx);
 }
 
-function follow(qaddress,targetpublickey) {
+function follow(qaddress, targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
     }
-    if(isBitCloutUser()){
+    if (isBitCloutUser()) {
         sendBitCloutFollow(targetpublickey);
     }
     sendNostrFollow(targetpublickey);
 }
 
-function unfollow(qaddress,targetpublickey) {
+function unfollow(qaddress, targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
     }
     //if(isBitCloutUser()){
@@ -433,9 +436,9 @@ function unfollow(qaddress,targetpublickey) {
     sendNostrUnFollow(targetpublickey);
 }
 
-function mute(qaddress,targetpublickey) {
+function mute(qaddress, targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
     }
     sendNostrMute(targetpublickey);
@@ -444,9 +447,9 @@ function mute(qaddress,targetpublickey) {
     //}
 }
 
-function unmute(qaddress,targetpublickey) {
+function unmute(qaddress, targetpublickey) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
     }
     sendNostrUnMute(targetpublickey);
@@ -457,7 +460,7 @@ function unmute(qaddress,targetpublickey) {
 
 function sub(topicHOSTILE) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         subTransaction(topicHOSTILE);
     }
     sendNostrSub(topicHOSTILE);
@@ -468,11 +471,11 @@ function sub(topicHOSTILE) {
 
 function unsub(topicHOSTILE) {
     if (!checkForPrivKey()) return false;
-    if(checkForNativeUserAndHasBalance()){
+    if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
     }
     sendNostrUnSub(topicHOSTILE);
-    
+
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);
     //}

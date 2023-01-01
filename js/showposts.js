@@ -99,14 +99,24 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
         }
 
+        let filtereditems=0;
         for (var i = 0; i < data.length; i++) {
             try {
                 if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
                 if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
-                contents = contents + getPostListItemHTML(getHTMLForPost(data[i], i + 1, page, i, null, false, true, false));
+                let postHTML=getHTMLForPost(data[i], i + 1, page, i, null, false, true, false);
+                if(postHTML){
+                    contents = contents + getPostListItemHTML(postHTML);
+                }else{
+                    filtereditems++;
+                }
             } catch (err) {
                 console.log(err);
             }
+        }
+
+        if(filtereditems){
+            contents += getDivClassHTML('message', filtereditems + getSafeTranslation("filtereditems", " posts have been hidden based on your content and network filters."));
         }
 
         if (contents == "") {
@@ -607,6 +617,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
     //Always show if post is directly requested
     if (!alwaysShow) {
         if (checkForMutedWords(data)) return "";
+        if (checkForMutedNetworks(data)) return "";
         if (data.moderated != null) return "";
     }
 
@@ -632,9 +643,9 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 
         //this is a quick hack to filter out multiple edits
         //a genuine response to self is also removed. look at this when revisiting edited posts
-        if (data.address && (data.address == data.opaddress)) {
+        /*if (data.address && (data.address == data.opaddress)) {
             return '';
-        }
+        }*/
 
         //post with message
         if (repostHTML2) {
@@ -671,7 +682,7 @@ function getHTMLForReply(data, depth, page, starindex) {
     if (checkForMutedWords(data)) return "";
     let mainRatingID = starindex + page + ds(data.address);
     let member = MemberFromData(data, '', mainRatingID);
-    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit);
+    return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit, data.roottxid);
 }
 
 function showReplyButton(txid, page, divForStatus) {
@@ -679,7 +690,7 @@ function showReplyButton(txid, page, divForStatus) {
     document.getElementById("replytext" + page + txid).value = "";
 }
 
-function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, network) {
+function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
     if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
@@ -701,8 +712,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
         function (membertxid) {
             replySuccessFunction(page, txid);
             if (isBitCloutUser()) {
-                //sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-                sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+                sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+                //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
             }
         };
 
@@ -711,7 +722,7 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, netw
         successFunction = null;
     }
 
-    sendNostrReply(origtxid, replytext, divForStatus, successFunction, parentSourceNetwork);
+    sendNostrReply(origtxid, replytext, divForStatus, successFunction, origroottxid);
 
     return true;
 }
@@ -809,7 +820,7 @@ function pinpost(txid) {
     }
 }
 
-function likePost(txid, origtxid, tipAddress, amountSats) {
+function likePost(txid, origtxid, tipAddress, amountSats, roottxid=null) {
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
@@ -838,7 +849,7 @@ function likePost(txid, origtxid, tipAddress, amountSats) {
         }
     }
 
-    nostrLikePost(origtxid);
+    nostrLikePost(origtxid, roottxid);
 }
 
 function dislikePost(txid, origtxid) {
@@ -914,16 +925,29 @@ function showMore(show, hide) {
 }
 
 function checkForMutedWords(data) {
+    
     for (var i = 0; i < mutedwords.length; i++) {
         if (mutedwords[i] == "") continue;
         var checkfor = mutedwords[i].toLowerCase();
-        if (data.message != undefined && data.message.toLowerCase().contains(checkfor)) return true;
-        if (data.name != undefined && data.name.toLowerCase().contains(checkfor)) return true;
+        if (data.message && data.message.toLowerCase().contains(checkfor)) return true;
+        if (data.name && data.name.toLowerCase().contains(checkfor)) return true;
         data.address = data.address + "";//Ensure data address is a string.
-        if (data.address != undefined && data.address.toLowerCase().contains(checkfor)) return true;
-        if (data.topic != undefined && ("(" + data.topic.toLowerCase() + ")").contains(checkfor)) return true;
+        if (data.address && data.address.toLowerCase().contains(checkfor)) return true;
+        if (data.topic && ("(" + data.topic.toLowerCase() + ")").contains(checkfor)) return true;
 
     }
+    return false;
+}
+
+function checkForMutedNetworks(data) {
+    
+    if(settings["mutebitclout"] == "true" && data.network==1){
+        return true;
+    }
+    if(settings["mutenostr"] == "true" && data.network==5){
+        return true;
+    }
+
     return false;
 }
 

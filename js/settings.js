@@ -164,7 +164,7 @@ async function getDataMemberFinally(data) {
     }
 
     if (data && data[0] && !data[0].hivename && data[0].publickey) { //don't show bcaddress for hivename - publickey is not correct yet
-        var bcaddress = await pubkeyToBCaddress(data[0].publickey);
+        var bcaddress =pubkeyToBitcloutAddress(data[0].publickey);
         obj.bcaddress = bcaddress;
     }
 
@@ -291,10 +291,10 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
 
     if (data && data[0] && data[0].publickey) {
-        var bcaddress = await pubkeyToBCaddress(data[0].publickey);
+        var bcaddress =pubkeyToBitcloutAddress(data[0].publickey);
         obj.bcaddress = bcaddress;
     } else if (qaddress == pubkey && pubkeyhex) {
-        var bcaddress = await pubkeyToBCaddress(pubkeyhex);
+        var bcaddress =pubkeyToBitcloutAddress(pubkeyhex);
         obj.bcaddress = bcaddress;
     }
     obj.version = version;
@@ -326,7 +326,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
 async function populateTools() {
 
-    var bcaddress = await pubkeyToBCaddress(pubkeyhex);
+    var bcaddress =pubkeyToBitcloutAddress(pubkeyhex);
     var obj = {
         address: pubkey,
         cashaddress: legacyToNativeCoin(pubkey),

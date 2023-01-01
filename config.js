@@ -9,7 +9,7 @@ var profilepicbase = 'img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 var siteTitle = 'member.cash';
 var theStyle = 'feels compact';
-var maxScoreToCollapseComment = 64;
+var maxScoreToCollapseComment = 32;
 var bitcoinjslib = "js/lib/bitcoincashjs-lib-5.2.0-bitcoinmessage.min.js";
 //var bitcoinjslib = "js/lib/bitcoinjs-lib-5.2.0.js";
 var allowBitcloutUser = true;
@@ -61,7 +61,9 @@ var settings = {
     "showlbry": "true",
     "showbitclout": "true",
     "shownonameposts": "false",
-    "shownopicposts": "true"
+    "shownopicposts": "true",
+    "mutenostr" : "false",
+    "mutebitclout" : "false",
 };
 var dropdowns = {
     "contentserver": "https://member.cash/v2/member.js",

@@ -186,7 +186,7 @@ Member.prototype.userHTML = function (includeProfile) {
 };
 
 //Posts and Replies
-function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxid) {
+function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxid, origroottxid) {
     page = page + differentiator;
     var obj = {
         //These must all be HTML safe.
@@ -197,7 +197,8 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
         address: pubkey,
         sourcenetwork: sourcenetwork,
         origtxid: origtxid,
-        maxreplylength: maxreplylength
+        maxreplylength: maxreplylength,
+        origroottxid: origroottxid
     }
 
     return templateReplace(replyDivTemplate, obj);
@@ -483,11 +484,11 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     }
 
 
-    var votelinks = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
+    var votelinks = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid);
     var age = getAgeHTML(firstseen);
     //var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var tipsandlinks = '';
-    var replydiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID);
+    var replydiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID, roottxid);
 
     var santxid = san(txid);
     var permalink = `p/` + santxid;
@@ -593,7 +594,7 @@ function truncateNumber(theNumber){
 }
 
 
-function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted, edit) {
+function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, page, ishighlighted, likedtxid, likeordislike, blockstxid, differentiator, topicHOSTILE, moderatedtxid, repostcount, repostidtxid, sourcenetwork, hivelink, deleted, edit, roottxid) {
     txid = txid + ""; //ensure txid is a string. Sometimes it is returned as a number.
 
     let origTXID = hivelink; //This is used when replying, reposting, or other onchain actions
@@ -652,7 +653,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         highlighted: (ishighlighted ? ` highlight` : ``),
         id: (ishighlighted ? `highlightedcomment` : ``),
         blocked: (blockstxid != null ? `blocked` : ``),
-        votebuttons: getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID),
+        votebuttons: getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid),
         author: theMember.userHTML(true),
         message: message,
         likes: getLikesHTML(txid, likesbalance, differentiator, (likes > 0)),
@@ -660,7 +661,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         remembers: getRemembersHTML(txid, differentiator, repostcount, (repostcount > 0), origTXID, sourcenetwork),
         age: getAgeHTML(firstseen, false, permalink),
         replyandtips: getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress, permalink, articlelink),
-        replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID),
+        replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID, roottxid),
         diff: differentiator,
         deleted: (deleted == '1' ? ` deleted` : ''),
         retracted: (deleted == '1' ? ` removed` : ''),
@@ -727,11 +728,11 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
     //Caution topicname may contain hostile characters/code
 
     var navheader = `<nav class="filters">`;
-    navheader += `<a data-vavilon="VV0106" data-vavilon_title="VV0107" value="new" title="Latest posts" class="` + (order == 'new' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
+    navheader += `<a data-vavilon="VV0106" onclick="nlc();" data-vavilon_title="VV0107" value="new" title="Latest posts" class="` + (order == 'new' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0104" data-vavilon_title="VV0105" value="hot" title="Hottest posts" class="` + (order == 'hot' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
+    navheader += `<a data-vavilon="VV0104" onclick="nlc();" data-vavilon_title="VV0105" value="hot" title="Hottest posts" class="` + (order == 'hot' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVTop" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="` + (order == 'topd' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Top</a> `;
+    navheader += `<a data-vavilon="VVTop" onclick="nlc();" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="` + (order == 'topd' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Top</a> `;
     navheader += `<span class="separator"></span>`;
     //navheader += `<a data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw" title="Top posts from the past Week" class="` + (order == 'topw' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topw&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Week</a> `;
     //navheader += `<span class="separator"></span>`;
@@ -739,16 +740,16 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
     //navheader += `<span class="separator"></span>`;
     //navheader += `<a data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy" title="Top posts from the past Year" class="`+(order=='topy'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topy&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
     //navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0118" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="` + (order == 'topa' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
+    navheader += `<a data-vavilon="VV0118" onclick="nlc();" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="` + (order == 'topa' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVold" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="` + (order == 'old' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=old&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Old</a> `;
+    navheader += `<a data-vavilon="VVold" onclick="nlc();" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="` + (order == 'old' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=old&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Old</a> `;
 
     navheader += `<nav class="filterssecondset">`;
-    navheader += `<a data-vavilon="VV0120" data-vavilon_title="VV0121" title="See only posts" class="` + (content == 'posts' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
+    navheader += `<a data-vavilon="VV0120" onclick="nlc();" data-vavilon_title="VV0121" title="See only posts" class="` + (content == 'posts' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0122" data-vavilon_title="VV0123" title="See only replies" class="` + (content == 'replies' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
+    navheader += `<a data-vavilon="VV0122" onclick="nlc();" data-vavilon_title="VV0123" title="See only replies" class="` + (content == 'replies' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
     navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVall" data-vavilon_title="VV0125" title="See both posts and replies" class="` + (content == 'both' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
+    navheader += `<a data-vavilon="VVall" onclick="nlc();" data-vavilon_title="VV0125" title="See both posts and replies" class="` + (content == 'both' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
     navheader += "</nav>";
     navheader += "</nav>";
     return navheader;
@@ -800,7 +801,7 @@ function getItemListandNavButtonsHTML(navheader, contentsHTML, navbuttonsHTML, s
     }
 }
 
-function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID) {
+function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID, roottxid) {
 
     var upvoteHTML;
     let scoreHTML = `<span class="betweenvotesscore" id="score` + san(txid) + `">` + Number(score) + `</span>`;
@@ -810,7 +811,7 @@ function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, o
         upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a>`;
         scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
     } else {
-        upvoteHTML = `<a id="upvoteaction${san(txid)}" href="javascript:;" onclick="likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0)"><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a>`;
+        upvoteHTML = `<a id="upvoteaction${san(txid)}" href="javascript:;" onclick="likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0,${san(roottxid)})"><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a>`;
     }
 
     if (likeordislike == "-1") {
@@ -958,8 +959,8 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
     message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (member.cash)" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
 
     var memberlinksRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})*.*?<\/a>/i;
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})?.*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})?.*?<\/a>/i;
     message = message.replace(memberlinksRegex, replaceDiamondApp);
 
     var giphyRegex = global ?
