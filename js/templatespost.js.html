@@ -64,7 +64,7 @@ var postCompactTemplate = `
                     </span>
                     <span class="post-footer-downvote{dislikeactivated} post-footer-relative"
                         id="downvotecontainer{txid}">
-                        <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{origtxid}')"
+                        <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{origtxid}','{roottxid}')"
                             class="btn-icon" data-action="dislike">
                             <span class="dislikeicon">
                                 <span class="emojiicon">👎</span>
@@ -87,7 +87,7 @@ var postCompactTemplate = `
                                 <a onclick="repostPost('{txid}','{origtxid}','{sourcenetwork}');"><span
                                         data-vavilon="remember">remember</span></a>
                                 <a
-                                    onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={origtxid}';"><span
+                                    onclick="nlc(); location.href='#new?txid={origtxid}';"><span
                                         data-vavilon="VV0158">quote</span></a>
                             </div>
                         </a>
@@ -136,7 +136,7 @@ var postCompactTemplate = `
                                     data-vavilon="permalink">Permalink</span></a>
                             <a id="articlelinkposts{diff}{txid}" href="{articlelink}"><span
                                     data-vavilon="article">Article</span></a>
-                            <a id="dislikepost{diff}{txid}" onclick="dislikePost('{txid}','{origtxid}')"
+                            <a id="dislikepost{diff}{txid}" onclick="dislikePost('{txid}','{origtxid}','{roottxid}')"
                                 href="javascript:;"><span data-vavilon="downvote">Downvote</span></a>
 
                             <!--<a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
@@ -152,6 +152,8 @@ var postCompactTemplate = `
                             <a rel="noopener noreferrer" target="bitcoincom"
                                 href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>
                             <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>-->
+                            {followbuttonHTML}
+                            {mutebuttonHTML}
                             {pinnedpostHTML}
                             {sourceNetworkHTML}
                         </div>
@@ -176,7 +178,9 @@ var postCompactTemplate = `
 
 var completedPostTemplate=`
 <span data-vavilon="messagesent">Sent.</span>
-<!--<a data-vavilon="VV0145" onclick="showThread('{txid}')" href="#thread?post={txid}" onclick="nlc();">View It</a> or-->
+<!--<a data-vavilon="VV0145" onclick="showThread('{txid}')" href="#thread?post={txid}" onclick="nlc();">View It</a>-->
+<a data-vavilon="VV0145" onclick="showThread('{txid}')" href="#show?start=0&limit=25&order=new&content=both&minrating=0&filter=everyone&qaddress={address}" onclick="nlc();">View It</a>
+
 <!--<a data-vavilon="VV0146" href="javascript;"
     onclick="window.open('{encodedurl}', 'twitterwindow', 'width=300,height=250');return false;">Also
     Post To Twitter (opens a new window)</a>-->
@@ -195,8 +199,8 @@ var userCompactTemplate=`
         </a>
     </span>
     <span class="starratingcompact">
-        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingaddress="{bitcoinaddress}"
-            data-ratingraw="{rating}" id="ratingposts{diff}" data-ratingsystem={systemscoreclass}
+        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingpublickey="{bitcoinaddress}"
+            data-ratingraw="{rating}" id="ratingposts{diff}" data-ratingdisabled="true" data-ratingsystem={systemscoreclass} 
             class="star-rating-compact"></span>
     </span>
     {flair}
@@ -219,8 +223,8 @@ var userProfileCompactTemplate=`
                 <span class="member-handle">{handle}</span>
             </a>
             <span class="starrating">
-                <span data-ratingsize="16" data-ratingaddress="{bitcoinaddress}" data-ratingraw="{rating}"
-                    data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" class="star-rating"></span>
+                <span data-ratingsize="16" data-ratingpublickey="{bitcoinaddress}" data-ratingraw="{rating}"
+                    data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" data-ratingdisabled="true" class="star-rating"></span>
             </span>
             {flair}
             <br />

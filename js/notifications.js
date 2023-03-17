@@ -67,10 +67,10 @@ function populateNotificationTab(limit, nfilter, minrating) {
     <span class="separator"></span>
     <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+ (nfilter == 'repost' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=repost` + options + `">Remembers</a>
     <span class="separator"></span>
-    <a data-vavilon="notificationpurchase" data-vavilon_title="notificationpurchase" title="See only creator coin purchases" class="`+ (nfilter == 'purchase' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=purchase` + options + `">Buys</a>
+    <!--<a data-vavilon="notificationpurchase" data-vavilon_title="notificationpurchase" title="See only creator coin purchases" class="`+ (nfilter == 'purchase' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=purchase` + options + `">Buys</a>
     <span class="separator"></span>
     <a data-vavilon="notificationsale" data-vavilon_title="notificationsale" title="See only creator coin sales" class="`+ (nfilter == 'sale' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=sale` + options + `">Sells</a>
-    <span class="separator"></span>
+    <span class="separator"></span>-->
     <nav class="filterssecondset">
         <span class="starratingnotifications">
             <span data-ratingsize="16" id="notificationsfilter" class="star-rating-notifications"></span>
@@ -87,6 +87,7 @@ function populateNotificationTab(limit, nfilter, minrating) {
 
 
     notificationFilter.element = raterJs({
+        extraClass: "systemscore",
         starSize: Number(notificationFilter.element.dataset.ratingsize),
         rating: notificationFilter.minrating,
         element: notificationFilter.element,
@@ -216,7 +217,7 @@ notificationFilter.limit = 25;
 
 
 function getHTMLForNotification(data, rank, page, starindex, highlighted) {
-    if (checkForMutedWords(data)) return "";
+    if (checkForMutedWords(data)) return ""; //note, no check for muted network
     let type = ds(data.type);
     let mainRatingID = starindex + page + ds(data.origin);
     let postRatingID = "";

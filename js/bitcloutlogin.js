@@ -83,9 +83,9 @@ function getBitCloutLoginFromLocalStorage() {
     bitCloutIDProvider = 'https://identity.deso.org';
   }
 
-  if (bitCloutUserData) {
+  /*if (bitCloutUserData) {
     insertBitcloutIdentityFrame(bitCloutIDProvider);
-  }
+  }*/
 }
 
 function handleLoginBitclout(payload) {
@@ -587,8 +587,8 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
-  replytext="https://member.cash/p/"+membertxid.substr(0,10);
-  //replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
+  //replytext="https://member.cash/p/"+membertxid.substr(0,10);
+  replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
     
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
@@ -654,7 +654,7 @@ async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, succes
 async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null) {
   var txid = await sendBitCloutPost(posttext, topic, divForStatus, null, null, imageURL);
   if (postbody) {
-    return await sendBitCloutReply(txid, postbody, divForStatus, successFunction, imageURL);
+    return await sendBitCloutReply(txid, postbody, divForStatus, successFunction, 1, null, imageURL);
   } else {
     if (successFunction) { successFunction(txid, posttext) };
     return txid;

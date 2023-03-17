@@ -22,75 +22,103 @@
 
     <meta http-equiv="Content-Security-Policy" content=" 
         script-src 
-            'self' 
-            'unsafe-inline' 
-            https://www.google-analytics.com 
-            https://ssl.google-analytics.com 
-            https://www.googletagmanager.com;
+'self' 
+'unsafe-inline' 
+https://www.google-analytics.com 
+https://ssl.google-analytics.com 
+https://www.googletagmanager.com;
         connect-src 
-            'self' 
-            https://member.cash/
-            https://doge.hair/ 
-            http://127.0.0.1:3123/ 
-            http://localhost:3123/ 
-            https://www.google-analytics.com
-            wss://relay.damus.io
-            wss://relay.nostr.info
-            wss://nostr.openchain.fr
-            wss://relay.nostr.ch
-            wss://nostr.rocks
-            wss://relay.nostr.info
-            wss://nostr-relay.wlvs.space
-            wss://nostr.rocks
-            wss://nostr-relay.untethr.me
-            wss://nostr-pub.wellorder.net
-            wss://nostr.onsats.org
-            wss://nostr.semisol.dev
-            wss://nostr-pub.semisol.dev
-            wss://nostr-verified.wellorder.net
-            wss://nostr.drss.io
-            wss://relay.damus.io
-            wss://nostr.openchain.fr
-            wss://nostr.delo.software
-            wss://relay.minds.com/nostr/v1/ws
-            wss://nostr.zaprite.io
-            wss://nostr.oxtr.dev
-            wss://nostr.ono.re
-            wss://relay.grunch.dev
-            wss://nostr.sandwich.farm
-            wss://relay.nostr.ch
-            wss://nostr.fmt.wiz.biz
-            wss://relay.damus.io
-            wss://nostr-relay.wlvs.space
-            wss://nostr.fmt.wiz.biz
-            wss://relay.nostr.bg
-            wss://nostr.oxtr.dev
-            wss://nostr.v0l.io
-            wss://nostr-2.zebedee.cloud
-            ; 
+'self' 
+https://member.cash/
+http://127.0.0.1:3123/ 
+http://localhost:3123/ 
+https://www.google-analytics.com
+wss://nostr.member.cash
+wss://relay.damus.io
+wss://relay.nostr.info
+wss://nostr.openchain.fr
+wss://relay.nostr.ch
+wss://nostr.rocks
+wss://nostr-relay.wlvs.space
+wss://nostr-relay.untethr.me
+wss://nostr-pub.wellorder.net
+wss://nostr.semisol.dev
+wss://nostr-pub.semisol.dev
+wss://nostr-verified.wellorder.net
+wss://nostr.drss.io
+wss://nostr.delo.software
+wss://relay.minds.com/nostr/v1/ws
+wss://nostr.zaprite.io
+wss://nostr.oxtr.dev
+wss://nostr.ono.re
+wss://relay.grunch.dev
+wss://nostr.sandwich.farm
+wss://nostr.fmt.wiz.biz
+wss://relay.nostr.bg
+wss://nostr.v0l.io
+wss://nostr-2.zebedee.cloud
+wss://nostr.onsats.org
+wss://nostr.bitcoiner.social
+wss://nostr.zebedee.cloud
+wss://nostr.walletofsatoshi.com
+wss://nostr.band
+wss://relay.snort.social
+wss://eden.nostr.land
+wss://nostr.orangepill.dev 
+wss://nostrical.com
+wss://no.str.cr
+wss://nostr.fly.dev       
+wss://eden.nostr.land	
+wss://nostr.milou.lol	
+wss://puravida.nostr.land
+wss://relay.nostr.com.au
+wss://relay.orangepill.dev
+wss://nostr.wine
+wss://nostr.inosta.cc
+wss://relay.nostrati.com
+wss://atlas.nostr.land
+wss://relay.nostriches.org
+wss://relay.nostrich.land
+wss://nostr.decentony.com
+wss://bitcoiner.social
+wss://private.red.gb.net
+wss://nostr.gives.africa
+wss://nostr.uselessshit.co
+wss://nostr.ownscale.org
+wss://nostr.howtobitcoin.shop
+wss://nostr.bitcoinpuertori.co
+wss://paid.spore.ws
+wss://nostr.naut.social
+wss://lightningrelay.com
+wss://relay.stonez.me
+wss://relay.orange-crush.com
+wss://relay.nostrview.com
+wss://nostr.easify.de
+wss://relay.nostr.distrl.net
+wss://nostream.denizenid.com
+; 
         media-src 
-            https://imgur.com 
-            https://i.imgur.com/; 
+*; 
         img-src
-            *
-            data:; 
+*
+data:; 
         frame-src 
-            'self' 
-            https://identity.love4src.com/ 
-            https://identity.bitclout.com/
-            https://identity.deso.org/ 
-            https://www.youtube.com/  
-            https://nitter.net/ 
-            https://twitframe.com/ 
-            https://img.youtube.com/vi/;
+'self' 
+https://identity.love4src.com/ 
+https://identity.bitclout.com/
+https://identity.deso.org/ 
+https://www.youtube.com/  
+https://nitter.net/ 
+https://twitframe.com/ 
+https://img.youtube.com/vi/;
         object-src 
-            'none';">
+'none';">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!--  Progressive Web App Service Worker -->
     <link rel="manifest" href="pwa/manifest.webmanifest" type="application/manifest+json">
-    <script src="pwa/pwa2.js?8.10.16"></script>
+    <script defer src="pwa/pwa2.js?8.13.3"></script>
 
     <!-- DNS-prefetch resource hints  
     <link rel="preconnect" href="https://twitframe.com" />
@@ -111,18 +139,21 @@
     <link id="mde1style" rel="stylesheet" >
     <link id="mde2style" rel="stylesheet" >
 
-    <link id="pagestyle" rel="stylesheet" href="css/feels.css?8.10.16">
-    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?8.10.16">
+    <link id="pagestyle" rel="stylesheet" href="css/feels.css?8.13.3">
+    <link id="pagestyle2" rel="stylesheet" href="css/compact.css?8.13.3">
     <link id="pagestyle3" rel="stylesheet" >
 
     <!--  Config -->
-    <script src="config.js?8.10.16"></script>
+    <script defer src="config.js?8.13.3"></script>
 
     <!-- Light External Libs -->
-    <script src="js/lib/memberextlibs.js?8.10.16"></script>
+    <script defer src="js/lib/memberextlibs.js?8.13.3"></script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics 
-    <script async src="https://www.googletagmanager.com/gtag/js"></script>-->
+    <!--  Member Minified Code. -->
+    <script defer src="js/memberlibs.js?8.13.3"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js"></script>
 
 </head>
 
@@ -134,9 +165,7 @@
     <div class="mainbodywrapper" id="mainbodywrapper"></div>
     <footer id="footer"></footer>
     <div id="status" class="status"></div>
-    <div id="bitcloutframe"></div>
-    <!--  Member Minified Code. -->
-    <script src="js/memberlibs.js?8.10.16"></script>
+    <!--<div id="bitcloutframe"></div>-->
 </body>
 
 </html>

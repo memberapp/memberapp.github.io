@@ -1,7 +1,7 @@
 ## Member
 
 Member is a bridge between multiple decentralized social networks. It operates on the BitClout, Bitcoin Cash,
-Hive and Membercoin blockchains and the relay based Nostr network. 
+Hive blockchains and the relay based Nostr network. 
 Members have a single login that can read, follow, like, tip, post and reply across multiple networks.
 Notably it also has reputational ratings and geolocated posts.
 It is a 'fat' javascript client app that runs against a relatively dumb server.
@@ -14,8 +14,8 @@ You can try it online here - https://member.cash
 | 0 - Bitcoin Cash  | yes   | no    | Memo network|
 | 1 - Bitclout      | yes   | yes   ||
 | 2 - Hive          | soon  | no    | Importing . . available to read soon|
-| 3 - Membercoin    | yes   | yes   ||
-| 4 - Doge          | no    | no    | [Defunct - see here](https://www.reddit.com/r/dogecoindev/comments/y4apo0/new_project_on_the_doge_chain_decentralized/iteckgy/)|
+| 3 - Membercoin    | yes   | no    | [Defunct - see here](https://www.reddit.com/r/dogecoindev/comments/y4apo0/new_project_on_the_doge_chain_decentralized/iteckgy/)|
+| 4 - Doge          | no    | no    | [Defunct - see here](https://member.cash/p/d987d2e159) Old posts still indexed|
 | 5 - Nostr         | yes   | yes   |[Guide](https://member.cash/p/b31b9ebb3f)|
 | 6 - Farcaster     | soon  | ?     | Awaiting hubs release |
 | 7 - Lens          | ?     | ?     | Legibility problems |

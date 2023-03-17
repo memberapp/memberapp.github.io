@@ -1901,8 +1901,6 @@ footer {
   padding: 1rem 0;
   display: none; }
   .scoreexpanded .closebutton, .remembersexpanded .closebutton {
-    display: -ms-flexbox;
-    display: flex;
     margin-left: auto; }
     .scoreexpanded .closebutton a, .remembersexpanded .closebutton a {
       line-height: 1.2;

@@ -4,10 +4,10 @@ body {
 
 }
 
-.commentbody{
+.commentbody {
   line-height: 1.45;
 }
-  
+
 
 
 p {
@@ -24,7 +24,7 @@ p {
   margin-left: auto;
 }
 
-.status{
+.status {
   white-space: nowrap;
   overflow: hidden;
 }
@@ -39,12 +39,10 @@ p {
 }
 
 .network-source {
-  float:right;
+  float: right;
 }
 
-.post-body {
-  padding-bottom: 0.5em;
-}
+
 
 .footerlabel {
   display: none;
@@ -80,7 +78,7 @@ p {
   display: flex;
   justify-content: space-between;
   margin-top: 0.5em;
-  word-break:keep-all;
+  word-break: keep-all;
 }
 
 /* Style The Dropdown Button */
@@ -146,15 +144,18 @@ p {
 .dropdown:hover .dropbtn {
   background-color: #1063a8;
 }
+
 /* buttons */
 input[type="submit"],
 button {
   background-color: #61aff0 !important;
 }
+
 input[type="submit"]:hover,
 button:hover {
   background: #2291eb;
 }
+
 .emojiicon {
   display: none;
 }
@@ -185,11 +186,13 @@ button:hover {
   background-size: 1rem 1rem;
   display: inline-block;
 }
+
 /* a.btn-icon>.likeicon:active, a.btn-icon>.likeicon:focus a.btn-icon>.likeicon:target{ */
 .likeicon:target {
   background-image: url(../img/icons/liked.png) !important;
   transition-delay: 0s;
 }
+
 .tipicon {
   width: 1rem;
   height: 1rem;
@@ -217,6 +220,7 @@ a {
 .quotepost .post-footer {
   display: none;
 }
+
 /* active & deactive state for footer post buttons */
 
 .post-footer-downvote-activated,
@@ -224,13 +228,16 @@ a {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%);
   display: none;
 }
+
 .post-footer-upvote-activated a span.likesbalance {
   color: #61aff0 !important;
 }
+
 .post-footer-upvote-activated a .likeicon {
   background-image: url(../img/icons/liked.png) !important;
   filter: unset;
 }
+
 .post-footer-remembers-activated a .remembersicon {
   background-image: url(../img/icons/retweeted.png) !important;
   color: red !important;
@@ -239,6 +246,7 @@ a {
 .post-side-bar .member-handle {
   display: none;
 }
+
 /*move the stars up a little*/
 .post-side-bar .star-rating {
   top: -0.7em;
@@ -251,11 +259,12 @@ a {
   left: 0;
 }
 
-.handle-label, .pagingid-label{
-  display:none;
+.handle-label,
+.pagingid-label {
+  display: none;
 }
 
-.profile-handle{
+.profile-handle {
   font-weight: 600;
   font-size: 1.2rem;
 }
@@ -303,11 +312,12 @@ a {
   top: 0.2rem;
   position: relative;
   object-fit: cover;
-  /*These 3 hide the alt text which may disrupt layout if image not available*/  
+  /*These 3 hide the alt text which may disrupt layout if image not available*/
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
 }
+
 .memberpicsmallcompact,
 img.memberpicturesmallpost {
   height: 2rem;
@@ -315,6 +325,7 @@ img.memberpicturesmallpost {
   border-radius: 100%;
   outline: none;
 }
+
 /*Side bar, profile pic and jdenticon side and profile pic in circle*/
 .post-side-bar .memberpicturesmall,
 .post-side-bar .memberpicsmallcompact,
@@ -346,7 +357,8 @@ Use important, because we always want profile card pics to be this size*/
   color: white;
   border-radius: 0.25rem;
   width: 3em;
-  display: inline-block;
+  /*display: inline-block;*/
+  display: none;
   text-align: center;
   height: 1.65em;
   margin-right: 0.1em;
@@ -402,24 +414,30 @@ Use important, because we always want profile card pics to be this size*/
 .profile-card-meta {
   display: flex;
 }
+
 /*----------------------------------------------*/
 
 /*No margin on age*/
-.plaintext, .age {
+.plaintext,
+.age {
   margin-right: 0rem;
   word-spacing: 0;
 }
+
 /*Remove border on posts*/
 .mainbodywrapper #posts .itemlist ol.posts li {
   border: 0px solid rgba(0, 0, 0, 0.12);
 }
+
 .mainbodywrapper #posts .itemlist ol.posts li .post {
   box-shadow: 0 13px 27px 6px #fafafa;
 }
+
 #thread .itemlist .fatitem {
   border: none;
   box-shadow: 0 13px 27px 6px #fafafa;
 }
+
 #newpost #memorandumarea {
   border: none;
   box-shadow: 0 13px 27px 6px #fafafa;
@@ -427,6 +445,7 @@ Use important, because we always want profile card pics to be this size*/
   padding-left: 50px;
   margin-top: -40px;
 }
+
 /*new post silde profilepic  */
 #newpost #newpostprofilepic {
   position: relative;
@@ -435,41 +454,50 @@ Use important, because we always want profile card pics to be this size*/
   width: 2.5rem;
   height: 2.5rem;
 }
+
 #newpost #newpostprofilepic img {
   width: 2rem;
   height: 2rem;
   outline: none;
   border-radius: 100%;
 }
+
 #newpostmemorandumbutton {
   background: #61aff0 !important;
 }
+
 #newpost #memorandumarea #memorandumpreviewareabutton a {
   font-weight: 400;
 }
+
 #newpost #memorandumarea #memorandumpreviewareabutton a:hover {
   color: #fff !important;
   border-color: #61aff0;
   background: #61aff0 !important;
 }
+
 #messagesanchor .content {
   border: none;
   padding-top: 0px;
 }
+
 #messagesanchor .content #messageslist li {
   box-shadow: 0 13px 27px 6px #fafafa;
   padding: 2em 0.875rem;
   border: none;
 }
+
 /* send message hover effect */
 #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"],
 #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"] {
   border: 1px solid #61aff0 !important;
 }
+
 #messagesanchor .content #messageslist li .messagemeta a[href="javascript:;"]:hover,
 #messagesanchor .content #messageslist li .replymessagemeta a[href="javascript:;"]:hover {
   color: #fff !important;
 }
+
 /* to make consistent space between navbar & content*/
 .mainbodywrapper #posts .itemlist ol.posts {
   margin-top: 0px;
@@ -478,6 +506,7 @@ Use important, because we always want profile card pics to be this size*/
 .notificationitem .notificationminheight {
   position: relative;
 }
+
 .notificationitem .notificationIcon {
   display: block;
   position: absolute;
@@ -488,14 +517,17 @@ Use important, because we always want profile card pics to be this size*/
 .notificationitem .notificationIcon img {
   outline: none;
 }
+
 #notifications ul.notificationslist li {
   border: none;
   box-shadow: 0 13px 27px 6px #fafafa;
 }
+
 #notifications .notificationtitlecompact {
   margin: 0 0.5rem;
   padding: 1rem 0;
 }
+
 #notifications ul.notificationslist li:hover {
   box-shadow: 0 13px 27px 6px #fafafa !important;
 }
@@ -511,10 +543,14 @@ Use important, because we always want profile card pics to be this size*/
 
 .profilepreview {
   animation: postFadein 0.5s;
-  -moz-animation: postFadein 0.5s; /* Firefox */
-  -webkit-animation: postFadein 0.5s; /* Safari and Chrome */
-  -o-animation: postFadein 0.5s; /* Opera */
+  -moz-animation: postFadein 0.5s;
+  /* Firefox */
+  -webkit-animation: postFadein 0.5s;
+  /* Safari and Chrome */
+  -o-animation: postFadein 0.5s;
+  /* Opera */
 }
+
 /*show small memberpic for when post is quoted*/
 .quotepost .memberpicturesmall {
   display: inline;
@@ -534,12 +570,14 @@ Use important, because we always want profile card pics to be this size*/
 .post-right-contents .replyprofilepic {
   position: relative;
 }
+
 .comment .replyprofilepic a,
 .post-right-contents .replyprofilepic a {
   position: absolute;
   left: -40px;
   top: 1.5rem;
 }
+
 .post-right-contents .replyprofilepic img,
 .comment .replyprofilepic img.memberpicturesmallpos {
   height: 2rem;
@@ -549,10 +587,10 @@ Use important, because we always want profile card pics to be this size*/
 }
 
 .subtextbuttons2 {
-    font-size: 0.75rem;
-    color: rgba(0, 0, 0, 0.54);
-    font-weight: bold;
-    word-spacing: 5px;
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.54);
+  font-weight: bold;
+  word-spacing: 5px;
 }
 
 .subtextbuttons2 a {
@@ -564,19 +602,19 @@ Use important, because we always want profile card pics to be this size*/
 }
 
 .subtexttips a {
-  color:rgb(0, 170, 0) !important;
+  color: rgb(0, 170, 0) !important;
 }
 
 .subtextremembers a {
-  color:#61aff0 !important;
+  color: #61aff0 !important;
 }
 
 .retracted {
-  color:red;
+  color: red;
 }
 
 .revision {
-  color:darkred;
+  color: darkred;
 }
 
 /*Remove generally bad img defaults*/
@@ -588,11 +626,13 @@ img {
 
 .imgurimage {
   outline-offset: -1px;
+  min-height: 440px;
   max-height: 640px;
   width: auto;
   max-width: 100%;
   margin: 1rem auto 0 auto;
   display: block;
+  object-fit: cover;
 }
 
 /* make the number links grey*/
@@ -600,9 +640,7 @@ img {
   color: #aaa;
 }
 
-.post-body {
-  word-break: break-word;
-}
+
 
 .repost .star-rating {
   display: inline-block;
@@ -645,6 +683,7 @@ img {
 .usersearchnav {
   width: 15em;
 }
+
 /* New Header 
 #header {
   display: none;
@@ -688,28 +727,33 @@ img {
   filter: unset;
   background-color: rgb(11 143 255 /25%);
 }
+
 .post-footer-reply:hover .replyicon,
 .post-footer-reply-activated:hover .replyicon {
   filter: unset;
   background-color: rgb(11 143 255 /25%);
 }
+
 .post-footer-remembers:hover .remembersicon,
 .post-footer-remembers-activated:hover .remembersicon {
   filter: unset;
   background-color: rgb(11 143 255 /25%);
   /* background: url(../img/icons/money.png); */
 }
+
 .post-footer-tips:hover .tipicon,
 .post-footer-tips-activated:hover .tipicon {
   filter: unset;
   background-color: rgb(11 143 255 /25%);
 }
+
 /* rembericon on state */
 .post-footer-remembers:target .remembersicon,
 .post-footer-remembers-activated:target .remembersicon {
   filter: unset;
   background: url(../img/icons/money.png);
 }
+
 /* make the number links grey*/
 .post-footer-relative a {
   color: #aaa !important;
@@ -721,6 +765,7 @@ img {
 .iconcount {
   position: unset !important;
 }
+
 /* profile-card box-shadow arround it */
 .profilepreview {
   box-shadow: 0 14px 28px rgb(0 0 0 / 4%), 0 0px 5px rgb(0 0 0 / 10%) !important;
@@ -731,20 +776,24 @@ img {
 .member-pagingid {
   text-overflow: initial !important;
 }
+
 /* profile-card content text line height and breaking long words */
 .profilepreview .profile-text {
   line-height: 1.5 !important;
 }
+
 /* profile-card ratings position  */
 .starrating {
   float: right !important;
 }
+
 /* profile-card rating tooltip having number of rating */
 .star-rating[data-title]:hover:after {
   box-shadow: 0px 0px 4px #2222224f !important;
   margin-top: 4px !important;
   background-image: -webkit-linear-gradient(top, #eeeeee, #ffffff) !important;
 }
+
 /* profile-card content box line height for whole content inside it  */
 .profile-right-contents {
   line-height: 20px;
@@ -754,6 +803,7 @@ img {
 .profile-text {
   margin-top: 10px !important;
 }
+
 /* profile-card followers text font size */
 .profilepreviewfollowers a {
   font-size: 0.9em !important;
@@ -774,6 +824,7 @@ img {
   padding: 0 10px;
   display: inherit;
 }
+
 /* newheader header groups fixed width */
 .newheader .headercentergroup,
 .newheader .headerrightgroup,
@@ -782,12 +833,14 @@ img {
   max-width: 300px;
   min-width: 300px;
 }
+
 .newheader .headerleftgroup {
   width: 30%;
   display: flex;
   align-items: center;
   grid-gap: 10px;
 }
+
 .newheader .headercentergroup {
   width: 40%;
   display: flex;
@@ -795,6 +848,7 @@ img {
   justify-content: center;
   height: 100%;
 }
+
 .newheader .headerrightgroup {
   width: 30%;
   display: flex;
@@ -802,12 +856,15 @@ img {
   height: 100%;
   grid-gap: 10px;
 }
+
 .newheader .headerrightgroup .usersearchclass {
   width: 7rem;
 }
+
 .memberlogo {
   padding-top: 8px;
 }
+
 .newheader .headerleftgroup a.profilepicwrapper {
   /* width: 15%; */
   display: flex;
@@ -817,9 +874,11 @@ img {
   cursor: pointer;
   padding: 0px 0px;
 }
+
 .newheader .headerleftgroup span.profilepicheader {
   display: flex;
 }
+
 .newheader .profilepicheaderimg {
   height: 3rem;
   width: 3rem;
@@ -827,6 +886,7 @@ img {
   border-radius: 100%;
   max-width: 3rem;
 }
+
 .mainbodywrapper .mainbody {
   margin-top: 90px;
   padding-top: 15px;
@@ -839,6 +899,7 @@ img {
   padding: 0 5px;
   word-break: normal;
 }
+
 .newheader .majornavbuttonsdiv #loggedin {
   height: 100%;
   justify-content: space-evenly;
@@ -850,12 +911,14 @@ img {
   font-weight: 400;
   font-family: inherit;
 }
+
 .newheader .majornavbuttonsclass #loggedout {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   height: 100%;
 }
+
 .newheader .majornavbuttonsclass #loggedout a {
   display: flex;
   align-items: center;
@@ -875,6 +938,7 @@ img {
   display: flex;
   justify-content: center;
 }
+
 .newheader .majornavbuttonsdiv a:hover {
   background: #ddeefc;
 }
@@ -908,6 +972,7 @@ img {
   width: 60%;
   padding: 0 5px;
 }
+
 .newheader .pagetitleclass .pageTitlediv {
   text-align: left;
   width: 100%;
@@ -923,6 +988,7 @@ img {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .newheader .searchwrapper input {
   border: 2px solid rgba(0, 0, 0, 0.12);
   border-radius: 0.25rem;
@@ -931,6 +997,7 @@ img {
   box-shadow: none;
   padding-right: 2em;
 }
+
 .newheader .searchwrapper .usersearchnavclass::after {
   content: "";
   background-image: url(../img/feelstheme/loupe.png);
@@ -947,34 +1014,38 @@ img {
   border-bottom-right-radius: 45px;
   border-top-right-radius: 45px;
 }
+
 a {
   color: #61aff0 !important;
   cursor: pointer;
 }
-.imgurimage {
-  object-fit: cover;
-}
+
 .newheader .searchwrapper input::placeholder {
   color: #aaa;
 }
+
 .newheader .searchwrapper .usersearchnav {
-  width: 100%;  
+  width: 100%;
   border-radius: 45px;
 }
-.newheader .searchwrapper .usersearchnav:focus{
+
+.newheader .searchwrapper .usersearchnav:focus {
   border: 1px solid #61aff0;
 }
+
 .newheader .majornavbuttonsclass {
   display: flex;
   width: fit-content;
   height: 100%;
   align-items: center;
 }
+
 .newheader .majornavbuttonsclass img {
   /* object-fit: contain; */
   width: unset !important;
   max-width: unset;
 }
+
 .mainhamburger {
   right: unset;
   top: 3.5em;
@@ -1017,6 +1088,7 @@ a {
   height: 32px;
   display: none;
 }
+
 .newheader .searchwrapper .usersearchnavclass {
   position: relative;
   z-index: 750;
@@ -1025,6 +1097,7 @@ a {
 .newheader .searchwrapper .usersearchnavclass label {
   border-bottom: 2px solid rgba(0, 0, 0, 0.12);
 }
+
 .mainhamburger::before,
 .newheader .searchwrapper #usersearchnavresults::before,
 .post .dropdown .dropdown-content::before,
@@ -1046,16 +1119,19 @@ a {
   width: 43px;
   height: 36px;
 }
+
 .dropdown:hover button {
   transition: all 0.3s ease;
   background-color: rgba(221, 221, 221, 0.8) !important;
   color: #fff;
 }
+
 .newheader .hamburgermenuclass {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .dropdown button {
   font-size: 25px;
   color: #aaa;
@@ -1092,15 +1168,18 @@ a {
   height: fit-content !important;
   min-height: 300px;
 }
+
 .newheader .memberlogoimage {
   display: none;
 }
+
 .newheader .memberlogoimagefull {
   width: 150px;
   height: 44px;
   object-fit: contain;
   max-width: unset !important;
 }
+
 .newheader img {
   outline: none;
 }
@@ -1157,14 +1236,23 @@ a {
 .post {
   transition: all 0.3s ease;
 }
-.post-body {
+
+.post-list-item .post-body {
+  padding-bottom: 0.5em;
+  word-break: break-word;
   border-top: 1px solid #e7e7e7;
   margin-top: 0.4em;
+
+  /*hide posts that are too long*/
+  max-height: 600px;
+  overflow: hidden;
 }
+
 .highlighted {
   background-color: #f3f6fb;
   color: #000;
 }
+
 .options {
   display: flex;
   flex-direction: column;
@@ -1172,13 +1260,16 @@ a {
   justify-content: center;
   row-gap: 3px;
 }
+
 .post .dropdown .dropbtn:hover .options div {
   background-color: rgb(11 143 255 / 50%);
 }
+
 .post .dropdown .dropbtn {
   background-color: transparent !important;
   min-width: 30px;
 }
+
 .options div {
   width: 5px;
   height: 5px;
@@ -1186,6 +1277,7 @@ a {
   background: #cecdcd;
   transition: all 0.3s ease;
 }
+
 .post .dropdown .dropdown-content {
   background-color: white;
   display: none;
@@ -1202,6 +1294,7 @@ a {
   text-transform: capitalize;
   padding: 0.5em 0;
 }
+
 .post .dropdown .dropdown-content a {
   padding: 0.2em 1em;
 }
@@ -1210,6 +1303,7 @@ a {
   background: linear-gradient(to right, #dadada, #fff) !important;
   background-color: unset;
 }
+
 .post .dropdown .dropdown-content::before {
   transform: rotate(136deg);
   top: 6px;
@@ -1219,7 +1313,7 @@ a {
 }
 
 .post div {
-   margin-bottom: unset !important;
+  margin-bottom: unset !important;
 }
 
 .replyinmainfeed {
@@ -1231,58 +1325,75 @@ a {
   width: 100%;
   transition: all 0.3s ease;
 }
+
 .newseedphrasedescription {
   transition: all 0.3s ease;
 }
+
 #loginbox {
   min-height: calc(100vh - 81px);
   position: relative;
 }
 
-.post-list-final, .pageundertabs {
+.post-list-final,
+.pageundertabs {
   clear: both;
 }
 
 .post-list-item .post {
   animation: postFadein 1.5s;
-  -moz-animation: postFadein 1.5s; /* Firefox */
-  -webkit-animation: postFadein 1.5s; /* Safari and Chrome */
-  -o-animation: postFadein 1.5s; /* Opera */
+  -moz-animation: postFadein 1.5s;
+  /* Firefox */
+  -webkit-animation: postFadein 1.5s;
+  /* Safari and Chrome */
+  -o-animation: postFadein 1.5s;
+  /* Opera */
 }
+
 @keyframes postFadein {
   from {
     opacity: 0;
   }
+
   to {
     transform: none;
     opacity: 1;
   }
 }
+
 @-webkit-keyframes postFadein {
+
   /* Safari and Chrome */
   from {
     opacity: 0;
   }
+
   to {
     transform: none;
     opacity: 1;
   }
 }
+
 @-moz-keyframes fadein {
+
   /* Firefox */
   from {
     opacity: 0;
   }
+
   to {
     transform: none;
     opacity: 1;
   }
 }
+
 @-o-keyframes fadein {
+
   /* Opera */
   from {
     opacity: 0;
   }
+
   to {
     transform: none;
     opacity: 1;
@@ -1296,6 +1407,7 @@ a {
 .remember-dropdown-wrapper {
   display: none;
 }
+
 .post-footer-remembers .remember-dropdown,
 .post-footer-remembers-activiated .remember-dropdown {
   background-color: white;
@@ -1341,6 +1453,7 @@ a {
 .remember-dropdown .dropdown-option-icon {
   background-color: unset !important;
 }
+
 .remember-dropdown .dropdown-option:hover {
   color: #fff;
   background-color: #f1f1f1;
@@ -1354,11 +1467,15 @@ a {
   overflow-wrap: break-word;
 }
 
-.trustgraph, .memberanchor, .besties, .posts {
+.trustgraph,
+.memberanchor,
+.besties,
+.posts {
   clear: both;
   padding-left: 0px;
   padding-right: 0px;
 }
+
 /* profile page design */
 .memberanchor .content {
   position: relative;
@@ -1369,6 +1486,7 @@ a {
 .memberpiccontainer label {
   display: none !important;
 }
+
 .memberpiccontainer label {
   position: absolute;
   left: 26px;
@@ -1384,12 +1502,15 @@ a {
   width: 130px;
   height: 130px;
 }
+
 .memberanchor .content .memberprofiletextContainer {
   margin-top: 100px;
 }
+
 .memberanchor .content .memberprofiletextContainer label {
   display: none !important;
 }
+
 .memberanchor .content #membernametext {
   margin-bottom: 0;
 }
@@ -1401,16 +1522,19 @@ a {
   border-radius: 45px;
   padding: 0.5rem 1rem;
 }
+
 .memberanchor .content #membernametext a.populate-send-message {
   position: absolute;
   top: 26px;
   right: 26px;
 }
+
 .memberanchor .content #membernametext a.populate-send-message:hover,
 .memberanchor .content #memberlegacyaddress {
   position: relative;
   margin-top: 2rem;
 }
+
 /* .memberanchor .content #memberlegacyaddress {
   /* display: flex;
   flex-direction: row;
@@ -1421,6 +1545,7 @@ a {
 .memberanchor .content #memberlegacyaddress label {
   display: none;
 }
+
 #memberlegacyaddress #memberlegacyformatdiv {
   position: absolute;
   right: 0;
@@ -1429,19 +1554,23 @@ a {
   padding: 0.2rem;
   margin: 0;
 }
+
 span.qrcodeclick span {
   display: none;
   color: #61aff0 !important;
 }
+
 #memberlegacyaddress span#memberlegacyformat {
   margin-bottom: 0;
   position: relative;
   margin-left: 15px;
 }
+
 #memberlegacyaddress span#memberlegacyformat img {
   width: 16px;
   cursor: pointer;
 }
+
 #memberprofilelinks {
   text-align: center;
 }
@@ -1449,11 +1578,13 @@ span.qrcodeclick span {
 #memberprofilelinks label {
   display: none;
 }
+
 #memberprofilelinks div a {
   border: 1px solid #61aff0;
   border-radius: 45px;
   color: #61aff0;
 }
+
 #memberprofilelinks div a:hover {
   color: #fff !important;
 }
@@ -1462,21 +1593,26 @@ span.qrcodeclick span {
 label#memberblockexplorer {
   display: none;
 }
+
 #memberblockexplorer {
   position: absolute;
   top: 435px;
 }
+
 #memberblockexplorer a {
   display: block;
   margin-left: 10px;
 }
+
 #memberblockexplorer a i {
   color: #61aff0;
   font-size: 1rem;
 }
+
 #memberblockexplorer img {
   outline: none;
 }
+
 #memberlegacyformatdiv {
   position: relative;
 }
@@ -1485,6 +1621,7 @@ label#memberblockexplorer {
 #toolsanchor .content div {
   margin-bottom: 1rem;
 }
+
 #toolsanchor .content #walletbalance,
 #toolsanchor .content #walletaddress,
 #toolsanchor .content #walletlegacyaddress,
@@ -1498,37 +1635,45 @@ label#memberblockexplorer {
   box-shadow: 0 13px 21px 6px #fafaf9;
   background: #eef2f7;
 }
+
 #toolsanchor .content #walletsendfunds {
   padding-bottom: 60px;
 }
+
 #toolsanchor .content {
   position: relative;
   box-shadow: 0 13px 27px 6px #fafafa;
   border: none;
 }
+
 #toolsanchor .content #walletbalance span.balancebch {
   margin-left: 35%;
 }
+
 #toolsanchor .content #walletbalance span {
   /* font-size: 1.5rem;
   font-weight: 600; */
   line-height: 1.8rem;
 }
+
 #toolsanchor .content #walletbalance span.approximatelyequal {
   display: block;
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
 }
+
 #toolsanchor .content #walletbalance span.balanceusd {
   margin-left: 40%;
   font-size: 1.8rem;
   color: #61aff0;
   font-weight: bolder;
 }
+
 #toolsanchor .content #walletbalance span.usd {
   font-size: o.8rem;
 }
+
 #walletbalance .balancedetails img {
   outline: none !important;
   cursor: pointer;
@@ -1539,27 +1684,32 @@ label#memberblockexplorer {
   border: 1px solid #61aff0;
   padding: 3px;
 }
+
 #toolsanchor .content #walletaddress span,
 #toolsanchor .content #walletlegacyaddress span,
 #toolsanchor .content #walletbcaddress span,
 #toolsanchor .content #walletsendfunds p {
   margin-left: 15px;
 }
+
 #walletaddress,
 #walletlegacyaddress,
 #walletbcaddress,
 #walletprivatekey {
   position: relative;
 }
+
 .qrcodeclick img {
   border: 1px solid #61aff0;
   cursor: pointer;
 }
+
 .qrcodeclick {
   position: absolute;
   right: 10px;
   top: 25px;
 }
+
 .qrcodeclick span {
   display: none;
 }
@@ -1570,6 +1720,7 @@ label#memberblockexplorer {
   margin-top: 10px;
   cursor: pointer;
 }
+
 #walletaddress span#cashaddrformat,
 #walletlegacyaddress #legacyformat {
   margin-left: 0;
@@ -1580,18 +1731,22 @@ label#memberblockexplorer {
 #walletsendfunds {
   position: relative;
 }
+
 #walletsendfunds label {
   margin-top: 1rem;
 }
+
 #walletsendfunds input {
   margin-left: 15px;
 }
+
 #walletsendfunds input#sendfundsaddress,
 #walletsendfunds input#fundsamount {
   border: 1px solid #61aff0;
   border-radius: 45px;
   /* box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;  */
 }
+
 #walletsendfunds input#sendfundsaddress {
   width: 96%;
   border: 1px solid #61aff0;
@@ -1603,9 +1758,11 @@ label#memberblockexplorer {
 #walletsendfunds input#fundsamount:focus {
   box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
 }
+
 #walletsendfunds input#fundsamount {
   width: 96%;
 }
+
 #walletsendfunds .sendusd {
   border-bottom: 1px solid #61aff0;
   position: absolute;
@@ -1622,6 +1779,7 @@ label#memberblockexplorer {
 #walletprivatekey label {
   margin-bottom: 1.5rem;
 }
+
 #walletprivatekey #privatekey a {
   cursor: pointer;
   border-bottom: 1px solid #61aff0;
@@ -1630,12 +1788,14 @@ label#memberblockexplorer {
   left: 50%;
   text-align: center;
 }
+
 #walletblockexplorer a {
   display: block !important;
   margin-left: 25px;
   position: relative;
   text-align: left !important;
 }
+
 #walletblockexplorer a::before {
   content: url("../img/icons/link.png");
   position: absolute;
@@ -1648,7 +1808,7 @@ label#memberblockexplorer {
 
 .membalance {
   word-break: normal;
-  cursor:pointer;
+  cursor: pointer;
   color: black;
 }
 
@@ -1697,6 +1857,7 @@ label#memberblockexplorer {
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar {
   width: 10px;
 }
+
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
@@ -1704,11 +1865,13 @@ label#memberblockexplorer {
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content::-webkit-scrollbar-thumb {
   background-color: darkgrey;
 }
+
 /* for firefox */
 #map .leaflet-popup-pane .leaflet-popup .leaflet-popup-content-wrapper .leaflet-popup-content {
   scrollbar-width: thin;
   scrollbar-color: #fff darkgrey;
 }
+
 #map .leaflet-popup-pane .leaflet-popup a.leaflet-popup-close-button {
   left: -7px !important;
   background: #61aff0;
@@ -1718,6 +1881,7 @@ label#memberblockexplorer {
   width: 26px;
   height: 26px;
 }
+
 #newgeopost input#newpostgeobutton:hover {
   background: #2291eb !important;
 }
@@ -1738,33 +1902,40 @@ label#memberblockexplorer {
   box-shadow: 0 13px 21px 6px #fafaf9;
   border: none;
 }
-table thead tr{
+
+table thead tr {
   border: none;
 }
+
 table thead tr th,
 table thead tr td {
   background: transparent;
   color: #333;
   padding-bottom: 20px;
 }
+
 tbody tr td a[href^="#modmorelink"],
 tbody tr td a[href^="javascript:;"] {
   color: #fff !important;
   box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
   border-radius: 45px;
 }
+
 tbody tr td a[href^="#modmorelink"],
 tbody tr td a[href^="javascript:;"] {
   background: #61aff0;
 }
+
 tbody tr td a[href^="#modmorelink"]:hover,
 tbody tr td a[href^="javascript:;"]:hover {
   background: #2291eb;
   box-shadow: none;
 }
-table tbody tr:nth-child(even){
+
+table tbody tr:nth-child(even) {
   background: transparent;
 }
+
 .tlaction a {
   box-shadow: 0px 0px 37px 6px rgb(0 0 0 / 10%);
   border-radius: 45px;
@@ -1773,7 +1944,7 @@ table tbody tr:nth-child(even){
 
 /* setting page  */
 
-.customcheckbox input:checked ~ label:before {
+.customcheckbox input:checked~label:before {
   background: #61aff0;
 }
 
@@ -1784,41 +1955,41 @@ table tbody tr:nth-child(even){
   border: 1px solid #61aff0;
   border-radius: 45px;
 }
-#settingsanchor textarea{
+
+#settingsanchor textarea {
   border: 1px solid #61aff0;
   border-radius: 10px;
 }
+
 /* textarea scrollbar design */
-#settingsanchor textarea::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #f1f1f1;
+#settingsanchor textarea::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f1f1f1;
 }
 
-#settingsanchor textarea::-webkit-scrollbar
-{
-	width: 8px;
-	background-color: #f1f1f1;
+#settingsanchor textarea::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f1f1f1;
 }
 
-#settingsanchor textarea::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #c1c1c1;
+#settingsanchor textarea::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #c1c1c1;
 }
 
 #settingsanchor input:focus,
 #settingsanchor select:focus,
 #settingsanchor textarea:focus,
-.formgroup input:focus{
+.formgroup input:focus {
   box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
 }
 
 
-textarea:disabled, input:disabled{
-  background-color: #ddeefc  !important;
+textarea:disabled,
+input:disabled {
+  background-color: #ddeefc !important;
 }
 
 .starratingnotifications {
@@ -1828,70 +1999,87 @@ textarea:disabled, input:disabled{
 
 
 /* footer section */
-footer{
+footer {
   background: #f6f9ff;
 }
+
 @media (max-width: 1024px) {
+
   .newheader .headercentergroup,
   .newheader .headerrightgroup,
   .newheader .headerleftgroup {
     max-width: 300px;
     min-width: 300px;
   }
+
   .newheader .headerleftgroup {
     min-width: 250px;
   }
+
   .newheader .memberlogoimage {
     display: inline;
     width: 48px;
     height: 48px;
     max-width: unset;
   }
+
   .newheader .memberlogoimagefull {
     display: none;
   }
+
   #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
   }
+
   #memberprofilelinks {
     top: 410px;
   }
+
   #memberblockexplorer {
     top: 480px;
   }
 }
+
 /* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
 @media (max-width: 900px) {
   .newheader {
     padding: 0px;
   }
+
   .memberlogo {
     margin-left: 10px;
   }
+
   .newheader .headercentergroup {
     max-width: 260px;
     min-width: 260px;
   }
+
   .newheader .headerleftgroup {
     max-width: 200px;
     min-width: 200px;
   }
+
   .newheader .headerleftgroup {
     grid-gap: 5px;
   }
+
   .newheader .searchwrapper {
     grid-gap: 0px;
   }
+
   .newheader .pagetitleclass .pageTitlediv {
     display: none;
   }
 
 }
+
 /* """""""""""""""""""""""""""""""""""""""""""""""""""""""""" */
 @media (max-width: 768px) {
   .newheader {
     position: unset;
   }
+
   /* fixed width */
 
   .newheader .headercentergroup {
@@ -1899,12 +2087,15 @@ footer{
     min-width: unset;
     width: 0;
   }
+
   .newheader .headerleftgroup {
     width: 30%;
   }
+
   .newheader .headerleftgroup {
     grid-gap: 0px;
   }
+
   .newheader .memberlogo {
     width: 50%;
     text-align: center;
@@ -1915,13 +2106,15 @@ footer{
     left: 60px;
     padding: 4px;
   }
+
   .newheader .searchwrapper {
     width: 100%;
   }
+
   .mainbodywrapper .mainbody {
     margin-top: 1rem;
   }
-  
+
   .filters {
     display: block;
   }
@@ -1930,6 +2123,7 @@ footer{
   .post .dropdown .dropbtn {
     padding-top: 5px;
   }
+
   .newheader .majornavbuttonsclass {
     position: fixed;
     bottom: 0;
@@ -1941,17 +2135,20 @@ footer{
     width: 100%;
     height: 50px;
   }
+
   .newheader .majornavbuttonsdiv a {
     padding: 9px 3px;
   }
+
   .newheader .majornavbuttonsclass #loggedout a {
     padding: 12px 3px;
   }
-  
+
   .newheader .majornavbuttonsdiv a {
     display: unset;
     width: unset;
   }
+
   .newheader .pagetitleclass {
     display: none;
   }
@@ -1961,88 +2158,109 @@ footer{
     display: flex;
     width: 100%;
   }
+
   div#status {
     bottom: 50px;
   }
+
   .newheader .searchwrapper #usersearchnavresults {
     left: 50%;
     transform: translateX(-66%);
   }
+
   /* profile page */
   #memberprofilelinks div a {
     margin: 10px;
   }
-  
+
   #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
   }
+
   #memberprofilelinks {
     top: 410px;
   }
+
   #memberblockexplorer {
     top: 520px;
   }
-  
+
   .memberanchor .content .memberprofiletextContainer {
     margin-top: 135px;
   }
+
   /* wallet page  */
   #walletaddress span#cashaddrformat {
     margin-left: 10px !important;
   }
+
   #toolsanchor .content #walletbalance span.balancebch {
     margin-left: 18% !important;
   }
+
   #toolsanchor .content #walletsendfunds p {
     margin-left: 10px !important;
   }
+
   #toolsanchor .content #walletlegacyaddress span {
     margin-left: 10px !important;
   }
+
   #toolsanchor .content #walletbalance span.balanceusd {
     margin-left: 26%;
   }
+
   #walletsendfunds input#sendfundsaddress {
     width: 96%;
   }
+
   #cashaddrformatdiv,
   #legacyformatdiv {
     text-align: center;
     margin-top: 10px;
   }
+
   .qrcodeclick {
     position: unset;
   }
 
- 
+
   #walletsendfunds .sendusd {
     bottom: 15px;
     left: 37px;
   }
+
   #walletsendfunds input#fundsamount {
     width: 96%;
   }
+
   #toolsanchor .content #walletsendfunds {
     padding-bottom: 40px;
   }
+
   #walletprivatekey #privatekey a {
     position: unset;
     width: 150px;
   }
+
   #walletprivatekey label {
     margin-top: 0.4rem;
     margin-bottom: 10px;
   }
+
   .qrcodeclick {
     top: 68px;
     right: 40%;
   }
-  
-  
-  .tipicon, .remembersicon, .likeicon, .replyicon {
+
+
+  .tipicon,
+  .remembersicon,
+  .likeicon,
+  .replyicon {
     width: 30px !important;
     height: 30px !important;
- }
+  }
 
 
 }
@@ -2052,7 +2270,7 @@ footer{
   .newheader .alertcount {
     left: 50px;
     margin-left: 0;
-  }  
+  }
 }
 
 @media (max-width: 500px) {
@@ -2061,7 +2279,7 @@ footer{
   }
 
   /* lightbox */
-  #loginbox{
+  #loginbox {
     max-width: 340px;
   }
 
@@ -2072,57 +2290,71 @@ footer{
     max-width: unset;
     min-width: unset;
   }
+
   .newheader .headerrightgroup {
     width: unset;
   }
+
   #newpost #newpostprofilepic {
     left: 0px;
   }
+
   /* fixed-bottom bar */
   .newheader .majornavbuttonsdiv {
     max-width: unset;
     min-width: unset;
   }
+
   .newheader .headerleftgroup a.profilepicwrapper {
     width: unset;
   }
+
   .newheader .headerleftgroup {
     grid-gap: 4px;
     height: 100%;
   }
+
   .newheader .searchwrapper {
     width: unset;
     grid-gap: 0px;
   }
+
   .newheader .alertcount {
     right: 10px;
     left: unset;
   }
+
   .mainhamburger {
     left: -10em;
   }
+
   .newheader .searchwrapper .dropdown {
     width: 38px;
     height: 38px;
   }
+
   .newheader .searchwrapper .dropdown button {
     font-size: 30px;
   }
+
   .newheader .searchwrapper #usersearchnavresults {
     transform: translateX(-59%);
   }
+
   .newheader .searchwrapper #usersearchnavresults {
     width: 20rem;
   }
+
   /* profile */
   .memberanchor .content .memberprofiletextContainer {
     margin-top: 190px;
   }
-  
+
   .memberanchor .content #membernametext a.populate-send-message {
     right: 18px;
     top: 85px;
   }
+
   #memberprofilelinks div a {
     margin: 5px;
   }
@@ -2131,17 +2363,21 @@ footer{
     margin-left: 0px;
     width: 90%;
   }
+
   #memberlegacyaddress #memberlegacyformatdiv {
     margin: 0 auto;
   }
+
   #memberlegacyaddress #memberlegacyformatdiv {
     right: 26px;
     position: unset;
   }
+
   #memberprofilelinks {
     top: 510px;
     left: 0;
   }
+
   #memberblockexplorer {
     top: 620px;
   }
@@ -2150,47 +2386,58 @@ footer{
   #walletaddress span#cashaddrformat {
     margin-left: 0 !important;
   }
+
   #toolsanchor .content #walletbalance span.balancebch {
     margin-left: 0 !important;
   }
+
   #toolsanchor .content #walletsendfunds p {
     margin-left: 0 !important;
   }
+
   #toolsanchor .content #walletbalance span.balanceusd {
     margin-left: 0;
   }
+
   .qrcodeclick {
     position: absolute;
   }
+
   #toolsanchor .content #walletlegacyaddress span {
     margin-left: 0 !important;
     /* position: ; */
   }
+
   #walletsendfunds input#sendfundsaddress {
     width: 100%;
   }
+
   #walletsendfunds input {
     margin-left: 0 !important;
   }
+
   #walletsendfunds input#fundsamount {
     width: 100%;
   }
- 
+
   #walletsendfunds .sendusd {
     position: relative;
     top: 10px;
     left: 0px;
   }
+
   #walletprivatekey #privatekey a {
     position: unset;
   }
-  
+
   .qrcodeclick {
     right: 20px;
   }
+
   #walletprivatekey label {
     margin-bottom: 10px;
   }
+
   /* notifcation icons */
 
 }
@@ -2202,7 +2449,7 @@ footer{
   border: unset;
 }
 
-.privatemessagetext{
+.privatemessagetext {
   white-space: pre-line;
 }
 
@@ -2214,8 +2461,12 @@ tbody tr td:first-of-type {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(85deg) brightness(95%) contrast(93%);
 }
 
-.systemscore{
+.systemscore {
   filter: invert(49%) sepia(37%) saturate(3784%) hue-rotate(185deg) brightness(95%) contrast(93%) !important;
+}
+
+.scorewarning{
+  filter: invert(69%) sepia(37%) saturate(3784%) hue-rotate(162deg) brightness(95%) contrast(93%) !important;
 }
 
 .bitcloutframe {
@@ -2236,15 +2487,15 @@ tbody tr td:first-of-type {
 }
 
 .ddcover {
-  background:grey;
-  overflow:visible;
-  width: 100%; 
-  height: 100%; 
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-  opacity: 0.2; 
-  display:none; 
+  background: grey;
+  overflow: visible;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0.2;
+  display: none;
   z-index: 500;
 }
 
@@ -2264,7 +2515,7 @@ tbody tr td:first-of-type {
 }
 
 /* Article Mode Stuff */
-.articleheader{
+.articleheader {
   display: none;
 }
 
@@ -2292,14 +2543,14 @@ tbody tr td:first-of-type {
   margin: 0;
 }
 
-.article .articleheader{
+.article .articleheader {
   line-height: 48px;
   font-size: 40px;
   font-family: Georgia, Cambria, "Times New Roman", Times, serif;
   color: rgba(0, 0, 0, 0.84);
   margin: 0;
   letter-spacing: 0px;
-  padding-left:62px;
+  padding-left: 62px;
   display: block;
 }
 
@@ -2332,7 +2583,7 @@ tbody tr td:first-of-type {
 }
 
 .profileactions {
-  float:right;
+  float: right;
   top: -70px;
   position: relative;
 }
@@ -2377,12 +2628,13 @@ tbody tr td:first-of-type {
   color: #777;
 }
 
-.muting, .muters {
+.muting,
+.muters {
   display: none !important;
 }
 
-.mutebutton{
-text-transform: capitalize;
+.mutebutton {
+  text-transform: capitalize;
 }
 
 
@@ -2408,27 +2660,28 @@ text-transform: capitalize;
   animation-delay: 0.5s;
 }
 
-a.unfollowbutton,
-a.followbutton,
+.profileactions a.unfollowbutton,
+.profileactions a.followbutton,
 a.memberlinkbutton {
   line-height: 1.2;
   font-weight: 400;
   cursor: pointer;
   text-decoration: none;
   transition: all 0.15s ease-in-out;
-  border-radius: 0.25rem;
-  color: #fff !important;
   padding: 0.5rem 1.5rem;
+  color: #fff !important;
   background: #61aff0 !important;
+  border-radius: 0.25rem;
   border: 1px solid #61aff0 !important;
 }
 
-a.unfollowbutton:hover,
-a.followbutton:hover,
-a.memberlinkbutton:hover{
+.profileactions a.unfollowbutton:hover,
+.profileactions a.followbutton:hover,
+a.memberlinkbutton:hover {
   color: #61aff0 !important;
   background: #fff !important;
 }
+
 
 
 #settingsanchor .content #settingsnametextbutton,
@@ -2438,31 +2691,35 @@ a.memberlinkbutton:hover{
 }
 
 
- /* *********** POST follow button **************/
+/* *********** POST follow button **************/
 /* close button for tip& like */
-.scoreexpanded .closebutton a, 
-.remembersexpanded .closebutton a{
+.scoreexpanded .closebutton a,
+.remembersexpanded .closebutton a {
   border-color: #61aff0;
 }
+
 .scoreexpanded .closebutton a:hover,
- .remembersexpanded .closebutton a:hover{
-   background-color: #61aff0;
-   color: #fff !important;
- }
+.remembersexpanded .closebutton a:hover {
+  background-color: #61aff0;
+  color: #fff !important;
+}
 
 .profilepreview .profile-actions .profilepreviewfollowbutton a {
   background: #61aff0;
   color: #fff !important;
 }
+
 .profilepreview .profile-actions .profilepreviewfollowbutton a:hover {
   background: #2291eb;
   color: #fff !important;
 }
+
 .navbuttons a {
   background: #61aff0;
   color: #fff !important;
   border-color: #61aff0;
 }
+
 .navbuttons a:hover {
   background-color: #2291eb;
 }
@@ -2471,87 +2728,94 @@ a.memberlinkbutton:hover{
   border: 1px solid #61aff0;
   border-radius: 45px;
 }
-#settingsanchor .content #settingsnametextbutton:disabled, #settingsanchor .content #settingsprofiletextbutton:disabled{
+
+#settingsanchor .content #settingsnametextbutton:disabled,
+#settingsanchor .content #settingsprofiletextbutton:disabled {
   border: none !important;
   border-radius: 45px;
 }
 
 
- /* Youtube, Imgur, Twitter */
+/* Youtube, Imgur, Twitter */
 
- /*Allow nitter embeds extra width on mobile */
+/*Allow nitter embeds extra width on mobile */
 
- @media (max-width: 768px) {
+@media (max-width: 768px) {
 
-  .nittercontainer{
+  .nittercontainer {
+    position: relative;
+    left: -60px;
+    top: 7px;
+    width: calc(100% + 60px);
+  }
+}
+
+/* Ensure youtube play button appears in the center */
+.youtubepreview .play-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  transform: translate(-50%, -50%);
+}
+
+/* Ensure youtube preview image spans full width available */
+.youtubepreviewimage {
+  width: 100%;
+  vertical-align: top;
+}
+
+/* Ensure youtube iframe writes on top of preview image */
+.youtubeiframe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.youtubepreview {
   position: relative;
-  left: -60px;
-  top: 7px;
-  width: calc(100% + 60px);
-  }
- }
+}
 
- /* Ensure youtube play button appears in the center */
-  .youtubepreview .play-icon {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100px;
-    transform: translate(-50%, -50%);
-  }
+.odyseeiframe {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
 
-  /* Ensure youtube preview image spans full width available */
-    .youtubepreviewimage {
-      width: 100%;
-      vertical-align: top;
-    }
-    
-    /* Ensure youtube iframe writes on top of preview image */
-    .youtubeiframe {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 100%;
-      width: 100%;
-    }
-    .youtubepreview {
-      position: relative;
-    }
+/* Ensure twitter iframe spans full width available  */
+.twitteriframe {
+  display: inline;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 400px;
+  width: 100%;
+  vertical-align: top;
+}
 
-    .odyseeiframe {
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-    }
-    
-    /* Ensure twitter iframe spans full width available  */
-    .twitteriframe {
-      display: inline;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      height: 400px;
-      width: 100%;
-      vertical-align: top;
-    }
+.star-rating-notifications{
+  top: 2px;
+}
 
+/* temp nostr features off */
 
-    /* temp nostr features off */
-
-    #articlebutton, 
-#memorandumpreviewbuttonanddisplay, 
-#privatemessagesbutton, 
+#articlebutton,
+#memorandumpreviewbuttonanddisplay,
+#privatemessagesbutton,
 #mapbutton,
+.profilebuttondiv,
+.oneclicktipamount,
+.post-footer-tips,
+.walletbuttondiv,
 .populate-send-message,
 .displaymining,
 .showmembercoinmining,
-.displayinfluencers,
-.displaycontact
- {
+.displaycontact {
   display: none;
 }
-

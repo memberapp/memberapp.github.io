@@ -1372,7 +1372,7 @@ var ratingAndReasonHTML=`
 <tr>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{rater}</td>
     <td data-vavilon_data_label="VV0008" data-label='Rates As' align='center'>
-        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingaddress="{rateraddress}"
+        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingpublickey="{rateraddress}"
             data-ratingraw="{rating}" id='{stem}{rateraddress}'></div>
     </td>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{ratee}</td>
@@ -1393,7 +1393,7 @@ var trustRatingTableHTML=`
 <div id="cy" style="width:100%;height:600px;"></div>
 <div id="cynote" style="width:100%">&nbsp;</div>
 <br />
-<a href="https://member.cash/a/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
+<a href="https://member.cash/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
     interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
 <br />
 <table>{tablecontents}</table>
@@ -1530,7 +1530,8 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n3">*New and Nostr Users. Click 'Make New Phrase'.</span><br />
+        <span data-vavilon="VV0019n3">*Nostr Users. Use 'npub...' or 'nsec...' key or login with </span><a
+            onclick="nos2xlogin();return false;">nos2x</a><br />
     </div>
     <div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
@@ -1558,14 +1559,14 @@ var lowfundswarningHTML=`
     <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
     <br />
     <br />
-    <span class="showmembercoinmining">
+    <!--<span class="showmembercoinmining">
         <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a
             few
             seconds.</span>
         <br />
         <br />
         <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
-    </span>
+    </span>-->
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -1919,7 +1920,7 @@ var membertabsHTML=`
         href="#list?qaddress={address}">List</a>
     <span class="separator"></span>
     <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
-        href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&topicname=">Posts</a>
+        href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&minrating=0&topicname=">Posts</a>
 </div>
 `;
 
@@ -1956,14 +1957,14 @@ pages.member = `
                 <!--<span class="dogehairprofilelink">
                     <a href="https://doge.hair/#member?qaddress={address}" id="dogehairprofilelink">doge.hair</a><span
                         class="separatorwide"></span>
-                </span>-->
+                </span>
                 <span class="membermemoprofilelink">
-                    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{bcaddress}"
+                    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{qaddress}"
                         id="membermemoprofilelink">Memo</a><span class="separatorwide"></span>
                 </span>
                 <span class="bitcloutprofilelink">
                     <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/u/{pagingid}"
-                        id="bitcloutprofilelink">BitClout</a><span class="separatorwide"></span></span>
+                        id="bitcloutprofilelink">BitClout</a><span class="separatorwide"></span></span>-->
             </div>
         </span>
     </div>
@@ -1981,7 +1982,7 @@ pages.member = `
 
     <div class="memberstats">
         <div class="membrain">
-            <a href="https://member.cash/a/804fc6e860"></a><label data-vavilon="membrain">MemBrain</label></a>
+            <label data-vavilon="membrain">MemBrain</label></a>
             <a id="membrainnumber" href="https://member.cash/a/804fc6e860">{membrain}</a>
         </div>
         <div class="followers">
@@ -2009,7 +2010,7 @@ pages.member = `
         </div>
     </div>
     {pinnedpostHTML}
-    <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
+    <!--<div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="membercashaddrformat">{cashaddress}</span>
         <div id="membercashaddrformatdiv">
@@ -2018,7 +2019,20 @@ pages.member = `
                     code</span>
             </span>
         </div>
-    </div>
+    </div>-->
+    <!--
+        Hmm, don't always have the nostr pubkey
+        <div id="walletnostraddress" onclick="copyToClipboard('{nostraddress}')" class="bitcloutaddress">
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+        <span id="nostrformat">{nostraddress}</span>
+        <div id="nostrformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('nostrformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
+    </div>-->
+    <!--
     <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')" class="bitcloutaddress">
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="memberbcformat">{bcaddress}</span>
@@ -2029,8 +2043,7 @@ pages.member = `
             </span>
         </div>
     </div>
-
-
+    -->
 </div>`;
 
 pages.settings = `
@@ -2045,8 +2058,28 @@ pages.settings = `
 
     <h2 data-vavilon="VV0166">Settings</h2>
     <div id="settingsloggedin">
-        <div class="settingspiccontainer">
+        <div>
+            <label data-vavilon="VV0060" for="settingsnametext">Handle</label>
+            <div class="formgroup">
+                <input maxlength="50" size="30" id="settingsnametext" value="{handle}"
+                    onchange="document.getElementById('settingsnametextbutton').disabled=false; updatePagingId();"
+                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                <button data-vavilon="VV0077" id="settingsnametextbutton" type="button"
+                    onclick="setName();">update</button>
+            </div>
+        </div>
+        <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
+        <div id="settingspagingidhtml">@{pagingid}</div>
 
+        <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
+        <textarea maxlength="{maxprofilelength}" size="30" rows="4" cols="60" id="settingsprofiletext"
+            onchange="checkLength('settingsprofiletext',{maxprofilelength});document.getElementById('settingsprofiletextbutton2').disabled=false;"
+            onkeypress="this.onchange();" onpaste="this.onchange();"
+            oninput="this.onchange();">{profileHTMLEscaped}</textarea>
+        <button data-vavilon="VV0077" id="settingsprofiletextbutton2" type="button" onclick="setProfile();"
+            data-vavilon="update" disabled="">update</button>
+        <br />
+        <div class="settingspiccontainer">
             <!--<label id="settingspiclargelabel" for="settingspic" style="display:inline;">
                 <span data-vavilon="VV0076" class="profilepicdirections">(Must be imgur link in this format or .png
                     format)</span></label>-->
@@ -2073,77 +2106,54 @@ pages.settings = `
 
         </div>
         <div>
-            <label data-vavilon="VV0060" for="settingsnametext">Handle</label>
-            <div class="formgroup">
-                <input maxlength="50" size="30" id="settingsnametext" value="{handle}"
-                    onchange="document.getElementById('settingsnametextbutton').disabled=false;"
-                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                <button data-vavilon="VV0077" id="settingsnametextbutton" type="button"
-                    onclick="setName();">update</button>
-            </div>
-        </div>
-        <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
-        <div id="settingspagingidhtml">@{pagingid}</div>
-        <div>
-            <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
-            <div class="formgroup">
-                <input maxlength="{maxprofilelength}" size="30" id="settingsprofiletext" value="{profile}"
-                    onchange="checkLength('settingsprofiletext',{maxprofilelength});document.getElementById('settingsprofiletextbutton').disabled=false;"
-                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                <button data-vavilon="VV0077" id="settingsprofiletextbutton" type="button" onclick="setProfile();"
-                    data-vavilon="update" disabled="">update</button>
-            </div>
-        </div>
-        <div>
             <label data-vavilon="VV0079" for="notificationbutton">Notifications</label>
             <span class="allownotifications"><a data-vavilon="VV0080" class="memberlinkbutton" href="javascript:;"
                     onclick="requestNotificationPermission(); this.style.display='none';">Allow
                     Notifications</a></span>
         </div>
         <div>
-            <label data-vavilon="installapp" for="installappbutton">Install</label>
-            <span class="installappbutton"><a data-vavilon="installapp" class="memberlinkbutton" id="installbutton"
-                    href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
-        </div>
-        <div>
-            <label for="usenostrkeyaccount"><span data-vavilon="usenostrkeyaccount">Use Different Nostr Account (Private Key)</span> 
+            <label for="usenostrkeyaccount"><span data-vavilon="usenostrkeyaccount">Use Different Nostr Account
+                    (Private Key)</span>
                 <div class="formgroup">
-                <input id="usenostrkeyaccount" placeholder="nostr private key hex">
-                <button data-vavilon="nostrkey" id="linkbitcloutaccountbutton" type="button" onclick="switchNostrKey();"
-                    data-vavilon="nostrkey">switch</button>
+                    <input id="usenostrkeyaccount" placeholder="nostr private key nsec1.......">
+                    <button data-vavilon="nostrkey" id="linkbitcloutaccountbutton" type="button"
+                        onclick="switchNostrKey();" data-vavilon="nostrkey">switch</button>
                 </div>
         </div>
         <div>
-            <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public Key)</span> 
-            <div class="formgroup">
-                <input id="linknostraccount" value={nostrpubkey}>
-                <button data-vavilon="link" id="linknostraccountbutton" type="button" onclick="linkNostrAccount();"
-                    data-vavilon="link">link</button>
-            </div>
-            <div id="bitcloutlinktext" style="display:none;">
-                <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
-                <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
-            </div>
+            <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public
+                    Key)</span>
+                <div class="formgroup">
+                    <input id="linknostraccount" value={nostrpubkey}>
+                    <button data-vavilon="link" id="linknostraccountbutton" type="button" onclick="linkNostrAccount();"
+                        data-vavilon="link">link</button>
+                </div>
+                <div id="bitcloutlinktext" style="display:none;">
+                    <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
+                    <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
+                </div>
         </div>
         <div>
-            <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout Account</span> 
-            <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
+            <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout/Memo
+                    Account</span>
+                <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
             <div class="formgroup">
-                <input id="linkbitcloutaccount" placeholder="BC...."
+                <input id="linkbitcloutaccount" placeholder="BC..../1..../bitcoincash:...."
                     onchange="document.getElementById('linkbitcloutaccountbutton').disabled=false;"
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                <button data-vavilon="link" id="linkbitcloutaccountbutton" type="button" onclick="showBitcloutLinkText();"
-                    data-vavilon="link">link</button>
+                <button data-vavilon="link" id="linkbitcloutaccountbutton" type="button"
+                    onclick="showBitcloutLinkText();" data-vavilon="link">link</button>
             </div>
             <div id="bitcloutlinktext" style="display:none;">
-                <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
+                <span data-vavilon="postthistext">(Make a post with this text from your BitClout/Memo
+                    account)</span>
                 <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
             </div>
         </div>
-        
-        
 
-        <div>
+
+
+        <div class='oneclicktipamount'>
             <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
             <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
@@ -2159,6 +2169,11 @@ pages.settings = `
     <input type="hidden" id="usdrate" step="1" onchange="updateSettingsNumber('usdrate');" onkeypress="this.onchange();"
         onpaste="this.onchange();" oninput="this.onchange();">
     <div>
+        <label data-vavilon="installapp" for="installappbutton">Install</label>
+        <span class="installappbutton"><a data-vavilon="installapp" class="memberlinkbutton" id="installbutton"
+                href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
+    </div>
+    <div>
         <label for="languageselector">Language / 语言 / Idioma / Lengguwahe</label>
         <select id="languageselector" onchange="updateSettingsDropdown('languageselector');">
             <option value="en">English</option>
@@ -2173,6 +2188,7 @@ pages.settings = `
             <option data-vavilon="VV0167" value="feels compact">Choose Theme</option>
             <option value="feels compact">Feels Compact</option>
             <option value="feels-night compact compactnight">Feels Compact Night Mode</option>
+            <!--<option value="hackernews">Hacker News</option>-->
             <!--<option data-vavilon="VV0168" value="none">None</option>-->
         </select>
     </div>
@@ -2182,11 +2198,11 @@ pages.settings = `
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
         <p data-vavilon="VV0084">(Max results to show per page. Maximum 100)</p>
     </div>
-    <div class="displaymining">
+    <!--<div class="displaymining">
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
         <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{address}"></iframe>
     </div>
-    <!--<div>
+    <div>
         <label data-vavilon="VV0085" for="currencydisplay">Currency Display</label>
         <select id="currencydisplay" onchange="updateSettingsDropdown('currencydisplay');">
             <option value="USD">USD</option>
@@ -2211,6 +2227,12 @@ pages.settings = `
         <textarea id="mutedwords" name="text" rows="4" cols="60" onchange="updatemutedwords();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
     </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="mutegm" onchange="updateSettingsCheckbox('mutegm');">
+        <label data-vavilon="mutegm" for="mutegm" class="checkboxlabel">Mute posts starting GM/Good Morning/GN/Good
+            Night/PV/Pura Vida</label>
+    </div>
+
     <div>
         <label data-vavilon="mutednetworks">Muted Networks</label>
     </div>
@@ -2308,16 +2330,16 @@ var hamburgerMenuHTML=`
 <span class="dropdown">
     <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
-        <a data-vavilon_title="VV0063" id="profilebutton" title="Profile" class="hamburgerbutton" href="#profile"
-            onclick="nlc();" style="display:none;">
-            <img src="img/icons/user.png" alt="profile">
-            <span data-vavilon="VV0063">Profile</span></a>
-        <a data-vavilon_title="VVwallet" id="walletbutton" title="Wallet" class="hamburgerbutton" href="#wallet"
-            onclick="nlc();" style="display:none;">
-            <img src="img/icons/wallet.png" alt="wallet">
-            <span data-vavilon="VVwallet">Wallet</span></a>
-        <a data-vavilon_title="VV0100" id="topiclistbuttonmenu" title="Tag List" class="hamburgerbutton" href="#topiclist"
-            onclick="nlc();">
+        <div class='profilebuttondiv'><a data-vavilon_title="VV0063" id="profilebutton" title="Profile"
+                class="hamburgerbutton" href="#profile" onclick="nlc();" style="display:none;">
+                <img src="img/icons/user.png" alt="profile">
+                <span data-vavilon="VV0063">Profile</span></a></div>
+        <div class='walletbuttondiv'><a data-vavilon_title="VVwallet" id="walletbutton" title="Wallet"
+                class="hamburgerbutton" href="#wallet" onclick="nlc();" style="display:none;">
+                <img src="img/icons/wallet.png" alt="wallet">
+                <span data-vavilon="VVwallet">Wallet</span></a></div>
+        <a data-vavilon_title="VV0100" id="topiclistbuttonmenu" title="Tag List" class="hamburgerbutton"
+            href="#topiclist" onclick="nlc();">
             <img src="img/icons/hashtag.png" alt="MyFeed">
             <span data-vavilon="VV0100">Tag List</span></a>
         <a data-vavilon_title="VV0101" id="mapbutton" title="Map" class="hamburgerbutton" href="#map" onclick="nlc();">
@@ -2367,8 +2389,7 @@ var majorNavButtonsHTML=`
     </span>
     <span id="loggedout" class="loggedout">
         <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebuttonloggedout"
-            title="Firehose (Everything)"
-            href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
+            title="Firehose (Everything)" href="#firehose">
             <!-- 📰 -->
             <img src="img/icons/fire-hose.png" width="32" height="32" alt="firehose">
         </a>
@@ -2438,10 +2459,10 @@ var footerHTML = `
         <hr />
     </span>
     <span class="footerlinks">
-        <span class="displayinfluencers">
+        <!--<span class="displayinfluencers">
             <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
             <span class="separatorwide"></span>
-        </span>
+        </span>-->
         <span class="displaygithub">
             <a rel='noopener noreferrer' target="github"
                 href="https://github.com/memberapp/memberapp.github.io">Github</a>
@@ -2529,7 +2550,7 @@ var footerHTML = `
                     </span>
                     <span class="post-footer-downvote{dislikeactivated} post-footer-relative"
                         id="downvotecontainer{txid}">
-                        <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{origtxid}')"
+                        <a id="downvoteaction{txid}" href="javascript:;" onclick="dislikePost('{txid}','{origtxid}','{roottxid}')"
                             class="btn-icon" data-action="dislike">
                             <span class="dislikeicon">
                                 <span class="emojiicon">👎</span>
@@ -2552,7 +2573,7 @@ var footerHTML = `
                                 <a onclick="repostPost('{txid}','{origtxid}','{sourcenetwork}');"><span
                                         data-vavilon="remember">remember</span></a>
                                 <a
-                                    onclick="if (!checkForPrivKey()) return false; nlc(); location.href='#new?txid={origtxid}';"><span
+                                    onclick="nlc(); location.href='#new?txid={origtxid}';"><span
                                         data-vavilon="VV0158">quote</span></a>
                             </div>
                         </a>
@@ -2601,7 +2622,7 @@ var footerHTML = `
                                     data-vavilon="permalink">Permalink</span></a>
                             <a id="articlelinkposts{diff}{txid}" href="{articlelink}"><span
                                     data-vavilon="article">Article</span></a>
-                            <a id="dislikepost{diff}{txid}" onclick="dislikePost('{txid}','{origtxid}')"
+                            <a id="dislikepost{diff}{txid}" onclick="dislikePost('{txid}','{origtxid}','{roottxid}')"
                                 href="javascript:;"><span data-vavilon="downvote">Downvote</span></a>
 
                             <!--<a id="hidepostlinkposts{diff}{txid}" onclick="sendHidePost('{txid}');"
@@ -2617,6 +2638,8 @@ var footerHTML = `
                             <a rel="noopener noreferrer" target="bitcoincom"
                                 href="https://explorer.bitcoin.com/bch/tx/{txid}">Bitcoin.com</a>
                             <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/posts/{txid}">BitClout</a>-->
+                            {followbuttonHTML}
+                            {mutebuttonHTML}
                             {pinnedpostHTML}
                             {sourceNetworkHTML}
                         </div>
@@ -2641,7 +2664,9 @@ var footerHTML = `
 
 var completedPostTemplate=`
 <span data-vavilon="messagesent">Sent.</span>
-<!--<a data-vavilon="VV0145" onclick="showThread('{txid}')" href="#thread?post={txid}" onclick="nlc();">View It</a> or-->
+<!--<a data-vavilon="VV0145" onclick="showThread('{txid}')" href="#thread?post={txid}" onclick="nlc();">View It</a>-->
+<a data-vavilon="VV0145" onclick="showThread('{txid}')" href="#show?start=0&limit=25&order=new&content=both&minrating=0&filter=everyone&qaddress={address}" onclick="nlc();">View It</a>
+
 <!--<a data-vavilon="VV0146" href="javascript;"
     onclick="window.open('{encodedurl}', 'twitterwindow', 'width=300,height=250');return false;">Also
     Post To Twitter (opens a new window)</a>-->
@@ -2660,8 +2685,8 @@ var userCompactTemplate=`
         </a>
     </span>
     <span class="starratingcompact">
-        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingaddress="{bitcoinaddress}"
-            data-ratingraw="{rating}" id="ratingposts{diff}" data-ratingsystem={systemscoreclass}
+        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingpublickey="{bitcoinaddress}"
+            data-ratingraw="{rating}" id="ratingposts{diff}" data-ratingdisabled="true" data-ratingsystem={systemscoreclass} 
             class="star-rating-compact"></span>
     </span>
     {flair}
@@ -2684,8 +2709,8 @@ var userProfileCompactTemplate=`
                 <span class="member-handle">{handle}</span>
             </a>
             <span class="starrating">
-                <span data-ratingsize="16" data-ratingaddress="{bitcoinaddress}" data-ratingraw="{rating}"
-                    data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" class="star-rating"></span>
+                <span data-ratingsize="16" data-ratingpublickey="{bitcoinaddress}" data-ratingraw="{rating}"
+                    data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" data-ratingdisabled="true" class="star-rating"></span>
             </span>
             {flair}
             <br />
@@ -2951,9 +2976,9 @@ function getBitCloutLoginFromLocalStorage() {
     bitCloutIDProvider = 'https://identity.deso.org';
   }
 
-  if (bitCloutUserData) {
+  /*if (bitCloutUserData) {
     insertBitcloutIdentityFrame(bitCloutIDProvider);
-  }
+  }*/
 }
 
 function handleLoginBitclout(payload) {
@@ -3455,8 +3480,8 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
-  replytext="https://member.cash/p/"+membertxid.substr(0,10);
-  //replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
+  //replytext="https://member.cash/p/"+membertxid.substr(0,10);
+  replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
     
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
@@ -3522,7 +3547,7 @@ async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, succes
 async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null) {
   var txid = await sendBitCloutPost(posttext, topic, divForStatus, null, null, imageURL);
   if (postbody) {
-    return await sendBitCloutReply(txid, postbody, divForStatus, successFunction, imageURL);
+    return await sendBitCloutReply(txid, postbody, divForStatus, successFunction, 1, null, imageURL);
   } else {
     if (successFunction) { successFunction(txid, posttext) };
     return txid;
@@ -3963,12 +3988,12 @@ function satsToUSDString(sats) {
   return usdString(satsToUSD(sats), false);
 }
 
-function usdString(total, truncate=false) {
+function usdString(total, truncate = false) {
   var usd = Number(total / 10000).toFixed(2);
   if (usd < 1) {
     return (usd * 100).toFixed(0) + "¢";
   } else {
-    if(truncate){
+    if (truncate) {
       return "$" + parseInt(usd);
     }
     return "$" + usd;
@@ -3976,8 +4001,8 @@ function usdString(total, truncate=false) {
 }
 
 function updateUSDRate(data) {
-  let element=document.getElementById('usdrate');
-  if (data && data[0] && data[0].usdrate && element) { 
+  let element = document.getElementById('usdrate');
+  if (data && data[0] && data[0].usdrate && element) {
     element.value = data[0].usdrate;
     updateSettingsNumber('usdrate');
   }
@@ -4309,7 +4334,7 @@ const reloadImageEverywhere = url =>
   fetch(url, { cache: 'reload', mode: 'no-cors' })
     .then(() => document.body.querySelectorAll(`img[src='${url}']`)
       .forEach(img => img.src = url))
-      
+
 //Install app
 
 let deferredPrompt;
@@ -4334,69 +4359,100 @@ function installApp() {
   });
 }
 
-function linkNostrAccount(useNOS2Xifavailable=true) {
-  let nostrpublickey='02'+nostrPubKeyHex;
-  let element=document.getElementById('linknostraccount');
-  if(element){
-    nostrpublickey='02'+element.value.trim();
+function linkNostrAccount(useNOS2Xifavailable = true) {
+  let nostrpublickey = '02' + nostrPubKeyHex;
+  let element = document.getElementById('linknostraccount');
+  if (element) {
+    npubval = element.value.trim();
+    if (npubval.startsWith('npub')) {
+      nostrpublickey = '02' + window.bech32converter('npub').toHex(npubval).slice(2).toLowerCase();
+    }
   }
 
-  let legacyaddress=pubkeyhexToLegacy(nostrpublickey);
+  let legacyaddress = pubkeyhexToLegacy(nostrpublickey);
   //note legacyaddress from Nostr account is internal identifier and should not be used for anything external.
   //as mixing signature schemes may weaken security.
   let fullmessage = getLinkMessage(legacyaddress);
 
-  sendNostrPost(fullmessage, '', '', "newpostmemorandumstatus", nostrLinkSuccessMessage, useNOS2Xifavailable);
+  sendNostrPost(fullmessage, '', '', "newpostmemorandumstatus", nostrLinkSuccessMessage, useNOS2Xifavailable, 6000);
 }
 
-function nostrLinkSuccessMessage(){
+function nostrLinkSuccessMessage() {
   updateStatus('Nostr Link Request submitted');
 }
 
 function showBitcloutLinkText() {
-  let legacyaddress=document.getElementById('linkbitcloutaccount').value.trim();
+  let legacyaddress = document.getElementById('linkbitcloutaccount').value.trim();
 
   if (legacyaddress.startsWith("member:") || legacyaddress.startsWith("bitcoincash:")) {
     legacyaddress = membercoinToLegacy(legacyaddress);
-  }else if (legacyaddress.startsWith("BC1")) {
+  } else if (legacyaddress.startsWith("BC1")) {
     legacyaddress = bitcloutToLegacy(legacyaddress);
   }
-  
+
   let fullmessage = getLinkMessage(legacyaddress);
 
   //let bcaddress=document.getElementById('linkbitcloutaccount').value.trim();
-  document.getElementById('bitcloutlinktextarea').value=fullmessage;
-  document.getElementById('bitcloutlinktext').style.display='block';
+  document.getElementById('bitcloutlinktextarea').value = fullmessage;
+  document.getElementById('bitcloutlinktext').style.display = 'block';
 }
 
-function getLinkMessage(legacyaddress){
+function getLinkMessage(legacyaddress) {
   window.bitcoinjs.address.toOutputScript(legacyaddress);//this will throw error if address is not valid
   var time = parseInt(new Date().getTime() / 1000);
-  let message=`membercashlink:${legacyaddress}:${pubkeyhex}:${time}`;
+  let message = `membercashlink:${legacyaddress}:${pubkeyhex}:${time}`;
   let keyPair = new window.bitcoinjs.ECPair.fromWIF(privkey);
   var privateKey = keyPair.privateKey;
   var signature = window.bitcoinmessage.sign(message, privateKey, keyPair.compressed, "member.cash link request", { extraEntropy: eccryptoJs.randomBytes(32) });
-  return message+':'+signature.toString('base64');
+  return message + ':' + signature.toString('base64');
 }
 
-function switchNostrKey(){
-  try{
-    let hexprivkey=document.getElementById('usenostrkeyaccount').value.trim();
+function switchNostrKey() {
+  try {
+    let nsecprivkey = document.getElementById('usenostrkeyaccount').value.trim();
+
+    let hexprivkey = window.bech32converter('nsec').toHex(nsecprivkey).slice(2).toLowerCase();
+
     //let ecpair = new window.bitcoinjs.ECPair.fromWIF(hexprivkey);
-    let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexprivkey,'hex'));
+    let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexprivkey, 'hex'));
     setNostrKeys(ecpair);
-    updateStatus("New Nostr Public Key:"+nostrPubKeyHex);
-  }catch(err){
-    updateStatus("Nostr Private Key Not Recognized"+err);
+    updateStatus("New Nostr Public Key:" + nostrPubKeyHex);
+  } catch (err) {
+    updateStatus("Nostr Private Key Not Recognized" + err);
   }
-  
-}//Some refactoring is possible in these functions
+
+}
+
+function bechifylink(linkelement,txid){
+  linkelement.href=`https://snort.social/e/`+bech32Encode('note',txid);
+}
+
+function bech32Encode(stub,theString){
+  if (!window.bech32converter){
+    loadScript("js/lib/bech32-converting-1.0.9.min.js");
+    return 'false';
+  }
+  return window.bech32converter(stub).toBech32('0x'+theString);
+}
+
+function getImpliedBitcoinAddress(namepubkey) {
+  if (namepubkey.length == 64) namepubkey = '02' + namepubkey;
+  return pubkeyhexToLegacy(namepubkey);
+}
+
+function htmlToElement(html) {
+  var template = document.createElement('template');
+  html = html.trim(); // Never return a text node of whitespace as the result
+  template.innerHTML = html;
+  return template.content.firstChild;
+}
+//Some refactoring is possible in these functions
 
 "use strict";
 
 var eccryptoJs = null;
 
-function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons) {
+function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, minStarRating=2) {
     if (order == "") order = "hot";
     if (content == "") content = "posts";
     if (filter == "") filter = "everyone";
@@ -4434,15 +4490,15 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         topicnameHOSTILE = '';
     }
 
-    var networkOnly = '';
+    /*var networkOnly = '';
     if (dropdowns['contentnetwork'] != "-1") {
         networkOnly = `&network=${dropdowns['contentnetwork']}`;
-    }
+    }*/
 
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + networkOnly;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
     getJSON(theURL).then(function (data) {
 
         updateUSDRate(data);
@@ -4455,18 +4511,17 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         if (data.length && data[0]) {
             if (order == 'new' || order == 'old') {
                 end = data[data.length - 1].firstseen;
-            }else if (order == 'hot') {
+            } else if (order == 'hot') {
                 end = data[data.length - 1].score2;
-            }else if (order == 'topd') {
+            } else if (order == 'topd') {
                 end = data[data.length - 1].scoretop;
-            }else if (order == 'topa') {
+            } else if (order == 'topa') {
                 end = data[data.length - 1].score;
             }
-        
-        } 
 
-        //var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
-        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length);
+        }
+
+        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length, minStarRating);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length);
@@ -4485,21 +4540,29 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
 
+        contents = getItemListandNavButtonsHTMLHeader(navheader, contents, navbuttons, "posts", start)
+        + contents
+        + getItemListandNavButtonsHTMLFooter(navheader, contents, navbuttons, "posts", start);
+        var pageElement = document.getElementById(page);
+        pageElement.innerHTML = contents; //display the result in the HTML element
+        
+        var listElement=document.getElementById('itemlistol');
 
         if (!pubkey && order == 'hot' && !qaddress && Math.random() < adfrequency) {//Show member.cash explainer video
             let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
-            contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
+            listElement.appendChild(htmlToElement(getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, true, true, false))));
         }
 
-        let filtereditems=0;
+        let filtereditems = 0;
+        let alwaysShow=(qaddress);
         for (var i = 0; i < data.length; i++) {
             try {
                 if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
                 if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
-                let postHTML=getHTMLForPost(data[i], i + 1, page, i, null, false, true, false);
-                if(postHTML){
-                    contents = contents + getPostListItemHTML(postHTML);
-                }else{
+                let postHTML = getHTMLForPost(data[i], i + 1, page, i, null, alwaysShow, true, false);
+                if (postHTML) {
+                    listElement.appendChild(htmlToElement(getPostListItemHTML(postHTML)));
+                } else {
                     filtereditems++;
                 }
             } catch (err) {
@@ -4507,8 +4570,16 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             }
         }
 
-        if(filtereditems){
-            contents += getDivClassHTML('message', filtereditems + getSafeTranslation("filtereditems", " posts have been hidden based on your content and network filters."));
+        if (filtereditems) {
+            //contents += getDivClassHTML('message', filtereditems + getSafeTranslation("filtereditems", " posts have been hidden based on your content and network filters."));
+            listElement.appendChild(htmlToElement(
+            getDivClassHTML('message',
+            filtereditems
+            +getSafeTranslation("filtereditems1", " posts have been hidden based on ")
+            +`<a href='#settings'>`
+            +getSafeTranslation("filtereditems2", " your content and network filters")
+            +`</a>`
+            )));
         }
 
         if (contents == "") {
@@ -4522,18 +4593,42 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             if (data && data[0] && data[0].interrupted == "query timed out") {
                 contents = getDivClassHTML('message', getSafeTranslation("servertimeout", "This request timed out - maybe it is too difficult or the server is under heavy load."));
             }
-
+            pageElement.innerHTML = contents;
         }
+
         if (topicnameHOSTILE != null && topicnameHOSTILE != "" && topicnameHOSTILE.toLowerCase() != "mytopics" && topicnameHOSTILE.toLowerCase() != "myfeed" && topicnameHOSTILE.toLowerCase() != "mypeeps") {
             showOnly("topicmeta");
         }
 
-        if (!pubkey && !topicnameHOSTILE) {
+        //if (!pubkey && !topicnameHOSTILE) {
             //contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
+        //}
+
+
+        displayItemListandNavButtonsHTML(data, true);
+
+        //Activate navigation filter star ratings
+        let postsqualityfilter = document.getElementById('postsqualityfilter');
+
+
+        postsqualityfilter = raterJs({
+        extraClass: "systemscore",
+        starSize: Number(postsqualityfilter.dataset.ratingsize),
+        rating: minStarRating,
+        element: postsqualityfilter,
+        showToolTip: false,
+        rateCallback: function rateCallback(rating, done) {
+            postsqualityfilter.setRating(rating);
+            done();
+            //postsqualityfilter.minrating = rating;
+            getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, rating);
         }
+    });
 
+    if (postsqualityfilter) {
+        postsqualityfilter.setRating(minStarRating);
+    }
 
-        displayItemListandNavButtonsHTML(navheader, contents, navbuttons, page, data, "posts", start, true);
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -4586,7 +4681,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
     });
 }
 
-function getAndPopulateThread(roottxid, txid, pageName) {
+function getAndPopulateThread(roottxid, txid, pageName, articlestyle='thread') {
     if (pageName != "mapthread") {
         show(pageName);
         document.getElementById(pageName).innerHTML = document.getElementById("loading").innerHTML;
@@ -4622,7 +4717,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Find the first reply by the thread starter, but only for article style
         let earliestReply = "none";
         let earliestReplyTXID = "none";
-        if (pageName == 'article') {
+        if (articlestyle == 'article') {
             let earliestReplyTime = 9999999999;
             //Find who started the thread
             let threadstarter = null;
@@ -4649,10 +4744,16 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             earliestReplyTime = 9999999999;
         }
 
+
         var contents = "";
+        contents = '<div id="threaddisplay"></div>';
+        var pageElement = document.getElementById(pageName);
+        pageElement.innerHTML = contents; //display the result in the HTML element
+        var listElement=document.getElementById('threaddisplay');
+        
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
-                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false, true));
+                listElement.appendChild(htmlToElement(getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false, true))));
 
                 var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, earliestReplyTXID)
 
@@ -4662,13 +4763,13 @@ function getAndPopulateThread(roottxid, txid, pageName) {
                     commentTree = getDivClassHTML("comment-tree", commentTree);
                 }
 
-                contents += commentTree;
+                listElement.appendChild(htmlToElement(commentTree));
             }
         }
 
 
         //Threads have no navbuttons
-        displayItemListandNavButtonsHTML('', contents, "", pageName, data, "", 0, false);
+        displayItemListandNavButtonsHTML(data, false);
 
         //Repeat the title for article mode
         //This doesn't seem essential, but was causing some problems when viewing thread directly after post, so put in a try/catch
@@ -4813,10 +4914,8 @@ function getAndPopulateQuoteBox(txid) {
 }
 
 
-function displayItemListandNavButtonsHTML(navheader, contents, navbuttons, page, data, styletype, start, adddynamic) {
-    contents = getItemListandNavButtonsHTML(navheader, contents, navbuttons, styletype, start);
-    var pageElement = document.getElementById(page);
-    pageElement.innerHTML = contents; //display the result in the HTML element
+function displayItemListandNavButtonsHTML(data, adddynamic) {
+
     listenForTwitFrameResizes();
     if (adddynamic) {
         addDynamicHTMLElements(data);
@@ -4949,9 +5048,10 @@ function addSingleStarsRating(theElement) {
     if (theElement == undefined) return;
     if (theElement.isdone) return;
     let name = theElement.dataset.ratingname;
-    let theAddress = theElement.dataset.ratingaddress;
+    let theAddress = theElement.dataset.ratingpublickey;
     let rawRating = theElement.dataset.ratingraw;
     let starSize = theElement.dataset.ratingsize;
+    let isDisabled = theElement.dataset.ratingdisabled;
     //this is very slow
     //let starSize = Number(getComputedStyle(theElement).fontSize);
 
@@ -4963,6 +5063,8 @@ function addSingleStarsRating(theElement) {
     }
     if (theElement.dataset.ratingsystem == 'systemscore') {
         disabledtext = 'MemBrain score ' + theRatingRound + '/5';
+    }else{
+        disabledtext = 'Your Rating ' + theRatingRound + '/5';
     }
 
 
@@ -4980,38 +5082,32 @@ function addSingleStarsRating(theElement) {
         }
     });
     starRating1.theAddress = theAddress;
-    if (disabledtext) {
+    if (isDisabled) {
         starRating1.disable();
     }
     theElement.isdone = true;
     return starRating1;
 }
 
-function sendRating(rating, ratingText, pageName, theAddress) {
-    if (!checkForPrivKey()) return false;
-    var comment = "";
-    if (ratingText) {
-        comment = ratingText.value;
-    }
 
-    if (checkForNativeUserAndHasBalance()) {
-        rateCallbackAction(rating, comment, theAddress);
-    }
 
-    if (isBitCloutUser()) {
-        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
-    }
-}
 
+//This is called to
+//to show feed items
+//to show main thread item
+//to show quotebox
+//insert member.cash explainer video
+// for feed items, sometimes we mute
+// for last three items, alwaysshow should be true
 
 function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, truncate, includeArticleHeader) {
 
     //Always show if post is directly requested
-    if (!alwaysShow) {
+    /*if (!alwaysShow) {
         if (checkForMutedWords(data)) return "";
         if (checkForMutedNetworks(data)) return "";
         if (data.moderated != null) return "";
-    }
+    }*/
 
     let mainRatingID = starindex + page + ds(data.address);
     var retHTML = "";
@@ -5023,8 +5119,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID));
         let member = MemberFromData(data, "rp", mainRatingID + "qr");
-        //repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '', data.rplastactive, truncate, data.rpsysrating, data.rpsourcenetwork, data.rphivename, data.rphivelink, data.rpbitcoinaddress);
-        repostHTML2 = getHTMLForPostHTML3(member, data, 'rp', page, starindex, '', truncate);
+        repostHTML2 = getHTMLForPostHTML3(member, data, 'rp', page, starindex, '', truncate, alwaysShow);
 
         //if (repostHTML2) {
         //    repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
@@ -5045,20 +5140,27 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         }
 
         let member = MemberFromData(data, "", mainRatingID);
-        retHTML = getHTMLForPostHTML3(member, data, '', page, starindex, repostHTML2, truncate);
+        retHTML = getHTMLForPostHTML3(member, data, '', page, starindex, repostHTML2, truncate, alwaysShow);
 
         //reply post, include original post
         if (data.opaddress) {
             let opmember = MemberFromData(data, "op", mainRatingID + 'op');
-            retHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex + 'op', repostHTML2, truncate) +
-                `<div class="replyinmainfeed">` + retHTML + `</div>`;
+            let oppost = getHTMLForPostHTML3(opmember, data, 'op', page, starindex + 'op', repostHTML2, truncate, alwaysShow);
+            if(oppost && retHTML){
+                //if oppost, filtered out, will just use reply post as original post
+                //if no original post, nothing will show
+                //only if there is an original post and the reply will it show both
+                retHTML =  oppost + `<div class="replyinmainfeed">` + retHTML + `</div>`;
+            }
         }
 
 
 
     } else {
         //repost with no message
-        retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
+        if(repostHTML2){ //repost might have been muted
+            retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
+        }
     }
     if (includeArticleHeader) {
         retHTML += `<div id="articleheader` + san(data.txid) + `" class="articleheader"></div>`;
@@ -5071,7 +5173,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 }
 
 function getHTMLForReply(data, depth, page, starindex) {
-    if (checkForMutedWords(data)) return "";
+    
     let mainRatingID = starindex + page + ds(data.address);
     let member = MemberFromData(data, '', mainRatingID);
     return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit, data.roottxid);
@@ -5083,7 +5185,7 @@ function showReplyButton(txid, page, divForStatus) {
 }
 
 function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     if (replytext.length == 0) {
@@ -5100,21 +5202,25 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, orig
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
 
+    let successfunctionCompleted = false;
     var successFunction =
         function (membertxid) {
-            replySuccessFunction(page, txid);
-            if (isBitCloutUser()) {
-                sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-                //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+            if (!successfunctionCompleted) {
+                successfunctionCompleted = true; //ensure it only gets sent once
+                replySuccessFunction(page, txid);
+                if (isBitCloutUser() && parentSourceNetwork==1) {
+                    sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+                    //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+                }
             }
         };
 
     if (checkForNativeUserAndHasBalance()) {
         sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
-        successFunction = null;
+        //successFunction = null;
     }
 
-    sendNostrReply(origtxid, replytext, divForStatus, successFunction, origroottxid);
+    sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
 
     return true;
 }
@@ -5210,14 +5316,18 @@ function pinpost(txid) {
     if (checkForNativeUserAndHasBalance()) {
         memoPinPost(txid, privkey);
     }
+
+    nostrPinPost(txid);
+
 }
 
-function likePost(txid, origtxid, tipAddress, amountSats, roottxid=null) {
+function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
+    
     //if no identity login, then check for priv key 
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
 
     //GUI update
     increaseGUILikes(txid);
@@ -5244,17 +5354,17 @@ function likePost(txid, origtxid, tipAddress, amountSats, roottxid=null) {
     nostrLikePost(origtxid, roottxid);
 }
 
-function dislikePost(txid, origtxid) {
-    if (!checkForNativeUser()) return false;
-
+function dislikePost(txid, origtxid, roottxid = null) {
     decreaseGUILikes(txid);
 
-    sendDislike(origtxid);
+    if (checkForNativeUserAndHasBalance()) {
+        sendDislike(origtxid);
+    }
+    nostrDislikePost(origtxid, roottxid);
 }
 
 function repostPost(txid, origtxid, sourcenetwork) {
-    if (!checkForPrivKey()) return false;
-
+    
     increaseGUIReposts(txid);
 
     if (isBitCloutUser()) {
@@ -5270,7 +5380,7 @@ function repostPost(txid, origtxid, sourcenetwork) {
 }
 
 function sendTip(txid, origtxid, tipAddress, page) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
 
     //document.getElementById("tipbox" + page + txid).style.display = "none";
     //document.getElementById("tiplink" + page + txid).style.display = "block";
@@ -5300,7 +5410,7 @@ function sendTip(txid, origtxid, tipAddress, page) {
 }
 
 function showTipBox(txid) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
     if (document.getElementById("tipamount" + txid).value == 0) {
         document.getElementById("tipamount" + txid).value = defaulttip;
     }
@@ -5316,27 +5426,43 @@ function showMore(show, hide) {
     return true;
 }
 
-function checkForMutedWords(data) {
-    
-    for (var i = 0; i < mutedwords.length; i++) {
-        if (mutedwords[i] == "") continue;
+function checkForMutedWords(data,stub='') {
+
+    if (settings["mutegm"] == "true") {
+        if(data[stub+'message']){
+            let messagetext=data[stub+'message'].toLowerCase();
+            if(
+               messagetext.startsWith('pv') 
+            || messagetext.startsWith('pura vida') 
+            || messagetext.startsWith('gm') 
+            || messagetext.startsWith('good morning') 
+            || messagetext.startsWith('gn') 
+            || messagetext.startsWith('good night')
+            ){
+                return true;
+            }
+        }
+    }
+
+    for (var i = 0; i < mutedwords.length; i++) { //todo run tolowercase just once for each type for speed improvement
+        if (mutedwords[i] == "") continue; 
         var checkfor = mutedwords[i].toLowerCase();
-        if (data.message && data.message.toLowerCase().contains(checkfor)) return true;
-        if (data.name && data.name.toLowerCase().contains(checkfor)) return true;
-        data.address = data.address + "";//Ensure data address is a string.
-        if (data.address && data.address.toLowerCase().contains(checkfor)) return true;
-        if (data.topic && ("(" + data.topic.toLowerCase() + ")").contains(checkfor)) return true;
+        if (data[stub+'message'] && data[stub+'message'].toLowerCase().contains(checkfor)) return true;
+        if (data[stub+'name'] && data[stub+'name'].toLowerCase().contains(checkfor)) return true;
+        data[stub+'address'] += "";//Ensure data address is a string.
+        if (data[stub+'address'] && data[stub+'address'].toLowerCase().contains(checkfor)) return true;
+        if (data[stub+'topic'] && ("(" + data[stub+'topic'].toLowerCase() + ")").contains(checkfor)) return true;
 
     }
     return false;
 }
 
 function checkForMutedNetworks(data) {
-    
-    if(settings["mutebitclout"] == "true" && data.network==1){
+
+    if (settings["mutebitclout"] == "true" && data.network == 1) {
         return true;
     }
-    if(settings["mutenostr"] == "true" && data.network==5){
+    if (settings["mutenostr"] == "true" && data.network == 5) {
         return true;
     }
 
@@ -5685,7 +5811,7 @@ function memorandumPreview() {
     var repostedHTML = document.getElementById('quotepost').outerHTML;
 
 
-    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey, null);
+    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', null);
 
     document.getElementById('memorandumpreview').innerHTML =
         getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, '000', 1, 0, 0, '', 3, '000', false)
@@ -5701,7 +5827,7 @@ function memorandumPreview() {
 }
 
 function geopost() {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
     var posttext = txtarea.value;
@@ -5733,7 +5859,7 @@ function geopost() {
     if (checkForNativeUserAndHasBalance()) {
         //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
         postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
-        successFunction = null;
+        //successFunction = null;
     }
     if (isBitCloutUser()) {
         sendBitCloutPost(posttext + " \nmember.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
@@ -5744,7 +5870,7 @@ function geopost() {
 }
 
 function postmemorandum() {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
     if (!posttext.includes('#')) {
         if (!confirm(getSafeTranslation('notagareyousure', `Are you sure you want to post this without a #hashtag?  Include a #hashtag to help members find your post. Click OK to post or Cancel to add a #hashtag.`))) {
@@ -5797,7 +5923,7 @@ function postmemorandum() {
             //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
             postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
             //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
-            successFunction = null;
+            //successFunction = null;
         }
         if (isBitCloutUser()) {
             sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
@@ -5814,7 +5940,7 @@ function postmemorandum() {
 
         if (checkForNativeUserAndHasBalance()) {
             postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
-            successFunction = null;
+            //successFunction = null;
         }
         if (isBitCloutUser()) {
             sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
@@ -5980,8 +6106,9 @@ function getPicURL(picurl, profilepicbase, qaddress, hivename) {
 async function getDataMemberFinally(data) {
 
     let qaddress = null;
-    if (data[0] && data[0].bitcoinaddress) {
-        qaddress = data[0].bitcoinaddress;
+
+    if (data[0] && data[0].publickey && data[0].publickey.length==66) {
+        qaddress=pubkeyhexToLegacy(data[0].publickey);
     }
 
     let cashaddress = null;
@@ -6030,15 +6157,15 @@ async function getDataMemberFinally(data) {
     }
 
     if (data && (data.length < 1 || Number(data[0].isfollowing) == 0)) {
-        obj.followbuttonhtml = clickActionNamedHTML("follow", qaddress, "follow", obj.publickey);
+        obj.followbuttonhtml = clickActionNamedHTML("follow", obj.publickey, "follow");
     } else {
-        obj.followbuttonhtml = clickActionNamedHTML("unfollow", qaddress, "unfollow", obj.publickey);
+        obj.followbuttonhtml = clickActionNamedHTML("unfollow", obj.publickey, "unfollow");
     }
 
     if (data && (data.length < 1 || Number(data[0].isblocked) == 0)) {
-        obj.mutebuttonhtml = clickActionNamedHTML("mute", qaddress, "mute", obj.publickey);
+        obj.mutebuttonhtml = clickActionNamedHTML("mute", obj.publickey, "mute");
     } else {
-        obj.mutebuttonhtml = clickActionNamedHTML("unmute", qaddress, "unmute", obj.publickey);
+        obj.mutebuttonhtml = clickActionNamedHTML("unmute", obj.publickey, "unmute");
     }
 
 
@@ -6058,8 +6185,7 @@ async function getDataMemberFinally(data) {
     if (data && data[0]) {
         //data[0].rname=data[0].name;
         let member = MemberFromData(data[0], '', '???mainratingid');
-        //obj.pinnedpostHTML = getHTMLForPostHTML(data[0].rtxid, data[0].raddress, data[0].name, data[0].rlikes, data[0].rdislikes, data[0].rtips, data[0].rfirstseen, data[0].rmessage, data[0].rroottxid, data[0].rtopic, data[0].rreplies, data[0].rgeohash, 'memberpage', '???mainratingid', data[0].likedtxid, data[0].likeordislike, data[0].rrepliesroot, data[0].rating, 0, data[0].rrepostcount, data[0].repostidtxid, data[0].pagingid, data[0].publickey, data[0].picurl, data[0].tokens, data[0].followers, data[0].following, data[0].blockers, data[0].blocking, data[0].profile, data[0].isfollowing, data[0].nametime, '', data[0].lastactive, false, data[0].sysrating, data[0].rsourcenetwork, data[0].hivename, data[0].hivelink, data[0].bitcoinaddress);
-        obj.pinnedpostHTML = getHTMLForPostHTML3(member, data[0], 'r', 'memberpage', 0, '', false);
+        obj.pinnedpostHTML = getHTMLForPostHTML3(member, data[0], 'r', 'memberpage', 0, '', false, true); //always show pinned post on member's page
     }
 
     document.getElementById('mcidmemberanchor').innerHTML = templateReplace(pages.member, obj);
@@ -6079,15 +6205,15 @@ async function getDataMemberFinally(data) {
         if (data[0]) {
             document.getElementById('memberratinggroup').style.display = "block";
             document.getElementById('memberratingcomment').innerHTML = getRatingComment(data[0]);
-            document.getElementById('memberratingcommentinputbox' + data[0].bitcoinaddress).onchange = function () { starRating1.setRating(0); };
+            document.getElementById('memberratingcommentinputbox' + data[0].publickey).onchange = function () { starRating1.setRating(0); };
 
             var ratingScore = 0;
             if (data.length > 0) {
                 ratingScore = Number(data[0].rating);
             }
-            document.getElementById('memberrating').innerHTML = getMemberRatingHTML(data[0].bitcoinaddress, ratingScore, data[0].pagingid);
+            document.getElementById('memberrating').innerHTML = getMemberRatingHTML(data[0].publickey, ratingScore, data[0].pagingid);
 
-            var theElement = document.getElementById(`memberrating` + data[0].bitcoinaddress);
+            var theElement = document.getElementById(`memberrating` + data[0].publickey);
             var starRating1 = addSingleStarsRating(theElement);
             setPageTitleRaw("@" + data[0].pagingid);
         }
@@ -6147,7 +6273,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         obj.muting = Number(data[0].blocking);
         obj.handle = ds(data[0].name);
         obj.handlefunction = unicodeEscape(data[0].name);
-        obj.profile = data[0].profile;
+        obj.profileHTMLEscaped = ds(data[0].profile);
         obj.publickey = san(data[0].publickey);
         obj.pagingid = ds(data[0].pagingid);
         obj.picurl = ds(data[0].picurl + "");
@@ -6185,14 +6311,17 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     obj.version = version;
     obj.dust = nativeCoin.dust;
     obj.maxprofilelength = maxprofilelength;
-    obj.nostrpubkey = nostrPubKeyHex;
+
+    if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
+    obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+nostrPubKeyHex);
+    
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
 
     updateSettings();
     document.getElementById('settingsnametextbutton').disabled = true;
-    document.getElementById('settingsprofiletextbutton').disabled = true;
+    document.getElementById('settingsprofiletextbutton2').disabled = true;
     document.getElementById('settingspicbutton').disabled = true;
     //After 9 ratings, members cannot change their handle
     //if (data && data[0] && data[0].ratingnumber > 9) { note - ratingnumber is not being returned in data
@@ -6439,11 +6568,31 @@ function getAndPopulateFB(page, qaddress) {
 function setPic() {
     document.getElementById('settingspicbutton').disabled = true;
     document.getElementById('settingspic').disabled = true;
-
     var newName = document.getElementById('settingspic').value;
+    document.getElementById('settingspicurl').value=newName;
     setTrxPic(newName,getAndPopulateSettings);
     //setNostrProfile("picture",newName);
     setNostrProfile();
+}
+
+function updatePagingId(){
+    var newName = document.getElementById('settingsnametext').value;
+    document.getElementById('settingspagingidhtml').textContent='@'+reduceToPageName(newName);
+}
+
+function reduceToPageName(pagename) {
+    try {
+        if (pagename) {
+            //pagename may include alphanumberic, _ (for bitclout, twitter), and . - (for hive)
+            //we won't store . - in pagenames, but where a page includes . -, the page will be recognized.
+            return pagename.replace(/[^_0-9\u0041-\u005A\u0061-\u007A\u00AA\u00B5\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/g, '').toLowerCase(); 
+        } else {
+            return '';
+        }
+    } catch (err) {
+        console.log("reduceToPageName error " + pagename);
+        return '';
+    }
 }
 "use strict";
 
@@ -6528,19 +6677,20 @@ function displayContentBasedOnURLParameters(suggestedurl) {
             safeGPBN("filter"),
             numberGPBN("start"),
             numberGPBN("limit"),
-            safeGPBN("qaddress")
+            safeGPBN("qaddress"),
+            numberGPBN("minrating")
         );
         setTopic(safeGPBN("topicname"));
     } else if (action.startsWith("list")) {
-        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"));
+        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"),1);
     } else if (action.startsWith("notifications")) {
         showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
         showMember(sane(pubkey), '');
     } else if (action.startsWith("membersonly")) {
-        showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '');
+        showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("topinfluencers")) {
-        getAndPopulateNew('top50', 'both', '', '', 0, 50, 'posts', '', false);
+        getAndPopulateNew('top50', 'both', '', '', 0, 50, 'posts', '', false, 1);
     } else if (action.startsWith("member")) {
         showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -6580,11 +6730,11 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("map")) {
         showMap(safeGPBN("geohash"), safeGPBN("post"));
     } else if (action.startsWith("myfeed") || action.startsWith("mypeople")) {
-        showPostsNew('new', 'both', '', 'myfeed', 0, numbers.results, '');
+        showPostsNew('new', 'both', '', 'myfeed', 0, numbers.results, '', 1);
     } else if (action.startsWith("mytags")) {
-        showPostsNew('new', 'both', 'mytopics', 'everyone', 0, numbers.results, '');
+        showPostsNew('new', 'both', 'mytopics', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("firehose")) {
-        showPostsNew('hot', 'both', '', 'everyone', 0, numbers.results, '');
+        showPostsNew('hot', 'both', '', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("wallet")) {
         showWallet();
     } else if (action.startsWith("custom")) {
@@ -6596,7 +6746,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
             showPFC(0, numbers.results, 'both');
         }
     } else {
-        showPostsNew('hot', 'posts', '', 'everyone', 0, numbers.results, '');
+        showPostsNew('hot', 'posts', '', 'everyone', 0, numbers.results, '', 1);
     }
 }
 
@@ -6805,7 +6955,7 @@ function showMember(qaddress, pagingID, isList) {
     }
 
     if (isList) {
-        showPostsNew("new", "posts", "", "list", 0, 25, sane(qaddress));
+        showPostsNew("new", "posts", "", "list", 0, 25, sane(qaddress), 1);
     } else {
         //setPageTitleFromID("VV0063");
         hideAll();
@@ -6866,10 +7016,10 @@ function showMessages(messagetype, start, limit) {
 }
 
 function showPFC(start, limit, page) {
-    showPostsNew('hot', page, '', 'everyone', start, limit)
+    showPostsNew('hot', page, '', 'everyone', start, limit, '', 1)
 }
 
-function showPostsNew(order, content, topicname, filter, start, limit, qaddress) {
+function showPostsNew(order, content, topicname, filter, start, limit, qaddress='', minStarRating=1) {
     //setTopic('');
     if (topicname == 'mytopics') {
         highlightmajornavbutton("topiclistbutton");
@@ -6879,7 +7029,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
         highlightmajornavbutton("firehosebutton");
     }
 
-    getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress, true);
+    getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress, true, minStarRating);
 }
 
 
@@ -6888,7 +7038,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
 function showTopic(start, limit, topicname, type) {
     setTopic(topicname);
     if (!type) type = "new";
-    getAndPopulateNew(type, 'posts', topicname, 'everyone', start, limit, 'posts', '', true);
+    getAndPopulateNew(type, 'posts', topicname, 'everyone', start, limit, 'posts', '', true, 2);
 }
 
 function showTopicList() {
@@ -6972,7 +7122,7 @@ function setTopic(topicName) {
 
 
 function showThread(roottxid, txid, articleStyle) {
-    getAndPopulateThread(roottxid, txid, 'thread');
+    getAndPopulateThread(roottxid, txid, 'thread', articleStyle);
     if (articleStyle == "article") {
         switchToArticleMode(roottxid);
     }
@@ -7100,7 +7250,7 @@ function checkForNativeUser() {
     if (privkey == "" && pubkey != "") {
         alert(getSafeTranslation('readonlymode2', "You may be logged in with a public key in read only mode. Try logging out and logging back in again."));
         return false;
-    } else if (privkey == "") {
+    } else if (privkey == "" && !window.nostr) {
         alert(getSafeTranslation('mustlogin', "You must login to do this."));
         return false;
     }
@@ -7114,8 +7264,45 @@ function checkForNativeUser() {
 }
 
 function checkForNativeUserAndHasBalance() {
-    return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
+    //return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
+    return false;
 }
+
+function sendRating(rating, ratingText, pageName, targetpublickey) {
+    
+    //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
+
+    //if (!checkForPrivKey()) return false;
+    var comment = "";
+    if (ratingText) {
+        comment = ratingText.value;
+    }
+    
+    let addresshandle='';
+    let targetpublickey66=targetpublickey;
+    if(targetpublickey66.length==64){targetpublickey66='02'+targetpublickey66;}//nostr style public key.
+    theAddress=pubkeyhexToLegacy(targetpublickey66);
+
+    if(targetpublickey.length==64){
+        addresshandle = window.bech32converter('npub').toBech32('0x'+targetpublickey);
+    }else{
+        addresshandle = theAddress
+    }   
+
+    sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nhttps://member.cash/ba/" + addresshandle, null, targetpublickey, true, rating, comment);
+
+    
+    if (checkForNativeUserAndHasBalance()) {
+        rateCallbackAction(rating, comment, theAddress);
+    }
+
+    if (isBitCloutUser()) {
+        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nhttps://member.cash/ba/" + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
+    }
+
+    
+}
+
 
 //var waitForTransactionToComplete = false;
 
@@ -7148,7 +7335,7 @@ function repost(txid, privkey) {
 }
 
 function setTrxPic(newName, callback) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
     //if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
     //    alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
     //    return;
@@ -7170,7 +7357,7 @@ function setName() {
     //setNostrProfile('name',newName);
     setNostrProfile();
 
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
 
 
     document.getElementById('settingsnametextbutton').disabled = true;
@@ -7445,9 +7632,9 @@ function setProfile() {
     setNostrProfile();
     //setNostrProfile('about',newProfile);
 
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
 
-    document.getElementById('settingsprofiletextbutton').disabled = true;
+    document.getElementById('settingsprofiletextbutton2').disabled = true;
 
 
     const tx = {
@@ -7461,7 +7648,7 @@ function setProfile() {
 
 function subTransaction(topicHOSTILE) {
 
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -7475,7 +7662,7 @@ function subTransaction(topicHOSTILE) {
 }
 
 function unsubTransaction(topicHOSTILE) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -7488,7 +7675,10 @@ function unsubTransaction(topicHOSTILE) {
     tq.queueTransaction(tx);
 }
 
-function addressTransaction(removeElementID, qaddress, actionCode, statusMessage) {
+function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey) {
+    //if(!qaddress){
+    let qaddress=getImpliedBitcoinAddress(targetpublickey);
+    //}
     try {
         //document.getElementById(removeElementID).style.display = "none";
         var addressraw = getLegacyToHash160(qaddress);
@@ -7503,52 +7693,65 @@ function addressTransaction(removeElementID, qaddress, actionCode, statusMessage
     }
 }
 
-function follow(qaddress, targetpublickey) {
-    if (!checkForPrivKey()) return false;
+function follow(targetpublickey) {
+    //if (!checkForPrivKey()) return false;
+
+    sendNostrFollow(targetpublickey); 
+    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberfollow', qaddress, "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"));
+        addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey);
     }
     if (isBitCloutUser()) {
         sendBitCloutFollow(targetpublickey);
     }
-    sendNostrFollow(targetpublickey);
+    
 }
 
-function unfollow(qaddress, targetpublickey) {
-    if (!checkForPrivKey()) return false;
-    if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberfollow', qaddress, "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"));
-    }
-    //if(isBitCloutUser()){
-    //    sendBitCloutUnFollow(targetpublickey);
-    //}
+function unfollow(targetpublickey) {
+    //if (!checkForPrivKey()) return false;
+
     sendNostrUnFollow(targetpublickey);
+    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+
+    if (checkForNativeUserAndHasBalance()) {
+        addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey);
+    }
+    if(isBitCloutUser()){
+        sendBitCloutUnFollow(targetpublickey);
+    }
+    
 }
 
-function mute(qaddress, targetpublickey) {
-    if (!checkForPrivKey()) return false;
-    if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberblock', qaddress, "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"));
-    }
+function mute(targetpublickey) {
+    //if (!checkForPrivKey()) return false;
     sendNostrMute(targetpublickey);
+    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+
+    if (checkForNativeUserAndHasBalance()) {
+        addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey);
+    }
     //if(isBitCloutUser()){
     //    sendBitCloutMute(targetpublickey);
     //}
 }
 
-function unmute(qaddress, targetpublickey) {
-    if (!checkForPrivKey()) return false;
-    if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberblock', qaddress, "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"));
-    }
+function unmute(targetpublickey) {
+    //if (!checkForPrivKey()) return false;
     sendNostrUnMute(targetpublickey);
+    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+
+    if (checkForNativeUserAndHasBalance()) {
+        addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey);
+    }
     //if(isBitCloutUser()){
     //    sendBitCloutUnMute(targetpublickey);
     //}
 }
 
 function sub(topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
+    
     if (checkForNativeUserAndHasBalance()) {
         subTransaction(topicHOSTILE);
     }
@@ -7559,7 +7762,7 @@ function sub(topicHOSTILE) {
 }
 
 function unsub(topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
     if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
     }
@@ -7587,7 +7790,7 @@ function sendSendUnhidePost(txid) {
 }
 
 function txidTransaction(txid, actionCode, statusMessage) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
@@ -7600,7 +7803,7 @@ function txidTransaction(txid, actionCode, statusMessage) {
 }
 
 function rateUser(qaddress, rating, ratingcomment) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
     if (ratingcomment === undefined) {
         ratingcomment = "";
     }
@@ -7635,7 +7838,7 @@ function unhideuser(qaddress, topicHOSTILE, elementid) {
 
 
 function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMessage, topicHOSTILE) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
 
     document.getElementById(removeElementID).style.display = "none";
     var addressraw = getLegacyToHash160(qaddress);
@@ -8939,6 +9142,20 @@ function getAndSetVersion() {
         });
 }*/
 
+async function nos2xlogin(){
+    let pubKeyToUse;
+    try{
+        pubKeyToUse=await window.nostr.getPublicKey();
+        if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
+        pubKeyToUse = window.bech32converter('npub').toBech32('0x'+pubKeyToUse);
+
+    }catch(error){
+        document.getElementById('loginerror').innerHTML = "nos2x error:"+error.message;
+        console.log(error);
+    }
+    trylogin(pubKeyToUse);
+}
+
 function trylogin(loginkey, nextpage) {
     try {
         login(loginkey);
@@ -8952,7 +9169,7 @@ function trylogin(loginkey, nextpage) {
     }
 
     //Show message if in read only mode
-    if (!privkey) {
+    if (!privkey && !window.nostr) {
         document.getElementById('readonlyversion').style.display = 'block';
     }
 
@@ -8973,9 +9190,10 @@ async function loadBigLibs() {
     loadBigLibsStarted = true;
     //Load big libraries that may not be immediately needed.
 
-    if (!window.NostrTools)  loadScript("js/lib/nostr.bundle.1.0.1.js");
     if (!bip39) loadScript("js/lib/bip39.browser.js");
     if (!window.bitcoinjs) loadScript(bitcoinjslib);
+    if (!window.NostrTools)  loadScript("js/lib/nostr.bundle.1.0.1.js");
+    if (!window.bech32converter)  loadScript("js/lib/bech32-converting-1.0.9.min.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) loadScript("js/lib/elliptic.min.js");
     loadMDE();
@@ -9011,6 +9229,24 @@ async function login(loginkey) {
         if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
         if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
 
+        let userLoggedInWithnsec = false;
+        if (loginkey.startsWith("nsec")) {
+            userLoggedInWithnsec = true;
+            //Nostr bech32 encoded private key
+            if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+            let hexkey = window.bech32converter('nsec').toHex(loginkey).slice(2).toLowerCase();
+            let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexkey,'hex'));
+            setNostrKeys(ecpair);
+            //Note, cannot use this key directly as it is used for EDDSA, 
+            //There is a theoretical risk if also using for ECDSA sigs
+            //Hash the key, use as a source of entropy to generate mnemonic
+            if (!eccryptoJs) {await loadScript("js/lib/eccrypto-js.js");}
+            let hashprivkey = await eccryptoJs.sha256(await eccryptoJs.sha256(new Buffer(nostrPrivKeyHex,'hex')));
+            hashprivkey = hashprivkey.toString('hex');
+            hashprivkey = hashprivkey.slice(0,32);
+            loginkey = bip39.entropyToMnemonic(new Buffer(hashprivkey,'hex'));
+        }
+
         let loginkeylowercase=loginkey.toLowerCase();
         if (bip39.validateMnemonic(loginkeylowercase)) {
             let seed = bip39.mnemonicToSeedSync(loginkeylowercase);
@@ -9021,8 +9257,12 @@ async function login(loginkey) {
             mnemonic = loginkeylowercase;
             loginkey = newloginkey;
 
-            let nostrKey = root.derivePath("44'/1237'/0'/0/0");
-            setNostrKeys(nostrKey);
+            if(!nostrPrivKeyHex){ //if the user logged in with an nsec, the priv/pub keys are already set!
+                let nostrKey = root.derivePath("44'/1237'/0'/0/0");
+                setNostrKeys(nostrKey);
+            }
+
+
 
 
             //pubkeyhex = ecpair.publicKey.toString('hex');
@@ -9031,12 +9271,20 @@ async function login(loginkey) {
         }
 
         try {
-            if (loginkey.startsWith("q")) {
+            if (loginkey.startsWith("q")) { //Note, not possible to be a valid seed phrase here, so shouldn't interfere with that, could be a username starting with q
                 loginkey = "member:" + loginkey;
             }
+
             if (loginkey.startsWith("member:") || loginkey.startsWith("bitcoincash:")) {
                 publicaddress = membercoinToLegacy(loginkey);
-            } else if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
+            } 
+            else if (loginkey.startsWith("npub")) {
+                //Nostr bech32 encoded public key
+                if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+                let hexkey = window.bech32converter('npub').toHex(loginkey).slice(2).toLowerCase();
+                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: Buffer.from('02'+hexkey, 'hex') }).address;
+            }
+            else if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
                 let ecpair = window.bitcoinjs.ECPair.fromWIF(loginkey);
                 publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
                 privkey = loginkey;
@@ -9058,8 +9306,17 @@ async function login(loginkey) {
                 var theURL = dropdowns.contentserver + '?action=usersearch&searchterm=' + encodeURIComponent(loginkey);
                 getJSON(theURL).then(function (data) {
                     if (data && data.length > 0) {
-                        var qaddress = data[0].bitcoinaddress;
-                        trylogin(qaddress);
+                        //Nostr won't have a bitcoin address associated with it - use representative one
+                        //if(!qaddress || qaddress=='null'){
+                        let namepubkey=data[0].publickey;
+                        if (namepubkey.length==64)namepubkey='02'+namepubkey;
+                        var qaddress=pubkeyhexToLegacy(namepubkey);
+                        //}
+                        
+                        if(qaddress && qaddress.length>21){
+                            trylogin(qaddress);
+                        }
+                        
                         return;
                     } else {
                         alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
@@ -9087,7 +9344,7 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             
-            if(newlygeneratedaccount){
+            if(newlygeneratedaccount || userLoggedInWithnsec){
                 linkNostrAccount(false); //link the nostr public key to the member key
             }
             //dropdowns.utxoserver
@@ -9119,7 +9376,8 @@ async function login(loginkey) {
     document.getElementById('newseedphrase').textContent = "";
     document.getElementById('loginkey').value = "";
 
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength, nostrpubkey:nostrPubKeyHex}, true);
+    //, nostrpubkey:nostrPubKeyHex bech32 lib may not be available yet
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength}, true);
     document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
 
     updateSettings();
@@ -9327,10 +9585,10 @@ function populateNotificationTab(limit, nfilter, minrating) {
     <span class="separator"></span>
     <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+ (nfilter == 'repost' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=repost` + options + `">Remembers</a>
     <span class="separator"></span>
-    <a data-vavilon="notificationpurchase" data-vavilon_title="notificationpurchase" title="See only creator coin purchases" class="`+ (nfilter == 'purchase' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=purchase` + options + `">Buys</a>
+    <!--<a data-vavilon="notificationpurchase" data-vavilon_title="notificationpurchase" title="See only creator coin purchases" class="`+ (nfilter == 'purchase' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=purchase` + options + `">Buys</a>
     <span class="separator"></span>
     <a data-vavilon="notificationsale" data-vavilon_title="notificationsale" title="See only creator coin sales" class="`+ (nfilter == 'sale' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=sale` + options + `">Sells</a>
-    <span class="separator"></span>
+    <span class="separator"></span>-->
     <nav class="filterssecondset">
         <span class="starratingnotifications">
             <span data-ratingsize="16" id="notificationsfilter" class="star-rating-notifications"></span>
@@ -9347,6 +9605,7 @@ function populateNotificationTab(limit, nfilter, minrating) {
 
 
     notificationFilter.element = raterJs({
+        extraClass: "systemscore",
         starSize: Number(notificationFilter.element.dataset.ratingsize),
         rating: notificationFilter.minrating,
         element: notificationFilter.element,
@@ -9476,7 +9735,7 @@ notificationFilter.limit = 25;
 
 
 function getHTMLForNotification(data, rank, page, starindex, highlighted) {
-    if (checkForMutedWords(data)) return "";
+    if (checkForMutedWords(data)) return ""; //note, no check for muted network
     let type = ds(data.type);
     let mainRatingID = starindex + page + ds(data.origin);
     let postRatingID = "";
@@ -9716,7 +9975,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
 
 function userFromDataBasic(data, mainRatingID) {
     if (!data.raterrating) { data.raterrating = data.rating; }//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.bitcoinaddress, data.messageaddress).userHTML(true);
+    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.messageaddress).userHTML(true);
 }
 
 function userFromData(data, mainRatingID) {
@@ -9743,28 +10002,24 @@ function MemberFromData(data, stub, ratingID) {
         data[stub + "lastactive"],
         data[stub + "sysrating"],
         data[stub + "hivename"],
-        data[stub + "bitcoinaddress"],
+        null,
         data[stub + "messageaddress"]
     );
 }
 
-function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress, messageaddress=null) {
+function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, messageaddress = null) {
 
-    if (!address || address=='null') {
-        if(messageaddress){
-            address=messageaddress; //This happens if the server has no profile data for the member.
-        }else{
+    if (!address || address == 'null') {
+        if (messageaddress) {
+            address = messageaddress; //This happens if the server has no profile data for the member.
+        } else {
             console.log('Missing address for post error - this should not happen.');
             updateStatus('Missing address for post error - this should not happen.'); return "";
         }
     }
 
-    if (!bitcoinaddress) {
-        updateStatus('Missing legacy address for post error - this can happen if server does not have public key for user.');
-    }
-
     address = "" + address;//always treat address like a string.
-    
+
 
     /*if (!name) {
         if (sourcenetwork == 2) {//get the hive name
@@ -9779,7 +10034,7 @@ function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, pi
     if (this.name == "" || this.name == null) {
         this.name = address.substring(0, 10);
     }
-    
+
     this.ratingID = ratingID;
     this.ratingRawScore = ratingRawScore;
     this.pagingid = pagingid;
@@ -9796,7 +10051,9 @@ function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, pi
     this.lastactive = lastactive;
     this.sysrating = sysrating;
     this.hivename = hivename;
-    this.bitcoinaddress = bitcoinaddress;
+    if (publickey && publickey.length == 66) {
+        this.bitcoinaddress = pubkeyhexToLegacy(publickey);
+    }
 }
 
 Member.prototype.userHTML = function (includeProfile) {
@@ -9826,10 +10083,14 @@ Member.prototype.userHTML = function (includeProfile) {
     if (this.tokens > 0) {
         flair = ` <span data-vavilon_title="TopIndex" class="flair" title="TopIndex">` + ordinal_suffix_of(Number(this.tokens)) + ` </span> `;
     }
-    let followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('` + sane(this.bitcoinaddress) + `','` + sane(this.publickey) + `'); this.style.display='none';">follow</a>`;
+    //let followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('${sane(this.publickey)}'); this.style.display='none';">follow</a>`;
+    let followButton = clickActionNamedHTML("follow", sane(this.publickey), "follow");
     if (this.isfollowing) {
-        followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('` + sane(this.bitcoinaddress) + `','` + sane(this.publickey) + `'); this.style.display='none';">unfollow</a>`;
+        //followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('${sane(this.publickey)}'); this.style.display='none';">unfollow</a>`;
+        followButton = clickActionNamedHTML("unfollow", sane(this.publickey), "unfollow");
     }
+
+
 
     if (this.ratingID == undefined) {
         this.ratingID = 'test';
@@ -9849,8 +10110,11 @@ Member.prototype.userHTML = function (includeProfile) {
 
     let directlink = "";
 
-    let systemScoreClass = '';
-    let useScore=this.ratingRawScore
+    let systemScoreClass = '""';
+    let useScore = this.ratingRawScore;
+    if (useScore < 65) {
+        systemScoreClass = 'scorewarning';
+    }
     if (!useScore) { //If the user hasn't rated the user, use a system score
         useScore = this.sysrating;
         systemScoreClass = 'systemscore';
@@ -9941,11 +10205,17 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         //sourceNetworkHTML = '<a rel="noopener noreferrer" href="' + permalink + '">member.cash</a>';
     } else if (sourcenetwork == 4) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
-    } else if (sourcenetwork == 5) {
+    } /*else if (sourcenetwork == 5) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}">astral.ninja</a>`; 
-    }else if (sourcenetwork == 99) {
+    } */
+    else if (sourcenetwork == 5) {
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="snort" href="https://snort.social/e/${bech32Encode('note',hivelink)}">snort</a>`; 
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostrgram" href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;    
+    } else if (sourcenetwork == 99) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">rss</a>';
     }
+
 
     var obj = {
         //These must all be HTML safe.
@@ -10123,7 +10393,13 @@ function getSafeMessage(messageHTML, differentiator, includeMajorMedia) {
     let theMember= new Member(address, name, ratingID, rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress);
     return getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, likedtxid, likeordislike, repliesroot, differentiator, repostcount, repostidtxid, repostedHTML, truncate, sourcenetwork, hivelink);
 }*/
-function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repostedHTML, truncate) {
+function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repostedHTML, truncate, alwaysShow = true) {
+
+    if (!alwaysShow) {
+        if (checkForMutedWords(data, stub)) return "";
+        if (checkForMutedNetworks(data, stub)) return "";
+        if (data.moderated != null) return "";
+    }
     return getHTMLForPostHTML2(
         theMember,
         page,
@@ -10217,8 +10493,11 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img width='15' height='15' alt='doge.hair' src='img/networks/4.png'></a>`;
     } else if (sourcenetwork == 5) {
-        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}">astral.ninja</a>`; 
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
+        //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+    
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://nostrgram.co/#thread:${san(hivelink)}">snort</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
@@ -10228,6 +10507,17 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     if (theMember.bitcoinaddress == pubkey) {
         pinnedpostHTML = `<a data-vavilon="VVpinpost" href="javascript:;" onclick="pinpost('${san(origTXID)}')">Pin Post</a>`;
     }
+
+    let followButton = clickActionNamedHTML("follow", sane(theMember.publickey), "follow");
+    let muteButton = clickActionNamedHTML("mute", sane(theMember.publickey), "mute");
+
+    if (theMember.isfollowing) {
+        followButton = clickActionNamedHTML("unfollow", sane(theMember.publickey), "unfollow");
+        muteButton = '';
+    }
+
+
+
 
     var obj = {
         //These must all be HTML safe 
@@ -10277,7 +10567,9 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         MEMUSD100: satsToUSDString(10000000000),
         deleted: (deleted == '1' ? ` deleted` : ''),
         retracted: (deleted == '1' ? ` <span class='retracted'>removed</span>` : ''),
-        ticker: nativeCoin.ticker
+        ticker: nativeCoin.ticker,
+        followbuttonHTML: followButton,
+        mutebuttonHTML: muteButton
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -10285,9 +10577,9 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
 
 }
 
-function truncateNumber(theNumber){
-    if(theNumber>999){
-        return parseInt(theNumber/100)/10+'k';
+function truncateNumber(theNumber) {
+    if (theNumber > 999) {
+        return parseInt(theNumber / 100) / 10 + 'k';
     }
     return theNumber;
 }
@@ -10317,27 +10609,6 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
 
     message = getSafeMessage(message, differentiator, true);
 
-    /*
-    //Remove html - use dslite here to allow for markdown including some characters
-    message = dslite(message);
-
-    message = ShowdownConverter.makeHtml(message);
-    
-    //check for XSS vulnerabilities
-    message = DOMPurify.sanitize(message);
-
-    //Add youtube links
-
-    message = addImageAndYoutubeMarkdown(message, differentiator, true);
-*/
-    //var voteButtons = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
-    //var author = theMember.userHTML(true);
-    //new Member(address, name, ratingID, rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress).userHTML(true);
-    //var age = getAgeHTML(firstseen);
-    //var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator, repostcount);
-    //var replyAndTips = getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, repostidtxid, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress);
-    //var replyDiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID);
-
     let likesbalance = Number(likes) - Number(dislikes);
     let santxid = san(txid);
     let permalink = `?` + santxid.substring(0, 4) + `#thread?post=` + santxid;
@@ -10364,7 +10635,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         diff: differentiator,
         deleted: (deleted == '1' ? ` deleted` : ''),
         retracted: (deleted == '1' ? ` removed` : ''),
-        revision: (Number(edit)>0 ? ' edit'+Number(edit) : '')
+        revision: (Number(edit) > 0 ? ' edit' + Number(edit) : '')
     };
 
     return templateReplace(replyTemplate, obj);
@@ -10379,7 +10650,14 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
             if (data[i].rating) {
                 ratingused = data[i].rating;
             }
-            var isMuted = (data[i].edit > 0 || data[i].blockstxid != null || data[i].moderated != null || ratingused < maxScoreToCollapseComment);
+            var isMuted = (
+                data[i].edit > 0
+                || data[i].blockstxid != null
+                || data[i].moderated != null
+                || ratingused < maxScoreToCollapseComment
+                || checkForMutedWords(data)
+                || checkForMutedNetworks(data)
+            );
 
             var obj = {
                 unmuteddisplay: (isMuted ? `none` : `block`),
@@ -10393,7 +10671,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
                 diff: i,
                 deleted: (data[i].deleted == '1' ? ` deleted` : ''),
                 retracted: (data[i].deleted == '1' ? ` removed` : ''),
-                revision: (Number(data[i].edit)>0 ? ' edit'+Number(data[i].edit) : '')
+                revision: (Number(data[i].edit) > 0 ? ' edit' + Number(data[i].edit) : '')
                 //These must all be HTML safe.
             }
 
@@ -10423,34 +10701,35 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + getSafeTranslation(linktext, linktext) + `</a>`;
 }
 
-function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
+function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults, minrating) {
     //Caution topicname may contain hostile characters/code
 
-    var navheader = `<nav class="filters">`;
-    navheader += `<a data-vavilon="VV0106" onclick="nlc();" data-vavilon_title="VV0107" value="new" title="Latest posts" class="` + (order == 'new' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0104" onclick="nlc();" data-vavilon_title="VV0105" value="hot" title="Hottest posts" class="` + (order == 'hot' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVTop" onclick="nlc();" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="` + (order == 'topd' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Top</a> `;
-    navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw" title="Top posts from the past Week" class="` + (order == 'topw' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topw&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Week</a> `;
-    //navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0114" data-vavilon_title="VV0115" value="topm" title="Top posts from the past Month" class="` + (order == 'topm' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topm&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Month</a> `;
-    //navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy" title="Top posts from the past Year" class="`+(order=='topy'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topy&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
-    //navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0118" onclick="nlc();" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="` + (order == 'topa' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVold" onclick="nlc();" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="` + (order == 'old' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=old&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Old</a> `;
+    let fixedparams = `#${action}?content=${content}&minrating=${minrating}&start=0&limit=${limit}&filter=${filter}&qaddress=${qaddress}&topicname=${ds(encodeURIComponent(topicnameHOSTILE))}`;
+    fixedparams2 =       `#${action}?&order=${order}&minrating=${minrating}&start=0&limit=${limit}&filter=${filter}&qaddress=${qaddress}&topicname=${ds(encodeURIComponent(topicnameHOSTILE))}`;
 
-    navheader += `<nav class="filterssecondset">`;
-    navheader += `<a data-vavilon="VV0120" onclick="nlc();" data-vavilon_title="VV0121" title="See only posts" class="` + (content == 'posts' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0122" onclick="nlc();" data-vavilon_title="VV0123" title="See only replies" class="` + (content == 'replies' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVall" onclick="nlc();" data-vavilon_title="VV0125" title="See both posts and replies" class="` + (content == 'both' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
-    navheader += "</nav>";
-    navheader += "</nav>";
+    var navheader = `<nav class="filters">
+    <a data-vavilon="VV0106" onclick="nlc();" data-vavilon_title="VV0107" value="new" title="Latest posts" class="${(order == 'new' ? 'filteron' : 'filteroff')}"                 href="${fixedparams}&order=new" >New</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VV0104" onclick="nlc();" data-vavilon_title="VV0105" value="hot" title="Hottest posts" class="${(order == 'hot' ? 'filteron' : 'filteroff')}"                href="${fixedparams}&order=hot" >Hot</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VVTop" onclick="nlc();" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="${(order == 'topd' ? 'filteron' : 'filteroff')}" href="${fixedparams}&order=topd" >Top</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VV0118" onclick="nlc();" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="${(order == 'topa' ? 'filteron' : 'filteroff')}"    href="${fixedparams}&order=topa" >All</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VVold" onclick="nlc();" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="${(order == 'old' ? 'filteron' : 'filteroff')}"         href="${fixedparams}&order=old" >Old</a> 
+    <nav class="filterssecondset">`;
+    if(!qaddress){
+        navheader += `<span class="starratingnotifications">
+                        <span data-ratingsize="16" id="postsqualityfilter" class="star-rating-notifications"></span>
+                    </span>`
+    }
+    navheader += `<a data-vavilon="VV0120" onclick="nlc();" data-vavilon_title="VV0121" title="See only posts" class="${(content == 'posts' ? 'filteron' : 'filteroff')}"   href="${fixedparams2}&content=posts" >Posts</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VV0122" onclick="nlc();" data-vavilon_title="VV0123" title="See only replies" class="${(content == 'replies' ? 'filteron' : 'filteroff')}"             href="${fixedparams2}&content=replies" >Replies</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VVall" onclick="nlc();" data-vavilon_title="VV0125" title="See both posts and replies" class="${(content == 'both' ? 'filteron' : 'filteroff')}"       href="${fixedparams2}&content=both" >All</a>
+    </nav>
+    </nav>`;
     return navheader;
 
 }
@@ -10458,14 +10737,14 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
 function getNotificationNavButtonsNewHTML(start, limit, action, qaddress, minrating, notificationtype, numberOfResults) {
     //Caution topicname may contain hostile characters/code
 
-    var navbuttons = `<div class="navbuttons">`;
+    var navbuttons = `<div class="navbuttons" > `;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&minrating=` + minrating + `&nfilter=` + notificationtype + `&qaddress=` + qaddress + `" >` + getSafeTranslation('prev', 'back') + `</a> `; }
+    { navbuttons += `<a class="next" href = "#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&minrating=` + minrating + `&nfilter=` + notificationtype + `&qaddress=` + qaddress + `" > ` + getSafeTranslation('prev', 'back') + `</a > `; }
 
     //if (numberOfResults > numbers.results) //Sometimes an sql limit request returns fewer than the available set - nearly always include a next button
     //Always show
-    { navbuttons += `<a class="back" href="#` + action + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&minrating=` + minrating + `&nfilter=` + notificationtype + `&qaddress=` + qaddress + `" >` + getSafeTranslation('next', 'next') + `</a>`; }
+    { navbuttons += `<a class="back" href = "#` + action + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&minrating=` + minrating + `&nfilter=` + notificationtype + `&qaddress=` + qaddress + `" > ` + getSafeTranslation('next', 'next') + `</a > `; }
 
     navbuttons += "</div>";
     return navbuttons;
@@ -10476,55 +10755,72 @@ function getNotificationNavButtonsNewHTML(start, limit, action, qaddress, minrat
 function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
     //Caution topicname may contain hostile characters/code
 
-    var navbuttons = `<div class="navbuttons">`;
+    var navbuttons = `<div class="navbuttons" > `;
 
     //Don't really need back button - user can click back in browser
     //if (start != 0) //Don't show back buttons if we're at the start
-    //{ navbuttons += `<a class="next" href="#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('prev', 'back') + `</a> `; }
+    //{ navbuttons += `< a class="next" href = "#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" > ` + getSafeTranslation('prev', 'back') + `</a > `; }
 
     //if (numberOfResults > numbers.results / 2) //Sometimes an sql limit request returns fewer than the available set - nearly always include a next button
     //Always show
-    { navbuttons += `<a class="back" href="#` + action + `?start=` + (Number(start)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('next', 'next') + `</a>`; }
+    { navbuttons += `<a class="back" href = "#` + action + `?start=` + (Number(start)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" > ` + getSafeTranslation('next', 'next') + `</a > `; }
 
     navbuttons += "</div>";
     return navbuttons;
 
 }
 
+function getItemListandNavButtonsHTMLHeader(navheader, contentsHTML, navbuttonsHTML, styletype, start) {
+    if (styletype != "") {
+        return `<div class="itemlist"> ${ navheader } <ol id="itemlistol" start="` + (Number(start) + 1) + `" class="` + styletype + `">`;
+    } else {
+        return `<div class="itemlist"> `;
+    }
+}
+
+function getItemListandNavButtonsHTMLFooter(navheader, contentsHTML, navbuttonsHTML, styletype, start) {
+    if (styletype != "") {
+        return `</ol></div > <div class="navbuttons">` + navbuttonsHTML + `</div>`;
+    } else {
+        return `</div > <div class="navbuttons">` + navbuttonsHTML + `</div>`;
+    }
+}
+
+
 
 function getItemListandNavButtonsHTML(navheader, contentsHTML, navbuttonsHTML, styletype, start) {
     if (styletype != "") {
-        return `<div class="itemlist">${navheader}<ol start="` + (Number(start) + 1) + `" class="` + styletype + `">` + contentsHTML + `</ol></div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
+        return `<div class="itemlist"> ${ navheader } <ol start="` + (Number(start) + 1) + `" class="` + styletype + `">` + contentsHTML + `</ol></div > <div class="navbuttons">` + navbuttonsHTML + `</div>`;
     } else {
-        return `<div class="itemlist">` + contentsHTML + `</div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
+        return `<div class="itemlist"> ` + contentsHTML + `</div > <div class="navbuttons">` + navbuttonsHTML + `</div>`;
     }
 }
 
 function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID, roottxid) {
 
     var upvoteHTML;
-    let scoreHTML = `<span class="betweenvotesscore" id="score` + san(txid) + `">` + Number(score) + `</span>`;
+    let scoreHTML = `<span class="betweenvotesscore" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     var downvoteHTML;
 
     if (likeordislike == "1") {
-        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a>`;
-        scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
+        upvoteHTML = `<a id = "upvoteaction` + san(txid) + `" href = "javascript:;" ><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a > `;
+        scoreHTML = `<span class="betweenvotesscoreup" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     } else {
-        upvoteHTML = `<a id="upvoteaction${san(txid)}" href="javascript:;" onclick="likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0,${san(roottxid)})"><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a>`;
+        upvoteHTML = `<a id = "upvoteaction${san(txid)}" href = "javascript:;" onclick = "likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0,${san(roottxid)})" ><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a > `;
     }
 
     if (likeordislike == "-1") {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;"><span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
-        scoreHTML = `<span class="betweenvotesscoredown" id="score` + san(txid) + `">` + Number(score) + `</span>`;
+        downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" > <span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
+        scoreHTML = `<span class="betweenvotesscoredown" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     } else {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `','` + san(origTXID) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
+        downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" onclick = "dislikePost('${san(txid)}','${san(origTXID)},${san(roottxid)}')" > <span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
     }
 
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
 }
 
 function getRefreshButtonHTML() {
-    return `<a id="refreshbutton" class="btn" href="" onclick="displayContentBasedOnURLParameters();return false;">🔄</a>`;
+    return `<a id = "refreshbutton" class="btn" href = "" onclick = "displayContentBasedOnURLParameters();return false;" >🔄</a > `;
 }
 
 
@@ -10535,6 +10831,7 @@ function completedPostHTML(txid, titleHOSTILE) {
     var obj = {
         //These must all be HTML safe 
         txid: san(txid),
+        address: san(pubkey),
         encodedurl: encodedURL
     };
 
@@ -10596,17 +10893,6 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         message = message.replace(imgurRegex, replaceImgur);
     }
 
-
-    /*if (settings["showprism"] == "true") {
-        //Prism
-        //If not, cdn.prism.red/*.jpeg & .png
-        //Otherwise include mp4 & mp3 in that extension list
-        var imgurRegex = global ?
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(imgurRegex, replaceImgur);
-    }*/
-
     if (settings["showtwitter"] == "true") {
         //Twitter
         var tweetRegex = global ?
@@ -10638,46 +10924,67 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         message = message.replace(lbryRegex, `<div class="youtubecontainer"><iframe loading="lazy" width="480" height="270" class="odyseeiframe" src="https://odysee.com/$/embed/$1" allowFullScreen="false"></iframe></div>`);
     }
 
-    if (settings["showbitclout"] == "true") {
-        //Bitclout
-        var bitcloutRegex = global ?
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Bitclout)" class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
-
-        var bitcloutRegex = global ?
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Deso)" class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
-
-    }
-
-    var membercoinRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/i;
-    message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (member.cash)" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
-
     var memberlinksRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})?.*?<\/a>/gi :
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})?.*?<\/a>/i;
     message = message.replace(memberlinksRegex, replaceDiamondApp);
 
+
+    //todo - should have a settings option for giphy
     var giphyRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(giphy\.com\/embed\/|media1\.giphy\.com\/media\/)([a-z0-9A-Z]{5,20})*.*?<\/a>/gi :
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(giphy\.com\/embed\/|media1\.giphy\.com\/media\/)([a-z0-9A-Z]{5,20})*.*?<\/a>/i;
     message = message.replace(giphyRegex, `<a href="https://i.giphy.com/media/$2/giphy.webp" rel="noopener noreferrer" target="_giphy" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy"  alt="Post's Image (Giphy)" class="imgurimage" src="https://i.giphy.com/media/$2/giphy.webp"></img></div></a>`);
 
 
-    var pearlRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/i;
-    message = message.replace(pearlRegex, `<a href="https://cdn.pearl.app/$1.webp" rel="noopener noreferrer" target="_pearl" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Pearl)" class="imgurimage" src="https://cdn.pearl.app/$1.webp"></img></div></a>`);
+    //Images - todo should have a settings option for all other images
 
-    var diamondappRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/i;
-    message = message.replace(diamondappRegex, replaceDiamondApp);
+    var imageRegex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?([a-zA-Z0-9\.\/_-]*\.(?:png|jpg|jpeg|jfif|gif|png|svg|webp)).*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?([a-zA-Z0-9\.\/_-]*\.(?:png|jpg|jpeg|jfif|gif|png|svg|webp)).*?<\/a>/i;
+    message = message.replace(imageRegex, `<a href="https://$1" rel="noopener noreferrer" target="_imagewindow" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image" class="imgurimage" src="https://$1"></img></div></a>`);
 
+    var mp4Regex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?([a-zA-Z0-9\.\/_-]*\.(?:mp4)).*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?([a-zA-Z0-9\.\/_-]*\.(?:mp4)).*?<\/a>/i;
+    message = message.replace(mp4Regex, `<a href='javascript:;'><video controls class="imgurimage" draggable="false" playsinline="true" loop="true"><source loading="lazy" type="video/mp4" src="https://$1" alt="mp4 post"></video></a>`);
+
+    /*
+        //if (settings["showbitclout"] == "true") {
+        //Bitclout
+        
+        var bitcloutRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
+        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Bitclout)" class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
+    
+        var bitcloutRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
+        message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Deso)" class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
+    
+        //}
+    
+        var membercoinRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/i;
+        message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (member.cash)" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
+    
+        var pearlRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/i;
+        message = message.replace(pearlRegex, `<a href="https://cdn.pearl.app/$1.webp" rel="noopener noreferrer" target="_pearl" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Pearl)" class="imgurimage" src="https://cdn.pearl.app/$1.webp"></img></div></a>`);
+    
+        var diamondappRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/i;
+        message = message.replace(diamondappRegex, replaceDiamondApp);
+    
+        var nostrbuildRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(nostr\.build\/i\/)([0-9]{1,10})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(nostr\.build\/i\/)([0-9]{1,10})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
+        message = message.replace(nostrbuildRegex, `<a href="https://nostr.build/i/$2$3" rel="noopener noreferrer" target="_nostrbuild" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy"  alt="Post's Image (Nostr Build)" class="imgurimage" src="https://nostr.build/i/$2$3"></img></div></a>`);
+    */
 
     return message;
 }
@@ -10869,17 +11176,17 @@ function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, ra
 }
 
 function getRatingComment(data) {
-    return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="${maxratinglength}" id="memberratingcommentinputbox${san(data.bitcoinaddress)}" value="${ds(data.ratingreason)}" onchange="checkLength('memberratingcommentinputbox${san(data.bitcoinaddress)}',${maxratinglength});" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+    return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="${maxratinglength}" id="memberratingcommentinputbox${san(data.publickey)}" value="${ds(data.ratingreason)}" onchange="checkLength('memberratingcommentinputbox${san(data.publickey)}',${maxratinglength});" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
-function getMemberRatingHTML(bitcoinaddress, ratingScore, pagingid) {
-    return `<div class="starrating"><div data-ratingsize="20" data-ratingname="` + ds(pagingid) + `" data-ratingaddress="` + san(bitcoinaddress) + `" data-ratingraw="` + Number(ratingScore) + `" id="memberrating` + san(bitcoinaddress) + `"></div></div>`;
+function getMemberRatingHTML(publickey, ratingScore, pagingid) {
+    return `<div class="starrating"><div data-ratingsize="20" data-ratingname="` + ds(pagingid) + `" data-ratingpublickey="` + san(publickey) + `" data-ratingraw="` + Number(ratingScore) + `" id="memberrating` + san(publickey) + `"></div></div>`;
 }
 
 
 //Settings
-function clickActionNamedHTML(action, qaddress, name, targetpubkey) {
-    return `<a class='${action}button' data-vavilon='` + action + `' class='` + action + `' href='javascript:;' onclick='` + action + `("` + sane(qaddress) + `","` + sane(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
+function clickActionNamedHTML(action, targetpubkey, name) {
+    return `<a class='${action}button' data-vavilon='` + action + `' class='` + action + `' href='javascript:;' onclick='` + action + `("` + sane(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
 }
 
 /*
@@ -11002,7 +11309,7 @@ function populateSendMessage(address, name, publickey) {
 function getMessageHTML(data, count) {
     //You sent a message
     if (data.bitcoinaddress == pubkey && data.address != data.toaddress) {
-        return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, data.bitcoinaddress, null)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
+        return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, null)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     } else {
         return "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.bitcoinaddress, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }
@@ -11171,7 +11478,7 @@ function showErrorMessage(status, page, theURL) {
     status = san(status);
     console.log(`Error:${status}`);
     var theElement = document.getElementById(page);
-    if(status==499){
+    if (status == 499) {
         //Google error status, probably caused by google bot being unable to 
         //load content due to robot.txt restrictions. show the preview content text instead
         theElement.innerHTML = document.getElementById('previewcontent').innerHTML;
@@ -11437,8 +11744,13 @@ function dogecoinToLegacy(pubkey) {
 }
 
 function pubkeyhexToLegacy(pubkeyhex2) {
-    var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
-    return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+    if(window.bitcoinjs){
+        var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
+        return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+    }else{
+        console.log("Problem with pub key hex, bitcoinjs not loaded yet 4534663");
+        return null;
+    }
     //return window.bitcoinjs.payments.p2pkh({ pubkey: Buffer.from(pubkeyhex2) }).address;
 }
 
@@ -11489,7 +11801,7 @@ function setBalanceWithInterest() {
 }
 
 //This just set visual display of balance plus interest earned
-setInterval(setBalanceWithInterest, 500);
+//setInterval(setBalanceWithInterest, 500);
 
 
 //utxopool will call this after utxos updated
@@ -11537,63 +11849,77 @@ function updateBalance(dynamicChainHeight, showLowFunds = false) {
 
 
 
-async function chooseNostrPublicKey(useNOS2Xifavailable=true){
-    let pubKeyToUse=nostrPubKeyHex;
-    if(useNOS2Xifavailable && window.nostr){
-        pubKeyToUse=await window.nostr.getPublicKey();
+async function chooseNostrPublicKey(useNOS2Xifavailable = true) {
+    let pubKeyToUse = nostrPubKeyHex;
+    if (useNOS2Xifavailable && window.nostr) {
+        pubKeyToUse = await window.nostr.getPublicKey();
     }
     return pubKeyToUse;
 }
 
-async function signAndBroadcastEvent(event,successFunction,useNOS2Xifavailable=true){
+async function signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable = true) {
     event.id = window.NostrTools.getEventHash(event);
-    
-    if(useNOS2Xifavailable && window.nostr){
-        try{
+
+    if (useNOS2Xifavailable && window.nostr) {
+        try {
             event = await window.nostr.signEvent(event);
-        }catch(err){
+        } catch (err) {
             event.sig = window.NostrTools.signEvent(event, nostrPrivKeyHex);
         }
-    }else{
+    } else {
         event.sig = window.NostrTools.signEvent(event, nostrPrivKeyHex);
     }
-    broadcastEvent(event,successFunction,useNOS2Xifavailable);
+    broadcastEvent(event, successFunction, useNOS2Xifavailable);
     return event;
 }
 
-async function broadcastEvent(event,successFunction,useNOS2Xifavailable=true){
+async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true) {
     let relays = [];
-    try{
-        if(useNOS2Xifavailable && window.nostr){
-        let relaysObj=await window.nostr.getRelays();
+    try {
+        if (useNOS2Xifavailable && window.nostr) {
+            let relaysObj = await window.nostr.getRelays();
             for (var key in relaysObj) {
                 console.log(key);
                 relays.push(key);
             }
         }
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
 
-    relays.push("wss://nostr.rocks");
-    relays.push("wss://relay.damus.io");
-    relays.push("wss://nostr.openchain.fr");
+    relays.push("wss://nostr.member.cash");
+
+    relays.push("wss://nostr.wine");
+
+
+    relays.push("wss://nostr.oxtr.dev");
     relays.push("wss://relay.nostr.ch");
+
+    relays.push("wss://nostr.orangepill.dev");
+    relays.push("wss://nostrical.com");
+    relays.push("wss://no.str.cr");
+    relays.push("wss://nostr.fly.dev");
+
     relays.push("wss://nostr-pub.wellorder.net");
-    relays.push("wss://relay.damus.io");
-    relays.push("wss://nostr-relay.wlvs.space");
     relays.push("wss://nostr.fmt.wiz.biz");
     relays.push("wss://relay.nostr.bg");
-    relays.push("wss://nostr.oxtr.dev");
-    relays.push("wss://nostr.v0l.io");
-    relays.push("wss://nostr-2.zebedee.cloud");
+    relays.push("wss://relay.snort.social");
+    relays.push("wss://nostr.bitcoiner.social");
+    relays.push("wss://nostr.zebedee.cloud");
+    relays.push("wss://relay.nostr.info");
+    
+    //relays.push("wss://nostr-pub.semisol.dev"); //private?
+
+    //requires nip05
+    //relays.push("wss://nostr.openchain.fr");
+
     /*
     relays.push("wss://relay.nostr.info");
     relays.push("wss://nostr-relay.wlvs.space");
     relays.push("wss://nostr-relay.untethr.me");
     relays.push("wss://nostr.onsats.org");
     relays.push("wss://nostr.semisol.dev");
-    relays.push("wss://nostr-pub.semisol.dev");
+    
     relays.push("wss://nostr-verified.wellorder.net");
     relays.push("wss://nostr.drss.io");
     relays.push("wss://nostr.delo.software");
@@ -11606,56 +11932,87 @@ async function broadcastEvent(event,successFunction,useNOS2Xifavailable=true){
     relays.push("wss://nostr.fmt.wiz.biz");	
 */
     sendNostrTransaction(JSON.stringify(event), null);
-    for(let i=0;i<relays.length;i++){
-        publishEventToRelay(event,relays[i],successFunction);    
+    for (let i = 0; i < relays.length; i++) {
+        publishEventToRelay(event, relays[i], successFunction);
     }
 }
 
-function publishEventToRelay(event, relayaddress,successFunction){
-    const relay = window.NostrTools.relayInit(relayaddress);
-    relay.connect();
+var relaysGlobal = new Object();
 
-    relay.on('connect', () => {
-        console.log(`connected to ${relay.url}`);
+function publishEventToRelay(event, relayaddress, successFunction) {
+    let relay = relaysGlobal[relayaddress];
+    if (!relay) {
+        relay = window.NostrTools.relayInit(relayaddress);
+        relaysGlobal[relayaddress] = relay;
+        //console.log(relay.status);//3
+    }
+    console.log("Relay status:"+relay.status); //0 might be status during connection
+    if(relay.status==3){ //no attempt at connection made yet
+        relay.connect().catch(function () { console.log(`Promise Rejected ${relay.url}`); relaysGlobal[relayaddress] = null;});
+        relay.on('connect', () => {
+            //console.log(`connected to ${relay.url}`);
+            let pub = relay.publish(event);
+            pub.on('ok', () => {
+                console.log(`3 ${relay.url} has accepted our event ` + event.id);
+                if (successFunction) {
+                    successFunction(event.id);
+                }
+            });
+            pub.on('seen', () => {
+                console.log(`3 we saw the event on ${relay.url}`);
+            });
+            pub.on('failed', reason => {
+                console.log(`3 failed to publish to ${relay.url}: ${reason}`);
+                //relay.close();
+                //pub = relay.publish(event);
+            });
+        });
+
+        relay.on('error', () => {
+            console.log(`failed to connect to ${relay.url}`);
+            relaysGlobal[relayaddress] = null;
+        })
+    }
+    else if(relay.status==1){ //connected
         let pub = relay.publish(event);
         pub.on('ok', () => {
-            console.log(`${relay.url} has accepted our event`);
-            if(successFunction){
+            console.log(`1 ${relay.url} has accepted our event ` + event.id);
+            if (successFunction) {
                 successFunction(event.id);
             }
-            relay.close();
         });
         pub.on('seen', () => {
-            console.log(`we saw the event on ${relay.url}`);
-            relay.close();
+            console.log(`1 we saw the event on ${relay.url}`);
         });
         pub.on('failed', reason => {
-            console.log(`failed to publish to ${relay.url}: ${reason}`);
-            relay.close();
+            console.log(`1 failed to publish to ${relay.url}: ${reason}`);
+            //relay.close();
             //pub = relay.publish(event);
         });
-    });
+    }else{
+        //unknown
+        console.log("Unknown relay status "+relay.status);
+        //await sleep(1000);
+        setTimeout(function(){publishEventToRelay(event, relayaddress, successFunction)},1000);
+    }
 
-      relay.on('error', () => {
-        console.log(`failed to connect to ${relay.url}`)
-      })
 }
 
 async function sendNostrTransaction(payload, divForStatus) {
 
     if (divForStatus) {
-      var statusElement = document.getElementById(divForStatus);
+        var statusElement = document.getElementById(divForStatus);
     }
-    
+
     var url = dropdowns.txbroadcastserver + "nostr?action=relay&payload=" + encodeURIComponent(payload);
     if (statusElement) statusElement.value = "Sending Nostr Tx";
     //Fire and forget
-    getJSON(url, null,null).then(async function (data) {
+    getJSON(url, null, null).then(async function (data) {
         console.log(data);
-      });
-    }
+    });
+}
 
-async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, useNOS2Xifavailable=true) {
+async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, useNOS2Xifavailable = true, eventkind = 1) {
 
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
@@ -11667,7 +12024,7 @@ async function sendNostrPost(posttext, postbody, topic, divelement, successFunct
     }
 
     let event = {
-        kind: 1,
+        kind: eventkind,
         pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
         created_at: Math.floor(Date.now() / 1000),
         tags: [],
@@ -11679,7 +12036,7 @@ async function sendNostrPost(posttext, postbody, topic, divelement, successFunct
 }
 
 
-async function nostrLikePost(origtxid){
+async function nostrLikePost(origtxid) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let event = {
         kind: 7,
@@ -11691,26 +12048,78 @@ async function nostrLikePost(origtxid){
     signAndBroadcastEvent(event, null);
 }
 
-async function sendNostrReply(txid, replytext, divForStatus, successFunction, roottxid){
+async function nostrDislikePost(origtxid) {
+    if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    let event = {
+        kind: 7,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [["e", origtxid]],
+        content: '-'
+    }
+    signAndBroadcastEvent(event, null);
+}
+
+async function getNostrMetadata(txid, event, successFunction) {
+    var theURL = dropdowns.contentserver + '?action=nostrmetadata&txid=' + txid;
+
+    getJSON(theURL).then(function (data) {
+        try {
+            if (!data) {
+                serverresponses.set(id, "Error no metadata for post");
+            } else {
+                console.log(data);
+            }
+
+            if (data && data[1] && data[1].metadata) {
+                //root event
+                if (data[1].metadata.length == 64) {
+                    if(event.tags[0][1]!=data[1].metadata){ //nostrgram doesn't like an identical root/reply tag
+                        let newtags = [["e", data[1].metadata, '', 'root']];
+                        event.tags = newtags.concat(event.tags);
+                    }
+                }
+            }
+
+            if (data && data[0] && data[0].metadata) {
+                //pubkey
+                if (data[0].metadata.length == 64) {
+                    event.tags.push(["p", data[0].metadata]);
+                } else if (data[0].metadata.length = 66) {//some pubkeys stored incorrectly in db, can remove this after db rebuild
+                    event.tags.push(["p", data[0].metadata.slice(2)]);
+                }
+            }
+        } catch (err) {
+            console.log(err);
+        }
+        //modify event
+        //insert root e before
+        //insert p after
+        signAndBroadcastEvent(event, successFunction);
+    });
+}
+
+async function sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
-    //note incorrect roottxid provide currently, must update db
     let event = {
         kind: 1,
         pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
         tags: [
             //["e", roottxid,'','root'],
-            ["e", txid,'','reply']
+            ["e", origtxid, '', 'reply']
         ],
         //tags: [["e", txid]],
         content: replytext
     }
 
-    signAndBroadcastEvent(event, successFunction);
+    //note incorrect roottxid provide currently, must update db
+    getNostrMetadata(txid, event, successFunction);
+
 }
 
-async function sendNostrQuotePost(posttext, topic, txid, divForStatus, successFunction, roottxid){
+async function sendNostrQuotePost(posttext, topic, origtxid, divForStatus, successFunction, txid) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     //note incorrect roottxid provide currently, must update db
     let event = {
@@ -11719,11 +12128,12 @@ async function sendNostrQuotePost(posttext, topic, txid, divForStatus, successFu
         created_at: Math.floor(Date.now() / 1000),
         tags: [
             //["e", roottxid,'','root'],
-            ["e", txid, '', 'repost']
+            ["e", origtxid, '', 'repost']
         ],
         content: posttext
     }
-    signAndBroadcastEvent(event, successFunction);
+
+    getNostrMetadata(txid, event, successFunction);
 }
 
 
@@ -11743,7 +12153,7 @@ async function sendNostrQuotePost(posttext, topic, txid, divForStatus, successFu
 }*/
 
 
-async function nostrRePost(txid){
+async function nostrRePost(txid) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let event = {
         kind: 6,
@@ -11754,7 +12164,7 @@ async function nostrRePost(txid){
     }
     signAndBroadcastEvent(event, null);
 }
- 
+
 /*
 async function sendNostrPrivateMessage(messageRecipientpubkey, text, divForStatus, successFunction, useNOS2Xifavailable=true){
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
@@ -11797,10 +12207,11 @@ async function sendNostrPrivateMessage(publickey, text, status, successFunction)
 }  */
 
 
-async function setNostrProfile(){
+async function setNostrProfile() {
     var name = document.getElementById('settingsnametext').value;
-    var picture = document.getElementById('settingspic').value;
+    var picture = document.getElementById('settingspicurl').value;
     var about = document.getElementById('settingsprofiletext').value;
+    var pagingid = document.getElementById('settingspagingidhtml').textContent;
 
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let event = {
@@ -11811,10 +12222,22 @@ async function setNostrProfile(){
         content: JSON.stringify({
             name: name,
             about: about,
-            picture: picture
+            picture: picture,
+            nip05: pagingid.replace('@', '') + "@member.cash"
         })
     }
-    signAndBroadcastEvent(event, function(){updateStatus(`Set ${name}`)});
+    signAndBroadcastEvent(event, function () { updateStatus(`Set ${name}`) });
+
+    let event2 = {
+        kind: 2,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [],
+        content: "wss://nostr.member.cash"
+    };
+
+    signAndBroadcastEvent(event2, null);
+    
 }
 
 /*
@@ -11840,14 +12263,24 @@ User Rating 	0x6da5 	address(20),message(196)
 */
 // Need pin post action
 //Pin post 	0x6da9 	txhash(32) 	Pin Post To Profile Implemented on Member
-// bitCloutPinPost(pinPostHashHex, pubkey)
+
+async function nostrPinPost(pinPostHashHex) {
+    let event = {
+        kind: 6019,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [['e', pinPostHashHex]],
+        content: 'pinpost'
+    }
+    signAndBroadcastEvent(event, null);
+}
 
 // Follow user 	0x6d06 	address(20)
-async function sendNostrFollow(followpubkey){
+async function sendNostrFollow(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
-    let keytype='p';
-    if(followpubkey.length==66){
-        keytype='cecdsa';
+    let keytype = 'p';
+    if (followpubkey.length == 66) {
+        keytype = 'cecdsa';
     }
     let event = {
         kind: 6006,
@@ -11860,11 +12293,11 @@ async function sendNostrFollow(followpubkey){
 }
 
 //Unfollow user 0x6d07 address(20)  
-async function sendNostrUnFollow(followpubkey){
+async function sendNostrUnFollow(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
-    let keytype='p';
-    if(followpubkey.length==66){
-        keytype='cecdsa';
+    let keytype = 'p';
+    if (followpubkey.length == 66) {
+        keytype = 'cecdsa';
     }
     let event = {
         kind: 6007,
@@ -11876,17 +12309,40 @@ async function sendNostrUnFollow(followpubkey){
     signAndBroadcastEvent(event, null);
 }
 
+async function sendNostrMute(followpubkey) {
+    if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    let keytype = 'p';
+    if (followpubkey.length == 66) {
+        keytype = 'cecdsa';
+    }
+    let event = {
+        kind: 6016,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [[keytype, followpubkey]],
+        content: 'mute'
+    }
+    signAndBroadcastEvent(event, null);
+}
+
+async function sendNostrUnMute(followpubkey) {
+    if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    let keytype = 'p';
+    if (followpubkey.length == 66) {
+        keytype = 'cecdsa';
+    }
+    let event = {
+        kind: 6017,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [[keytype, followpubkey]],
+        content: 'unmute'
+    }
+    signAndBroadcastEvent(event, null);
+}
 
 
-
-
-
-// Need unsubscribe action
-// async function sendBitCloutUnSub(topicHOSTILE)
-// Need subscribe action
-// async function sendBitCloutSub(topicHOSTILE)
-/*
-async function sendNostrSub(topicHOSTILE){
+async function sendNostrSub(topicHOSTILE) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let event = {
         kind: 6013,
@@ -11898,7 +12354,7 @@ async function sendNostrSub(topicHOSTILE){
     signAndBroadcastEvent(event, null);
 }
 
-async function sendNostrUnSub(topicHOSTILE){
+async function sendNostrUnSub(topicHOSTILE) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let event = {
         kind: 6014,
@@ -11908,19 +12364,46 @@ async function sendNostrUnSub(topicHOSTILE){
         content: topicHOSTILE
     }
     signAndBroadcastEvent(event, null);
-}*/
+}
 
-// Need mute action
-// async function sendBitCloutMute(followpubkey)
-  
-// Need unmute action
-// async function sendBitCloutUnMute(followpubkey)
-  
 // Need rating action
-// async function sendBitCloutRating(posttext, topic, divForStatus, successFunction, postExtraData)
-  
+async function sendNostrRating(posttext, successFunction, targetMember, useNOS2Xifavailable, rating, comment) {
+    if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+
+    let keytype = 'p';
+    if (targetMember.length == 66) {
+        keytype = 'cecdsa';
+    }
+
+    let event2 = {
+        kind: 6015,
+        pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [
+            [keytype, targetMember],
+            ["rating", ""+rating]
+        ],
+        content: comment
+    };
+
+    signAndBroadcastEvent(event2, successFunction, useNOS2Xifavailable);
+
+
+    let event = {
+        kind: 1,
+        pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [[keytype, targetMember]],
+        content: posttext
+    };
+
+    signAndBroadcastEvent(event, null, useNOS2Xifavailable);
+
+    
+}
+
 // skip for now
 //async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null)
 
-var version = '8.10.16'; 
+var version = '8.13.3'; 
 if (init) { init(); } 

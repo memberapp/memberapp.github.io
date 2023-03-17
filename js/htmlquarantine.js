@@ -17,7 +17,7 @@
 
 function userFromDataBasic(data, mainRatingID) {
     if (!data.raterrating) { data.raterrating = data.rating; }//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.bitcoinaddress, data.messageaddress).userHTML(true);
+    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.messageaddress).userHTML(true);
 }
 
 function userFromData(data, mainRatingID) {
@@ -44,28 +44,24 @@ function MemberFromData(data, stub, ratingID) {
         data[stub + "lastactive"],
         data[stub + "sysrating"],
         data[stub + "hivename"],
-        data[stub + "bitcoinaddress"],
+        null,
         data[stub + "messageaddress"]
     );
 }
 
-function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress, messageaddress=null) {
+function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, messageaddress = null) {
 
-    if (!address || address=='null') {
-        if(messageaddress){
-            address=messageaddress; //This happens if the server has no profile data for the member.
-        }else{
+    if (!address || address == 'null') {
+        if (messageaddress) {
+            address = messageaddress; //This happens if the server has no profile data for the member.
+        } else {
             console.log('Missing address for post error - this should not happen.');
             updateStatus('Missing address for post error - this should not happen.'); return "";
         }
     }
 
-    if (!bitcoinaddress) {
-        updateStatus('Missing legacy address for post error - this can happen if server does not have public key for user.');
-    }
-
     address = "" + address;//always treat address like a string.
-    
+
 
     /*if (!name) {
         if (sourcenetwork == 2) {//get the hive name
@@ -80,7 +76,7 @@ function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, pi
     if (this.name == "" || this.name == null) {
         this.name = address.substring(0, 10);
     }
-    
+
     this.ratingID = ratingID;
     this.ratingRawScore = ratingRawScore;
     this.pagingid = pagingid;
@@ -97,7 +93,9 @@ function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, pi
     this.lastactive = lastactive;
     this.sysrating = sysrating;
     this.hivename = hivename;
-    this.bitcoinaddress = bitcoinaddress;
+    if (publickey && publickey.length == 66) {
+        this.bitcoinaddress = pubkeyhexToLegacy(publickey);
+    }
 }
 
 Member.prototype.userHTML = function (includeProfile) {
@@ -127,10 +125,14 @@ Member.prototype.userHTML = function (includeProfile) {
     if (this.tokens > 0) {
         flair = ` <span data-vavilon_title="TopIndex" class="flair" title="TopIndex">` + ordinal_suffix_of(Number(this.tokens)) + ` </span> `;
     }
-    let followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('` + sane(this.bitcoinaddress) + `','` + sane(this.publickey) + `'); this.style.display='none';">follow</a>`;
+    //let followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('${sane(this.publickey)}'); this.style.display='none';">follow</a>`;
+    let followButton = clickActionNamedHTML("follow", sane(this.publickey), "follow");
     if (this.isfollowing) {
-        followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('` + sane(this.bitcoinaddress) + `','` + sane(this.publickey) + `'); this.style.display='none';">unfollow</a>`;
+        //followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('${sane(this.publickey)}'); this.style.display='none';">unfollow</a>`;
+        followButton = clickActionNamedHTML("unfollow", sane(this.publickey), "unfollow");
     }
+
+
 
     if (this.ratingID == undefined) {
         this.ratingID = 'test';
@@ -150,8 +152,11 @@ Member.prototype.userHTML = function (includeProfile) {
 
     let directlink = "";
 
-    let systemScoreClass = '';
-    let useScore=this.ratingRawScore
+    let systemScoreClass = '""';
+    let useScore = this.ratingRawScore;
+    if (useScore < 65) {
+        systemScoreClass = 'scorewarning';
+    }
     if (!useScore) { //If the user hasn't rated the user, use a system score
         useScore = this.sysrating;
         systemScoreClass = 'systemscore';
@@ -242,11 +247,17 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         //sourceNetworkHTML = '<a rel="noopener noreferrer" href="' + permalink + '">member.cash</a>';
     } else if (sourcenetwork == 4) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
-    } else if (sourcenetwork == 5) {
+    } /*else if (sourcenetwork == 5) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}">astral.ninja</a>`; 
-    }else if (sourcenetwork == 99) {
+    } */
+    else if (sourcenetwork == 5) {
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="snort" href="https://snort.social/e/${bech32Encode('note',hivelink)}">snort</a>`; 
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostrgram" href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;    
+    } else if (sourcenetwork == 99) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">rss</a>';
     }
+
 
     var obj = {
         //These must all be HTML safe.
@@ -424,7 +435,13 @@ function getSafeMessage(messageHTML, differentiator, includeMajorMedia) {
     let theMember= new Member(address, name, ratingID, rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress);
     return getHTMLForPostHTML2(theMember, txid, likes, dislikes, tips, firstseen, message, roottxid, topic, replies, geohash, page, likedtxid, likeordislike, repliesroot, differentiator, repostcount, repostidtxid, repostedHTML, truncate, sourcenetwork, hivelink);
 }*/
-function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repostedHTML, truncate) {
+function getHTMLForPostHTML3(theMember, data, stub, page, differentiator, repostedHTML, truncate, alwaysShow = true) {
+
+    if (!alwaysShow) {
+        if (checkForMutedWords(data, stub)) return "";
+        if (checkForMutedNetworks(data, stub)) return "";
+        if (data.moderated != null) return "";
+    }
     return getHTMLForPostHTML2(
         theMember,
         page,
@@ -518,8 +535,11 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img width='15' height='15' alt='doge.hair' src='img/networks/4.png'></a>`;
     } else if (sourcenetwork == 5) {
-        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}">astral.ninja</a>`; 
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://astral.ninja/event/${sanhl(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
+        //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+    
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://nostrgram.co/#thread:${san(hivelink)}">snort</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
@@ -529,6 +549,17 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     if (theMember.bitcoinaddress == pubkey) {
         pinnedpostHTML = `<a data-vavilon="VVpinpost" href="javascript:;" onclick="pinpost('${san(origTXID)}')">Pin Post</a>`;
     }
+
+    let followButton = clickActionNamedHTML("follow", sane(theMember.publickey), "follow");
+    let muteButton = clickActionNamedHTML("mute", sane(theMember.publickey), "mute");
+
+    if (theMember.isfollowing) {
+        followButton = clickActionNamedHTML("unfollow", sane(theMember.publickey), "unfollow");
+        muteButton = '';
+    }
+
+
+
 
     var obj = {
         //These must all be HTML safe 
@@ -578,7 +609,9 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         MEMUSD100: satsToUSDString(10000000000),
         deleted: (deleted == '1' ? ` deleted` : ''),
         retracted: (deleted == '1' ? ` <span class='retracted'>removed</span>` : ''),
-        ticker: nativeCoin.ticker
+        ticker: nativeCoin.ticker,
+        followbuttonHTML: followButton,
+        mutebuttonHTML: muteButton
     };
 
     return templateReplace(postCompactTemplate, obj);
@@ -586,9 +619,9 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
 
 }
 
-function truncateNumber(theNumber){
-    if(theNumber>999){
-        return parseInt(theNumber/100)/10+'k';
+function truncateNumber(theNumber) {
+    if (theNumber > 999) {
+        return parseInt(theNumber / 100) / 10 + 'k';
     }
     return theNumber;
 }
@@ -618,27 +651,6 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
 
     message = getSafeMessage(message, differentiator, true);
 
-    /*
-    //Remove html - use dslite here to allow for markdown including some characters
-    message = dslite(message);
-
-    message = ShowdownConverter.makeHtml(message);
-    
-    //check for XSS vulnerabilities
-    message = DOMPurify.sanitize(message);
-
-    //Add youtube links
-
-    message = addImageAndYoutubeMarkdown(message, differentiator, true);
-*/
-    //var voteButtons = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID);
-    //var author = theMember.userHTML(true);
-    //new Member(address, name, ratingID, rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, bitcoinaddress).userHTML(true);
-    //var age = getAgeHTML(firstseen);
-    //var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator, repostcount);
-    //var replyAndTips = getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, repostidtxid, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress);
-    //var replyDiv = getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID);
-
     let likesbalance = Number(likes) - Number(dislikes);
     let santxid = san(txid);
     let permalink = `?` + santxid.substring(0, 4) + `#thread?post=` + santxid;
@@ -665,7 +677,7 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         diff: differentiator,
         deleted: (deleted == '1' ? ` deleted` : ''),
         retracted: (deleted == '1' ? ` removed` : ''),
-        revision: (Number(edit)>0 ? ' edit'+Number(edit) : '')
+        revision: (Number(edit) > 0 ? ' edit' + Number(edit) : '')
     };
 
     return templateReplace(replyTemplate, obj);
@@ -680,7 +692,14 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
             if (data[i].rating) {
                 ratingused = data[i].rating;
             }
-            var isMuted = (data[i].edit > 0 || data[i].blockstxid != null || data[i].moderated != null || ratingused < maxScoreToCollapseComment);
+            var isMuted = (
+                data[i].edit > 0
+                || data[i].blockstxid != null
+                || data[i].moderated != null
+                || ratingused < maxScoreToCollapseComment
+                || checkForMutedWords(data)
+                || checkForMutedNetworks(data)
+            );
 
             var obj = {
                 unmuteddisplay: (isMuted ? `none` : `block`),
@@ -694,7 +713,7 @@ function getNestedPostHTML(data, targettxid, depth, pageName, firstreplytxid) {
                 diff: i,
                 deleted: (data[i].deleted == '1' ? ` deleted` : ''),
                 retracted: (data[i].deleted == '1' ? ` removed` : ''),
-                revision: (Number(data[i].edit)>0 ? ' edit'+Number(data[i].edit) : '')
+                revision: (Number(data[i].edit) > 0 ? ' edit' + Number(data[i].edit) : '')
                 //These must all be HTML safe.
             }
 
@@ -724,34 +743,35 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + getSafeTranslation(linktext, linktext) + `</a>`;
 }
 
-function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
+function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults, minrating) {
     //Caution topicname may contain hostile characters/code
 
-    var navheader = `<nav class="filters">`;
-    navheader += `<a data-vavilon="VV0106" onclick="nlc();" data-vavilon_title="VV0107" value="new" title="Latest posts" class="` + (order == 'new' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=new&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >New</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0104" onclick="nlc();" data-vavilon_title="VV0105" value="hot" title="Hottest posts" class="` + (order == 'hot' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=hot&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Hot</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVTop" onclick="nlc();" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="` + (order == 'topd' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topd&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Top</a> `;
-    navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0112" data-vavilon_title="VV0113" value="topw" title="Top posts from the past Week" class="` + (order == 'topw' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topw&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Week</a> `;
-    //navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0114" data-vavilon_title="VV0115" value="topm" title="Top posts from the past Month" class="` + (order == 'topm' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topm&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Month</a> `;
-    //navheader += `<span class="separator"></span>`;
-    //navheader += `<a data-vavilon="VV0116" data-vavilon_title="VV0117" value="topy" title="Top posts from the past Year" class="`+(order=='topy'?'filteron':'filteroff')+`" href="#` + action + `?start=0&limit=` + limit + `&order=topy&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('new', 'new') + `</a> `;
-    //navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0118" onclick="nlc();" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="` + (order == 'topa' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=topa&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVold" onclick="nlc();" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="` + (order == 'old' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=old&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Old</a> `;
+    let fixedparams = `#${action}?content=${content}&minrating=${minrating}&start=0&limit=${limit}&filter=${filter}&qaddress=${qaddress}&topicname=${ds(encodeURIComponent(topicnameHOSTILE))}`;
+    fixedparams2 =       `#${action}?&order=${order}&minrating=${minrating}&start=0&limit=${limit}&filter=${filter}&qaddress=${qaddress}&topicname=${ds(encodeURIComponent(topicnameHOSTILE))}`;
 
-    navheader += `<nav class="filterssecondset">`;
-    navheader += `<a data-vavilon="VV0120" onclick="nlc();" data-vavilon_title="VV0121" title="See only posts" class="` + (content == 'posts' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=posts&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Posts</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VV0122" onclick="nlc();" data-vavilon_title="VV0123" title="See only replies" class="` + (content == 'replies' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=replies&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >Replies</a> `;
-    navheader += `<span class="separator"></span>`;
-    navheader += `<a data-vavilon="VVall" onclick="nlc();" data-vavilon_title="VV0125" title="See both posts and replies" class="` + (content == 'both' ? 'filteron' : 'filteroff') + `" href="#` + action + `?start=0&limit=` + limit + `&order=` + order + `&content=both&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >All</a> `;
-    navheader += "</nav>";
-    navheader += "</nav>";
+    var navheader = `<nav class="filters">
+    <a data-vavilon="VV0106" onclick="nlc();" data-vavilon_title="VV0107" value="new" title="Latest posts" class="${(order == 'new' ? 'filteron' : 'filteroff')}"                 href="${fixedparams}&order=new" >New</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VV0104" onclick="nlc();" data-vavilon_title="VV0105" value="hot" title="Hottest posts" class="${(order == 'hot' ? 'filteron' : 'filteroff')}"                href="${fixedparams}&order=hot" >Hot</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VVTop" onclick="nlc();" data-vavilon_title="VV0109" value="topd" title="Top posts from the past Day" class="${(order == 'topd' ? 'filteron' : 'filteroff')}" href="${fixedparams}&order=topd" >Top</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VV0118" onclick="nlc();" data-vavilon_title="VV0119" value="topa" title="Top posts from all time" class="${(order == 'topa' ? 'filteron' : 'filteroff')}"    href="${fixedparams}&order=topa" >All</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VVold" onclick="nlc();" data-vavilon_title="VVoldtitle" value="topa" title="Oldest to newest" class="${(order == 'old' ? 'filteron' : 'filteroff')}"         href="${fixedparams}&order=old" >Old</a> 
+    <nav class="filterssecondset">`;
+    if(!qaddress){
+        navheader += `<span class="starratingnotifications">
+                        <span data-ratingsize="16" id="postsqualityfilter" class="star-rating-notifications"></span>
+                    </span>`
+    }
+    navheader += `<a data-vavilon="VV0120" onclick="nlc();" data-vavilon_title="VV0121" title="See only posts" class="${(content == 'posts' ? 'filteron' : 'filteroff')}"   href="${fixedparams2}&content=posts" >Posts</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VV0122" onclick="nlc();" data-vavilon_title="VV0123" title="See only replies" class="${(content == 'replies' ? 'filteron' : 'filteroff')}"             href="${fixedparams2}&content=replies" >Replies</a> 
+    <span class="separator"></span>
+    <a data-vavilon="VVall" onclick="nlc();" data-vavilon_title="VV0125" title="See both posts and replies" class="${(content == 'both' ? 'filteron' : 'filteroff')}"       href="${fixedparams2}&content=both" >All</a>
+    </nav>
+    </nav>`;
     return navheader;
 
 }
@@ -759,14 +779,14 @@ function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit
 function getNotificationNavButtonsNewHTML(start, limit, action, qaddress, minrating, notificationtype, numberOfResults) {
     //Caution topicname may contain hostile characters/code
 
-    var navbuttons = `<div class="navbuttons">`;
+    var navbuttons = `<div class="navbuttons" > `;
 
     if (start != 0) //Don't show back buttons if we're at the start
-    { navbuttons += `<a class="next" href="#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&minrating=` + minrating + `&nfilter=` + notificationtype + `&qaddress=` + qaddress + `" >` + getSafeTranslation('prev', 'back') + `</a> `; }
+    { navbuttons += `<a class="next" href = "#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&minrating=` + minrating + `&nfilter=` + notificationtype + `&qaddress=` + qaddress + `" > ` + getSafeTranslation('prev', 'back') + `</a > `; }
 
     //if (numberOfResults > numbers.results) //Sometimes an sql limit request returns fewer than the available set - nearly always include a next button
     //Always show
-    { navbuttons += `<a class="back" href="#` + action + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&minrating=` + minrating + `&nfilter=` + notificationtype + `&qaddress=` + qaddress + `" >` + getSafeTranslation('next', 'next') + `</a>`; }
+    { navbuttons += `<a class="back" href = "#` + action + `?start=` + (Number(start) + Number(numbers.results)) + `&limit=` + limit + `&minrating=` + minrating + `&nfilter=` + notificationtype + `&qaddress=` + qaddress + `" > ` + getSafeTranslation('next', 'next') + `</a > `; }
 
     navbuttons += "</div>";
     return navbuttons;
@@ -777,55 +797,72 @@ function getNotificationNavButtonsNewHTML(start, limit, action, qaddress, minrat
 function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
     //Caution topicname may contain hostile characters/code
 
-    var navbuttons = `<div class="navbuttons">`;
+    var navbuttons = `<div class="navbuttons" > `;
 
     //Don't really need back button - user can click back in browser
     //if (start != 0) //Don't show back buttons if we're at the start
-    //{ navbuttons += `<a class="next" href="#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('prev', 'back') + `</a> `; }
+    //{ navbuttons += `< a class="next" href = "#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" > ` + getSafeTranslation('prev', 'back') + `</a > `; }
 
     //if (numberOfResults > numbers.results / 2) //Sometimes an sql limit request returns fewer than the available set - nearly always include a next button
     //Always show
-    { navbuttons += `<a class="back" href="#` + action + `?start=` + (Number(start)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" >` + getSafeTranslation('next', 'next') + `</a>`; }
+    { navbuttons += `<a class="back" href = "#` + action + `?start=` + (Number(start)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" > ` + getSafeTranslation('next', 'next') + `</a > `; }
 
     navbuttons += "</div>";
     return navbuttons;
 
 }
 
+function getItemListandNavButtonsHTMLHeader(navheader, contentsHTML, navbuttonsHTML, styletype, start) {
+    if (styletype != "") {
+        return `<div class="itemlist"> ${ navheader } <ol id="itemlistol" start="` + (Number(start) + 1) + `" class="` + styletype + `">`;
+    } else {
+        return `<div class="itemlist"> `;
+    }
+}
+
+function getItemListandNavButtonsHTMLFooter(navheader, contentsHTML, navbuttonsHTML, styletype, start) {
+    if (styletype != "") {
+        return `</ol></div > <div class="navbuttons">` + navbuttonsHTML + `</div>`;
+    } else {
+        return `</div > <div class="navbuttons">` + navbuttonsHTML + `</div>`;
+    }
+}
+
+
 
 function getItemListandNavButtonsHTML(navheader, contentsHTML, navbuttonsHTML, styletype, start) {
     if (styletype != "") {
-        return `<div class="itemlist">${navheader}<ol start="` + (Number(start) + 1) + `" class="` + styletype + `">` + contentsHTML + `</ol></div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
+        return `<div class="itemlist"> ${ navheader } <ol start="` + (Number(start) + 1) + `" class="` + styletype + `">` + contentsHTML + `</ol></div > <div class="navbuttons">` + navbuttonsHTML + `</div>`;
     } else {
-        return `<div class="itemlist">` + contentsHTML + `</div><div class="navbuttons">` + navbuttonsHTML + `</div>`;
+        return `<div class="itemlist"> ` + contentsHTML + `</div > <div class="navbuttons">` + navbuttonsHTML + `</div>`;
     }
 }
 
 function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID, roottxid) {
 
     var upvoteHTML;
-    let scoreHTML = `<span class="betweenvotesscore" id="score` + san(txid) + `">` + Number(score) + `</span>`;
+    let scoreHTML = `<span class="betweenvotesscore" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     var downvoteHTML;
 
     if (likeordislike == "1") {
-        upvoteHTML = `<a id="upvoteaction` + san(txid) + `" href="javascript:;"><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a>`;
-        scoreHTML = `<span class="betweenvotesscoreup" id="score` + san(txid) + `">` + Number(score) + `</span>`;
+        upvoteHTML = `<a id = "upvoteaction` + san(txid) + `" href = "javascript:;" ><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a > `;
+        scoreHTML = `<span class="betweenvotesscoreup" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     } else {
-        upvoteHTML = `<a id="upvoteaction${san(txid)}" href="javascript:;" onclick="likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0,${san(roottxid)})"><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a>`;
+        upvoteHTML = `<a id = "upvoteaction${san(txid)}" href = "javascript:;" onclick = "likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0,${san(roottxid)})" ><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a > `;
     }
 
     if (likeordislike == "-1") {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;"><span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
-        scoreHTML = `<span class="betweenvotesscoredown" id="score` + san(txid) + `">` + Number(score) + `</span>`;
+        downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" > <span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
+        scoreHTML = `<span class="betweenvotesscoredown" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     } else {
-        downvoteHTML = `<a id="downvoteaction` + san(txid) + `" href="javascript:;" onclick="dislikePost('` + san(txid) + `','` + san(origTXID) + `')"><span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a>`;
+        downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" onclick = "dislikePost('${san(txid)}','${san(origTXID)},${san(roottxid)}')" > <span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
     }
 
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
 }
 
 function getRefreshButtonHTML() {
-    return `<a id="refreshbutton" class="btn" href="" onclick="displayContentBasedOnURLParameters();return false;">🔄</a>`;
+    return `<a id = "refreshbutton" class="btn" href = "" onclick = "displayContentBasedOnURLParameters();return false;" >🔄</a > `;
 }
 
 
@@ -836,6 +873,7 @@ function completedPostHTML(txid, titleHOSTILE) {
     var obj = {
         //These must all be HTML safe 
         txid: san(txid),
+        address: san(pubkey),
         encodedurl: encodedURL
     };
 
@@ -897,17 +935,6 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         message = message.replace(imgurRegex, replaceImgur);
     }
 
-
-    /*if (settings["showprism"] == "true") {
-        //Prism
-        //If not, cdn.prism.red/*.jpeg & .png
-        //Otherwise include mp4 & mp3 in that extension list
-        var imgurRegex = global ?
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(\w+\.)?imgur\.com(\/|\/a\/|\/gallery\/)(?!gallery)([\w\-_]{5,12})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(imgurRegex, replaceImgur);
-    }*/
-
     if (settings["showtwitter"] == "true") {
         //Twitter
         var tweetRegex = global ?
@@ -939,46 +966,67 @@ function addImageAndYoutubeMarkdown(message, differentiator, global) {
         message = message.replace(lbryRegex, `<div class="youtubecontainer"><iframe loading="lazy" width="480" height="270" class="odyseeiframe" src="https://odysee.com/$/embed/$1" allowFullScreen="false"></iframe></div>`);
     }
 
-    if (settings["showbitclout"] == "true") {
-        //Bitclout
-        var bitcloutRegex = global ?
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Bitclout)" class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
-
-        var bitcloutRegex = global ?
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
-            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
-        message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Deso)" class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
-
-    }
-
-    var membercoinRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/i;
-    message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (member.cash)" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
-
     var memberlinksRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})?.*?<\/a>/gi :
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(member\.cash\/p\/)([a-z0-9]{10})?.*?<\/a>/i;
     message = message.replace(memberlinksRegex, replaceDiamondApp);
 
+
+    //todo - should have a settings option for giphy
     var giphyRegex = global ?
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(giphy\.com\/embed\/|media1\.giphy\.com\/media\/)([a-z0-9A-Z]{5,20})*.*?<\/a>/gi :
         /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(giphy\.com\/embed\/|media1\.giphy\.com\/media\/)([a-z0-9A-Z]{5,20})*.*?<\/a>/i;
     message = message.replace(giphyRegex, `<a href="https://i.giphy.com/media/$2/giphy.webp" rel="noopener noreferrer" target="_giphy" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy"  alt="Post's Image (Giphy)" class="imgurimage" src="https://i.giphy.com/media/$2/giphy.webp"></img></div></a>`);
 
 
-    var pearlRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/i;
-    message = message.replace(pearlRegex, `<a href="https://cdn.pearl.app/$1.webp" rel="noopener noreferrer" target="_pearl" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Pearl)" class="imgurimage" src="https://cdn.pearl.app/$1.webp"></img></div></a>`);
+    //Images - todo should have a settings option for all other images
 
-    var diamondappRegex = global ?
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/gi :
-        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/i;
-    message = message.replace(diamondappRegex, replaceDiamondApp);
+    var imageRegex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?([a-zA-Z0-9\.\/_-]*\.(?:png|jpg|jpeg|jfif|gif|png|svg|webp)).*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?([a-zA-Z0-9\.\/_-]*\.(?:png|jpg|jpeg|jfif|gif|png|svg|webp)).*?<\/a>/i;
+    message = message.replace(imageRegex, `<a href="https://$1" rel="noopener noreferrer" target="_imagewindow" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image" class="imgurimage" src="https://$1"></img></div></a>`);
 
+    var mp4Regex = global ?
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?([a-zA-Z0-9\.\/_-]*\.(?:mp4)).*?<\/a>/gi :
+        /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?([a-zA-Z0-9\.\/_-]*\.(?:mp4)).*?<\/a>/i;
+    message = message.replace(mp4Regex, `<a href='javascript:;'><video controls class="imgurimage" draggable="false" playsinline="true" loop="true"><source loading="lazy" type="video/mp4" src="https://$1" alt="mp4 post"></video></a>`);
+
+    /*
+        //if (settings["showbitclout"] == "true") {
+        //Bitclout
+        
+        var bitcloutRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.bitclout\.com\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
+        message = message.replace(bitcloutRegex, `<a href="https://images.bitclout.com/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Bitclout)" class="imgurimage" src="https://images.bitclout.com/$1$2"></img></div></a>`);
+    
+        var bitcloutRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?images\.deso\.org\/([a-zA-Z0-9]{64})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
+        message = message.replace(bitcloutRegex, `<a href="https://images.deso.org/$1.webp" rel="noopener noreferrer" target="_bitclout" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Deso)" class="imgurimage" src="https://images.deso.org/$1$2"></img></div></a>`);
+    
+        //}
+    
+        var membercoinRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?member\.cash\/img\/upload\/([a-z0-9]{10})(\.webp)*.*?<\/a>/i;
+        message = message.replace(membercoinRegex, `<a href="https://member.cash/img/upload/$1.webp" rel="noopener noreferrer" target="_membercoin" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (member.cash)" class="imgurimage" src="https://member.cash/img/upload/$1.webp"></img></div></a>`);
+    
+        var pearlRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?cdn\.pearl\.app\/([a-z0-9\-]{36})(\.webp)*.*?<\/a>/i;
+        message = message.replace(pearlRegex, `<a href="https://cdn.pearl.app/$1.webp" rel="noopener noreferrer" target="_pearl" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy" alt="Post's Image (Pearl)" class="imgurimage" src="https://cdn.pearl.app/$1.webp"></img></div></a>`);
+    
+        var diamondappRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(bitclout\.com\/posts\/|diamondapp\.com\/posts\/|diamondapp\.com\/nft\/|desocialworld\.com\/nft\/|desocialworld\.com\/posts\/|node\.deso\.org\/posts\/)([a-z0-9]{64})*.*?<\/a>/i;
+        message = message.replace(diamondappRegex, replaceDiamondApp);
+    
+        var nostrbuildRegex = global ?
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(nostr\.build\/i\/)([0-9]{1,10})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/gi :
+            /<a (?:rel="noopener noreferrer" )?href="(?:https?:\/\/)?(nostr\.build\/i\/)([0-9]{1,10})(\.[a-zA-Z0-9]{3,4})*.*?<\/a>/i;
+        message = message.replace(nostrbuildRegex, `<a href="https://nostr.build/i/$2$3" rel="noopener noreferrer" target="_nostrbuild" onclick="event.stopPropagation();" aria-label="Full Sized Image"><div class="imgurcontainer"><img loading="lazy"  alt="Post's Image (Nostr Build)" class="imgurimage" src="https://nostr.build/i/$2$3"></img></div></a>`);
+    */
 
     return message;
 }
@@ -1170,17 +1218,17 @@ function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, ra
 }
 
 function getRatingComment(data) {
-    return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="${maxratinglength}" id="memberratingcommentinputbox${san(data.bitcoinaddress)}" value="${ds(data.ratingreason)}" onchange="checkLength('memberratingcommentinputbox${san(data.bitcoinaddress)}',${maxratinglength});" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
+    return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="${maxratinglength}" id="memberratingcommentinputbox${san(data.publickey)}" value="${ds(data.ratingreason)}" onchange="checkLength('memberratingcommentinputbox${san(data.publickey)}',${maxratinglength});" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
-function getMemberRatingHTML(bitcoinaddress, ratingScore, pagingid) {
-    return `<div class="starrating"><div data-ratingsize="20" data-ratingname="` + ds(pagingid) + `" data-ratingaddress="` + san(bitcoinaddress) + `" data-ratingraw="` + Number(ratingScore) + `" id="memberrating` + san(bitcoinaddress) + `"></div></div>`;
+function getMemberRatingHTML(publickey, ratingScore, pagingid) {
+    return `<div class="starrating"><div data-ratingsize="20" data-ratingname="` + ds(pagingid) + `" data-ratingpublickey="` + san(publickey) + `" data-ratingraw="` + Number(ratingScore) + `" id="memberrating` + san(publickey) + `"></div></div>`;
 }
 
 
 //Settings
-function clickActionNamedHTML(action, qaddress, name, targetpubkey) {
-    return `<a class='${action}button' data-vavilon='` + action + `' class='` + action + `' href='javascript:;' onclick='` + action + `("` + sane(qaddress) + `","` + sane(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
+function clickActionNamedHTML(action, targetpubkey, name) {
+    return `<a class='${action}button' data-vavilon='` + action + `' class='` + action + `' href='javascript:;' onclick='` + action + `("` + sane(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
 }
 
 /*
@@ -1303,7 +1351,7 @@ function populateSendMessage(address, name, publickey) {
 function getMessageHTML(data, count) {
     //You sent a message
     if (data.bitcoinaddress == pubkey && data.address != data.toaddress) {
-        return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, data.bitcoinaddress, null)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
+        return "<li><div class='replymessagemeta'><span class='plaintext'>" + getSafeTranslation('yousent', 'you sent') + " (" + data.message.length + " bytes) -> </span>" + (new Member(data.toaddress, data.recipientname, count + "privatemessages" + data.recipientbitcoinaddress, data.recipientrating, data.recipientpagingid, data.recipientpublickey, data.recipientpicurl, data.recipienttokens, data.recipientfollowers, data.recipientfollowing, data.recipientblockers, data.recipientblocking, data.recipientprofile, data.recipientisfollowing, data.recipientnametime, data.recipientlastactive, data.recipientsysrating, data.hivename, null)).userHTML(true) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.recipientbitcoinaddress, data.recipientname, data.recipientpublickey) + "</div><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     } else {
         return "<li><span class='messagemeta'>" + userFromDataBasic(data, count + "privatemessages" + data.address) + " " + getAgeHTML(data.firstseen, false) + " " + sendEncryptedMessageHTML(data.bitcoinaddress, data.name, data.publickey) + "</span><br/><div class='privatemessagetext' id='" + san(data.roottxid) + "'>" + getSafeTranslation('processing', 'processing') + "</div><br/></li>";
     }
@@ -1472,7 +1520,7 @@ function showErrorMessage(status, page, theURL) {
     status = san(status);
     console.log(`Error:${status}`);
     var theElement = document.getElementById(page);
-    if(status==499){
+    if (status == 499) {
         //Google error status, probably caused by google bot being unable to 
         //load content due to robot.txt restrictions. show the preview content text instead
         theElement.innerHTML = document.getElementById('previewcontent').innerHTML;

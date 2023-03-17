@@ -315,12 +315,12 @@ function satsToUSDString(sats) {
   return usdString(satsToUSD(sats), false);
 }
 
-function usdString(total, truncate=false) {
+function usdString(total, truncate = false) {
   var usd = Number(total / 10000).toFixed(2);
   if (usd < 1) {
     return (usd * 100).toFixed(0) + "¢";
   } else {
-    if(truncate){
+    if (truncate) {
       return "$" + parseInt(usd);
     }
     return "$" + usd;
@@ -328,8 +328,8 @@ function usdString(total, truncate=false) {
 }
 
 function updateUSDRate(data) {
-  let element=document.getElementById('usdrate');
-  if (data && data[0] && data[0].usdrate && element) { 
+  let element = document.getElementById('usdrate');
+  if (data && data[0] && data[0].usdrate && element) {
     element.value = data[0].usdrate;
     updateSettingsNumber('usdrate');
   }
@@ -661,7 +661,7 @@ const reloadImageEverywhere = url =>
   fetch(url, { cache: 'reload', mode: 'no-cors' })
     .then(() => document.body.querySelectorAll(`img[src='${url}']`)
       .forEach(img => img.src = url))
-      
+
 //Install app
 
 let deferredPrompt;
@@ -686,60 +686,90 @@ function installApp() {
   });
 }
 
-function linkNostrAccount(useNOS2Xifavailable=true) {
-  let nostrpublickey='02'+nostrPubKeyHex;
-  let element=document.getElementById('linknostraccount');
-  if(element){
-    nostrpublickey='02'+element.value.trim();
+function linkNostrAccount(useNOS2Xifavailable = true) {
+  let nostrpublickey = '02' + nostrPubKeyHex;
+  let element = document.getElementById('linknostraccount');
+  if (element) {
+    npubval = element.value.trim();
+    if (npubval.startsWith('npub')) {
+      nostrpublickey = '02' + window.bech32converter('npub').toHex(npubval).slice(2).toLowerCase();
+    }
   }
 
-  let legacyaddress=pubkeyhexToLegacy(nostrpublickey);
+  let legacyaddress = pubkeyhexToLegacy(nostrpublickey);
   //note legacyaddress from Nostr account is internal identifier and should not be used for anything external.
   //as mixing signature schemes may weaken security.
   let fullmessage = getLinkMessage(legacyaddress);
 
-  sendNostrPost(fullmessage, '', '', "newpostmemorandumstatus", nostrLinkSuccessMessage, useNOS2Xifavailable);
+  sendNostrPost(fullmessage, '', '', "newpostmemorandumstatus", nostrLinkSuccessMessage, useNOS2Xifavailable, 6000);
 }
 
-function nostrLinkSuccessMessage(){
+function nostrLinkSuccessMessage() {
   updateStatus('Nostr Link Request submitted');
 }
 
 function showBitcloutLinkText() {
-  let legacyaddress=document.getElementById('linkbitcloutaccount').value.trim();
+  let legacyaddress = document.getElementById('linkbitcloutaccount').value.trim();
 
   if (legacyaddress.startsWith("member:") || legacyaddress.startsWith("bitcoincash:")) {
     legacyaddress = membercoinToLegacy(legacyaddress);
-  }else if (legacyaddress.startsWith("BC1")) {
+  } else if (legacyaddress.startsWith("BC1")) {
     legacyaddress = bitcloutToLegacy(legacyaddress);
   }
-  
+
   let fullmessage = getLinkMessage(legacyaddress);
 
   //let bcaddress=document.getElementById('linkbitcloutaccount').value.trim();
-  document.getElementById('bitcloutlinktextarea').value=fullmessage;
-  document.getElementById('bitcloutlinktext').style.display='block';
+  document.getElementById('bitcloutlinktextarea').value = fullmessage;
+  document.getElementById('bitcloutlinktext').style.display = 'block';
 }
 
-function getLinkMessage(legacyaddress){
+function getLinkMessage(legacyaddress) {
   window.bitcoinjs.address.toOutputScript(legacyaddress);//this will throw error if address is not valid
   var time = parseInt(new Date().getTime() / 1000);
-  let message=`membercashlink:${legacyaddress}:${pubkeyhex}:${time}`;
+  let message = `membercashlink:${legacyaddress}:${pubkeyhex}:${time}`;
   let keyPair = new window.bitcoinjs.ECPair.fromWIF(privkey);
   var privateKey = keyPair.privateKey;
   var signature = window.bitcoinmessage.sign(message, privateKey, keyPair.compressed, "member.cash link request", { extraEntropy: eccryptoJs.randomBytes(32) });
-  return message+':'+signature.toString('base64');
+  return message + ':' + signature.toString('base64');
 }
 
-function switchNostrKey(){
-  try{
-    let hexprivkey=document.getElementById('usenostrkeyaccount').value.trim();
+function switchNostrKey() {
+  try {
+    let nsecprivkey = document.getElementById('usenostrkeyaccount').value.trim();
+
+    let hexprivkey = window.bech32converter('nsec').toHex(nsecprivkey).slice(2).toLowerCase();
+
     //let ecpair = new window.bitcoinjs.ECPair.fromWIF(hexprivkey);
-    let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexprivkey,'hex'));
+    let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexprivkey, 'hex'));
     setNostrKeys(ecpair);
-    updateStatus("New Nostr Public Key:"+nostrPubKeyHex);
-  }catch(err){
-    updateStatus("Nostr Private Key Not Recognized"+err);
+    updateStatus("New Nostr Public Key:" + nostrPubKeyHex);
+  } catch (err) {
+    updateStatus("Nostr Private Key Not Recognized" + err);
   }
-  
+
+}
+
+function bechifylink(linkelement,txid){
+  linkelement.href=`https://snort.social/e/`+bech32Encode('note',txid);
+}
+
+function bech32Encode(stub,theString){
+  if (!window.bech32converter){
+    loadScript("js/lib/bech32-converting-1.0.9.min.js");
+    return 'false';
+  }
+  return window.bech32converter(stub).toBech32('0x'+theString);
+}
+
+function getImpliedBitcoinAddress(namepubkey) {
+  if (namepubkey.length == 64) namepubkey = '02' + namepubkey;
+  return pubkeyhexToLegacy(namepubkey);
+}
+
+function htmlToElement(html) {
+  var template = document.createElement('template');
+  html = html.trim(); // Never return a text node of whitespace as the result
+  template.innerHTML = html;
+  return template.content.firstChild;
 }

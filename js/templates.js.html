@@ -34,7 +34,7 @@ var ratingAndReasonHTML=`
 <tr>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{rater}</td>
     <td data-vavilon_data_label="VV0008" data-label='Rates As' align='center'>
-        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingaddress="{rateraddress}"
+        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingpublickey="{rateraddress}"
             data-ratingraw="{rating}" id='{stem}{rateraddress}'></div>
     </td>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{ratee}</td>
@@ -55,7 +55,7 @@ var trustRatingTableHTML=`
 <div id="cy" style="width:100%;height:600px;"></div>
 <div id="cynote" style="width:100%">&nbsp;</div>
 <br />
-<a href="https://member.cash/a/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
+<a href="https://member.cash/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
     interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
 <br />
 <table>{tablecontents}</table>
@@ -192,7 +192,8 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n3">*New and Nostr Users. Click 'Make New Phrase'.</span><br />
+        <span data-vavilon="VV0019n3">*Nostr Users. Use 'npub...' or 'nsec...' key or login with </span><a
+            onclick="nos2xlogin();return false;">nos2x</a><br />
     </div>
     <div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
@@ -220,14 +221,14 @@ var lowfundswarningHTML=`
     <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
     <br />
     <br />
-    <span class="showmembercoinmining">
+    <!--<span class="showmembercoinmining">
         <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a
             few
             seconds.</span>
         <br />
         <br />
         <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
-    </span>
+    </span>-->
     <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
             your balance</span></a> or
     <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
@@ -581,7 +582,7 @@ var membertabsHTML=`
         href="#list?qaddress={address}">List</a>
     <span class="separator"></span>
     <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
-        href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&topicname=">Posts</a>
+        href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&minrating=0&topicname=">Posts</a>
 </div>
 `;
 
@@ -618,14 +619,14 @@ pages.member = `
                 <!--<span class="dogehairprofilelink">
                     <a href="https://doge.hair/#member?qaddress={address}" id="dogehairprofilelink">doge.hair</a><span
                         class="separatorwide"></span>
-                </span>-->
+                </span>
                 <span class="membermemoprofilelink">
-                    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{bcaddress}"
+                    <a rel="noopener noreferrer" target="memo" href="https://memo.cash/profile/{qaddress}"
                         id="membermemoprofilelink">Memo</a><span class="separatorwide"></span>
                 </span>
                 <span class="bitcloutprofilelink">
                     <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/u/{pagingid}"
-                        id="bitcloutprofilelink">BitClout</a><span class="separatorwide"></span></span>
+                        id="bitcloutprofilelink">BitClout</a><span class="separatorwide"></span></span>-->
             </div>
         </span>
     </div>
@@ -643,7 +644,7 @@ pages.member = `
 
     <div class="memberstats">
         <div class="membrain">
-            <a href="https://member.cash/a/804fc6e860"></a><label data-vavilon="membrain">MemBrain</label></a>
+            <label data-vavilon="membrain">MemBrain</label></a>
             <a id="membrainnumber" href="https://member.cash/a/804fc6e860">{membrain}</a>
         </div>
         <div class="followers">
@@ -671,7 +672,7 @@ pages.member = `
         </div>
     </div>
     {pinnedpostHTML}
-    <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
+    <!--<div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="membercashaddrformat">{cashaddress}</span>
         <div id="membercashaddrformatdiv">
@@ -680,7 +681,20 @@ pages.member = `
                     code</span>
             </span>
         </div>
-    </div>
+    </div>-->
+    <!--
+        Hmm, don't always have the nostr pubkey
+        <div id="walletnostraddress" onclick="copyToClipboard('{nostraddress}')" class="bitcloutaddress">
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+        <span id="nostrformat">{nostraddress}</span>
+        <div id="nostrformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('nostrformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
+    </div>-->
+    <!--
     <div id="walletbcaddress" onclick="copyToClipboard('{bcaddress}')" class="bitcloutaddress">
         <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
         <span id="memberbcformat">{bcaddress}</span>
@@ -691,8 +705,7 @@ pages.member = `
             </span>
         </div>
     </div>
-
-
+    -->
 </div>`;
 
 pages.settings = `
@@ -707,8 +720,28 @@ pages.settings = `
 
     <h2 data-vavilon="VV0166">Settings</h2>
     <div id="settingsloggedin">
-        <div class="settingspiccontainer">
+        <div>
+            <label data-vavilon="VV0060" for="settingsnametext">Handle</label>
+            <div class="formgroup">
+                <input maxlength="50" size="30" id="settingsnametext" value="{handle}"
+                    onchange="document.getElementById('settingsnametextbutton').disabled=false; updatePagingId();"
+                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+                <button data-vavilon="VV0077" id="settingsnametextbutton" type="button"
+                    onclick="setName();">update</button>
+            </div>
+        </div>
+        <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
+        <div id="settingspagingidhtml">@{pagingid}</div>
 
+        <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
+        <textarea maxlength="{maxprofilelength}" size="30" rows="4" cols="60" id="settingsprofiletext"
+            onchange="checkLength('settingsprofiletext',{maxprofilelength});document.getElementById('settingsprofiletextbutton2').disabled=false;"
+            onkeypress="this.onchange();" onpaste="this.onchange();"
+            oninput="this.onchange();">{profileHTMLEscaped}</textarea>
+        <button data-vavilon="VV0077" id="settingsprofiletextbutton2" type="button" onclick="setProfile();"
+            data-vavilon="update" disabled="">update</button>
+        <br />
+        <div class="settingspiccontainer">
             <!--<label id="settingspiclargelabel" for="settingspic" style="display:inline;">
                 <span data-vavilon="VV0076" class="profilepicdirections">(Must be imgur link in this format or .png
                     format)</span></label>-->
@@ -735,77 +768,54 @@ pages.settings = `
 
         </div>
         <div>
-            <label data-vavilon="VV0060" for="settingsnametext">Handle</label>
-            <div class="formgroup">
-                <input maxlength="50" size="30" id="settingsnametext" value="{handle}"
-                    onchange="document.getElementById('settingsnametextbutton').disabled=false;"
-                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                <button data-vavilon="VV0077" id="settingsnametextbutton" type="button"
-                    onclick="setName();">update</button>
-            </div>
-        </div>
-        <label data-vavilon="VV0062" for="settingspagingid">Paging ID</label>
-        <div id="settingspagingidhtml">@{pagingid}</div>
-        <div>
-            <label data-vavilon="VV0063" for="settingsprofiletext">Profile</label>
-            <div class="formgroup">
-                <input maxlength="{maxprofilelength}" size="30" id="settingsprofiletext" value="{profile}"
-                    onchange="checkLength('settingsprofiletext',{maxprofilelength});document.getElementById('settingsprofiletextbutton').disabled=false;"
-                    onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                <button data-vavilon="VV0077" id="settingsprofiletextbutton" type="button" onclick="setProfile();"
-                    data-vavilon="update" disabled="">update</button>
-            </div>
-        </div>
-        <div>
             <label data-vavilon="VV0079" for="notificationbutton">Notifications</label>
             <span class="allownotifications"><a data-vavilon="VV0080" class="memberlinkbutton" href="javascript:;"
                     onclick="requestNotificationPermission(); this.style.display='none';">Allow
                     Notifications</a></span>
         </div>
         <div>
-            <label data-vavilon="installapp" for="installappbutton">Install</label>
-            <span class="installappbutton"><a data-vavilon="installapp" class="memberlinkbutton" id="installbutton"
-                    href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
-        </div>
-        <div>
-            <label for="usenostrkeyaccount"><span data-vavilon="usenostrkeyaccount">Use Different Nostr Account (Private Key)</span> 
+            <label for="usenostrkeyaccount"><span data-vavilon="usenostrkeyaccount">Use Different Nostr Account
+                    (Private Key)</span>
                 <div class="formgroup">
-                <input id="usenostrkeyaccount" placeholder="nostr private key hex">
-                <button data-vavilon="nostrkey" id="linkbitcloutaccountbutton" type="button" onclick="switchNostrKey();"
-                    data-vavilon="nostrkey">switch</button>
+                    <input id="usenostrkeyaccount" placeholder="nostr private key nsec1.......">
+                    <button data-vavilon="nostrkey" id="linkbitcloutaccountbutton" type="button"
+                        onclick="switchNostrKey();" data-vavilon="nostrkey">switch</button>
                 </div>
         </div>
         <div>
-            <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public Key)</span> 
-            <div class="formgroup">
-                <input id="linknostraccount" value={nostrpubkey}>
-                <button data-vavilon="link" id="linknostraccountbutton" type="button" onclick="linkNostrAccount();"
-                    data-vavilon="link">link</button>
-            </div>
-            <div id="bitcloutlinktext" style="display:none;">
-                <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
-                <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
-            </div>
+            <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public
+                    Key)</span>
+                <div class="formgroup">
+                    <input id="linknostraccount" value={nostrpubkey}>
+                    <button data-vavilon="link" id="linknostraccountbutton" type="button" onclick="linkNostrAccount();"
+                        data-vavilon="link">link</button>
+                </div>
+                <div id="bitcloutlinktext" style="display:none;">
+                    <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
+                    <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
+                </div>
         </div>
         <div>
-            <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout Account</span> 
-            <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
+            <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout/Memo
+                    Account</span>
+                <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
             <div class="formgroup">
-                <input id="linkbitcloutaccount" placeholder="BC...."
+                <input id="linkbitcloutaccount" placeholder="BC..../1..../bitcoincash:...."
                     onchange="document.getElementById('linkbitcloutaccountbutton').disabled=false;"
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-                <button data-vavilon="link" id="linkbitcloutaccountbutton" type="button" onclick="showBitcloutLinkText();"
-                    data-vavilon="link">link</button>
+                <button data-vavilon="link" id="linkbitcloutaccountbutton" type="button"
+                    onclick="showBitcloutLinkText();" data-vavilon="link">link</button>
             </div>
             <div id="bitcloutlinktext" style="display:none;">
-                <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
+                <span data-vavilon="postthistext">(Make a post with this text from your BitClout/Memo
+                    account)</span>
                 <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
             </div>
         </div>
-        
-        
 
-        <div>
+
+
+        <div class='oneclicktipamount'>
             <label data-vavilon="VV0082" for="oneclicktip">One-Click Tip Amount</label>
             <input id="oneclicktip" size="8" type="number" onchange="updateSettingsNumber('oneclicktip');"
                 onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
@@ -821,6 +831,11 @@ pages.settings = `
     <input type="hidden" id="usdrate" step="1" onchange="updateSettingsNumber('usdrate');" onkeypress="this.onchange();"
         onpaste="this.onchange();" oninput="this.onchange();">
     <div>
+        <label data-vavilon="installapp" for="installappbutton">Install</label>
+        <span class="installappbutton"><a data-vavilon="installapp" class="memberlinkbutton" id="installbutton"
+                href="javascript:;" onclick="installApp(); this.style.display='none';">Install App</a></span>
+    </div>
+    <div>
         <label for="languageselector">Language / 语言 / Idioma / Lengguwahe</label>
         <select id="languageselector" onchange="updateSettingsDropdown('languageselector');">
             <option value="en">English</option>
@@ -835,6 +850,7 @@ pages.settings = `
             <option data-vavilon="VV0167" value="feels compact">Choose Theme</option>
             <option value="feels compact">Feels Compact</option>
             <option value="feels-night compact compactnight">Feels Compact Night Mode</option>
+            <!--<option value="hackernews">Hacker News</option>-->
             <!--<option data-vavilon="VV0168" value="none">None</option>-->
         </select>
     </div>
@@ -844,11 +860,11 @@ pages.settings = `
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
         <p data-vavilon="VV0084">(Max results to show per page. Maximum 100)</p>
     </div>
-    <div class="displaymining">
+    <!--<div class="displaymining">
         <label data-vavilon="mineheader" for="notificationbutton">Mining</label>
         <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{address}"></iframe>
     </div>
-    <!--<div>
+    <div>
         <label data-vavilon="VV0085" for="currencydisplay">Currency Display</label>
         <select id="currencydisplay" onchange="updateSettingsDropdown('currencydisplay');">
             <option value="USD">USD</option>
@@ -873,6 +889,12 @@ pages.settings = `
         <textarea id="mutedwords" name="text" rows="4" cols="60" onchange="updatemutedwords();"
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
     </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="mutegm" onchange="updateSettingsCheckbox('mutegm');">
+        <label data-vavilon="mutegm" for="mutegm" class="checkboxlabel">Mute posts starting GM/Good Morning/GN/Good
+            Night/PV/Pura Vida</label>
+    </div>
+
     <div>
         <label data-vavilon="mutednetworks">Muted Networks</label>
     </div>
@@ -970,16 +992,16 @@ var hamburgerMenuHTML=`
 <span class="dropdown">
     <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
     <div class="dropdown-content mainhamburger" id="dropdown-content">
-        <a data-vavilon_title="VV0063" id="profilebutton" title="Profile" class="hamburgerbutton" href="#profile"
-            onclick="nlc();" style="display:none;">
-            <img src="img/icons/user.png" alt="profile">
-            <span data-vavilon="VV0063">Profile</span></a>
-        <a data-vavilon_title="VVwallet" id="walletbutton" title="Wallet" class="hamburgerbutton" href="#wallet"
-            onclick="nlc();" style="display:none;">
-            <img src="img/icons/wallet.png" alt="wallet">
-            <span data-vavilon="VVwallet">Wallet</span></a>
-        <a data-vavilon_title="VV0100" id="topiclistbuttonmenu" title="Tag List" class="hamburgerbutton" href="#topiclist"
-            onclick="nlc();">
+        <div class='profilebuttondiv'><a data-vavilon_title="VV0063" id="profilebutton" title="Profile"
+                class="hamburgerbutton" href="#profile" onclick="nlc();" style="display:none;">
+                <img src="img/icons/user.png" alt="profile">
+                <span data-vavilon="VV0063">Profile</span></a></div>
+        <div class='walletbuttondiv'><a data-vavilon_title="VVwallet" id="walletbutton" title="Wallet"
+                class="hamburgerbutton" href="#wallet" onclick="nlc();" style="display:none;">
+                <img src="img/icons/wallet.png" alt="wallet">
+                <span data-vavilon="VVwallet">Wallet</span></a></div>
+        <a data-vavilon_title="VV0100" id="topiclistbuttonmenu" title="Tag List" class="hamburgerbutton"
+            href="#topiclist" onclick="nlc();">
             <img src="img/icons/hashtag.png" alt="MyFeed">
             <span data-vavilon="VV0100">Tag List</span></a>
         <a data-vavilon_title="VV0101" id="mapbutton" title="Map" class="hamburgerbutton" href="#map" onclick="nlc();">
@@ -1029,8 +1051,7 @@ var majorNavButtonsHTML=`
     </span>
     <span id="loggedout" class="loggedout">
         <a data-vavilon_title="VVfirehose" class="largenavbtn" onclick="nlc();" id="firehosebuttonloggedout"
-            title="Firehose (Everything)"
-            href="#show?order=hot&content=posts&topicname=&filter=everyone&start=0&limit=25">
+            title="Firehose (Everything)" href="#firehose">
             <!-- 📰 -->
             <img src="img/icons/fire-hose.png" width="32" height="32" alt="firehose">
         </a>
@@ -1100,10 +1121,10 @@ var footerHTML = `
         <hr />
     </span>
     <span class="footerlinks">
-        <span class="displayinfluencers">
+        <!--<span class="displayinfluencers">
             <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
             <span class="separatorwide"></span>
-        </span>
+        </span>-->
         <span class="displaygithub">
             <a rel='noopener noreferrer' target="github"
                 href="https://github.com/memberapp/memberapp.github.io">Github</a>

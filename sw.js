@@ -12,7 +12,7 @@ const PRECACHE_URLS = [
 //If updating version here, also update version in index.html
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-const version = '8.10.16';
+const version = '8.13.3';
 const siteurl = 'https://member.cash';
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;

@@ -145,7 +145,7 @@ function memorandumPreview() {
     var repostedHTML = document.getElementById('quotepost').outerHTML;
 
 
-    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', pubkey, null);
+    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', null);
 
     document.getElementById('memorandumpreview').innerHTML =
         getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, '000', 1, 0, 0, '', 3, '000', false)
@@ -161,7 +161,7 @@ function memorandumPreview() {
 }
 
 function geopost() {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
     var posttext = txtarea.value;
@@ -193,7 +193,7 @@ function geopost() {
     if (checkForNativeUserAndHasBalance()) {
         //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
         postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
-        successFunction = null;
+        //successFunction = null;
     }
     if (isBitCloutUser()) {
         sendBitCloutPost(posttext + " \nmember.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
@@ -204,7 +204,7 @@ function geopost() {
 }
 
 function postmemorandum() {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
     if (!posttext.includes('#')) {
         if (!confirm(getSafeTranslation('notagareyousure', `Are you sure you want to post this without a #hashtag?  Include a #hashtag to help members find your post. Click OK to post or Cancel to add a #hashtag.`))) {
@@ -257,7 +257,7 @@ function postmemorandum() {
             //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
             postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
             //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
-            successFunction = null;
+            //successFunction = null;
         }
         if (isBitCloutUser()) {
             sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
@@ -274,7 +274,7 @@ function postmemorandum() {
 
         if (checkForNativeUserAndHasBalance()) {
             postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
-            successFunction = null;
+            //successFunction = null;
         }
         if (isBitCloutUser()) {
             sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);

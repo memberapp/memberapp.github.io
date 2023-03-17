@@ -4,7 +4,7 @@
 
 var eccryptoJs = null;
 
-function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons) {
+function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, minStarRating=2) {
     if (order == "") order = "hot";
     if (content == "") content = "posts";
     if (filter == "") filter = "everyone";
@@ -42,15 +42,15 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         topicnameHOSTILE = '';
     }
 
-    var networkOnly = '';
+    /*var networkOnly = '';
     if (dropdowns['contentnetwork'] != "-1") {
         networkOnly = `&network=${dropdowns['contentnetwork']}`;
-    }
+    }*/
 
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + networkOnly;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
     getJSON(theURL).then(function (data) {
 
         updateUSDRate(data);
@@ -63,18 +63,17 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         if (data.length && data[0]) {
             if (order == 'new' || order == 'old') {
                 end = data[data.length - 1].firstseen;
-            }else if (order == 'hot') {
+            } else if (order == 'hot') {
                 end = data[data.length - 1].score2;
-            }else if (order == 'topd') {
+            } else if (order == 'topd') {
                 end = data[data.length - 1].scoretop;
-            }else if (order == 'topa') {
+            } else if (order == 'topa') {
                 end = data[data.length - 1].score;
             }
-        
-        } 
 
-        //var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
-        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length);
+        }
+
+        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length, minStarRating);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
         var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length);
@@ -93,21 +92,29 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         var contents = "";
 
+        contents = getItemListandNavButtonsHTMLHeader(navheader, contents, navbuttons, "posts", start)
+        + contents
+        + getItemListandNavButtonsHTMLFooter(navheader, contents, navbuttons, "posts", start);
+        var pageElement = document.getElementById(page);
+        pageElement.innerHTML = contents; //display the result in the HTML element
+        
+        var listElement=document.getElementById('itemlistol');
 
         if (!pubkey && order == 'hot' && !qaddress && Math.random() < adfrequency) {//Show member.cash explainer video
             let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
-            contents = contents + getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, false, true, false));
+            listElement.appendChild(htmlToElement(getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, true, true, false))));
         }
 
-        let filtereditems=0;
+        let filtereditems = 0;
+        let alwaysShow=(qaddress);
         for (var i = 0; i < data.length; i++) {
             try {
                 if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
                 if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
-                let postHTML=getHTMLForPost(data[i], i + 1, page, i, null, false, true, false);
-                if(postHTML){
-                    contents = contents + getPostListItemHTML(postHTML);
-                }else{
+                let postHTML = getHTMLForPost(data[i], i + 1, page, i, null, alwaysShow, true, false);
+                if (postHTML) {
+                    listElement.appendChild(htmlToElement(getPostListItemHTML(postHTML)));
+                } else {
                     filtereditems++;
                 }
             } catch (err) {
@@ -115,8 +122,16 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             }
         }
 
-        if(filtereditems){
-            contents += getDivClassHTML('message', filtereditems + getSafeTranslation("filtereditems", " posts have been hidden based on your content and network filters."));
+        if (filtereditems) {
+            //contents += getDivClassHTML('message', filtereditems + getSafeTranslation("filtereditems", " posts have been hidden based on your content and network filters."));
+            listElement.appendChild(htmlToElement(
+            getDivClassHTML('message',
+            filtereditems
+            +getSafeTranslation("filtereditems1", " posts have been hidden based on ")
+            +`<a href='#settings'>`
+            +getSafeTranslation("filtereditems2", " your content and network filters")
+            +`</a>`
+            )));
         }
 
         if (contents == "") {
@@ -130,18 +145,42 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
             if (data && data[0] && data[0].interrupted == "query timed out") {
                 contents = getDivClassHTML('message', getSafeTranslation("servertimeout", "This request timed out - maybe it is too difficult or the server is under heavy load."));
             }
-
+            pageElement.innerHTML = contents;
         }
+
         if (topicnameHOSTILE != null && topicnameHOSTILE != "" && topicnameHOSTILE.toLowerCase() != "mytopics" && topicnameHOSTILE.toLowerCase() != "myfeed" && topicnameHOSTILE.toLowerCase() != "mypeeps") {
             showOnly("topicmeta");
         }
 
-        if (!pubkey && !topicnameHOSTILE) {
+        //if (!pubkey && !topicnameHOSTILE) {
             //contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
+        //}
+
+
+        displayItemListandNavButtonsHTML(data, true);
+
+        //Activate navigation filter star ratings
+        let postsqualityfilter = document.getElementById('postsqualityfilter');
+
+
+        postsqualityfilter = raterJs({
+        extraClass: "systemscore",
+        starSize: Number(postsqualityfilter.dataset.ratingsize),
+        rating: minStarRating,
+        element: postsqualityfilter,
+        showToolTip: false,
+        rateCallback: function rateCallback(rating, done) {
+            postsqualityfilter.setRating(rating);
+            done();
+            //postsqualityfilter.minrating = rating;
+            getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, rating);
         }
+    });
 
+    if (postsqualityfilter) {
+        postsqualityfilter.setRating(minStarRating);
+    }
 
-        displayItemListandNavButtonsHTML(navheader, contents, navbuttons, page, data, "posts", start, true);
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
     });
@@ -194,7 +233,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
     });
 }
 
-function getAndPopulateThread(roottxid, txid, pageName) {
+function getAndPopulateThread(roottxid, txid, pageName, articlestyle='thread') {
     if (pageName != "mapthread") {
         show(pageName);
         document.getElementById(pageName).innerHTML = document.getElementById("loading").innerHTML;
@@ -230,7 +269,7 @@ function getAndPopulateThread(roottxid, txid, pageName) {
         //Find the first reply by the thread starter, but only for article style
         let earliestReply = "none";
         let earliestReplyTXID = "none";
-        if (pageName == 'article') {
+        if (articlestyle == 'article') {
             let earliestReplyTime = 9999999999;
             //Find who started the thread
             let threadstarter = null;
@@ -257,10 +296,16 @@ function getAndPopulateThread(roottxid, txid, pageName) {
             earliestReplyTime = 9999999999;
         }
 
+
         var contents = "";
+        contents = '<div id="threaddisplay"></div>';
+        var pageElement = document.getElementById(pageName);
+        pageElement.innerHTML = contents; //display the result in the HTML element
+        var listElement=document.getElementById('threaddisplay');
+        
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
-                contents += getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false, true));
+                listElement.appendChild(htmlToElement(getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false, true))));
 
                 var commentTree = getNestedPostHTML(data, data[i].txid, 0, pageName, earliestReplyTXID)
 
@@ -270,13 +315,13 @@ function getAndPopulateThread(roottxid, txid, pageName) {
                     commentTree = getDivClassHTML("comment-tree", commentTree);
                 }
 
-                contents += commentTree;
+                listElement.appendChild(htmlToElement(commentTree));
             }
         }
 
 
         //Threads have no navbuttons
-        displayItemListandNavButtonsHTML('', contents, "", pageName, data, "", 0, false);
+        displayItemListandNavButtonsHTML(data, false);
 
         //Repeat the title for article mode
         //This doesn't seem essential, but was causing some problems when viewing thread directly after post, so put in a try/catch
@@ -421,10 +466,8 @@ function getAndPopulateQuoteBox(txid) {
 }
 
 
-function displayItemListandNavButtonsHTML(navheader, contents, navbuttons, page, data, styletype, start, adddynamic) {
-    contents = getItemListandNavButtonsHTML(navheader, contents, navbuttons, styletype, start);
-    var pageElement = document.getElementById(page);
-    pageElement.innerHTML = contents; //display the result in the HTML element
+function displayItemListandNavButtonsHTML(data, adddynamic) {
+
     listenForTwitFrameResizes();
     if (adddynamic) {
         addDynamicHTMLElements(data);
@@ -557,9 +600,10 @@ function addSingleStarsRating(theElement) {
     if (theElement == undefined) return;
     if (theElement.isdone) return;
     let name = theElement.dataset.ratingname;
-    let theAddress = theElement.dataset.ratingaddress;
+    let theAddress = theElement.dataset.ratingpublickey;
     let rawRating = theElement.dataset.ratingraw;
     let starSize = theElement.dataset.ratingsize;
+    let isDisabled = theElement.dataset.ratingdisabled;
     //this is very slow
     //let starSize = Number(getComputedStyle(theElement).fontSize);
 
@@ -571,6 +615,8 @@ function addSingleStarsRating(theElement) {
     }
     if (theElement.dataset.ratingsystem == 'systemscore') {
         disabledtext = 'MemBrain score ' + theRatingRound + '/5';
+    }else{
+        disabledtext = 'Your Rating ' + theRatingRound + '/5';
     }
 
 
@@ -588,38 +634,32 @@ function addSingleStarsRating(theElement) {
         }
     });
     starRating1.theAddress = theAddress;
-    if (disabledtext) {
+    if (isDisabled) {
         starRating1.disable();
     }
     theElement.isdone = true;
     return starRating1;
 }
 
-function sendRating(rating, ratingText, pageName, theAddress) {
-    if (!checkForPrivKey()) return false;
-    var comment = "";
-    if (ratingText) {
-        comment = ratingText.value;
-    }
 
-    if (checkForNativeUserAndHasBalance()) {
-        rateCallbackAction(rating, comment, theAddress);
-    }
 
-    if (isBitCloutUser()) {
-        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nmember.cash/ba/" + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
-    }
-}
 
+//This is called to
+//to show feed items
+//to show main thread item
+//to show quotebox
+//insert member.cash explainer video
+// for feed items, sometimes we mute
+// for last three items, alwaysshow should be true
 
 function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, truncate, includeArticleHeader) {
 
     //Always show if post is directly requested
-    if (!alwaysShow) {
+    /*if (!alwaysShow) {
         if (checkForMutedWords(data)) return "";
         if (checkForMutedNetworks(data)) return "";
         if (data.moderated != null) return "";
-    }
+    }*/
 
     let mainRatingID = starindex + page + ds(data.address);
     var retHTML = "";
@@ -631,8 +671,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         let repostRatingID = starindex + "repost" + ds(data.rpaddress);
         repostHTML1 = getRepostHeaderHTML(userFromDataBasic(data, repostRatingID));
         let member = MemberFromData(data, "rp", mainRatingID + "qr");
-        //repostHTML2 = getHTMLForPostHTML(data.rptxid, data.rpaddress, data.rpname, data.rplikes, data.rpdislikes, data.rptips, data.rpfirstseen, data.rpmessage, data.rproottxid, data.rptopic, data.rpreplies, data.rpgeohash, page, mainRatingID + "qr", data.rplikedtxid, data.rplikeordislike, data.rprepliesroot, data.rprating, starindex, data.rprepostcount, data.repostidtxid, data.rppagingid, data.rppublickey, data.rppicurl, data.rptokens, data.rpfollowers, data.rpfollowing, data.rpblockers, data.rpblocking, data.rpprofile, data.rpisfollowing, data.rpnametime, '', data.rplastactive, truncate, data.rpsysrating, data.rpsourcenetwork, data.rphivename, data.rphivelink, data.rpbitcoinaddress);
-        repostHTML2 = getHTMLForPostHTML3(member, data, 'rp', page, starindex, '', truncate);
+        repostHTML2 = getHTMLForPostHTML3(member, data, 'rp', page, starindex, '', truncate, alwaysShow);
 
         //if (repostHTML2) {
         //    repostHTML2 = getDivClassHTML("quotepost", repostHTML2);
@@ -653,20 +692,27 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         }
 
         let member = MemberFromData(data, "", mainRatingID);
-        retHTML = getHTMLForPostHTML3(member, data, '', page, starindex, repostHTML2, truncate);
+        retHTML = getHTMLForPostHTML3(member, data, '', page, starindex, repostHTML2, truncate, alwaysShow);
 
         //reply post, include original post
         if (data.opaddress) {
             let opmember = MemberFromData(data, "op", mainRatingID + 'op');
-            retHTML = getHTMLForPostHTML3(opmember, data, 'op', page, starindex + 'op', repostHTML2, truncate) +
-                `<div class="replyinmainfeed">` + retHTML + `</div>`;
+            let oppost = getHTMLForPostHTML3(opmember, data, 'op', page, starindex + 'op', repostHTML2, truncate, alwaysShow);
+            if(oppost && retHTML){
+                //if oppost, filtered out, will just use reply post as original post
+                //if no original post, nothing will show
+                //only if there is an original post and the reply will it show both
+                retHTML =  oppost + `<div class="replyinmainfeed">` + retHTML + `</div>`;
+            }
         }
 
 
 
     } else {
         //repost with no message
-        retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
+        if(repostHTML2){ //repost might have been muted
+            retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
+        }
     }
     if (includeArticleHeader) {
         retHTML += `<div id="articleheader` + san(data.txid) + `" class="articleheader"></div>`;
@@ -679,7 +725,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 }
 
 function getHTMLForReply(data, depth, page, starindex) {
-    if (checkForMutedWords(data)) return "";
+    
     let mainRatingID = starindex + page + ds(data.address);
     let member = MemberFromData(data, '', mainRatingID);
     return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit, data.roottxid);
@@ -691,7 +737,7 @@ function showReplyButton(txid, page, divForStatus) {
 }
 
 function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     if (replytext.length == 0) {
@@ -708,21 +754,25 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, orig
     //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
     //no wait for the first reply
 
+    let successfunctionCompleted = false;
     var successFunction =
         function (membertxid) {
-            replySuccessFunction(page, txid);
-            if (isBitCloutUser()) {
-                sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-                //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+            if (!successfunctionCompleted) {
+                successfunctionCompleted = true; //ensure it only gets sent once
+                replySuccessFunction(page, txid);
+                if (isBitCloutUser() && parentSourceNetwork==1) {
+                    sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
+                    //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+                }
             }
         };
 
     if (checkForNativeUserAndHasBalance()) {
         sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
-        successFunction = null;
+        //successFunction = null;
     }
 
-    sendNostrReply(origtxid, replytext, divForStatus, successFunction, origroottxid);
+    sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
 
     return true;
 }
@@ -818,14 +868,18 @@ function pinpost(txid) {
     if (checkForNativeUserAndHasBalance()) {
         memoPinPost(txid, privkey);
     }
+
+    nostrPinPost(txid);
+
 }
 
-function likePost(txid, origtxid, tipAddress, amountSats, roottxid=null) {
+function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
+    
     //if no identity login, then check for priv key 
-    if (!checkForPrivKey()) return false;
+    //if (!checkForPrivKey()) return false;
 
     //GUI update
     increaseGUILikes(txid);
@@ -852,17 +906,17 @@ function likePost(txid, origtxid, tipAddress, amountSats, roottxid=null) {
     nostrLikePost(origtxid, roottxid);
 }
 
-function dislikePost(txid, origtxid) {
-    if (!checkForNativeUser()) return false;
-
+function dislikePost(txid, origtxid, roottxid = null) {
     decreaseGUILikes(txid);
 
-    sendDislike(origtxid);
+    if (checkForNativeUserAndHasBalance()) {
+        sendDislike(origtxid);
+    }
+    nostrDislikePost(origtxid, roottxid);
 }
 
 function repostPost(txid, origtxid, sourcenetwork) {
-    if (!checkForPrivKey()) return false;
-
+    
     increaseGUIReposts(txid);
 
     if (isBitCloutUser()) {
@@ -878,7 +932,7 @@ function repostPost(txid, origtxid, sourcenetwork) {
 }
 
 function sendTip(txid, origtxid, tipAddress, page) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
 
     //document.getElementById("tipbox" + page + txid).style.display = "none";
     //document.getElementById("tiplink" + page + txid).style.display = "block";
@@ -908,7 +962,7 @@ function sendTip(txid, origtxid, tipAddress, page) {
 }
 
 function showTipBox(txid) {
-    if (!checkForNativeUser()) return false;
+    if (!checkForNativeUserAndHasBalance()) return false;
     if (document.getElementById("tipamount" + txid).value == 0) {
         document.getElementById("tipamount" + txid).value = defaulttip;
     }
@@ -924,27 +978,43 @@ function showMore(show, hide) {
     return true;
 }
 
-function checkForMutedWords(data) {
-    
-    for (var i = 0; i < mutedwords.length; i++) {
-        if (mutedwords[i] == "") continue;
+function checkForMutedWords(data,stub='') {
+
+    if (settings["mutegm"] == "true") {
+        if(data[stub+'message']){
+            let messagetext=data[stub+'message'].toLowerCase();
+            if(
+               messagetext.startsWith('pv') 
+            || messagetext.startsWith('pura vida') 
+            || messagetext.startsWith('gm') 
+            || messagetext.startsWith('good morning') 
+            || messagetext.startsWith('gn') 
+            || messagetext.startsWith('good night')
+            ){
+                return true;
+            }
+        }
+    }
+
+    for (var i = 0; i < mutedwords.length; i++) { //todo run tolowercase just once for each type for speed improvement
+        if (mutedwords[i] == "") continue; 
         var checkfor = mutedwords[i].toLowerCase();
-        if (data.message && data.message.toLowerCase().contains(checkfor)) return true;
-        if (data.name && data.name.toLowerCase().contains(checkfor)) return true;
-        data.address = data.address + "";//Ensure data address is a string.
-        if (data.address && data.address.toLowerCase().contains(checkfor)) return true;
-        if (data.topic && ("(" + data.topic.toLowerCase() + ")").contains(checkfor)) return true;
+        if (data[stub+'message'] && data[stub+'message'].toLowerCase().contains(checkfor)) return true;
+        if (data[stub+'name'] && data[stub+'name'].toLowerCase().contains(checkfor)) return true;
+        data[stub+'address'] += "";//Ensure data address is a string.
+        if (data[stub+'address'] && data[stub+'address'].toLowerCase().contains(checkfor)) return true;
+        if (data[stub+'topic'] && ("(" + data[stub+'topic'].toLowerCase() + ")").contains(checkfor)) return true;
 
     }
     return false;
 }
 
 function checkForMutedNetworks(data) {
-    
-    if(settings["mutebitclout"] == "true" && data.network==1){
+
+    if (settings["mutebitclout"] == "true" && data.network == 1) {
         return true;
     }
-    if(settings["mutenostr"] == "true" && data.network==5){
+    if (settings["mutenostr"] == "true" && data.network == 5) {
         return true;
     }
 

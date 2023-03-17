@@ -81,19 +81,20 @@ function displayContentBasedOnURLParameters(suggestedurl) {
             safeGPBN("filter"),
             numberGPBN("start"),
             numberGPBN("limit"),
-            safeGPBN("qaddress")
+            safeGPBN("qaddress"),
+            numberGPBN("minrating")
         );
         setTopic(safeGPBN("topicname"));
     } else if (action.startsWith("list")) {
-        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"));
+        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"),1);
     } else if (action.startsWith("notifications")) {
         showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
         showMember(sane(pubkey), '');
     } else if (action.startsWith("membersonly")) {
-        showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '');
+        showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("topinfluencers")) {
-        getAndPopulateNew('top50', 'both', '', '', 0, 50, 'posts', '', false);
+        getAndPopulateNew('top50', 'both', '', '', 0, 50, 'posts', '', false, 1);
     } else if (action.startsWith("member")) {
         showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
@@ -133,11 +134,11 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("map")) {
         showMap(safeGPBN("geohash"), safeGPBN("post"));
     } else if (action.startsWith("myfeed") || action.startsWith("mypeople")) {
-        showPostsNew('new', 'both', '', 'myfeed', 0, numbers.results, '');
+        showPostsNew('new', 'both', '', 'myfeed', 0, numbers.results, '', 1);
     } else if (action.startsWith("mytags")) {
-        showPostsNew('new', 'both', 'mytopics', 'everyone', 0, numbers.results, '');
+        showPostsNew('new', 'both', 'mytopics', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("firehose")) {
-        showPostsNew('hot', 'both', '', 'everyone', 0, numbers.results, '');
+        showPostsNew('hot', 'both', '', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("wallet")) {
         showWallet();
     } else if (action.startsWith("custom")) {
@@ -149,7 +150,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
             showPFC(0, numbers.results, 'both');
         }
     } else {
-        showPostsNew('hot', 'posts', '', 'everyone', 0, numbers.results, '');
+        showPostsNew('hot', 'posts', '', 'everyone', 0, numbers.results, '', 1);
     }
 }
 
@@ -358,7 +359,7 @@ function showMember(qaddress, pagingID, isList) {
     }
 
     if (isList) {
-        showPostsNew("new", "posts", "", "list", 0, 25, sane(qaddress));
+        showPostsNew("new", "posts", "", "list", 0, 25, sane(qaddress), 1);
     } else {
         //setPageTitleFromID("VV0063");
         hideAll();
@@ -419,10 +420,10 @@ function showMessages(messagetype, start, limit) {
 }
 
 function showPFC(start, limit, page) {
-    showPostsNew('hot', page, '', 'everyone', start, limit)
+    showPostsNew('hot', page, '', 'everyone', start, limit, '', 1)
 }
 
-function showPostsNew(order, content, topicname, filter, start, limit, qaddress) {
+function showPostsNew(order, content, topicname, filter, start, limit, qaddress='', minStarRating=1) {
     //setTopic('');
     if (topicname == 'mytopics') {
         highlightmajornavbutton("topiclistbutton");
@@ -432,7 +433,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
         highlightmajornavbutton("firehosebutton");
     }
 
-    getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress, true);
+    getAndPopulateNew(order, content, topicname, filter, start, limit, 'posts', qaddress, true, minStarRating);
 }
 
 
@@ -441,7 +442,7 @@ function showPostsNew(order, content, topicname, filter, start, limit, qaddress)
 function showTopic(start, limit, topicname, type) {
     setTopic(topicname);
     if (!type) type = "new";
-    getAndPopulateNew(type, 'posts', topicname, 'everyone', start, limit, 'posts', '', true);
+    getAndPopulateNew(type, 'posts', topicname, 'everyone', start, limit, 'posts', '', true, 2);
 }
 
 function showTopicList() {
@@ -525,7 +526,7 @@ function setTopic(topicName) {
 
 
 function showThread(roottxid, txid, articleStyle) {
-    getAndPopulateThread(roottxid, txid, 'thread');
+    getAndPopulateThread(roottxid, txid, 'thread', articleStyle);
     if (articleStyle == "article") {
         switchToArticleMode(roottxid);
     }

@@ -225,8 +225,13 @@ function dogecoinToLegacy(pubkey) {
 }
 
 function pubkeyhexToLegacy(pubkeyhex2) {
-    var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
-    return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+    if(window.bitcoinjs){
+        var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
+        return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+    }else{
+        console.log("Problem with pub key hex, bitcoinjs not loaded yet 4534663");
+        return null;
+    }
     //return window.bitcoinjs.payments.p2pkh({ pubkey: Buffer.from(pubkeyhex2) }).address;
 }
 
@@ -277,7 +282,7 @@ function setBalanceWithInterest() {
 }
 
 //This just set visual display of balance plus interest earned
-setInterval(setBalanceWithInterest, 500);
+//setInterval(setBalanceWithInterest, 500);
 
 
 //utxopool will call this after utxos updated
