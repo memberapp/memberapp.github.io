@@ -4452,7 +4452,7 @@ function htmlToElement(html) {
 
 var eccryptoJs = null;
 
-function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, minStarRating=2) {
+function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, minStarRating = 2) {
     if (order == "") order = "hot";
     if (content == "") content = "posts";
     if (filter == "") filter = "everyone";
@@ -4541,12 +4541,12 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var contents = "";
 
         contents = getItemListandNavButtonsHTMLHeader(navheader, contents, navbuttons, "posts", start)
-        + contents
-        + getItemListandNavButtonsHTMLFooter(navheader, contents, navbuttons, "posts", start);
+            + contents
+            + getItemListandNavButtonsHTMLFooter(navheader, contents, navbuttons, "posts", start);
         var pageElement = document.getElementById(page);
         pageElement.innerHTML = contents; //display the result in the HTML element
-        
-        var listElement=document.getElementById('itemlistol');
+
+        var listElement = document.getElementById('itemlistol');
 
         if (!pubkey && order == 'hot' && !qaddress && Math.random() < adfrequency) {//Show member.cash explainer video
             let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
@@ -4554,7 +4554,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         let filtereditems = 0;
-        let alwaysShow=(qaddress);
+        let alwaysShow = (qaddress);
         for (var i = 0; i < data.length; i++) {
             try {
                 if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
@@ -4573,13 +4573,13 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         if (filtereditems) {
             //contents += getDivClassHTML('message', filtereditems + getSafeTranslation("filtereditems", " posts have been hidden based on your content and network filters."));
             listElement.appendChild(htmlToElement(
-            getDivClassHTML('message',
-            filtereditems
-            +getSafeTranslation("filtereditems1", " posts have been hidden based on ")
-            +`<a href='#settings'>`
-            +getSafeTranslation("filtereditems2", " your content and network filters")
-            +`</a>`
-            )));
+                getDivClassHTML('message',
+                    filtereditems
+                    + getSafeTranslation("filtereditems1", " posts have been hidden based on ")
+                    + `<a href='#settings'>`
+                    + getSafeTranslation("filtereditems2", " your content and network filters")
+                    + `</a>`
+                )));
         }
 
         if (contents == "") {
@@ -4601,7 +4601,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         }
 
         //if (!pubkey && !topicnameHOSTILE) {
-            //contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
+        //contents=`<div><iframe src="https://www.youtube.com/embed/SkaaPcjKI2E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" style="max-width: 100vw;max-height: 56.25vw;" width="770" height="433" frameborder="0"></iframe>`+contents;
         //}
 
 
@@ -4612,22 +4612,22 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 
         postsqualityfilter = raterJs({
-        extraClass: "systemscore",
-        starSize: Number(postsqualityfilter.dataset.ratingsize),
-        rating: minStarRating,
-        element: postsqualityfilter,
-        showToolTip: false,
-        rateCallback: function rateCallback(rating, done) {
-            postsqualityfilter.setRating(rating);
-            done();
-            //postsqualityfilter.minrating = rating;
-            getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, rating);
-        }
-    });
+            extraClass: "systemscore",
+            starSize: Number(postsqualityfilter.dataset.ratingsize),
+            rating: minStarRating,
+            element: postsqualityfilter,
+            showToolTip: false,
+            rateCallback: function rateCallback(rating, done) {
+                postsqualityfilter.setRating(rating);
+                done();
+                //postsqualityfilter.minrating = rating;
+                getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, rating);
+            }
+        });
 
-    if (postsqualityfilter) {
-        postsqualityfilter.setRating(minStarRating);
-    }
+        if (postsqualityfilter) {
+            postsqualityfilter.setRating(minStarRating);
+        }
 
     }, function (status) { //error detection....
         showErrorMessage(status, page, theURL);
@@ -4681,7 +4681,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
     });
 }
 
-function getAndPopulateThread(roottxid, txid, pageName, articlestyle='thread') {
+function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread') {
     if (pageName != "mapthread") {
         show(pageName);
         document.getElementById(pageName).innerHTML = document.getElementById("loading").innerHTML;
@@ -4749,8 +4749,8 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle='thread') {
         contents = '<div id="threaddisplay"></div>';
         var pageElement = document.getElementById(pageName);
         pageElement.innerHTML = contents; //display the result in the HTML element
-        var listElement=document.getElementById('threaddisplay');
-        
+        var listElement = document.getElementById('threaddisplay');
+
         for (var i = 0; i < data.length; i++) {
             if (data[i].txid == roottxid) {
                 listElement.appendChild(htmlToElement(getDivClassHTML("fatitem", getHTMLForPost(data[i], 1, pageName, i, data[earliestReply], true, false, true))));
@@ -4782,9 +4782,9 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle='thread') {
             console.log(errortitle);
         }
 
-        if (popup != undefined) {
-            popup.setContent(getDivClassHTML('mapthread', contents));
-        }
+        //if (popup != undefined) {
+        //    popup.setContent(getDivClassHTML('mapthread', contents));
+        //}
         addDynamicHTMLElements(data);
         scrollToPosition();
 
@@ -4930,6 +4930,20 @@ function displayItemListandNavButtonsHTML(data, adddynamic) {
 
 function addDynamicHTMLElements(data) {
 
+    //remove min-height requirement for image. 
+    //we need a min height to avoid google CLS penalites for content that shifts around too much
+    //but the min-height can cause the image to be shown incorrectly
+    let images = document.getElementsByClassName('imgurimage');
+    for (let i = 0; i < images.length; i++) {
+        if(images[i].complete){
+            images[i].style.minHeight = '0';
+        }else{
+            images[i].addEventListener('load', function () {
+                this.style.minHeight = '0';
+            });
+        }
+    }
+
     if (data != null && data != undefined && data[0]) {
         //if (data.length > 0) {
         //let qt = (Math.round(data[0].msc * 100) / 100).toFixed(2);
@@ -5063,7 +5077,7 @@ function addSingleStarsRating(theElement) {
     }
     if (theElement.dataset.ratingsystem == 'systemscore') {
         disabledtext = 'MemBrain score ' + theRatingRound + '/5';
-    }else{
+    } else {
         disabledtext = 'Your Rating ' + theRatingRound + '/5';
     }
 
@@ -5146,11 +5160,11 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
         if (data.opaddress) {
             let opmember = MemberFromData(data, "op", mainRatingID + 'op');
             let oppost = getHTMLForPostHTML3(opmember, data, 'op', page, starindex + 'op', repostHTML2, truncate, alwaysShow);
-            if(oppost && retHTML){
+            if (oppost && retHTML) {
                 //if oppost, filtered out, will just use reply post as original post
                 //if no original post, nothing will show
                 //only if there is an original post and the reply will it show both
-                retHTML =  oppost + `<div class="replyinmainfeed">` + retHTML + `</div>`;
+                retHTML = oppost + `<div class="replyinmainfeed">` + retHTML + `</div>`;
             }
         }
 
@@ -5158,7 +5172,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 
     } else {
         //repost with no message
-        if(repostHTML2){ //repost might have been muted
+        if (repostHTML2) { //repost might have been muted
             retHTML = getDivClassHTML("repostnoquote", repostHTML1 + getDivClassHTML("noquote", repostHTML2));
         }
     }
@@ -5173,7 +5187,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
 }
 
 function getHTMLForReply(data, depth, page, starindex) {
-    
+
     let mainRatingID = starindex + page + ds(data.address);
     let member = MemberFromData(data, '', mainRatingID);
     return getHTMLForReplyHTML2(member, data.txid, data.likes, data.dislikes, data.tips, data.firstseen, data.message, page, data.highlighted, data.likedtxid, data.likeordislike, data.blockstxid, starindex, data.topic, data.moderated, data.repostcount, data.repostidtxid, data.network, data.hivelink, data.deleted, data.edit, data.roottxid);
@@ -5208,7 +5222,7 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, orig
             if (!successfunctionCompleted) {
                 successfunctionCompleted = true; //ensure it only gets sent once
                 replySuccessFunction(page, txid);
-                if (isBitCloutUser() && parentSourceNetwork==1) {
+                if (isBitCloutUser() && parentSourceNetwork == 1) {
                     sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
                     //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
                 }
@@ -5325,7 +5339,7 @@ function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
-    
+
     //if no identity login, then check for priv key 
     //if (!checkForPrivKey()) return false;
 
@@ -5364,7 +5378,7 @@ function dislikePost(txid, origtxid, roottxid = null) {
 }
 
 function repostPost(txid, origtxid, sourcenetwork) {
-    
+
     increaseGUIReposts(txid);
 
     if (isBitCloutUser()) {
@@ -5426,32 +5440,32 @@ function showMore(show, hide) {
     return true;
 }
 
-function checkForMutedWords(data,stub='') {
+function checkForMutedWords(data, stub = '') {
 
     if (settings["mutegm"] == "true") {
-        if(data[stub+'message']){
-            let messagetext=data[stub+'message'].toLowerCase();
-            if(
-               messagetext.startsWith('pv') 
-            || messagetext.startsWith('pura vida') 
-            || messagetext.startsWith('gm') 
-            || messagetext.startsWith('good morning') 
-            || messagetext.startsWith('gn') 
-            || messagetext.startsWith('good night')
-            ){
+        if (data[stub + 'message']) {
+            let messagetext = data[stub + 'message'].toLowerCase();
+            if (
+                messagetext.startsWith('pv')
+                || messagetext.startsWith('pura vida')
+                || messagetext.startsWith('gm')
+                || messagetext.startsWith('good morning')
+                || messagetext.startsWith('gn')
+                || messagetext.startsWith('good night')
+            ) {
                 return true;
             }
         }
     }
 
     for (var i = 0; i < mutedwords.length; i++) { //todo run tolowercase just once for each type for speed improvement
-        if (mutedwords[i] == "") continue; 
+        if (mutedwords[i] == "") continue;
         var checkfor = mutedwords[i].toLowerCase();
-        if (data[stub+'message'] && data[stub+'message'].toLowerCase().contains(checkfor)) return true;
-        if (data[stub+'name'] && data[stub+'name'].toLowerCase().contains(checkfor)) return true;
-        data[stub+'address'] += "";//Ensure data address is a string.
-        if (data[stub+'address'] && data[stub+'address'].toLowerCase().contains(checkfor)) return true;
-        if (data[stub+'topic'] && ("(" + data[stub+'topic'].toLowerCase() + ")").contains(checkfor)) return true;
+        if (data[stub + 'message'] && data[stub + 'message'].toLowerCase().contains(checkfor)) return true;
+        if (data[stub + 'name'] && data[stub + 'name'].toLowerCase().contains(checkfor)) return true;
+        data[stub + 'address'] += "";//Ensure data address is a string.
+        if (data[stub + 'address'] && data[stub + 'address'].toLowerCase().contains(checkfor)) return true;
+        if (data[stub + 'topic'] && ("(" + data[stub + 'topic'].toLowerCase() + ")").contains(checkfor)) return true;
 
     }
     return false;
@@ -5862,10 +5876,10 @@ function geopost() {
         //successFunction = null;
     }
     if (isBitCloutUser()) {
-        sendBitCloutPost(posttext + " \nmember.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
+        sendBitCloutPost(posttext + " \nhttps://member.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
     }
 
-    sendNostrPost(posttext + " \nmember.cash/geotag/" + geohash, '', null, "newpostgeostatus", successFunction);
+    sendNostrPost(posttext + " \nhttps://member.cash/geotag/" + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
 
 }
 
@@ -12012,7 +12026,7 @@ async function sendNostrTransaction(payload, divForStatus) {
     });
 }
 
-async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, useNOS2Xifavailable = true, eventkind = 1) {
+async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, useNOS2Xifavailable = true, eventkind = 1, geotag=null) {
 
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
@@ -12023,11 +12037,17 @@ async function sendNostrPost(posttext, postbody, topic, divelement, successFunct
         posttext += '\n' + postbody;
     }
 
+    let tags=[];
+
+    if(geotag){
+        tags = [["g", geohash]];
+    }
+
     let event = {
         kind: eventkind,
         pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
         created_at: Math.floor(Date.now() / 1000),
-        tags: [],
+        tags: tags,
         content: posttext
     }
 
@@ -12405,5 +12425,5 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
 // skip for now
 //async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null)
 
-var version = '8.13.3'; 
+var version = '8.14.2'; 
 if (init) { init(); } 

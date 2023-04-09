@@ -626,7 +626,7 @@ img {
 
 .imgurimage {
   outline-offset: -1px;
-  min-height: 440px;
+  min-height: 300px;
   max-height: 640px;
   width: auto;
   max-width: 100%;
@@ -2808,7 +2808,7 @@ a.memberlinkbutton:hover {
 #articlebutton,
 #memorandumpreviewbuttonanddisplay,
 #privatemessagesbutton,
-#mapbutton,
+
 .profilebuttondiv,
 .oneclicktipamount,
 .post-footer-tips,

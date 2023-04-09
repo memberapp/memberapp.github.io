@@ -49,6 +49,7 @@ var maxratinghexlength=maxratinglength*2;
 
 
 //var maxhexlength=368; //memo - 184*2, doge 76*2
+var maxgeolength=maxlength;
 
 var whitespacebreak=20; //how many chars to go back to look for whitespace to break
 

@@ -196,10 +196,10 @@ function geopost() {
         //successFunction = null;
     }
     if (isBitCloutUser()) {
-        sendBitCloutPost(posttext + " \nmember.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
+        sendBitCloutPost(posttext + " \nhttps://member.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
     }
 
-    sendNostrPost(posttext + " \nmember.cash/geotag/" + geohash, '', null, "newpostgeostatus", successFunction);
+    sendNostrPost(posttext + " \nhttps://member.cash/geotag/" + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
 
 }
 

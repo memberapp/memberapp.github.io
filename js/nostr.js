@@ -161,7 +161,7 @@ async function sendNostrTransaction(payload, divForStatus) {
     });
 }
 
-async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, useNOS2Xifavailable = true, eventkind = 1) {
+async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, useNOS2Xifavailable = true, eventkind = 1, geotag=null) {
 
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
@@ -172,11 +172,17 @@ async function sendNostrPost(posttext, postbody, topic, divelement, successFunct
         posttext += '\n' + postbody;
     }
 
+    let tags=[];
+
+    if(geotag){
+        tags = [["g", geohash]];
+    }
+
     let event = {
         kind: eventkind,
         pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
         created_at: Math.floor(Date.now() / 1000),
-        tags: [],
+        tags: tags,
         content: posttext
     }
 
