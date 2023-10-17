@@ -1646,9 +1646,6 @@ label#memberblockexplorer {
   border: none;
 }
 
-#toolsanchor .content #walletbalance span.balancebch {
-  margin-left: 35%;
-}
 
 #toolsanchor .content #walletbalance span {
   /* font-size: 1.5rem;
@@ -1656,15 +1653,12 @@ label#memberblockexplorer {
   line-height: 1.8rem;
 }
 
-#toolsanchor .content #walletbalance span.approximatelyequal {
-  display: block;
-  text-align: center;
+.approximatelyequal {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-#toolsanchor .content #walletbalance span.balanceusd {
-  margin-left: 40%;
+.balanceusd {
   font-size: 1.8rem;
   color: #61aff0;
   font-weight: bolder;
@@ -2194,9 +2188,6 @@ footer {
     margin-left: 10px !important;
   }
 
-  #toolsanchor .content #walletbalance span.balancebch {
-    margin-left: 18% !important;
-  }
 
   #toolsanchor .content #walletsendfunds p {
     margin-left: 10px !important;
@@ -2384,10 +2375,6 @@ footer {
 
   /* wallet  media quries*/
   #walletaddress span#cashaddrformat {
-    margin-left: 0 !important;
-  }
-
-  #toolsanchor .content #walletbalance span.balancebch {
     margin-left: 0 !important;
   }
 
@@ -2808,14 +2795,18 @@ a.memberlinkbutton:hover {
 #articlebutton,
 #memorandumpreviewbuttonanddisplay,
 #privatemessagesbutton,
-
+#walletblockexplorer,
 .profilebuttondiv,
 .oneclicktipamount,
 .post-footer-tips,
-.walletbuttondiv,
 .populate-send-message,
 .displaymining,
 .showmembercoinmining,
+
 .displaycontact {
   display: none;
+}
+
+.balancegroup {
+  text-align: center;
 }

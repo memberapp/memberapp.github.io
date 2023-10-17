@@ -15,22 +15,8 @@ function displayContentBasedOnURLParameters(suggestedurl) {
 
     if (suggestedurl) {
         var url = suggestedurl;
-        try {
-            if (gtag && url.indexOf('#') != -1) {
-                gtag('set', 'page_path', '/#' + url.split('#')[1]);
-                gtag('event', 'page_view');
-            }else{
-                console.log('no tracking info error');
-            }
-        } catch (err) { }
     } else {
         var url = window.location.href;
-        try {
-            if (gtag) {
-                gtag('set', 'page_path', window.location.pathname);
-                gtag('event', 'page_view');
-            }
-        } catch (err) { }
     }
 
     //https://developers.google.com/analytics/devguides/collection/gtagjs/single-page-applications
@@ -90,7 +76,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("notifications")) {
         showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
-        showMember(sane(pubkey), '');
+        showMember(sane(pubkeyhex), '');
     } else if (action.startsWith("membersonly")) {
         showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("topinfluencers")) {
@@ -339,7 +325,7 @@ function showMember(qaddress, pagingID, isList) {
     }
 
     if (qaddress == '' && pagingID) {
-        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + pubkey;
+        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + pubkeyhex.slice(0,16);
         getJSON(theURL).then(function (data) {
             if (data && data.length > 0) {
                 showMember(san(data[0].address), sane(data[0].pagingid), isList);
@@ -392,7 +378,7 @@ function showReputation(qaddress) {
     showOnly("mcidmemberheader");
     showOnly("mcidmembertabs");
     showOnly("trustgraph");
-    getAndPopulateTrustGraph(pubkey, qaddress);
+    getAndPopulateTrustGraph(pubkeyhex.slice(0,16), qaddress);
 
     //Show Filter
     var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff' };

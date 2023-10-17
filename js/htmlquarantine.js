@@ -1053,7 +1053,7 @@ async function populatelbry(lbrylink,elementid){
     //
 }*/
 function replaceDiamondApp(match, p1, p2) {
-    return `<a onclick="event.stopPropagation();nlc();location.href='#thread?post=${p2}'; " href="javascript:">https://member.cash/p/${p2.substring(0, 10)}</a>`;
+    return `<a onclick="event.stopPropagation();nlc();location.href='#thread?post=${p2}'; " href="javascript:">${pathpermalinks}/p/${p2.substring(0, 10)}</a>`;
 }
 
 function replaceImgur(match, p1, p2, p3, p4, offset, string) {

@@ -1,5 +1,6 @@
 async function chooseNostrPublicKey(useNOS2Xifavailable = true) {
-    let pubKeyToUse = nostrPubKeyHex;
+    //let pubKeyToUse = nostrPubKeyHex;
+    let pubKeyToUse = pubkeyhex;
     if (useNOS2Xifavailable && window.nostr) {
         pubKeyToUse = await window.nostr.getPublicKey();
     }
@@ -13,10 +14,10 @@ async function signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable
         try {
             event = await window.nostr.signEvent(event);
         } catch (err) {
-            event.sig = window.NostrTools.signEvent(event, nostrPrivKeyHex);
+            event.sig = window.NostrTools.signEvent(event, privkeyhex);
         }
     } else {
-        event.sig = window.NostrTools.signEvent(event, nostrPrivKeyHex);
+        event.sig = window.NostrTools.signEvent(event, privkeyhex);
     }
     broadcastEvent(event, successFunction, useNOS2Xifavailable);
     return event;
@@ -36,50 +37,14 @@ async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true
         console.log(err);
     }
 
-    relays.push("wss://nostr.member.cash");
-
-    relays.push("wss://nostr.wine");
-
-
     relays.push("wss://nostr.oxtr.dev");
-    relays.push("wss://relay.nostr.ch");
-
-    relays.push("wss://nostr.orangepill.dev");
-    relays.push("wss://nostrical.com");
-    relays.push("wss://no.str.cr");
-    relays.push("wss://nostr.fly.dev");
-
-    relays.push("wss://nostr-pub.wellorder.net");
     relays.push("wss://nostr.fmt.wiz.biz");
-    relays.push("wss://relay.nostr.bg");
-    relays.push("wss://relay.snort.social");
-    relays.push("wss://nostr.bitcoiner.social");
-    relays.push("wss://nostr.zebedee.cloud");
-    relays.push("wss://relay.nostr.info");
-    
-    //relays.push("wss://nostr-pub.semisol.dev"); //private?
+    relays.push("wss://nostr-pub.wellorder.net");
+    relays.push("wss://relayable.org");
+    relays.push("wss://relay.nostr.band");
+    relays.push("wss://hk.purplerelay.com");
 
-    //requires nip05
-    //relays.push("wss://nostr.openchain.fr");
 
-    /*
-    relays.push("wss://relay.nostr.info");
-    relays.push("wss://nostr-relay.wlvs.space");
-    relays.push("wss://nostr-relay.untethr.me");
-    relays.push("wss://nostr.onsats.org");
-    relays.push("wss://nostr.semisol.dev");
-    
-    relays.push("wss://nostr-verified.wellorder.net");
-    relays.push("wss://nostr.drss.io");
-    relays.push("wss://nostr.delo.software");
-    relays.push("wss://relay.minds.com/nostr/v1/ws");
-    relays.push("wss://nostr.zaprite.io");
-    relays.push("wss://nostr.oxtr.dev");
-    relays.push("wss://nostr.ono.re");
-    relays.push("wss://relay.grunch.dev");
-    relays.push("wss://nostr.sandwich.farm");
-    relays.push("wss://nostr.fmt.wiz.biz");	
-*/
     sendNostrTransaction(JSON.stringify(event), null);
     for (let i = 0; i < relays.length; i++) {
         publishEventToRelay(event, relays[i], successFunction);
@@ -186,7 +151,7 @@ async function sendNostrPost(posttext, postbody, topic, divelement, successFunct
         content: posttext
     }
 
-    signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable);
+    return await signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable);
 
 }
 
@@ -200,7 +165,7 @@ async function nostrLikePost(origtxid) {
         tags: [["e", origtxid]],
         content: '+'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 async function nostrDislikePost(origtxid) {
@@ -212,9 +177,50 @@ async function nostrDislikePost(origtxid) {
         tags: [["e", origtxid]],
         content: '-'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
+async function getNostrMetadata(txid, event, successFunction) {
+    var theURL = dropdowns.contentserver + '?action=nostrmetadata&txid=' + txid;
+
+    try {
+        const data = await getJSON(theURL);
+
+        if (!data) {
+            serverresponses.set(id, "Error no metadata for post");
+        } else {
+            console.log(data);
+        }
+
+        if (data && data[1] && data[1].metadata) {
+            // Root event
+            if (data[1].metadata.length === 64) {
+                if (event.tags[0][1] !== data[1].metadata) { // Nostrgram doesn't like an identical root/reply tag
+                    let newtags = [["e", data[1].metadata, '', 'root']];
+                    event.tags = newtags.concat(event.tags);
+                }
+            }
+        }
+
+        if (data && data[0] && data[0].metadata) {
+            // Pubkey
+            if (data[0].metadata.length === 64) {
+                event.tags.push(["p", data[0].metadata]);
+            } else if (data[0].metadata.length === 66) { // Some pubkeys stored incorrectly in db, can remove this after db rebuild
+                event.tags.push(["p", data[0].metadata.slice(2)]);
+            }
+        }
+
+        // Modify event
+        // Insert root e before
+        // Insert p after
+        return await signAndBroadcastEvent(event);
+    } catch (err) {
+        console.log(err);
+        // Handle errors here if needed
+    }
+}
+/*
 async function getNostrMetadata(txid, event, successFunction) {
     var theURL = dropdowns.contentserver + '?action=nostrmetadata&txid=' + txid;
 
@@ -252,7 +258,7 @@ async function getNostrMetadata(txid, event, successFunction) {
         //insert p after
         signAndBroadcastEvent(event, successFunction);
     });
-}
+}*/
 
 async function sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
@@ -270,7 +276,7 @@ async function sendNostrReply(origtxid, replytext, divForStatus, successFunction
     }
 
     //note incorrect roottxid provide currently, must update db
-    getNostrMetadata(txid, event, successFunction);
+    return await getNostrMetadata(txid, event, successFunction);
 
 }
 
@@ -288,7 +294,7 @@ async function sendNostrQuotePost(posttext, topic, origtxid, divForStatus, succe
         content: posttext
     }
 
-    getNostrMetadata(txid, event, successFunction);
+    return await getNostrMetadata(txid, event, successFunction);
 }
 
 
@@ -304,7 +310,7 @@ async function sendNostrQuotePost(posttext, topic, origtxid, divForStatus, succe
         tags: [["e", txid]],
         content: posttext
     }
-    signAndBroadcastEvent(event, successFunction);
+    return await signAndBroadcastEvent(event, successFunction);
 }*/
 
 
@@ -317,7 +323,7 @@ async function nostrRePost(txid) {
         tags: [["e", txid]],
         content: ''
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 /*
@@ -328,7 +334,7 @@ async function sendNostrPrivateMessage(messageRecipientpubkey, text, divForStatu
     if(useNOS2Xifavailable, window.nostr){
         event = await window.nostr.nip04.encrypt(messageRecipientpubkey.slice(2), text);
     }else{
-        encryptedtext = await nip04.encrypt(nostrPrivKeyHex, messageRecipientpubkey.slice(2), text);
+        encryptedtext = await nip04.encrypt(privkeyhex, messageRecipientpubkey.slice(2), text);
     }
 
     let event = {
@@ -339,7 +345,7 @@ async function sendNostrPrivateMessage(messageRecipientpubkey, text, divForStatu
         content: encryptedtext
     }
 
-    signAndBroadcastEvent(event, successFunction);
+    return await signAndBroadcastEvent(event, successFunction);
 }
 
 async function sendNostrPrivateMessage(publickey, text, status, successFunction){
@@ -348,7 +354,7 @@ async function sendNostrPrivateMessage(publickey, text, status, successFunction)
     if(window.nostr){
         event = await window.nostr.nip04.encrypt(publickey, text);
     }else{
-        ciphertext = await window.NostrTools.nip04.encrypt(nostrPrivKeyHex, publickey, text);
+        ciphertext = await window.NostrTools.nip04.encrypt(privkeyhex, publickey, text);
     }
 
     let event = {
@@ -358,7 +364,7 @@ async function sendNostrPrivateMessage(publickey, text, status, successFunction)
         tags: [['p', publickey]],
         content: ciphertext
     }
-    signAndBroadcastEvent(event, successFunction);
+    return await signAndBroadcastEvent(event, successFunction);
 }  */
 
 
@@ -369,6 +375,15 @@ async function setNostrProfile() {
     var pagingid = document.getElementById('settingspagingidhtml').textContent;
 
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    let event2 = {
+        kind: 2,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [],
+        content: "wss://relay.nostraco.in"
+    };
+    signAndBroadcastEvent(event2, null);
+
     let event = {
         kind: 0,
         pubkey: await chooseNostrPublicKey(),
@@ -378,20 +393,10 @@ async function setNostrProfile() {
             name: name,
             about: about,
             picture: picture,
-            nip05: pagingid.replace('@', '') + "@member.cash"
+            nip05: pagingid.replace('@', '') + "@nostraco.in"
         })
     }
-    signAndBroadcastEvent(event, function () { updateStatus(`Set ${name}`) });
-
-    let event2 = {
-        kind: 2,
-        pubkey: await chooseNostrPublicKey(),
-        created_at: Math.floor(Date.now() / 1000),
-        tags: [],
-        content: "wss://nostr.member.cash"
-    };
-
-    signAndBroadcastEvent(event2, null);
+    return signAndBroadcastEvent(event, function () { updateStatus(`Set ${name}`) });
     
 }
 
@@ -406,7 +411,7 @@ async function setNostrProfile(name,value){
         content: {}
     }
     event.content[name]=value;
-    signAndBroadcastEvent(event, function(){updateStatus(`Set ${name}`)});
+    return await signAndBroadcastEvent(event, function(){updateStatus(`Set ${name}`)});
 }*/
 
 /*
@@ -427,7 +432,7 @@ async function nostrPinPost(pinPostHashHex) {
         tags: [['e', pinPostHashHex]],
         content: 'pinpost'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 // Follow user 	0x6d06 	address(20)
@@ -444,7 +449,7 @@ async function sendNostrFollow(followpubkey) {
         tags: [[keytype, followpubkey]],
         content: 'addfollow'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 //Unfollow user 0x6d07 address(20)  
@@ -461,7 +466,7 @@ async function sendNostrUnFollow(followpubkey) {
         tags: [[keytype, followpubkey]],
         content: 'unfollow'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 async function sendNostrMute(followpubkey) {
@@ -477,7 +482,7 @@ async function sendNostrMute(followpubkey) {
         tags: [[keytype, followpubkey]],
         content: 'mute'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 async function sendNostrUnMute(followpubkey) {
@@ -493,7 +498,7 @@ async function sendNostrUnMute(followpubkey) {
         tags: [[keytype, followpubkey]],
         content: 'unmute'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 
@@ -506,7 +511,7 @@ async function sendNostrSub(topicHOSTILE) {
         tags: [],
         content: topicHOSTILE
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 async function sendNostrUnSub(topicHOSTILE) {
@@ -518,7 +523,7 @@ async function sendNostrUnSub(topicHOSTILE) {
         tags: [],
         content: topicHOSTILE
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 // Need rating action
@@ -541,8 +546,6 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
         content: comment
     };
 
-    signAndBroadcastEvent(event2, successFunction, useNOS2Xifavailable);
-
 
     let event = {
         kind: 1,
@@ -553,6 +556,7 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
     };
 
     signAndBroadcastEvent(event, null, useNOS2Xifavailable);
+    return await signAndBroadcastEvent(event2, successFunction, useNOS2Xifavailable);
 
     
 }

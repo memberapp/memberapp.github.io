@@ -686,7 +686,7 @@ function installApp() {
   });
 }
 
-function linkNostrAccount(useNOS2Xifavailable = true) {
+/*function linkNostrAccount(useNOS2Xifavailable = true) {
   let nostrpublickey = '02' + nostrPubKeyHex;
   let element = document.getElementById('linknostraccount');
   if (element) {
@@ -702,7 +702,7 @@ function linkNostrAccount(useNOS2Xifavailable = true) {
   let fullmessage = getLinkMessage(legacyaddress);
 
   sendNostrPost(fullmessage, '', '', "newpostmemorandumstatus", nostrLinkSuccessMessage, useNOS2Xifavailable, 6000);
-}
+}*/
 
 function nostrLinkSuccessMessage() {
   updateStatus('Nostr Link Request submitted');
@@ -712,7 +712,7 @@ function showBitcloutLinkText() {
   let legacyaddress = document.getElementById('linkbitcloutaccount').value.trim();
 
   if (legacyaddress.startsWith("member:") || legacyaddress.startsWith("bitcoincash:")) {
-    legacyaddress = membercoinToLegacy(legacyaddress);
+    legacyaddress = cashaddrToLegacy(legacyaddress);
   } else if (legacyaddress.startsWith("BC1")) {
     legacyaddress = bitcloutToLegacy(legacyaddress);
   }
@@ -724,6 +724,7 @@ function showBitcloutLinkText() {
   document.getElementById('bitcloutlinktext').style.display = 'block';
 }
 
+/*
 function getLinkMessage(legacyaddress) {
   window.bitcoinjs.address.toOutputScript(legacyaddress);//this will throw error if address is not valid
   var time = parseInt(new Date().getTime() / 1000);
@@ -732,9 +733,9 @@ function getLinkMessage(legacyaddress) {
   var privateKey = keyPair.privateKey;
   var signature = window.bitcoinmessage.sign(message, privateKey, keyPair.compressed, "member.cash link request", { extraEntropy: eccryptoJs.randomBytes(32) });
   return message + ':' + signature.toString('base64');
-}
+}*/
 
-function switchNostrKey() {
+/*function switchNostrKey() {
   try {
     let nsecprivkey = document.getElementById('usenostrkeyaccount').value.trim();
 
@@ -747,8 +748,7 @@ function switchNostrKey() {
   } catch (err) {
     updateStatus("Nostr Private Key Not Recognized" + err);
   }
-
-}
+}*/
 
 function bechifylink(linkelement,txid){
   linkelement.href=`https://snort.social/e/`+bech32Encode('note',txid);

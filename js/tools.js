@@ -41,7 +41,7 @@ async function userSearchChanged(searchbox, targetelement) {
     }
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkey + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
+    var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkeyhex.slice(0,16) + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
     getJSON(theURL).then(function (data) {
 
         var test = data;
@@ -161,7 +161,7 @@ async function sendfunds() {
 
     //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
     if (sendAddress.startsWith("member:")) {
-        sendAddress = await membercoinToLegacy(sendAddress);
+        sendAddress = await cashaddrToLegacy(sendAddress);
     }
 
     if (sendAddress.startsWith("D")) {
@@ -193,7 +193,7 @@ function sendFundsComplete() {
 
 }
 
-function membercoinToLegacy(address) {
+function cashaddrToLegacy(address) {
     const { prefix, type, hash } = cashaddr.decode(address);
     let hashhex = Buffer.from(hash).toString('hex');
     let toencode = new Buffer('00' + hashhex, 'hex');
@@ -201,8 +201,8 @@ function membercoinToLegacy(address) {
 }
 
 function legacyToNativeCoin(pubkey) {
-    if (nativeCoin.name == "Membercoin") {
-        return legacyToMembercoin(pubkey);
+    if (nativeCoin.name == "Nostracoin") {
+        return legacyToNostracoin(pubkey);
     } else if (nativeCoin.name == "Dogecoin") {
         return legacyToDogecoin(pubkey);
     }
@@ -236,9 +236,9 @@ function pubkeyhexToLegacy(pubkeyhex2) {
 }
 
 
-function legacyToMembercoin(pubkey) {
+function legacyToNostracoin(pubkey) {
     let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
-    return cashaddr.encode('member', 'P2PKH', hash);
+    return cashaddr.encode('nostracoin', 'P2PKH', hash);
 
     //const { prefix, type, hash } = cashaddr.decode(address);
     //let hashhex = Buffer.from(hash).toString('hex');
@@ -282,7 +282,7 @@ function setBalanceWithInterest() {
 }
 
 //This just set visual display of balance plus interest earned
-//setInterval(setBalanceWithInterest, 500);
+setInterval(setBalanceWithInterest, 500);
 
 
 //utxopool will call this after utxos updated
@@ -294,7 +294,9 @@ var showwarning = true;
 function updateBalance(dynamicChainHeight, showLowFunds = false) {
 
     if (!dynamicChainHeight) {
-        dynamicChainHeight = tq.chainheighttime;
+        //dynamicChainHeight = tq.chainheighttime;
+        //makes no sense to use a time instead of a blockheight here.
+        return;
     }
     var total = tq.getBalance(dynamicChainHeight);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);

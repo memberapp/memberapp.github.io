@@ -1,12 +1,12 @@
-var pathpermalinks = 'https://member.cash/';
-//var profilepicbase = '../../notsync/serverdata/profilepics/';
-var profilepicbase = 'https://member.cash/img/profilepics/';
+var pathpermalinks = 'https://nostraco.in';
+//var profilepicbase = '../../notsync/serverdata/profilepics';
+var profilepicbase = 'https://nostraco.in/img/profilepics/';
 
 var dropdowns = {
-    "contentserver": "https://member.cash/v2/member.js",
-    "txbroadcastserver": "https://member.cash/v2/",
-    "mcutxoserver": "https://member.cash/v2/",
-    "imageuploadserver": "https://member.cash/v2/",
+    "contentserver": "http://127.0.0.1:3123/v2/member.js",
+    "txbroadcastserver": pathpermalinks+"/v2/",
+    "mcutxoserver": pathpermalinks+"/v2/",
+    "imageuploadserver": pathpermalinks+"/v2/",
     "languageselector": "en"
 };
 

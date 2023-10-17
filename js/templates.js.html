@@ -55,7 +55,7 @@ var trustRatingTableHTML=`
 <div id="cy" style="width:100%;height:600px;"></div>
 <div id="cynote" style="width:100%">&nbsp;</div>
 <br />
-<a href="https://member.cash/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
+<a href=pathpermalinks+"/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
     interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
 <br />
 <table>{tablecontents}</table>
@@ -242,17 +242,23 @@ var walletanchorHTML=`
 
     <div id="walletbalance">
         <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
-        <span class="balancebch" id="balancebch">0</span>
-        <span class="satoshis">({ticker})</span>
-        <span class="balancesatoshis" id="balancesatoshis">0</span>
-        <span class="satoshis">(satoshis)</span>
-        <span class="approximatelyequal" style="display: none;">≈</span>
-        <span class="balanceusd" id="balanceusd">0</span>
-        <span class="usd">(USD)</span>
-        <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
-            class="balancedetails">
-            <img src="img/icons/reload.png" alt="">
-        </span>
+        <div class="balancegroup">
+            <span class="balancebch" id="balancebch">0</span>
+            <span class="satoshis">({ticker})</span>
+        </div>
+        <div class="balancegroup">
+            <span class="balancesatoshis" id="balancesatoshis">0</span>
+            <span class="satoshis">(satoshis)</span>
+        </div>
+        <div class="balancegroup">
+            <span class="approximatelyequal">≈</span>
+            <span class="balanceusd" id="balanceusd">0</span>
+            <span class="usd">(USD)</span>
+            <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
+                class="balancedetails">
+                <img src="img/icons/reload.png" alt="">
+            </span>
+        </div>
     </div>
 
 
@@ -267,18 +273,6 @@ var walletanchorHTML=`
             </span>
         </div>
     </div>
-    <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
-        <label data-vavilon="VV0068">Legacy Address</label>
-        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-        <span id="legacyformat">{address}</span>
-        <div id="legacyformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
-        </div>
-    </div>
-
     <div id="walletsendfunds">
         <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
         <p data-vavilon="VV0029">You can send funds to another address.</p>
@@ -292,6 +286,17 @@ var walletanchorHTML=`
             onclick="sendfunds();">Send
             Funds</button>
         <br />
+    </div>
+    <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
+        <label data-vavilon="VV0068">Legacy Address</label>
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+        <span id="legacyformat">{address}</span>
+        <div id="legacyformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
     </div>
     <div id="walletprivatekey">
         <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
@@ -577,10 +582,10 @@ var membertabsHTML=`
     <span class="separator"></span>
     <!--<a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}"
         href="#support?qaddress={address}">Top 5</a>-->
-    <span class="separator"></span>
+    <!--<span class="separator"></span>
     <a data-vavilon="VVlist" data-vavilon_title="VVlist" title="List" class="filteroff"
         href="#list?qaddress={address}">List</a>
-    <span class="separator"></span>
+    <span class="separator"></span>-->
     <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
         href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&minrating=0&topicname=">Posts</a>
 </div>
@@ -613,7 +618,7 @@ pages.member = `
                 </span>
                 {mutebuttonhtml}
                 <span class="memberprofilelink">
-                    <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
+                    <a href=pathpermalinks+"/#member?qaddress={address}" id="memberprofilelink">{pathpermalinks}</a><span
                         class="separatorwide"></span>
                 </span>
                 <!--<span class="dogehairprofilelink">
@@ -645,7 +650,7 @@ pages.member = `
     <div class="memberstats">
         <div class="membrain">
             <label data-vavilon="membrain">MemBrain</label></a>
-            <a id="membrainnumber" href="https://member.cash/a/804fc6e860">{membrain}</a>
+            <a id="membrainnumber" href=pathpermalinks+"/a/804fc6e860">{membrain}</a>
         </div>
         <div class="followers">
             <label data-vavilon="VV0071">Followers</label>
@@ -782,7 +787,7 @@ pages.settings = `
                         onclick="switchNostrKey();" data-vavilon="nostrkey">switch</button>
                 </div>
         </div>
-        <div>
+        <!--<div>
             <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public
                     Key)</span>
                 <div class="formgroup">
@@ -794,7 +799,7 @@ pages.settings = `
                     <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
                     <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
                 </div>
-        </div>
+        </div>-->
         <div>
             <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout/Memo
                     Account</span>
@@ -958,21 +963,21 @@ pages.settings = `
         <div>
             <label data-vavilon="VV0091" for="contentserver">Content Server</label>
             <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
-                <option value="https://member.cash/v2/member.js">member.cash</option>
+                <option value="{pathpermalinks}/v2/member.js">{siteTitle}</option>
                 <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
             </select>
         </div>
         <div>
             <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
             <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
-                <option value="https://member.cash/v2/">member.cash</option>
+                <option value="{pathpermalinks}/v2/">{siteTitle}</option>
                 <option value="http://127.0.0.1:3123/v2/">Localhost</option>
             </select>
         </div>
         <div>
             <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
             <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
-                <option value="https://member.cash/v2/">member.cash</option>
+                <option value="{pathpermalinks}/v2/">{siteTitle}</option>
                 <option value="http://127.0.0.1:3123/v2/">Localhost</option>
             </select>
         </div>
@@ -1111,8 +1116,8 @@ var footerHTML = `
             preview version
             of Member You may need to SHIFT + Reload to get the very latest changes. Generally, It's recommended
             to</span>
-        <a data-vavilon="VV0138" rel='noopener noreferrer' target="member" href="https://member.cash">use the stable
-            version at https://member.cash</a><br /><br />
+        <a data-vavilon="VV0138" rel='noopener noreferrer' target="member" href="{pathpermalinks}">use the stable
+            version at {pathpermalinks}</a><br /><br />
         <hr />
     </span>
     <span id="readonlyversion" class="developmentversion" style="display: none;"><span
@@ -1122,7 +1127,7 @@ var footerHTML = `
     </span>
     <span class="footerlinks">
         <!--<span class="displayinfluencers">
-            <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
+            <a data-vavilon="VVinfluencers" href="{pathpermalinks}/#topinfluencers">Influencers</a>
             <span class="separatorwide"></span>
         </span>-->
         <span class="displaygithub">

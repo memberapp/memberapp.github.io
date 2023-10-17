@@ -6,7 +6,7 @@ function getAndPopulateCommunityRatings(qaddress) {
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'communityratingtable';
-    var theURL = dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -27,7 +27,7 @@ function getAndPopulateRatings(qaddress) {
     document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'memberratingtable';
-    var theURL = dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -45,7 +45,7 @@ function getAndPopulateRatings(qaddress) {
 
 function getDataMember(qaddress) {
     document.getElementById('mcidmemberanchor').innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
         if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         if (data) {
@@ -60,7 +60,7 @@ function getDataSettings(qaddress, cashaddress) {
 
     //document.getElementById('settingsanchor').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
         if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         try {
@@ -177,6 +177,8 @@ async function getDataMemberFinally(data) {
         obj.pinnedpostHTML = getHTMLForPostHTML3(member, data[0], 'r', 'memberpage', 0, '', false, true); //always show pinned post on member's page
     }
 
+    obj.pathpermalinks = pathpermalinks;
+    obj.siteTitle = siteTitle;
     document.getElementById('mcidmemberanchor').innerHTML = templateReplace(pages.member, obj);
 
     if (data && data[0] && data[0].hivename) {
@@ -302,8 +304,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     obj.maxprofilelength = maxprofilelength;
 
     if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
-    obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+nostrPubKeyHex);
-    
+    obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+pubkeyhex);
+    obj.siteTitle = siteTitle;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -329,7 +331,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
 async function populateTools() {
 
-    var bcaddress =pubkeyToBitcloutAddress(pubkeyhex);
+    var bcaddress =pubkeyToBitcloutAddress(pubkeyhexsign+pubkeyhex);
     var obj = {
         address: pubkey,
         cashaddress: legacyToNativeCoin(pubkey),
@@ -432,10 +434,10 @@ function updateSettings() {
 
     //Make sure users are not on the old server
     if (dropdowns.contentserver == "https://memberjs.org:8123/member.js") {
-        dropdowns.contentserver = "https://member.cash/v2/member.js";
+        dropdowns.contentserver = pathpermalinks+"/v2/member.js";
     }
     if (dropdowns.txbroadcastserver == "https://memberjs.org:8123/member.js") {
-        dropdowns.txbroadcastserver = "https://member.cash/v2/";
+        dropdowns.txbroadcastserver = pathpermalinks+"/v2/";
     }
 
     document.getElementById("debuginfo").value = debuginfo;
@@ -539,7 +541,7 @@ function getAndPopulateFB(page, qaddress) {
     if (!qaddress) {
         qaddress = pubkey;
     }
-    var theURL = dropdowns.contentserver + '?action=' + page + '&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=' + page + '&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -554,14 +556,15 @@ function getAndPopulateFB(page, qaddress) {
     });
 }
 
-function setPic() {
+async function setPic() {
     document.getElementById('settingspicbutton').disabled = true;
     document.getElementById('settingspic').disabled = true;
     var newName = document.getElementById('settingspic').value;
     document.getElementById('settingspicurl').value=newName;
     setTrxPic(newName,getAndPopulateSettings);
     //setNostrProfile("picture",newName);
-    setNostrProfile();
+    let event= await setNostrProfile();
+    sendWrappedEvent(event);
 }
 
 function updatePagingId(){

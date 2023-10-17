@@ -259,7 +259,7 @@ function getAndPopulateBesties(target) {
     document.getElementById('besties').innerHTML = document.getElementById("loading").innerHTML;
 
 
-    let theURL = dropdowns.contentserver + '?action=support&address=' + pubkey + '&qaddress=' + target;
+    let theURL = dropdowns.contentserver + '?action=support&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + target;
     getJSON(theURL).then(async function (data) {
 
         if (data[0]) {

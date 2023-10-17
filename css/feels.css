@@ -337,7 +337,7 @@ img {
 .separatorwide::before {
   content: " "; }
 
-/*! don't capitalize member.cash */
+/*! don't capitalize header */
 .header .pagetop nav .membertext {
   text-transform: none; }
 

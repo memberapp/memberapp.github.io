@@ -160,7 +160,7 @@ function memorandumPreview() {
     addDynamicHTMLElements();
 }
 
-function geopost() {
+async function geopost() {
     //if (!checkForPrivKey()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
@@ -189,21 +189,22 @@ function geopost() {
 
     let successFunction = geocompleted;
 
-    let taggedPostText = posttext + " \nhttps://member.cash/geotag/" + geohash;
+    let taggedPostText = posttext + ` \n${pathpermalinks}/geotag/` + geohash;
     if (checkForNativeUserAndHasBalance()) {
         //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
         postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
         //successFunction = null;
     }
     if (isBitCloutUser()) {
-        sendBitCloutPost(posttext + " \nhttps://member.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
+        sendBitCloutPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
     }
 
-    sendNostrPost(posttext + " \nhttps://member.cash/geotag/" + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
+    let event = await sendNostrPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
+    sendWrappedEvent(event);
 
 }
 
-function postmemorandum() {
+async function postmemorandum() {
     //if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
     if (!posttext.includes('#')) {
@@ -263,8 +264,8 @@ function postmemorandum() {
             sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
         }
 
-        sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
-        
+        let event= await sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
+        sendWrappedEvent(event);
     }
     else {
         //Don't post body if it is not visible - it may contain old elements that the user is not expecting to post
@@ -281,8 +282,8 @@ function postmemorandum() {
         }
         
         //Should always be possible to send Nostr event if user is logged in.
-        sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
-        
+        let event= await sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
+        sendWrappedEvent(event);
     }
 
     //if (typeof popupOverlay !== "undefined") {
@@ -299,7 +300,7 @@ function sendRepostNotification(txid, divForStatus, topic, newtxid) {
     if (topic) {
         replytext += " " + getSafeTranslation('intopic', "in tag") + " " + topic;
     }
-    replytext += " https://member.cash/p/" + newtxid;
+    replytext += ` ${pathpermalinks}/p/` + newtxid;
     var replyHex = new Buffer(replytext).toString('hex');
 
     sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, function (txidnew) { memorandumpostcompleted(newtxid); });

@@ -435,7 +435,7 @@ async function bitCloutPinPost(pinPostHashHex, pubkey) {
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: pinPostHashHex,
-    BodyObj: { Body: `pinpost https://member.cash/ba/${pubkey}` },
+    BodyObj: { Body: `pinpost $/ba/${pubkey}` },
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
   };
@@ -587,12 +587,12 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
-  //replytext="https://member.cash/p/"+membertxid.substr(0,10);
-  replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
+  //replytext=pathpermalinks+"/p/"+membertxid.substr(0,10);
+  replytext=pathpermalinks+"/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
     
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
-    //replytext="https://member.cash/p/"+txid.substr(0,10);
+    //replytext=pathpermalinks+"/p/"+txid.substr(0,10);
   }else{
     payload.ParentStakeID = txid;
   }
@@ -647,7 +647,7 @@ async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, succes
     if (successFunction) { successFunction(txid, posttext) };
     return txid;
   } else {
-    return await sendBitCloutPost(posttext + "\n\nhttps://member.cash/p/" + txid.substr(0, 10), topic, divForStatus, successFunction, null);
+    return await sendBitCloutPost(posttext + `\n\n${pathpermalinks}/p/` + txid.substr(0, 10), topic, divForStatus, successFunction, null);
   }
 }
 
@@ -673,7 +673,7 @@ async function bitCloutRePost(txid, sourcenetwork) {
     };
     return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
   } else {
-    return await sendBitCloutPost("https://member.cash/p/" + txid.substr(0, 10), '', null, null, null);
+    return await sendBitCloutPost(pathpermalinks+"/p/" + txid.substr(0, 10), '', null, null, null);
   }
 }
 

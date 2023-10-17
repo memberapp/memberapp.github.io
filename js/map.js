@@ -129,7 +129,7 @@ function onMapClick(e) {
 function loadLocationListFromServerAndPlaceOnMap(event) {
 
     var mapBounds = map.getBounds();
-    var theURL = dropdowns.contentserver + '?action=map&address=' + pubkey + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
+    var theURL = dropdowns.contentserver + '?action=map&address=' + pubkeyhex.slice(0,16) + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {

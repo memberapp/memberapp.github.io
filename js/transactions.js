@@ -25,11 +25,10 @@ function checkForNativeUser() {
 }
 
 function checkForNativeUserAndHasBalance() {
-    //return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
-    return false;
+    return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
 }
 
-function sendRating(rating, ratingText, pageName, targetpublickey) {
+async function sendRating(rating, ratingText, pageName, targetpublickey) {
     
     //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
 
@@ -50,7 +49,6 @@ function sendRating(rating, ratingText, pageName, targetpublickey) {
         addresshandle = theAddress
     }   
 
-    sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nhttps://member.cash/ba/" + addresshandle, null, targetpublickey, true, rating, comment);
 
     
     if (checkForNativeUserAndHasBalance()) {
@@ -58,9 +56,10 @@ function sendRating(rating, ratingText, pageName, targetpublickey) {
     }
 
     if (isBitCloutUser()) {
-        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nhttps://member.cash/ba/" + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
+        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
     }
-
+    let event= await sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + addresshandle, null, targetpublickey, true, rating, comment);
+    sendWrappedEvent(event);
     
 }
 
@@ -111,12 +110,28 @@ function setTrxPic(newName, callback) {
     tq.queueTransaction(tx, callback);
 }
 
+function sendWrappedEvent(event, callback) {
+    if (!checkForNativeUserAndHasBalance()) return false;
+    //serialize and compress event
+    const jsonData = JSON.stringify(event);
+    const compressedData = pako.gzip(jsonData);
+    const tx = {
+        data: ["0x6de0", compressedData],
+        cash: { key: privkey }
+    }
+    updateStatus(getSafeTranslation('sendingwrappednostr', "Sending Nostr Event To Nostracoin"));
+    tq.queueTransaction(tx, callback);
+}
 
-function setName() {
+
+
+
+async function setName() {
     var newName = document.getElementById('settingsnametext').value;
 
     //setNostrProfile('name',newName);
-    setNostrProfile();
+    let event= await setNostrProfile();
+    sendWrappedEvent(event);
 
     if (!checkForNativeUserAndHasBalance()) return false;
 
@@ -387,10 +402,11 @@ function memoPinPost(txid, privkey) {
     tq.queueTransaction(tx);
 }
 
-function setProfile() {
+async function setProfile() {
 
     var newProfile = document.getElementById('settingsprofiletext').value;
-    setNostrProfile();
+    let event= await setNostrProfile();
+    sendWrappedEvent(event);
     //setNostrProfile('about',newProfile);
 
     if (!checkForNativeUserAndHasBalance()) return false;
@@ -438,13 +454,13 @@ function unsubTransaction(topicHOSTILE) {
 
 function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey) {
     //if(!qaddress){
-    let qaddress=getImpliedBitcoinAddress(targetpublickey);
+    //let qaddress=getImpliedBitcoinAddress(targetpublickey);
     //}
     try {
         //document.getElementById(removeElementID).style.display = "none";
-        var addressraw = getLegacyToHash160(qaddress);
+        //var addressraw = getLegacyToHash160(qaddress);
         const tx = {
-            data: [actionCode, "0x" + addressraw],
+            data: [actionCode, "0x" + targetpublickey],
             cash: { key: privkey }
         }
         updateStatus(statusMessage);
@@ -454,11 +470,11 @@ function addressTransaction(removeElementID, actionCode, statusMessage, targetpu
     }
 }
 
-function follow(targetpublickey) {
+async function follow(targetpublickey) {
     //if (!checkForPrivKey()) return false;
 
-    sendNostrFollow(targetpublickey); 
-    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+    let event= await sendNostrFollow(targetpublickey);
+    sendWrappedEvent(event); 
 
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey);
@@ -469,11 +485,11 @@ function follow(targetpublickey) {
     
 }
 
-function unfollow(targetpublickey) {
+async function unfollow(targetpublickey) {
     //if (!checkForPrivKey()) return false;
 
-    sendNostrUnFollow(targetpublickey);
-    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+    let event= await sendNostrUnFollow(targetpublickey);
+    sendWrappedEvent(event);
 
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey);
@@ -484,10 +500,10 @@ function unfollow(targetpublickey) {
     
 }
 
-function mute(targetpublickey) {
+async function mute(targetpublickey) {
     //if (!checkForPrivKey()) return false;
-    sendNostrMute(targetpublickey);
-    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+    let event= await sendNostrMute(targetpublickey);
+    sendWrappedEvent(event);
 
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey);
@@ -497,10 +513,10 @@ function mute(targetpublickey) {
     //}
 }
 
-function unmute(targetpublickey) {
+async function unmute(targetpublickey) {
     //if (!checkForPrivKey()) return false;
-    sendNostrUnMute(targetpublickey);
-    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+    let event= await sendNostrUnMute(targetpublickey);
+    sendWrappedEvent(event);
 
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey);
@@ -510,24 +526,27 @@ function unmute(targetpublickey) {
     //}
 }
 
-function sub(topicHOSTILE) {
+async function sub(topicHOSTILE) {
     //if (!checkForPrivKey()) return false;
     
     if (checkForNativeUserAndHasBalance()) {
         subTransaction(topicHOSTILE);
     }
-    sendNostrSub(topicHOSTILE);
+    let event= await sendNostrSub(topicHOSTILE);
+    sendWrappedEvent(event);
+
     //if(isBitCloutUser()){
     //    sendBitCloutSub(topicHOSTILE);
     //}
 }
 
-function unsub(topicHOSTILE) {
+async function unsub(topicHOSTILE) {
     //if (!checkForPrivKey()) return false;
     if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
     }
-    sendNostrUnSub(topicHOSTILE);
+    let event= await sendNostrUnSub(topicHOSTILE);
+    sendWrappedEvent(event);
 
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);

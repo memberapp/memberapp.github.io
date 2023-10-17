@@ -6,7 +6,7 @@ var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
 var privkeyhex = "";
 var privateKeyBuf;
-var nostrPrivKeyHex = "";
+//var nostrPrivKeyHex = "";
 var nostrPubKeyHex = "";
 
 var chainheight = 0;
@@ -14,12 +14,14 @@ var chainheighttime = 0;
 
 //var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
+var pubkeyhexsign = ""; //Public Key, full hex
 var bitcloutaddress = ""; //Bitclout address
 
 let tq = null;
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var cytoscape = null;
 var bip39 = null;
+var pako = null;
 //var twitterEmbeds=new Array();
 var profilepic = "";
 var Buffer = buffer.Buffer;
@@ -97,7 +99,7 @@ async function init() {
     //setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
 
-    if (document.location.host != 'member.cash') {
+    if (document.location.host != siteTitle) {
         siteTitle = "Member";
         document.title = siteTitle;
     }
@@ -105,7 +107,7 @@ async function init() {
     //Show message if dev version in use
     if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
-        profilepicbase = 'https://member.cash/img/profilepics/';
+        profilepicbase = `${pathpermalinks}/img/profilepics/`;
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
@@ -199,6 +201,7 @@ async function loadBigLibs() {
     if (!window.bech32converter)  loadScript("js/lib/bech32-converting-1.0.9.min.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) loadScript("js/lib/elliptic.min.js");
+    if (!pako) loadScript("js/lib/pako.2.0.4.min.js");
     loadMDE();
     if (!cytoscape) loadScript("js/lib/cytoscape3.19.patched.min.js");
     if (!bcdecrypt) loadScript("js/lib/identityencryption.js");
@@ -213,19 +216,21 @@ async function login(loginkey) {
     pubkey = localStorageGet(localStorageSafe, "pubkey");
     //qpubkey = localStorageGet(localStorageSafe, "qpubkey");
     pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
+    pubkeyhexsign = localStorageGet(localStorageSafe, "pubkeyhexsign");
     privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
     bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
-    nostrPrivKeyHex = localStorageGet(localStorageSafe, "nostrprivkeyhex");
-    nostrPubKeyHex = localStorageGet(localStorageSafe, "nostrpubkeyhex");
+    //nostrPrivKeyHex = localStorageGet(localStorageSafe, "nostrprivkeyhex");
+    //nostrPubKeyHex = localStorageGet(localStorageSafe, "nostrpubkeyhex");
 
 
-    if (!(pubkey) || (privkey && !privkeyhex) || (mnemonic && !nostrPrivKeyHex)) {
+    loginkey = loginkey.trim();
+        
+    if (!(pubkey) || (privkey && !privkeyhex)) {
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
         //note, pubkeyhex won't be available in public key mode
 
-        loginkey = loginkey.trim();
         //check valid private or public key
         var publicaddress = "";
 
@@ -239,15 +244,19 @@ async function login(loginkey) {
             if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
             let hexkey = window.bech32converter('nsec').toHex(loginkey).slice(2).toLowerCase();
             let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexkey,'hex'));
-            setNostrKeys(ecpair);
-            //Note, cannot use this key directly as it is used for EDDSA, 
+            loginkey=ecpair.toWIF();
+            //nostrPrivKeyHex = ecpair.privateKey.toString('hex');
+            //nostrPubKeyHex = ecpair.publicKey.toString('hex').slice(2);
+
+            //setNostrKeys(ecpair);
+            //Note, cannot use this key directly as it is used for EDDSA,
             //There is a theoretical risk if also using for ECDSA sigs
             //Hash the key, use as a source of entropy to generate mnemonic
-            if (!eccryptoJs) {await loadScript("js/lib/eccrypto-js.js");}
-            let hashprivkey = await eccryptoJs.sha256(await eccryptoJs.sha256(new Buffer(nostrPrivKeyHex,'hex')));
-            hashprivkey = hashprivkey.toString('hex');
-            hashprivkey = hashprivkey.slice(0,32);
-            loginkey = bip39.entropyToMnemonic(new Buffer(hashprivkey,'hex'));
+            //if (!eccryptoJs) {await loadScript("js/lib/eccrypto-js.js");}
+            //let hashprivkey = await eccryptoJs.sha256(await eccryptoJs.sha256(new Buffer(nostrPrivKeyHex,'hex')));
+            //hashprivkey = hashprivkey.toString('hex');
+            //hashprivkey = hashprivkey.slice(0,32);
+            //loginkey = bip39.entropyToMnemonic(new Buffer(hashprivkey,'hex'));
         }
 
         let loginkeylowercase=loginkey.toLowerCase();
@@ -260,10 +269,10 @@ async function login(loginkey) {
             mnemonic = loginkeylowercase;
             loginkey = newloginkey;
 
-            if(!nostrPrivKeyHex){ //if the user logged in with an nsec, the priv/pub keys are already set!
-                let nostrKey = root.derivePath("44'/1237'/0'/0/0");
-                setNostrKeys(nostrKey);
-            }
+            //if(!nostrPrivKeyHex){ //if the user logged in with an nsec, the priv/pub keys are already set!
+            //    let nostrKey = root.derivePath("44'/1237'/0'/0/0");
+            //    setNostrKeys(nostrKey);
+            //}
 
 
 
@@ -274,12 +283,8 @@ async function login(loginkey) {
         }
 
         try {
-            if (loginkey.startsWith("q")) { //Note, not possible to be a valid seed phrase here, so shouldn't interfere with that, could be a username starting with q
-                loginkey = "member:" + loginkey;
-            }
-
-            if (loginkey.startsWith("member:") || loginkey.startsWith("bitcoincash:")) {
-                publicaddress = membercoinToLegacy(loginkey);
+            if (loginkey.startsWith("nostracoin:") || loginkey.startsWith("member:") || loginkey.startsWith("bitcoincash:")) {
+                publicaddress = cashaddrToLegacy(loginkey);
             } 
             else if (loginkey.startsWith("npub")) {
                 //Nostr bech32 encoded public key
@@ -340,16 +345,20 @@ async function login(loginkey) {
 
         if (privkey) {
             let ecpair = new window.bitcoinjs.ECPair.fromWIF(privkey);
-            pubkeyhex = ecpair.publicKey.toString('hex');
+            let pubkeyhexfull=ecpair.publicKey.toString('hex');
+            pubkeyhexsign = pubkeyhexfull.slice(0,2);
+            pubkeyhex = pubkeyhexfull.slice(2);
+            
             privkeyhex = ecpair.privateKey.toString('hex');
 
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
+            localStorageSet(localStorageSafe, "pubkeyhexsign", pubkeyhexsign);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             
-            if(newlygeneratedaccount || userLoggedInWithnsec){
-                linkNostrAccount(false); //link the nostr public key to the member key
-            }
+            //if(newlygeneratedaccount || userLoggedInWithnsec){
+            //    linkNostrAccount(false); //link the nostr public key to the member key
+            //}
             //dropdowns.utxoserver
             if(allowBitcloutUser){
                 checkIfBitcloutUser(pubkeyhex);
@@ -380,7 +389,7 @@ async function login(loginkey) {
     document.getElementById('loginkey').value = "";
 
     //, nostrpubkey:nostrPubKeyHex bech32 lib may not be available yet
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength}, true);
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength, siteTitle:siteTitle}, true);
     document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
 
     updateSettings();
@@ -390,7 +399,7 @@ async function login(loginkey) {
     //getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     //Register public key with content server to prepare feeds faster    
-    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkey + '?a=100').then(function (data) { }, function (status) { });
+    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkeyhexsign+pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     loadStyle();
 
@@ -437,7 +446,7 @@ async function createNewAccount() {
     newlygeneratedaccount=true;
 }
 
-function setNostrKeys(nostrKey){
+/*function setNostrKeys(nostrKey){
     nostrPrivKeyHex = nostrKey.privateKey.toString('hex');
     nostrPubKeyHex = nostrKey.publicKey.toString('hex').slice(2);
     localStorageSet(localStorageSafe, "nostrprivkeyhex", nostrPrivKeyHex);
@@ -446,7 +455,7 @@ function setNostrKeys(nostrKey){
     if(keyelement){
       keyelement.value=nostrPubKeyHex;
     }
-}
+}*/
 
 function logout() {
 
@@ -471,9 +480,10 @@ function logout() {
     pubkey = "";
     mnemonic = "";
     privateKeyBuf = "";
-    nostrPrivKeyHex = "";
-    nostrPubKeyHex = "";
+    //nostrPrivKeyHex = "";
+    //nostrPubKeyHex = "";
     pubkeyhex = ""; //Public Key, full hex
+    pubkeyhexsign = ""; //Public Key, full hex
     bitcloutaddress = ""; //Bitclout address
     tq = null;
     

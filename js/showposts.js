@@ -50,7 +50,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
     getJSON(theURL).then(function (data) {
 
         updateUSDRate(data);
@@ -101,8 +101,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var listElement = document.getElementById('itemlistol');
 
         if (!pubkey && order == 'hot' && !qaddress && Math.random() < adfrequency) {//Show member.cash explainer video
-            let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
-            listElement.appendChild(htmlToElement(getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, true, true, false))));
+            //let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
+            //listElement.appendChild(htmlToElement(getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, true, true, false))));
         }
 
         let filtereditems = 0;
@@ -200,7 +200,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
         console.log(err);
     }
 
-    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey + '&messagetype=' + messagetype;
+    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkeyhex.slice(0,16) + '&messagetype=' + messagetype;
     getJSON(theURL).then(async function (data) {
 
         if (!eccryptoJs) {
@@ -244,7 +244,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
     //If no post is specified, we'll use it as a top level
     if (txid === undefined || txid == "") { txid = roottxid; }
 
-    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkey + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkeyhex.slice(0,16) + '&txid=' + txid;
     getJSON(theURL).then(async function (data) {
         updateUSDRate(data);
         //Server bug will sometimes return duplicates if a post is liked twice for example,
@@ -356,7 +356,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
 function getAndPopulateTopic(topicNameHOSTILE) {
     var page = "topicmeta";
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         updateUSDRate(data);
         //todo, move this to htmlquarantine.
@@ -393,7 +393,7 @@ function getAndPopulateTopicList(showpage) {
         show(page);
     }
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         updateUSDRate(data);
         /*
@@ -449,7 +449,7 @@ function getAndPopulateQuoteBox(txid) {
     showOnly(page);
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkey + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkeyhex.slice(0,16) + '&txid=' + txid;
     getJSON(theURL).then(function (data) {
         var contents = "";
         if (data[0]) {
@@ -562,7 +562,7 @@ function showScoresExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + san(pubkey);
+    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -582,7 +582,7 @@ function showRemembersExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + san(pubkey);
+    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -750,7 +750,7 @@ function showReplyButton(txid, page, divForStatus) {
     document.getElementById("replytext" + page + txid).value = "";
 }
 
-function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
+async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
     //if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
@@ -776,7 +776,7 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, orig
                 replySuccessFunction(page, txid);
                 if (isBitCloutUser() && parentSourceNetwork == 1) {
                     sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-                    //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+                    //sendBitCloutQuotePost(pathpermalinks+"/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
                 }
             }
         };
@@ -786,7 +786,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, orig
         //successFunction = null;
     }
 
-    sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
+    let event = await sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
+    sendWrappedEvent(event);
 
     return true;
 }
@@ -873,7 +874,7 @@ function increaseGUIReposts(txid) {
     document.getElementById('repostscount' + txid).innerHTML = repostscount + 1;
 }
 
-function pinpost(txid) {
+async function pinpost(txid) {
     //If bitclout user is logged in
     if (isBitCloutUser()) {
         bitCloutPinPost(txid, pubkey);
@@ -883,11 +884,12 @@ function pinpost(txid) {
         memoPinPost(txid, privkey);
     }
 
-    nostrPinPost(txid);
+    let event= await nostrPinPost(txid);
+    sendWrappedEvent(event);
 
 }
 
-function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
+async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
@@ -917,19 +919,21 @@ function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
         }
     }
 
-    nostrLikePost(origtxid, roottxid);
+    let event = await nostrLikePost(origtxid, roottxid);
+    sendWrappedEvent(event);
 }
 
-function dislikePost(txid, origtxid, roottxid = null) {
+async function dislikePost(txid, origtxid, roottxid = null) {
     decreaseGUILikes(txid);
 
     if (checkForNativeUserAndHasBalance()) {
         sendDislike(origtxid);
     }
-    nostrDislikePost(origtxid, roottxid);
+    let event = await nostrDislikePost(origtxid, roottxid);
+    sendWrappedEvent(event);
 }
 
-function repostPost(txid, origtxid, sourcenetwork) {
+async function repostPost(txid, origtxid, sourcenetwork) {
 
     increaseGUIReposts(txid);
 
@@ -941,7 +945,8 @@ function repostPost(txid, origtxid, sourcenetwork) {
         repost(origtxid, privkey);
     }
 
-    nostrRePost(origtxid);
+    let event = await nostrRePost(origtxid);
+    sendWrappedEvent(event);
 
 }
 

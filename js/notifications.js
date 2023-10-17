@@ -4,12 +4,12 @@ var lastViewOfNotifications = 0;
 var lastViewOfNotificationspm = 0;
 
 function displayNotificationCount() {
-    if (!pubkey) {
+    if (!pubkeyhex) {
         return;
     }
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
-    var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
+    var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkeyhex.slice(0,16) + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
     getJSON(theURL).then(function (data) {
         try {
             if (data[0].count == null) {
@@ -125,7 +125,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid, nfilter
     notificationFilter.minrating = minrating;
 
 
-    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
+    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
         var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length);

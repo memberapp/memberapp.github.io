@@ -4,10 +4,10 @@ var mutedwords = new Array();
 var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 2;
-var pathpermalinks = 'https://member.cash/';
+var pathpermalinks = 'https://nostraco.in';
 var profilepicbase = 'img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-var siteTitle = 'member.cash';
+var siteTitle = 'nostraco.in';
 var theStyle = 'feels compact';
 var maxScoreToCollapseComment = 65;
 var bitcoinjslib = "js/lib/bitcoincashjs-lib-5.2.0-bitcoinmessage.min.js";
@@ -23,11 +23,11 @@ var adfrequency = 0.10; //value between 0 and 1
 var nativeCoin = {
     "dust": 547, //Avoid using BCH tokens - this is actually dust+1
     "interestExponent": 22,
-    "satsPerByte": 1,
-    "name": 'Membercoin',
-    "ticker": 'M3M',
-    "opreturnsize": 4000,
-    "symbol":'m̈'
+    "satsPerByte": 200000,
+    "name": 'Nostracoin',
+    "ticker": 'NOSTR',
+    "opreturnsize": 5000,
+    "symbol":'ṅ'
 }
 
 
@@ -68,10 +68,10 @@ var settings = {
     "mutegm" : "false",    
 };
 var dropdowns = {
-    "contentserver": "https://member.cash/v2/member.js",
-    "txbroadcastserver": "https://member.cash/v2/",
-    "mcutxoserver": "https://member.cash/v2/",
-    "imageuploadserver": "https://member.cash/v2/",
+    "contentserver": pathpermalinks+"/v2/member.js",
+    "txbroadcastserver": pathpermalinks+"/v2/",
+    "mcutxoserver": pathpermalinks+"/v2/",
+    "imageuploadserver": pathpermalinks+"/v2/",
     "languageselector": "en",
     "contentnetwork": -1
 };
@@ -82,9 +82,3 @@ var numbers = {
     "results": 25,
     "usdrate": .50
 }
-
-//Google Analytics
-window.dataLayer = window.dataLayer || [];
-function gtag() { dataLayer.push(arguments); }
-gtag('js', new Date());
-gtag('config', 'UA-243798555-1');

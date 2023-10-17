@@ -141,7 +141,7 @@ dictionary.en=
   "VV0135": "From people you follow",
   "VV0136": "Refresh Content",
   "VV0137": "You're viewing the development preview version of Member You may need to SHIFT + Reload to get the very latest changes. Generally, It's recommended to",
-  "VV0138": "use the stable version at https://member.cash",
+  "VV0138": "use the stable version at https://nostraco.in",
   "VV0139": "Top Supporters ",
   "VV0140": "Donate",
   "VV0141": "Protocol",
@@ -355,7 +355,7 @@ dictionary.en=
   "VV0174": "iniciar sesión",
   "VV0019": "*Los usuarios de Memo también pueden iniciar sesión con su clave (WIF comprimida: Comienza con 'L..' o 'K..').",
   "VV0020": "Obtener de Memo",
-  "VV0021": "Existen satoshis en tu cuenta de member.cash. Cada acción (publicar, dar me gusta, suscribirse, seguir, enviar mensaje, etc.) requiere una pequeña cantidad de Membercoin. Agrega algo de fondos, algunos centavos es suficiente.",
+  "VV0021": "Existen satoshis en tu cuenta de nostraco.in. Cada acción (publicar, dar me gusta, suscribirse, seguir, enviar mensaje, etc.) requiere una pequeña cantidad de Membercoin. Agrega algo de fondos, algunos centavos es suficiente.",
   "VV0022": "Tu dirección es",
   "VV0023": "Envía a Nuggets tu dirección para pedir unos centavos si se te complica conseguirlos.",
   "VV0024": "Email",
@@ -479,7 +479,7 @@ dictionary.en=
   "VV0135": "De gente que sigues",
   "VV0136": "Actualizar contenido",
   "VV0137": "Estás viendo la versión previa de desarrollo de Member. Puede que necesites teclear SHIFT + recargar para obtener los últimos cambios. Generalmente, se recomienda ",
-  "VV0138": "usar la versión estable en https://member.cash",
+  "VV0138": "usar la versión estable en https://nostraco.in",
   "VV0139": "Principales financistas ",
   "VV0140": "Donar",
   "VV0141": "Protocolo",
@@ -679,7 +679,7 @@ dictionary.en=
   "VV0174": "登录",
   "VV0019": "*Memo 用户。你也可以用你的密钥登录 (已压缩的 WIF: 开头为 'L..' 或 'K..')",
   "VV0020": "从 Memo 提取",
-  "VV0021": "Satoshis 与你的 member.cash 帐户息息相关 - 每个操作 (贴文、喜欢、订阅、关注、发送消息等) 都需要少量的。添加一些资金，只需几美分就够了。",
+  "VV0021": "Satoshis 与你的 nostraco.in 帐户息息相关 - 每个操作 (贴文、喜欢、订阅、关注、发送消息等) 都需要少量的。添加一些资金，只需几美分就够了。",
   "VV0022": "你的地址是",
   "VV0023": "如果你觉得很难取得一些资金，请将你的地址发送给 Nuggets。",
   "VV0024": "电子邮件",
@@ -803,7 +803,7 @@ dictionary.en=
   "VV0135": "来自你关注的人",
   "VV0136": "刷新内容",
   "VV0137": "你正在查看 Member 的开发预览版本，你可能需要使用 SHIFT + Reload 来获取最新的更改。一般来说，建议",
-  "VV0138": "使用 https://member.cash 的稳定版本",
+  "VV0138": "使用 https://nostraco.in 的稳定版本",
   "VV0139": "主要支持者 ",
   "VV0140": "捐献",
   "VV0141": "协议",
@@ -994,7 +994,7 @@ dictionary.en=
   "VVfirehose": "所有内容",
   "VV0100a": "我的标签（您关注的标签的最新帖子）",
   "VV0018u": "短语（12 个字）、用户名、公钥或私钥",
-  "satoshisinaccount": "satoshis 存在于您的 member.cash 帐户中 - 每个操作（发布、喜欢、订阅、关注、消息传递等）都需要少量的 ",
+  "satoshisinaccount": "satoshis 存在于您的 nostraco.in 帐户中 - 每个操作（发布、喜欢、订阅、关注、消息传递等）都需要少量的 ",
   "minemembercoin": "在这里获取一些硬币以换取处理能力 - 这可能需要几秒钟。",
   "VV0102a": "登录",
   "VV0103a": "开始",
@@ -1024,7 +1024,7 @@ dictionary.en=
   "VV0018": "Kataga (12 salita)",
   "VV0019": "*Sa mga gumagamit ng Memo, maaaring gamitin ang Compressed WIF: (Nagsisimula sa 'L' o 'K'.)",
   "VV0020": "Kunin mula sa Memo",
-  "VV0021": "satoshis ang nasa iyong member.cash account - ang bawat aksyon (pag-post, like, subscribe, at pag send ng mensahe at iba pa) ay nangangailangan ng maliit na halaga ng Membercoin. Magdagdag ng pondo, kahit na maliit na halaga. ",
+  "VV0021": "satoshis ang nasa iyong nostraco.in account - ang bawat aksyon (pag-post, like, subscribe, at pag send ng mensahe at iba pa) ay nangangailangan ng maliit na halaga ng Membercoin. Magdagdag ng pondo, kahit na maliit na halaga. ",
   "VV0022": "Ang iyong address ay ",
   "VV0023": "Ipadala kay Nuggets ang iyong address kung ikaw ay nahihirapang makahanap ng pondo. ",
   "VV0024": "E-mail",
@@ -1119,7 +1119,7 @@ dictionary.en=
   "VV0134": "Sinusundan",
   "VV0135": "Mula sa mga taong iyong sinusundan",
   "VV0137": "Ikaw ay nasa Development Preview Version ng Member. Pindutin ang SHIFT+ Reload upang makita ang pinakabagong bersyon. Inirerekomenda na",
-  "VV0138": "gamitin ang matatag na bersyon sa https://member.cash",
+  "VV0138": "gamitin ang matatag na bersyon sa https://nostraco.in",
   "VV0139": "Mga tagasuporta",
   "VV0140": "Magbigay ng Donasyon",
   "VV0141": "Protocol",
@@ -1393,7 +1393,7 @@ var trustRatingTableHTML=`
 <div id="cy" style="width:100%;height:600px;"></div>
 <div id="cynote" style="width:100%">&nbsp;</div>
 <br />
-<a href="https://member.cash/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
+<a href=pathpermalinks+"/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
     interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
 <br />
 <table>{tablecontents}</table>
@@ -1580,17 +1580,23 @@ var walletanchorHTML=`
 
     <div id="walletbalance">
         <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
-        <span class="balancebch" id="balancebch">0</span>
-        <span class="satoshis">({ticker})</span>
-        <span class="balancesatoshis" id="balancesatoshis">0</span>
-        <span class="satoshis">(satoshis)</span>
-        <span class="approximatelyequal" style="display: none;">≈</span>
-        <span class="balanceusd" id="balanceusd">0</span>
-        <span class="usd">(USD)</span>
-        <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
-            class="balancedetails">
-            <img src="img/icons/reload.png" alt="">
-        </span>
+        <div class="balancegroup">
+            <span class="balancebch" id="balancebch">0</span>
+            <span class="satoshis">({ticker})</span>
+        </div>
+        <div class="balancegroup">
+            <span class="balancesatoshis" id="balancesatoshis">0</span>
+            <span class="satoshis">(satoshis)</span>
+        </div>
+        <div class="balancegroup">
+            <span class="approximatelyequal">≈</span>
+            <span class="balanceusd" id="balanceusd">0</span>
+            <span class="usd">(USD)</span>
+            <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
+                class="balancedetails">
+                <img src="img/icons/reload.png" alt="">
+            </span>
+        </div>
     </div>
 
 
@@ -1605,18 +1611,6 @@ var walletanchorHTML=`
             </span>
         </div>
     </div>
-    <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
-        <label data-vavilon="VV0068">Legacy Address</label>
-        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-        <span id="legacyformat">{address}</span>
-        <div id="legacyformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
-        </div>
-    </div>
-
     <div id="walletsendfunds">
         <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
         <p data-vavilon="VV0029">You can send funds to another address.</p>
@@ -1630,6 +1624,17 @@ var walletanchorHTML=`
             onclick="sendfunds();">Send
             Funds</button>
         <br />
+    </div>
+    <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
+        <label data-vavilon="VV0068">Legacy Address</label>
+        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+        <span id="legacyformat">{address}</span>
+        <div id="legacyformatdiv">
+            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
+                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                    code</span>
+            </span>
+        </div>
     </div>
     <div id="walletprivatekey">
         <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
@@ -1915,10 +1920,10 @@ var membertabsHTML=`
     <span class="separator"></span>
     <!--<a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}"
         href="#support?qaddress={address}">Top 5</a>-->
-    <span class="separator"></span>
+    <!--<span class="separator"></span>
     <a data-vavilon="VVlist" data-vavilon_title="VVlist" title="List" class="filteroff"
         href="#list?qaddress={address}">List</a>
-    <span class="separator"></span>
+    <span class="separator"></span>-->
     <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
         href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&minrating=0&topicname=">Posts</a>
 </div>
@@ -1951,7 +1956,7 @@ pages.member = `
                 </span>
                 {mutebuttonhtml}
                 <span class="memberprofilelink">
-                    <a href="https://member.cash/#member?qaddress={address}" id="memberprofilelink">member.cash</a><span
+                    <a href=pathpermalinks+"/#member?qaddress={address}" id="memberprofilelink">{pathpermalinks}</a><span
                         class="separatorwide"></span>
                 </span>
                 <!--<span class="dogehairprofilelink">
@@ -1983,7 +1988,7 @@ pages.member = `
     <div class="memberstats">
         <div class="membrain">
             <label data-vavilon="membrain">MemBrain</label></a>
-            <a id="membrainnumber" href="https://member.cash/a/804fc6e860">{membrain}</a>
+            <a id="membrainnumber" href=pathpermalinks+"/a/804fc6e860">{membrain}</a>
         </div>
         <div class="followers">
             <label data-vavilon="VV0071">Followers</label>
@@ -2120,7 +2125,7 @@ pages.settings = `
                         onclick="switchNostrKey();" data-vavilon="nostrkey">switch</button>
                 </div>
         </div>
-        <div>
+        <!--<div>
             <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public
                     Key)</span>
                 <div class="formgroup">
@@ -2132,7 +2137,7 @@ pages.settings = `
                     <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
                     <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
                 </div>
-        </div>
+        </div>-->
         <div>
             <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout/Memo
                     Account</span>
@@ -2296,21 +2301,21 @@ pages.settings = `
         <div>
             <label data-vavilon="VV0091" for="contentserver">Content Server</label>
             <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
-                <option value="https://member.cash/v2/member.js">member.cash</option>
+                <option value="{pathpermalinks}/v2/member.js">{siteTitle}</option>
                 <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
             </select>
         </div>
         <div>
             <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
             <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
-                <option value="https://member.cash/v2/">member.cash</option>
+                <option value="{pathpermalinks}/v2/">{siteTitle}</option>
                 <option value="http://127.0.0.1:3123/v2/">Localhost</option>
             </select>
         </div>
         <div>
             <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
             <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
-                <option value="https://member.cash/v2/">member.cash</option>
+                <option value="{pathpermalinks}/v2/">{siteTitle}</option>
                 <option value="http://127.0.0.1:3123/v2/">Localhost</option>
             </select>
         </div>
@@ -2449,8 +2454,8 @@ var footerHTML = `
             preview version
             of Member You may need to SHIFT + Reload to get the very latest changes. Generally, It's recommended
             to</span>
-        <a data-vavilon="VV0138" rel='noopener noreferrer' target="member" href="https://member.cash">use the stable
-            version at https://member.cash</a><br /><br />
+        <a data-vavilon="VV0138" rel='noopener noreferrer' target="member" href="{pathpermalinks}">use the stable
+            version at {pathpermalinks}</a><br /><br />
         <hr />
     </span>
     <span id="readonlyversion" class="developmentversion" style="display: none;"><span
@@ -2460,7 +2465,7 @@ var footerHTML = `
     </span>
     <span class="footerlinks">
         <!--<span class="displayinfluencers">
-            <a data-vavilon="VVinfluencers" href="https://member.cash/#topinfluencers">Influencers</a>
+            <a data-vavilon="VVinfluencers" href="{pathpermalinks}/#topinfluencers">Influencers</a>
             <span class="separatorwide"></span>
         </span>-->
         <span class="displaygithub">
@@ -3328,7 +3333,7 @@ async function bitCloutPinPost(pinPostHashHex, pubkey) {
   var payload = {
     UpdaterPublicKeyBase58Check: bitCloutUser,
     ParentStakeID: pinPostHashHex,
-    BodyObj: { Body: `pinpost https://member.cash/ba/${pubkey}` },
+    BodyObj: { Body: `pinpost $/ba/${pubkey}` },
     IsHidden: true,
     MinFeeRateNanosPerKB: 1000
   };
@@ -3480,12 +3485,12 @@ async function sendBitCloutReply(txid, replytext, divForStatus, successFunction,
     MinFeeRateNanosPerKB: 1000
   };
 
-  //replytext="https://member.cash/p/"+membertxid.substr(0,10);
-  replytext="https://member.cash/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
+  //replytext=pathpermalinks+"/p/"+membertxid.substr(0,10);
+  replytext=pathpermalinks+"/p/"+membertxid.substr(0,10)+"\n\n"+replytext;
     
   if (parentSourceNetwork != 1) {
     payload.PostExtraData = { Overideretxid: txid };
-    //replytext="https://member.cash/p/"+txid.substr(0,10);
+    //replytext=pathpermalinks+"/p/"+txid.substr(0,10);
   }else{
     payload.ParentStakeID = txid;
   }
@@ -3540,7 +3545,7 @@ async function sendBitCloutQuotePost(posttext, topic, txid, divForStatus, succes
     if (successFunction) { successFunction(txid, posttext) };
     return txid;
   } else {
-    return await sendBitCloutPost(posttext + "\n\nhttps://member.cash/p/" + txid.substr(0, 10), topic, divForStatus, successFunction, null);
+    return await sendBitCloutPost(posttext + `\n\n${pathpermalinks}/p/` + txid.substr(0, 10), topic, divForStatus, successFunction, null);
   }
 }
 
@@ -3566,7 +3571,7 @@ async function bitCloutRePost(txid, sourcenetwork) {
     };
     return await sendBitCloutTransaction(JSON.stringify(payload), "submit-post");
   } else {
-    return await sendBitCloutPost("https://member.cash/p/" + txid.substr(0, 10), '', null, null, null);
+    return await sendBitCloutPost(pathpermalinks+"/p/" + txid.substr(0, 10), '', null, null, null);
   }
 }
 
@@ -4359,7 +4364,7 @@ function installApp() {
   });
 }
 
-function linkNostrAccount(useNOS2Xifavailable = true) {
+/*function linkNostrAccount(useNOS2Xifavailable = true) {
   let nostrpublickey = '02' + nostrPubKeyHex;
   let element = document.getElementById('linknostraccount');
   if (element) {
@@ -4375,7 +4380,7 @@ function linkNostrAccount(useNOS2Xifavailable = true) {
   let fullmessage = getLinkMessage(legacyaddress);
 
   sendNostrPost(fullmessage, '', '', "newpostmemorandumstatus", nostrLinkSuccessMessage, useNOS2Xifavailable, 6000);
-}
+}*/
 
 function nostrLinkSuccessMessage() {
   updateStatus('Nostr Link Request submitted');
@@ -4385,7 +4390,7 @@ function showBitcloutLinkText() {
   let legacyaddress = document.getElementById('linkbitcloutaccount').value.trim();
 
   if (legacyaddress.startsWith("member:") || legacyaddress.startsWith("bitcoincash:")) {
-    legacyaddress = membercoinToLegacy(legacyaddress);
+    legacyaddress = cashaddrToLegacy(legacyaddress);
   } else if (legacyaddress.startsWith("BC1")) {
     legacyaddress = bitcloutToLegacy(legacyaddress);
   }
@@ -4397,6 +4402,7 @@ function showBitcloutLinkText() {
   document.getElementById('bitcloutlinktext').style.display = 'block';
 }
 
+/*
 function getLinkMessage(legacyaddress) {
   window.bitcoinjs.address.toOutputScript(legacyaddress);//this will throw error if address is not valid
   var time = parseInt(new Date().getTime() / 1000);
@@ -4405,9 +4411,9 @@ function getLinkMessage(legacyaddress) {
   var privateKey = keyPair.privateKey;
   var signature = window.bitcoinmessage.sign(message, privateKey, keyPair.compressed, "member.cash link request", { extraEntropy: eccryptoJs.randomBytes(32) });
   return message + ':' + signature.toString('base64');
-}
+}*/
 
-function switchNostrKey() {
+/*function switchNostrKey() {
   try {
     let nsecprivkey = document.getElementById('usenostrkeyaccount').value.trim();
 
@@ -4420,8 +4426,7 @@ function switchNostrKey() {
   } catch (err) {
     updateStatus("Nostr Private Key Not Recognized" + err);
   }
-
-}
+}*/
 
 function bechifylink(linkelement,txid){
   linkelement.href=`https://snort.social/e/`+bech32Encode('note',txid);
@@ -4498,7 +4503,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
     getJSON(theURL).then(function (data) {
 
         updateUSDRate(data);
@@ -4549,8 +4554,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         var listElement = document.getElementById('itemlistol');
 
         if (!pubkey && order == 'hot' && !qaddress && Math.random() < adfrequency) {//Show member.cash explainer video
-            let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
-            listElement.appendChild(htmlToElement(getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, true, true, false))));
+            //let membervid = { "address": "-2124810688269680833", "message": "Hit Play to Understand #Member in 90 seconds.\n\nhttps://youtu.be/SkaaPcjKI2E", "txid": "4828901585208465235", "firstseen": 1657702206, "retxid": "", "roottxid": "4828901585208465235", "likes": 2, "dislikes": 0, "tips": 1500, "topic": "member", "lat": null, "lon": null, "geohash": null, "repliesdirect": 0, "repliesroot": 0, "repliestree": 0, "repliesuniquemembers": 0, "repost": null, "canonicalid": "4828901585208465235", "repostcount": 0, "language": "", "amount": 0, "score": 1500000, "score2": 208943.26776183146, "network": 3, "posttype": 0, "memberscore": 236, "weightedlikes": 120721, "weighteddislikes": 0, "weightedreposts": 0, "weightedtips": 0, "contentflags": 1, "deleted": 0, "hivelink": "c303b46839abd7538da5ed16bbfb139bdabce45bf5013e178dcbc36179de1a9a", "format": null, "title": null, "scoretop": 12007.604013087894, "isfollowing": null, "name": "member.cash", "pagingid": "membercash", "publickey": "02b5a809307637d405a3165830bc603794cf5d67ce69a381424eca9a2e2f4d9c17", "picurl": "-8772705979516345993", "tokens": 55, "followers": 5252, "following": 1696, "blockers": 2, "blocking": 14, "profile": "Aggregator for multiple decentralized social networks\n\nhttps://member.cash\n\nCovering social posts from \n\nBitclout, Bitcoin Cash and Hive\n\n@FreeTrade\n\n", "nametime": 1625985623, "lastactive": 1657702333, "sysrating": 236, "hivename": null, "bitcoinaddress": "19ytLgLYamSdx6spZRLMqfFr4hKBxkgLj6", "rpname": null, "rppagingid": null, "rppublickey": null, "rppicurl": null, "rptokens": null, "rpfollowers": null, "rpfollowing": null, "rpblockers": null, "rpblocking": null, "rpprofile": null, "rpnametime": null, "rplastactive": null, "rpsysrating": null, "rphivename": null, "rpbitcoinaddress": null, "rating": null, "rprating": null, "replies": 0, "likedtxid": null, "likeordislike": null, "rplikedtxid": null, "rplikeordislike": null, "rpaddress": null, "rpamount": null, "rpdislikes": null, "rpfirstseen": null, "rpgeohash": null, "rplanguage": null, "rplat": null, "rplikes": null, "rplon": null, "rpmessage": null, "rprepliestree": null, "rprepliesuniquemembers": null, "rprepost": null, "rprepostcount": null, "rpretxid": null, "rproottxid": null, "rptips": null, "rptopic": null, "rptxid": null, "rpreplies": null, "rprepliesroot": null, "rphivelink": null, "rpsourcenetwork": null };
+            //listElement.appendChild(htmlToElement(getPostListItemHTML(getHTMLForPost(membervid, 10000 + 1, page, 10000, null, true, true, false))));
         }
 
         let filtereditems = 0;
@@ -4648,7 +4653,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
         console.log(err);
     }
 
-    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkey + '&messagetype=' + messagetype;
+    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkeyhex.slice(0,16) + '&messagetype=' + messagetype;
     getJSON(theURL).then(async function (data) {
 
         if (!eccryptoJs) {
@@ -4692,7 +4697,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
     //If no post is specified, we'll use it as a top level
     if (txid === undefined || txid == "") { txid = roottxid; }
 
-    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkey + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkeyhex.slice(0,16) + '&txid=' + txid;
     getJSON(theURL).then(async function (data) {
         updateUSDRate(data);
         //Server bug will sometimes return duplicates if a post is liked twice for example,
@@ -4804,7 +4809,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
 function getAndPopulateTopic(topicNameHOSTILE) {
     var page = "topicmeta";
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         updateUSDRate(data);
         //todo, move this to htmlquarantine.
@@ -4841,7 +4846,7 @@ function getAndPopulateTopicList(showpage) {
         show(page);
     }
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         updateUSDRate(data);
         /*
@@ -4897,7 +4902,7 @@ function getAndPopulateQuoteBox(txid) {
     showOnly(page);
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkey + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkeyhex.slice(0,16) + '&txid=' + txid;
     getJSON(theURL).then(function (data) {
         var contents = "";
         if (data[0]) {
@@ -5010,7 +5015,7 @@ function showScoresExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + san(pubkey);
+    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -5030,7 +5035,7 @@ function showRemembersExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + san(pubkey);
+    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -5198,7 +5203,7 @@ function showReplyButton(txid, page, divForStatus) {
     document.getElementById("replytext" + page + txid).value = "";
 }
 
-function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
+async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
     //if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
@@ -5224,7 +5229,7 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, orig
                 replySuccessFunction(page, txid);
                 if (isBitCloutUser() && parentSourceNetwork == 1) {
                     sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
-                    //sendBitCloutQuotePost("https://member.cash/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
+                    //sendBitCloutQuotePost(pathpermalinks+"/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
                 }
             }
         };
@@ -5234,7 +5239,8 @@ function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, orig
         //successFunction = null;
     }
 
-    sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
+    let event = await sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
+    sendWrappedEvent(event);
 
     return true;
 }
@@ -5321,7 +5327,7 @@ function increaseGUIReposts(txid) {
     document.getElementById('repostscount' + txid).innerHTML = repostscount + 1;
 }
 
-function pinpost(txid) {
+async function pinpost(txid) {
     //If bitclout user is logged in
     if (isBitCloutUser()) {
         bitCloutPinPost(txid, pubkey);
@@ -5331,11 +5337,12 @@ function pinpost(txid) {
         memoPinPost(txid, privkey);
     }
 
-    nostrPinPost(txid);
+    let event= await nostrPinPost(txid);
+    sendWrappedEvent(event);
 
 }
 
-function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
+async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
@@ -5365,19 +5372,21 @@ function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
         }
     }
 
-    nostrLikePost(origtxid, roottxid);
+    let event = await nostrLikePost(origtxid, roottxid);
+    sendWrappedEvent(event);
 }
 
-function dislikePost(txid, origtxid, roottxid = null) {
+async function dislikePost(txid, origtxid, roottxid = null) {
     decreaseGUILikes(txid);
 
     if (checkForNativeUserAndHasBalance()) {
         sendDislike(origtxid);
     }
-    nostrDislikePost(origtxid, roottxid);
+    let event = await nostrDislikePost(origtxid, roottxid);
+    sendWrappedEvent(event);
 }
 
-function repostPost(txid, origtxid, sourcenetwork) {
+async function repostPost(txid, origtxid, sourcenetwork) {
 
     increaseGUIReposts(txid);
 
@@ -5389,7 +5398,8 @@ function repostPost(txid, origtxid, sourcenetwork) {
         repost(origtxid, privkey);
     }
 
-    nostrRePost(origtxid);
+    let event = await nostrRePost(origtxid);
+    sendWrappedEvent(event);
 
 }
 
@@ -5840,7 +5850,7 @@ function memorandumPreview() {
     addDynamicHTMLElements();
 }
 
-function geopost() {
+async function geopost() {
     //if (!checkForPrivKey()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
@@ -5869,21 +5879,22 @@ function geopost() {
 
     let successFunction = geocompleted;
 
-    let taggedPostText = posttext + " \nhttps://member.cash/geotag/" + geohash;
+    let taggedPostText = posttext + ` \n${pathpermalinks}/geotag/` + geohash;
     if (checkForNativeUserAndHasBalance()) {
         //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
         postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
         //successFunction = null;
     }
     if (isBitCloutUser()) {
-        sendBitCloutPost(posttext + " \nhttps://member.cash/geotag/" + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
+        sendBitCloutPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
     }
 
-    sendNostrPost(posttext + " \nhttps://member.cash/geotag/" + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
+    let event = await sendNostrPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
+    sendWrappedEvent(event);
 
 }
 
-function postmemorandum() {
+async function postmemorandum() {
     //if (!checkForPrivKey()) return false;
     var posttext = document.getElementById('memorandumtitle').value;
     if (!posttext.includes('#')) {
@@ -5943,8 +5954,8 @@ function postmemorandum() {
             sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
         }
 
-        sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
-        
+        let event= await sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
+        sendWrappedEvent(event);
     }
     else {
         //Don't post body if it is not visible - it may contain old elements that the user is not expecting to post
@@ -5961,8 +5972,8 @@ function postmemorandum() {
         }
         
         //Should always be possible to send Nostr event if user is logged in.
-        sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
-        
+        let event= await sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
+        sendWrappedEvent(event);
     }
 
     //if (typeof popupOverlay !== "undefined") {
@@ -5979,7 +5990,7 @@ function sendRepostNotification(txid, divForStatus, topic, newtxid) {
     if (topic) {
         replytext += " " + getSafeTranslation('intopic', "in tag") + " " + topic;
     }
-    replytext += " https://member.cash/p/" + newtxid;
+    replytext += ` ${pathpermalinks}/p/` + newtxid;
     var replyHex = new Buffer(replytext).toString('hex');
 
     sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, function (txidnew) { memorandumpostcompleted(newtxid); });
@@ -6031,7 +6042,7 @@ function getAndPopulateCommunityRatings(qaddress) {
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'communityratingtable';
-    var theURL = dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -6052,7 +6063,7 @@ function getAndPopulateRatings(qaddress) {
     document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'memberratingtable';
-    var theURL = dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -6070,7 +6081,7 @@ function getAndPopulateRatings(qaddress) {
 
 function getDataMember(qaddress) {
     document.getElementById('mcidmemberanchor').innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
         if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         if (data) {
@@ -6085,7 +6096,7 @@ function getDataSettings(qaddress, cashaddress) {
 
     //document.getElementById('settingsanchor').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkey + '&qaddress=' + qaddress;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
         if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         try {
@@ -6202,6 +6213,8 @@ async function getDataMemberFinally(data) {
         obj.pinnedpostHTML = getHTMLForPostHTML3(member, data[0], 'r', 'memberpage', 0, '', false, true); //always show pinned post on member's page
     }
 
+    obj.pathpermalinks = pathpermalinks;
+    obj.siteTitle = siteTitle;
     document.getElementById('mcidmemberanchor').innerHTML = templateReplace(pages.member, obj);
 
     if (data && data[0] && data[0].hivename) {
@@ -6327,8 +6340,8 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     obj.maxprofilelength = maxprofilelength;
 
     if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
-    obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+nostrPubKeyHex);
-    
+    obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+pubkeyhex);
+    obj.siteTitle = siteTitle;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -6354,7 +6367,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 
 async function populateTools() {
 
-    var bcaddress =pubkeyToBitcloutAddress(pubkeyhex);
+    var bcaddress =pubkeyToBitcloutAddress(pubkeyhexsign+pubkeyhex);
     var obj = {
         address: pubkey,
         cashaddress: legacyToNativeCoin(pubkey),
@@ -6457,10 +6470,10 @@ function updateSettings() {
 
     //Make sure users are not on the old server
     if (dropdowns.contentserver == "https://memberjs.org:8123/member.js") {
-        dropdowns.contentserver = "https://member.cash/v2/member.js";
+        dropdowns.contentserver = pathpermalinks+"/v2/member.js";
     }
     if (dropdowns.txbroadcastserver == "https://memberjs.org:8123/member.js") {
-        dropdowns.txbroadcastserver = "https://member.cash/v2/";
+        dropdowns.txbroadcastserver = pathpermalinks+"/v2/";
     }
 
     document.getElementById("debuginfo").value = debuginfo;
@@ -6564,7 +6577,7 @@ function getAndPopulateFB(page, qaddress) {
     if (!qaddress) {
         qaddress = pubkey;
     }
-    var theURL = dropdowns.contentserver + '?action=' + page + '&qaddress=' + qaddress + '&address=' + pubkey;
+    var theURL = dropdowns.contentserver + '?action=' + page + '&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -6579,14 +6592,15 @@ function getAndPopulateFB(page, qaddress) {
     });
 }
 
-function setPic() {
+async function setPic() {
     document.getElementById('settingspicbutton').disabled = true;
     document.getElementById('settingspic').disabled = true;
     var newName = document.getElementById('settingspic').value;
     document.getElementById('settingspicurl').value=newName;
     setTrxPic(newName,getAndPopulateSettings);
     //setNostrProfile("picture",newName);
-    setNostrProfile();
+    let event= await setNostrProfile();
+    sendWrappedEvent(event);
 }
 
 function updatePagingId(){
@@ -6625,22 +6639,8 @@ function displayContentBasedOnURLParameters(suggestedurl) {
 
     if (suggestedurl) {
         var url = suggestedurl;
-        try {
-            if (gtag && url.indexOf('#') != -1) {
-                gtag('set', 'page_path', '/#' + url.split('#')[1]);
-                gtag('event', 'page_view');
-            }else{
-                console.log('no tracking info error');
-            }
-        } catch (err) { }
     } else {
         var url = window.location.href;
-        try {
-            if (gtag) {
-                gtag('set', 'page_path', window.location.pathname);
-                gtag('event', 'page_view');
-            }
-        } catch (err) { }
     }
 
     //https://developers.google.com/analytics/devguides/collection/gtagjs/single-page-applications
@@ -6700,7 +6700,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("notifications")) {
         showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
-        showMember(sane(pubkey), '');
+        showMember(sane(pubkeyhex), '');
     } else if (action.startsWith("membersonly")) {
         showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("topinfluencers")) {
@@ -6949,7 +6949,7 @@ function showMember(qaddress, pagingID, isList) {
     }
 
     if (qaddress == '' && pagingID) {
-        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + pubkey;
+        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + pubkeyhex.slice(0,16);
         getJSON(theURL).then(function (data) {
             if (data && data.length > 0) {
                 showMember(san(data[0].address), sane(data[0].pagingid), isList);
@@ -7002,7 +7002,7 @@ function showReputation(qaddress) {
     showOnly("mcidmemberheader");
     showOnly("mcidmembertabs");
     showOnly("trustgraph");
-    getAndPopulateTrustGraph(pubkey, qaddress);
+    getAndPopulateTrustGraph(pubkeyhex.slice(0,16), qaddress);
 
     //Show Filter
     var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff' };
@@ -7278,11 +7278,10 @@ function checkForNativeUser() {
 }
 
 function checkForNativeUserAndHasBalance() {
-    //return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
-    return false;
+    return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
 }
 
-function sendRating(rating, ratingText, pageName, targetpublickey) {
+async function sendRating(rating, ratingText, pageName, targetpublickey) {
     
     //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
 
@@ -7303,7 +7302,6 @@ function sendRating(rating, ratingText, pageName, targetpublickey) {
         addresshandle = theAddress
     }   
 
-    sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nhttps://member.cash/ba/" + addresshandle, null, targetpublickey, true, rating, comment);
 
     
     if (checkForNativeUserAndHasBalance()) {
@@ -7311,9 +7309,10 @@ function sendRating(rating, ratingText, pageName, targetpublickey) {
     }
 
     if (isBitCloutUser()) {
-        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + "\nhttps://member.cash/ba/" + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
+        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
     }
-
+    let event= await sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + addresshandle, null, targetpublickey, true, rating, comment);
+    sendWrappedEvent(event);
     
 }
 
@@ -7364,12 +7363,28 @@ function setTrxPic(newName, callback) {
     tq.queueTransaction(tx, callback);
 }
 
+function sendWrappedEvent(event, callback) {
+    if (!checkForNativeUserAndHasBalance()) return false;
+    //serialize and compress event
+    const jsonData = JSON.stringify(event);
+    const compressedData = pako.gzip(jsonData);
+    const tx = {
+        data: ["0x6de0", compressedData],
+        cash: { key: privkey }
+    }
+    updateStatus(getSafeTranslation('sendingwrappednostr', "Sending Nostr Event To Nostracoin"));
+    tq.queueTransaction(tx, callback);
+}
 
-function setName() {
+
+
+
+async function setName() {
     var newName = document.getElementById('settingsnametext').value;
 
     //setNostrProfile('name',newName);
-    setNostrProfile();
+    let event= await setNostrProfile();
+    sendWrappedEvent(event);
 
     if (!checkForNativeUserAndHasBalance()) return false;
 
@@ -7640,10 +7655,11 @@ function memoPinPost(txid, privkey) {
     tq.queueTransaction(tx);
 }
 
-function setProfile() {
+async function setProfile() {
 
     var newProfile = document.getElementById('settingsprofiletext').value;
-    setNostrProfile();
+    let event= await setNostrProfile();
+    sendWrappedEvent(event);
     //setNostrProfile('about',newProfile);
 
     if (!checkForNativeUserAndHasBalance()) return false;
@@ -7691,13 +7707,13 @@ function unsubTransaction(topicHOSTILE) {
 
 function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey) {
     //if(!qaddress){
-    let qaddress=getImpliedBitcoinAddress(targetpublickey);
+    //let qaddress=getImpliedBitcoinAddress(targetpublickey);
     //}
     try {
         //document.getElementById(removeElementID).style.display = "none";
-        var addressraw = getLegacyToHash160(qaddress);
+        //var addressraw = getLegacyToHash160(qaddress);
         const tx = {
-            data: [actionCode, "0x" + addressraw],
+            data: [actionCode, "0x" + targetpublickey],
             cash: { key: privkey }
         }
         updateStatus(statusMessage);
@@ -7707,11 +7723,11 @@ function addressTransaction(removeElementID, actionCode, statusMessage, targetpu
     }
 }
 
-function follow(targetpublickey) {
+async function follow(targetpublickey) {
     //if (!checkForPrivKey()) return false;
 
-    sendNostrFollow(targetpublickey); 
-    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+    let event= await sendNostrFollow(targetpublickey);
+    sendWrappedEvent(event); 
 
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey);
@@ -7722,11 +7738,11 @@ function follow(targetpublickey) {
     
 }
 
-function unfollow(targetpublickey) {
+async function unfollow(targetpublickey) {
     //if (!checkForPrivKey()) return false;
 
-    sendNostrUnFollow(targetpublickey);
-    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+    let event= await sendNostrUnFollow(targetpublickey);
+    sendWrappedEvent(event);
 
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey);
@@ -7737,10 +7753,10 @@ function unfollow(targetpublickey) {
     
 }
 
-function mute(targetpublickey) {
+async function mute(targetpublickey) {
     //if (!checkForPrivKey()) return false;
-    sendNostrMute(targetpublickey);
-    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+    let event= await sendNostrMute(targetpublickey);
+    sendWrappedEvent(event);
 
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey);
@@ -7750,10 +7766,10 @@ function mute(targetpublickey) {
     //}
 }
 
-function unmute(targetpublickey) {
+async function unmute(targetpublickey) {
     //if (!checkForPrivKey()) return false;
-    sendNostrUnMute(targetpublickey);
-    if(targetpublickey.length==64){targetpublickey='02'+targetpublickey;}//nostr style public key.
+    let event= await sendNostrUnMute(targetpublickey);
+    sendWrappedEvent(event);
 
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey);
@@ -7763,24 +7779,27 @@ function unmute(targetpublickey) {
     //}
 }
 
-function sub(topicHOSTILE) {
+async function sub(topicHOSTILE) {
     //if (!checkForPrivKey()) return false;
     
     if (checkForNativeUserAndHasBalance()) {
         subTransaction(topicHOSTILE);
     }
-    sendNostrSub(topicHOSTILE);
+    let event= await sendNostrSub(topicHOSTILE);
+    sendWrappedEvent(event);
+
     //if(isBitCloutUser()){
     //    sendBitCloutSub(topicHOSTILE);
     //}
 }
 
-function unsub(topicHOSTILE) {
+async function unsub(topicHOSTILE) {
     //if (!checkForPrivKey()) return false;
     if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
     }
-    sendNostrUnSub(topicHOSTILE);
+    let event= await sendNostrUnSub(topicHOSTILE);
+    sendWrappedEvent(event);
 
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);
@@ -8544,7 +8563,7 @@ function onMapClick(e) {
 function loadLocationListFromServerAndPlaceOnMap(event) {
 
     var mapBounds = map.getBounds();
-    var theURL = dropdowns.contentserver + '?action=map&address=' + pubkey + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
+    var theURL = dropdowns.contentserver + '?action=map&address=' + pubkeyhex.slice(0,16) + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -8826,7 +8845,7 @@ function getAndPopulateBesties(target) {
     document.getElementById('besties').innerHTML = document.getElementById("loading").innerHTML;
 
 
-    let theURL = dropdowns.contentserver + '?action=support&address=' + pubkey + '&qaddress=' + target;
+    let theURL = dropdowns.contentserver + '?action=support&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + target;
     getJSON(theURL).then(async function (data) {
 
         if (data[0]) {
@@ -9017,7 +9036,7 @@ var mnemonic = ""; //Mnemonic BIP39
 var privkey = ""; //Private Key
 var privkeyhex = "";
 var privateKeyBuf;
-var nostrPrivKeyHex = "";
+//var nostrPrivKeyHex = "";
 var nostrPubKeyHex = "";
 
 var chainheight = 0;
@@ -9025,12 +9044,14 @@ var chainheighttime = 0;
 
 //var qpubkey = ""; //Public Key (q style address)
 var pubkeyhex = ""; //Public Key, full hex
+var pubkeyhexsign = ""; //Public Key, full hex
 var bitcloutaddress = ""; //Bitclout address
 
 let tq = null;
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var cytoscape = null;
 var bip39 = null;
+var pako = null;
 //var twitterEmbeds=new Array();
 var profilepic = "";
 var Buffer = buffer.Buffer;
@@ -9108,7 +9129,7 @@ async function init() {
     //setLang((navigator.language || navigator.userLanguage));
     //check local app storage for key
 
-    if (document.location.host != 'member.cash') {
+    if (document.location.host != siteTitle) {
         siteTitle = "Member";
         document.title = siteTitle;
     }
@@ -9116,7 +9137,7 @@ async function init() {
     //Show message if dev version in use
     if (document.location.href.indexOf('freetrade.github.io/memberdev') != -1) {
         document.getElementById('developmentversion').style.display = 'block';
-        profilepicbase = 'https://member.cash/img/profilepics/';
+        profilepicbase = `${pathpermalinks}/img/profilepics/`;
     }
     var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
     var loginprivkey = localStorageGet(localStorageSafe, "privkey");
@@ -9210,6 +9231,7 @@ async function loadBigLibs() {
     if (!window.bech32converter)  loadScript("js/lib/bech32-converting-1.0.9.min.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) loadScript("js/lib/elliptic.min.js");
+    if (!pako) loadScript("js/lib/pako.2.0.4.min.js");
     loadMDE();
     if (!cytoscape) loadScript("js/lib/cytoscape3.19.patched.min.js");
     if (!bcdecrypt) loadScript("js/lib/identityencryption.js");
@@ -9224,19 +9246,21 @@ async function login(loginkey) {
     pubkey = localStorageGet(localStorageSafe, "pubkey");
     //qpubkey = localStorageGet(localStorageSafe, "qpubkey");
     pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
+    pubkeyhexsign = localStorageGet(localStorageSafe, "pubkeyhexsign");
     privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
     bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
-    nostrPrivKeyHex = localStorageGet(localStorageSafe, "nostrprivkeyhex");
-    nostrPubKeyHex = localStorageGet(localStorageSafe, "nostrpubkeyhex");
+    //nostrPrivKeyHex = localStorageGet(localStorageSafe, "nostrprivkeyhex");
+    //nostrPubKeyHex = localStorageGet(localStorageSafe, "nostrpubkeyhex");
 
 
-    if (!(pubkey) || (privkey && !privkeyhex) || (mnemonic && !nostrPrivKeyHex)) {
+    loginkey = loginkey.trim();
+        
+    if (!(pubkey) || (privkey && !privkeyhex)) {
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
         //note, pubkeyhex won't be available in public key mode
 
-        loginkey = loginkey.trim();
         //check valid private or public key
         var publicaddress = "";
 
@@ -9250,15 +9274,19 @@ async function login(loginkey) {
             if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
             let hexkey = window.bech32converter('nsec').toHex(loginkey).slice(2).toLowerCase();
             let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexkey,'hex'));
-            setNostrKeys(ecpair);
-            //Note, cannot use this key directly as it is used for EDDSA, 
+            loginkey=ecpair.toWIF();
+            //nostrPrivKeyHex = ecpair.privateKey.toString('hex');
+            //nostrPubKeyHex = ecpair.publicKey.toString('hex').slice(2);
+
+            //setNostrKeys(ecpair);
+            //Note, cannot use this key directly as it is used for EDDSA,
             //There is a theoretical risk if also using for ECDSA sigs
             //Hash the key, use as a source of entropy to generate mnemonic
-            if (!eccryptoJs) {await loadScript("js/lib/eccrypto-js.js");}
-            let hashprivkey = await eccryptoJs.sha256(await eccryptoJs.sha256(new Buffer(nostrPrivKeyHex,'hex')));
-            hashprivkey = hashprivkey.toString('hex');
-            hashprivkey = hashprivkey.slice(0,32);
-            loginkey = bip39.entropyToMnemonic(new Buffer(hashprivkey,'hex'));
+            //if (!eccryptoJs) {await loadScript("js/lib/eccrypto-js.js");}
+            //let hashprivkey = await eccryptoJs.sha256(await eccryptoJs.sha256(new Buffer(nostrPrivKeyHex,'hex')));
+            //hashprivkey = hashprivkey.toString('hex');
+            //hashprivkey = hashprivkey.slice(0,32);
+            //loginkey = bip39.entropyToMnemonic(new Buffer(hashprivkey,'hex'));
         }
 
         let loginkeylowercase=loginkey.toLowerCase();
@@ -9271,10 +9299,10 @@ async function login(loginkey) {
             mnemonic = loginkeylowercase;
             loginkey = newloginkey;
 
-            if(!nostrPrivKeyHex){ //if the user logged in with an nsec, the priv/pub keys are already set!
-                let nostrKey = root.derivePath("44'/1237'/0'/0/0");
-                setNostrKeys(nostrKey);
-            }
+            //if(!nostrPrivKeyHex){ //if the user logged in with an nsec, the priv/pub keys are already set!
+            //    let nostrKey = root.derivePath("44'/1237'/0'/0/0");
+            //    setNostrKeys(nostrKey);
+            //}
 
 
 
@@ -9285,12 +9313,8 @@ async function login(loginkey) {
         }
 
         try {
-            if (loginkey.startsWith("q")) { //Note, not possible to be a valid seed phrase here, so shouldn't interfere with that, could be a username starting with q
-                loginkey = "member:" + loginkey;
-            }
-
-            if (loginkey.startsWith("member:") || loginkey.startsWith("bitcoincash:")) {
-                publicaddress = membercoinToLegacy(loginkey);
+            if (loginkey.startsWith("nostracoin:") || loginkey.startsWith("member:") || loginkey.startsWith("bitcoincash:")) {
+                publicaddress = cashaddrToLegacy(loginkey);
             } 
             else if (loginkey.startsWith("npub")) {
                 //Nostr bech32 encoded public key
@@ -9351,16 +9375,20 @@ async function login(loginkey) {
 
         if (privkey) {
             let ecpair = new window.bitcoinjs.ECPair.fromWIF(privkey);
-            pubkeyhex = ecpair.publicKey.toString('hex');
+            let pubkeyhexfull=ecpair.publicKey.toString('hex');
+            pubkeyhexsign = pubkeyhexfull.slice(0,2);
+            pubkeyhex = pubkeyhexfull.slice(2);
+            
             privkeyhex = ecpair.privateKey.toString('hex');
 
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
+            localStorageSet(localStorageSafe, "pubkeyhexsign", pubkeyhexsign);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             
-            if(newlygeneratedaccount || userLoggedInWithnsec){
-                linkNostrAccount(false); //link the nostr public key to the member key
-            }
+            //if(newlygeneratedaccount || userLoggedInWithnsec){
+            //    linkNostrAccount(false); //link the nostr public key to the member key
+            //}
             //dropdowns.utxoserver
             if(allowBitcloutUser){
                 checkIfBitcloutUser(pubkeyhex);
@@ -9391,7 +9419,7 @@ async function login(loginkey) {
     document.getElementById('loginkey').value = "";
 
     //, nostrpubkey:nostrPubKeyHex bech32 lib may not be available yet
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength}, true);
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength, siteTitle:siteTitle}, true);
     document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
 
     updateSettings();
@@ -9401,7 +9429,7 @@ async function login(loginkey) {
     //getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     //Register public key with content server to prepare feeds faster    
-    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkey + '?a=100').then(function (data) { }, function (status) { });
+    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkeyhexsign+pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     loadStyle();
 
@@ -9448,7 +9476,7 @@ async function createNewAccount() {
     newlygeneratedaccount=true;
 }
 
-function setNostrKeys(nostrKey){
+/*function setNostrKeys(nostrKey){
     nostrPrivKeyHex = nostrKey.privateKey.toString('hex');
     nostrPubKeyHex = nostrKey.publicKey.toString('hex').slice(2);
     localStorageSet(localStorageSafe, "nostrprivkeyhex", nostrPrivKeyHex);
@@ -9457,7 +9485,7 @@ function setNostrKeys(nostrKey){
     if(keyelement){
       keyelement.value=nostrPubKeyHex;
     }
-}
+}*/
 
 function logout() {
 
@@ -9482,9 +9510,10 @@ function logout() {
     pubkey = "";
     mnemonic = "";
     privateKeyBuf = "";
-    nostrPrivKeyHex = "";
-    nostrPubKeyHex = "";
+    //nostrPrivKeyHex = "";
+    //nostrPubKeyHex = "";
     pubkeyhex = ""; //Public Key, full hex
+    pubkeyhexsign = ""; //Public Key, full hex
     bitcloutaddress = ""; //Bitclout address
     tq = null;
     
@@ -9536,12 +9565,12 @@ var lastViewOfNotifications = 0;
 var lastViewOfNotificationspm = 0;
 
 function displayNotificationCount() {
-    if (!pubkey) {
+    if (!pubkeyhex) {
         return;
     }
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
-    var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkey + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
+    var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkeyhex.slice(0,16) + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
     getJSON(theURL).then(function (data) {
         try {
             if (data[0].count == null) {
@@ -9657,7 +9686,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid, nfilter
     notificationFilter.minrating = minrating;
 
 
-    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkey + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
+    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
         var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length);
@@ -11025,7 +11054,7 @@ async function populatelbry(lbrylink,elementid){
     //
 }*/
 function replaceDiamondApp(match, p1, p2) {
-    return `<a onclick="event.stopPropagation();nlc();location.href='#thread?post=${p2}'; " href="javascript:">https://member.cash/p/${p2.substring(0, 10)}</a>`;
+    return `<a onclick="event.stopPropagation();nlc();location.href='#thread?post=${p2}'; " href="javascript:">${pathpermalinks}/p/${p2.substring(0, 10)}</a>`;
 }
 
 function replaceImgur(match, p1, p2, p3, p4, offset, string) {
@@ -11574,7 +11603,7 @@ async function userSearchChanged(searchbox, targetelement) {
     }
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkey + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
+    var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkeyhex.slice(0,16) + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
     getJSON(theURL).then(function (data) {
 
         var test = data;
@@ -11694,7 +11723,7 @@ async function sendfunds() {
 
     //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
     if (sendAddress.startsWith("member:")) {
-        sendAddress = await membercoinToLegacy(sendAddress);
+        sendAddress = await cashaddrToLegacy(sendAddress);
     }
 
     if (sendAddress.startsWith("D")) {
@@ -11726,7 +11755,7 @@ function sendFundsComplete() {
 
 }
 
-function membercoinToLegacy(address) {
+function cashaddrToLegacy(address) {
     const { prefix, type, hash } = cashaddr.decode(address);
     let hashhex = Buffer.from(hash).toString('hex');
     let toencode = new Buffer('00' + hashhex, 'hex');
@@ -11734,8 +11763,8 @@ function membercoinToLegacy(address) {
 }
 
 function legacyToNativeCoin(pubkey) {
-    if (nativeCoin.name == "Membercoin") {
-        return legacyToMembercoin(pubkey);
+    if (nativeCoin.name == "Nostracoin") {
+        return legacyToNostracoin(pubkey);
     } else if (nativeCoin.name == "Dogecoin") {
         return legacyToDogecoin(pubkey);
     }
@@ -11769,9 +11798,9 @@ function pubkeyhexToLegacy(pubkeyhex2) {
 }
 
 
-function legacyToMembercoin(pubkey) {
+function legacyToNostracoin(pubkey) {
     let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
-    return cashaddr.encode('member', 'P2PKH', hash);
+    return cashaddr.encode('nostracoin', 'P2PKH', hash);
 
     //const { prefix, type, hash } = cashaddr.decode(address);
     //let hashhex = Buffer.from(hash).toString('hex');
@@ -11815,7 +11844,7 @@ function setBalanceWithInterest() {
 }
 
 //This just set visual display of balance plus interest earned
-//setInterval(setBalanceWithInterest, 500);
+setInterval(setBalanceWithInterest, 500);
 
 
 //utxopool will call this after utxos updated
@@ -11827,7 +11856,9 @@ var showwarning = true;
 function updateBalance(dynamicChainHeight, showLowFunds = false) {
 
     if (!dynamicChainHeight) {
-        dynamicChainHeight = tq.chainheighttime;
+        //dynamicChainHeight = tq.chainheighttime;
+        //makes no sense to use a time instead of a blockheight here.
+        return;
     }
     var total = tq.getBalance(dynamicChainHeight);
     document.getElementById('balancesatoshis').innerHTML = Math.round(total);
@@ -11864,7 +11895,8 @@ function updateBalance(dynamicChainHeight, showLowFunds = false) {
 
 
 async function chooseNostrPublicKey(useNOS2Xifavailable = true) {
-    let pubKeyToUse = nostrPubKeyHex;
+    //let pubKeyToUse = nostrPubKeyHex;
+    let pubKeyToUse = pubkeyhex;
     if (useNOS2Xifavailable && window.nostr) {
         pubKeyToUse = await window.nostr.getPublicKey();
     }
@@ -11878,10 +11910,10 @@ async function signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable
         try {
             event = await window.nostr.signEvent(event);
         } catch (err) {
-            event.sig = window.NostrTools.signEvent(event, nostrPrivKeyHex);
+            event.sig = window.NostrTools.signEvent(event, privkeyhex);
         }
     } else {
-        event.sig = window.NostrTools.signEvent(event, nostrPrivKeyHex);
+        event.sig = window.NostrTools.signEvent(event, privkeyhex);
     }
     broadcastEvent(event, successFunction, useNOS2Xifavailable);
     return event;
@@ -11901,50 +11933,14 @@ async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true
         console.log(err);
     }
 
-    relays.push("wss://nostr.member.cash");
-
-    relays.push("wss://nostr.wine");
-
-
     relays.push("wss://nostr.oxtr.dev");
-    relays.push("wss://relay.nostr.ch");
-
-    relays.push("wss://nostr.orangepill.dev");
-    relays.push("wss://nostrical.com");
-    relays.push("wss://no.str.cr");
-    relays.push("wss://nostr.fly.dev");
-
-    relays.push("wss://nostr-pub.wellorder.net");
     relays.push("wss://nostr.fmt.wiz.biz");
-    relays.push("wss://relay.nostr.bg");
-    relays.push("wss://relay.snort.social");
-    relays.push("wss://nostr.bitcoiner.social");
-    relays.push("wss://nostr.zebedee.cloud");
-    relays.push("wss://relay.nostr.info");
-    
-    //relays.push("wss://nostr-pub.semisol.dev"); //private?
+    relays.push("wss://nostr-pub.wellorder.net");
+    relays.push("wss://relayable.org");
+    relays.push("wss://relay.nostr.band");
+    relays.push("wss://hk.purplerelay.com");
 
-    //requires nip05
-    //relays.push("wss://nostr.openchain.fr");
 
-    /*
-    relays.push("wss://relay.nostr.info");
-    relays.push("wss://nostr-relay.wlvs.space");
-    relays.push("wss://nostr-relay.untethr.me");
-    relays.push("wss://nostr.onsats.org");
-    relays.push("wss://nostr.semisol.dev");
-    
-    relays.push("wss://nostr-verified.wellorder.net");
-    relays.push("wss://nostr.drss.io");
-    relays.push("wss://nostr.delo.software");
-    relays.push("wss://relay.minds.com/nostr/v1/ws");
-    relays.push("wss://nostr.zaprite.io");
-    relays.push("wss://nostr.oxtr.dev");
-    relays.push("wss://nostr.ono.re");
-    relays.push("wss://relay.grunch.dev");
-    relays.push("wss://nostr.sandwich.farm");
-    relays.push("wss://nostr.fmt.wiz.biz");	
-*/
     sendNostrTransaction(JSON.stringify(event), null);
     for (let i = 0; i < relays.length; i++) {
         publishEventToRelay(event, relays[i], successFunction);
@@ -12051,7 +12047,7 @@ async function sendNostrPost(posttext, postbody, topic, divelement, successFunct
         content: posttext
     }
 
-    signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable);
+    return await signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable);
 
 }
 
@@ -12065,7 +12061,7 @@ async function nostrLikePost(origtxid) {
         tags: [["e", origtxid]],
         content: '+'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 async function nostrDislikePost(origtxid) {
@@ -12077,9 +12073,50 @@ async function nostrDislikePost(origtxid) {
         tags: [["e", origtxid]],
         content: '-'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
+async function getNostrMetadata(txid, event, successFunction) {
+    var theURL = dropdowns.contentserver + '?action=nostrmetadata&txid=' + txid;
+
+    try {
+        const data = await getJSON(theURL);
+
+        if (!data) {
+            serverresponses.set(id, "Error no metadata for post");
+        } else {
+            console.log(data);
+        }
+
+        if (data && data[1] && data[1].metadata) {
+            // Root event
+            if (data[1].metadata.length === 64) {
+                if (event.tags[0][1] !== data[1].metadata) { // Nostrgram doesn't like an identical root/reply tag
+                    let newtags = [["e", data[1].metadata, '', 'root']];
+                    event.tags = newtags.concat(event.tags);
+                }
+            }
+        }
+
+        if (data && data[0] && data[0].metadata) {
+            // Pubkey
+            if (data[0].metadata.length === 64) {
+                event.tags.push(["p", data[0].metadata]);
+            } else if (data[0].metadata.length === 66) { // Some pubkeys stored incorrectly in db, can remove this after db rebuild
+                event.tags.push(["p", data[0].metadata.slice(2)]);
+            }
+        }
+
+        // Modify event
+        // Insert root e before
+        // Insert p after
+        return await signAndBroadcastEvent(event);
+    } catch (err) {
+        console.log(err);
+        // Handle errors here if needed
+    }
+}
+/*
 async function getNostrMetadata(txid, event, successFunction) {
     var theURL = dropdowns.contentserver + '?action=nostrmetadata&txid=' + txid;
 
@@ -12117,7 +12154,7 @@ async function getNostrMetadata(txid, event, successFunction) {
         //insert p after
         signAndBroadcastEvent(event, successFunction);
     });
-}
+}*/
 
 async function sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
@@ -12135,7 +12172,7 @@ async function sendNostrReply(origtxid, replytext, divForStatus, successFunction
     }
 
     //note incorrect roottxid provide currently, must update db
-    getNostrMetadata(txid, event, successFunction);
+    return await getNostrMetadata(txid, event, successFunction);
 
 }
 
@@ -12153,7 +12190,7 @@ async function sendNostrQuotePost(posttext, topic, origtxid, divForStatus, succe
         content: posttext
     }
 
-    getNostrMetadata(txid, event, successFunction);
+    return await getNostrMetadata(txid, event, successFunction);
 }
 
 
@@ -12169,7 +12206,7 @@ async function sendNostrQuotePost(posttext, topic, origtxid, divForStatus, succe
         tags: [["e", txid]],
         content: posttext
     }
-    signAndBroadcastEvent(event, successFunction);
+    return await signAndBroadcastEvent(event, successFunction);
 }*/
 
 
@@ -12182,7 +12219,7 @@ async function nostrRePost(txid) {
         tags: [["e", txid]],
         content: ''
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 /*
@@ -12193,7 +12230,7 @@ async function sendNostrPrivateMessage(messageRecipientpubkey, text, divForStatu
     if(useNOS2Xifavailable, window.nostr){
         event = await window.nostr.nip04.encrypt(messageRecipientpubkey.slice(2), text);
     }else{
-        encryptedtext = await nip04.encrypt(nostrPrivKeyHex, messageRecipientpubkey.slice(2), text);
+        encryptedtext = await nip04.encrypt(privkeyhex, messageRecipientpubkey.slice(2), text);
     }
 
     let event = {
@@ -12204,7 +12241,7 @@ async function sendNostrPrivateMessage(messageRecipientpubkey, text, divForStatu
         content: encryptedtext
     }
 
-    signAndBroadcastEvent(event, successFunction);
+    return await signAndBroadcastEvent(event, successFunction);
 }
 
 async function sendNostrPrivateMessage(publickey, text, status, successFunction){
@@ -12213,7 +12250,7 @@ async function sendNostrPrivateMessage(publickey, text, status, successFunction)
     if(window.nostr){
         event = await window.nostr.nip04.encrypt(publickey, text);
     }else{
-        ciphertext = await window.NostrTools.nip04.encrypt(nostrPrivKeyHex, publickey, text);
+        ciphertext = await window.NostrTools.nip04.encrypt(privkeyhex, publickey, text);
     }
 
     let event = {
@@ -12223,7 +12260,7 @@ async function sendNostrPrivateMessage(publickey, text, status, successFunction)
         tags: [['p', publickey]],
         content: ciphertext
     }
-    signAndBroadcastEvent(event, successFunction);
+    return await signAndBroadcastEvent(event, successFunction);
 }  */
 
 
@@ -12234,6 +12271,15 @@ async function setNostrProfile() {
     var pagingid = document.getElementById('settingspagingidhtml').textContent;
 
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    let event2 = {
+        kind: 2,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [],
+        content: "wss://relay.nostraco.in"
+    };
+    signAndBroadcastEvent(event2, null);
+
     let event = {
         kind: 0,
         pubkey: await chooseNostrPublicKey(),
@@ -12243,20 +12289,10 @@ async function setNostrProfile() {
             name: name,
             about: about,
             picture: picture,
-            nip05: pagingid.replace('@', '') + "@member.cash"
+            nip05: pagingid.replace('@', '') + "@nostraco.in"
         })
     }
-    signAndBroadcastEvent(event, function () { updateStatus(`Set ${name}`) });
-
-    let event2 = {
-        kind: 2,
-        pubkey: await chooseNostrPublicKey(),
-        created_at: Math.floor(Date.now() / 1000),
-        tags: [],
-        content: "wss://nostr.member.cash"
-    };
-
-    signAndBroadcastEvent(event2, null);
+    return signAndBroadcastEvent(event, function () { updateStatus(`Set ${name}`) });
     
 }
 
@@ -12271,7 +12307,7 @@ async function setNostrProfile(name,value){
         content: {}
     }
     event.content[name]=value;
-    signAndBroadcastEvent(event, function(){updateStatus(`Set ${name}`)});
+    return await signAndBroadcastEvent(event, function(){updateStatus(`Set ${name}`)});
 }*/
 
 /*
@@ -12292,7 +12328,7 @@ async function nostrPinPost(pinPostHashHex) {
         tags: [['e', pinPostHashHex]],
         content: 'pinpost'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 // Follow user 	0x6d06 	address(20)
@@ -12309,7 +12345,7 @@ async function sendNostrFollow(followpubkey) {
         tags: [[keytype, followpubkey]],
         content: 'addfollow'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 //Unfollow user 0x6d07 address(20)  
@@ -12326,7 +12362,7 @@ async function sendNostrUnFollow(followpubkey) {
         tags: [[keytype, followpubkey]],
         content: 'unfollow'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 async function sendNostrMute(followpubkey) {
@@ -12342,7 +12378,7 @@ async function sendNostrMute(followpubkey) {
         tags: [[keytype, followpubkey]],
         content: 'mute'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 async function sendNostrUnMute(followpubkey) {
@@ -12358,7 +12394,7 @@ async function sendNostrUnMute(followpubkey) {
         tags: [[keytype, followpubkey]],
         content: 'unmute'
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 
@@ -12371,7 +12407,7 @@ async function sendNostrSub(topicHOSTILE) {
         tags: [],
         content: topicHOSTILE
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 async function sendNostrUnSub(topicHOSTILE) {
@@ -12383,7 +12419,7 @@ async function sendNostrUnSub(topicHOSTILE) {
         tags: [],
         content: topicHOSTILE
     }
-    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event, null);
 }
 
 // Need rating action
@@ -12406,8 +12442,6 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
         content: comment
     };
 
-    signAndBroadcastEvent(event2, successFunction, useNOS2Xifavailable);
-
 
     let event = {
         kind: 1,
@@ -12418,6 +12452,7 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
     };
 
     signAndBroadcastEvent(event, null, useNOS2Xifavailable);
+    return await signAndBroadcastEvent(event2, successFunction, useNOS2Xifavailable);
 
     
 }
@@ -12425,5 +12460,5 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
 // skip for now
 //async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null)
 
-var version = '8.14.2'; 
+var version = '9.0.1'; 
 if (init) { init(); } 
