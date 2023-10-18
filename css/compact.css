@@ -2802,7 +2802,8 @@ a.memberlinkbutton:hover {
 .populate-send-message,
 .displaymining,
 .showmembercoinmining,
-
+.usdbalance,
+.sendusd,
 .displaycontact {
   display: none;
 }

@@ -290,7 +290,7 @@ function showNewPost(txid, sourcenetwork) {
 function showNotifications(start, limit, qaddress, txid, nfilter, minrating) {
 
     highlightmajornavbutton("notificationsbutton");
-    if (pubkey == "" || pubkey == null || pubkey == undefined) {
+    if (pubkeyhex == "" || pubkeyhex == null || pubkeyhex == undefined) {
         showPFC(0, numbers.results, 'posts');
         return;
     }
@@ -299,7 +299,7 @@ function showNotifications(start, limit, qaddress, txid, nfilter, minrating) {
     if (!minrating) {
         minrating = 2;
     }
-    getAndPopulateNotifications(start, limit, "notifications", pubkey, txid, nfilter, minrating);
+    getAndPopulateNotifications(start, limit, "notifications", pubkeyhex, txid, nfilter, minrating);
 
 }
 

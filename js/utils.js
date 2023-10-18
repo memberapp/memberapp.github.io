@@ -750,9 +750,9 @@ function getLinkMessage(legacyaddress) {
   }
 }*/
 
-function bechifylink(linkelement,txid){
-  linkelement.href=`https://snort.social/e/`+bech32Encode('note',txid);
-}
+//function bechifylink(linkelement,txid){
+//  linkelement.href=`https://snort.social/e/`+bech32Encode('note',txid);
+//}
 
 function bech32Encode(stub,theString){
   if (!window.bech32converter){
@@ -762,14 +762,11 @@ function bech32Encode(stub,theString){
   return window.bech32converter(stub).toBech32('0x'+theString);
 }
 
-function getImpliedBitcoinAddress(namepubkey) {
-  if (namepubkey.length == 64) namepubkey = '02' + namepubkey;
-  return pubkeyhexToLegacy(namepubkey);
-}
-
 function htmlToElement(html) {
   var template = document.createElement('template');
   html = html.trim(); // Never return a text node of whitespace as the result
   template.innerHTML = html;
   return template.content.firstChild;
 }
+
+

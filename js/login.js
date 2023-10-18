@@ -3,21 +3,21 @@
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
-var privkey = ""; //Private Key
-var privkeyhex = "";
-var privateKeyBuf;
 //var nostrPrivKeyHex = "";
 var nostrPubKeyHex = "";
 
-var chainheight = 0;
-var chainheighttime = 0;
 
-//var qpubkey = ""; //Public Key (q style address)
-var pubkeyhex = ""; //Public Key, full hex
-var pubkeyhexsign = ""; //Public Key, full hex
+var privkey = ""; //Private Key
+var privkeyhex = "";
+var pubkeyhexsigned = ""; //Public Key, full hex
+var pubkeyhex = ""; //Public Key, minus sign
+//var pubkeyhexsign = ""; //Public Key, sign, sometimes empty
 var bitcloutaddress = ""; //Bitclout address
 
 let tq = null;
+var chainheight = 0;
+var chainheighttime = 0;
+
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var cytoscape = null;
 var bip39 = null;
@@ -78,7 +78,7 @@ function setLanguage() {
 async function init() {
 
     if (window.location.protocol == "file:") {
-        await loadScript("configlocal.js?"+version);
+        await loadScript("configlocal.js?" + version);
     }
 
     setLanguage();
@@ -86,7 +86,7 @@ async function init() {
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
     //document.getElementById('header').innerHTML = headerHTML;
-    document.getElementById('header').innerHTML = templateReplace(headerHTML, {logowide:logowide, logoicon:logoicon}, true);
+    document.getElementById('header').innerHTML = templateReplace(headerHTML, { logowide: logowide, logoicon: logoicon }, true);
 
     document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
     document.getElementById('pagetitle').innerHTML = pageTitleHTML;
@@ -109,27 +109,25 @@ async function init() {
         document.getElementById('developmentversion').style.display = 'block';
         profilepicbase = `${pathpermalinks}/img/profilepics/`;
     }
-    var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
-    var loginprivkey = localStorageGet(localStorageSafe, "privkey");
-    var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
+    
+    //var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
+    //var loginprivkey = localStorageGet(localStorageSafe, "privkey");
+    //var loginpubhexkey = localStorageGet(localStorageSafe, "pubhexkeyfull");
 
-    getBitCloutLoginFromLocalStorage();
+
+    //getBitCloutLoginFromLocalStorage();
 
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 
-    if (loginmnemonic != "null" && loginmnemonic != null && loginmnemonic != "") {
+    trylogin();
+    /*if (loginmnemonic) {
         trylogin(loginmnemonic);
-        return;
-    } if (loginprivkey != "null" && loginprivkey != null && loginprivkey != "") {
+    } else if (loginprivkey) {
         trylogin(loginprivkey);
-        return;
-    } else if (loginpubkey != "null" && loginpubkey != null && loginpubkey != "") {
-        trylogin(loginpubkey);
-        return;
-    }
+    } else if (loginpubhexkey) {
+        trylogin(loginpubhexkey);
+    }*/
 
-
-    
     displayContentBasedOnURLParameters();
     loadBigLibs();
 }
@@ -147,18 +145,26 @@ function getAndSetVersion() {
         });
 }*/
 
-async function nos2xlogin(){
+async function nos2xlogin() {
     let pubKeyToUse;
-    try{
-        pubKeyToUse=await window.nostr.getPublicKey();
+    try {
+        if (!window.nostr) {
+            alert('nos2x browser extension not found.');
+            return;
+        }
+        pubKeyToUse = await window.nostr.getPublicKey();
         if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
-        pubKeyToUse = window.bech32converter('npub').toBech32('0x'+pubKeyToUse);
+        pubKeyToUse = window.bech32converter('npub').toBech32('0x' + pubKeyToUse);
 
-    }catch(error){
-        document.getElementById('loginerror').innerHTML = "nos2x error:"+error.message;
+    } catch (error) {
+        document.getElementById('loginerror').innerHTML = "nos2x error:" + error.message;
         console.log(error);
     }
-    trylogin(pubKeyToUse);
+    if (pubKeyToUse) {
+        trylogin(pubKeyToUse);
+    } else {
+        alert('nos2x public key not provided.');
+    }
 }
 
 function trylogin(loginkey, nextpage) {
@@ -178,10 +184,9 @@ function trylogin(loginkey, nextpage) {
         document.getElementById('readonlyversion').style.display = 'block';
     }
 
-    //getAndPopulateTopicList(false);
-    if(newlygeneratedaccount){
+    if (newlygeneratedaccount) {
         displayContentBasedOnURLParameters('#settings');
-    }else{
+    } else {
         displayContentBasedOnURLParameters(nextpage);
     }
     //make sure these get loaded
@@ -197,8 +202,8 @@ async function loadBigLibs() {
 
     if (!bip39) loadScript("js/lib/bip39.browser.js");
     if (!window.bitcoinjs) loadScript(bitcoinjslib);
-    if (!window.NostrTools)  loadScript("js/lib/nostr.bundle.1.0.1.js");
-    if (!window.bech32converter)  loadScript("js/lib/bech32-converting-1.0.9.min.js");
+    if (!window.NostrTools) loadScript("js/lib/nostr.bundle.1.0.1.js");
+    if (!window.bech32converter) loadScript("js/lib/bech32-converting-1.0.9.min.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) loadScript("js/lib/elliptic.min.js");
     if (!pako) loadScript("js/lib/pako.2.0.4.min.js");
@@ -209,57 +214,55 @@ async function loadBigLibs() {
 }
 
 
-async function login(loginkey) {
+async function login(loginkey) { //login should throw error if not successful
 
     mnemonic = localStorageGet(localStorageSafe, "mnemonic");
     privkey = localStorageGet(localStorageSafe, "privkey");
-    pubkey = localStorageGet(localStorageSafe, "pubkey");
-    //qpubkey = localStorageGet(localStorageSafe, "qpubkey");
-    pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
-    pubkeyhexsign = localStorageGet(localStorageSafe, "pubkeyhexsign");
     privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
-    bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
+    pubkeyhexsigned = localStorageGet(localStorageSafe, "pubkeyhexsigned");
+    pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
+    //bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
     //nostrPrivKeyHex = localStorageGet(localStorageSafe, "nostrprivkeyhex");
     //nostrPubKeyHex = localStorageGet(localStorageSafe, "nostrpubkeyhex");
 
-
-    loginkey = loginkey.trim();
         
-    if (!(pubkey) || (privkey && !privkeyhex)) {
+    
+
+    if (!pubkeyhexsigned) { //no info for this user, full login
+        if(!loginkey)return; //no login key
+        loginkey = loginkey.trim();
+
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
-        //note, pubkeyhex won't be available in public key mode
 
         //check valid private or public key
-        var publicaddress = "";
+
 
         if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
         if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
 
-        let userLoggedInWithnsec = false;
-        if (loginkey.startsWith("nsec")) {
-            userLoggedInWithnsec = true;
-            //Nostr bech32 encoded private key
-            if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
-            let hexkey = window.bech32converter('nsec').toHex(loginkey).slice(2).toLowerCase();
-            let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexkey,'hex'));
-            loginkey=ecpair.toWIF();
-            //nostrPrivKeyHex = ecpair.privateKey.toString('hex');
-            //nostrPubKeyHex = ecpair.publicKey.toString('hex').slice(2);
 
-            //setNostrKeys(ecpair);
-            //Note, cannot use this key directly as it is used for EDDSA,
-            //There is a theoretical risk if also using for ECDSA sigs
-            //Hash the key, use as a source of entropy to generate mnemonic
-            //if (!eccryptoJs) {await loadScript("js/lib/eccrypto-js.js");}
-            //let hashprivkey = await eccryptoJs.sha256(await eccryptoJs.sha256(new Buffer(nostrPrivKeyHex,'hex')));
-            //hashprivkey = hashprivkey.toString('hex');
-            //hashprivkey = hashprivkey.slice(0,32);
-            //loginkey = bip39.entropyToMnemonic(new Buffer(hashprivkey,'hex'));
+        if (loginkey.startsWith("nsec")) {
+            //Nostr bech32 encoded private key
+            if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+            let hexkey = window.bech32converter('nsec').toHex(loginkey).slice(2).toLowerCase();
+            let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexkey, 'hex'));
+            loginkey = ecpair.toWIF();
         }
 
-        let loginkeylowercase=loginkey.toLowerCase();
+        let loginkeylowercase = loginkey.toLowerCase();
+
+        /*
+        if (loginkeylowercase.startsWith("npub")) {
+            //Nostr bech32 encoded public key
+            if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+            nostrPubKeyHex = window.bech32converter('npub').toHex(loginkey).slice(2).toLowerCase();
+            //Generate a new seed phrase
+            if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
+            loginkeylowercase = bip39.generateMnemonic();
+        }*/
+
         if (bip39.validateMnemonic(loginkeylowercase)) {
             let seed = bip39.mnemonicToSeedSync(loginkeylowercase);
             let root = window.bitcoinjs.bip32.fromSeed(seed);
@@ -268,45 +271,29 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "mnemonic", loginkeylowercase);
             mnemonic = loginkeylowercase;
             loginkey = newloginkey;
-
-            //if(!nostrPrivKeyHex){ //if the user logged in with an nsec, the priv/pub keys are already set!
-            //    let nostrKey = root.derivePath("44'/1237'/0'/0/0");
-            //    setNostrKeys(nostrKey);
-            //}
-
-
-
-
-            //pubkeyhex = ecpair.publicKey.toString('hex');
-            //privkeyhex = ecpair.privateKey.toString('hex');
-            
         }
 
+        //Login will now either be a wif, or a public key, or a user name, or an error
+
         try {
-            if (loginkey.startsWith("nostracoin:") || loginkey.startsWith("member:") || loginkey.startsWith("bitcoincash:")) {
-                publicaddress = cashaddrToLegacy(loginkey);
-            } 
-            else if (loginkey.startsWith("npub")) {
-                //Nostr bech32 encoded public key
-                if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
-                let hexkey = window.bech32converter('npub').toHex(loginkey).slice(2).toLowerCase();
-                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: Buffer.from('02'+hexkey, 'hex') }).address;
-            }
-            else if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
-                let ecpair = window.bitcoinjs.ECPair.fromWIF(loginkey);
-                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+            if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
                 privkey = loginkey;
                 document.getElementById('loginkey').value = "";
-            } else if (loginkey.startsWith("BC1")) {
+            } else if (loginkey.startsWith("npub")) {
+                //Nostr bech32 encoded public key
+                if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+                nostrPubKeyHex = window.bech32converter('npub').toHex(loginkey).slice(2).toLowerCase();
+                //Generate a new seed phrase
+                if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
+                loginkeylowercase = bip39.generateMnemonic();
+            }
+            // other wise try logging in with other types of public keys, bitclout, memo, hive etc 
+            /*else if (loginkey.startsWith("BC1")) {
                 var preslice = window.bs58check.decode(loginkey);
                 var bcpublicKey = preslice.slice(3);
                 checkIfBitcloutUser(new Buffer(bcpublicKey).toString('hex'));
-                var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(bcpublicKey));
-                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
-            } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
-                window.bitcoinjs.address.toOutputScript(loginkey);//this will throw error if address is not valid
-                publicaddress = loginkey;
-            } else {
+            }*/
+            else {
                 throw Error('No login key recognized');
             }
         } catch (err) {
@@ -314,17 +301,10 @@ async function login(loginkey) {
                 var theURL = dropdowns.contentserver + '?action=usersearch&searchterm=' + encodeURIComponent(loginkey);
                 getJSON(theURL).then(function (data) {
                     if (data && data.length > 0) {
-                        //Nostr won't have a bitcoin address associated with it - use representative one
-                        //if(!qaddress || qaddress=='null'){
-                        let namepubkey=data[0].publickey;
-                        if (namepubkey.length==64)namepubkey='02'+namepubkey;
-                        var qaddress=pubkeyhexToLegacy(namepubkey);
-                        //}
-                        
-                        if(qaddress && qaddress.length>21){
-                            trylogin(qaddress);
+                        let namepubkey = data[0].publickey;
+                        if (namepubkey && namepubkey.length == 64) {
+                            trylogin(window.bech32converter('npub').toBech32('0x' + namepubkey), '#mypeople');
                         }
-                        
                         return;
                     } else {
                         alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
@@ -340,40 +320,30 @@ async function login(loginkey) {
             return;
         }
 
-        pubkey = publicaddress.toString();
-        localStorageSet(localStorageSafe, "pubkey", pubkey);
-
+        //set the signed, compressed public key
         if (privkey) {
             let ecpair = new window.bitcoinjs.ECPair.fromWIF(privkey);
-            let pubkeyhexfull=ecpair.publicKey.toString('hex');
-            pubkeyhexsign = pubkeyhexfull.slice(0,2);
-            pubkeyhex = pubkeyhexfull.slice(2);
-            
             privkeyhex = ecpair.privateKey.toString('hex');
-
             localStorageSet(localStorageSafe, "privkey", privkey);
-            localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
-            localStorageSet(localStorageSafe, "pubkeyhexsign", pubkeyhexsign);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
-            
-            //if(newlygeneratedaccount || userLoggedInWithnsec){
-            //    linkNostrAccount(false); //link the nostr public key to the member key
-            //}
-            //dropdowns.utxoserver
-            if(allowBitcloutUser){
-                checkIfBitcloutUser(pubkeyhex);
-            }
-            //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
+            pubkeyhexsigned = ecpair.publicKey.toString('hex');
+        } else if (nostrPubKeyHex) {
+            pubkeyhexsigned = getYSign(nostrPubKeyHex)+nostrPubKeyHex;
         }
 
-
+        /*
+ if(allowBitcloutUser){
+     checkIfBitcloutUser(pubkeyhex);
+ }
+ //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
+ */
 
     }
 
-    if (privkey) {
-        privateKeyBuf = Buffer.from(privkeyhex, 'hex');
-    }
-
+    pubkeyhex = pubkeyhexsigned.slice(2);
+    nostrPubKeyHex = pubkeyhex; //might set these differently for future feature
+    localStorageSet(localStorageSafe, "pubkeyhexsigned", pubkeyhexsigned);
+    localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
 
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
@@ -389,8 +359,8 @@ async function login(loginkey) {
     document.getElementById('loginkey').value = "";
 
     //, nostrpubkey:nostrPubKeyHex bech32 lib may not be available yet
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength, siteTitle:siteTitle}, true);
-    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, { version: version, dust: nativeCoin.dust, maxprofilelength: maxprofilelength, siteTitle: siteTitle, pathpermalinks: pathpermalinks }, true);
+    //document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
 
     updateSettings();
     getAndPopulateSettings();
@@ -399,13 +369,13 @@ async function login(loginkey) {
     //getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     //Register public key with content server to prepare feeds faster    
-    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkeyhexsign+pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
+    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     loadStyle();
 
     //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
     if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
-    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost",nativeCoin.satsPerByte,nativeCoin.interestExponent,nativeCoin.dust);
+    tq = new TransactionQueue(pubkeyhexToLegacy(pubkeyhexsigned), privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost", nativeCoin.satsPerByte, nativeCoin.interestExponent, nativeCoin.dust);
     tq.refreshPool();
 
     if (!privkey) {
@@ -436,14 +406,14 @@ function loadStyle() {
     }
 }
 
-var newlygeneratedaccount=false;
+var newlygeneratedaccount = false;
 async function createNewAccount() {
     if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
     let mnemonictemp = bip39.generateMnemonic();
     document.getElementById('newseedphrasedescription').style.display = "inline";
     document.getElementById('newseedphrase').textContent = mnemonictemp;
     document.getElementById('loginkey').value = mnemonictemp;
-    newlygeneratedaccount=true;
+    newlygeneratedaccount = true;
 }
 
 /*function setNostrKeys(nostrKey){
@@ -477,16 +447,18 @@ function logout() {
     bitcloutlogout();
 
     privkey = "";
+    privkeyhex = "";
+    pubkeyhexsigned = ""
     pubkey = "";
     mnemonic = "";
     privateKeyBuf = "";
     //nostrPrivKeyHex = "";
     //nostrPubKeyHex = "";
     pubkeyhex = ""; //Public Key, full hex
-    pubkeyhexsign = ""; //Public Key, full hex
+    //pubkeyhexsign = ""; //Public Key, full hex
     bitcloutaddress = ""; //Bitclout address
     tq = null;
-    
+
     document.getElementById('loggedout').style.display = "flex";
     document.getElementById('loggedin').style.display = "none";
     document.getElementById('profilebutton').style.display = "none";

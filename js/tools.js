@@ -85,14 +85,14 @@ async function postprivatemessage() {
     var publickey = document.getElementById("messagepublickey").textContent;
 
     let preEncryptedMessage;
-    if (privateKeyBuf) {
+    if (privkey) {
         // Encrypt the message
         const pubKeyBuf = Buffer.from(publickey, 'hex');
         const data = Buffer.from(text);
         //const structuredEj = await eccryptoJs.encrypt(pubKeyBuf, data);
         //const encryptedMessage = eccryptoJs.serialize(structuredEj).toString('hex');
         let uncompressedPublicKeySender = Buffer.from(window.ec.keyFromPublic(pubKeyBuf, 'hex').getPublic(false, 'hex'), 'hex');
-        preEncryptedMessage = bcencryptShared(privateKeyBuf, uncompressedPublicKeySender, data, null).toString('hex');
+        preEncryptedMessage = bcencryptShared(Buffer.from(privkeyhex, 'hex'), uncompressedPublicKeySender, data, null).toString('hex');
     }
 
     var successFunction = privateMessagePosted;
@@ -156,11 +156,11 @@ async function sendfunds() {
     }
 
     if (sendAddress.startsWith("q")) {
-        sendAddress = "member:" + sendAddress;
+        sendAddress = nativeCoin.addressprefix + sendAddress;
     }
 
     //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
-    if (sendAddress.startsWith("member:")) {
+    if (sendAddress.startsWith(nativeCoin.addressprefix)) {
         sendAddress = await cashaddrToLegacy(sendAddress);
     }
 
@@ -330,5 +330,21 @@ function updateBalance(dynamicChainHeight, showLowFunds = false) {
 }
 
 
+// Consts for secp256k1 curve.
+// https://en.bitcoin.it/wiki/Secp256k1
 
+
+function getYSign( comp ) {
+    let prime = new bigInt('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16),
+    pIdent = prime.add(1).divide(4);
+    let x = new bigInt(comp, 16);
+    // y mod p = +-(x^3 + 7)^((p+1)/4) mod p
+    let y = x.modPow(3, prime).add(7).mod(prime).modPow( pIdent, prime );
+    // If the parity doesn't match it's the *other* root
+    if(y.mod(2).toJSNumber()!=0){
+        return '03';
+    }else{
+        return '02';
+    }
+}
 

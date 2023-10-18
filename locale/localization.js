@@ -159,7 +159,7 @@ dictionary.en=
   "VV0153": "comments",
   "VV0154": "sending...",
   "VV0155": "reply",
-  "VV0156": "remembers",
+  "VV0156": "reposts",
   "VV0157": "tip",
   "VV0158": "quote",
   "VV0159": "+more",

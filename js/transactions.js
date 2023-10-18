@@ -1,9 +1,7 @@
 "use strict";
 
 function checkForPrivKey() {
-    if (isBitCloutUser()) {
-        return true;
-    }
+    //if (isBitCloutUser()) {return true;}
     return checkForNativeUser();
 }
 
@@ -29,9 +27,9 @@ function checkForNativeUserAndHasBalance() {
 }
 
 async function sendRating(rating, ratingText, pageName, targetpublickey) {
-    
-    //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
+    if (!checkForPrivKey()) return false;
 
+    //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
     //if (!checkForPrivKey()) return false;
     var comment = "";
     if (ratingText) {
@@ -39,9 +37,10 @@ async function sendRating(rating, ratingText, pageName, targetpublickey) {
     }
     
     let addresshandle='';
-    let targetpublickey66=targetpublickey;
-    if(targetpublickey66.length==64){targetpublickey66='02'+targetpublickey66;}//nostr style public key.
-    theAddress=pubkeyhexToLegacy(targetpublickey66);
+
+    //let targetpublickey66=targetpublickey;
+    //if(targetpublickey66.length==64){targetpublickey66='02'+targetpublickey66;}//nostr style public key.
+    //theAddress=pubkeyhexToLegacy(targetpublickey66);
 
     if(targetpublickey.length==64){
         addresshandle = window.bech32converter('npub').toBech32('0x'+targetpublickey);
@@ -51,13 +50,13 @@ async function sendRating(rating, ratingText, pageName, targetpublickey) {
 
 
     
-    if (checkForNativeUserAndHasBalance()) {
-        rateCallbackAction(rating, comment, theAddress);
-    }
+    //if (checkForNativeUserAndHasBalance()) {
+    //    rateCallbackAction(rating, comment, theAddress);
+    //}
 
-    if (isBitCloutUser()) {
-        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
-    }
+    //if (isBitCloutUser()) {
+    //    sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
+    //}
     let event= await sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + addresshandle, null, targetpublickey, true, rating, comment);
     sendWrappedEvent(event);
     
@@ -127,14 +126,14 @@ function sendWrappedEvent(event, callback) {
 
 
 async function setName() {
-    var newName = document.getElementById('settingsnametext').value;
-
+    if (!checkForPrivKey()) return false;
     //setNostrProfile('name',newName);
     let event= await setNostrProfile();
     sendWrappedEvent(event);
 
+    var newName = document.getElementById('settingsnametext').value;
+    /*
     if (!checkForNativeUserAndHasBalance()) return false;
-
 
     document.getElementById('settingsnametextbutton').disabled = true;
     document.getElementById('settingsnametext').disabled = true;
@@ -147,6 +146,7 @@ async function setName() {
 
     //TODO, on error, this should really enable the text field and text button again
     tq.queueTransaction(tx);
+    */
 }
 
 
@@ -403,12 +403,14 @@ function memoPinPost(txid, privkey) {
 }
 
 async function setProfile() {
+    if (!checkForPrivKey()) return false;
 
-    var newProfile = document.getElementById('settingsprofiletext').value;
     let event= await setNostrProfile();
     sendWrappedEvent(event);
-    //setNostrProfile('about',newProfile);
-
+    
+    /*
+    var newProfile = document.getElementById('settingsprofiletext').value;
+    
     if (!checkForNativeUserAndHasBalance()) return false;
 
     document.getElementById('settingsprofiletextbutton2').disabled = true;
@@ -419,7 +421,7 @@ async function setProfile() {
         cash: { key: privkey }
     }
     updateStatus(getSafeTranslation('settingprofile', "Setting Profile"));
-    tq.queueTransaction(tx);
+    tq.queueTransaction(tx);*/
 }
 
 
@@ -453,9 +455,6 @@ function unsubTransaction(topicHOSTILE) {
 }
 
 function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey) {
-    //if(!qaddress){
-    //let qaddress=getImpliedBitcoinAddress(targetpublickey);
-    //}
     try {
         //document.getElementById(removeElementID).style.display = "none";
         //var addressraw = getLegacyToHash160(qaddress);
@@ -471,86 +470,98 @@ function addressTransaction(removeElementID, actionCode, statusMessage, targetpu
 }
 
 async function follow(targetpublickey) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     let event= await sendNostrFollow(targetpublickey);
     sendWrappedEvent(event); 
 
+    /*
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey);
     }
     if (isBitCloutUser()) {
         sendBitCloutFollow(targetpublickey);
-    }
+    }*/
     
 }
 
 async function unfollow(targetpublickey) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     let event= await sendNostrUnFollow(targetpublickey);
     sendWrappedEvent(event);
 
+    /*
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey);
     }
     if(isBitCloutUser()){
         sendBitCloutUnFollow(targetpublickey);
-    }
+    }*/
     
 }
 
 async function mute(targetpublickey) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     let event= await sendNostrMute(targetpublickey);
     sendWrappedEvent(event);
 
+    /*
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey);
     }
     //if(isBitCloutUser()){
     //    sendBitCloutMute(targetpublickey);
     //}
+    */
 }
 
 async function unmute(targetpublickey) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     let event= await sendNostrUnMute(targetpublickey);
     sendWrappedEvent(event);
 
+    /*
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey);
     }
     //if(isBitCloutUser()){
     //    sendBitCloutUnMute(targetpublickey);
     //}
+    */
 }
 
 async function sub(topicHOSTILE) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     
-    if (checkForNativeUserAndHasBalance()) {
-        subTransaction(topicHOSTILE);
-    }
     let event= await sendNostrSub(topicHOSTILE);
     sendWrappedEvent(event);
 
+    /*
+    if (checkForNativeUserAndHasBalance()) {
+        subTransaction(topicHOSTILE);
+    }
+    
     //if(isBitCloutUser()){
     //    sendBitCloutSub(topicHOSTILE);
     //}
+    */
 }
 
 async function unsub(topicHOSTILE) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
     }
+    
+    /*
     let event= await sendNostrUnSub(topicHOSTILE);
     sendWrappedEvent(event);
 
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);
     //}
+    */
 }
 
 

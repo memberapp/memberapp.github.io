@@ -50,7 +50,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkeyhex.slice(0, 16) + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
     getJSON(theURL).then(function (data) {
 
         updateUSDRate(data);
@@ -200,7 +200,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
         console.log(err);
     }
 
-    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkeyhex.slice(0,16) + '&messagetype=' + messagetype;
+    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkeyhex.slice(0, 16) + '&messagetype=' + messagetype;
     getJSON(theURL).then(async function (data) {
 
         if (!eccryptoJs) {
@@ -244,7 +244,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
     //If no post is specified, we'll use it as a top level
     if (txid === undefined || txid == "") { txid = roottxid; }
 
-    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkeyhex.slice(0,16) + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkeyhex.slice(0, 16) + '&txid=' + txid;
     getJSON(theURL).then(async function (data) {
         updateUSDRate(data);
         //Server bug will sometimes return duplicates if a post is liked twice for example,
@@ -356,7 +356,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
 function getAndPopulateTopic(topicNameHOSTILE) {
     var page = "topicmeta";
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkeyhex;
     getJSON(theURL).then(function (data) {
         updateUSDRate(data);
         //todo, move this to htmlquarantine.
@@ -393,7 +393,7 @@ function getAndPopulateTopicList(showpage) {
         show(page);
     }
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkeyhex;
     getJSON(theURL).then(function (data) {
         updateUSDRate(data);
         /*
@@ -449,7 +449,7 @@ function getAndPopulateQuoteBox(txid) {
     showOnly(page);
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkeyhex.slice(0,16) + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkeyhex.slice(0, 16) + '&txid=' + txid;
     getJSON(theURL).then(function (data) {
         var contents = "";
         if (data[0]) {
@@ -487,9 +487,9 @@ function addDynamicHTMLElements(data) {
     //but the min-height can cause the image to be shown incorrectly
     let images = document.getElementsByClassName('imgurimage');
     for (let i = 0; i < images.length; i++) {
-        if(images[i].complete){
+        if (images[i].complete) {
             images[i].style.minHeight = '0';
-        }else{
+        } else {
             images[i].addEventListener('load', function () {
                 this.style.minHeight = '0';
             });
@@ -562,7 +562,7 @@ function showScoresExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0, 16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -582,7 +582,7 @@ function showRemembersExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0, 16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -751,7 +751,7 @@ function showReplyButton(txid, page, divForStatus) {
 }
 
 async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     if (replytext.length == 0) {
@@ -764,9 +764,7 @@ async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid
     document.getElementById("replycompleted" + page + txid).textContent = "";
 
     var replytext = document.getElementById("replytext" + page + txid).value;
-    const replyhex = new Buffer(replytext).toString('hex');
-    //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
-    //no wait for the first reply
+
 
     let successfunctionCompleted = false;
     var successFunction =
@@ -774,20 +772,24 @@ async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid
             if (!successfunctionCompleted) {
                 successfunctionCompleted = true; //ensure it only gets sent once
                 replySuccessFunction(page, txid);
-                if (isBitCloutUser() && parentSourceNetwork == 1) {
+                /*if (isBitCloutUser() && parentSourceNetwork == 1) {
                     sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
                     //sendBitCloutQuotePost(pathpermalinks+"/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
-                }
+                }*/
             }
         };
 
-    if (checkForNativeUserAndHasBalance()) {
-        sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
-        //successFunction = null;
-    }
-
+    //Get the event and send it to relays
     let event = await sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
-    sendWrappedEvent(event);
+
+    //Send nostr event wrapped to nostracoin
+    sendWrappedEvent(event, successFunction);
+
+    //Send event as memo protocol to native chain
+    //if (checkForNativeUserAndHasBalance()) {
+    //    const replyhex = new Buffer(replytext).toString('hex');
+    //    sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
+    //}
 
     return true;
 }
@@ -875,28 +877,28 @@ function increaseGUIReposts(txid) {
 }
 
 async function pinpost(txid) {
+    if (!checkForPrivKey()) return false;
     //If bitclout user is logged in
-    if (isBitCloutUser()) {
-        bitCloutPinPost(txid, pubkey);
-    }
+    //if (isBitCloutUser()) {
+    //    bitCloutPinPost(txid, pubkey);
+    //}
 
-    if (checkForNativeUserAndHasBalance()) {
-        memoPinPost(txid, privkey);
-    }
+    //if (checkForNativeUserAndHasBalance()) {
+    //    memoPinPost(txid, privkey);
+    //}
 
-    let event= await nostrPinPost(txid);
+    let event = await nostrPinPost(txid);
     sendWrappedEvent(event);
 
 }
 
 async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
+    if (!checkForPrivKey()) return false;
+
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
-
-    //if no identity login, then check for priv key 
-    //if (!checkForPrivKey()) return false;
-
+    
     //GUI update
     increaseGUILikes(txid);
     if (amountSats >= nativeCoin.dust) {
@@ -906,24 +908,26 @@ async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null)
     }
 
     //If bitclout user is logged in
-    if (isBitCloutUser()) {
-        bitCloutLikePost(origtxid);
-    }
+    //if (isBitCloutUser()) {bitCloutLikePost(origtxid);}
+
+    let event = await nostrLikePost(origtxid, roottxid);
+    sendWrappedEvent(event);
 
     //If memo user is logged in
     if (checkForNativeUserAndHasBalance()) {
         if (amountSats >= nativeCoin.dust) {
             sendTipRaw(origtxid, tipAddress, amountSats, privkey, null);
-        } else {
-            sendLike(origtxid, privkey);
         }
+        /* else {
+            sendLike(origtxid, privkey);
+        }*/
     }
 
-    let event = await nostrLikePost(origtxid, roottxid);
-    sendWrappedEvent(event);
+
 }
 
 async function dislikePost(txid, origtxid, roottxid = null) {
+    if (!checkForPrivKey()) return false;
     decreaseGUILikes(txid);
 
     if (checkForNativeUserAndHasBalance()) {
@@ -934,16 +938,17 @@ async function dislikePost(txid, origtxid, roottxid = null) {
 }
 
 async function repostPost(txid, origtxid, sourcenetwork) {
+    if (!checkForPrivKey()) return false;
 
     increaseGUIReposts(txid);
 
-    if (isBitCloutUser()) {
+    /*if (isBitCloutUser()) {
         bitCloutRePost(origtxid, sourcenetwork);
-    }
+    }*/
 
-    if (checkForNativeUserAndHasBalance()) {
+    /*if (checkForNativeUserAndHasBalance()) {
         repost(origtxid, privkey);
-    }
+    }*/
 
     let event = await nostrRePost(origtxid);
     sendWrappedEvent(event);

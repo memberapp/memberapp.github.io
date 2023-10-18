@@ -60,7 +60,7 @@ function getDataSettings(qaddress, cashaddress) {
 
     //document.getElementById('settingsanchor').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + pubkeyhex;
     getJSON(theURL).then(function (data) {
         if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         try {
@@ -306,6 +306,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
     obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+pubkeyhex);
     obj.siteTitle = siteTitle;
+    obj.pathpermalinks = pathpermalinks;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -330,41 +331,30 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 }
 
 async function populateTools() {
-
-    var bcaddress =pubkeyToBitcloutAddress(pubkeyhexsign+pubkeyhex);
     var obj = {
-        address: pubkey,
-        cashaddress: legacyToNativeCoin(pubkey),
-        bcaddress: bcaddress,
-        ticker: nativeCoin.ticker
+        address: pubkeyhexToLegacy(pubkeyhexsigned),
+        cashaddress: legacyToNativeCoin(pubkeyhexToLegacy(pubkeyhexsigned)),
+        bcaddress: pubkeyToBitcloutAddress(pubkeyhexsigned),
+        ticker: nativeCoin.ticker,
+        seedphrase:(mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey,
+        privatekey: privkey,
+
     };
-
-    obj.privatekey = privkey;
-    obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
-
     document.getElementById('toolsanchor').innerHTML = templateReplace(walletanchorHTML, obj);
-
-
-
 }
 
 
 async function getAndPopulateSettings() {
-    let cashaddr;
+    /*let cashaddr;
     try {
         cashaddr = legacyToNativeCoin(pubkey);
     } catch (err) {
         console.log(err);
-    }
-    getDataSettings(pubkey, cashaddr);
+    }*/
+    getDataSettings(pubkey, pubkey);
 }
 
 function updateSettings() {
-
-
-
-    //These may already be switched to qrcodes, so try/catch necessary
-    //try { document.getElementById('lowfundsaddress').innerHTML = qpubkey; } catch (err) { }
 
     var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");
     if (storedmutedwords != undefined && storedmutedwords != null) {

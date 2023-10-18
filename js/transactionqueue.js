@@ -471,7 +471,7 @@ var TransactionQueue = /** @class */ (function (_super) {
             transactionBuilder.enableBitcoinCash(true);
             this.sighashtouse = this.BCH_SIGHASH_ALL;
         }
-        transactionBuilder.maximumFeeRate = 10000; //For dogecoin
+        transactionBuilder.maximumFeeRate = 205000;
         //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
         if (scriptArray.length > 0) {
             transactionBuilder.addOutput(script2, 0);

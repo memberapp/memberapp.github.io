@@ -161,7 +161,7 @@ function memorandumPreview() {
 }
 
 async function geopost() {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
     var posttext = txtarea.value;
@@ -190,22 +190,23 @@ async function geopost() {
     let successFunction = geocompleted;
 
     let taggedPostText = posttext + ` \n${pathpermalinks}/geotag/` + geohash;
-    if (checkForNativeUserAndHasBalance()) {
-        //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
-        postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
-        //successFunction = null;
-    }
-    if (isBitCloutUser()) {
-        sendBitCloutPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
-    }
+    //if (checkForNativeUserAndHasBalance()) {
+    //    //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
+    //    postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
+    //    //successFunction = null;
+    //}
+    //if (isBitCloutUser()) {
+    //    sendBitCloutPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
+    //}
 
     let event = await sendNostrPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
-    sendWrappedEvent(event);
+    sendWrappedEvent(event, successFunction);
 
 }
 
 async function postmemorandum() {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
+    
     var posttext = document.getElementById('memorandumtitle').value;
     if (!posttext.includes('#')) {
         if (!confirm(getSafeTranslation('notagareyousure', `Are you sure you want to post this without a #hashtag?  Include a #hashtag to help members find your post. Click OK to post or Cancel to add a #hashtag.`))) {
@@ -254,18 +255,18 @@ async function postmemorandum() {
 
     if (txid) {
         //Repost
-        if (checkForNativeUserAndHasBalance()) {
-            //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
-            postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
-            //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
-            //successFunction = null;
-        }
-        if (isBitCloutUser()) {
-            sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
-        }
+        //if (checkForNativeUserAndHasBalance()) {
+        //    //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
+        //    postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
+        //    //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
+        //    //successFunction = null;
+        //}
+        //if (isBitCloutUser()) {
+        //    sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
+        //}
 
         let event= await sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
-        sendWrappedEvent(event);
+        sendWrappedEvent(event, successFunction);
     }
     else {
         //Don't post body if it is not visible - it may contain old elements that the user is not expecting to post
@@ -273,17 +274,17 @@ async function postmemorandum() {
             postbody = '';
         }
 
-        if (checkForNativeUserAndHasBalance()) {
-            postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
-            //successFunction = null;
-        }
-        if (isBitCloutUser()) {
-            sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
-        }
+        //if (checkForNativeUserAndHasBalance()) {
+        //    postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
+        //    //successFunction = null;
+        //}
+        //if (isBitCloutUser()) {
+        //    sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
+        //}
         
         //Should always be possible to send Nostr event if user is logged in.
         let event= await sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
-        sendWrappedEvent(event);
+        sendWrappedEvent(event, successFunction);
     }
 
     //if (typeof popupOverlay !== "undefined") {

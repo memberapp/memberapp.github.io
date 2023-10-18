@@ -192,17 +192,17 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n3">*Nostr Users. Use 'npub...' or 'nsec...' key or login with </span><a
-            onclick="nos2xlogin();return false;">nos2x</a><br />
+        <span data-vavilon="VV0019n3">Use 'npub...' or 'nsec...' key or </span><a
+            onclick="nos2xlogin();return false;">login with nos2x</a><br />
     </div>
-    <div class="loginnotes">
+    <!--<div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
             access.</span><br />
     </div>
     <div class="loginnotes">
         <span>*Memo Users. Your <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">private
                 key</a> starts with 'L..' or 'K..'</span>
-    </div>
+    </div>-->
 
     <br />
     <br />
@@ -249,15 +249,15 @@ var walletanchorHTML=`
         <div class="balancegroup">
             <span class="balancesatoshis" id="balancesatoshis">0</span>
             <span class="satoshis">(satoshis)</span>
+            <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
+            class="balancedetails">
+            <img src="img/icons/reload.png" alt="">
+        </span>
         </div>
-        <div class="balancegroup">
+        <div class="balancegroup usdbalance">
             <span class="approximatelyequal">≈</span>
             <span class="balanceusd" id="balanceusd">0</span>
             <span class="usd">(USD)</span>
-            <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
-                class="balancedetails">
-                <img src="img/icons/reload.png" alt="">
-            </span>
         </div>
     </div>
 
@@ -356,7 +356,7 @@ var newpostHTML=`
             onpaste="this.onchange();" oninput="this.onchange();">{defaulttag}</textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
     </div>
-    <form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
+    <!--<form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
         <label>
             <input name='firstfile' type="file" style="display: none;"
                 onchange="uploadFile('memorandumtitlefile','{fileuploadurl}','memorandumtitle','memorandumpreviewarea','uploadimagelink','uploadimagestatus',showMemorandumPreview,'memberimageurl');"
@@ -364,7 +364,7 @@ var newpostHTML=`
             <a id="uploadimagelink" data-vavilon="addimage">+add image</a>
         </label>
         <span style="display:none;" id="uploadimagestatus">uploading image . . .</span>
-    </form>
+    </form>-->
     <div class="articlebutton">
         <div id="memorandumtextbutton">
             <a data-vavilon="VV0039" href=""

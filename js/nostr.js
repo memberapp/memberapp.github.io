@@ -43,6 +43,7 @@ async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true
     relays.push("wss://relayable.org");
     relays.push("wss://relay.nostr.band");
     relays.push("wss://hk.purplerelay.com");
+    relays.push("wss://nostr.mutinywallet.com");
 
 
     sendNostrTransaction(JSON.stringify(event), null);
@@ -214,7 +215,7 @@ async function getNostrMetadata(txid, event, successFunction) {
         // Modify event
         // Insert root e before
         // Insert p after
-        return await signAndBroadcastEvent(event);
+        return await signAndBroadcastEvent(event, successFunction);
     } catch (err) {
         console.log(err);
         // Handle errors here if needed
@@ -530,10 +531,10 @@ async function sendNostrUnSub(topicHOSTILE) {
 async function sendNostrRating(posttext, successFunction, targetMember, useNOS2Xifavailable, rating, comment) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
-    let keytype = 'p';
-    if (targetMember.length == 66) {
-        keytype = 'cecdsa';
-    }
+    //let keytype = 'p';
+    //if (targetMember.length == 66) {
+    //    keytype = 'cecdsa';
+    //}
 
     let event2 = {
         kind: 6015,

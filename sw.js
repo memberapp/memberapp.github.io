@@ -12,7 +12,7 @@ const PRECACHE_URLS = [
 //If updating version here, also update version in index.html
 //Preferable to grab this from sw.js, maybe with messages
 //So must be entered in two places
-const version = '9.0.1';
+const version = '9.0.2';
 const siteurl = 'https://nostraco.in';
 const RUNTIME = 'runtime-' + version;
 const INSTALL = 'install-' + version;

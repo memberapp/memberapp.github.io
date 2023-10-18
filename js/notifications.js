@@ -19,8 +19,8 @@ function displayNotificationCount() {
             setAlertCount("alertcount", Number(data[0].count));
             setAlertCount("alertcountpm", Number(data[0].countpm));
 
-            var pageTitleCount = Number(data[0].count) + Number(data[0].countpm);
-            var pageTitle = "";
+            //var pageTitleCount = Number(data[0].count) + Number(data[0].countpm);
+            //var pageTitle = "";
             //if (pageTitleCount > 0) {
             //    pageTitle = "(" + pageTitleCount + ") ";
             //}
@@ -65,7 +65,7 @@ function populateNotificationTab(limit, nfilter, minrating) {
     <span class="separator"></span>
     <a data-vavilon="notificationmentions" data-vavilon_title="notificationmentions" title="See only mentions" class="`+ (nfilter == 'page' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=page` + options + `">Mentions</a>
     <span class="separator"></span>
-    <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+ (nfilter == 'repost' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=repost` + options + `">Remembers</a>
+    <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+ (nfilter == 'repost' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=repost` + options + `">Reposts</a>
     <span class="separator"></span>
     <!--<a data-vavilon="notificationpurchase" data-vavilon_title="notificationpurchase" title="See only creator coin purchases" class="`+ (nfilter == 'purchase' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=purchase` + options + `">Buys</a>
     <span class="separator"></span>

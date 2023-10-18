@@ -443,7 +443,7 @@ class TransactionQueue extends UTXOPool {
       this.sighashtouse=this.BCH_SIGHASH_ALL;
     }
 
-    transactionBuilder.maximumFeeRate=10000; //For dogecoin
+    transactionBuilder.maximumFeeRate=205000; //For nostracoin
     
     //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
     if (scriptArray.length > 0) {

@@ -253,7 +253,7 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     else if (sourcenetwork == 5) {
         //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
         //sourceNetworkHTML = `<a rel="noopener noreferrer" target="snort" href="https://snort.social/e/${bech32Encode('note',hivelink)}">snort</a>`; 
-        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostrgram" href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;    
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostrgram" href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;    
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">rss</a>';
     }
@@ -511,14 +511,14 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     var permalink = `p/` + santxid;
     var articlelink = `a/` + santxid;
     if (pathpermalinks) {
-        permalink = pathpermalinks + `p/` + origTXID.substr(0, 10);
-        articlelink = pathpermalinks + `a/` + origTXID.substr(0, 10);
+        permalink = pathpermalinks + `/p/` + origTXID.substr(0, 10);
+        articlelink = pathpermalinks + `/a/` + origTXID.substr(0, 10);
     }
 
     var directlink = "";
 
-    let sourceNetworkHTML;
-    let sourceNetworkImage;
+    let sourceNetworkHTML=``;
+    let sourceNetworkImage=``;
     if (sourcenetwork == 0) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}">Memo</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}"><img width='15' height='15' alt='Memo' src='img/networks/0.png'></a>`;
@@ -538,8 +538,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
         //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
     
-        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://nostrgram.co/#thread:${san(hivelink)}">snort</a>`;
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;
+        //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
@@ -656,8 +656,8 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
     let permalink = `?` + santxid.substring(0, 4) + `#thread?post=` + santxid;
     let articlelink = `?` + santxid.substring(0, 4) + `#article?post=` + santxid;
     if (pathpermalinks) {
-        permalink = pathpermalinks + `p/` + origTXID.substr(0, 10);
-        articlelink = pathpermalinks + `a/` + origTXID.substr(0, 10);
+        permalink = pathpermalinks + `/p/` + origTXID.substr(0, 10);
+        articlelink = pathpermalinks + `/a/` + origTXID.substr(0, 10);
     }
     var obj = {
         //These must all be HTML safe 
@@ -1361,9 +1361,9 @@ async function populateMessages(data, count) {
     // Decrypt the message
     if (data.bitcoinaddress == pubkey && data.address != data.toaddress) {
         //this message was sent by the logged in user.
-        await decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid, data.recipientpublickey);
+        await decryptMessageAndPlaceInDiv(Buffer.from(privkeyhex, 'hex'), data.message, data.roottxid, data.recipientpublickey);
     } else {
-        await decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid, data.publickey);
+        await decryptMessageAndPlaceInDiv(Buffer.from(privkeyhex, 'hex'), data.message, data.roottxid, data.publickey);
     }
     return;
 }

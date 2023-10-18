@@ -159,7 +159,7 @@ dictionary.en=
   "VV0153": "comments",
   "VV0154": "sending...",
   "VV0155": "reply",
-  "VV0156": "remembers",
+  "VV0156": "reposts",
   "VV0157": "tip",
   "VV0158": "quote",
   "VV0159": "+more",
@@ -1530,17 +1530,17 @@ var loginboxHTML=`
     <br />
     <br />
     <div class="loginnotes">
-        <span data-vavilon="VV0019n3">*Nostr Users. Use 'npub...' or 'nsec...' key or login with </span><a
-            onclick="nos2xlogin();return false;">nos2x</a><br />
+        <span data-vavilon="VV0019n3">Use 'npub...' or 'nsec...' key or </span><a
+            onclick="nos2xlogin();return false;">login with nos2x</a><br />
     </div>
-    <div class="loginnotes">
+    <!--<div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
             access.</span><br />
     </div>
     <div class="loginnotes">
         <span>*Memo Users. Your <a rel='noopener noreferrer' target="memo" href="https://memo.cash/key/export">private
                 key</a> starts with 'L..' or 'K..'</span>
-    </div>
+    </div>-->
 
     <br />
     <br />
@@ -1587,15 +1587,15 @@ var walletanchorHTML=`
         <div class="balancegroup">
             <span class="balancesatoshis" id="balancesatoshis">0</span>
             <span class="satoshis">(satoshis)</span>
+            <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
+            class="balancedetails">
+            <img src="img/icons/reload.png" alt="">
+        </span>
         </div>
-        <div class="balancegroup">
+        <div class="balancegroup usdbalance">
             <span class="approximatelyequal">≈</span>
             <span class="balanceusd" id="balanceusd">0</span>
             <span class="usd">(USD)</span>
-            <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
-                class="balancedetails">
-                <img src="img/icons/reload.png" alt="">
-            </span>
         </div>
     </div>
 
@@ -1694,7 +1694,7 @@ var newpostHTML=`
             onpaste="this.onchange();" oninput="this.onchange();">{defaulttag}</textarea>
         <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
     </div>
-    <form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
+    <!--<form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
         <label>
             <input name='firstfile' type="file" style="display: none;"
                 onchange="uploadFile('memorandumtitlefile','{fileuploadurl}','memorandumtitle','memorandumpreviewarea','uploadimagelink','uploadimagestatus',showMemorandumPreview,'memberimageurl');"
@@ -1702,7 +1702,7 @@ var newpostHTML=`
             <a id="uploadimagelink" data-vavilon="addimage">+add image</a>
         </label>
         <span style="display:none;" id="uploadimagestatus">uploading image . . .</span>
-    </form>
+    </form>-->
     <div class="articlebutton">
         <div id="memorandumtextbutton">
             <a data-vavilon="VV0039" href=""
@@ -4440,17 +4440,14 @@ function bech32Encode(stub,theString){
   return window.bech32converter(stub).toBech32('0x'+theString);
 }
 
-function getImpliedBitcoinAddress(namepubkey) {
-  if (namepubkey.length == 64) namepubkey = '02' + namepubkey;
-  return pubkeyhexToLegacy(namepubkey);
-}
-
 function htmlToElement(html) {
   var template = document.createElement('template');
   html = html.trim(); // Never return a text node of whitespace as the result
   template.innerHTML = html;
   return template.content.firstChild;
 }
+
+
 //Some refactoring is possible in these functions
 
 "use strict";
@@ -4503,7 +4500,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkeyhex.slice(0, 16) + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
     getJSON(theURL).then(function (data) {
 
         updateUSDRate(data);
@@ -4653,7 +4650,7 @@ function getAndPopulateMessages(messagetype, start, limit) {
         console.log(err);
     }
 
-    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkeyhex.slice(0,16) + '&messagetype=' + messagetype;
+    var theURL = dropdowns.contentserver + '?action=messages&address=' + pubkeyhex.slice(0, 16) + '&messagetype=' + messagetype;
     getJSON(theURL).then(async function (data) {
 
         if (!eccryptoJs) {
@@ -4697,7 +4694,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
     //If no post is specified, we'll use it as a top level
     if (txid === undefined || txid == "") { txid = roottxid; }
 
-    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkeyhex.slice(0,16) + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkeyhex.slice(0, 16) + '&txid=' + txid;
     getJSON(theURL).then(async function (data) {
         updateUSDRate(data);
         //Server bug will sometimes return duplicates if a post is liked twice for example,
@@ -4809,7 +4806,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
 function getAndPopulateTopic(topicNameHOSTILE) {
     var page = "topicmeta";
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=topiclist&topicname=' + encodeURIComponent(topicNameHOSTILE) + '&qaddress=' + pubkeyhex;
     getJSON(theURL).then(function (data) {
         updateUSDRate(data);
         //todo, move this to htmlquarantine.
@@ -4846,7 +4843,7 @@ function getAndPopulateTopicList(showpage) {
         show(page);
     }
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=topiclist&qaddress=' + pubkeyhex;
     getJSON(theURL).then(function (data) {
         updateUSDRate(data);
         /*
@@ -4902,7 +4899,7 @@ function getAndPopulateQuoteBox(txid) {
     showOnly(page);
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkeyhex.slice(0,16) + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkeyhex.slice(0, 16) + '&txid=' + txid;
     getJSON(theURL).then(function (data) {
         var contents = "";
         if (data[0]) {
@@ -4940,9 +4937,9 @@ function addDynamicHTMLElements(data) {
     //but the min-height can cause the image to be shown incorrectly
     let images = document.getElementsByClassName('imgurimage');
     for (let i = 0; i < images.length; i++) {
-        if(images[i].complete){
+        if (images[i].complete) {
             images[i].style.minHeight = '0';
-        }else{
+        } else {
             images[i].addEventListener('load', function () {
                 this.style.minHeight = '0';
             });
@@ -5015,7 +5012,7 @@ function showScoresExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0, 16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -5035,7 +5032,7 @@ function showRemembersExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0, 16);
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -5204,7 +5201,7 @@ function showReplyButton(txid, page, divForStatus) {
 }
 
 async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     if (replytext.length == 0) {
@@ -5217,9 +5214,7 @@ async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid
     document.getElementById("replycompleted" + page + txid).textContent = "";
 
     var replytext = document.getElementById("replytext" + page + txid).value;
-    const replyhex = new Buffer(replytext).toString('hex');
-    //const decoded = new Buffer(encoded, 'hex').toString(); // decoded === "This is my string to be encoded/decoded"
-    //no wait for the first reply
+
 
     let successfunctionCompleted = false;
     var successFunction =
@@ -5227,20 +5222,24 @@ async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid
             if (!successfunctionCompleted) {
                 successfunctionCompleted = true; //ensure it only gets sent once
                 replySuccessFunction(page, txid);
-                if (isBitCloutUser() && parentSourceNetwork == 1) {
+                /*if (isBitCloutUser() && parentSourceNetwork == 1) {
                     sendBitCloutReply(origtxid, replytext, divForStatus, null, parentSourceNetwork, membertxid);
                     //sendBitCloutQuotePost(pathpermalinks+"/p/" + membertxid.substr(0, 10) + "\n\n" + replytext, '', origtxid, divForStatus, null, parentSourceNetwork);
-                }
+                }*/
             }
         };
 
-    if (checkForNativeUserAndHasBalance()) {
-        sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
-        //successFunction = null;
-    }
-
+    //Get the event and send it to relays
     let event = await sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
-    sendWrappedEvent(event);
+
+    //Send nostr event wrapped to nostracoin
+    sendWrappedEvent(event, successFunction);
+
+    //Send event as memo protocol to native chain
+    //if (checkForNativeUserAndHasBalance()) {
+    //    const replyhex = new Buffer(replytext).toString('hex');
+    //    sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
+    //}
 
     return true;
 }
@@ -5328,28 +5327,28 @@ function increaseGUIReposts(txid) {
 }
 
 async function pinpost(txid) {
+    if (!checkForPrivKey()) return false;
     //If bitclout user is logged in
-    if (isBitCloutUser()) {
-        bitCloutPinPost(txid, pubkey);
-    }
+    //if (isBitCloutUser()) {
+    //    bitCloutPinPost(txid, pubkey);
+    //}
 
-    if (checkForNativeUserAndHasBalance()) {
-        memoPinPost(txid, privkey);
-    }
+    //if (checkForNativeUserAndHasBalance()) {
+    //    memoPinPost(txid, privkey);
+    //}
 
-    let event= await nostrPinPost(txid);
+    let event = await nostrPinPost(txid);
     sendWrappedEvent(event);
 
 }
 
 async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
+    if (!checkForPrivKey()) return false;
+
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
-
-    //if no identity login, then check for priv key 
-    //if (!checkForPrivKey()) return false;
-
+    
     //GUI update
     increaseGUILikes(txid);
     if (amountSats >= nativeCoin.dust) {
@@ -5359,24 +5358,26 @@ async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null)
     }
 
     //If bitclout user is logged in
-    if (isBitCloutUser()) {
-        bitCloutLikePost(origtxid);
-    }
+    //if (isBitCloutUser()) {bitCloutLikePost(origtxid);}
+
+    let event = await nostrLikePost(origtxid, roottxid);
+    sendWrappedEvent(event);
 
     //If memo user is logged in
     if (checkForNativeUserAndHasBalance()) {
         if (amountSats >= nativeCoin.dust) {
             sendTipRaw(origtxid, tipAddress, amountSats, privkey, null);
-        } else {
-            sendLike(origtxid, privkey);
         }
+        /* else {
+            sendLike(origtxid, privkey);
+        }*/
     }
 
-    let event = await nostrLikePost(origtxid, roottxid);
-    sendWrappedEvent(event);
+
 }
 
 async function dislikePost(txid, origtxid, roottxid = null) {
+    if (!checkForPrivKey()) return false;
     decreaseGUILikes(txid);
 
     if (checkForNativeUserAndHasBalance()) {
@@ -5387,16 +5388,17 @@ async function dislikePost(txid, origtxid, roottxid = null) {
 }
 
 async function repostPost(txid, origtxid, sourcenetwork) {
+    if (!checkForPrivKey()) return false;
 
     increaseGUIReposts(txid);
 
-    if (isBitCloutUser()) {
+    /*if (isBitCloutUser()) {
         bitCloutRePost(origtxid, sourcenetwork);
-    }
+    }*/
 
-    if (checkForNativeUserAndHasBalance()) {
+    /*if (checkForNativeUserAndHasBalance()) {
         repost(origtxid, privkey);
-    }
+    }*/
 
     let event = await nostrRePost(origtxid);
     sendWrappedEvent(event);
@@ -5851,7 +5853,7 @@ function memorandumPreview() {
 }
 
 async function geopost() {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
     var posttext = txtarea.value;
@@ -5880,22 +5882,23 @@ async function geopost() {
     let successFunction = geocompleted;
 
     let taggedPostText = posttext + ` \n${pathpermalinks}/geotag/` + geohash;
-    if (checkForNativeUserAndHasBalance()) {
-        //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
-        postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
-        //successFunction = null;
-    }
-    if (isBitCloutUser()) {
-        sendBitCloutPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
-    }
+    //if (checkForNativeUserAndHasBalance()) {
+    //    //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
+    //    postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
+    //    //successFunction = null;
+    //}
+    //if (isBitCloutUser()) {
+    //    sendBitCloutPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
+    //}
 
     let event = await sendNostrPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
-    sendWrappedEvent(event);
+    sendWrappedEvent(event, successFunction);
 
 }
 
 async function postmemorandum() {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
+    
     var posttext = document.getElementById('memorandumtitle').value;
     if (!posttext.includes('#')) {
         if (!confirm(getSafeTranslation('notagareyousure', `Are you sure you want to post this without a #hashtag?  Include a #hashtag to help members find your post. Click OK to post or Cancel to add a #hashtag.`))) {
@@ -5944,18 +5947,18 @@ async function postmemorandum() {
 
     if (txid) {
         //Repost
-        if (checkForNativeUserAndHasBalance()) {
-            //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
-            postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
-            //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
-            //successFunction = null;
-        }
-        if (isBitCloutUser()) {
-            sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
-        }
+        //if (checkForNativeUserAndHasBalance()) {
+        //    //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
+        //    postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
+        //    //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
+        //    //successFunction = null;
+        //}
+        //if (isBitCloutUser()) {
+        //    sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
+        //}
 
         let event= await sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
-        sendWrappedEvent(event);
+        sendWrappedEvent(event, successFunction);
     }
     else {
         //Don't post body if it is not visible - it may contain old elements that the user is not expecting to post
@@ -5963,17 +5966,17 @@ async function postmemorandum() {
             postbody = '';
         }
 
-        if (checkForNativeUserAndHasBalance()) {
-            postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
-            //successFunction = null;
-        }
-        if (isBitCloutUser()) {
-            sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
-        }
+        //if (checkForNativeUserAndHasBalance()) {
+        //    postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
+        //    //successFunction = null;
+        //}
+        //if (isBitCloutUser()) {
+        //    sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
+        //}
         
         //Should always be possible to send Nostr event if user is logged in.
         let event= await sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
-        sendWrappedEvent(event);
+        sendWrappedEvent(event, successFunction);
     }
 
     //if (typeof popupOverlay !== "undefined") {
@@ -6096,7 +6099,7 @@ function getDataSettings(qaddress, cashaddress) {
 
     //document.getElementById('settingsanchor').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + pubkeyhex;
     getJSON(theURL).then(function (data) {
         if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         try {
@@ -6342,6 +6345,7 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
     obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+pubkeyhex);
     obj.siteTitle = siteTitle;
+    obj.pathpermalinks = pathpermalinks;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
     //reloadImageEverywhere(obj.profilepiclargehtml);
 
@@ -6366,41 +6370,30 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 }
 
 async function populateTools() {
-
-    var bcaddress =pubkeyToBitcloutAddress(pubkeyhexsign+pubkeyhex);
     var obj = {
-        address: pubkey,
-        cashaddress: legacyToNativeCoin(pubkey),
-        bcaddress: bcaddress,
-        ticker: nativeCoin.ticker
+        address: pubkeyhexToLegacy(pubkeyhexsigned),
+        cashaddress: legacyToNativeCoin(pubkeyhexToLegacy(pubkeyhexsigned)),
+        bcaddress: pubkeyToBitcloutAddress(pubkeyhexsigned),
+        ticker: nativeCoin.ticker,
+        seedphrase:(mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey,
+        privatekey: privkey,
+
     };
-
-    obj.privatekey = privkey;
-    obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
-
     document.getElementById('toolsanchor').innerHTML = templateReplace(walletanchorHTML, obj);
-
-
-
 }
 
 
 async function getAndPopulateSettings() {
-    let cashaddr;
+    /*let cashaddr;
     try {
         cashaddr = legacyToNativeCoin(pubkey);
     } catch (err) {
         console.log(err);
-    }
-    getDataSettings(pubkey, cashaddr);
+    }*/
+    getDataSettings(pubkey, pubkey);
 }
 
 function updateSettings() {
-
-
-
-    //These may already be switched to qrcodes, so try/catch necessary
-    //try { document.getElementById('lowfundsaddress').innerHTML = qpubkey; } catch (err) { }
 
     var storedmutedwords = localStorageGet(localStorageSafe, "mutedwords");
     if (storedmutedwords != undefined && storedmutedwords != null) {
@@ -6914,7 +6907,7 @@ function showNewPost(txid, sourcenetwork) {
 function showNotifications(start, limit, qaddress, txid, nfilter, minrating) {
 
     highlightmajornavbutton("notificationsbutton");
-    if (pubkey == "" || pubkey == null || pubkey == undefined) {
+    if (pubkeyhex == "" || pubkeyhex == null || pubkeyhex == undefined) {
         showPFC(0, numbers.results, 'posts');
         return;
     }
@@ -6923,7 +6916,7 @@ function showNotifications(start, limit, qaddress, txid, nfilter, minrating) {
     if (!minrating) {
         minrating = 2;
     }
-    getAndPopulateNotifications(start, limit, "notifications", pubkey, txid, nfilter, minrating);
+    getAndPopulateNotifications(start, limit, "notifications", pubkeyhex, txid, nfilter, minrating);
 
 }
 
@@ -7254,9 +7247,7 @@ function scrollToPosition(theElement) {
 "use strict";
 
 function checkForPrivKey() {
-    if (isBitCloutUser()) {
-        return true;
-    }
+    //if (isBitCloutUser()) {return true;}
     return checkForNativeUser();
 }
 
@@ -7282,9 +7273,9 @@ function checkForNativeUserAndHasBalance() {
 }
 
 async function sendRating(rating, ratingText, pageName, targetpublickey) {
-    
-    //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
+    if (!checkForPrivKey()) return false;
 
+    //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
     //if (!checkForPrivKey()) return false;
     var comment = "";
     if (ratingText) {
@@ -7292,9 +7283,10 @@ async function sendRating(rating, ratingText, pageName, targetpublickey) {
     }
     
     let addresshandle='';
-    let targetpublickey66=targetpublickey;
-    if(targetpublickey66.length==64){targetpublickey66='02'+targetpublickey66;}//nostr style public key.
-    theAddress=pubkeyhexToLegacy(targetpublickey66);
+
+    //let targetpublickey66=targetpublickey;
+    //if(targetpublickey66.length==64){targetpublickey66='02'+targetpublickey66;}//nostr style public key.
+    //theAddress=pubkeyhexToLegacy(targetpublickey66);
 
     if(targetpublickey.length==64){
         addresshandle = window.bech32converter('npub').toBech32('0x'+targetpublickey);
@@ -7304,13 +7296,13 @@ async function sendRating(rating, ratingText, pageName, targetpublickey) {
 
 
     
-    if (checkForNativeUserAndHasBalance()) {
-        rateCallbackAction(rating, comment, theAddress);
-    }
+    //if (checkForNativeUserAndHasBalance()) {
+    //    rateCallbackAction(rating, comment, theAddress);
+    //}
 
-    if (isBitCloutUser()) {
-        sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
-    }
+    //if (isBitCloutUser()) {
+    //    sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
+    //}
     let event= await sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + addresshandle, null, targetpublickey, true, rating, comment);
     sendWrappedEvent(event);
     
@@ -7380,14 +7372,14 @@ function sendWrappedEvent(event, callback) {
 
 
 async function setName() {
-    var newName = document.getElementById('settingsnametext').value;
-
+    if (!checkForPrivKey()) return false;
     //setNostrProfile('name',newName);
     let event= await setNostrProfile();
     sendWrappedEvent(event);
 
+    var newName = document.getElementById('settingsnametext').value;
+    /*
     if (!checkForNativeUserAndHasBalance()) return false;
-
 
     document.getElementById('settingsnametextbutton').disabled = true;
     document.getElementById('settingsnametext').disabled = true;
@@ -7400,6 +7392,7 @@ async function setName() {
 
     //TODO, on error, this should really enable the text field and text button again
     tq.queueTransaction(tx);
+    */
 }
 
 
@@ -7656,12 +7649,14 @@ function memoPinPost(txid, privkey) {
 }
 
 async function setProfile() {
+    if (!checkForPrivKey()) return false;
 
-    var newProfile = document.getElementById('settingsprofiletext').value;
     let event= await setNostrProfile();
     sendWrappedEvent(event);
-    //setNostrProfile('about',newProfile);
-
+    
+    /*
+    var newProfile = document.getElementById('settingsprofiletext').value;
+    
     if (!checkForNativeUserAndHasBalance()) return false;
 
     document.getElementById('settingsprofiletextbutton2').disabled = true;
@@ -7672,7 +7667,7 @@ async function setProfile() {
         cash: { key: privkey }
     }
     updateStatus(getSafeTranslation('settingprofile', "Setting Profile"));
-    tq.queueTransaction(tx);
+    tq.queueTransaction(tx);*/
 }
 
 
@@ -7706,9 +7701,6 @@ function unsubTransaction(topicHOSTILE) {
 }
 
 function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey) {
-    //if(!qaddress){
-    //let qaddress=getImpliedBitcoinAddress(targetpublickey);
-    //}
     try {
         //document.getElementById(removeElementID).style.display = "none";
         //var addressraw = getLegacyToHash160(qaddress);
@@ -7724,86 +7716,98 @@ function addressTransaction(removeElementID, actionCode, statusMessage, targetpu
 }
 
 async function follow(targetpublickey) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     let event= await sendNostrFollow(targetpublickey);
     sendWrappedEvent(event); 
 
+    /*
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey);
     }
     if (isBitCloutUser()) {
         sendBitCloutFollow(targetpublickey);
-    }
+    }*/
     
 }
 
 async function unfollow(targetpublickey) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
 
     let event= await sendNostrUnFollow(targetpublickey);
     sendWrappedEvent(event);
 
+    /*
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey);
     }
     if(isBitCloutUser()){
         sendBitCloutUnFollow(targetpublickey);
-    }
+    }*/
     
 }
 
 async function mute(targetpublickey) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     let event= await sendNostrMute(targetpublickey);
     sendWrappedEvent(event);
 
+    /*
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey);
     }
     //if(isBitCloutUser()){
     //    sendBitCloutMute(targetpublickey);
     //}
+    */
 }
 
 async function unmute(targetpublickey) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     let event= await sendNostrUnMute(targetpublickey);
     sendWrappedEvent(event);
 
+    /*
     if (checkForNativeUserAndHasBalance()) {
         addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey);
     }
     //if(isBitCloutUser()){
     //    sendBitCloutUnMute(targetpublickey);
     //}
+    */
 }
 
 async function sub(topicHOSTILE) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     
-    if (checkForNativeUserAndHasBalance()) {
-        subTransaction(topicHOSTILE);
-    }
     let event= await sendNostrSub(topicHOSTILE);
     sendWrappedEvent(event);
 
+    /*
+    if (checkForNativeUserAndHasBalance()) {
+        subTransaction(topicHOSTILE);
+    }
+    
     //if(isBitCloutUser()){
     //    sendBitCloutSub(topicHOSTILE);
     //}
+    */
 }
 
 async function unsub(topicHOSTILE) {
-    //if (!checkForPrivKey()) return false;
+    if (!checkForPrivKey()) return false;
     if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
     }
+    
+    /*
     let event= await sendNostrUnSub(topicHOSTILE);
     sendWrappedEvent(event);
 
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);
     //}
+    */
 }
 
 
@@ -8357,7 +8361,7 @@ var TransactionQueue = /** @class */ (function (_super) {
             transactionBuilder.enableBitcoinCash(true);
             this.sighashtouse = this.BCH_SIGHASH_ALL;
         }
-        transactionBuilder.maximumFeeRate = 10000; //For dogecoin
+        transactionBuilder.maximumFeeRate = 205000;
         //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
         if (scriptArray.length > 0) {
             transactionBuilder.addOutput(script2, 0);
@@ -9033,21 +9037,21 @@ function getAndPopulateBesties(target) {
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
-var privkey = ""; //Private Key
-var privkeyhex = "";
-var privateKeyBuf;
 //var nostrPrivKeyHex = "";
 var nostrPubKeyHex = "";
 
-var chainheight = 0;
-var chainheighttime = 0;
 
-//var qpubkey = ""; //Public Key (q style address)
-var pubkeyhex = ""; //Public Key, full hex
-var pubkeyhexsign = ""; //Public Key, full hex
+var privkey = ""; //Private Key
+var privkeyhex = "";
+var pubkeyhexsigned = ""; //Public Key, full hex
+var pubkeyhex = ""; //Public Key, minus sign
+//var pubkeyhexsign = ""; //Public Key, sign, sometimes empty
 var bitcloutaddress = ""; //Bitclout address
 
 let tq = null;
+var chainheight = 0;
+var chainheighttime = 0;
+
 //let currentTopic = ""; //Be careful, current Topic can contain anything, including code.
 var cytoscape = null;
 var bip39 = null;
@@ -9108,7 +9112,7 @@ function setLanguage() {
 async function init() {
 
     if (window.location.protocol == "file:") {
-        await loadScript("configlocal.js?"+version);
+        await loadScript("configlocal.js?" + version);
     }
 
     setLanguage();
@@ -9116,7 +9120,7 @@ async function init() {
     document.getElementById('previewcontent').style.display = 'none';
     document.getElementById('mainbodywrapper').innerHTML = mainbodyHTML;
     //document.getElementById('header').innerHTML = headerHTML;
-    document.getElementById('header').innerHTML = templateReplace(headerHTML, {logowide:logowide, logoicon:logoicon}, true);
+    document.getElementById('header').innerHTML = templateReplace(headerHTML, { logowide: logowide, logoicon: logoicon }, true);
 
     document.getElementById('hamburgermenu').innerHTML = hamburgerMenuHTML;
     document.getElementById('pagetitle').innerHTML = pageTitleHTML;
@@ -9139,27 +9143,25 @@ async function init() {
         document.getElementById('developmentversion').style.display = 'block';
         profilepicbase = `${pathpermalinks}/img/profilepics/`;
     }
-    var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
-    var loginprivkey = localStorageGet(localStorageSafe, "privkey");
-    var loginpubkey = localStorageGet(localStorageSafe, "pubkey");
+    
+    //var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
+    //var loginprivkey = localStorageGet(localStorageSafe, "privkey");
+    //var loginpubhexkey = localStorageGet(localStorageSafe, "pubhexkeyfull");
 
-    getBitCloutLoginFromLocalStorage();
+
+    //getBitCloutLoginFromLocalStorage();
 
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 
-    if (loginmnemonic != "null" && loginmnemonic != null && loginmnemonic != "") {
+    trylogin();
+    /*if (loginmnemonic) {
         trylogin(loginmnemonic);
-        return;
-    } if (loginprivkey != "null" && loginprivkey != null && loginprivkey != "") {
+    } else if (loginprivkey) {
         trylogin(loginprivkey);
-        return;
-    } else if (loginpubkey != "null" && loginpubkey != null && loginpubkey != "") {
-        trylogin(loginpubkey);
-        return;
-    }
+    } else if (loginpubhexkey) {
+        trylogin(loginpubhexkey);
+    }*/
 
-
-    
     displayContentBasedOnURLParameters();
     loadBigLibs();
 }
@@ -9177,18 +9179,26 @@ function getAndSetVersion() {
         });
 }*/
 
-async function nos2xlogin(){
+async function nos2xlogin() {
     let pubKeyToUse;
-    try{
-        pubKeyToUse=await window.nostr.getPublicKey();
+    try {
+        if (!window.nostr) {
+            alert('nos2x browser extension not found.');
+            return;
+        }
+        pubKeyToUse = await window.nostr.getPublicKey();
         if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
-        pubKeyToUse = window.bech32converter('npub').toBech32('0x'+pubKeyToUse);
+        pubKeyToUse = window.bech32converter('npub').toBech32('0x' + pubKeyToUse);
 
-    }catch(error){
-        document.getElementById('loginerror').innerHTML = "nos2x error:"+error.message;
+    } catch (error) {
+        document.getElementById('loginerror').innerHTML = "nos2x error:" + error.message;
         console.log(error);
     }
-    trylogin(pubKeyToUse);
+    if (pubKeyToUse) {
+        trylogin(pubKeyToUse);
+    } else {
+        alert('nos2x public key not provided.');
+    }
 }
 
 function trylogin(loginkey, nextpage) {
@@ -9208,10 +9218,9 @@ function trylogin(loginkey, nextpage) {
         document.getElementById('readonlyversion').style.display = 'block';
     }
 
-    //getAndPopulateTopicList(false);
-    if(newlygeneratedaccount){
+    if (newlygeneratedaccount) {
         displayContentBasedOnURLParameters('#settings');
-    }else{
+    } else {
         displayContentBasedOnURLParameters(nextpage);
     }
     //make sure these get loaded
@@ -9227,8 +9236,8 @@ async function loadBigLibs() {
 
     if (!bip39) loadScript("js/lib/bip39.browser.js");
     if (!window.bitcoinjs) loadScript(bitcoinjslib);
-    if (!window.NostrTools)  loadScript("js/lib/nostr.bundle.1.0.1.js");
-    if (!window.bech32converter)  loadScript("js/lib/bech32-converting-1.0.9.min.js");
+    if (!window.NostrTools) loadScript("js/lib/nostr.bundle.1.0.1.js");
+    if (!window.bech32converter) loadScript("js/lib/bech32-converting-1.0.9.min.js");
     if (!eccryptoJs) loadScript("js/lib/eccrypto-js.js");
     if (!window.elliptic) loadScript("js/lib/elliptic.min.js");
     if (!pako) loadScript("js/lib/pako.2.0.4.min.js");
@@ -9239,57 +9248,55 @@ async function loadBigLibs() {
 }
 
 
-async function login(loginkey) {
+async function login(loginkey) { //login should throw error if not successful
 
     mnemonic = localStorageGet(localStorageSafe, "mnemonic");
     privkey = localStorageGet(localStorageSafe, "privkey");
-    pubkey = localStorageGet(localStorageSafe, "pubkey");
-    //qpubkey = localStorageGet(localStorageSafe, "qpubkey");
-    pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
-    pubkeyhexsign = localStorageGet(localStorageSafe, "pubkeyhexsign");
     privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
-    bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
+    pubkeyhexsigned = localStorageGet(localStorageSafe, "pubkeyhexsigned");
+    pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
+    //bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
     //nostrPrivKeyHex = localStorageGet(localStorageSafe, "nostrprivkeyhex");
     //nostrPubKeyHex = localStorageGet(localStorageSafe, "nostrpubkeyhex");
 
-
-    loginkey = loginkey.trim();
         
-    if (!(pubkey) || (privkey && !privkeyhex)) {
+    
+
+    if (!pubkeyhexsigned) { //no info for this user, full login
+        if(!loginkey)return; //no login key
+        loginkey = loginkey.trim();
+
         //slow login.
         //note, mnemonic not available to all users for fast login
         //note, user may be logged in in public key mode
-        //note, pubkeyhex won't be available in public key mode
 
         //check valid private or public key
-        var publicaddress = "";
+
 
         if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
         if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
 
-        let userLoggedInWithnsec = false;
-        if (loginkey.startsWith("nsec")) {
-            userLoggedInWithnsec = true;
-            //Nostr bech32 encoded private key
-            if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
-            let hexkey = window.bech32converter('nsec').toHex(loginkey).slice(2).toLowerCase();
-            let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexkey,'hex'));
-            loginkey=ecpair.toWIF();
-            //nostrPrivKeyHex = ecpair.privateKey.toString('hex');
-            //nostrPubKeyHex = ecpair.publicKey.toString('hex').slice(2);
 
-            //setNostrKeys(ecpair);
-            //Note, cannot use this key directly as it is used for EDDSA,
-            //There is a theoretical risk if also using for ECDSA sigs
-            //Hash the key, use as a source of entropy to generate mnemonic
-            //if (!eccryptoJs) {await loadScript("js/lib/eccrypto-js.js");}
-            //let hashprivkey = await eccryptoJs.sha256(await eccryptoJs.sha256(new Buffer(nostrPrivKeyHex,'hex')));
-            //hashprivkey = hashprivkey.toString('hex');
-            //hashprivkey = hashprivkey.slice(0,32);
-            //loginkey = bip39.entropyToMnemonic(new Buffer(hashprivkey,'hex'));
+        if (loginkey.startsWith("nsec")) {
+            //Nostr bech32 encoded private key
+            if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+            let hexkey = window.bech32converter('nsec').toHex(loginkey).slice(2).toLowerCase();
+            let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(hexkey, 'hex'));
+            loginkey = ecpair.toWIF();
         }
 
-        let loginkeylowercase=loginkey.toLowerCase();
+        let loginkeylowercase = loginkey.toLowerCase();
+
+        /*
+        if (loginkeylowercase.startsWith("npub")) {
+            //Nostr bech32 encoded public key
+            if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+            nostrPubKeyHex = window.bech32converter('npub').toHex(loginkey).slice(2).toLowerCase();
+            //Generate a new seed phrase
+            if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
+            loginkeylowercase = bip39.generateMnemonic();
+        }*/
+
         if (bip39.validateMnemonic(loginkeylowercase)) {
             let seed = bip39.mnemonicToSeedSync(loginkeylowercase);
             let root = window.bitcoinjs.bip32.fromSeed(seed);
@@ -9298,45 +9305,29 @@ async function login(loginkey) {
             localStorageSet(localStorageSafe, "mnemonic", loginkeylowercase);
             mnemonic = loginkeylowercase;
             loginkey = newloginkey;
-
-            //if(!nostrPrivKeyHex){ //if the user logged in with an nsec, the priv/pub keys are already set!
-            //    let nostrKey = root.derivePath("44'/1237'/0'/0/0");
-            //    setNostrKeys(nostrKey);
-            //}
-
-
-
-
-            //pubkeyhex = ecpair.publicKey.toString('hex');
-            //privkeyhex = ecpair.privateKey.toString('hex');
-            
         }
 
+        //Login will now either be a wif, or a public key, or a user name, or an error
+
         try {
-            if (loginkey.startsWith("nostracoin:") || loginkey.startsWith("member:") || loginkey.startsWith("bitcoincash:")) {
-                publicaddress = cashaddrToLegacy(loginkey);
-            } 
-            else if (loginkey.startsWith("npub")) {
-                //Nostr bech32 encoded public key
-                if (!window.bech32converter)  await loadScript("js/lib/bech32-converting-1.0.9.min.js");
-                let hexkey = window.bech32converter('npub').toHex(loginkey).slice(2).toLowerCase();
-                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: Buffer.from('02'+hexkey, 'hex') }).address;
-            }
-            else if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
-                let ecpair = window.bitcoinjs.ECPair.fromWIF(loginkey);
-                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+            if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
                 privkey = loginkey;
                 document.getElementById('loginkey').value = "";
-            } else if (loginkey.startsWith("BC1")) {
+            } else if (loginkey.startsWith("npub")) {
+                //Nostr bech32 encoded public key
+                if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+                nostrPubKeyHex = window.bech32converter('npub').toHex(loginkey).slice(2).toLowerCase();
+                //Generate a new seed phrase
+                if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
+                loginkeylowercase = bip39.generateMnemonic();
+            }
+            // other wise try logging in with other types of public keys, bitclout, memo, hive etc 
+            /*else if (loginkey.startsWith("BC1")) {
                 var preslice = window.bs58check.decode(loginkey);
                 var bcpublicKey = preslice.slice(3);
                 checkIfBitcloutUser(new Buffer(bcpublicKey).toString('hex'));
-                var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(bcpublicKey));
-                publicaddress = window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
-            } else if (loginkey.startsWith("1") || loginkey.startsWith("3")) {
-                window.bitcoinjs.address.toOutputScript(loginkey);//this will throw error if address is not valid
-                publicaddress = loginkey;
-            } else {
+            }*/
+            else {
                 throw Error('No login key recognized');
             }
         } catch (err) {
@@ -9344,17 +9335,10 @@ async function login(loginkey) {
                 var theURL = dropdowns.contentserver + '?action=usersearch&searchterm=' + encodeURIComponent(loginkey);
                 getJSON(theURL).then(function (data) {
                     if (data && data.length > 0) {
-                        //Nostr won't have a bitcoin address associated with it - use representative one
-                        //if(!qaddress || qaddress=='null'){
-                        let namepubkey=data[0].publickey;
-                        if (namepubkey.length==64)namepubkey='02'+namepubkey;
-                        var qaddress=pubkeyhexToLegacy(namepubkey);
-                        //}
-                        
-                        if(qaddress && qaddress.length>21){
-                            trylogin(qaddress);
+                        let namepubkey = data[0].publickey;
+                        if (namepubkey && namepubkey.length == 64) {
+                            trylogin(window.bech32converter('npub').toBech32('0x' + namepubkey), '#mypeople');
                         }
-                        
                         return;
                     } else {
                         alert(getSafeTranslation('keynotrecognized', "Key/Handle not recognized, use a valid handle or 12 word BIP39 seed phrase, or a compressed WIF (starts with L or K)"));
@@ -9370,40 +9354,30 @@ async function login(loginkey) {
             return;
         }
 
-        pubkey = publicaddress.toString();
-        localStorageSet(localStorageSafe, "pubkey", pubkey);
-
+        //set the signed, compressed public key
         if (privkey) {
             let ecpair = new window.bitcoinjs.ECPair.fromWIF(privkey);
-            let pubkeyhexfull=ecpair.publicKey.toString('hex');
-            pubkeyhexsign = pubkeyhexfull.slice(0,2);
-            pubkeyhex = pubkeyhexfull.slice(2);
-            
             privkeyhex = ecpair.privateKey.toString('hex');
-
             localStorageSet(localStorageSafe, "privkey", privkey);
-            localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
-            localStorageSet(localStorageSafe, "pubkeyhexsign", pubkeyhexsign);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
-            
-            //if(newlygeneratedaccount || userLoggedInWithnsec){
-            //    linkNostrAccount(false); //link the nostr public key to the member key
-            //}
-            //dropdowns.utxoserver
-            if(allowBitcloutUser){
-                checkIfBitcloutUser(pubkeyhex);
-            }
-            //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
+            pubkeyhexsigned = ecpair.publicKey.toString('hex');
+        } else if (nostrPubKeyHex) {
+            pubkeyhexsigned = getYSign(nostrPubKeyHex)+nostrPubKeyHex;
         }
 
-
+        /*
+ if(allowBitcloutUser){
+     checkIfBitcloutUser(pubkeyhex);
+ }
+ //bitCloutUser=pubkeyToBCaddress(pubkeyhex);
+ */
 
     }
 
-    if (privkey) {
-        privateKeyBuf = Buffer.from(privkeyhex, 'hex');
-    }
-
+    pubkeyhex = pubkeyhexsigned.slice(2);
+    nostrPubKeyHex = pubkeyhex; //might set these differently for future feature
+    localStorageSet(localStorageSafe, "pubkeyhexsigned", pubkeyhexsigned);
+    localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
 
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
@@ -9419,8 +9393,8 @@ async function login(loginkey) {
     document.getElementById('loginkey').value = "";
 
     //, nostrpubkey:nostrPubKeyHex bech32 lib may not be available yet
-    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, {version:version, dust:nativeCoin.dust, maxprofilelength:maxprofilelength, siteTitle:siteTitle}, true);
-    document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
+    document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, { version: version, dust: nativeCoin.dust, maxprofilelength: maxprofilelength, siteTitle: siteTitle, pathpermalinks: pathpermalinks }, true);
+    //document.getElementById('lowfundswarning').innerHTML = templateReplace(lowfundswarningHTML, { coinname:nativeCoin.name, version:version, bcaddress: pubkey, cashaddress: legacyToNativeCoin(pubkey) }, true);
 
     updateSettings();
     getAndPopulateSettings();
@@ -9429,13 +9403,13 @@ async function login(loginkey) {
     //getJSON(dropdowns.utxoserver + 'reg/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     //Register public key with content server to prepare feeds faster    
-    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkeyhexsign+pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
+    getJSON(dropdowns.txbroadcastserver + 'regk/' + pubkeyhex + '?a=100').then(function (data) { }, function (status) { });
 
     loadStyle();
 
     //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
     if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
-    tq = new TransactionQueue(pubkey, privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost",nativeCoin.satsPerByte,nativeCoin.interestExponent,nativeCoin.dust);
+    tq = new TransactionQueue(pubkeyhexToLegacy(pubkeyhexsigned), privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost", nativeCoin.satsPerByte, nativeCoin.interestExponent, nativeCoin.dust);
     tq.refreshPool();
 
     if (!privkey) {
@@ -9466,14 +9440,14 @@ function loadStyle() {
     }
 }
 
-var newlygeneratedaccount=false;
+var newlygeneratedaccount = false;
 async function createNewAccount() {
     if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
     let mnemonictemp = bip39.generateMnemonic();
     document.getElementById('newseedphrasedescription').style.display = "inline";
     document.getElementById('newseedphrase').textContent = mnemonictemp;
     document.getElementById('loginkey').value = mnemonictemp;
-    newlygeneratedaccount=true;
+    newlygeneratedaccount = true;
 }
 
 /*function setNostrKeys(nostrKey){
@@ -9507,16 +9481,18 @@ function logout() {
     bitcloutlogout();
 
     privkey = "";
+    privkeyhex = "";
+    pubkeyhexsigned = ""
     pubkey = "";
     mnemonic = "";
     privateKeyBuf = "";
     //nostrPrivKeyHex = "";
     //nostrPubKeyHex = "";
     pubkeyhex = ""; //Public Key, full hex
-    pubkeyhexsign = ""; //Public Key, full hex
+    //pubkeyhexsign = ""; //Public Key, full hex
     bitcloutaddress = ""; //Bitclout address
     tq = null;
-    
+
     document.getElementById('loggedout').style.display = "flex";
     document.getElementById('loggedin').style.display = "none";
     document.getElementById('profilebutton').style.display = "none";
@@ -9580,8 +9556,8 @@ function displayNotificationCount() {
             setAlertCount("alertcount", Number(data[0].count));
             setAlertCount("alertcountpm", Number(data[0].countpm));
 
-            var pageTitleCount = Number(data[0].count) + Number(data[0].countpm);
-            var pageTitle = "";
+            //var pageTitleCount = Number(data[0].count) + Number(data[0].countpm);
+            //var pageTitle = "";
             //if (pageTitleCount > 0) {
             //    pageTitle = "(" + pageTitleCount + ") ";
             //}
@@ -9626,7 +9602,7 @@ function populateNotificationTab(limit, nfilter, minrating) {
     <span class="separator"></span>
     <a data-vavilon="notificationmentions" data-vavilon_title="notificationmentions" title="See only mentions" class="`+ (nfilter == 'page' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=page` + options + `">Mentions</a>
     <span class="separator"></span>
-    <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+ (nfilter == 'repost' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=repost` + options + `">Remembers</a>
+    <a data-vavilon="notificationremembers" data-vavilon_title="notificationremembers" title="See only remembers" class="`+ (nfilter == 'repost' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=repost` + options + `">Reposts</a>
     <span class="separator"></span>
     <!--<a data-vavilon="notificationpurchase" data-vavilon_title="notificationpurchase" title="See only creator coin purchases" class="`+ (nfilter == 'purchase' ? 'filteron' : 'filteroff') + `" href="#notifications?nfilter=purchase` + options + `">Buys</a>
     <span class="separator"></span>
@@ -10512,8 +10488,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     var permalink = `p/` + santxid;
     var articlelink = `a/` + santxid;
     if (pathpermalinks) {
-        permalink = pathpermalinks + `p/` + origTXID.substr(0, 10);
-        articlelink = pathpermalinks + `a/` + origTXID.substr(0, 10);
+        permalink = pathpermalinks + `/p/` + origTXID.substr(0, 10);
+        articlelink = pathpermalinks + `/a/` + origTXID.substr(0, 10);
     }
 
     var directlink = "";
@@ -10657,8 +10633,8 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
     let permalink = `?` + santxid.substring(0, 4) + `#thread?post=` + santxid;
     let articlelink = `?` + santxid.substring(0, 4) + `#article?post=` + santxid;
     if (pathpermalinks) {
-        permalink = pathpermalinks + `p/` + origTXID.substr(0, 10);
-        articlelink = pathpermalinks + `a/` + origTXID.substr(0, 10);
+        permalink = pathpermalinks + `/p/` + origTXID.substr(0, 10);
+        articlelink = pathpermalinks + `/a/` + origTXID.substr(0, 10);
     }
     var obj = {
         //These must all be HTML safe 
@@ -11362,9 +11338,9 @@ async function populateMessages(data, count) {
     // Decrypt the message
     if (data.bitcoinaddress == pubkey && data.address != data.toaddress) {
         //this message was sent by the logged in user.
-        await decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid, data.recipientpublickey);
+        await decryptMessageAndPlaceInDiv(Buffer.from(privkeyhex, 'hex'), data.message, data.roottxid, data.recipientpublickey);
     } else {
-        await decryptMessageAndPlaceInDiv(privateKeyBuf, data.message, data.roottxid, data.publickey);
+        await decryptMessageAndPlaceInDiv(Buffer.from(privkeyhex, 'hex'), data.message, data.roottxid, data.publickey);
     }
     return;
 }
@@ -11647,14 +11623,14 @@ async function postprivatemessage() {
     var publickey = document.getElementById("messagepublickey").textContent;
 
     let preEncryptedMessage;
-    if (privateKeyBuf) {
+    if (privkey) {
         // Encrypt the message
         const pubKeyBuf = Buffer.from(publickey, 'hex');
         const data = Buffer.from(text);
         //const structuredEj = await eccryptoJs.encrypt(pubKeyBuf, data);
         //const encryptedMessage = eccryptoJs.serialize(structuredEj).toString('hex');
         let uncompressedPublicKeySender = Buffer.from(window.ec.keyFromPublic(pubKeyBuf, 'hex').getPublic(false, 'hex'), 'hex');
-        preEncryptedMessage = bcencryptShared(privateKeyBuf, uncompressedPublicKeySender, data, null).toString('hex');
+        preEncryptedMessage = bcencryptShared(Buffer.from(privkeyhex, 'hex'), uncompressedPublicKeySender, data, null).toString('hex');
     }
 
     var successFunction = privateMessagePosted;
@@ -11718,11 +11694,11 @@ async function sendfunds() {
     }
 
     if (sendAddress.startsWith("q")) {
-        sendAddress = "member:" + sendAddress;
+        sendAddress = nativeCoin.addressprefix + sendAddress;
     }
 
     //sendAddress = sendAddress.replace("membercoin:", "bitcoincash:");
-    if (sendAddress.startsWith("member:")) {
+    if (sendAddress.startsWith(nativeCoin.addressprefix)) {
         sendAddress = await cashaddrToLegacy(sendAddress);
     }
 
@@ -11892,7 +11868,22 @@ function updateBalance(dynamicChainHeight, showLowFunds = false) {
 }
 
 
+// Consts for secp256k1 curve.
+// https://en.bitcoin.it/wiki/Secp256k1
+const prime = new bigInt('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16),
+pIdent = prime.add(1).divide(4);
 
+function getYSign( comp ) {
+    var x = new bigInt(comp, 16);
+    // y mod p = +-(x^3 + 7)^((p+1)/4) mod p
+    var y = x.modPow(3, prime).add(7).mod(prime).modPow( pIdent, prime );
+    // If the parity doesn't match it's the *other* root
+    if(y.mod(2).toJSNumber()!=0){
+        return '03';
+    }else{
+        return '02';
+    }
+}
 
 async function chooseNostrPublicKey(useNOS2Xifavailable = true) {
     //let pubKeyToUse = nostrPubKeyHex;
@@ -11939,6 +11930,7 @@ async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true
     relays.push("wss://relayable.org");
     relays.push("wss://relay.nostr.band");
     relays.push("wss://hk.purplerelay.com");
+    relays.push("wss://nostr.mutinywallet.com");
 
 
     sendNostrTransaction(JSON.stringify(event), null);
@@ -12110,7 +12102,7 @@ async function getNostrMetadata(txid, event, successFunction) {
         // Modify event
         // Insert root e before
         // Insert p after
-        return await signAndBroadcastEvent(event);
+        return await signAndBroadcastEvent(event, successFunction);
     } catch (err) {
         console.log(err);
         // Handle errors here if needed
@@ -12426,10 +12418,10 @@ async function sendNostrUnSub(topicHOSTILE) {
 async function sendNostrRating(posttext, successFunction, targetMember, useNOS2Xifavailable, rating, comment) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
-    let keytype = 'p';
-    if (targetMember.length == 66) {
-        keytype = 'cecdsa';
-    }
+    //let keytype = 'p';
+    //if (targetMember.length == 66) {
+    //    keytype = 'cecdsa';
+    //}
 
     let event2 = {
         kind: 6015,
@@ -12460,5 +12452,5 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
 // skip for now
 //async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null)
 
-var version = '9.0.1'; 
+var version = '9.0.2'; 
 if (init) { init(); } 
