@@ -4,18 +4,18 @@ var mutedwords = new Array();
 var defaulttip = 1000;
 var oneclicktip = 0;
 var maxfee = 2;
-var pathpermalinks = 'https://nostraco.in';
+var pathpermalinks = 'https://repnet.site';
 var profilepicbase = 'img/profilepics/';
 mapTileProvider = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-var siteTitle = 'nostraco.in';
+var siteTitle = 'repnet.site';
 var theStyle = 'feels compact';
 var maxScoreToCollapseComment = 65;
 var bitcoinjslib = "js/lib/bitcoincashjs-lib-5.2.0-bitcoinmessage.min.js";
 //var bitcoinjslib = "js/lib/bitcoinjs-lib-5.2.0.js";
 var allowBitcloutUser = true;
 var defaultTag="";
-var logowide="img/logos/logowide.svg";
-var logoicon="img/logos/membericon.svg";
+var logowide="img/logos/logowidesmall.png";
+var logoicon="img/logos/membericon.png";
 var customCSS="";
 var adfrequency = 0.10; //value between 0 and 1
 
@@ -24,11 +24,11 @@ var nativeCoin = {
     "dust": 547, //Avoid using BCH tokens - this is actually dust+1
     "interestExponent": 22,
     "satsPerByte": 204000, //add 2% for safety
-    "name": 'Nostracoin',
-    "ticker": 'NOSTR',
+    "name": 'RepNet',
+    "ticker": 'R3P',
     "opreturnsize": 5000,
-    "symbol":'Ṅ',
-    "addressprefix":"nostracoin:"
+    "symbol":'₹',
+    "addressprefix":"repnet:"
 }
 
 
@@ -63,7 +63,7 @@ var settings = {
     "showlbry": "true",
     "showbitclout": "true",
     "shownonameposts": "false",
-    "shownopicposts": "false",
+    "shownopicposts": "true",
     "mutenostr" : "false",
     "mutebitclout" : "false",
     "mutegm" : "false",    

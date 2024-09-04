@@ -9,7 +9,7 @@ function displayNotificationCount() {
     }
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
-    var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkeyhex.slice(0,16) + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
+    var theURL = dropdowns.contentserver + '?action=alertcount&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
     getJSON(theURL).then(function (data) {
         try {
             if (data[0].count == null) {
@@ -89,19 +89,19 @@ function populateNotificationTab(limit, nfilter, minrating) {
     notificationFilter.element = raterJs({
         extraClass: "systemscore",
         starSize: Number(notificationFilter.element.dataset.ratingsize),
-        rating: notificationFilter.minrating,
+        rating: Number(notificationFilter.minrating),
         element: notificationFilter.element,
         showToolTip: false,
         rateCallback: function rateCallback(rating, done) {
-            notificationFilter.element.setRating(rating);
+            notificationFilter.element.setRating(Number(rating));
             done();
             notificationFilter.minrating = rating;
-            getAndPopulateNotifications(0, notificationFilter.limit, "notifications", pubkey, null, notificationFilter.type, notificationFilter.minrating);
+            getAndPopulateNotifications(0, notificationFilter.limit, "notifications", pubkey, null, notificationFilter.type, Number(notificationFilter.minrating));
         }
     });
 
     if (notificationFilter.element) {
-        notificationFilter.element.setRating(minrating);
+        notificationFilter.element.setRating(Number(minrating));
     }
 
 }
@@ -125,7 +125,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid, nfilter
     notificationFilter.minrating = minrating;
 
 
-    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
+    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
         var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length);

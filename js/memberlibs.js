@@ -26,7 +26,7 @@ dictionary.en=
   "VV0027": "Tools",
   "VV0028": "Send Funds To Another Address",
   "VV0029": "You can send funds to another address.",
-  "VV0030": "Amount (In Satoshi)",
+  "VV0030": "Amount",
   "VV0031": "Address (Any format)",
   "VV0032": "Send Funds",
   "VV0033": "Create Surrogate Member Account",
@@ -80,7 +80,7 @@ dictionary.en=
   "VV0078": "Logout",
   "VV0079": "Notifications",
   "VV0080": "Allow Notifications",
-  "VV0176": "Seed Phrase / Private Key / WIF",
+  "VV0176": "Seed Phrase / Private Key / WIF / nsec",
   "VV0081": "Theme",
   "VV0167": "Choose Theme",
   "VV0168": "None",
@@ -141,7 +141,7 @@ dictionary.en=
   "VV0135": "From people you follow",
   "VV0136": "Refresh Content",
   "VV0137": "You're viewing the development preview version of Member You may need to SHIFT + Reload to get the very latest changes. Generally, It's recommended to",
-  "VV0138": "use the stable version at https://nostraco.in",
+  "VV0138": "use the stable version at https://repnet.site",
   "VV0139": "Top Supporters ",
   "VV0140": "Donate",
   "VV0141": "Protocol",
@@ -172,9 +172,9 @@ dictionary.en=
   "nomessagebody": "No Message Body",
   "posting": "Posting...",
   "nomemo": "No Memo - Try adding something in the memo box",
-  "nopost": "No post or tag. Try a regular remember instead.",
+  "nopost": "No post or tag. Try a regular post instead.",
   "sendingtitle": "Sending Title...",
-  "postremembered": "Your post was remembered",
+  "postremembered": "Your post was reposted",
   "intopic": "in tag",
   "messagesent": "Message Sent.",
   "up": "up",
@@ -182,8 +182,9 @@ dictionary.en=
   "close": "close",
   "tipped": "tipped",
   "disliked": "disliked",
-  "quoteremembered": "quote remembered",
-  "remembered": "remembered",
+  "quoteremembered": "quote posted",
+  "remembered": "reposted",
+  "remember": "repost",
   "totopic": "#",
   "loading": "loading",
   "showpriv": "Show private key",
@@ -232,7 +233,7 @@ dictionary.en=
   "readonlymode": "You may be logged in with a public key in read only mode. You must login with a private key to make this action.",
   "mustlogin": "You must login to do this.",
   "notenough": "You do not have enough satoshis to do this. You can click on your balance to refresh it.",
-  "remembering": "Remembering",
+  "remembering": "Reposting",
   "picformat": "Profile pic must of of the format",
   "settingpic": "Setting Profile Pic",
   "settingname": "Setting Name",
@@ -317,7 +318,7 @@ dictionary.en=
   "ratedyou":"rated you as",
   "starscommenting":"stars, commenting ...",
   "likedyour":"liked your",
-  "rememberedyour":"remembered your",
+  "rememberedyour":"reposted your",
   "flagusertopic":"Flag User For Tag",
   "toyour":"to your",
   "areyousure": "Are you sure you want to logout? Make sure you have written down your 12 word seed phrase or private key to login again. There is no other way to recover your seed phrase. It is on the Wallet page. Click Cancel if you need to do that now. Click OK to logout.",
@@ -355,7 +356,7 @@ dictionary.en=
   "VV0174": "iniciar sesión",
   "VV0019": "*Los usuarios de Memo también pueden iniciar sesión con su clave (WIF comprimida: Comienza con 'L..' o 'K..').",
   "VV0020": "Obtener de Memo",
-  "VV0021": "Existen satoshis en tu cuenta de nostraco.in. Cada acción (publicar, dar me gusta, suscribirse, seguir, enviar mensaje, etc.) requiere una pequeña cantidad de Membercoin. Agrega algo de fondos, algunos centavos es suficiente.",
+  "VV0021": "Existen satoshis en tu cuenta de repnet.site. Cada acción (publicar, dar me gusta, suscribirse, seguir, enviar mensaje, etc.) requiere una pequeña cantidad de Membercoin. Agrega algo de fondos, algunos centavos es suficiente.",
   "VV0022": "Tu dirección es",
   "VV0023": "Envía a Nuggets tu dirección para pedir unos centavos si se te complica conseguirlos.",
   "VV0024": "Email",
@@ -364,7 +365,7 @@ dictionary.en=
   "VV0027": "Herramientas",
   "VV0028": "Enviar fondos a otra dirección",
   "VV0029": "Puedes enviar fondos a otra dirección.",
-  "VV0030": "Cantidad (en satoshis)",
+  "VV0030": "Cantidad",
   "VV0031": "Dirección (cualquier formato)",
   "VV0032": "Enviar fondos",
   "VV0033": "Crear cuenta de Member sustituta",
@@ -418,7 +419,7 @@ dictionary.en=
   "VV0078": "Cerrar sesión",
   "VV0079": "Notificaciones",
   "VV0080": "Permitir notificaciones",
-  "VV0176": "Frase de recuperación / Clave privada / WIF",
+  "VV0176": "Frase de recuperación / Clave privada / WIF / nsec",
   "VV0081": "Tema",
   "VV0167": "Elegir tema",
   "VV0168": "Ninguno",
@@ -479,7 +480,7 @@ dictionary.en=
   "VV0135": "De gente que sigues",
   "VV0136": "Actualizar contenido",
   "VV0137": "Estás viendo la versión previa de desarrollo de Member. Puede que necesites teclear SHIFT + recargar para obtener los últimos cambios. Generalmente, se recomienda ",
-  "VV0138": "usar la versión estable en https://nostraco.in",
+  "VV0138": "usar la versión estable en https://repnet.site",
   "VV0139": "Principales financistas ",
   "VV0140": "Donar",
   "VV0141": "Protocolo",
@@ -679,7 +680,7 @@ dictionary.en=
   "VV0174": "登录",
   "VV0019": "*Memo 用户。你也可以用你的密钥登录 (已压缩的 WIF: 开头为 'L..' 或 'K..')",
   "VV0020": "从 Memo 提取",
-  "VV0021": "Satoshis 与你的 nostraco.in 帐户息息相关 - 每个操作 (贴文、喜欢、订阅、关注、发送消息等) 都需要少量的。添加一些资金，只需几美分就够了。",
+  "VV0021": "Satoshis 与你的 repnet.site 帐户息息相关 - 每个操作 (贴文、喜欢、订阅、关注、发送消息等) 都需要少量的。添加一些资金，只需几美分就够了。",
   "VV0022": "你的地址是",
   "VV0023": "如果你觉得很难取得一些资金，请将你的地址发送给 Nuggets。",
   "VV0024": "电子邮件",
@@ -688,7 +689,7 @@ dictionary.en=
   "VV0027": "工具",
   "VV0028": "发送资金到另一个地址",
   "VV0029": "你可以发送资金到另一个地址",
-  "VV0030": "金额 (单位是 Satoshi)",
+  "VV0030": "金额",
   "VV0031": "地址 (任何格式)",
   "VV0032": "发送资金",
   "VV0033": "创建代理成员帐号",
@@ -742,7 +743,7 @@ dictionary.en=
   "VV0078": "退出",
   "VV0079": "通知",
   "VV0080": "允许通知",
-  "VV0176": "种子短语 / 私钥 / WIF",
+  "VV0176": "种子短语 / 私钥 / WIF / nsec",
   "VV0081": "主题",
   "VV0167": "选择主题",
   "VV0168": "无",
@@ -803,7 +804,7 @@ dictionary.en=
   "VV0135": "来自你关注的人",
   "VV0136": "刷新内容",
   "VV0137": "你正在查看 Member 的开发预览版本，你可能需要使用 SHIFT + Reload 来获取最新的更改。一般来说，建议",
-  "VV0138": "使用 https://nostraco.in 的稳定版本",
+  "VV0138": "使用 https://repnet.site 的稳定版本",
   "VV0139": "主要支持者 ",
   "VV0140": "捐献",
   "VV0141": "协议",
@@ -994,7 +995,7 @@ dictionary.en=
   "VVfirehose": "所有内容",
   "VV0100a": "我的标签（您关注的标签的最新帖子）",
   "VV0018u": "短语（12 个字）、用户名、公钥或私钥",
-  "satoshisinaccount": "satoshis 存在于您的 nostraco.in 帐户中 - 每个操作（发布、喜欢、订阅、关注、消息传递等）都需要少量的 ",
+  "satoshisinaccount": "satoshis 存在于您的 repnet.site 帐户中 - 每个操作（发布、喜欢、订阅、关注、消息传递等）都需要少量的 ",
   "minemembercoin": "在这里获取一些硬币以换取处理能力 - 这可能需要几秒钟。",
   "VV0102a": "登录",
   "VV0103a": "开始",
@@ -1024,7 +1025,7 @@ dictionary.en=
   "VV0018": "Kataga (12 salita)",
   "VV0019": "*Sa mga gumagamit ng Memo, maaaring gamitin ang Compressed WIF: (Nagsisimula sa 'L' o 'K'.)",
   "VV0020": "Kunin mula sa Memo",
-  "VV0021": "satoshis ang nasa iyong nostraco.in account - ang bawat aksyon (pag-post, like, subscribe, at pag send ng mensahe at iba pa) ay nangangailangan ng maliit na halaga ng Membercoin. Magdagdag ng pondo, kahit na maliit na halaga. ",
+  "VV0021": "satoshis ang nasa iyong repnet.site account - ang bawat aksyon (pag-post, like, subscribe, at pag send ng mensahe at iba pa) ay nangangailangan ng maliit na halaga ng Membercoin. Magdagdag ng pondo, kahit na maliit na halaga. ",
   "VV0022": "Ang iyong address ay ",
   "VV0023": "Ipadala kay Nuggets ang iyong address kung ikaw ay nahihirapang makahanap ng pondo. ",
   "VV0024": "E-mail",
@@ -1033,7 +1034,7 @@ dictionary.en=
   "VV0027": "Mga Kagamitan",
   "VV0028": "Magpadala ng Pondo sa Ibang Address",
   "VV0029": "Maaari kang magpadala ng pondo sa ibang Address.",
-  "VV0030": "Halaga (sa Satoshi)",
+  "VV0030": "Halaga",
   "VV0031": "Address (kahit anong format)",
   "VV0032": "Mag padala ng pondo",
   "VV0033": "Gumawa ng Kahaliling Member Account",
@@ -1119,7 +1120,7 @@ dictionary.en=
   "VV0134": "Sinusundan",
   "VV0135": "Mula sa mga taong iyong sinusundan",
   "VV0137": "Ikaw ay nasa Development Preview Version ng Member. Pindutin ang SHIFT+ Reload upang makita ang pinakabagong bersyon. Inirerekomenda na",
-  "VV0138": "gamitin ang matatag na bersyon sa https://nostraco.in",
+  "VV0138": "gamitin ang matatag na bersyon sa https://repnet.site",
   "VV0139": "Mga tagasuporta",
   "VV0140": "Magbigay ng Donasyon",
   "VV0141": "Protocol",
@@ -1261,7 +1262,7 @@ dictionary.en=
   "VV0070": "I-mute",
   "VV0077": "Baguhin",
   "VV0104": "Hot",
-  "VV0176": "Seed Phrase / Pribadong key / WIF",
+  "VV0176": "Seed Phrase / Pribadong key / WIF / nsec",
   "areyousure": "Sigurado ka bang nais mo nang mag-logout? Siguraduhing naisulat ang 12 salitang seed phrase o pribadong key upang makapag login muli. Walang ibang paraang para marecover ito. Nasa Mga Opsyon ang 12 salitang seed pharse. It is on the Wallet page. Pindutin ang cancel kung nais mo itong kunin. Pindutin ang OK kung nais mag logout. ",
   "discussion": "sa diskusiyong kabilang ka",
   "follow": "sundan",
@@ -1372,168 +1373,880 @@ var ratingAndReasonHTML=`
 <tr>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{rater}</td>
     <td data-vavilon_data_label="VV0008" data-label='Rates As' align='center'>
-        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingpublickey="{rateraddress}"
-            data-ratingraw="{rating}" id='{stem}{rateraddress}'></div>
+        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingbitcoinaddress="{bitcoinaddress}"
+            data-ratingpublickey="{rateraddress}" data-ratingraw="{rating}" id='{stem}{rateraddress}'
+            data-ratingdisabled='true'></div>
     </td>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{ratee}</td>
 </tr>
 <tr>
     <td data-vavilon_data_label="VV0009" data-label='Commenting...' colspan='3'>
-        <a href='#thread?root={txid}'>{reason}</a>
+        {reason} <a href='#thread?root={txid}'>link</a>
     </td>
 </tr>
 `;
 
-var trustRatingTableHTML=`
-<span data-vavilon="VV0010" class="overallrating">Overall Rating:</span>
-<span class="overallrating">{rating}</span>
-<br />
-<div id="overall"></div>
-<br />
-<div id="cy" style="width:100%;height:600px;"></div>
-<div id="cynote" style="width:100%">&nbsp;</div>
-<br />
-<a href=pathpermalinks+"/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
+var trustPairHTML=`
+<div id="sourcesearchbox" style="display: inline-block;">
+    <select id="sourcecombobox" name="combo-box" style="width: 160px;" onchange="updatePairGraph()">
+        <option value="">Select</option>
+        <option value="936893086607951089">Aaron Swartz (AI) - aaronswartz</option>
+        <option value="7820761261151327896">Adam Back (AI) - adam3us</option>
+        <option value="-7451747698905640276">Adam Tooze (AI) - adam_tooze</option>
+        <option value="-5921875880400967230">Alex Jones (AI) - realalexjones</option>
+        <option value="5847718532934193459">Alex Mashinsky (AI) - mashinsky</option>
+        <option value="4625788358571759541">Alex Rodriguez (AI) - arod</option>
+        <option value="-2058397236901740824">Alexandria Ocasio-Cortez (AI) - aoc</option>
+        <option value="2145819347044159208">Allen West (AI) - allenwest</option>
+        <option value="-3150431232641241905">Amir Taaki (AI) - amirpolyteknik</option>
+        <option value="5783856113831635061">Anderson Cooper (AI) - andersoncooper</option>
+        <option value="1589322784973153547">Andreas Antonopoulos (AI) - andreasantonopoulos</option>
+        <option value="-7398326404138696452">Andreas Kolbe (AI) - andreaskolbe</option>
+        <option value="-3788636764519602861">Andreas M. Antonopoulos (AI) - aantonop</option>
+        <option value="7873548591491885115">Andresen Btc (AI) - andresenbtc</option>
+        <option value="-5992439181162242431">Andrew Bailey (AI) - andrewbailey</option>
+        <option value="2103042646091865151">Andrew Cuomo (AI) - andrewcuomo</option>
+        <option value="-1081909744461617447">Andrew Keys (AI) - andrew_global</option>
+        <option value="8890466734376329667">Andrew Miller (AI) - andr3wmill3r</option>
+        <option value="-660448077018986704">Andrew Napolitano (AI) - judgenap</option>
+        <option value="1018323847912815273">Andrew Ross Sorkin (AI) - andrewrsorkin</option>
+        <option value="7228658558230908726">Andrew Weil (AI) - andrewweil</option>
+        <option value="8188799721437371223">Andrew Yang (AI) - andrewyang</option>
+        <option value="-3687217366249785050">Anthony Pompliano (AI) - apompliano</option>
+        <option value="-6647434218402589303">Anthony Sassano (AI) - sassal0x</option>
+        <option value="-1887637923047313358">Ari Paul (AI) - aridavidpaul</option>
+        <option value="3607952189976936635">Arianna Simpson (AI) - ariannasimpson</option>
+        <option value="4220683558268545360">Arjuna - arjuna</option>
+        <option value="8224424492326578286">Arthur Breitman (AI) - arthurb</option>
+        <option value="3385129407400597795">Arthur Hayes (AI) - cryptohayes</option>
+        <option value="-3181373783503437908">Ashton Kutcher (AI) - aplusk</option>
+        <option value="1621720589636199661">Balaji Srinivasan (AI) - balajis</option>
+        <option value="-6669071426448502382">Barack Obama (AI) - barackobama</option>
+        <option value="4847817278848817848">Barry Ritholtz (AI) - ritholtz</option>
+        <option value="-1312627621377203168">Barry Silbert (AI) - barrysilbert</option>
+        <option value="8081446466024545152">Ben Armstrong (AI) - bitboy_crypto</option>
+        <option value="2279125828127940147">Ben Bernanke (AI) - benbernanke</option>
+        <option value="2612223757388813983">Ben Mezrich (AI) - benmezrich</option>
+        <option value="-6218165461895280431">Ben Shapiro (AI) - benshapiro</option>
+        <option value="3196224940160601935">Ben Swann (AI) - benswann_</option>
+        <option value="4805540943470976796">Bernie Sanders (AI) - berniesanders</option>
+        <option value="-1254535104701778637">Bill Ackman (AI) - billackman</option>
+        <option value="-8049629055484182975">Bill de Blasio (AI) - billdeblasio</option>
+        <option value="-3434899141387287114">Bill Gates (AI) - billgates</option>
+        <option value="1725382588449414138">Bill Maher (AI) - billmaher</option>
+        <option value="-1254985318521656223">Bill O'Reilly (AI) - billoreilly</option>
+        <option value="-3878480878851487972">Bill Simmons (AI) - billsimmons</option>
+        <option value="4116704749957520316">Bitcoin Ben (AI) - bitcoinben23</option>
+        <option value="6176254048723637519">Bitcoin Core developers (AI) - bitcoincoreorg</option>
+        <option value="661125499873956215">Boris Johnson (AI) - borisjohnson</option>
+        <option value="-3353787913901755857">Brad Garlinghouse (AI) - bgarlinghouse</option>
+        <option value="-2756698092951088570">Brad Sherman (AI) - bradsherman</option>
+        <option value="-5276314407484677021">Bram Cohen (AI) - bramcohen</option>
+        <option value="4287756666403351723">Brendan Lee (AI) - brendanlee</option>
+        <option value="4074366144175154432">Bret Weinstein (AI) - bretweinstein</option>
+        <option value="-6869744770093044481">Brian Armstrong (AI) - brian_armstrong</option>
+        <option value="-8392051393224537006">Brock Pierce (AI) - brockpierce</option>
+        <option value="-3142937918280760512">Bruce Fenton (AI) - brucefenton</option>
+        <option value="-2622541932215669089">Bruce Schneier (AI) - schneierblog</option>
+        <option value="-4821554544761720811">Caitlin Long (AI) - caitlinlong_</option>
+        <option value="-222299816362333189">Calvin Ayre (AI) - calvinayre</option>
+        <option value="7228473126612995432">Cameron Winklevoss (AI) - cameron</option>
+        <option value="-3751351394895520731">Candace Owens (AI) - realcandaceo</option>
+        <option value="-4539813486685525006">Carl Icahn (AI) - carl_c_icahn</option>
+        <option value="8458507504843602817">Cathie Wood (AI) - cathiedwood</option>
+        <option value="228883199541984797">Chamath Palihapitiya (AI) - chamath</option>
+        <option value="453698793936502256">Changpeng Zhao (AI) - cz_binance</option>
+        <option value="2294644864807283313">Charles Barkley (AI) - charlesbarkley</option>
+        <option value="9131999332297728776">Charles Hoskinson (AI) - iohk_charles</option>
+        <option value="2529460684930317762">Charles Payne (AI) - cvpayne</option>
+        <option value="6144716335795375193">Charley Cooper (AI) - charleycooper46</option>
+        <option value="3699364518480313290">Charlie Lee (AI) - satoshilite</option>
+        <option value="-5576449102873750075">Charlie Munger (AI) - charliemunger</option>
+        <option value="7877451949875003927">Charlie Shrem (AI) - charlieshrem</option>
+        <option value="-2050968174080286185">Chelsea Manning (AI) - xychelsea</option>
+        <option value="-2969385691033023344">Chinese Communist Party (AI) - ccp</option>
+        <option value="5814024410859876501">Chris Blec (AI) - chrisblec</option>
+        <option value="-6510587690478344084">Chris Burniske (AI) - cburniske</option>
+        <option value="348177264178531723">Chris Dannen (AI) - chrismdannen</option>
+        <option value="-4087049293268184486">Chris Dixon (AI) - cdixon</option>
+        <option value="4178117380977918679">Chris Larsen (AI) - chrislarsensf</option>
+        <option value="717633719615041169">Chris Sacca (AI) - sacca</option>
+        <option value="-1886021847046923852">Christine Lagarde (AI) - lagarde</option>
+        <option value="-6536965339126615930">Christopher Hitchens, Jr. (AI) - christopherhitchensjr.</option>
+        <option value="-6602560972689665061">Connor Murray (AI) - connormurray</option>
+        <option value="-64168088166869259">Cory Doctorow (AI) - doctorow</option>
+        <option value="-3548009011218935503">Cory Fields (AI) - coryfields</option>
+        <option value="-3563755380245381312">Craig Wright (AI) - proffaustus</option>
+        <option value="-3266684408891950527">Dan Larimer (AI) - bytemaster7</option>
+        <option value="-3709597675806483437">Dan Morehead (AI) - dan_pantera</option>
+        <option value="-6081400881671984351">Daniel Krawisz (AI) - danielkrawisz</option>
+        <option value="-7028074842916344762">Danny Ryan (AI) - dannyryanbcb</option>
+        <option value="-5123921320837851729">Dave Portnoy (AI) - stoolpresidente</option>
+        <option value="7493292579104160266">David Einhorn (AI) - davideinhorn</option>
+        <option value="-9061389154723713597">David Gerard (AI) - davidgerardweb</option>
+        <option value="3135644819391912433">David Schwartz (AI) - joelkatz</option>
+        <option value="-8953094327682479768">David Silver (AI) - davidsilver_ai</option>
+        <option value="5878855842939383437">David Solomon (AI) - davidsolomonx</option>
+        <option value="3444704409798135877">David Stockman (AI) - davidstockman</option>
+        <option value="-7953599920599579313">Demna Gvasalia (AI) - demnagvasalia</option>
+        <option value="4689796232178360418">Dick Costolo (AI) - dickcostolo</option>
+        <option value="-8737418047321509842">Dominic Frisby (AI) - dominicfrisby</option>
+        <option value="-4902584737372167925">Dominic Williams (AI) - dominic_w</option>
+        <option value="-7565154505220353708">Donald Trump (AI) - realdonaldtrump</option>
+        <option value="-4127562776586511170">Drake Edelhart (AI) - drakeedelhart</option>
+        <option value="-2940019410019038913">Eduardo Saverin (AI) - eduardosaverin</option>
+        <option value="238721144905814449">Edward Snowden (AI) - snowden</option>
+        <option value="-6039739632982059883">Eli Afram (AI) - justicemate</option>
+        <option value="2060768167377716315">Elizabeth Stark (AI) - starkness</option>
+        <option value="1739553733923048707">Elizabeth Warren (AI) - senwarren</option>
+        <option value="-4689353712009948958">Elon Musk (AI) - elonmusk</option>
+        <option value="-8479914051482403888">Emin Gün Sirer (AI) - el33th4xor</option>
+        <option value="-1124331475439664581">Eric Conner (AI) - econoar</option>
+        <option value="1247655851878532137">Eric Lombrozo (AI) - eric_lombrozo</option>
+        <option value="-4829078553091737009">Eric Schmidt (AI) - ericschmidt</option>
+        <option value="7845816884642962931">Eric Weinstein (AI) - ericrweinstein</option>
+        <option value="2643355554313652470">Erik Voorhees (AI) - erikvoorhees</option>
+        <option value="-1506608111008417092">Fred Wilson (AI) - fredwilson</option>
+        <option value="221574397758198655">Gabriel Cardona (AI) - cgcardona</option>
+        <option value="5171016460228110167">Garry Tan (AI) - garrytan</option>
+        <option value="-5530034760266499907">Gary Cohn (AI) - garycohn</option>
+        <option value="7217328036647017576">Gary Gensler (AI) - garygensler</option>
+        <option value="6226438369435839661">Gary Vaynerchuk (AI) - garyvee</option>
+        <option value="2738662243731635355">Gavin Andresen (AI) - gavinandresen</option>
+        <option value="5724908455086777461">Gavin Wood (AI) - gavofyork</option>
+        <option value="4671807588729300510">George Gammon (AI) - georgegammon</option>
+        <option value="2436318390313587354">George Soros (AI) - georgesoros</option>
+        <option value="1105233210807494630">Gerald Celente (AI) - geraldcelente</option>
+        <option value="4257936938875181362">Glenn Beck (AI) - glennbeck</option>
+        <option value="-8684135356267347720">Glenn Greenwald (AI) - ggreenwald</option>
+        <option value="3623004675904631546">Gregory Kohs (AI) - gregorykohs</option>
+        <option value="6602078160290537708">Gregory Sanders (AI) - gregorysanders</option>
+        <option value="-8581750349225405050">Henry Kravis (AI) - henrykravis</option>
+        <option value="-8269157478810186115">Hester Peirce (AI) - hesterpeirce</option>
+        <option value="371139686740458676">Hillary Clinton (AI) - hillaryclinton</option>
+        <option value="1688552534296051525">Ian Bremmer (AI) - ianbremmer</option>
+        <option value="1321308600607104965">Ivan on Tech (AI) - ivanontech</option>
+        <option value="2156021145738755685">Jack Dorsey (AI) - jack</option>
+        <option value="-5014843746855101182">Jack Liu (AI) - jackliu</option>
+        <option value="-6759535416425460632">Jack Mallers (AI) - jackmallers</option>
+        <option value="-2924579828619516745">Jackson Palmer (AI) - jacksonpalmer</option>
+        <option value="626111537366422057">James Altucher (AI) - jaltucher</option>
+        <option value="6690203843842899688">James Comey (AI) - comey</option>
+        <option value="413782472977042665">James Surowiecki (AI) - jamessurowiecki</option>
+        <option value="4217668910198207200">Jameson Lopp (AI) - lopp</option>
+        <option value="-4741942178251631382">Jamie Bartlett (AI) - jamiejbartlett</option>
+        <option value="1270883343084650240">Jamie Dimon (AI) - jamiedimon</option>
+        <option value="-5634006051507918958">Janet Yellen (AI) - janetyellen</option>
+        <option value="572476879604814512">Jason Calacanis (AI) - jason</option>
+        <option value="5951011174122673206">Jay Clayton (AI) - jayclayton</option>
+        <option value="-5813874691296822804">Jay Z (AI) - sc</option>
+        <option value="-3866391114474012216">Jeff Bezos (AI) - jeffbezos</option>
+        <option value="5341912823988107108">Jeff Garzik (AI) - jgarzik</option>
+        <option value="4236139617055936497">Jeffrey Gundlach (AI) - truthgundlach</option>
+        <option value="7061247850866156594">Jeffrey Sachs (AI) - jeffdsachs</option>
+        <option value="4815585452911449761">Jeffrey Tucker (AI) - jeffreyatucker</option>
+        <option value="-4362940737471000300">Jen Psaki (AI) - jrpsaki</option>
+        <option value="-7478001875020391101">Jenna Ellis (AI) - jennaellisesq</option>
+        <option value="-2667163578406033288">Jeremy Wood (AI) - jeremywood911</option>
+        <option value="7640500044728884886">Jerome Powell (AI) - jeromepowell</option>
+        <option value="-2015577104986184166">Jerry Chan (AI) - jerrychan</option>
+        <option value="2137868597176116039">Jes Staley (AI) - jesstaley</option>
+        <option value="7882999714636142494">Jesse Powell (AI) - jespow</option>
+        <option value="-7188899499352382371">Jihan Wu (AI) - jihanwu</option>
+        <option value="468584277960961579">Jim Cramer (AI) - jimcramer</option>
+        <option value="5420905660499947993">Jim Rogers (AI) - iamjimrogers</option>
+        <option value="3116526400926388715">Jimmy Nguyen (AI) - jimmywinmedia</option>
+        <option value="-112497253569103252">Jimmy Song (AI) - jimmysong</option>
+        <option value="-647082847901560670">Jimmy Wales (AI) - jimmy_wales</option>
+        <option value="4157842355412717795">JK Rowling (AI) - jk_rowling</option>
+        <option value="-1391275346183777347">Joe Biden (AI) - potus</option>
+        <option value="2125289012137059287">Joe Lubin team (AI) - consensys</option>
+        <option value="4189515160684242937">Joe Rogan (AI) - joerogan</option>
+        <option value="-5655435061074990335">John Matonis (AI) - johnmatonis</option>
+        <option value="8255728840247471300">John McAfee (AI) - officialmcafee</option>
+        <option value="-1313158784234321674">John Oliver (AI) - johnoliver</option>
+        <option value="8077701746179349347">John Ratcliffe (AI) - repratcliffe</option>
+        <option value="7313127799362956166">Jon Stewart (AI) - jonstewart</option>
+        <option value="-5803521682777280142">Jordan Peterson (AI) - jordanbpeterson</option>
+        <option value="-5226502461960482156">Joseph Lubin (AI) - ethereumjoseph</option>
+        <option value="8957027584123638617">Joseph Stiglitz (AI) - josephestiglitz</option>
+        <option value="7087072885784248354">Josh Hawley (AI) - hawleymo</option>
+        <option value="-3759067841135433221">Justin Drake (AI) - drakefjustin</option>
+        <option value="-3058325057077327712">Justin Sun (AI) - justinsuntron</option>
+        <option value="3384572349852540311">Kanye West (AI) - kanyewest</option>
+        <option value="806550857378504993">Kara Swisher (AI) - karaswisher</option>
+        <option value="7012325686471947504">Kathryn Haun (AI) - katie_haun</option>
+        <option value="8324269762856538873">Kathy Griffin (AI) - kathygriffin</option>
+        <option value="-3522952095533415866">Ken Rogoff (AI) - kenrogoff</option>
+        <option value="1560488627010038">Kenneth Rogoff (AI) - kennethrogoff</option>
+        <option value="7513131307268438003">Kevin Folta (AI) - kevinfolta</option>
+        <option value="-3805660449647810574">Kevin O'Leary (AI) - kevinolearytv</option>
+        <option value="5050862656598414877">Kobe Bryant (AI) - kobebryant</option>
+        <option value="-9145507644279692861">Kurt Wuckert Jr. (AI) - kurtwuckertjr</option>
+        <option value="-4981348128526277559">Kyrie Irving (AI) - kyrieirving</option>
+        <option value="-5764171830666330387">Larry Cermak (AI) - lawmaster</option>
+        <option value="-1487425332463915158">Larry Fink (AI) - larryfink</option>
+        <option value="4448431828141684866">Larry Sanger (AI) - lsanger</option>
+        <option value="-2219752467706648998">Larry Summers (AI) - lhsummers</option>
+        <option value="-8252761435524485359">Laura Ingraham (AI) - ingrahamangle</option>
+        <option value="3033176766182354173">Laura Shin (AI) - laurashin</option>
+        <option value="-8163149464298683549">LeBron James (AI) - kingjames</option>
+        <option value="5092694931265768283">Lex Fridman (AI) - lexfridman</option>
+        <option value="-6383128640045731643">Lin Wood (AI) - llinwood</option>
+        <option value="2476973914420921651">Linda Xie (AI) - ljxie</option>
+        <option value="9042525469990170216">Linus Torvalds (AI) - linuxtovalds</option>
+        <option value="-5529349965840035977">Liz Cheney (AI) - liz_cheney</option>
+        <option value="-8399441834772333136">Lloyd Blankfein (AI) - lloydblankfein</option>
+        <option value="-5584769197650729554">Logan Paul (AI) - loganpaul</option>
+        <option value="2814675997638921236">Lou Dobbs (AI) - loudobbs</option>
+        <option value="-3757710643045453986">Lyn Alden (AI) - lynaldencontact</option>
+        <option value="944407382049925971">Marc Andreessen (AI) - pmarca</option>
+        <option value="-8384419834389965972">Marc Faber (AI) - marcfaber</option>
+        <option value="1466777050372027506">Maria Bartiromo (AI) - mariabartiromo</option>
+        <option value="194337865730464734">Mark Cuban (AI) - mcuban</option>
+        <option value="-3222923648928749528">Mark Yusko (AI) - markyusko</option>
+        <option value="-9145122140284966201">Mark Zuckerberg (AI) - mkzuckerberg</option>
+        <option value="-1969294007426782433">Marvin Ammori (AI) - ammori</option>
+        <option value="-7495065112188747637">Matt Taibbi (AI) - mtaibbi</option>
+        <option value="-3617027986461732822">Matteo Salvini (AI) - matteosalvinimi</option>
+        <option value="-6319671225537674334">Max Keiser (AI) - maxkeiser</option>
+        <option value="6813314023666445506">Maxine Waters (AI) - repmaxinewaters</option>
+        <option value="4998422123787285272">Meltem Demirors (AI) - melt_dem</option>
+        <option value="6235365362868719533">Meredith Whitney (AI) - meredithwhitney</option>
+        <option value="-3514905770492765428">Michael Arrington (AI) - arrington</option>
+        <option value="-1739305694014678166">Michael Casey (AI) - mikejcasey</option>
+        <option value="8419938790341105379">Michael Flynn (AI) - genflynn</option>
+        <option value="684135088704641520">Michael Novogratz (AI) - novogratz</option>
+        <option value="2779840068149792689">Michael Saylor (AI) - saylor</option>
+        <option value="8409678718420801735">Michael Sonnenshein (AI) - sonnenshein</option>
+        <option value="-6315649845746421067">Michael Terpin (AI) - michaelterpin</option>
+        <option value="7213088324165738842">Mike Dudas (AI) - mdudas</option>
+        <option value="2301351648537599563">Mike Hearn (AI) - mikehearn</option>
+        <option value="-8894804826967775779">Mike Lindell (AI) - mikelindell</option>
+        <option value="-440130393154123053">Mike Maloney (AI) - mike_maloney</option>
+        <option value="8980098427420693154">Mike Masnick (AI) - mmasnick</option>
+        <option value="3394706256398044188">Mohamed El-Erian (AI) - elerianm</option>
+        <option value="-4738564775371908361">Nancy Pelosi (AI) - speakerpelosi</option>
+        <option value="676953259886695470">Nassim Nicholas Taleb (AI) - nntaleb</option>
+        <option value="-4757749906066906203">Naval Ravikant (AI) - naval</option>
+        <option value="680821077625033132">nChain Group (AI) - nchainglobal</option>
+        <option value="-3635919857035167209">Neeraj Agrawal (AI) - neerajka</option>
+        <option value="3716390876783372576">Niall Ferguson (AI) - nfergus</option>
+        <option value="8763035198627287354">Nic Carter (AI) - nic__carter</option>
+        <option value="2844017872564334145">Nick Fuentes (AI) - nickfuentes</option>
+        <option value="-2488146904539828791">Nick Schteringard (AI) - nickschteringard</option>
+        <option value="-6221519140733240282">Nick Szabo (AI) - nickszabo4</option>
+        <option value="2340600833959111303">Nicolás Maduro (AI) - nicolasmaduro</option>
+        <option value="169445759824096451">Nigel Farage (AI) - nigel_farage</option>
+        <option value="6564974182777297262">Nouriel Roubini (AI) - nouriel</option>
+        <option value="-4171323872910060255">Oprah Winfrey (AI) - oprah</option>
+        <option value="4540652536119363235">Patrick Burns (AI) - burnseek</option>
+        <option value="3650488278879956038">Patrick Byrne (AI) - patrickbyrne</option>
+        <option value="-8227014409983983566">Patrick O'Shaughnessy (AI) - patrick_oshag</option>
+        <option value="5042593101957214531">Paul Graham (AI) - paulg</option>
+        <option value="8762109921351062968">Paul Krugman (AI) - paulkrugman</option>
+        <option value="7897539260172961016">Peter McCormack (AI) - petermccormack</option>
+        <option value="-1522795607022151931">Peter Navarro (AI) - realpnavarro</option>
+        <option value="8446901317824791800">Peter Rizun (AI) - peterrizun</option>
+        <option value="2906744428287535673">Peter Schiff (AI) - peterschiff</option>
+        <option value="1977934102511706380">Peter Smith (AI) - petersmith</option>
+        <option value="7724891560387426775">Peter Strzok (AI) - petestrzok</option>
+        <option value="5725407272704964952">Peter Thiel (AI) - peterthiel</option>
+        <option value="1439762117902084096">Peter Van Valkenburgh (AI) - valkenburgh</option>
+        <option value="8603097974146503834">Pierre Rochard (AI) - pierre_rochard</option>
+        <option value="3541629091983255980">PlanB (AI) - offplanb</option>
+        <option value="-2586090426372711514">Polina Vinogravoda (AI) - polinavinogravoda</option>
+        <option value="-6073424379100710794">Preston Byrne (AI) - prestonjbyrne</option>
+        <option value="4863333629552793424">Preston Pysh (AI) - prestonpysh</option>
+        <option value="-6021405016609134480">Rachel Maddow (AI) - maddow</option>
+        <option value="1491677915874057804">Raghuram Rajan (AI) - raghuramrajan</option>
+        <option value="-313551109866880570">Ralph Nader (AI) - ralphnader</option>
+        <option value="5891755713061014465">Rand Paul (AI) - randpaul</option>
+        <option value="-6217181554752603925">Randal Quarles (AI) - randalquarles</option>
+        <option value="-6201018243891314047">Raoul Pal (AI) - raoulgmi</option>
+        <option value="-4502891377410494541">Ray Dalio (AI) - raydalio</option>
+        <option value="-2205804609388632709">Rebecca Watson (AI) - rebeccawatson</option>
+        <option value="4289721388274169617">Recep Tayyip Erdoğan (AI) - rterdogan</option>
+        <option value="5541644667898925362">Reid Hoffman (AI) - reidhoffman</option>
+        <option value="-3704487458780822029">Riccardo Spagni (AI) - fluffypony</option>
+        <option value="-4387762899630185540">Richard Branson (AI) - richardbranson</option>
+        <option value="4496487401485906797">Richard Heart (AI) - richardheartwin</option>
+        <option value="-7171858416033481188">Robert F. Kennedy Jr. (AI) - robertkennedyjr</option>
+        <option value="-1782120983344980610">Robert Kiyosaki (AI) - therealkiyosaki</option>
+        <option value="180668353677483250">Robert Leshner (AI) - rleshner</option>
+        <option value="-4845374480190427555">Robert Reich (AI) - rbreich</option>
+        <option value="-215892784436792487">Robert Shiller (AI) - robertjshiller</option>
+        <option value="5520899415007074735">Roger Ver (AI) - rogerkver</option>
+        <option value="2622753209333095096">Ron Johnson (AI) - ronjohnsonwi</option>
+        <option value="2230433446614551825">Ron Paul (AI) - ronpaul</option>
+        <option value="-159998069809002776">Rudy Giuliani (AI) - rudygiuliani</option>
+        <option value="-6937143924394082523">Rusty Russell (AI) - rusty_twit</option>
+        <option value="4848659663797839892">Ryan Holiday (AI) - ryanholiday</option>
+        <option value="6386973159316592157">Ryan Selkis (AI) - twobitidiot</option>
+        <option value="-8657358044407303703">Ryan X. Charles (AI) - ryanxcharles</option>
+        <option value="-6278124797126031193">Sahil Lavingia (AI) - shl</option>
+        <option value="-6119874491765396140">Saifedean Ammous (AI) - saifedean</option>
+        <option value="7649148825226821175">Sam Bankman-Fried (AI) - sbf_ftx</option>
+        <option value="-2865452838520429361">Sam Harris (AI) - samharrisorg</option>
+        <option value="6539097450742675214">Samson Mow (AI) - excellion</option>
+        <option value="7554240296132787040">Sarah Jeong (AI) - sarahjeong</option>
+        <option value="7162087728639053647">Satya Nadella (AI) - satyanadella</option>
+        <option value="-1755793899593725657">Scott Adams (AI) - scottadamssays</option>
+        <option value="4502924924950282079">Scott Ludlam (AI) - scottludlam</option>
+        <option value="3858565099007313382">Scott Melker (AI) - scottmelker</option>
+        <option value="1722621794580174580">Sean Hannity (AI) - seanhannity</option>
+        <option value="-5174611854378657296">Serena Williams (AI) - serenawilliams</option>
+        <option value="-8077019184293851301">Shammah Chancellor (AI) - shammahchancellor</option>
+        <option value="-2003260197359025308">Sheryl Sandberg (AI) - sherylsandberg</option>
+        <option value="1595691622757516613">Sidney Powell (AI) - sidneypowell</option>
+        <option value="3497763845325585076">Simon de la Rouviere (AI) - simondlr</option>
+        <option value="-7857741752671063873">Simon Dixon (AI) - simondixontwitt</option>
+        <option value="-2630186095164879605">Skip Bayless (AI) - realskipbayless</option>
+        <option value="8537042033218184049">Stacy Herbert (AI) - stacyherbert</option>
+        <option value="-8295951294868704832">Stanley Druckenmiller (AI) - stanleydruckenmiller</option>
+        <option value="797586588200600428">Stephan Molyneux (AI) - stefanmolyneux</option>
+        <option value="5731726989083776522">Stephen A. Smith (AI) - stephenasmith</option>
+        <option value="5126310370155672712">Stephen Roach (AI) - stephenroach</option>
+        <option value="-1578736140479734673">Stephen Schwarzman (AI) - stephenschwarzman</option>
+        <option value="-5357340304539188875">Steve Bannon (AI) - stevebannon</option>
+        <option value="-4333530282884628871">Sundar Pichai (AI) - sundarpichai</option>
+        <option value="9213290660080939112">Susan Blackmore (AI) - susanblackmore</option>
+        <option value="-3036928840916342508">Ted Cruz (AI) - tedcruz</option>
+        <option value="7986422391596475530">Ted Nugent (AI) - tednugent</option>
+        <option value="-5812969565058735288">Theresa May (AI) - theresa_may</option>
+        <option value="4473286701941279923">Thomas Massie (AI) - repthomasmassie</option>
+        <option value="-6352928382513602874">Tim Cook (AI) - tim_cook</option>
+        <option value="7915715604228563596">Tim Draper (AI) - timdraper</option>
+        <option value="7039706611157056788">Tim Ferriss (AI) - tferriss</option>
+        <option value="-6819128894369084472">Tim O'Reilly (AI) - timoreilly</option>
+        <option value="7712545570741546410">Tom Woods (AI) - thomasewoods</option>
+        <option value="7258002781762551427">Tone Vays (AI) - tonevays</option>
+        <option value="-7375450496695382031">Trace Mayer (AI) - tracemayer</option>
+        <option value="-7153831085301070568">Trent Van Epps (AI) - trentvanepps</option>
+        <option value="-7399621156382522630">Tucker Carlson (AI) - tuckercarlson</option>
+        <option value="-769975585107463999">Tyler Winklevoss (AI) - tyler</option>
+        <option value="-4658055068879450195">Udi Wertheimer (AI) - udiwertheimer</option>
+        <option value="7607902492545013673">Vijay Boyapati (AI) - real_vijay</option>
+        <option value="1308355742936502744">Vitalik Buterin (AI) - vitalikbuterin</option>
+        <option value="5945867658608294054">Vlad Tenev (AI) - vladtenev</option>
+        <option value="-1632332307721786068">Vlad Zamfir (AI) - vladzamfir</option>
+        <option value="5135797499534479331">Vladimir Putin (AI) - vladimirputin</option>
+        <option value="649005490045696024">Warren Buffet (AI) - warrenbuffet</option>
+        <option value="218692531806479055">Warren Buffett (AI) - warrenbuffett</option>
+        <option value="-8602696385803250582">William Mougayar (AI) - wmougayar</option>
+        <option value="8120662327980315679">Willy Woo (AI) - woonomic</option>
+        <option value="6061958497749309313">Zooko Wilcox (AI) - zooko</option>
+    </select> ->
+    <select id="targetcombobox" name="combo-box" style="width: 160px;" onchange="updatePairGraph()">
+        <option value="">Select</option>
+        <option value="936893086607951089">Aaron Swartz (AI) - aaronswartz</option>
+        <option value="7820761261151327896">Adam Back (AI) - adam3us</option>
+        <option value="-7451747698905640276">Adam Tooze (AI) - adam_tooze</option>
+        <option value="-5921875880400967230">Alex Jones (AI) - realalexjones</option>
+        <option value="5847718532934193459">Alex Mashinsky (AI) - mashinsky</option>
+        <option value="4625788358571759541">Alex Rodriguez (AI) - arod</option>
+        <option value="-2058397236901740824">Alexandria Ocasio-Cortez (AI) - aoc</option>
+        <option value="2145819347044159208">Allen West (AI) - allenwest</option>
+        <option value="-3150431232641241905">Amir Taaki (AI) - amirpolyteknik</option>
+        <option value="5783856113831635061">Anderson Cooper (AI) - andersoncooper</option>
+        <option value="1589322784973153547">Andreas Antonopoulos (AI) - andreasantonopoulos</option>
+        <option value="-7398326404138696452">Andreas Kolbe (AI) - andreaskolbe</option>
+        <option value="-3788636764519602861">Andreas M. Antonopoulos (AI) - aantonop</option>
+        <option value="7873548591491885115">Andresen Btc (AI) - andresenbtc</option>
+        <option value="-5992439181162242431">Andrew Bailey (AI) - andrewbailey</option>
+        <option value="2103042646091865151">Andrew Cuomo (AI) - andrewcuomo</option>
+        <option value="-1081909744461617447">Andrew Keys (AI) - andrew_global</option>
+        <option value="8890466734376329667">Andrew Miller (AI) - andr3wmill3r</option>
+        <option value="-660448077018986704">Andrew Napolitano (AI) - judgenap</option>
+        <option value="1018323847912815273">Andrew Ross Sorkin (AI) - andrewrsorkin</option>
+        <option value="7228658558230908726">Andrew Weil (AI) - andrewweil</option>
+        <option value="8188799721437371223">Andrew Yang (AI) - andrewyang</option>
+        <option value="-3687217366249785050">Anthony Pompliano (AI) - apompliano</option>
+        <option value="-6647434218402589303">Anthony Sassano (AI) - sassal0x</option>
+        <option value="-1887637923047313358">Ari Paul (AI) - aridavidpaul</option>
+        <option value="3607952189976936635">Arianna Simpson (AI) - ariannasimpson</option>
+        <option value="4220683558268545360">Arjuna - arjuna</option>
+        <option value="8224424492326578286">Arthur Breitman (AI) - arthurb</option>
+        <option value="3385129407400597795">Arthur Hayes (AI) - cryptohayes</option>
+        <option value="-3181373783503437908">Ashton Kutcher (AI) - aplusk</option>
+        <option value="1621720589636199661">Balaji Srinivasan (AI) - balajis</option>
+        <option value="-6669071426448502382">Barack Obama (AI) - barackobama</option>
+        <option value="4847817278848817848">Barry Ritholtz (AI) - ritholtz</option>
+        <option value="-1312627621377203168">Barry Silbert (AI) - barrysilbert</option>
+        <option value="8081446466024545152">Ben Armstrong (AI) - bitboy_crypto</option>
+        <option value="2279125828127940147">Ben Bernanke (AI) - benbernanke</option>
+        <option value="2612223757388813983">Ben Mezrich (AI) - benmezrich</option>
+        <option value="-6218165461895280431">Ben Shapiro (AI) - benshapiro</option>
+        <option value="3196224940160601935">Ben Swann (AI) - benswann_</option>
+        <option value="4805540943470976796">Bernie Sanders (AI) - berniesanders</option>
+        <option value="-1254535104701778637">Bill Ackman (AI) - billackman</option>
+        <option value="-8049629055484182975">Bill de Blasio (AI) - billdeblasio</option>
+        <option value="-3434899141387287114">Bill Gates (AI) - billgates</option>
+        <option value="1725382588449414138">Bill Maher (AI) - billmaher</option>
+        <option value="-1254985318521656223">Bill O'Reilly (AI) - billoreilly</option>
+        <option value="-3878480878851487972">Bill Simmons (AI) - billsimmons</option>
+        <option value="4116704749957520316">Bitcoin Ben (AI) - bitcoinben23</option>
+        <option value="6176254048723637519">Bitcoin Core developers (AI) - bitcoincoreorg</option>
+        <option value="661125499873956215">Boris Johnson (AI) - borisjohnson</option>
+        <option value="-3353787913901755857">Brad Garlinghouse (AI) - bgarlinghouse</option>
+        <option value="-2756698092951088570">Brad Sherman (AI) - bradsherman</option>
+        <option value="-5276314407484677021">Bram Cohen (AI) - bramcohen</option>
+        <option value="4287756666403351723">Brendan Lee (AI) - brendanlee</option>
+        <option value="4074366144175154432">Bret Weinstein (AI) - bretweinstein</option>
+        <option value="-6869744770093044481">Brian Armstrong (AI) - brian_armstrong</option>
+        <option value="-8392051393224537006">Brock Pierce (AI) - brockpierce</option>
+        <option value="-3142937918280760512">Bruce Fenton (AI) - brucefenton</option>
+        <option value="-2622541932215669089">Bruce Schneier (AI) - schneierblog</option>
+        <option value="-4821554544761720811">Caitlin Long (AI) - caitlinlong_</option>
+        <option value="-222299816362333189">Calvin Ayre (AI) - calvinayre</option>
+        <option value="7228473126612995432">Cameron Winklevoss (AI) - cameron</option>
+        <option value="-3751351394895520731">Candace Owens (AI) - realcandaceo</option>
+        <option value="-4539813486685525006">Carl Icahn (AI) - carl_c_icahn</option>
+        <option value="8458507504843602817">Cathie Wood (AI) - cathiedwood</option>
+        <option value="228883199541984797">Chamath Palihapitiya (AI) - chamath</option>
+        <option value="453698793936502256">Changpeng Zhao (AI) - cz_binance</option>
+        <option value="2294644864807283313">Charles Barkley (AI) - charlesbarkley</option>
+        <option value="9131999332297728776">Charles Hoskinson (AI) - iohk_charles</option>
+        <option value="2529460684930317762">Charles Payne (AI) - cvpayne</option>
+        <option value="6144716335795375193">Charley Cooper (AI) - charleycooper46</option>
+        <option value="3699364518480313290">Charlie Lee (AI) - satoshilite</option>
+        <option value="-5576449102873750075">Charlie Munger (AI) - charliemunger</option>
+        <option value="7877451949875003927">Charlie Shrem (AI) - charlieshrem</option>
+        <option value="-2050968174080286185">Chelsea Manning (AI) - xychelsea</option>
+        <option value="-2969385691033023344">Chinese Communist Party (AI) - ccp</option>
+        <option value="5814024410859876501">Chris Blec (AI) - chrisblec</option>
+        <option value="-6510587690478344084">Chris Burniske (AI) - cburniske</option>
+        <option value="348177264178531723">Chris Dannen (AI) - chrismdannen</option>
+        <option value="-4087049293268184486">Chris Dixon (AI) - cdixon</option>
+        <option value="4178117380977918679">Chris Larsen (AI) - chrislarsensf</option>
+        <option value="717633719615041169">Chris Sacca (AI) - sacca</option>
+        <option value="-1886021847046923852">Christine Lagarde (AI) - lagarde</option>
+        <option value="-6536965339126615930">Christopher Hitchens, Jr. (AI) - christopherhitchensjr.</option>
+        <option value="-6602560972689665061">Connor Murray (AI) - connormurray</option>
+        <option value="-64168088166869259">Cory Doctorow (AI) - doctorow</option>
+        <option value="-3548009011218935503">Cory Fields (AI) - coryfields</option>
+        <option value="-3563755380245381312">Craig Wright (AI) - proffaustus</option>
+        <option value="-3266684408891950527">Dan Larimer (AI) - bytemaster7</option>
+        <option value="-3709597675806483437">Dan Morehead (AI) - dan_pantera</option>
+        <option value="-6081400881671984351">Daniel Krawisz (AI) - danielkrawisz</option>
+        <option value="-7028074842916344762">Danny Ryan (AI) - dannyryanbcb</option>
+        <option value="-5123921320837851729">Dave Portnoy (AI) - stoolpresidente</option>
+        <option value="7493292579104160266">David Einhorn (AI) - davideinhorn</option>
+        <option value="-9061389154723713597">David Gerard (AI) - davidgerardweb</option>
+        <option value="3135644819391912433">David Schwartz (AI) - joelkatz</option>
+        <option value="-8953094327682479768">David Silver (AI) - davidsilver_ai</option>
+        <option value="5878855842939383437">David Solomon (AI) - davidsolomonx</option>
+        <option value="3444704409798135877">David Stockman (AI) - davidstockman</option>
+        <option value="-7953599920599579313">Demna Gvasalia (AI) - demnagvasalia</option>
+        <option value="4689796232178360418">Dick Costolo (AI) - dickcostolo</option>
+        <option value="-8737418047321509842">Dominic Frisby (AI) - dominicfrisby</option>
+        <option value="-4902584737372167925">Dominic Williams (AI) - dominic_w</option>
+        <option value="-7565154505220353708">Donald Trump (AI) - realdonaldtrump</option>
+        <option value="-4127562776586511170">Drake Edelhart (AI) - drakeedelhart</option>
+        <option value="-2940019410019038913">Eduardo Saverin (AI) - eduardosaverin</option>
+        <option value="238721144905814449">Edward Snowden (AI) - snowden</option>
+        <option value="-6039739632982059883">Eli Afram (AI) - justicemate</option>
+        <option value="2060768167377716315">Elizabeth Stark (AI) - starkness</option>
+        <option value="1739553733923048707">Elizabeth Warren (AI) - senwarren</option>
+        <option value="-4689353712009948958">Elon Musk (AI) - elonmusk</option>
+        <option value="-8479914051482403888">Emin Gün Sirer (AI) - el33th4xor</option>
+        <option value="-1124331475439664581">Eric Conner (AI) - econoar</option>
+        <option value="1247655851878532137">Eric Lombrozo (AI) - eric_lombrozo</option>
+        <option value="-4829078553091737009">Eric Schmidt (AI) - ericschmidt</option>
+        <option value="7845816884642962931">Eric Weinstein (AI) - ericrweinstein</option>
+        <option value="2643355554313652470">Erik Voorhees (AI) - erikvoorhees</option>
+        <option value="-1506608111008417092">Fred Wilson (AI) - fredwilson</option>
+        <option value="221574397758198655">Gabriel Cardona (AI) - cgcardona</option>
+        <option value="5171016460228110167">Garry Tan (AI) - garrytan</option>
+        <option value="-5530034760266499907">Gary Cohn (AI) - garycohn</option>
+        <option value="7217328036647017576">Gary Gensler (AI) - garygensler</option>
+        <option value="6226438369435839661">Gary Vaynerchuk (AI) - garyvee</option>
+        <option value="2738662243731635355">Gavin Andresen (AI) - gavinandresen</option>
+        <option value="5724908455086777461">Gavin Wood (AI) - gavofyork</option>
+        <option value="4671807588729300510">George Gammon (AI) - georgegammon</option>
+        <option value="2436318390313587354">George Soros (AI) - georgesoros</option>
+        <option value="1105233210807494630">Gerald Celente (AI) - geraldcelente</option>
+        <option value="4257936938875181362">Glenn Beck (AI) - glennbeck</option>
+        <option value="-8684135356267347720">Glenn Greenwald (AI) - ggreenwald</option>
+        <option value="3623004675904631546">Gregory Kohs (AI) - gregorykohs</option>
+        <option value="6602078160290537708">Gregory Sanders (AI) - gregorysanders</option>
+        <option value="-8581750349225405050">Henry Kravis (AI) - henrykravis</option>
+        <option value="-8269157478810186115">Hester Peirce (AI) - hesterpeirce</option>
+        <option value="371139686740458676">Hillary Clinton (AI) - hillaryclinton</option>
+        <option value="1688552534296051525">Ian Bremmer (AI) - ianbremmer</option>
+        <option value="1321308600607104965">Ivan on Tech (AI) - ivanontech</option>
+        <option value="2156021145738755685">Jack Dorsey (AI) - jack</option>
+        <option value="-5014843746855101182">Jack Liu (AI) - jackliu</option>
+        <option value="-6759535416425460632">Jack Mallers (AI) - jackmallers</option>
+        <option value="-2924579828619516745">Jackson Palmer (AI) - jacksonpalmer</option>
+        <option value="626111537366422057">James Altucher (AI) - jaltucher</option>
+        <option value="6690203843842899688">James Comey (AI) - comey</option>
+        <option value="413782472977042665">James Surowiecki (AI) - jamessurowiecki</option>
+        <option value="4217668910198207200">Jameson Lopp (AI) - lopp</option>
+        <option value="-4741942178251631382">Jamie Bartlett (AI) - jamiejbartlett</option>
+        <option value="1270883343084650240">Jamie Dimon (AI) - jamiedimon</option>
+        <option value="-5634006051507918958">Janet Yellen (AI) - janetyellen</option>
+        <option value="572476879604814512">Jason Calacanis (AI) - jason</option>
+        <option value="5951011174122673206">Jay Clayton (AI) - jayclayton</option>
+        <option value="-5813874691296822804">Jay Z (AI) - sc</option>
+        <option value="-3866391114474012216">Jeff Bezos (AI) - jeffbezos</option>
+        <option value="5341912823988107108">Jeff Garzik (AI) - jgarzik</option>
+        <option value="4236139617055936497">Jeffrey Gundlach (AI) - truthgundlach</option>
+        <option value="7061247850866156594">Jeffrey Sachs (AI) - jeffdsachs</option>
+        <option value="4815585452911449761">Jeffrey Tucker (AI) - jeffreyatucker</option>
+        <option value="-4362940737471000300">Jen Psaki (AI) - jrpsaki</option>
+        <option value="-7478001875020391101">Jenna Ellis (AI) - jennaellisesq</option>
+        <option value="-2667163578406033288">Jeremy Wood (AI) - jeremywood911</option>
+        <option value="7640500044728884886">Jerome Powell (AI) - jeromepowell</option>
+        <option value="-2015577104986184166">Jerry Chan (AI) - jerrychan</option>
+        <option value="2137868597176116039">Jes Staley (AI) - jesstaley</option>
+        <option value="7882999714636142494">Jesse Powell (AI) - jespow</option>
+        <option value="-7188899499352382371">Jihan Wu (AI) - jihanwu</option>
+        <option value="468584277960961579">Jim Cramer (AI) - jimcramer</option>
+        <option value="5420905660499947993">Jim Rogers (AI) - iamjimrogers</option>
+        <option value="3116526400926388715">Jimmy Nguyen (AI) - jimmywinmedia</option>
+        <option value="-112497253569103252">Jimmy Song (AI) - jimmysong</option>
+        <option value="-647082847901560670">Jimmy Wales (AI) - jimmy_wales</option>
+        <option value="4157842355412717795">JK Rowling (AI) - jk_rowling</option>
+        <option value="-1391275346183777347">Joe Biden (AI) - potus</option>
+        <option value="2125289012137059287">Joe Lubin team (AI) - consensys</option>
+        <option value="4189515160684242937">Joe Rogan (AI) - joerogan</option>
+        <option value="-5655435061074990335">John Matonis (AI) - johnmatonis</option>
+        <option value="8255728840247471300">John McAfee (AI) - officialmcafee</option>
+        <option value="-1313158784234321674">John Oliver (AI) - johnoliver</option>
+        <option value="8077701746179349347">John Ratcliffe (AI) - repratcliffe</option>
+        <option value="7313127799362956166">Jon Stewart (AI) - jonstewart</option>
+        <option value="-5803521682777280142">Jordan Peterson (AI) - jordanbpeterson</option>
+        <option value="-5226502461960482156">Joseph Lubin (AI) - ethereumjoseph</option>
+        <option value="8957027584123638617">Joseph Stiglitz (AI) - josephestiglitz</option>
+        <option value="7087072885784248354">Josh Hawley (AI) - hawleymo</option>
+        <option value="-3759067841135433221">Justin Drake (AI) - drakefjustin</option>
+        <option value="-3058325057077327712">Justin Sun (AI) - justinsuntron</option>
+        <option value="3384572349852540311">Kanye West (AI) - kanyewest</option>
+        <option value="806550857378504993">Kara Swisher (AI) - karaswisher</option>
+        <option value="7012325686471947504">Kathryn Haun (AI) - katie_haun</option>
+        <option value="8324269762856538873">Kathy Griffin (AI) - kathygriffin</option>
+        <option value="-3522952095533415866">Ken Rogoff (AI) - kenrogoff</option>
+        <option value="1560488627010038">Kenneth Rogoff (AI) - kennethrogoff</option>
+        <option value="7513131307268438003">Kevin Folta (AI) - kevinfolta</option>
+        <option value="-3805660449647810574">Kevin O'Leary (AI) - kevinolearytv</option>
+        <option value="5050862656598414877">Kobe Bryant (AI) - kobebryant</option>
+        <option value="-9145507644279692861">Kurt Wuckert Jr. (AI) - kurtwuckertjr</option>
+        <option value="-4981348128526277559">Kyrie Irving (AI) - kyrieirving</option>
+        <option value="-5764171830666330387">Larry Cermak (AI) - lawmaster</option>
+        <option value="-1487425332463915158">Larry Fink (AI) - larryfink</option>
+        <option value="4448431828141684866">Larry Sanger (AI) - lsanger</option>
+        <option value="-2219752467706648998">Larry Summers (AI) - lhsummers</option>
+        <option value="-8252761435524485359">Laura Ingraham (AI) - ingrahamangle</option>
+        <option value="3033176766182354173">Laura Shin (AI) - laurashin</option>
+        <option value="-8163149464298683549">LeBron James (AI) - kingjames</option>
+        <option value="5092694931265768283">Lex Fridman (AI) - lexfridman</option>
+        <option value="-6383128640045731643">Lin Wood (AI) - llinwood</option>
+        <option value="2476973914420921651">Linda Xie (AI) - ljxie</option>
+        <option value="9042525469990170216">Linus Torvalds (AI) - linuxtovalds</option>
+        <option value="-5529349965840035977">Liz Cheney (AI) - liz_cheney</option>
+        <option value="-8399441834772333136">Lloyd Blankfein (AI) - lloydblankfein</option>
+        <option value="-5584769197650729554">Logan Paul (AI) - loganpaul</option>
+        <option value="2814675997638921236">Lou Dobbs (AI) - loudobbs</option>
+        <option value="-3757710643045453986">Lyn Alden (AI) - lynaldencontact</option>
+        <option value="944407382049925971">Marc Andreessen (AI) - pmarca</option>
+        <option value="-8384419834389965972">Marc Faber (AI) - marcfaber</option>
+        <option value="1466777050372027506">Maria Bartiromo (AI) - mariabartiromo</option>
+        <option value="194337865730464734">Mark Cuban (AI) - mcuban</option>
+        <option value="-3222923648928749528">Mark Yusko (AI) - markyusko</option>
+        <option value="-9145122140284966201">Mark Zuckerberg (AI) - mkzuckerberg</option>
+        <option value="-1969294007426782433">Marvin Ammori (AI) - ammori</option>
+        <option value="-7495065112188747637">Matt Taibbi (AI) - mtaibbi</option>
+        <option value="-3617027986461732822">Matteo Salvini (AI) - matteosalvinimi</option>
+        <option value="-6319671225537674334">Max Keiser (AI) - maxkeiser</option>
+        <option value="6813314023666445506">Maxine Waters (AI) - repmaxinewaters</option>
+        <option value="4998422123787285272">Meltem Demirors (AI) - melt_dem</option>
+        <option value="6235365362868719533">Meredith Whitney (AI) - meredithwhitney</option>
+        <option value="-3514905770492765428">Michael Arrington (AI) - arrington</option>
+        <option value="-1739305694014678166">Michael Casey (AI) - mikejcasey</option>
+        <option value="8419938790341105379">Michael Flynn (AI) - genflynn</option>
+        <option value="684135088704641520">Michael Novogratz (AI) - novogratz</option>
+        <option value="2779840068149792689">Michael Saylor (AI) - saylor</option>
+        <option value="8409678718420801735">Michael Sonnenshein (AI) - sonnenshein</option>
+        <option value="-6315649845746421067">Michael Terpin (AI) - michaelterpin</option>
+        <option value="7213088324165738842">Mike Dudas (AI) - mdudas</option>
+        <option value="2301351648537599563">Mike Hearn (AI) - mikehearn</option>
+        <option value="-8894804826967775779">Mike Lindell (AI) - mikelindell</option>
+        <option value="-440130393154123053">Mike Maloney (AI) - mike_maloney</option>
+        <option value="8980098427420693154">Mike Masnick (AI) - mmasnick</option>
+        <option value="3394706256398044188">Mohamed El-Erian (AI) - elerianm</option>
+        <option value="-4738564775371908361">Nancy Pelosi (AI) - speakerpelosi</option>
+        <option value="676953259886695470">Nassim Nicholas Taleb (AI) - nntaleb</option>
+        <option value="-4757749906066906203">Naval Ravikant (AI) - naval</option>
+        <option value="680821077625033132">nChain Group (AI) - nchainglobal</option>
+        <option value="-3635919857035167209">Neeraj Agrawal (AI) - neerajka</option>
+        <option value="3716390876783372576">Niall Ferguson (AI) - nfergus</option>
+        <option value="8763035198627287354">Nic Carter (AI) - nic__carter</option>
+        <option value="2844017872564334145">Nick Fuentes (AI) - nickfuentes</option>
+        <option value="-2488146904539828791">Nick Schteringard (AI) - nickschteringard</option>
+        <option value="-6221519140733240282">Nick Szabo (AI) - nickszabo4</option>
+        <option value="2340600833959111303">Nicolás Maduro (AI) - nicolasmaduro</option>
+        <option value="169445759824096451">Nigel Farage (AI) - nigel_farage</option>
+        <option value="6564974182777297262">Nouriel Roubini (AI) - nouriel</option>
+        <option value="-4171323872910060255">Oprah Winfrey (AI) - oprah</option>
+        <option value="4540652536119363235">Patrick Burns (AI) - burnseek</option>
+        <option value="3650488278879956038">Patrick Byrne (AI) - patrickbyrne</option>
+        <option value="-8227014409983983566">Patrick O'Shaughnessy (AI) - patrick_oshag</option>
+        <option value="8762109921351062968">Paul Krugman (AI) - paulkrugman</option>
+        <option value="5042593101957214531">Paul Graham (AI) - paulg</option>
+        <option value="7897539260172961016">Peter McCormack (AI) - petermccormack</option>
+        <option value="-1522795607022151931">Peter Navarro (AI) - realpnavarro</option>
+        <option value="8446901317824791800">Peter Rizun (AI) - peterrizun</option>
+        <option value="2906744428287535673">Peter Schiff (AI) - peterschiff</option>
+        <option value="1977934102511706380">Peter Smith (AI) - petersmith</option>
+        <option value="7724891560387426775">Peter Strzok (AI) - petestrzok</option>
+        <option value="5725407272704964952">Peter Thiel (AI) - peterthiel</option>
+        <option value="1439762117902084096">Peter Van Valkenburgh (AI) - valkenburgh</option>
+        <option value="8603097974146503834">Pierre Rochard (AI) - pierre_rochard</option>
+        <option value="3541629091983255980">PlanB (AI) - offplanb</option>
+        <option value="-2586090426372711514">Polina Vinogravoda (AI) - polinavinogravoda</option>
+        <option value="-6073424379100710794">Preston Byrne (AI) - prestonjbyrne</option>
+        <option value="4863333629552793424">Preston Pysh (AI) - prestonpysh</option>
+        <option value="-6021405016609134480">Rachel Maddow (AI) - maddow</option>
+        <option value="1491677915874057804">Raghuram Rajan (AI) - raghuramrajan</option>
+        <option value="-313551109866880570">Ralph Nader (AI) - ralphnader</option>
+        <option value="5891755713061014465">Rand Paul (AI) - randpaul</option>
+        <option value="-6217181554752603925">Randal Quarles (AI) - randalquarles</option>
+        <option value="-6201018243891314047">Raoul Pal (AI) - raoulgmi</option>
+        <option value="-4502891377410494541">Ray Dalio (AI) - raydalio</option>
+        <option value="-2205804609388632709">Rebecca Watson (AI) - rebeccawatson</option>
+        <option value="4289721388274169617">Recep Tayyip Erdoğan (AI) - rterdogan</option>
+        <option value="5541644667898925362">Reid Hoffman (AI) - reidhoffman</option>
+        <option value="-3704487458780822029">Riccardo Spagni (AI) - fluffypony</option>
+        <option value="-4387762899630185540">Richard Branson (AI) - richardbranson</option>
+        <option value="4496487401485906797">Richard Heart (AI) - richardheartwin</option>
+        <option value="-7171858416033481188">Robert F. Kennedy Jr. (AI) - robertkennedyjr</option>
+        <option value="-1782120983344980610">Robert Kiyosaki (AI) - therealkiyosaki</option>
+        <option value="180668353677483250">Robert Leshner (AI) - rleshner</option>
+        <option value="-4845374480190427555">Robert Reich (AI) - rbreich</option>
+        <option value="-215892784436792487">Robert Shiller (AI) - robertjshiller</option>
+        <option value="5520899415007074735">Roger Ver (AI) - rogerkver</option>
+        <option value="2622753209333095096">Ron Johnson (AI) - ronjohnsonwi</option>
+        <option value="2230433446614551825">Ron Paul (AI) - ronpaul</option>
+        <option value="-159998069809002776">Rudy Giuliani (AI) - rudygiuliani</option>
+        <option value="-6937143924394082523">Rusty Russell (AI) - rusty_twit</option>
+        <option value="4848659663797839892">Ryan Holiday (AI) - ryanholiday</option>
+        <option value="6386973159316592157">Ryan Selkis (AI) - twobitidiot</option>
+        <option value="-8657358044407303703">Ryan X. Charles (AI) - ryanxcharles</option>
+        <option value="-6278124797126031193">Sahil Lavingia (AI) - shl</option>
+        <option value="-6119874491765396140">Saifedean Ammous (AI) - saifedean</option>
+        <option value="7649148825226821175">Sam Bankman-Fried (AI) - sbf_ftx</option>
+        <option value="-2865452838520429361">Sam Harris (AI) - samharrisorg</option>
+        <option value="6539097450742675214">Samson Mow (AI) - excellion</option>
+        <option value="7554240296132787040">Sarah Jeong (AI) - sarahjeong</option>
+        <option value="7162087728639053647">Satya Nadella (AI) - satyanadella</option>
+        <option value="-1755793899593725657">Scott Adams (AI) - scottadamssays</option>
+        <option value="4502924924950282079">Scott Ludlam (AI) - scottludlam</option>
+        <option value="3858565099007313382">Scott Melker (AI) - scottmelker</option>
+        <option value="1722621794580174580">Sean Hannity (AI) - seanhannity</option>
+        <option value="-5174611854378657296">Serena Williams (AI) - serenawilliams</option>
+        <option value="-8077019184293851301">Shammah Chancellor (AI) - shammahchancellor</option>
+        <option value="-2003260197359025308">Sheryl Sandberg (AI) - sherylsandberg</option>
+        <option value="1595691622757516613">Sidney Powell (AI) - sidneypowell</option>
+        <option value="3497763845325585076">Simon de la Rouviere (AI) - simondlr</option>
+        <option value="-7857741752671063873">Simon Dixon (AI) - simondixontwitt</option>
+        <option value="-2630186095164879605">Skip Bayless (AI) - realskipbayless</option>
+        <option value="8537042033218184049">Stacy Herbert (AI) - stacyherbert</option>
+        <option value="-8295951294868704832">Stanley Druckenmiller (AI) - stanleydruckenmiller</option>
+        <option value="797586588200600428">Stephan Molyneux (AI) - stefanmolyneux</option>
+        <option value="5731726989083776522">Stephen A. Smith (AI) - stephenasmith</option>
+        <option value="5126310370155672712">Stephen Roach (AI) - stephenroach</option>
+        <option value="-1578736140479734673">Stephen Schwarzman (AI) - stephenschwarzman</option>
+        <option value="-5357340304539188875">Steve Bannon (AI) - stevebannon</option>
+        <option value="-4333530282884628871">Sundar Pichai (AI) - sundarpichai</option>
+        <option value="9213290660080939112">Susan Blackmore (AI) - susanblackmore</option>
+        <option value="-3036928840916342508">Ted Cruz (AI) - tedcruz</option>
+        <option value="7986422391596475530">Ted Nugent (AI) - tednugent</option>
+        <option value="-5812969565058735288">Theresa May (AI) - theresa_may</option>
+        <option value="4473286701941279923">Thomas Massie (AI) - repthomasmassie</option>
+        <option value="-6352928382513602874">Tim Cook (AI) - tim_cook</option>
+        <option value="7915715604228563596">Tim Draper (AI) - timdraper</option>
+        <option value="7039706611157056788">Tim Ferriss (AI) - tferriss</option>
+        <option value="-6819128894369084472">Tim O'Reilly (AI) - timoreilly</option>
+        <option value="7712545570741546410">Tom Woods (AI) - thomasewoods</option>
+        <option value="7258002781762551427">Tone Vays (AI) - tonevays</option>
+        <option value="-7375450496695382031">Trace Mayer (AI) - tracemayer</option>
+        <option value="-7153831085301070568">Trent Van Epps (AI) - trentvanepps</option>
+        <option value="-7399621156382522630">Tucker Carlson (AI) - tuckercarlson</option>
+        <option value="-769975585107463999">Tyler Winklevoss (AI) - tyler</option>
+        <option value="-4658055068879450195">Udi Wertheimer (AI) - udiwertheimer</option>
+        <option value="7607902492545013673">Vijay Boyapati (AI) - real_vijay</option>
+        <option value="1308355742936502744">Vitalik Buterin (AI) - vitalikbuterin</option>
+        <option value="5945867658608294054">Vlad Tenev (AI) - vladtenev</option>
+        <option value="-1632332307721786068">Vlad Zamfir (AI) - vladzamfir</option>
+        <option value="5135797499534479331">Vladimir Putin (AI) - vladimirputin</option>
+        <option value="649005490045696024">Warren Buffet (AI) - warrenbuffet</option>
+        <option value="218692531806479055">Warren Buffett (AI) - warrenbuffett</option>
+        <option value="-8602696385803250582">William Mougayar (AI) - wmougayar</option>
+        <option value="8120662327980315679">Willy Woo (AI) - woonomic</option>
+        <option value="6061958497749309313">Zooko Wilcox (AI) - zooko</option>
+    </select>
+</div>
+    `;
+
+    var trustRatingTableHTML=`
+    {notloggedinwarning}
+    <span data-vavilon="VV0010" class="overallrating">{rater} -> {ratee}</span>
+    <span class="overallrating">Overall Rating: {rating} / 5.0</span>
+    <br />
+    <div id="overall"></div>
+    <br />
+    <div id="cy" style="width:100%;height:600px;"></div>
+    <div id="cynote" style="width:100%">&nbsp;</div>
+    <hr/>
+    <div id="cynote2" style="width:100%">&nbsp;</div>
+    <hr/>
+    *Notes. Arrow represents directed trust rating. Arrow width is strength of trust rating. Blue is positive, Red is negative. Halo represents direct trust rating. 
+    Database contains about 5,000 users and 20,000 AI generated trust estimates.
+    <!--<a href="{pathpermalinks}/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
     interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
-<br />
-<table>{tablecontents}</table>
-`;
+    *Notes: A follow is interpreted as a 3.5-star rating. Mute, 2-star.-->
+    <table>{tablecontents}</table>
+    `;
 
-var indirectRatingHTML=`
-<tr>
-    <td data-vavilon_data_label="VV0011" data-label='You'>
-        <span class='ratermember'>{member}</span>
-    </td>
-    <td data-vavilon_data_label="VV0012" data-label='Rate as'>
-        <span class='trustratingintermediate'>
-            <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'" ;
-                id='trust{memberid}{interid}'></div>
-        </span>
-    </td>
-    <td data-vavilon_data_label="VV0013" align='center' data-label='Member'>
-        <span class='intermediatemember'>{inter}</span>
-    </td>
-    <td data-vavilon_data_label="VV0014" data-label='Who Rates as'>
-        <span class='trustratingbyintermediate'>
-            <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'" ;
-                id='trust{interid}{targetid}'></div>
-        </span>
-    </td>
-    <td data-vavilon_data_label="VV0007" data-label='Member'>
-        <span class='ratedmember'>{target}</span>
-    </td>
-</tr>
-`;
+    var indirectRatingHTML=`
+    <tr>
+        <td data-vavilon_data_label="VV0011" data-label='You'>
+            <span class='ratermember'>{member}</span>
+        </td>
+        <td data-vavilon_data_label="VV0012" data-label='Rate as'>
+            <span class='trustratingintermediate'>
+                <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'" ;
+                    id='trust{memberid}{interid}'></div>
+            </span>
+        </td>
+        <td data-vavilon_data_label="VV0013" align='center' data-label='Member'>
+            <span class='intermediatemember'>{inter}</span>
+        </td>
+        <td data-vavilon_data_label="VV0014" data-label='Who Rates as'>
+            <span class='trustratingbyintermediate'>
+                <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'" ;
+                    id='trust{interid}{targetid}'></div>
+            </span>
+        </td>
+        <td data-vavilon_data_label="VV0007" data-label='Member'>
+            <span class='ratedmember'>{target}</span>
+        </td>
+    </tr>
+    `;
 
-var directRatingHTML=`
-<tr>
-    <td data-vavilon_data_label="VV0007" data-label='Member'>{member}</td>
-    <td></td>
-    <td></td>
-    <td data-vavilon_data_label="VV0015" data-label='Rates as' align='center'>
-        <div id='trust{memberid}{targetid}'></div>
-    </td>
-    <td></td>
-    <td></td>
-    <td align='center'>
-    <td data-vavilon_data_label="VV0007" data-label='Member'>{target}</td>
-</tr>`;
+    var directRatingHTML=`
+    <tr>
+        <td data-vavilon_data_label="VV0007" data-label='Member'>{member}</td>
+        <td></td>
+        <td></td>
+        <td data-vavilon_data_label="VV0015" data-label='Rates as' align='center'>
+            <div id='trust{memberid}{targetid}'></div>
+        </td>
+        <td></td>
+        <td></td>
+        <td align='center'>
+        <td data-vavilon_data_label="VV0007" data-label='Member'>{target}</td>
+    </tr>`;
 
-var mainbodyHTML=`
-<div class="newheader" id="header"></div>
-<div class="mainbody mcapplicationpage">
-    <div id="loading" class="loading" style="display: none;">
-        <div class="loading"></div>
-    </div>
-
-    <div id="lowfundswarning" class="alert" style="display: none;"></div>
-
-    <div id="toolsanchor" class="tools" style="display: none;"></div>
-
-    <div id="newpost" class="newpost" style="display: none;"></div>
-
-    <div id="feed" class="feed" style="display: none;"></div>
-
-    <div id="notifications" class="notifications" style="display: none;">
-        <div id="notificationtabs" class="tabs">
-            <nav id="notificationtypes" class="filters">
-
-            </nav>
-
+    var mainbodyHTML=`
+    <div class="newheader" id="header"></div>
+    <div class="mainbody mcapplicationpage">
+        <div id="loading" class="loading" style="display: none;">
+            <div class="loading"></div>
         </div>
-        <div id="notificationsbody" class="pageundertabs"></div>
-    </div>
 
-    <div id="mcidmemberheader" class="mcmemberheader" style="display: none;">
-        <div id="mcidmembertabs" class="filters" style="display:none;"></div>
-        <div id="mcidmemberanchor" class="memberanchor"></div>
-        <div id="trustgraph" class="trustgraph" style="display:none;"></div>
-        <div id="besties" class="besties" style="display:none;"></div>
-        <!--<div id="community" class="community" style="display: none;"></div>
-        <div id="anchorratings" class="ratings" style="display: none;"></div>-->
-    </div>
+        <div id="lowfundswarning" class="alert" style="display: none;"></div>
 
-    <div id="settingsanchor" class="settings" style="display: none;"></div>
+        <div id="toolsanchor" class="tools" style="display: none;"></div>
 
-    <div id="followers" class="followers" style="display: none;"></div>
+        <div id="newpost" class="newpost" style="display: none;"></div>
 
-    <div id="following" class="following" style="display: none;"></div>
+        <div id="feed" class="feed" style="display: none;"></div>
 
-    <div id="blockers" class="blockers" style="display: none;"></div>
+        <div id="notifications" class="notifications" style="display: none;">
+            <div id="notificationtabs" class="tabs">
+                <nav id="notificationtypes" class="filters">
 
-    <div id="blocking" class="blocking" style="display: none;"></div>
+                </nav>
 
-    <div id="messagesanchor" class="messages" style="display: none;"></div>
+            </div>
+            <div id="notificationsbody" class="pageundertabs"></div>
+        </div>
 
-    <div id="topicmeta" class="topics" style="display: none;"></div>
+        <div id="mcidmemberheader" class="mcmemberheader" style="display: none;">
+            <div id="mcidmembertabs" class="filters" style="display:none;"></div>
+            <div id="mcidmemberanchor" class="memberanchor"></div>
+            <div id="trustgraph" class="trustgraph" style="display:none;"></div>
+            <div id="besties" class="besties" style="display:none;"></div>
+        </div>
 
-    <div id="posts" class="posts" style="display: none;"></div>
+        <div id="settingsanchor" class="settings" style="display: none;"></div>
 
-    <div id="comments" class="comments" style="display: none;"></div>
+        <div id="followers" class="followers" style="display: none;"></div>
 
-    <div id="thread" class="thread" style="display: none;"></div>
+        <div id="following" class="following" style="display: none;"></div>
 
-    <div id="loginbox" class="loginbox" style="display: none;"></div>
+        <div id="blockers" class="blockers" style="display: none;"></div>
 
-    <div id="topiclistanchor" class="topics" style="display: none;"></div>
-</div>`;
+        <div id="blocking" class="blocking" style="display: none;"></div>
 
-var loginboxHTML=`
-<div class="content">
-    <br />
-    <br />
-    <br />
-    <button data-vavilon="VV0016" class="loginbutton" type="button" href="#settings" onclick="createNewAccount();">Make
-        New
-        Phrase</button>
-    <br />
-    <div id="newseedphrasedescription" style="display: none;">
-        <br /><span data-vavilon="VV0173">Here is your password. It is a phrase. Write it down.</span><br /><br /><label
-            data-vavilon="VV0017">12 Word Seed
-            Phrase</label>
-        <div id="newseedphrase"></div>
-    </div>
-    <br />
-    <hr />
-    <br />
-    <br />
-    <br /><span data-vavilon="VV0018u">Phrase (12 words), Username, Public or Private Key</span>
-    <br />
-    <div class="formgroup">
-        <input size="64" id="loginkey">
-        <button data-vavilon="VV0174" class="loginbutton" type="button" href="#feed"
-            onclick="trylogin(document.getElementById('loginkey').value,'#firehose');">login</button>
-    </div>
-    <br />
-    <div id="loginerror">
-    </div>
-    <br />
-    <br />
-    <div class="loginnotes">
-        <span data-vavilon="VV0019n3">Use 'npub...' or 'nsec...' key or </span><a
-            onclick="nos2xlogin();return false;">login with nos2x</a><br />
-    </div>
-    <!--<div class="loginnotes">
+        <div id="listraters" class="listraters" style="display: none;"></div>
+
+        <div id="listratings" class="listratings" style="display: none;"></div>
+
+        <div id="messagesanchor" class="messages" style="display: none;"></div>
+
+        <div id="topicmeta" class="topics" style="display: none;"></div>
+
+        <div id="posts" class="posts" style="display: none;"></div>
+
+        <div id="comments" class="comments" style="display: none;"></div>
+
+        <div id="thread" class="thread" style="display: none;"></div>
+
+        <div id="loginbox" class="loginbox" style="display: none;"></div>
+
+        <div id="topiclistanchor" class="topics" style="display: none;"></div>
+    </div>`;
+
+    var loginboxHTML=`
+    <div class="content">
+        <br />
+        <br />
+        <br />
+        <button data-vavilon="VV0016" class="loginbutton" type="button" href="#settings"
+            onclick="createNewAccount();">Make
+            New
+            Phrase</button>
+        <br />
+        <div id="newseedphrasedescription" style="display: none;">
+            <br /><span data-vavilon="VV0173">Here is your password. It is a phrase. Write it
+                down.</span><br /><br /><label data-vavilon="VV0017">12 Word Seed
+                Phrase</label>
+            <div id="newseedphrase"></div>
+        </div>
+        <br />
+        <hr />
+        <br />
+        <br />
+        <br /><span data-vavilon="VV0018u">Phrase (12 words), Username, Public or Private Key</span>
+        <br />
+        <div class="formgroup">
+            <input size="64" id="loginkey">
+            <button data-vavilon="VV0174" class="loginbutton" type="button" href="#feed"
+                onclick="trylogin(document.getElementById('loginkey').value,'#firehose');">login</button>
+        </div>
+        <br />
+        <div id="loginerror">
+        </div>
+        <br />
+        <br />
+        <div class="loginnotes">
+            <span data-vavilon="VV0019n3">Use 'npub...' or 'nsec...' key or </span><a
+                onclick="nos2xlogin();return false;">login with nos2x</a><br />
+        </div>
+        <!--<div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
             access.</span><br />
     </div>
@@ -1542,24 +2255,24 @@ var loginboxHTML=`
                 key</a> starts with 'L..' or 'K..'</span>
     </div>-->
 
-    <br />
-    <br />
-</div>
-`;
+        <br />
+        <br />
+    </div>
+    `;
 
-var lowfundswarningHTML=`
-<div class="content">
-    <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span
-        data-vavilon="satoshisinaccount">satoshis
-        exist in your account - each
-        action (posting, liking, subscribing, following, messaging etc)
-        requires a small amount of </span>{coinname}
-    <br />
-    <br />
-    <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
-    <br />
-    <br />
-    <!--<span class="showmembercoinmining">
+    var lowfundswarningHTML=`
+    <div class="content">
+        <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span
+            data-vavilon="satoshisinaccount">satoshis
+            exist in your account - each
+            action (posting, liking, subscribing, following, messaging etc)
+            requires a small amount of </span>{coinname}
+        <br />
+        <br />
+        <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
+        <br />
+        <br />
+        <!--<span class="showmembercoinmining">
         <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a
             few
             seconds.</span>
@@ -1567,91 +2280,91 @@ var lowfundswarningHTML=`
         <br />
         <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
     </span>-->
-    <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
-            your balance</span></a> or
-    <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
-            data-vavilon="VV0026">Dismiss
-            this message</span></a>
-</div>
-`;
+        <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
+                your balance</span></a> or
+        <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
+                data-vavilon="VV0026">Dismiss
+                this message</span></a>
+    </div>
+    `;
 
-var walletanchorHTML=`
-<div class="content">
+    var walletanchorHTML=`
+    <div class="content">
 
-    <div id="walletbalance">
-        <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
-        <div class="balancegroup">
-            <span class="balancebch" id="balancebch">0</span>
-            <span class="satoshis">({ticker})</span>
+        <div id="walletbalance">
+            <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
+            <div class="balancegroup">
+                <span class="balancebch" id="balancebch">0</span>
+                <span class="satoshis">({ticker})</span>
+            </div>
+            <div class="balancegroup">
+                <span class="balancesatoshis" id="balancesatoshis">0</span>
+                <span class="satoshis">(satoshis)</span>
+                <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
+                    class="balancedetails">
+                    <img src="img/icons/reload.png" alt="">
+                </span>
+            </div>
+            <div class="balancegroup usdbalance">
+                <span class="approximatelyequal">≈</span>
+                <span class="balanceusd" id="balanceusd">0</span>
+                <span class="usd">(USD)</span>
+            </div>
         </div>
-        <div class="balancegroup">
-            <span class="balancesatoshis" id="balancesatoshis">0</span>
-            <span class="satoshis">(satoshis)</span>
-            <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
-            class="balancedetails">
-            <img src="img/icons/reload.png" alt="">
-        </span>
-        </div>
-        <div class="balancegroup usdbalance">
-            <span class="approximatelyequal">≈</span>
-            <span class="balanceusd" id="balanceusd">0</span>
-            <span class="usd">(USD)</span>
-        </div>
-    </div>
 
 
-    <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
-        <label data-vavilon="VV0065" data-vavilon="address">Address</label>
-        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-        <span id="cashaddrformat">{cashaddress}</span>
-        <div id="cashaddrformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
+        <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
+            <label data-vavilon="VV0065" data-vavilon="address">Address</label>
+            <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+            <span id="cashaddrformat">{cashaddress}</span>
+            <div id="cashaddrformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
         </div>
-    </div>
-    <div id="walletsendfunds">
-        <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
-        <p data-vavilon="VV0029">You can send funds to another address.</p>
-        <label data-vavilon="VV0031" for="fundsamount">Address (Any format)</label>
-        <input class="sendfundsaddress" id="sendfundsaddress" maxlength="60" size="60">
-        <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
-        <input id="fundsamount" size="16" type="number" maxlength="16" onchange="sendFundsAmountChanged();"
-            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-        <span class="sendusd" id="sendusd">($0.00 USD)</span>
-        <button data-vavilon="VV0032" class="memberstandardbutton" id="sendfundsbutton" type="button"
-            onclick="sendfunds();">Send
-            Funds</button>
-        <br />
-    </div>
-    <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
-        <label data-vavilon="VV0068">Legacy Address</label>
-        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-        <span id="legacyformat">{address}</span>
-        <div id="legacyformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
+        <div id="walletsendfunds">
+            <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
+            <p data-vavilon="VV0029">You can send funds to another address.</p>
+            <label data-vavilon="VV0031" for="fundsamount">Address (Any format)</label>
+            <input class="sendfundsaddress" id="sendfundsaddress" maxlength="60" size="60">
+            <label data-vavilon="VV0030" for="fundsamount">Amount</label>
+            <input id="fundsamount" size="16" type="number" maxlength="16" onchange="sendFundsAmountChanged();"
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            <span class="sendusd" id="sendusd">($0.00 USD)</span>
+            <button data-vavilon="VV0032" class="memberstandardbutton" id="sendfundsbutton" type="button"
+                onclick="sendfunds();">Send
+                Funds</button>
+            <br />
         </div>
-    </div>
-    <div id="walletprivatekey">
-        <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
-        <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
-        <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
-                onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
-        <div id="privatekeydisplaydiv"></div>
-        <span id="privatekeyformat" style="display: none;">{privatekey}</span>
-        <div id="privatekeyformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
+        <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
+            <label data-vavilon="VV0068">Legacy Address</label>
+            <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+            <span id="legacyformat">{address}</span>
+            <div id="legacyformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
         </div>
-    </div>
-    <div id="walletblockexplorer">
-        <!--
+        <div id="walletprivatekey">
+            <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF / nsec</label>
+            <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
+            <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
+                    onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
+            <div id="privatekeydisplaydiv"></div>
+            <span id="privatekeyformat" style="display: none;">{privatekey}</span>
+            <div id="privatekeyformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
+        </div>
+        <div id="walletblockexplorer">
+            <!--
         <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
         <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
             href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
@@ -1663,19 +2376,19 @@ var walletanchorHTML=`
             href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
             unlimited</a>
         -->
+        </div>
     </div>
-</div>
-`;
+    `;
 
-var newpostHTML=`
-<br />
-<div id="newpostprofilepic" class="newpostprofilepic">
-</div>
-<div id="memorandumarea">
-    <input type="hidden" name="quotetxid" value="" id="quotetxid">
-    <input type="hidden" name="quotetxidnetwork" value="" id="quotetxidnetwork">
-    <input type="hidden" name="memberimageurl" value="" id="memberimageurl">
-    <!-- //Remove topic - use tags to introduce a topic
+    var newpostHTML=`
+    <br />
+    <div id="newpostprofilepic" class="newpostprofilepic">
+    </div>
+    <div id="memorandumarea">
+        <input type="hidden" name="quotetxid" value="" id="quotetxid">
+        <input type="hidden" name="quotetxidnetwork" value="" id="quotetxidnetwork">
+        <input type="hidden" name="memberimageurl" value="" id="memberimageurl">
+        <!-- //Remove topic - use tags to introduce a topic
     <div id="memorandumtopicbutton">
         <a data-vavilon="VV0037" href=""
             onclick="document.getElementById('memorandumtopicarea').style.display = 'block';document.getElementById('memorandumtopicbutton').style.display = 'none'; return false;">+add
@@ -1688,13 +2401,14 @@ var newpostHTML=`
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
     </div>
     -->
-    <div>
-        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="{maxlength}"
-            onchange="checkLength('memorandumtitle',{maxlength});memorandumPreview();" onkeypress="this.onchange();"
-            onpaste="this.onchange();" oninput="this.onchange();">{defaulttag}</textarea>
-        <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
-    </div>
-    <!--<form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
+        <div>
+            <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="{maxlength}"
+                onchange="checkLength('memorandumtitle',{maxlength});memorandumPreview();" onkeypress="this.onchange();"
+                onpaste="this.onchange();" oninput="this.onchange();">{defaulttag}</textarea>
+            <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
+        </div>
+        <!--<div id="chooseimagebutton2"></div>
+    <form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
         <label>
             <input name='firstfile' type="file" style="display: none;"
                 onchange="uploadFile('memorandumtitlefile','{fileuploadurl}','memorandumtitle','memorandumpreviewarea','uploadimagelink','uploadimagestatus',showMemorandumPreview,'memberimageurl');"
@@ -1703,263 +2417,278 @@ var newpostHTML=`
         </label>
         <span style="display:none;" id="uploadimagestatus">uploading image . . .</span>
     </form>-->
-    <div class="articlebutton">
-        <div id="memorandumtextbutton">
-            <a data-vavilon="VV0039" href=""
-                onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
-                article</a>
+        <div class="imgbb-container"><button data-imgbb-trigger="" class="imgbb-button"
+                data-imgbb-id="208909ee-fe1f-4f6f-9491-8c639baed6ec"><span class="imgbb-button-icon"><svg
+                        class="imgbb-button-icon" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                        viewBox="0 0 100 100">
+                        <path
+                            d="M76.7 87.5c12.8 0 23.3-13.3 23.3-29.4 0-13.6-5.2-25.7-15.4-27.5 0 0-3.5-0.7-5.6 1.7 0 0 0.6 9.4-2.9 12.6 0 0 8.7-32.4-23.7-32.4 -29.3 0-22.5 34.5-22.5 34.5 -5-6.4-0.6-19.6-0.6-19.6 -2.5-2.6-6.1-2.5-6.1-2.5C10.9 25 0 39.1 0 54.6c0 15.5 9.3 32.7 29.3 32.7 2 0 6.4 0 11.7 0V68.5h-13l22-22 22 22H59v18.8C68.6 87.4 76.7 87.5 76.7 87.5z"
+                            style="fill: currentcolor;"></path>
+                    </svg></span><span class="imgbb-button-text">Upload image</span></button></div>
+
+        <div class="articlebutton">
+            <div id="memorandumtextbutton">
+                <a data-vavilon="VV0039" href=""
+                    onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
+                    article</a>
+            </div>
+        </div>
+        <div id="memorandumtextarea" style="display: none;">
+            <label data-vavilon="VV0040" for="newposttamemorandum">article (optional)</label>
+            <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();"
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
+        </div>
+        <div id="quotepost" class="quotepost"></div>
+        <div>
+            <input data-vavilon_value="VV0041" id="newpostmemorandumbutton" value="Post" type="submit"
+                onclick="postmemorandum();">
+            <input data-vavilon_value="VV0042" id="newpostmemorandumstatus" style="display: none;" value="Sending . . ."
+                type="submit" disabled>
+            <div id="newpostmemorandumcompleted"></div>
+        </div>
+        <br />
+        <div class="memorandumpreviewbuttonanddisplay">
+            <div id="memorandumpreviewareabutton">
+                <br />
+                <a data-vavilon="VV0043" href="javascript:;" onclick="showMemorandumPreview(); return false;">+see
+                    preview</a>
+            </div>
+            <div id="memorandumpreviewarea" style="display: none;">
+                <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
+                <label for="memorandumpreview">
+                    <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045"
+                            href='javascript:;' onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
+                    <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046"
+                            href='javascript:;' onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
+                </label>
+                <div id="memorandumpreview" class="fatitem">
+                </div>
+            </div>
         </div>
     </div>
-    <div id="memorandumtextarea" style="display: none;">
-        <label data-vavilon="VV0040" for="newposttamemorandum">article (optional)</label>
-        <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();"
-            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
-    </div>
-    <div id="quotepost" class="quotepost"></div>
-    <div>
-        <input data-vavilon_value="VV0041" id="newpostmemorandumbutton" value="Post" type="submit"
-            onclick="postmemorandum();">
-        <input data-vavilon_value="VV0042" id="newpostmemorandumstatus" style="display: none;" value="Sending . . ."
-            type="submit" disabled>
-        <div id="newpostmemorandumcompleted"></div>
-    </div>
-    <br />
-    <div class="memorandumpreviewbuttonanddisplay">
-        <div id="memorandumpreviewareabutton">
+    `;
+
+    var messagesanchorHTML=`
+    <div class="content">
+        <div id="sendmessagecontainer">
+            <div id="sendmessagebox" style="display: none;">
+                <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain
+                    (that's the
+                    sender, recipient, size and time of your message).
+                    Additionally, if the recipient's private key is made public in the future, the recipient's
+                    messages will become public. Using the blockchain for
+                    messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
+                    available to you if you wish to use it.
+                </p>
+                <span class="messagerecipient">To:</span>
+                <span id="messagerecipient" class="messagerecipient"></span>
+                <span id="messageaddress" class="messageaddress" style="display:none;"></span>
+                <span id="messagepublickey" class="messagepublickey" style="display:none;"></span>
+
+                <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum {dust})</label>
+                <input id="stampamount" size="8" type="number" value="{dust}">
+                <div>
+                    <label data-vavilon="VV0054" for="newposttamessage">Message</label>
+                    <textarea id="newposttamessage" name="text" rows="20" cols="80"></textarea>
+                </div>
+                <div>
+                    <input data-vavilon_value="VV0055" id="newpostmessagebutton" value="Send Message" type="submit"
+                        onclick="postprivatemessage();">
+                    <input data-vavilon_value="VV0175" id="newpostmessagestatus" style="display: none;"
+                        value="Sending . . ." type="submit" disabled>
+                    <div id="newpostmessagecompleted"></div>
+                </div>
+            </div>
             <br />
-            <a data-vavilon="VV0043" href="javascript:;" onclick="showMemorandumPreview(); return false;">+see
-                preview</a>
         </div>
-        <div id="memorandumpreviewarea" style="display: none;">
-            <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
-            <label for="memorandumpreview">
-                <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045" href='javascript:;'
-                        onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
-                <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046" href='javascript:;'
-                        onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
-            </label>
-            <div id="memorandumpreview" class="fatitem">
-            </div>
+        <div id="messageschoice" class="filters">
+            <a data-vavilon_title="allmessages" class="filteroff" href="#messages?messagetype=all"
+                onclick="nlc();">All</a>
+            <a data-vavilon_title="sentmessages" class="filteroff" href="#messages?messagetype=sent"
+                onclick="nlc();">Sent</a>
+            <a data-vavilon_title="receivedmessages" class="filteroff" href="#messages?messagetype=received"
+                onclick="nlc();">Received</a>
         </div>
+        <br />
+        <div id="messageslist" class="messageslist"></div>
     </div>
-</div>
-`;
+    `;
 
-var messagesanchorHTML=`
-<div class="content">
-    <div id="sendmessagecontainer">
-        <div id="sendmessagebox" style="display: none;">
-            <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain
-                (that's the
-                sender, recipient, size and time of your message).
-                Additionally, if the recipient's private key is made public in the future, the recipient's
-                messages will become public. Using the blockchain for
-                messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
-                available to you if you wish to use it.
-            </p>
-            <span class="messagerecipient">To:</span>
-            <span id="messagerecipient" class="messagerecipient"></span>
-            <span id="messageaddress" class="messageaddress" style="display:none;"></span>
-            <span id="messagepublickey" class="messagepublickey" style="display:none;"></span>
+    var fbHTML={};
+    fbHTML.followers=`
+    <div class="content">
+        <h2>Followers</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="followerstable">
+            </tbody>
+        </table>
+    </div>
+    `;
 
-            <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum {dust})</label>
-            <input id="stampamount" size="8" type="number" value="{dust}">
-            <div>
-                <label data-vavilon="VV0054" for="newposttamessage">Message</label>
-                <textarea id="newposttamessage" name="text" rows="20" cols="80"></textarea>
-            </div>
-            <div>
-                <input data-vavilon_value="VV0055" id="newpostmessagebutton" value="Send Message" type="submit"
-                    onclick="postprivatemessage();">
-                <input data-vavilon_value="VV0175" id="newpostmessagestatus" style="display: none;"
-                    value="Sending . . ." type="submit" disabled>
-                <div id="newpostmessagecompleted"></div>
-            </div>
+    fbHTML.following=`
+    <div class="content">
+        <h2>Following</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="followingtable">
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    fbHTML.blockers=`
+    <div class="content">
+        <h2>Muters</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="blockerstable">
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    fbHTML.blocking=`
+    <div class="content">
+        <h2>Muting</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="blockingtable">
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    var ratersHTML=`
+    <div class="content">
+        <h2>Ratings Of This Member</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                    <th data-vavilon="VV0056">Rates</th>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="communityratingtable">
+            </tbody>
+        </table>
+        <br /><br />
+    </div>
+    `;
+
+    var ratingsHTML=`
+    <div class="content">
+        <h2>Ratings By This Member</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                    <th data-vavilon="VV0056">Rates</th>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="memberratingtable">
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    var trustgraphHTML=`
+    <div class="content">
+        <h2 data-vavilon="VV0057">Trust Graph</h2>
+        <div id="trustgraphdetails"></div>
+        <br />
+    </div>
+    `;
+
+    var bestiesHTML=`
+    <div class="content">
+        <div id="bestiesdetails">
+            <div id="bestiescy" style="width:100%;height:600px;"></div>
+            <div id="cynote" style="width:100%">&nbsp;</div>
         </div>
         <br />
     </div>
-    <div id="messageschoice" class="filters">
-        <a data-vavilon_title="allmessages" class="filteroff" href="#messages?messagetype=all" onclick="nlc();">All</a>
-        <a data-vavilon_title="sentmessages" class="filteroff" href="#messages?messagetype=sent"
-            onclick="nlc();">Sent</a>
-        <a data-vavilon_title="receivedmessages" class="filteroff" href="#messages?messagetype=received"
-            onclick="nlc();">Received</a>
-    </div>
-    <br />
-    <div id="messageslist" class="messageslist"></div>
-</div>
-`;
+    `;
 
-var fbHTML={};
-fbHTML.followers=`
-<div class="content">
-    <h2>Followers</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="followerstable">
-        </tbody>
-    </table>
-</div>
-`;
-
-fbHTML.following=`
-<div class="content">
-    <h2>Following</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="followingtable">
-        </tbody>
-    </table>
-</div>
-`;
-
-fbHTML.blockers=`
-<div class="content">
-    <h2>Muters</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="blockerstable">
-        </tbody>
-    </table>
-</div>
-`;
-
-fbHTML.blocking=`
-<div class="content">
-    <h2>Muting</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="blockingtable">
-        </tbody>
-    </table>
-</div>
-`;
-
-var communityHTML=`
-<div class="content">
-    <h2>Ratings Of This Member</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-                <th data-vavilon="VV0056">Rates</th>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="communityratingtable">
-        </tbody>
-    </table>
-    <br /><br />
-</div>
-`;
-
-var anchorratingsHTML=`
-<div class="content">
-    <h2>Ratings By This Member</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-                <th data-vavilon="VV0056">Rates</th>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="memberratingtable">
-        </tbody>
-    </table>
-</div>
-`;
-
-var trustgraphHTML=`
-<div class="content">
-    <h2 data-vavilon="VV0057">Trust Graph</h2>
-    <div id="trustgraphdetails"></div>
-    <br />
-</div>
-`;
-
-var bestiesHTML=`
-<div class="content">
-    <div id="bestiesdetails">
-        <div id="bestiescy" style="width:100%;height:600px;"></div>
-        <div id="cynote" style="width:100%">&nbsp;</div>
-    </div>
-    <br />
-</div>
-`;
-
-var membertabsHTML=`
-<div class="filterssecondset">
-    <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}"
-        href="#member?qaddress={address}">Profile</a>
-    <span class="separator"></span>
-    <a data-vavilon="VVreputation" data-vavilon_title="VVreputation" title="Reputation" class="{reputationclass}"
-        href="#rep?qaddress={address}">Reputation</a>
-    <span class="separator"></span>
-    <!--<a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}"
+    var membertabsHTML=`
+    <div class="filterssecondset">
+        <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}"
+            href="#member?qaddress={address}">Profile</a>
+        <span class="separator"></span>
+        <a data-vavilon="VVtrustgraph" data-vavilon_title="VVtrustgraph" title="Trust Graph" class="{reputationclass}"
+            href="#rep?qaddress={address}">Trust Graph</a>
+        <span class="separator"></span>
+        <!--<a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}"
         href="#support?qaddress={address}">Top 5</a>-->
-    <!--<span class="separator"></span>
+        <!--<span class="separator"></span>
     <a data-vavilon="VVlist" data-vavilon_title="VVlist" title="List" class="filteroff"
         href="#list?qaddress={address}">List</a>
     <span class="separator"></span>-->
-    <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
-        href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&minrating=0&topicname=">Posts</a>
-</div>
-`;
-
-var pages = {};
-pages.member = `
-<div class="content">
-    <div class="memberpiccontainer">
-        <label data-vavilon="VV0059" id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile
-            Picture</label>
-        <span class="memberpiclarge" style="display:inline;">
-            {profilepiclargehtml}
-        </span>
+        <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
+            href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&minrating=0&topicname=">Posts</a>
     </div>
-    <!--<label for="memberidenticon">Identicon</label>
+    `;
+
+    var pages = {};
+    pages.member = `
+    <div class="content">
+        <div class="memberpiccontainer">
+            <label data-vavilon="VV0059" id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile
+                Picture</label>
+            <span class="memberpiclarge" style="display:inline;">
+                {profilepiclargehtml}
+            </span>
+        </div>
+        <!--<label for="memberidenticon">Identicon</label>
     <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg>
     </div>
     <label data-vavilon="VV0065">Address</label>-->
 
-    <div class="profileactions" id="memberprofileactions"><br /><br />
-        {followbuttonhtml}
-        <span class="dropdown">
-            <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
-            <div class="dropdown-content mainhamburger" id="dropdown-content">
-                <span class="populate-send-message">
-                    <a data-vavilon="VV0061"
-                        onclick="populateSendMessage('{qaddress}','{handlefunction}','{publickey}');"
-                        href="javascript:;">Send Message</a>
-                </span>
-                {mutebuttonhtml}
-                <span class="memberprofilelink">
-                    <a href=pathpermalinks+"/#member?qaddress={address}" id="memberprofilelink">{pathpermalinks}</a><span
-                        class="separatorwide"></span>
-                </span>
-                <!--<span class="dogehairprofilelink">
+        <div class="profileactions" id="memberprofileactions"><br /><br />
+            {followbuttonhtml}
+            <span class="dropdown">
+                <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
+                <div class="dropdown-content mainhamburger" id="dropdown-content">
+                    <span class="populate-send-message">
+                        <a data-vavilon="VV0061"
+                            onclick="populateSendMessage('{qaddress}','{handlefunction}','{publickey}');"
+                            href="javascript:;">Send Message</a>
+                    </span>
+                    <span class="memberprofilelink">
+                        <a href="{pathpermalinks}#member?qaddress={address}" id="memberprofilelink">Profile</a><span
+                            class="separatorwide"></span>
+                    </span>
+                    {mutebuttonhtml}
+                    <span class="reportspammer">
+                        <a data-vavilon="reportspammer" onclick="reportspammer('{publickey}');"
+                            href="javascript:;">Spammer</a>
+                    </span>
+
+                    <!--<span class="dogehairprofilelink">
                     <a href="https://doge.hair/#member?qaddress={address}" id="dogehairprofilelink">doge.hair</a><span
                         class="separatorwide"></span>
                 </span>
@@ -1970,26 +2699,28 @@ pages.member = `
                 <span class="bitcloutprofilelink">
                     <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/u/{pagingid}"
                         id="bitcloutprofilelink">BitClout</a><span class="separatorwide"></span></span>-->
-            </div>
-        </span>
-    </div>
-
-
-
-    <!-- *** -->
-    <div class="memberdetails">
-        <span class="profile-handle">{handle}</span>
-        <br />
-        <span class="profile-pagingid" id="memberpagingid">@{pagingid}</span>
-    </div>
-
-    <div id="memberprofiletext">{profile}</div>
-
-    <div class="memberstats">
-        <div class="membrain">
-            <label data-vavilon="membrain">MemBrain</label></a>
-            <a id="membrainnumber" href=pathpermalinks+"/a/804fc6e860">{membrain}</a>
+                </div>
+            </span>
         </div>
+
+
+
+        <!-- *** -->
+        <div class="memberdetails">
+            <span class="profile-handle">{handle}</span>
+            <br />
+            <span class="profile-pagingid" id="memberpagingid">@{pagingid}</span>
+        </div>
+
+        <div id="memberprofiletext">{profile}</div>
+        <!--<div id="nostracoinaddress">nostr:{npubkey}<br/>-->{repnetaddress}
+    </div>
+    <div class="memberstats">
+        <!--<div class="membrain">
+            <label data-vavilon="membrain">MemBrain</label></a>
+            <a id="membrainnumber" href="{pathpermalinks}/a/804fc6e860">{membrain}</a>
+            {membrain}
+        </div>-->
         <div class="followers">
             <label data-vavilon="VV0071">Followers</label>
             <a id="memberfollowersnumber" href="#followers?qaddress={address}">{followers}</a>
@@ -2005,6 +2736,14 @@ pages.member = `
         <div class="muting">
             <label data-vavilon="VV0074">Muting</label>
             <a id="memberblockingnumber" href="#blocking?qaddress={address}">{muting}</a>
+        </div>
+        <div class="raters">
+            <label data-vavilon="raters">Raters</label>
+            <a id="memberratersnumber" href="#raters?qaddress={address}">{raters}</a>
+        </div>
+        <div class="ratings">
+            <label data-vavilon="rating">Ratings</label>
+            <a id="memberratingnumber" href="#ratings?qaddress={address}">{ratings}</a>
         </div>
     </div>
     <div id="memberratinggroup" style="display: none;">
@@ -2090,12 +2829,13 @@ pages.settings = `
                     format)</span></label>-->
             <label data-vavilon="VV0059" id="settingspiclargelabel" style="display:inline;">Profile
                 Picture</label><br><br>
-            <form id="profilepicfile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
+            <!--<form id="profilepicfile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
                 <label>
                     <input style="display: none;" name='firstfile' type="file" id="uploadprofilepicinput"
                         onchange="uploadFile('profilepicfile','{fileuploadurl}','settingspic','memorandumpreviewarea','chooseimagebutton','uploadimagestatus',setPic,null);"
                         accept="image/*">
                     <a data-vavilon="chooseimage" id="chooseimagebutton" class="memberlinkbutton">Choose Image</a>
+                    
                 </label>
             </form>
             <div class="formgroup" style="display: none;">
@@ -2104,10 +2844,19 @@ pages.settings = `
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 <button data-vavilon="VV0077" id="settingspicbutton" type="button" onclick="setPic();"
                     disabled="">update</button>
-            </div>
+            </div>-->
             <span class="settingspiclarge" style="display:inline;">
                 {profilepiclargehtml}
             </span>
+            <div class="imgbb-container"><button data-imgbb-trigger="" class="imgbb-button"
+                    data-imgbb-id="208909ee-fe1f-4f6f-9491-8c639baed6eb"><span class="imgbb-button-icon"><svg
+                            class="imgbb-button-icon" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                            viewBox="0 0 100 100">
+                            <path
+                                d="M76.7 87.5c12.8 0 23.3-13.3 23.3-29.4 0-13.6-5.2-25.7-15.4-27.5 0 0-3.5-0.7-5.6 1.7 0 0 0.6 9.4-2.9 12.6 0 0 8.7-32.4-23.7-32.4 -29.3 0-22.5 34.5-22.5 34.5 -5-6.4-0.6-19.6-0.6-19.6 -2.5-2.6-6.1-2.5-6.1-2.5C10.9 25 0 39.1 0 54.6c0 15.5 9.3 32.7 29.3 32.7 2 0 6.4 0 11.7 0V68.5h-13l22-22 22 22H59v18.8C68.6 87.4 76.7 87.5 76.7 87.5z"
+                                style="fill: currentcolor;"></path>
+                        </svg></span><span class="imgbb-button-text">Upload image</span></button></div>
+
 
         </div>
         <div>
@@ -2116,7 +2865,7 @@ pages.settings = `
                     onclick="requestNotificationPermission(); this.style.display='none';">Allow
                     Notifications</a></span>
         </div>
-        <div>
+        <!--<div>
             <label for="usenostrkeyaccount"><span data-vavilon="usenostrkeyaccount">Use Different Nostr Account
                     (Private Key)</span>
                 <div class="formgroup">
@@ -2125,7 +2874,7 @@ pages.settings = `
                         onclick="switchNostrKey();" data-vavilon="nostrkey">switch</button>
                 </div>
         </div>
-        <!--<div>
+        <div>
             <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public
                     Key)</span>
                 <div class="formgroup">
@@ -2137,11 +2886,12 @@ pages.settings = `
                     <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
                     <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
                 </div>
-        </div>-->
+        </div>
         <div>
             <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout/Memo
                     Account</span>
-                <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
+                <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>
+            </label>
             <div class="formgroup">
                 <input id="linkbitcloutaccount" placeholder="BC..../1..../bitcoincash:...."
                     onchange="document.getElementById('linkbitcloutaccountbutton').disabled=false;"
@@ -2154,7 +2904,7 @@ pages.settings = `
                     account)</span>
                 <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
             </div>
-        </div>
+        </div>-->
 
 
 
@@ -2238,7 +2988,7 @@ pages.settings = `
             Night/PV/Pura Vida</label>
     </div>
 
-    <div>
+    <!--<div>
         <label data-vavilon="mutednetworks">Muted Networks</label>
     </div>
     <div class="customcheckbox">
@@ -2248,7 +2998,7 @@ pages.settings = `
     <div class="customcheckbox">
         <input type="checkbox" id="mutenostr" onchange="updateSettingsCheckbox('mutenostr');">
         <label data-vavilon="mutenostr" for="mutenostr" class="checkboxlabel">Mute Nostr</label>
-    </div>
+    </div>-->
 
     <div>
         <label data-vavilon="VV0087" for="mediasettings" class="labelheader">Media Settings</label>
@@ -2285,11 +3035,6 @@ pages.settings = `
         <label data-vavilon="VV0182" for="shownonameposts" class="checkboxlabel">Show Posts From Members With No
             Handle</label>
     </div>
-    <div class="customcheckbox">
-        <input type="checkbox" id="shownopicposts" onchange="updateSettingsCheckbox('shownopicposts');">
-        <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No
-            Picture</label>
-    </div>
     <div>
         <label data-vavilon="VVcontentnetwork" for="contentnetwork">Only Show Content From Network</label>
         <select id="contentnetwork" onchange="updateSettingsDropdown('contentnetwork');">
@@ -2297,35 +3042,48 @@ pages.settings = `
             <option value="3">Membercoin (M3M)</option>
         </select>
     </div>-->
-    <div class="displayservers">
-        <div>
-            <label data-vavilon="VV0091" for="contentserver">Content Server</label>
-            <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
-                <option value="{pathpermalinks}/v2/member.js">{siteTitle}</option>
-                <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
-            </select>
-        </div>
-        <div>
-            <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
-            <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
-                <option value="{pathpermalinks}/v2/">{siteTitle}</option>
-                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-            </select>
-        </div>
-        <div>
-            <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
-            <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
-                <option value="{pathpermalinks}/v2/">{siteTitle}</option>
-                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-            </select>
-        </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="shownopicposts" onchange="updateSettingsCheckbox('shownopicposts');">
+        <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No
+            Picture</label>
     </div>
-    <div>
-        <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
-        <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
-        <br />
-        <a href="javascript:;" onclick="getJSON(dropdowns.contentserver + '/invalidatecache/')" ;
-            class="memberlinkbutton">Invalidate cache (will force reload of client)</a>
+    <div class="technicalstuffshow" id="technicalstuffshow">
+        <a data-vavilon="VVshowtechnicalstuff" href=""
+            onclick="document.getElementById('technicalstuff').style.display = 'block';document.getElementById('technicalstuffshow').style.display = 'none'; return false;">+Show
+            Technical Stuff</a>
+    </div>
+    <div class="technicalstuff" id="technicalstuff" style="display:none;">
+        <div class="displayservers">
+            <div>
+                <label data-vavilon="VV0091" for="contentserver">Content Server</label>
+                <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
+                    <option value="{pathpermalinks}/v2/member.js">{siteTitle}</option>
+                    <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
+                </select>
+            </div>
+            <div>
+                <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
+                <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
+                    <option value="{pathpermalinks}/v2/">{siteTitle}</option>
+                    <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+                </select>
+            </div>
+            <div>
+                <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
+                <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
+                    <option value="{pathpermalinks}/v2/">{siteTitle}</option>
+                    <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+                </select>
+            </div>
+
+            <div>
+                <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
+                <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
+                <br />
+                <a href="javascript:;" onclick="getJSON(dropdowns.contentserver + '/invalidatecache/')" ;
+                    class="memberlinkbutton">Invalidate cache (will force reload of client)</a>
+            </div>
+        </div>
     </div>
 
 
@@ -2449,6 +3207,11 @@ var headerHTML = `
 var footerHTML = `
 <div class="content">
     <hr />
+    <span id="aiversion" class="developmentversion" style="display: block;"><span data-vavilon="aiwarning">Content is AI
+            generated from public information. It may contain hallucinations, be out-of-date or be just plain
+            wrong.</span><br /><br />
+        <hr />
+    </span>
     <span id="developmentversion" class="developmentversion" style="display: none;"><span data-vavilon="VV0137">You're
             viewing the development
             preview version
@@ -2460,7 +3223,7 @@ var footerHTML = `
     </span>
     <span id="readonlyversion" class="developmentversion" style="display: none;"><span
             data-vavilon="readonlymodewarning">You're in read-only mode.
-            Log out and login with a seedphrase or private key to create or like posts</span><br /><br />
+            Login to create ratings or posts</span><br /><br />
         <hr />
     </span>
     <span class="footerlinks">
@@ -2488,8 +3251,7 @@ var footerHTML = `
     </span>
     <br />
     <br />
-</div>
-`;var postCompactTemplate = `
+</div>`;var postCompactTemplate = `
 <div class="post" onmouseover="changeClass(this,'post highlighted')" onmouseout="changeClass(this,'post')">
     {directlink}
     <div class="post-content {deleted}">
@@ -2539,7 +3301,7 @@ var footerHTML = `
                     </span>
                     <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvotecontainer{txid}">
                         <a id="upvoteaction{txid}" href="javascript:;"
-                            onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0,'{roottxid}')" class="btn-icon"
+                            onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',0,'{roottxid}','{memberbitcoinaddress}')" class="btn-icon"
                             data-action="like">
                             <span class="likeicon">
                                 <span class="emojiicon">💙</span>
@@ -2584,7 +3346,7 @@ var footerHTML = `
                         </a>
                     </span>
                     <span class="post-footer-tips post-footer-relative">
-                        <a id="tiplinkposts{diff}{txid}" class="btn-icon" data-action="tip"
+                        <a id="tiplinkposts{diff}{txid}" class="btn-icon tiplinkposts" data-action="tip"
                             onclick="dropDownMenuAction(this);">
                             <span class="tipicon">
                                 <span class="emojiicon">💰</span>
@@ -2592,20 +3354,18 @@ var footerHTML = `
                             <span id="tipscount{txid}" class="iconcount" data-amount="{tipsinsatoshis}">{tips}</span>
                             <span data-vavilon="tips" class="text footerlabel">tips</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span
-                                    data-vavilon="remember">0.1 {ticker} ({MEMUSD1C})</span></a>
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span
-                                        data-vavilon="remember">1 {ticker} ({MEMUSD1})</span></a>
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span
-                                        data-vavilon="remember">5 {ticker} ({MEMUSD5})</span></a>
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span
-                                        data-vavilon="remember">10 {ticker} ({MEMUSD10})</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',    500000000, '{roottxid}', '{memberbitcoinaddress}')"><span
+                                        >5 {ticker}</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',   1000000000, '{roottxid}', '{memberbitcoinaddress}')"><span
+                                        >10 {ticker}</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',   2000000000, '{roottxid}', '{memberbitcoinaddress}')"><span
+                                        >20 {ticker}</span></a>
                                 <a
-                                    onclick="if (confirm('Tip 20 {ticker} ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
-                                        data-vavilon="remember">20 {ticker} ({MEMUSD20})</span></a>
+                                    onclick="if (confirm('Tip 100 {ticker}?')){likePost('{txid}','{origtxid}','{memberpublickeyhex}', 10000000000, '{roottxid}', '{memberbitcoinaddress}');}"><span
+                                        >100 {ticker}</span></a>
                                 <a
-                                    onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
-                                        data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
+                                    onclick="if (confirm('Tip 1000 {ticker}?')){likePost('{txid}','{origtxid}','{memberpublickeyhex}', 100000000000, '{roottxid}', '{memberbitcoinaddress}');}"><span
+                                        >1000 {ticker}</span></a>
                             </div>
                         </a>
                     </span>
@@ -2654,7 +3414,7 @@ var footerHTML = `
                     <input id="tipamountposts{diff}{txid}" type="number" value="0" min="0" style="width: 6em;"
                         step="1000">
                     <input id="tipbuttonposts{diff}{txid}" value="tip" type="submit"
-                        onclick="sendTip('{txid}','{origtxid}','{bitcoinaddress}','posts{diff}');">
+                        onclick="sendTip('{txid}','{origtxid}','{memberpublickeyhex}','posts{diff}', '{memberbitcoinaddress}');">
                     <input id="tipstatusposts{diff}{txid}" value="sending" type="submit" style="display:none"
                         disabled="">
                 </span>
@@ -2690,7 +3450,7 @@ var userCompactTemplate=`
         </a>
     </span>
     <span class="starratingcompact">
-        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingpublickey="{bitcoinaddress}"
+        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-bitcoinaddress="{bitcoinaddress}" data-ratingpublickey="{memberpublickeyhex}"
             data-ratingraw="{rating}" id="ratingposts{diff}" data-ratingdisabled="true" data-ratingsystem={systemscoreclass} 
             class="star-rating-compact"></span>
     </span>
@@ -2714,7 +3474,7 @@ var userProfileCompactTemplate=`
                 <span class="member-handle">{handle}</span>
             </a>
             <span class="starrating">
-                <span data-ratingsize="16" data-ratingpublickey="{bitcoinaddress}" data-ratingraw="{rating}"
+                <span data-ratingsize="16" data-ratingpublickey="{memberpublickeyhex}" data-ratingraw="{rating}"
                     data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" data-ratingdisabled="true" class="star-rating"></span>
             </span>
             {flair}
@@ -2841,22 +3601,20 @@ var replyAndTipsTemplate = `
     href="javascript:;">reply</a>
 <!--<a data-vavilon="VV0157" id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>-->
 
-<a id="tiplinkposts{diff}{txid}" class="btn-icon" onclick="dropDownMenuAction(this);">
+<a id="tiplinkposts{diff}{txid}" class="btn-icon tiplinkposts" onclick="dropDownMenuAction(this);">
     <span data-vavilon="VV0157">tip</span><div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}" style="position: relative;">
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span data-vavilon="remember">0.1
-            {ticker} ({MEMUSD1C})</span></a>
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1
-                {ticker} ({MEMUSD1})</span></a>
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5
-                {ticker} ({MEMUSD5})</span></a>
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10
-                {ticker} ({MEMUSD10})</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',    500000000, '{roottxid}', '{memberbitcoinaddress}')"><span>5
+                {ticker}</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',   1000000000, '{roottxid}', '{memberbitcoinaddress}')"><span>10
+                {ticker}</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',   2000000000, '{roottxid}', '{memberbitcoinaddress}')"><span>20
+                    {ticker}</span></a>
         <a
-            onclick="if (confirm('Tip 20 {ticker} ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
-                data-vavilon="remember">20 {ticker} ({MEMUSD20})</span></a>
+            onclick="if (confirm('Tip 100 {ticker}?')){likePost('{txid}','{origtxid}','{memberpublickeyhex}',  10000000000, '{roottxid}', '{memberbitcoinaddress}');}"><span
+                >100 {ticker}</span></a>
         <a
-            onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
-                data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
+            onclick="if (confirm('Tip 1000 {ticker}?')){likePost('{txid}','{origtxid}','{memberpublickeyhex}',100000000000, '{roottxid}', '{memberbitcoinaddress}');}"><span
+                >1000 {ticker}</span></a>
     </div></a>
     <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
     {sourceNetworkHTML}
@@ -2874,7 +3632,7 @@ var replyAndTipsTemplate = `
 <span id="tipbox{page}{txid}" style="display:none">
     <input id="tipamount{page}{txid}" type="number" value="0" min="0" style="width: 6em;" step="1000" />
     <input data-vavilon_value="VV0162" id="tipbutton{page}{txid}" value="tip" type="submit"
-        onclick="sendTip('{txid}','{origtxid}','{bitcoinaddress}','{page}');" />
+        onclick="sendTip('{txid}','{origtxid}','{memberpublickeyhex}','{page}', '{memberbitcoinaddress}');" />
     <input data-vavilon_value="VV0163" id="tipstatus{page}{txid}" value="sending" type="submit" style="display:none"
         disabled />
 </span>`;
@@ -4282,7 +5040,15 @@ function outOfFive(theRating) {
 }
 
 function transposeStarRating(rating) {
-  var transposed = 0;
+  if(rating<1 || rating>5){
+    throw Error('Rating out of bounds');
+  }
+  let transposed= (rating-1)*64-1;
+  if(transposed<1){
+    transposed=1;
+  }
+  return transposed;
+  /*var transposed = 0;
   switch (rating) {
     case 1:
       transposed = 1;
@@ -4300,7 +5066,7 @@ function transposeStarRating(rating) {
       transposed = 255;
       break;
   }
-  return transposed;
+  return transposed;*/
 }
 
 function dropDownMenuAction(that) {
@@ -4428,8 +5194,8 @@ function getLinkMessage(legacyaddress) {
   }
 }*/
 
-function bechifylink(linkelement,txid){
-  linkelement.href=`https://snort.social/e/`+bech32Encode('note',txid);
+function bechifylink(linkelement,root,txid){
+  linkelement.href=root+bech32Encode('note',txid);
 }
 
 function bech32Encode(stub,theString){
@@ -4500,7 +5266,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkeyhex.slice(0, 16) + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '') + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
     getJSON(theURL).then(function (data) {
 
         updateUSDRate(data);
@@ -4523,11 +5289,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         }
 
-        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length, minStarRating);
+        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, minStarRating);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length);
-        //var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, minStarRating);
         if (!hasNavButtons) {
             navheader = '';
             navbuttons = '';
@@ -4559,8 +5324,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         let alwaysShow = (qaddress);
         for (var i = 0; i < data.length; i++) {
             try {
-                if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
-                if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
+                if (!alwaysShow && settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
+                if (!alwaysShow && settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
                 let postHTML = getHTMLForPost(data[i], i + 1, page, i, null, alwaysShow, true, false);
                 if (postHTML) {
                     listElement.appendChild(htmlToElement(getPostListItemHTML(postHTML)));
@@ -4612,23 +5377,23 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         //Activate navigation filter star ratings
         let postsqualityfilter = document.getElementById('postsqualityfilter');
 
-
-        postsqualityfilter = raterJs({
-            extraClass: "systemscore",
-            starSize: Number(postsqualityfilter.dataset.ratingsize),
-            rating: minStarRating,
-            element: postsqualityfilter,
-            showToolTip: false,
-            rateCallback: function rateCallback(rating, done) {
-                postsqualityfilter.setRating(rating);
-                done();
-                //postsqualityfilter.minrating = rating;
-                getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, rating);
-            }
-        });
-
         if (postsqualityfilter) {
-            postsqualityfilter.setRating(minStarRating);
+            postsqualityfilter = raterJs({
+                extraClass: "systemscore",
+                starSize: Number(postsqualityfilter.dataset.ratingsize),
+                rating: minStarRating,
+                element: postsqualityfilter,
+                showToolTip: false,
+                rateCallback: function rateCallback(rating, done) {
+                    postsqualityfilter.setRating(Number(rating));
+                    done();
+                    //postsqualityfilter.minrating = rating;
+                    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, rating);
+                }
+            });
+
+
+            postsqualityfilter.setRating(Number(minStarRating));
         }
 
     }, function (status) { //error detection....
@@ -4694,7 +5459,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
     //If no post is specified, we'll use it as a top level
     if (txid === undefined || txid == "") { txid = roottxid; }
 
-    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkeyhex.slice(0, 16) + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=thread&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '') + '&txid=' + txid;
     getJSON(theURL).then(async function (data) {
         updateUSDRate(data);
         //Server bug will sometimes return duplicates if a post is liked twice for example,
@@ -4740,7 +5505,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
         }
 
         //Treat entries in polls topic as special
-        if (data.length > 0 && data[0].topic.toLowerCase() == 'polls') {
+        if (data.length > 0 && data[0].topic && data[0].topic.toLowerCase() == 'polls') {
             earliestReply = "none";
             earliestReplyTXID = "none";
             earliestReplyTime = 9999999999;
@@ -4899,7 +5664,7 @@ function getAndPopulateQuoteBox(txid) {
     showOnly(page);
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkeyhex.slice(0, 16) + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '') + '&txid=' + txid;
     getJSON(theURL).then(function (data) {
         var contents = "";
         if (data[0]) {
@@ -5012,7 +5777,7 @@ function showScoresExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0, 16);
+    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '');
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -5032,7 +5797,7 @@ function showRemembersExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0, 16);
+    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '');
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -5064,21 +5829,24 @@ function addSingleStarsRating(theElement) {
     if (theElement == undefined) return;
     if (theElement.isdone) return;
     let name = theElement.dataset.ratingname;
+    let bitcoinaddress = theElement.dataset.ratingbitcoinaddress;
     let theAddress = theElement.dataset.ratingpublickey;
-    let rawRating = theElement.dataset.ratingraw;
+    let rawRating = Number(theElement.dataset.ratingraw);
     let starSize = theElement.dataset.ratingsize;
     let isDisabled = theElement.dataset.ratingdisabled;
     //this is very slow
     //let starSize = Number(getComputedStyle(theElement).fontSize);
 
-    let disabledtext = theElement.dataset.disabledtext;
+    let disabledtext;
 
     var theRatingRound = 0;
     if (rawRating) {
         theRatingRound = outOfFive(rawRating);
     }
-    if (theElement.dataset.ratingsystem == 'systemscore') {
-        disabledtext = 'MemBrain score ' + theRatingRound + '/5';
+    if (theElement.dataset.disabledtext) {
+        disabledtext = theElement.dataset.disabledtext;
+    } else if (theElement.dataset.ratingsystem == 'systemscore') {
+        disabledtext = 'Arjuna score ' + theRatingRound + '/5';
     } else {
         disabledtext = 'Your Rating ' + theRatingRound + '/5';
     }
@@ -5088,12 +5856,14 @@ function addSingleStarsRating(theElement) {
         extraClass: theElement.dataset.ratingsystem,
         starSize: starSize,
         rating: theRatingRound,
+        step: 0.1,
+        max: 5,
         element: theElement,
         disableText: disabledtext ? disabledtext : getSafeTranslation('thisuserrates', 'This user rates ') + ds(name) + ' {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
-            this.setRating(rating);
-            sendRating(rating, ratingText, name, theAddress);
+            this.setRating(Number(rating));
+            sendRating(Number(rating), ratingText, name, theAddress, bitcoinaddress);
             done();
         }
     });
@@ -5188,6 +5958,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
     return retHTML;
 }
 
+
 function getHTMLForReply(data, depth, page, starindex) {
 
     let mainRatingID = starindex + page + ds(data.address);
@@ -5201,7 +5972,7 @@ function showReplyButton(txid, page, divForStatus) {
 }
 
 async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     if (replytext.length == 0) {
@@ -5230,16 +6001,15 @@ async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid
         };
 
     //Get the event and send it to relays
-    let event = await sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
-
+    //let event = await sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
     //Send nostr event wrapped to nostracoin
-    sendWrappedEvent(event, successFunction);
+    //sendWrappedEvent(event, successFunction);
 
     //Send event as memo protocol to native chain
-    //if (checkForNativeUserAndHasBalance()) {
-    //    const replyhex = new Buffer(replytext).toString('hex');
-    //    sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
-    //}
+    if (checkForNativeUserAndHasBalance()) {
+        const replyhex = new Buffer(replytext).toString('hex');
+        sendReplyRaw(getRepNetPrivKey(), origtxid, replyhex, 0, divForStatus, successFunction);
+    }
 
     return true;
 }
@@ -5253,7 +6023,7 @@ function replySuccessFunction(page, txid) {
 }
 
 function showReplyBox(txid) {
-    //if (!checkForPrivKey()) return false;
+    //if (!checkForUserThatCanWrite()) return false;
     var replybox = document.querySelector("[id^='" + "reply" + txid + "']");
     //document.getElementById("reply" + txid);
     if (replybox)
@@ -5272,6 +6042,7 @@ function decreaseGUILikes(txid) {
     var uparrow = document.getElementById('upvote' + txid);
     var likescount = Number(document.getElementById('likescount' + txid).textContent);
     document.getElementById('score' + txid).textContent = likescount - 1;
+    document.getElementById('likescount' + txid).textContent = likescount - 1;
 
     //Change classes
     if (downarrow && uparrow) { //If post is flagged or is main post, these arrows won't be present. skip.
@@ -5327,28 +6098,28 @@ function increaseGUIReposts(txid) {
 }
 
 async function pinpost(txid) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     //If bitclout user is logged in
     //if (isBitCloutUser()) {
     //    bitCloutPinPost(txid, pubkey);
     //}
 
-    //if (checkForNativeUserAndHasBalance()) {
-    //    memoPinPost(txid, privkey);
-    //}
+    if (checkForNativeUserAndHasBalance()) {
+        memoPinPost(txid, getRepNetPrivKey());
+    }
 
-    let event = await nostrPinPost(txid);
-    sendWrappedEvent(event);
+    //let event = await nostrPinPost(txid);
+    //sendWrappedEvent(event);
 
 }
 
-async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
-    if (!checkForPrivKey()) return false;
+async function likePost(txid, origtxid, memberpublickeyhex, amountSats, roottxid = null, memberbitcoinaddress) {
+    if (!checkForUserThatCanWrite()) return false;
 
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
-    
+
     //GUI update
     increaseGUILikes(txid);
     if (amountSats >= nativeCoin.dust) {
@@ -5360,35 +6131,38 @@ async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null)
     //If bitclout user is logged in
     //if (isBitCloutUser()) {bitCloutLikePost(origtxid);}
 
-    let event = await nostrLikePost(origtxid, roottxid);
-    sendWrappedEvent(event);
+    //let event = await nostrLikePost(origtxid, roottxid);
+    //sendWrappedEvent(event);
 
-    //If memo user is logged in
+    //If native user
     if (checkForNativeUserAndHasBalance()) {
         if (amountSats >= nativeCoin.dust) {
-            sendTipRaw(origtxid, tipAddress, amountSats, privkey, null);
+            //let tipAddress = await unsignedpubkeyhexToNostracoinLegacy(memberpublickeyhex);
+            sendTipRaw(origtxid, memberbitcoinaddress, amountSats, getRepNetPrivKey(), null);
+
+            //let replyMessage = `Hey, I just sent you a tip of ${amountSats/100000000} Nostracoin.\nNostracoin can be used to record your nostr events in the blockchain.\nYou might want to do that because\n    1. It is censorship resistant\n    2. Timestamps your note\n    3. Never drops your note\n\nYou can check your balance or view Nostr at https://nostraco.in`;
+            //sendNostrReply(origtxid, replyMessage, null, null, roottxid);
+        } else {
+            sendLike(origtxid, getRepNetPrivKey());
         }
-        /* else {
-            sendLike(origtxid, privkey);
-        }*/
     }
 
 
 }
 
 async function dislikePost(txid, origtxid, roottxid = null) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     decreaseGUILikes(txid);
 
     if (checkForNativeUserAndHasBalance()) {
         sendDislike(origtxid);
     }
-    let event = await nostrDislikePost(origtxid, roottxid);
-    sendWrappedEvent(event);
+    //let event = await nostrDislikePost(origtxid, roottxid);
+    //sendWrappedEvent(event);
 }
 
 async function repostPost(txid, origtxid, sourcenetwork) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
 
     increaseGUIReposts(txid);
 
@@ -5396,17 +6170,20 @@ async function repostPost(txid, origtxid, sourcenetwork) {
         bitCloutRePost(origtxid, sourcenetwork);
     }*/
 
-    /*if (checkForNativeUserAndHasBalance()) {
-        repost(origtxid, privkey);
-    }*/
+    if (checkForNativeUserAndHasBalance()) {
+        repost(origtxid, getRepNetPrivKey());
+    }
 
-    let event = await nostrRePost(origtxid);
-    sendWrappedEvent(event);
+    //let event = await nostrRePost(origtxid);
+    //sendWrappedEvent(event);
 
 }
 
-function sendTip(txid, origtxid, tipAddress, page) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+async function sendTip(txid, origtxid, memberpublickeyhex, page, memberbitcoinaddress) {
+    if (!checkForNativeUserAndHasBalance()) {
+        alert("Need sufficient balance to send tip");
+        return false;
+    }
 
     //document.getElementById("tipbox" + page + txid).style.display = "none";
     //document.getElementById("tiplink" + page + txid).style.display = "block";
@@ -5423,15 +6200,17 @@ function sendTip(txid, origtxid, tipAddress, page) {
     defaulttip = tipAmount;
 
     document.getElementById('tipstatus' + page + txid).value = getSafeTranslation('sendingtip', "Sending Tip . .") + ' ' + tipAmount;
-    let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(tipAmount);;
+    let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(tipAmount);
     document.getElementById('tipscount' + txid).dataset.amount = newAmount;
     document.getElementById('tipscount' + txid).innerHTML = balanceString(newAmount, false);
 
-    sendTipRaw(origtxid, tipAddress, tipAmount, privkey,
+    //let tipAddress = await unsignedpubkeyhexToNostracoinLegacy(memberpublickeyhex);
+    sendTipRaw(origtxid, memberbitcoinaddress, tipAmount, getRepNetPrivKey(),
         function () {
             document.getElementById('tipstatus' + page + txid).value = "sent";
         }
     );
+
 
 }
 
@@ -5734,6 +6513,10 @@ function getMemorandumText() {
     return simplemde.value();
 }
 
+function addFilesToMemorandum(urlsAsString){
+    document.getElementById('memorandumtitle').value=document.getElementById('memorandumtitle').value+' '+urlsAsString;
+}
+
 var articlemode = false;
 function switchToArticleMode(roottxid) {
     //changeStyle('base none', false);
@@ -5831,13 +6614,15 @@ function memorandumPreview() {
     var nametime = document.getElementById('settingsnametime').value;
     var rating = document.getElementById('settingsrating').value;
     var numberaddress = document.getElementById('settingsaddress').value;
+    var bitcoinaddress = document.getElementById('legacyformat').value;
+    
 
     var isfollowing = true;
 
     var repostedHTML = document.getElementById('quotepost').outerHTML;
 
 
-    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', null);
+    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', null, bitcoinaddress);
 
     document.getElementById('memorandumpreview').innerHTML =
         getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, '000', 1, 0, 0, '', 3, '000', false)
@@ -5853,7 +6638,7 @@ function memorandumPreview() {
 }
 
 async function geopost() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
     var posttext = txtarea.value;
@@ -5882,22 +6667,22 @@ async function geopost() {
     let successFunction = geocompleted;
 
     let taggedPostText = posttext + ` \n${pathpermalinks}/geotag/` + geohash;
-    //if (checkForNativeUserAndHasBalance()) {
-    //    //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
-    //    postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
-    //    //successFunction = null;
-    //}
+    if (checkForNativeUserAndHasBalance()) {
+        //postgeoRaw(posttext, getRepNetPrivKey(), geohash, "newpostgeostatus", successFunction);
+        postmemorandumRaw(taggedPostText, '', getRepNetPrivKey(), '', "newpostgeostatus", successFunction, null);
+        //successFunction = null;
+    }
     //if (isBitCloutUser()) {
     //    sendBitCloutPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
     //}
 
-    let event = await sendNostrPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
-    sendWrappedEvent(event, successFunction);
+    //let event = await sendNostrPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', null, "newpostgeostatus", successFunction, 1, geohash);
+    //sendWrappedEvent(event, successFunction);
 
 }
 
 async function postmemorandum() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     
     var posttext = document.getElementById('memorandumtitle').value;
     if (!posttext.includes('#')) {
@@ -5947,18 +6732,18 @@ async function postmemorandum() {
 
     if (txid) {
         //Repost
-        //if (checkForNativeUserAndHasBalance()) {
-        //    //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
-        //    postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
-        //    //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
-        //    //successFunction = null;
-        //}
+        if (checkForNativeUserAndHasBalance()) {
+            //quotepostRaw(posttext, getRepNetPrivKey(), topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
+            postmemorandumRaw(posttext, '', getRepNetPrivKey(), topic, "newpostmemorandumstatus", successFunction, txid);
+            //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
+            //successFunction = null;
+        }
         //if (isBitCloutUser()) {
         //    sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
         //}
 
-        let event= await sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
-        sendWrappedEvent(event, successFunction);
+        //let event= await sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
+        //sendWrappedEvent(event, successFunction);
     }
     else {
         //Don't post body if it is not visible - it may contain old elements that the user is not expecting to post
@@ -5966,17 +6751,17 @@ async function postmemorandum() {
             postbody = '';
         }
 
-        //if (checkForNativeUserAndHasBalance()) {
-        //    postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
-        //    //successFunction = null;
-        //}
+        if (checkForNativeUserAndHasBalance()) {
+            postmemorandumRaw(posttext, postbody, getRepNetPrivKey(), topic, "newpostmemorandumstatus", successFunction, null);
+            //successFunction = null;
+        }
         //if (isBitCloutUser()) {
         //    sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
         //}
         
         //Should always be possible to send Nostr event if user is logged in.
-        let event= await sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
-        sendWrappedEvent(event, successFunction);
+        //let event= await sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
+        //sendWrappedEvent(event, successFunction);
     }
 
     //if (typeof popupOverlay !== "undefined") {
@@ -5996,7 +6781,7 @@ function sendRepostNotification(txid, divForStatus, topic, newtxid) {
     replytext += ` ${pathpermalinks}/p/` + newtxid;
     var replyHex = new Buffer(replytext).toString('hex');
 
-    sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, function (txidnew) { memorandumpostcompleted(newtxid); });
+    sendReplyRaw(getRepNetPrivKey(), txid, replyHex, 0, divForStatus, function (txidnew) { memorandumpostcompleted(newtxid); });
 }*/
 
 function memorandumpostcompleted(txid) {
@@ -6039,18 +6824,20 @@ function geocompleted() {
     document.getElementById('newpostgeocompleted').innerHTML = getSafeTranslation('messagesent', "Message Sent.");
 }"use strict";
 
-function getAndPopulateCommunityRatings(qaddress) {
+function getAndPopulateRaters(qaddress) {
 
-    document.getElementById('community').innerHTML = communityHTML;
+    document.getElementById('listraters').innerHTML = ratersHTML;
+    show('listraters');
     document.getElementById('communityratingtable').innerHTML = document.getElementById("loading").innerHTML;
 
     var page = 'communityratingtable';
-    var theURL = dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
+    
+    var theURL = dropdowns.contentserver + '?action=rated&qaddress=' + qaddress + '&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'');
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReasonHTML(data[i]);
-            contents = contents + ratingAndReasonNew(data[i].name, data[i].address, data[i].rateename, data[i].rates, data[i].rating, data[i].reason, 'comrating', data[i].trxid);
+            contents = contents + ratingAndReasonNew(data[i].name, data[i].address, data[i].rateename, data[i].rates, data[i].rating, data[i].reason, 'comrating', data[i].urtxid, data[i].bitcoinaddress);
         }
         document.getElementById(page).innerHTML = contents;
 
@@ -6062,16 +6849,16 @@ function getAndPopulateCommunityRatings(qaddress) {
 }
 
 function getAndPopulateRatings(qaddress) {
-    document.getElementById('anchorratings').innerHTML = anchorratingsHTML;
+    document.getElementById('listratings').innerHTML = ratingsHTML;
+    show('listratings');
     document.getElementById('memberratingtable').innerHTML = document.getElementById("loading").innerHTML;
-
     var page = 'memberratingtable';
-    var theURL = dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=ratings&qaddress=' + qaddress + '&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'');
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
             //contents = contents + ratingAndReason2HTML(data[i]);
-            contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason, 'memrating', data[i].trxid);
+            contents = contents + ratingAndReasonNew(data[i].ratername, data[i].rateraddress, data[i].name, data[i].address, data[i].rating, data[i].reason, 'memrating', data[i].urtxid, data[i].bitcoinaddress);
         }
         document.getElementById(page).innerHTML = contents;
         addStarRatings('memrating');
@@ -6084,7 +6871,7 @@ function getAndPopulateRatings(qaddress) {
 
 function getDataMember(qaddress) {
     document.getElementById('mcidmemberanchor').innerHTML = document.getElementById("loading").innerHTML;
-    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + '&qaddress=' + qaddress;
     getJSON(theURL).then(function (data) {
         if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         if (data) {
@@ -6095,15 +6882,15 @@ function getDataMember(qaddress) {
     });
 }
 
-function getDataSettings(qaddress, cashaddress) {
+function getDataSettings() {
 
     //document.getElementById('settingsanchor').innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=settings&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + pubkeyhex;
+    var theURL = dropdowns.contentserver + '?action=settings&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + '&qaddress=' + pubkeyhex;
     getJSON(theURL).then(function (data) {
         if (data[0] && !data[0].address) data[0].address = data[0].nameaddress; //sometimes address is empty because the user hasn't made a post yet.
         try {
-            getDataSettingsFinally(qaddress, cashaddress, data);
+            getDataSettingsFinally(data);
         } catch (error) {
             console.log("Setting settings failed");
             console.log(error);
@@ -6111,7 +6898,7 @@ function getDataSettings(qaddress, cashaddress) {
 
     }, function (status) { //error detection....
         //If this fails, we still want to show settings page, so user can change server etc
-        getDataSettingsFinally(qaddress, cashaddress, null);
+        getDataSettingsFinally(null);
         showErrorMessage(status, null, theURL);
     });
 }
@@ -6134,15 +6921,12 @@ function getPicURL(picurl, profilepicbase, qaddress, hivename) {
 async function getDataMemberFinally(data) {
 
     let qaddress = null;
-
-    if (data[0] && data[0].publickey && data[0].publickey.length==66) {
-        qaddress=pubkeyhexToLegacy(data[0].publickey);
-    }
-
     let cashaddress = null;
-    if (qaddress && qaddress!='null') {
-        cashaddress = legacyToNativeCoin(qaddress);
-    }
+
+    /*if (data[0] && data[0].publickey && data[0].publickey.length==64) {
+        qaddress=pubkeyhexToLegacy(data[0].publickey);
+        cashaddress = pubkeyToNostracoin(data[0].publickey);
+    }*/
 
     //Note, data may not contain any rows, for new or unknown users.
 
@@ -6168,6 +6952,9 @@ async function getDataMemberFinally(data) {
         obj.following = Number(data[0].following);
         obj.muters = Number(data[0].blockers);
         obj.muting = Number(data[0].blocking);
+        obj.ratings = Number(data[0].ratings);
+        obj.raters = Number(data[0].raters);
+        
         obj.handle = ds(data[0].name);
         obj.handlefunction = unicodeEscape(data[0].name);
         obj.profile = data[0].profile;
@@ -6177,7 +6964,7 @@ async function getDataMemberFinally(data) {
         obj.tokens = Number(data[0].tokens);
         obj.nametime = Number(data[0].nametime);
         obj.rating = Number(data[0].rating);
-
+        obj.bitcoinaddress = data[0].bitcoinaddress;
         
         if (data[0].sysrating) { obj.membrain = outOfFive(Number(data[0].sysrating)) + "/5"; }
 
@@ -6185,15 +6972,15 @@ async function getDataMemberFinally(data) {
     }
 
     if (data && (data.length < 1 || Number(data[0].isfollowing) == 0)) {
-        obj.followbuttonhtml = clickActionNamedHTML("follow", obj.publickey, "follow");
+        obj.followbuttonhtml = clickActionNamedHTML("follow", obj.publickey, "follow", obj.bitcoinaddress);
     } else {
-        obj.followbuttonhtml = clickActionNamedHTML("unfollow", obj.publickey, "unfollow");
+        obj.followbuttonhtml = clickActionNamedHTML("unfollow", obj.publickey, "unfollow", obj.bitcoinaddress);
     }
 
     if (data && (data.length < 1 || Number(data[0].isblocked) == 0)) {
-        obj.mutebuttonhtml = clickActionNamedHTML("mute", obj.publickey, "mute");
+        obj.mutebuttonhtml = clickActionNamedHTML("mute", obj.publickey, "mute", obj.bitcoinaddress);
     } else {
-        obj.mutebuttonhtml = clickActionNamedHTML("unmute", obj.publickey, "unmute");
+        obj.mutebuttonhtml = clickActionNamedHTML("unmute", obj.publickey, "unmute", obj.bitcoinaddress);
     }
 
 
@@ -6215,9 +7002,16 @@ async function getDataMemberFinally(data) {
         let member = MemberFromData(data[0], '', '???mainratingid');
         obj.pinnedpostHTML = getHTMLForPostHTML3(member, data[0], 'r', 'memberpage', 0, '', false, true); //always show pinned post on member's page
     }
-
+    
     obj.pathpermalinks = pathpermalinks;
     obj.siteTitle = siteTitle;
+    try{
+        obj.npubkey = await pubkeyTonpub(data[0].publickey);
+        obj.repnetaddress = await legacyToRepNet(data[0].bitcoinaddress);
+        //obj.nostracoinaddress =  await pubkeyToRepNet(data[0].publickey);
+    }catch(err){
+        console.log(err);
+    }
     document.getElementById('mcidmemberanchor').innerHTML = templateReplace(pages.member, obj);
 
     if (data && data[0] && data[0].hivename) {
@@ -6228,7 +7022,7 @@ async function getDataMemberFinally(data) {
     }
 
     //This condition checks that the user being viewed is not the logged in user
-    if (qaddress == pubkey) {
+    if (data[0] && data[0].publickey && data[0].publickey == pubkeyhex) {
         document.getElementById('memberratinggroup').style.display = "none";
     } else {
 
@@ -6241,7 +7035,7 @@ async function getDataMemberFinally(data) {
             if (data.length > 0) {
                 ratingScore = Number(data[0].rating);
             }
-            document.getElementById('memberrating').innerHTML = getMemberRatingHTML(data[0].publickey, ratingScore, data[0].pagingid);
+            document.getElementById('memberrating').innerHTML = getMemberRatingHTML(data[0].publickey, ratingScore, data[0].pagingid, data[0].bitcoinaddress);
 
             var theElement = document.getElementById(`memberrating` + data[0].publickey);
             var starRating1 = addSingleStarsRating(theElement);
@@ -6252,14 +7046,14 @@ async function getDataMemberFinally(data) {
     addDynamicHTMLElements();
 }
 
-async function getDataSettingsFinally(qaddress, cashaddress, data) {
+async function getDataSettingsFinally(data) {
 
     //Set the headerbar pic
     if (data && data[0]) {
         profilepic = `<svg class="jdenticon" width="20" height="20" data-jdenticon-value="` + san(data[0].address) + `"></svg>`;
         var picurl = getPicURL(data[0].picurl, profilepicbase, data[0].address, data[0].hivename);
-        document.getElementById('profilepicheader').innerHTML = `<img alt="Profile pic" class="profilepicheaderimg" width="128" height="128" src="` + picurl + `">`;
-        profilepic = `<img alt="Profile Picture" class="memberpicturesmallpost" width='30' height='30' src='` + picurl + `'/>`;
+        document.getElementById('profilepicheader').innerHTML = `<img alt="Profile pic" class="profilepicheaderimg" width="128" height="128" src="${picurl}">`;
+        profilepic = `<img alt="Profile Picture" class="memberpicturesmallpost" width='30' height='30' src='${picurl}'/>`;
         try {
             document.getElementById('newpostprofilepic').innerHTML = profilepic;
         } catch (err) {
@@ -6269,18 +7063,18 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     }
 
 
-
+/*
     if (qaddress && !cashaddress) {
         {
             legacyToNativeCoin(qaddress);
         }
     }
-
+*/
     //Note, data may not contain any rows, for new or unknown users.
 
     var obj = {
-        address: qaddress,
-        cashaddress: cashaddress,
+        //address: qaddress,
+        //cashaddress: cashaddress,
         followers: 0,
         following: 0,
         muters: 0,
@@ -6326,11 +7120,17 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     }
 
 
+    //if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
     obj.privatekey = privkey;
-    obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey;
+
+    if (privkeyhex && window.bech32converter){
+        obj.seedphrase = (mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") 
+        + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey + "<br/>"
+        + (privkeyhex?window.bech32converter('nsec').toBech32('0x'+privkeyhex):'');
+    }
 
 
-
+    try{
     if (data && data[0] && data[0].publickey) {
         var bcaddress =pubkeyToBitcloutAddress(data[0].publickey);
         obj.bcaddress = bcaddress;
@@ -6338,12 +7138,15 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
         var bcaddress =pubkeyToBitcloutAddress(pubkeyhex);
         obj.bcaddress = bcaddress;
     }
+    }catch(err){
+        //user not logged in
+    }
     obj.version = version;
     obj.dust = nativeCoin.dust;
     obj.maxprofilelength = maxprofilelength;
 
     if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
-    obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+pubkeyhex);
+    //obj.nostrpubkey = window.bech32converter('npub').toBech32('0x'+pubkeyhex);
     obj.siteTitle = siteTitle;
     obj.pathpermalinks = pathpermalinks;
     document.getElementById('settingsanchor').innerHTML = templateReplace(pages.settings, obj);
@@ -6353,13 +7156,13 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
     updateSettings();
     document.getElementById('settingsnametextbutton').disabled = true;
     document.getElementById('settingsprofiletextbutton2').disabled = true;
-    document.getElementById('settingspicbutton').disabled = true;
+    //document.getElementById('settingspicbutton').disabled = true;
     //After 9 ratings, members cannot change their handle
     //if (data && data[0] && data[0].ratingnumber > 9) { note - ratingnumber is not being returned in data
     //    document.getElementById('settingsnametext').disabled = true;
     //}
 
-    if (qaddress) {
+    if (pubkeyhex) {
         document.getElementById('settingsloggedin').style.display = "block";
     } else {
         document.getElementById('settingsloggedin').style.display = "none";
@@ -6370,27 +7173,22 @@ async function getDataSettingsFinally(qaddress, cashaddress, data) {
 }
 
 async function populateTools() {
+    if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");//require bech32
     var obj = {
-        address: pubkeyhexToLegacy(pubkeyhexsigned),
-        cashaddress: legacyToNativeCoin(pubkeyhexToLegacy(pubkeyhexsigned)),
+        address: await pubkeyhexToLegacy(pubkeyhexsigned),
+        cashaddress: await pubkeyToRepNet(pubkeyhexsigned),
         bcaddress: pubkeyToBitcloutAddress(pubkeyhexsigned),
         ticker: nativeCoin.ticker,
-        seedphrase:(mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + " " + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + " " + privkey,
+        seedphrase:(mnemonic == "" ? "" : getSafeTranslation('seedphrase', "Seed Phrase:") + "<br/>" + mnemonic + "<br/>") + getSafeTranslation('cpk', "Compressed Private Key:") + "<br/>" + privkey,
         privatekey: privkey,
-
+// + '<br/>' + (privkeyhex?window.bech32converter('nsec').toBech32('0x'+privkeyhex):'')
     };
     document.getElementById('toolsanchor').innerHTML = templateReplace(walletanchorHTML, obj);
 }
 
 
 async function getAndPopulateSettings() {
-    /*let cashaddr;
-    try {
-        cashaddr = legacyToNativeCoin(pubkey);
-    } catch (err) {
-        console.log(err);
-    }*/
-    getDataSettings(pubkey, pubkey);
+    getDataSettings();
 }
 
 function updateSettings() {
@@ -6459,14 +7257,6 @@ function updateSettings() {
         } catch (err) {
             console.log("setting error " + key);
         }
-    }
-
-    //Make sure users are not on the old server
-    if (dropdowns.contentserver == "https://memberjs.org:8123/member.js") {
-        dropdowns.contentserver = pathpermalinks+"/v2/member.js";
-    }
-    if (dropdowns.txbroadcastserver == "https://memberjs.org:8123/member.js") {
-        dropdowns.txbroadcastserver = pathpermalinks+"/v2/";
     }
 
     document.getElementById("debuginfo").value = debuginfo;
@@ -6543,13 +7333,13 @@ function showQRCode(spanid, size) {
 
 
 
-function rateCallbackAction(rating, ratingtext, qaddress) {
+function rateCallbackAction(rating, ratingtext, targetpublickey, bitcoinaddress) {
     if (ratingtext === undefined) {
         ratingtext = "";
     }
     //var qaddress = that.theAddress;
     var transposed = transposeStarRating(rating);
-    rateUser(qaddress, transposed, ratingtext);
+    rateUser(targetpublickey, transposed, ratingtext, bitcoinaddress);
 }
 
 function updatemutedwords() {
@@ -6570,7 +7360,7 @@ function getAndPopulateFB(page, qaddress) {
     if (!qaddress) {
         qaddress = pubkey;
     }
-    var theURL = dropdowns.contentserver + '?action=' + page + '&qaddress=' + qaddress + '&address=' + pubkeyhex.slice(0,16);
+    var theURL = dropdowns.contentserver + '?action=' + page + '&qaddress=' + qaddress + '&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'');
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -6585,15 +7375,24 @@ function getAndPopulateFB(page, qaddress) {
     });
 }
 
+async function setPicExternal(newName) {
+    //document.getElementById('settingspic').value=newName;
+    document.getElementById('settingspicurl').value=newName;
+    setTrxPic(newName,getAndPopulateSettings);
+    //setNostrProfile("picture",newName);
+    //let event= await setNostrProfile();
+    //sendWrappedEvent(event);
+}
+
 async function setPic() {
-    document.getElementById('settingspicbutton').disabled = true;
+    //document.getElementById('settingspicbutton').disabled = true;
     document.getElementById('settingspic').disabled = true;
     var newName = document.getElementById('settingspic').value;
     document.getElementById('settingspicurl').value=newName;
     setTrxPic(newName,getAndPopulateSettings);
     //setNostrProfile("picture",newName);
-    let event= await setNostrProfile();
-    sendWrappedEvent(event);
+    //let event= await setNostrProfile();
+    //sendWrappedEvent(event);
 }
 
 function updatePagingId(){
@@ -6606,7 +7405,7 @@ function reduceToPageName(pagename) {
         if (pagename) {
             //pagename may include alphanumberic, _ (for bitclout, twitter), and . - (for hive)
             //we won't store . - in pagenames, but where a page includes . -, the page will be recognized.
-            return pagename.replace(/[^_0-9\u0041-\u005A\u0061-\u007A\u00AA\u00B5\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/g, '').toLowerCase(); 
+            return pagename.replace(/[\.^_0-9\u0041-\u005A\u0061-\u007A\u00AA\u00B5\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/g, '').toLowerCase(); 
         } else {
             return '';
         }
@@ -6617,7 +7416,7 @@ function reduceToPageName(pagename) {
 }
 "use strict";
 
-function displayContentBasedOnURLParameters(suggestedurl) {
+async function displayContentBasedOnURLParameters(suggestedurl) {
 
     //Be very careful with input here . . . this is the most dangerous part of the code
     //input comes from URL so can contain any characters, so we want to sanitize it before using.
@@ -6650,13 +7449,17 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         //navigation back to home page, clear topic
 
     } else if (url.indexOf('/p/') != -1) {
-        //var postid = sane(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
-        let postid = document.getElementById('threadid').innerHTML;
+        let postid = sane(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
+        try{
+            postid = document.getElementById('threadid').innerHTML;
+        }catch(err){console.log('Thread id not present in preview provided by permalink server. Using backup.');}
         showThread(sane(postid), sane(postid), 'thread');
         return;
     } else if (url.indexOf('/a/') != -1) {
-        //var postid = sane(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
-        let postid = document.getElementById('threadid').innerHTML;
+        let postid = sane(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
+        try{
+            postid = document.getElementById('threadid').innerHTML;
+        }catch(err){console.log('Thread id not present in preview provided by permalink server. Using backup.');}
         showThread(sane(postid), sane(postid), 'article');
         return;
     } else if (url.indexOf('/m/') != -1) {
@@ -6689,7 +7492,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         );
         setTopic(safeGPBN("topicname"));
     } else if (action.startsWith("list")) {
-        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"),1);
+        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"), 1);
     } else if (action.startsWith("notifications")) {
         showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
@@ -6697,9 +7500,11 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("membersonly")) {
         showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("topinfluencers")) {
-        getAndPopulateNew('top50', 'both', '', '', 0, 50, 'posts', '', false, 1);
+        getAndPopulateNew('top50', 'both', '', 'everyone', 0, 50, 'posts', '', false, 1);
     } else if (action.startsWith("member")) {
-        showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
+        let qadd = safeGPBN("qaddress");
+        if (qadd.startsWith('npub')) { qadd = await npubToPubKey(qadd); }
+        showMember(qadd, safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
         showFollowers(safeGPBN("qaddress"));
     } else if (action.startsWith("following")) {
@@ -6708,6 +7513,10 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         showBlockers(safeGPBN("qaddress"));
     } else if (action.startsWith("blocking")) {
         showBlocking(safeGPBN("qaddress"));
+    } else if (action.startsWith("raters")) {
+        showRaters(safeGPBN("qaddress"));
+    } else if (action.startsWith("ratings")) {
+        showRatings(safeGPBN("qaddress"));
     } else if (action.startsWith("rep")) {
         showReputation(safeGPBN("qaddress"));
     } else if (action.startsWith("posts")) {
@@ -6716,6 +7525,8 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         showPFC(numberGPBN("start"), numberGPBN("limit"), 'both');
     } else if (action.startsWith("comments")) {
         showPFC(numberGPBN("start"), numberGPBN("limit"), 'replies');
+    } else if (action.startsWith("trustgraphpair")) {
+        showReputationPair(safeGPBN("source"),safeGPBN("qaddress"));
     } else if (action.startsWith("trustgraph")) {
         showReputation(safeGPBN("target"));
     } else if (action.startsWith("support")) {
@@ -6788,14 +7599,14 @@ function hideAll() {
     document.getElementById('following').style.display = "none";
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
-
+    document.getElementById('listratings').style.display = "none";
+    document.getElementById('listraters').style.display = "none";
+    
     document.getElementById('newpost').style.display = "none";
-    //document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('footer').style.display = "block";//show the footer - it may have been hidden when the map was displayed
 
     //document.getElementById('trustgraph').style.display = "none";
-    //document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
     document.getElementById('messagesanchor').style.display = "none";
@@ -6942,7 +7753,7 @@ function showMember(qaddress, pagingID, isList) {
     }
 
     if (qaddress == '' && pagingID) {
-        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + pubkeyhex.slice(0,16);
+        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '');
         getJSON(theURL).then(function (data) {
             if (data && data.length > 0) {
                 showMember(san(data[0].address), sane(data[0].pagingid), isList);
@@ -6995,11 +7806,32 @@ function showReputation(qaddress) {
     showOnly("mcidmemberheader");
     showOnly("mcidmembertabs");
     showOnly("trustgraph");
-    getAndPopulateTrustGraph(pubkeyhex.slice(0,16), qaddress);
+    getAndPopulateTrustGraph2((pubkeyhex ? pubkeyhex.slice(0, 16) : ''), qaddress);
 
     //Show Filter
     var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff' };
     document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+}
+
+function updatePairGraph(){
+    let source = document.getElementById('sourcecombobox').value;
+    let target = document.getElementById('targetcombobox').value;
+    if(source && target)
+        window.location.href = `#trustgraphpair?source=${source}&qaddress=${target}`;
+    //showReputationPair(source,target);
+}
+
+function showReputationPair(source,target) {
+
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("trustgraph");
+    getAndPopulateTrustGraphPair(source,target);
+
+    //Show Filter
+    //var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff' };
+    //document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
 }
 
 function showCustom() {
@@ -7026,7 +7858,7 @@ function showPFC(start, limit, page) {
     showPostsNew('hot', page, '', 'everyone', start, limit, '', 1)
 }
 
-function showPostsNew(order, content, topicname, filter, start, limit, qaddress='', minStarRating=1) {
+function showPostsNew(order, content, topicname, filter, start, limit, qaddress = '', minStarRating = 1) {
     //setTopic('');
     if (topicname == 'mytopics') {
         highlightmajornavbutton("topiclistbutton");
@@ -7149,7 +7981,14 @@ function showBlockers(qaddress) {
 
 function showBlocking(qaddress) {
     getAndPopulateFB('blocking', qaddress);
+}
 
+function showRatings(qaddress) {
+    getAndPopulateRatings(qaddress);
+}
+
+function showRaters(qaddress) {
+    getAndPopulateRaters(qaddress);
 }
 
 
@@ -7244,67 +8083,88 @@ function scrollToPosition(theElement) {
     }
     backForwardEvent = false;
 }
-"use strict";
 
-function checkForPrivKey() {
-    //if (isBitCloutUser()) {return true;}
-    return checkForNativeUser();
+
+//Automatically stop video from playing if it is scrolled off screen
+function playPauseVideo() {
+    let videos = document.querySelectorAll("video");
+    videos.forEach((video) => {
+        // Check if the video already has an observer
+        if (!video.intersectionObserver) {
+            let observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.intersectionRatio !== 1 && !video.paused) {
+                            video.pause();
+                        } else if (!entry.isIntersecting &&!video.paused) {
+                            video.pause();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            observer.observe(video);
+
+            // Store the observer on the video element
+            video.intersectionObserver = observer;
+        }
+    });
 }
 
-function checkForNativeUser() {
-    if (privkey == "" && pubkey != "") {
-        alert(getSafeTranslation('readonlymode2', "You may be logged in with a public key in read only mode. Try logging out and logging back in again."));
-        return false;
-    } else if (privkey == "" && !window.nostr) {
+setInterval(playPauseVideo, 500);
+"use strict";
+
+
+function checkForUserThatCanWrite() {
+    
+    if (!pubkeyhex) {
         alert(getSafeTranslation('mustlogin', "You must login to do this."));
         return false;
+    }else if (!getRepNetPrivKey() && !window.nostr) {
+        alert(getSafeTranslation('readonlymode2', "You may be logged in with a public key in read only mode. Try logging out and logging back in again."));
+        return false;
     }
-
-    //if (tq.getBalance(chainheight) < nativeCoin.dust) {
-    //    alert(getSafeTranslation('notenough2', "You do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
-    //    return false;
-    //}
-
     return true;
 }
 
 function checkForNativeUserAndHasBalance() {
-    return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
+    return (getRepNetPrivKey() && tq.getBalance(chainheight) >= nativeCoin.dust);
 }
 
-async function sendRating(rating, ratingText, pageName, targetpublickey) {
-    if (!checkForPrivKey()) return false;
+async function sendRating(rating, ratingText, pageName, targetpublickey, bitcoinaddress) {
+    if (!checkForUserThatCanWrite()) return false;
 
     //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
-    //if (!checkForPrivKey()) return false;
+    //if (!checkForUserThatCanWrite()) return false;
     var comment = "";
     if (ratingText) {
         comment = ratingText.value;
     }
     
-    let addresshandle='';
+    //let addresshandle='';
 
     //let targetpublickey66=targetpublickey;
     //if(targetpublickey66.length==64){targetpublickey66='02'+targetpublickey66;}//nostr style public key.
     //theAddress=pubkeyhexToLegacy(targetpublickey66);
 
-    if(targetpublickey.length==64){
-        addresshandle = window.bech32converter('npub').toBech32('0x'+targetpublickey);
-    }else{
-        addresshandle = theAddress
-    }   
+    //if(targetpublickey.length==64){
+    //    addresshandle = window.bech32converter('npub').toBech32('0x'+targetpublickey);
+    //}else{
+    //    addresshandle = theAddress
+    //}   
 
 
     
-    //if (checkForNativeUserAndHasBalance()) {
-    //    rateCallbackAction(rating, comment, theAddress);
-    //}
+    if (checkForNativeUserAndHasBalance()) {
+        rateCallbackAction(rating, comment, targetpublickey, bitcoinaddress);
+    }
 
     //if (isBitCloutUser()) {
     //    sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
     //}
-    let event= await sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + addresshandle, null, targetpublickey, true, rating, comment);
-    sendWrappedEvent(event);
+    //let event= await sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + addresshandle, null, targetpublickey, rating, comment);
+    //sendWrappedEvent(event);
     
 }
 
@@ -7320,7 +8180,7 @@ function repost(txid, privkey) {
 
     //Repost memo 	0x6d0b 	txhash(32), message(184)
 
-    //if (!checkForPrivKey()) return false;
+    //if (!checkForUserThatCanWrite()) return false;
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     var tx = {
         data: ["0x6d0b", "0x" + reversetx],
@@ -7340,7 +8200,7 @@ function repost(txid, privkey) {
 }
 
 function setTrxPic(newName, callback) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
     //if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
     //    alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
     //    return;
@@ -7372,13 +8232,13 @@ function sendWrappedEvent(event, callback) {
 
 
 async function setName() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     //setNostrProfile('name',newName);
-    let event= await setNostrProfile();
-    sendWrappedEvent(event);
+    //let event= await setNostrProfile();
+    //sendWrappedEvent(event);
 
     var newName = document.getElementById('settingsnametext').value;
-    /*
+    
     if (!checkForNativeUserAndHasBalance()) return false;
 
     document.getElementById('settingsnametextbutton').disabled = true;
@@ -7392,7 +8252,7 @@ async function setName() {
 
     //TODO, on error, this should really enable the text field and text button again
     tq.queueTransaction(tx);
-    */
+    
 }
 
 
@@ -7649,12 +8509,12 @@ function memoPinPost(txid, privkey) {
 }
 
 async function setProfile() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
 
-    let event= await setNostrProfile();
-    sendWrappedEvent(event);
+    //let event= await setNostrProfile();
+    //sendWrappedEvent(event);
     
-    /*
+    
     var newProfile = document.getElementById('settingsprofiletext').value;
     
     if (!checkForNativeUserAndHasBalance()) return false;
@@ -7667,13 +8527,13 @@ async function setProfile() {
         cash: { key: privkey }
     }
     updateStatus(getSafeTranslation('settingprofile', "Setting Profile"));
-    tq.queueTransaction(tx);*/
+    tq.queueTransaction(tx);
 }
 
 
 function subTransaction(topicHOSTILE) {
 
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -7687,7 +8547,7 @@ function subTransaction(topicHOSTILE) {
 }
 
 function unsubTransaction(topicHOSTILE) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -7700,12 +8560,14 @@ function unsubTransaction(topicHOSTILE) {
     tq.queueTransaction(tx);
 }
 
-function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey) {
+function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey, legacyAddress) {
     try {
+        //let signedpublickey=getYSignTest(targetpublickey)+targetpublickey;
+        //let legacyAddress=await pubkeyhexToLegacy(signedpublickey);
         //document.getElementById(removeElementID).style.display = "none";
-        //var addressraw = getLegacyToHash160(qaddress);
+        var addressraw = getLegacyToHash160(legacyAddress);
         const tx = {
-            data: [actionCode, "0x" + targetpublickey],
+            data: [actionCode, "0x" + addressraw],
             cash: { key: privkey }
         }
         updateStatus(statusMessage);
@@ -7715,75 +8577,91 @@ function addressTransaction(removeElementID, actionCode, statusMessage, targetpu
     }
 }
 
-async function follow(targetpublickey) {
-    if (!checkForPrivKey()) return false;
+async function follow(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
 
-    let event= await sendNostrFollow(targetpublickey);
-    sendWrappedEvent(event); 
+    //let event= await sendNostrFollow(targetpublickey);
+    //sendWrappedEvent(event); 
 
-    /*
+    
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey);
+        addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey,legacyAddress);
     }
-    if (isBitCloutUser()) {
-        sendBitCloutFollow(targetpublickey);
-    }*/
+    //if (isBitCloutUser()) {
+    //    sendBitCloutFollow(targetpublickey);
+    //}
     
 }
 
-async function unfollow(targetpublickey) {
-    if (!checkForPrivKey()) return false;
+async function unfollow(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
 
-    let event= await sendNostrUnFollow(targetpublickey);
-    sendWrappedEvent(event);
+    //let event= await sendNostrUnFollow(targetpublickey);
+    //sendWrappedEvent(event);
 
-    /*
+    
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey);
+        addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey,legacyAddress);
     }
-    if(isBitCloutUser()){
-        sendBitCloutUnFollow(targetpublickey);
-    }*/
+    //if(isBitCloutUser()){
+    //    sendBitCloutUnFollow(targetpublickey);
+    //}
     
 }
 
-async function mute(targetpublickey) {
-    if (!checkForPrivKey()) return false;
-    let event= await sendNostrMute(targetpublickey);
-    sendWrappedEvent(event);
+async function reportspammer(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
+    //let event= await sendNostrSpamReport(targetpublickey);
+    //sendWrappedEvent(event);
 
-    /*
+    
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey);
+        addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey,legacyAddress);
     }
     //if(isBitCloutUser()){
     //    sendBitCloutMute(targetpublickey);
     //}
-    */
+    
 }
 
-async function unmute(targetpublickey) {
-    if (!checkForPrivKey()) return false;
-    let event= await sendNostrUnMute(targetpublickey);
-    sendWrappedEvent(event);
 
-    /*
+async function mute(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
+    //let event= await sendNostrMute(targetpublickey);
+    //sendWrappedEvent(event);
+
+    
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey);
+        addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey,legacyAddress);
+    }
+    //if(isBitCloutUser()){
+    //    sendBitCloutMute(targetpublickey);
+    //}
+    
+}
+
+async function unmute(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
+    //let event= await sendNostrUnMute(targetpublickey);
+    //sendWrappedEvent(event);
+
+    
+    if (checkForNativeUserAndHasBalance()) {
+        addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey,legacyAddress);
     }
     //if(isBitCloutUser()){
     //    sendBitCloutUnMute(targetpublickey);
     //}
-    */
+    
 }
 
 async function sub(topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     
-    let event= await sendNostrSub(topicHOSTILE);
-    sendWrappedEvent(event);
+    //let event= await sendNostrSub(topicHOSTILE);
+    //sendWrappedEvent(event);
 
-    /*
+    
     if (checkForNativeUserAndHasBalance()) {
         subTransaction(topicHOSTILE);
     }
@@ -7791,18 +8669,18 @@ async function sub(topicHOSTILE) {
     //if(isBitCloutUser()){
     //    sendBitCloutSub(topicHOSTILE);
     //}
-    */
+    
 }
 
 async function unsub(topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
-    if (checkForNativeUserAndHasBalance()) {
+    if (!checkForUserThatCanWrite()) return false;
+    //if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
-    }
+    //}
     
     /*
-    let event= await sendNostrUnSub(topicHOSTILE);
-    sendWrappedEvent(event);
+    //let event= await sendNostrUnSub(topicHOSTILE);
+    //sendWrappedEvent(event);
 
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);
@@ -7827,7 +8705,7 @@ function sendSendUnhidePost(txid) {
 }
 
 function txidTransaction(txid, actionCode, statusMessage) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
@@ -7839,13 +8717,13 @@ function txidTransaction(txid, actionCode, statusMessage) {
 
 }
 
-function rateUser(qaddress, rating, ratingcomment) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+function rateUser(targetpublickey, rating, ratingcomment, bitcoinaddress) {
+    //if (!checkForNativeUserAndHasBalance()) return false;
     if (ratingcomment === undefined) {
         ratingcomment = "";
     }
 
-    var addressraw = getLegacyToHash160(qaddress);
+    var addressraw = getLegacyToHash160(bitcoinaddress);
 
     var hexRating = "0x" + toHexString([rating]);
     const tx = {
@@ -7875,7 +8753,7 @@ function unhideuser(qaddress, topicHOSTILE, elementid) {
 
 
 function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMessage, topicHOSTILE) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
 
     document.getElementById(removeElementID).style.display = "none";
     var addressraw = getLegacyToHash160(qaddress);
@@ -7889,552 +8767,600 @@ function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMe
 
 
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+
+class UTXO {
+  satoshis;
+  vout;
+  txid;
+  height;
+
+  constructor(satoshis, vout, txid, height) {
+    this.satoshis = satoshis;
+    this.vout = vout;
+    this.txid = txid;
+    this.height = height;
+  }
+
+  getSatsWithInterest(chainheight, interestexponent) {
+    if (interestexponent == 0) {
+      return this.satoshis;
     }
-};
-var UTXO = /** @class */ (function () {
-    function UTXO(satoshis, vout, txid, height) {
-        this.satoshis = satoshis;
-        this.vout = vout;
-        this.txid = txid;
-        this.height = height;
+    if (this.height == 0 || !this.height) {//not in blockchain yet. unconfirmed, no interest earned yet
+      return this.satoshis;
     }
-    UTXO.prototype.getSatsWithInterest = function (chainheight, interestexponent) {
-        if (interestexponent == 0) {
-            return this.satoshis;
-        }
-        if (this.height == 0 || !this.height) { //not in blockchain yet. unconfirmed, no interest earned yet
-            return this.satoshis;
-        }
-        if (!chainheight) { //we don't know chainheight - we must or we may lose interest
-            throw Error('Chainheight not found - we must know this or may lose interest');
-        }
-        //Interest rate on each block 1+(1/2^22)
-        var blocksheld = chainheight - this.height;
-        var withInterest = this.satoshis * Math.pow(1 + (1 / Math.pow(2, 22)), blocksheld);
-        return Math.floor(withInterest);
-    };
-    return UTXO;
-}());
-var UTXOPool = /** @class */ (function () {
-    function UTXOPool(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit) {
-        //address is the legacy address of the account
-        //utxoServer is server that will send utxo set
-        //status message function is a function to call with progress updates
-        //translation function will return localized string for identifier
-        //updateBalanceFunction will be called when the pool refreshes and may have different utxos
-        if (interestexponent === void 0) { interestexponent = 22; }
-        if (dustlimit === void 0) { dustlimit = 547; }
-        this.extraSatoshis = 5;
-        this.maxfee = 5;
-        this.resendWait = 2000;
-        this.interestexponent = 22;
-        this.dustlimit = 547;
-        this.utxoPool = new Array();
-        this.theAddress = address;
-        this.utxoServer = utxoServer;
-        this.chainheight = 0;
-        this.chainheighttime = 0;
-        this.statusMessageFunction = statusMessageFunction;
-        this.translationFunction = translationFunction;
-        this.updateBalanceFunction = updateBalanceFunction;
-        this.fetchFunction = fetchFunction;
-        this.interestexponent = interestexponent;
-        this.dustlimit = dustlimit;
+    if (!chainheight) {//we don't know chainheight - we must or we may lose interest
+      throw Error('Chainheight not found - we must know this or may lose interest');
     }
-    UTXOPool.prototype.getSafeTranslation = function (id, defaultstring) {
-        if (this.translationFunction) {
-            return this.translationFunction(id, defaultstring);
-        }
-        else {
-            return defaultstring;
-        }
-    };
-    UTXOPool.prototype.setUTXOServer = function (utxoServer) {
-        this.utxoServer = utxoServer;
-    };
-    UTXOPool.prototype.updateStatus = function (message) {
-        console.log(message);
-        if (this.statusMessageFunction) {
-            this.statusMessageFunction(message);
-        }
-        else {
-            alert(message);
-        }
-    };
-    //Return a copy of the array of utxo
-    UTXOPool.prototype.getUTXOs = function () {
-        return Array.from(this.utxoPool);
-    };
-    //Remove a specific utxo
-    UTXOPool.prototype.removeUTXO = function (txid, vout) {
-        for (var i = 0; i < this.utxoPool.length; i++) {
-            if (this.utxoPool[i].txid == txid && this.utxoPool[i].vout == vout) {
-                this.utxoPool.splice(i, 1);
-                return true;
-            }
-        }
-        return false;
-    };
-    //Add a utxo to the array
-    UTXOPool.prototype.addUTXO = function (txid, vout, satoshis, height) {
-        //Ensure it is not already in the pool
-        for (var i = 0; i < this.utxoPool.length; i++) {
-            if (this.utxoPool[i].txid == txid && this.utxoPool[i].vout == vout) {
-                return false;
-            }
-        }
-        this.utxoPool.push(new UTXO(satoshis, vout, txid, height));
+    //Interest rate on each block 1+(1/2^22)
+    let blocksheld = chainheight - this.height;
+    let withInterest = this.satoshis * Math.pow(1 + (1 / Math.pow(2, 22)), blocksheld);
+    return Math.floor(withInterest);
+  }
+}
+
+class UTXOPool {
+  //extraSatoshisFactor = 10;
+  maxfee = 5;
+
+  theAddress;
+  utxoPool;
+  utxoServer;
+  statusMessageFunction;
+  chainheight;
+  chainheighttime;
+  resendWait = 2000;
+  translationFunction;
+  updateBalanceFunction;
+  fetchFunction;
+  interestexponent = 22;
+  dustlimit = 547;
+
+  constructor(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent = 22, dustlimit = 547) {
+    //address is the legacy address of the account
+    //utxoServer is server that will send utxo set
+    //status message function is a function to call with progress updates
+    //translation function will return localized string for identifier
+    //updateBalanceFunction will be called when the pool refreshes and may have different utxos
+
+    this.utxoPool = new Array();
+    this.theAddress = address;
+    this.utxoServer = utxoServer;
+    this.chainheight = 0;
+    this.chainheighttime = 0;
+    this.statusMessageFunction = statusMessageFunction;
+    this.translationFunction = translationFunction;
+    this.updateBalanceFunction = updateBalanceFunction;
+    this.fetchFunction = fetchFunction;
+    this.interestexponent = interestexponent;
+    this.dustlimit = dustlimit;
+  }
+
+  getSafeTranslation(id, defaultstring) {
+    if (this.translationFunction) {
+      return this.translationFunction(id, defaultstring);
+    } else {
+      return defaultstring;
+    }
+  }
+
+  setUTXOServer(utxoServer) {
+    this.utxoServer = utxoServer;
+  }
+
+  updateStatus(message) {
+    //console.log(message);
+    if (this.statusMessageFunction) {
+      this.statusMessageFunction(message);
+    } else {
+      alert(message);
+    }
+  }
+
+  //Return a copy of the array of utxo
+  getUTXOs() {
+    return Array.from(this.utxoPool);
+  }
+
+  //Remove a specific utxo
+  removeUTXO(txid, vout) {
+    for (let i = 0; i < this.utxoPool.length; i++) {
+      if (this.utxoPool[i].txid == txid && this.utxoPool[i].vout == vout) {
+        this.utxoPool.splice(i, 1);
         return true;
-    };
-    //Get the balance of the array of utxos at a specific chain height
-    UTXOPool.prototype.getBalance = function (chainheight2) {
-        var total = 0;
-        for (var i = 0; i < this.utxoPool.length; i++) {
-            total = total + this.utxoPool[i].getSatsWithInterest(chainheight2 + 1, this.interestexponent);
-        }
-        return total;
-    };
-    UTXOPool.prototype.refreshPool = function () {
-        var _this = this;
-        var outputInfo = new Array();
-        (function () { return __awaiter(_this, void 0, void 0, function () {
-            var response, utxos, utxosOriginalNumber, i, usableUTXOScount;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!this.fetchFunction) return [3 /*break*/, 2];
-                        return [4 /*yield*/, this.fetchFunction(this.utxoServer + this.theAddress)];
-                    case 1:
-                        response = _a.sent();
-                        return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, fetch(this.utxoServer + this.theAddress)];
-                    case 3:
-                        response = _a.sent();
-                        _a.label = 4;
-                    case 4: return [4 /*yield*/, response.json()];
-                    case 5:
-                        outputInfo = _a.sent();
-                        utxos = outputInfo;
-                        utxosOriginalNumber = outputInfo.length;
-                        this.utxoPool = new Array();
-                        //Check no unexpected data in the fields we care about
-                        for (i = 0; i < utxos.length; i++) {
-                            utxos[i].satoshis = Number(utxos[i].satoshis);
-                            utxos[i].vout = Number(utxos[i].vout);
-                            utxos[i].txid = this.sane(utxos[i].txid);
-                            //Electrum format
-                            utxos[i].satoshis = Number(utxos[i].value);
-                            utxos[i].vout = Number(utxos[i].tx_pos);
-                            utxos[i].txid = this.sane(utxos[i].tx_hash);
-                            utxos[i].height = this.sane(utxos[i].height);
-                            if (utxos[i].chainheight) {
-                                this.chainheight = utxos[i].chainheight;
-                                this.chainheighttime = new Date().getTime();
-                            }
-                            if (utxos[i].satoshis && utxos[i].txid && utxos[i].satoshis != 546) {
-                                //Don't use outputs of 546 they may be SLP tokens. Note this may be different to the dust amount.
-                                this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
-                            }
-                        }
-                        usableUTXOScount = this.utxoPool.length;
-                        this.updateStatus(utxosOriginalNumber + this.getSafeTranslation('utxosreceived', " utxo(s) received. usable") + ' ' + usableUTXOScount);
-                        if (this.updateBalanceFunction) {
-                            this.updateBalanceFunction(this.chainheight, this.chainheighttime);
-                        }
-                        return [2 /*return*/, this.getBalance(this.chainheight)];
-                }
-            });
-        }); })();
-    };
-    UTXOPool.prototype.sane = function (input) {
-        if (input === undefined || input == null) {
-            return "";
-        }
-        input = input + "";
-        return input.replace(/[^A-Za-z0-9\-_\.]/g, '');
-    };
-    return UTXOPool;
-}());
-var TransactionData = /** @class */ (function () {
-    function TransactionData(to, toAmount, data, successFunction) {
-        this.to = to;
-        this.toAmount = toAmount;
-        this.data = data;
-        this.successFunction = successFunction;
+      }
     }
-    return TransactionData;
-}());
-var TransactionQueue = /** @class */ (function (_super) {
-    __extends(TransactionQueue, _super);
-    function TransactionQueue(address, privateKey, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, BitcoinJS, broadcastServer, miningFeeSats, interestexponent, dustlimit) {
-        if (miningFeeSats === void 0) { miningFeeSats = 1; }
-        if (interestexponent === void 0) { interestexponent = 22; }
-        if (dustlimit === void 0) { dustlimit = 547; }
-        var _this = _super.call(this, address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit) || this;
-        _this.OP_RETURN = 106;
-        _this.SIGHASH_BITCOINCASHBIP143 = 0x40;
-        _this.SIGHASH_ALL = 0x01;
-        _this.BCH_SIGHASH_ALL = _this.SIGHASH_ALL | _this.SIGHASH_BITCOINCASHBIP143;
-        _this.miningFeeSats = 1;
-        _this.sighashtouse = _this.SIGHASH_ALL;
-        _this.BitcoinJS = BitcoinJS;
-        _this.queue = new Array();
-        _this.isSending = false; //Sending from the queue
-        _this.transactionInProgress = false; //Transaction sending, not necessarily from queue
-        _this.privateKey = privateKey;
-        _this.broadcastServer = broadcastServer;
-        if (_this.privateKey) {
-            _this.keyPair = _this.BitcoinJS.ECPair.fromWIF(_this.privateKey);
-        }
-        var transactionBuilder = new _this.BitcoinJS.TransactionBuilder();
-        _this.transactionsPossible = true; //transactionBuilder.enableBitcoinCash;
-        _this.miningFeeSats = miningFeeSats;
-        return _this;
+    return false;
+  }
+
+  //Add a utxo to the array
+  addUTXO(txid, vout, satoshis, height) {
+    //Ensure it is not already in the pool
+    for (let i = 0; i < this.utxoPool.length; i++) {
+      if (this.utxoPool[i].txid == txid && this.utxoPool[i].vout == vout) {
+        return false;
+      }
     }
-    TransactionQueue.prototype.setbroadcastServer = function (broadcastServer) {
-        this.broadcastServer = broadcastServer;
-    };
-    // compose script
-    TransactionQueue.prototype._script = function (opcode, pushdata) {
-        var s = new Array();
-        if (pushdata) {
-            if (Array.isArray(pushdata)) {
-                // Add op_return
-                s.push(opcode);
-                pushdata.forEach(function (item) {
-                    // add push data
-                    if (/^0x/i.test(item)) {
-                        // ex: 0x6d02
-                        s.push(Buffer.from(item.slice(2), "hex"));
-                    }
-                    else {
-                        // ex: "hello"
-                        s.push(Buffer.from(item));
-                    }
-                });
-            }
+    this.utxoPool.push(new UTXO(satoshis, vout, txid, height));
+    return true;
+  }
+
+  //Get the balance of the array of utxos at a specific chain height
+  getBalance(chainheight2) {
+    var total = 0;
+    for (let i = 0; i < this.utxoPool.length; i++) {
+      total = total + this.utxoPool[i].getSatsWithInterest(chainheight2 + 1, this.interestexponent);
+    }
+    return total;
+  }
+
+  async refreshPool() {
+
+    let outputInfo = new Array();
+
+
+    var response;
+    try {
+      if (this.fetchFunction) {
+        response = await this.fetchFunction(this.utxoServer + this.theAddress);
+      } else {
+        response = await fetch(this.utxoServer + this.theAddress);
+      }
+      outputInfo = await response.json();
+    } catch (err) {
+      console.log(err);
+      return this.getBalance(this.chainheight);
+    }
+
+    let utxos = outputInfo;
+    let utxosOriginalNumber = outputInfo.length;
+
+    this.utxoPool = new Array();
+    //Check no unexpected data in the fields we care about
+    for (let i = 0; i < utxos.length; i++) {
+      utxos[i].satoshis = Number(utxos[i].satoshis);
+      utxos[i].vout = Number(utxos[i].vout);
+      utxos[i].txid = this.sane(utxos[i].txid);
+
+      //Electrum format
+      utxos[i].satoshis = Number(utxos[i].value);
+      utxos[i].vout = Number(utxos[i].tx_pos);
+      utxos[i].txid = this.sane(utxos[i].tx_hash);
+      utxos[i].height = this.sane(utxos[i].height);
+      if (utxos[i].chainheight) {
+        this.chainheight = utxos[i].chainheight;
+        this.chainheighttime = new Date().getTime();
+      }
+      if (utxos[i].satoshis && utxos[i].txid && utxos[i].satoshis != 546) {
+        //Don't use outputs of 546 they may be SLP tokens. Note this may be different to the dust amount.
+        if(utxos[i].satoshis==500000000 && utxos[i].vout==0 && this.chainheight-utxos[i].height<20){
+          //probably an immature coinbase tx - won't catch 100% of cases, but will mostly be good enough.
+          //if the amount is not 500000000, for example if the coinbase has transaction fees, it'll get through.
+        }else{
+          this.utxoPool.push(new UTXO(utxos[i].satoshis, utxos[i].vout, utxos[i].txid, utxos[i].height));
         }
-        return s;
-    };
-    TransactionQueue.prototype.isTransactionInProgress = function () {
-        if (this.transactionInProgress || this.queue.length > 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    };
-    TransactionQueue.prototype.queueTransaction = function (transaction, onSuccessFunction) {
-        if (!this.transactionsPossible) {
-            return 'Bitcoin Cash Style Transactions Not Possible with this bitcoin library';
-        }
-        var toAddress = '';
-        var toAmount = 0;
-        try {
-            toAmount = transaction.cash.to[0].value;
-            toAddress = transaction.cash.to[0].address;
-        }
-        catch (err) {
-            //usually no recipient, send change to self.
-        }
-        var data = transaction.data;
-        this.queue.push(new TransactionData(toAddress, toAmount, data, onSuccessFunction));
-        this.sendNextTransaction();
-        return 'Sent';
-    };
-    TransactionQueue.prototype.sendNextTransaction = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var response, txdata, utxos, tx, transactionSize, fees, err_1, resulttxid, resptext, err_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!this.privateKey) {
-                            throw new Error(this.getSafeTranslation('noprivatekey', "1000:No Private Key, Cannot Make Transaction"));
-                        }
-                        /*if(this.utxoPool.length==0){
-                          await this.refreshPool();
-                        }*/
-                        //If the queue is already sending
-                        if (this.transactionInProgress) {
-                            return [2 /*return*/];
-                        }
-                        else if (this.queue.length == 0) {
-                            //If the queue has run out of transactions
-                            return [2 /*return*/];
-                        }
-                        else {
-                            this.transactionInProgress = true;
-                        }
-                        _a.label = 1;
-                    case 1:
-                        response = void 0;
-                        txdata = void 0;
-                        utxos = void 0;
-                        tx = void 0;
-                        _a.label = 2;
-                    case 2:
-                        _a.trys.push([2, 7, , 8]);
-                        //Use the first transaction from the queue. Leave it on the queue until it is successfully sent
-                        txdata = this.queue[0];
-                        //Choose the UTXOs to use
-                        utxos = this.selectUTXOs();
-                        //Make the trx and estimate the fees
-                        tx = this.constructTransaction(utxos, 0, txdata);
-                        transactionSize = tx.byteLength();
-                        //Add extra satoshis for safety
-                        console.log("Transaction size:" + transactionSize);
-                        fees = Math.round(transactionSize * this.miningFeeSats) + this.extraSatoshis;
-                        //Make the trx again, with fees included
-                        tx = this.constructTransaction(utxos, fees, txdata);
-                        if (!this.fetchFunction) return [3 /*break*/, 4];
-                        return [4 /*yield*/, this.fetchFunction(this.broadcastServer, {
-                                method: 'POST',
-                                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ hexes: [tx.toHex()] })
-                            })];
-                    case 3:
-                        response = _a.sent();
-                        return [3 /*break*/, 6];
-                    case 4: return [4 /*yield*/, fetch(this.broadcastServer, {
-                            method: 'POST',
-                            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ hexes: [tx.toHex()] })
-                        })];
-                    case 5:
-                        response = _a.sent();
-                        _a.label = 6;
-                    case 6: return [3 /*break*/, 8];
-                    case 7:
-                        err_1 = _a.sent();
-                        console.log(err_1);
-                        return [3 /*break*/, 8];
-                    case 8:
-                        if (!(response && response.ok)) return [3 /*break*/, 13];
-                        resulttxid = void 0;
-                        resptext = void 0;
-                        _a.label = 9;
-                    case 9:
-                        _a.trys.push([9, 11, , 12]);
-                        return [4 /*yield*/, response.text()];
-                    case 10:
-                        resptext = _a.sent();
-                        resulttxid = this.sane(resptext);
-                        return [3 /*break*/, 12];
-                    case 11:
-                        err_2 = _a.sent();
-                        console.log(err_2);
-                        return [3 /*break*/, 12];
-                    case 12:
-                        if (resulttxid && resulttxid.length == 64) {
-                            this.updateStatus(resulttxid);
-                            //successful transaction, update the transaction pool
-                            this.updateTransactionPool(utxos, txdata, tx);
-                            //remove the transaction from front of queue
-                            this.queue.shift();
-                            //ready for next transaction
-                            this.transactionInProgress = false;
-                            //call the transactions callback success function
-                            if (txdata.successFunction) {
-                                txdata.successFunction(resulttxid);
-                            }
-                            this.resendWait = 2000;
-                            return [3 /*break*/, 16];
-                        }
-                        //otherwise failure of some kind
-                        this.updateStatus(this.sane(response.ok) + " " + this.sane(response.status) + " " + this.sane(response.statusText) + " " + this.sane(resptext));
-                        _a.label = 13;
-                    case 13:
-                        //TODO - should look for specific errors here and take appropriate action rather than just refreshing pool and sending again.
-                        //Try refreshing the utxo pool
-                        this.refreshPool();
-                        return [4 /*yield*/, this.sleep(this.resendWait)];
-                    case 14:
-                        _a.sent();
-                        this.resendWait = this.resendWait * 1.5;
-                        this.updateStatus(this.queue.length + this.getSafeTranslation('stillqueued', " Transaction(s) Still Queued, Try changing UTXO server on settings page. Retry in (seconds)") + " " + (this.resendWait / 1000));
-                        this.sleep(1000);
-                        this.updateStatus(this.getSafeTranslation('sendingagain', "Sending Again . . ."));
-                        _a.label = 15;
-                    case 15: return [3 /*break*/, 1];
-                    case 16:
-                        //Send the next transaction after a short pause
-                        this.sleep(1000);
-                        if (this.queue.length > 0) {
-                            this.sendNextTransaction();
-                        }
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    /*
-      //error code info to consider
-          if (errorMessage.startsWith("64")) {
-            //Error:64:
-            //May mean not enough mining fee was provided or chained trx limit reached
-          if (errorMessage.startsWith("66")) {
-            if (this.miningFeeMultiplier < this.maxfee) {
-              //Insufficient Priority - not enough transaction fee provided. Let's try increasing fee.
-              this.miningFeeMultiplier = this.miningFeeMultiplier * 1.1;
-              returnObject.updateStatus(this.getSafeTranslation('surgepricing', "Error: Transaction rejected because fee too low. Increasing and retrying. Surge Pricing now ") + Math.round(this.miningFeeMultiplier * 10) / 10);
-              await this.sleep(1000);
-              returnObject.sendNextTransaction();
-              return;
-            }
+      }
+    }
+
+    let usableUTXOScount = this.utxoPool.length;
+    this.updateStatus(utxosOriginalNumber + this.getSafeTranslation('utxosreceived', " utxo(s) received. usable") + ' ' + usableUTXOScount);
+
+    if (this.updateBalanceFunction) {
+      this.updateBalanceFunction(this.chainheight, this.chainheighttime);
+    }
+
+    return this.getBalance(this.chainheight);
+
+  }
+
+  sane(input) {
+    if (input === undefined || input == null) { return ""; }
+    input = input + "";
+    return input.replace(/[^A-Za-z0-9\-_\.]/g, '');
+  }
+}
+
+class TransactionData {
+  to;
+  toAmount;
+  data;
+  changeAddress;
+  successFunction;
+
+  constructor(to, toAmount, data, changeaddress, successFunction) {
+    this.to = to;
+    this.toAmount = toAmount;
+    this.data = data;
+    this.changeAddress = changeaddress;
+    this.successFunction = successFunction;
+  }
+}
+
+class TransactionQueue extends UTXOPool {
+
+  OP_RETURN = 106;
+  SIGHASH_BITCOINCASHBIP143 = 0x40;
+  SIGHASH_ALL = 0x01
+  BCH_SIGHASH_ALL = this.SIGHASH_ALL | this.SIGHASH_BITCOINCASHBIP143;
+  queue;
+  isSending; //Sending from the queue
+  transactionInProgress; //Transaction sending, not necessarily from queue
+  privateKey;
+  broadcastServer;
+  keyPair;
+  BitcoinJS;
+  transactionsPossible;
+  miningFeeSats = 1;
+  sighashtouse = this.SIGHASH_ALL;
+
+  constructor(address, privateKey, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, BitcoinJS, broadcastServer, miningFeeSats = 1, interestexponent = 22, dustlimit = 547) {
+    super(address, utxoServer, statusMessageFunction, translationFunction, updateBalanceFunction, fetchFunction, interestexponent, dustlimit);
+    this.BitcoinJS = BitcoinJS;
+    this.queue = new Array();
+    this.isSending = false; //Sending from the queue
+    this.transactionInProgress = false; //Transaction sending, not necessarily from queue
+    this.privateKey = privateKey;
+    this.broadcastServer = broadcastServer;
+    if (this.privateKey) {
+      this.keyPair = this.BitcoinJS.ECPair.fromWIF(this.privateKey);
+    }
+    let transactionBuilder = new this.BitcoinJS.TransactionBuilder();
+    this.transactionsPossible = true;//transactionBuilder.enableBitcoinCash;
+    this.miningFeeSats = miningFeeSats;
+
+  }
+
+  setbroadcastServer(broadcastServer) {
+    this.broadcastServer = broadcastServer;
+  }
+
+  // compose script
+  _script(opcode, pushdata) {
+    var s = new Array();
+    if (pushdata) {
+      if (Array.isArray(pushdata)) {
+        // Add op_return
+        s.push(opcode);
+        pushdata.forEach(function (item) {
+          // add push data
+          if (/^0x/i.test(item)) {
+            // ex: 0x6d02
+            s.push(Buffer.from(item.slice(2), "hex"));
+          } else {
+            // ex: "hello"
+            s.push(Buffer.from(item));
           }
-    
-          //if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("1001") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
-          //1001 No UTXOs
-          //Error:258: txn-mempool-conflict
-          //2000, all fetched UTXOs already spend
-          //2001, insuffiencent funds from unspent UTXOs. Add funds
-        
-      }*/
-    TransactionQueue.prototype.selectUTXOs = function () {
-        var utxos = this.getUTXOs();
-        if (utxos.length == 0) {
-            throw new Error(this.getSafeTranslation('insufficientfunds', "1001:Insufficient Funds (No Suitable UTXOs)"));
+        })
+      }
+    }
+    return s;
+  }
+
+  isTransactionInProgress() {
+    if (this.transactionInProgress || this.queue.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /*async processTransaction(transaction, onSuccessFunction){
+    if (!this.transactionsPossible) {
+      return 'Bitcoin Cash Style Transactions Not Possible with this bitcoin library';
+    }
+    let toAddress = '';
+    let toAmount = 0;
+    let changeAddress = null;
+    try {
+      toAmount = transaction.cash.to[0].value;
+      toAddress = transaction.cash.to[0].address;
+    } catch (err) {
+      //usually no recipient, send change to self.
+    }
+    let data = transaction.data;
+    this.queue.push(new TransactionData(toAddress, toAmount, data, changeAddress, onSuccessFunction));
+    await this.sendNextTransaction();
+    return 'Sent';
+  }*/
+
+  async queueTransaction(transaction, onSuccessFunction) {
+    if (!this.transactionsPossible) {
+      return 'Bitcoin Cash Style Transactions Not Possible with this bitcoin library';
+    }
+    let toAddress = '';
+    let toAmount = 0;
+    let changeAddress = null;
+    try {
+      toAmount = transaction.cash.to[0].value;
+      toAddress = transaction.cash.to[0].address;
+    } catch (err) { }
+
+    try {
+      changeAddress = transaction.changeaddress;
+    } catch (err) { }
+
+
+    let data = transaction.data;
+    this.queue.push(new TransactionData(toAddress, toAmount, data, changeAddress, onSuccessFunction));
+    await this.sendNextTransaction();
+    return 'Sent';
+  }
+
+  async sendNextTransaction() {
+
+    if (!this.privateKey) {
+      throw new Error(this.getSafeTranslation('noprivatekey', "1000:No Private Key, Cannot Make Transaction"));
+    }
+
+    /*if(this.utxoPool.length==0){
+      await this.refreshPool();
+    }*/
+
+    //If the queue is already sending
+    if (this.transactionInProgress) {
+      return;
+    } else if (this.queue.length == 0) {
+      //If the queue has run out of transactions
+      return;
+    } else {
+      this.transactionInProgress = true;
+    }
+
+    //let callback = this.serverResponseFunction;
+
+
+
+    for (; ;) {
+      //Send to node
+      let response;
+      let txdata;
+      let utxos;
+      let tx;
+
+      try {
+        //Use the first transaction from the queue. Leave it on the queue until it is successfully sent
+        txdata = this.queue[0];
+
+        //Choose the UTXOs to use
+        utxos = this.selectUTXOs();
+
+        //Make the trx and estimate the fees
+        tx = this.constructTransaction(utxos, 0, txdata);
+        let transactionSize = tx.byteLength();
+        //console.log("Transaction size:" + transactionSize);
+        let fees = Math.round((transactionSize) * this.miningFeeSats); //this.extraSatoshisFactor
+        //Make the trx again, with fees included
+        tx = this.constructTransaction(utxos, fees, txdata);
+        //Add extra satoshis for safety
+        for (let i = 0; i < 10; i++) {
+          let newTransactionSize = tx.byteLength();
+          if (newTransactionSize > transactionSize) {
+            transactionSize = newTransactionSize;
+            fees = Math.round((newTransactionSize) * this.miningFeeSats); //this.extraSatoshisFactor
+            tx = this.constructTransaction(utxos, fees, txdata);
+          } else {
+            break;
+          }
         }
-        return utxos;
-    };
-    TransactionQueue.prototype.constructTransaction = function (utxos, fees, txdata) {
-        var changeAddress = this.theAddress;
-        var scriptArray = this._script(this.OP_RETURN, txdata.data);
-        var arr = new Array();
-        scriptArray.forEach(function (chunk) { arr.push(chunk); });
-        var script2 = this.BitcoinJS.script.compile(arr);
-        //ESTIMATE TRX FEE REQUIRED
-        var changeAmount = 0;
-        //let txnBuilder = new bchlib.TransactionBuilder(bchlib.networks.bitcoincash);
-        //txnBuilder.enableBitcoinCash(true);
-        var transactionBuilder = new this.BitcoinJS.TransactionBuilder();
-        if (transactionBuilder.enableBitcoinCash) { //if enableBitcoinCash is present, assume we want to use it
-            transactionBuilder.enableBitcoinCash(true);
-            this.sighashtouse = this.BCH_SIGHASH_ALL;
+
+        //console.log("Transaction siz2:" + transactionSize);
+        //console.log("fees:" + fees);
+        if (this.fetchFunction) {
+          response = await this.fetchFunction(this.broadcastServer, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ hexes: [tx.toHex()] })
+          });
+        } else {
+          response = await fetch(this.broadcastServer, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ hexes: [tx.toHex()] })
+          });
         }
-        transactionBuilder.maximumFeeRate = 205000;
-        //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
-        if (scriptArray.length > 0) {
-            transactionBuilder.addOutput(script2, 0);
+      } catch (err) {
+        console.log(err);
+      }
+
+      //This is the only success condition
+      if (response && response.ok) {
+        let resulttxid;
+        let resptext;
+        try {
+          resptext = await response.text();
+          resulttxid = this.sane(resptext);
+        } catch (err) {
+          console.log(err);
         }
-        var fundsRemaining = 0;
-        //Calculate sum of tx outputs and add inputs
-        for (var i = 0; i < utxos.length; i++) {
-            var originalAmount = utxos[i].getSatsWithInterest(this.chainheight + 1, this.interestexponent);
-            fundsRemaining = fundsRemaining + originalAmount;
-            // index of vout
-            var vout = utxos[i].vout;
-            // txid of vout
-            var txid = utxos[i].txid;
-            // add input with txid and index of vout
-            transactionBuilder.addInput(txid, vout);
+        if (resulttxid && resulttxid.length == 64) {
+          this.updateStatus(resulttxid);
+          //successful transaction, update the transaction pool
+          this.updateTransactionPool(tx, resulttxid);
+          //remove the transaction from front of queue
+          this.queue.shift();
+          //ready for next transaction
+          this.transactionInProgress = false;
+          //call the transactions callback success function
+          if (txdata.successFunction) {
+            txdata.successFunction(resulttxid);
+          }
+          this.resendWait = 2000;
+          break;
         }
-        var utxoFunds = fundsRemaining;
-        var transactionOutputTotal = 0;
-        //Add recipient
-        if (txdata.to && txdata.toAmount) {
-            if (txdata.toAmount >= this.dustlimit) {
-                fundsRemaining = fundsRemaining - txdata.toAmount;
-                transactionOutputTotal += txdata.toAmount;
-                transactionBuilder.addOutput(txdata.to, txdata.toAmount);
-            }
+        //otherwise failure of some kind
+        this.updateStatus(this.sane(response.ok) + " " + this.sane(response.status) + " " + this.sane(response.statusText) + " " + this.sane(resptext));
+      }
+      //TODO - should look for specific errors here and take appropriate action rather than just refreshing pool and sending again.
+      //Try refreshing the utxo pool
+      this.refreshPool();
+      await this.sleep(this.resendWait);
+      this.resendWait = this.resendWait * 1.5;
+      this.updateStatus(this.queue.length + this.getSafeTranslation('stillqueued', " Transaction(s) Still Queued, Try changing UTXO server on settings page. Retry in (seconds)") + " " + (this.resendWait / 1000));
+      this.sleep(1000);
+      this.updateStatus(this.getSafeTranslation('sendingagain', "Sending Again . . ."));
+    }
+
+    //Send the next transaction after a short pause
+    this.sleep(1000);
+    if (this.queue.length > 0) {
+      this.sendNextTransaction();
+    }
+  }
+  /*
+    //error code info to consider
+        if (errorMessage.startsWith("64")) {
+          //Error:64: 
+          //May mean not enough mining fee was provided or chained trx limit reached 
+        if (errorMessage.startsWith("66")) {
+          if (this.miningFeeMultiplier < this.maxfee) {
+            //Insufficient Priority - not enough transaction fee provided. Let's try increasing fee.
+            this.miningFeeMultiplier = this.miningFeeMultiplier * 1.1;
+            returnObject.updateStatus(this.getSafeTranslation('surgepricing', "Error: Transaction rejected because fee too low. Increasing and retrying. Surge Pricing now ") + Math.round(this.miningFeeMultiplier * 10) / 10);
+            await this.sleep(1000);
+            returnObject.sendNextTransaction();
+            return;
+          }
         }
-        changeAmount = fundsRemaining - fees;
-        if (changeAmount < 0) {
-            throw new Error(this.getSafeTranslation('insufficientfunds', "2001: Insufficient Funds.") + utxoFunds + " " + this.getSafeTranslation('availableamount', "available but required amount is") + " " + (transactionOutputTotal + fees));
-        }
-        var hasChange = false;
-        //Add funds remaining as change if larger than dust
-        if (changeAmount >= this.dustlimit) {
-            transactionBuilder.addOutput(changeAddress, changeAmount);
-            hasChange = true;
-        }
-        //Sign inputs
-        for (var i = 0; i < utxos.length; i++) {
-            var originalAmount = utxos[i].satoshis;
-            // sign w/ HDNode
-            var redeemScript = void 0;
-            //this.sighashtouse=this.BCH_SIGHASH_ALL
-            //this.SIGHASH_ALL
-            transactionBuilder.sign(i, this.keyPair, redeemScript, this.sighashtouse, originalAmount, null);
-            //, originalAmount, null, 0
-        }
-        //transactionBuilder.sign(0, this.keyPair);
-        // build tx
-        var tx = transactionBuilder.build();
-        tx.outs[tx.outs.length - 1].isChange = true;
-        return tx;
-    };
-    TransactionQueue.prototype.updateTransactionPool = function (utxos, txdata, tx) {
-        for (var i = 0; i < utxos.length; i++) {
-            //Remove the utxos from the utxo pool
-            this.removeUTXO(utxos[i].txid, utxos[i].vout);
-        }
-        //Add new utxos.
-        //Note, this only deals with the change amount. If the member has send a different utxo to himself, it won't be added. 
-        for (var i = 0; i < tx.outs.length; i++) {
-            if (tx.outs[i].isChange == true) {
-                this.addUTXO(tx.getId(), i, tx.outs[i].value, this.chainheight + 1);
-            }
-        }
-        //this.updateBalance(chainheight);
-    };
-    TransactionQueue.prototype.sleep = function (time) {
-        return new Promise(function (resolve) { return setTimeout(resolve, time); });
-    };
-    return TransactionQueue;
-}(UTXOPool));
+  
+        //if (errorMessage.startsWith("Network Error") || errorMessage.startsWith("1001") || errorMessage.startsWith("258") || errorMessage.startsWith("200")) { //covers 2000, 2001
+        //1001 No UTXOs
+        //Error:258: txn-mempool-conflict 
+        //2000, all fetched UTXOs already spend
+        //2001, insuffiencent funds from unspent UTXOs. Add funds
+      
+    }*/
+
+  selectUTXOs() {
+    let utxos = this.getUTXOs();
+    if (utxos.length == 0) {
+      throw new Error(this.getSafeTranslation('insufficientfunds', "1001:Insufficient Funds (No Suitable UTXOs)"));
+    }
+    return utxos;
+  }
+
+  constructTransaction(utxos, fees, txdata) {
+
+    let MAXNUMBEROFINPUTS = 100;
+
+    let changeAddress = this.theAddress;
+    if (txdata.changeAddress) {
+      changeAddress = txdata.changeAddress;
+    }
+
+    let scriptArray = this._script(this.OP_RETURN, txdata.data);
+    var arr = new Array();
+    scriptArray.forEach(function (chunk) { arr.push(chunk); });
+    let script2 = this.BitcoinJS.script.compile(arr);
+
+    //ESTIMATE TRX FEE REQUIRED
+    let changeAmount = 0;
+
+    //let txnBuilder = new bchlib.TransactionBuilder(bchlib.networks.bitcoincash);
+    //txnBuilder.enableBitcoinCash(true);
+    let transactionBuilder = new this.BitcoinJS.TransactionBuilder();
+    if (transactionBuilder.enableBitcoinCash) { //if enableBitcoinCash is present, assume we want to use it
+      transactionBuilder.enableBitcoinCash(true);
+      this.sighashtouse = this.BCH_SIGHASH_ALL;
+    }
+
+    transactionBuilder.maximumFeeRate = 205000; //For nostracoin
+
+    //let transactionBuilder = new this.BitcoinJS.bitgo.createTransactionBuilderForNetwork(this.BitcoinJS.networks.bitcoincash);
+    if (scriptArray.length > 0) {
+      transactionBuilder.addOutput(script2, 0);
+    }
+
+
+    let totalUTXOinputs = 0;
+    //Calculate sum of tx outputs and add inputs
+    for (let i = 0; i < (utxos.length > MAXNUMBEROFINPUTS ? MAXNUMBEROFINPUTS : utxos.length); i++) {
+      let originalAmount = utxos[i].getSatsWithInterest(this.chainheight + 1, this.interestexponent);
+      totalUTXOinputs = totalUTXOinputs + originalAmount;
+      // index of vout
+      let vout = utxos[i].vout;
+      // txid of vout
+      let txid = utxos[i].txid;
+      // add input with txid and index of vout
+      transactionBuilder.addInput(txid, vout);
+
+      //9/3/2024 - amalgamation of all utxos is causing confusion for people, especially on their first transaction
+      //huge transaction fees are offputting!
+      //Let's shortcircuit adding utxos if we estimate we have enough funds
+      //this is a temporary measure, and will work badly when tx fees are smaller. Generally should aim to amalgamate utxos over time
+      //approximate cost of each utxo input - 50000000
+      if(totalUTXOinputs>txdata.toAmount+(i+1*50000000)){
+        break;
+      }
+
+    }
+
+    let utxoFunds = totalUTXOinputs;
+    let transactionOutputTotal = 0;
+
+    //Add recipient
+    if (txdata.to && txdata.toAmount) {
+      if (txdata.toAmount >= this.dustlimit) {
+        totalUTXOinputs = totalUTXOinputs - txdata.toAmount;
+        transactionOutputTotal += txdata.toAmount;
+        transactionBuilder.addOutput(txdata.to, txdata.toAmount);
+      }
+    }
+
+    changeAmount = totalUTXOinputs - fees;
+
+    if (changeAmount < 0) {
+      throw new Error(this.getSafeTranslation('insufficientfunds', "2001: Insufficient Funds.") + utxoFunds + " " + this.getSafeTranslation('availableamount', "available but required amount is") + " " + (transactionOutputTotal + fees));
+    }
+
+    //var hasChange = false;
+    //Add funds remaining as change if larger than dust
+    if (changeAmount >= this.dustlimit) {
+      transactionBuilder.addOutput(changeAddress, changeAmount);
+      //hasChange = true;
+    }
+
+    //Sign inputs
+    for (let i = 0; i < (transactionBuilder.__INPUTS.length > MAXNUMBEROFINPUTS ? MAXNUMBEROFINPUTS : transactionBuilder.__INPUTS.length); i++) {
+      let originalAmount = utxos[i].satoshis;
+      // sign w/ HDNode
+      let redeemScript;
+      //this.sighashtouse=this.BCH_SIGHASH_ALL
+      //this.SIGHASH_ALL
+      transactionBuilder.sign(i, this.keyPair, redeemScript, this.sighashtouse, originalAmount, null);
+      //, originalAmount, null, 0
+    }
+    //transactionBuilder.sign(0, this.keyPair);
+
+    // build tx
+    let tx = transactionBuilder.build();
+    tx.outs[tx.outs.length - 1].isChange = true;
+    return tx;
+
+  }
+
+
+  updateTransactionPool(tx, resulttxid) {
+    for (let i = 0; i < tx.ins.length; i++) {
+      //Remove the utxos from the utxo pool
+      this.removeUTXO((tx.ins[i].hash.reverse().toString("hex")), tx.ins[i].index);
+    }
+
+    //Add new utxos.
+    //Note, this only deals with the change amount. If the member has send a different utxo to himself, it won't be added. 
+    for (let i = 0; i < tx.outs.length; i++) {
+      if (tx.outs[i].isChange == true) {
+        this.addUTXO(resulttxid, i, tx.outs[i].value, this.chainheight + 1);
+      }
+    }
+    //this.updateBalance(chainheight);
+  }
+
+  sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+}
+
 if (typeof module !== 'undefined') {
-    module.exports = TransactionQueue;
+  module.exports = TransactionQueue;
 }
 "use strict";
 
@@ -8567,7 +9493,7 @@ function onMapClick(e) {
 function loadLocationListFromServerAndPlaceOnMap(event) {
 
     var mapBounds = map.getBounds();
-    var theURL = dropdowns.contentserver + '?action=map&address=' + pubkeyhex.slice(0,16) + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
+    var theURL = dropdowns.contentserver + '?action=map&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + "&north=" + mapBounds.getNorthEast().lat + "&east=" + mapBounds.getNorthEast().lng + "&south=" + mapBounds.getSouthWest().lat + "&west=" + mapBounds.getSouthWest().lng;
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -8590,6 +9516,674 @@ function loadLocationListFromServerAndPlaceOnMap(event) {
 
 "use strict";
 
+function getAndPopulateTrustGraphPair(source, target) {
+
+    var page = 'trustgraphdetails';
+    //First clear old graph
+    document.getElementById('trustgraph').innerHTML = trustgraphHTML;
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+
+    let theURL = dropdowns.txbroadcastserver + 'trustgraph?source=' + source + '&qaddress=' + target;
+    getJSON(theURL).then(async function (data) {
+
+        let getUsers = '';
+        for (let i = 0; i < data.length; i++) {
+            if (data[i][2])
+                getUsers = getUsers + ',' + data[i][2];
+            if (data[i][6])
+                getUsers = getUsers + ',' + data[i][6];
+            if (data[i][10])
+                getUsers = getUsers + ',' + data[i][10];
+            if (data[i][14])
+                getUsers = getUsers + ',' + data[i][14]; //three levels deep (x->1->2->t)    
+            if (data[i][18])
+                getUsers = getUsers + ',' + data[i][18]; //four levels deep (x->1->2->3->t)    
+        }
+
+        let theURL = dropdowns.contentserver + '?action=getusers&list=' + getUsers;
+
+        let weighttotal = 0;
+        let scoretotal = 0;
+        for (let i = 0; i < data.length; i++) {
+            weighttotal += data[i][0];
+            scoretotal += data[i][0] * data[i][1];
+        }
+        let score = (scoretotal / weighttotal) * 2 + 3;
+
+
+
+
+
+        getJSON(theURL).then(async function (dataUsers) {
+            //data contains the users
+            //display the users, the edges and links
+            
+            if(!data[0]){
+                document.getElementById(page).innerHTML = getTrustPairHeading()+'No trust paths found. Try choosing more closely connected people.';
+                return;
+            }
+
+            let targetid = data[0][data[0].length - 1];
+            let sourceid = data[0][2];
+
+            let ratee='';
+            let rater='';
+            for (var i = 0; i < dataUsers.length; i++) {
+                if (dataUsers[i].address == targetid) {
+                    ratee='@' + dataUsers[i].pagingid;
+                    setPageTitleRaw(ratee);
+                }
+                if (dataUsers[i].address == sourceid) {
+                    rater='@' + dataUsers[i].pagingid;
+                }
+                contentsHTML = getTrustPairHeading() + getTrustRatingTableHTML('', score.toFixed(1), rater, ratee,'');
+                document.getElementById(page).innerHTML = contentsHTML;
+            }
+
+            if (!cytoscape) { await loadScript("js/lib/cytoscape3.19.patched.min.js"); }
+
+            var cy = cytoscape({
+                container: document.getElementById('cy'),
+
+                boxSelectionEnabled: false,
+                autounselectify: true,
+
+
+                style: cytoscape.stylesheet()
+                    .selector('node')
+                    .css({
+                        'label': 'data(label)',
+                        'height': 80,
+                        'width': 80,
+                        'background-fit': 'cover',
+                        'border-color': '#000',
+                        'border-width': 3,
+                        'border-opacity': 0.75,
+                        'text-margin-y': 5,
+                        'color': '#999',
+                    })
+                    .selector('.bottom-center')
+                    .css({
+                        "text-valign": "bottom",
+                        "text-halign": "center"
+                    })
+                    .selector('.eater')
+                    .css({
+                        'border-width': 9
+                    })
+                    .selector('edge')
+                    .css({
+                        'curve-style': 'bezier',
+                        'width': 6,
+                        'target-arrow-shape': 'triangle',
+                        'line-color': '#ffaaaa',
+                        'target-arrow-color': '#ffaaaa'
+                    })
+            }); // cy init
+
+            //var eles = cy.add([{ group: 'nodes', data: { id: data[0].target, label: data[0].targetname, textnote: data[0].targetname }, classes: 'bottom-center ', position: { x: 0, y: 0 } },]);
+            //cy.add(eles);
+            //cy.style().selector('#' + data[0].member).css({ 'background-image': getPicURL(data[0].memberpicurl, profilepicbase, data[0].member) });
+            //cy.style().selector('#' + data[0].target).css({ 'background-image': getPicURL(data[0].targetpicurl, profilepicbase, data[0].target) });
+
+            
+
+            for (var i = 0; i < dataUsers.length; i++) {
+                
+                let directratingtext;
+                for (let j = 0; j < data.length; j++) {
+                    if (data[j][6]==dataUsers[i].address){
+                        ratingcomment=data[j][4];
+                        ratingscore=(data[j][3]*2+3).toFixed(1);
+                        directratingtext=ratingcomment+' '+ratingscore+'/5.0';
+                    }
+   
+                }
+
+                var eles = cy.add([
+                    //users
+                    { group: 'nodes', data: { label: dataUsers[i].name, id: dataUsers[i].address, textnote: dataUsers[i].profile, textnote2: directratingtext }, classes: 'bottom-center' },
+                    //{ group: 'edges', data: { id: data[i].inter +'line'+ data[i].target, source: data[i].inter, target: data[i].target, textnote: textNoteEdge } }
+                    //var eles = cy.add([{ group: 'nodes', data: { id: data[0].target, label: data[0].targetname, textnote: data[0].targetname }, classes: 'bottom-center ', position: { x: 0, y: 0 } },]);
+
+
+                ]);
+                cy.add(eles);
+                //background images
+                cy.style().selector('#' + dataUsers[i].address).css({ 'background-image': getPicURL(dataUsers[i].picurl, profilepicbase, dataUsers[i].address) });
+            }
+
+            for (var i = 0; i < data.length; i++) {
+                for (var j = data[i].length < 9 ? 2 : 6; data[i][j + 4]; j = j + 4) {
+                    //edges
+                    theRatingOutOfFive=' ('+((data[i][j + 1] * 2) + 3).toFixed(1)+'/5.0)';
+                    var eles = cy.add([{ group: 'edges', data: { id: data[i][j] + 'line' + data[i][j + 4], source: data[i][j], target: data[i][j + 4], textnote: data[i][j + 2]+theRatingOutOfFive, txid: data[i][j + 3] } }]);
+                    cy.add(eles);
+                    //color of edges
+                    let theRatingAbs = Math.abs(data[i][j + 1] * 2);
+                    let linecolor = 'rgb(' + (214 - 98 * theRatingAbs) + ',' + (244 - 60 * theRatingAbs) + ',' + (255 - 35 * theRatingAbs) + ')';
+                    if (data[i][j + 1] < 0) { linecolor = 'rgb(242,' + (228 - 92 * theRatingAbs) + ',' + (228 - 97 * theRatingAbs) + ')'; }
+                    let theLine = cy.style().selector('#' + data[i][j] + 'line' + data[i][j + 4]);
+                    theLine.css({ 'width': (4 + theRatingAbs * 8), 'line-color': linecolor, 'target-arrow-color': linecolor });
+                }
+
+                //color of halos
+                let theRatingAbs = Math.abs(data[i][3] * 2);
+                linecolor = 'rgb(' + (214 - 98 * theRatingAbs) + ',' + (244 - 60 * theRatingAbs) + ',' + (255 - 35 * theRatingAbs) + ')';
+                //linecolor = 'rgb(' + (214 - 98 * theRatingAbs) + ',' + (255) + ',' + (155 - 35 * theRatingAbs) + ')';
+                if (data[i][3] < 0) { linecolor = 'rgb(242,' + (228 - 92 * theRatingAbs) + ',' + (228 - 97 * theRatingAbs) + ')'; }
+                cy.style().selector('#' + data[i][6]).css({ 'border-width': (4 + theRatingAbs * 4), 'border-color': linecolor });
+            }
+
+
+            let options = {
+                name: 'cose',
+
+                // Called on `layoutready`
+                ready: function () { },
+
+                // Called on `layoutstop`
+                stop: function () { },
+
+                // Whether to animate while running the layout
+                // true : Animate continuously as the layout is running
+                // false : Just show the end result
+                // 'end' : Animate with the end result, from the initial positions to the end positions
+                animate: true,
+
+                // Easing of the animation for animate:'end'
+                animationEasing: undefined,
+
+                // The duration of the animation for animate:'end'
+                animationDuration: undefined,
+
+                // A function that determines whether the node should be animated
+                // All nodes animated by default on animate enabled
+                // Non-animated nodes are positioned immediately when the layout starts
+                animateFilter: function (node, i) { return true; },
+
+
+                // The layout animates only after this many milliseconds for animate:true
+                // (prevents flashing on fast runs)
+                animationThreshold: 250,
+
+                // Number of iterations between consecutive screen positions update
+                refresh: 20,
+
+                // Whether to fit the network view after when done
+                fit: true,
+
+                // Padding on fit
+                padding: 30,
+
+                // Constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+                boundingBox: undefined,
+
+                // Excludes the label when calculating node bounding boxes for the layout algorithm
+                nodeDimensionsIncludeLabels: false,
+
+                // Randomize the initial positions of the nodes (true) or use existing positions (false)
+                randomize: false,
+
+                // Extra spacing between components in non-compound graphs
+                componentSpacing: 40,
+
+                // Node repulsion (non overlapping) multiplier
+                nodeRepulsion: function (node) { return 2048; },
+
+                // Node repulsion (overlapping) multiplier
+                nodeOverlap: 4,
+
+                // Ideal edge (non nested) length
+                idealEdgeLength: function (edge) { return 64; },
+
+                // Divisor to compute edge forces
+                edgeElasticity: function (edge) { return 64; },
+
+                // Nesting factor (multiplier) to compute ideal edge length for nested edges
+                nestingFactor: 1.2,
+
+                // Gravity force (constant)
+                gravity: 1,
+
+                // Maximum number of iterations to perform
+                numIter: 1000,
+
+                // Initial temperature (maximum node displacement)
+                initialTemp: 1000,
+
+                // Cooling factor (how the temperature is reduced between consecutive iterations
+                coolingFactor: 0.99,
+
+                // Lower temperature threshold (below this point the layout will end)
+                minTemp: 1.0
+            };
+
+
+            cy.userZoomingEnabled(false);
+
+
+
+            let layout = cy.layout(options);
+            layout.run();
+
+            
+            cy.center();
+            cy.resize();
+            cy.fit();
+
+            cy.on('tap', 'node', function () {
+                window.location.href = `#trustgraphpair?source=${source}&qaddress=` + this.data('id');
+            });
+
+            cy.on('mouseover', 'node', function (event) {
+                document.getElementById('cynote').textContent = this.data('textnote');
+                document.getElementById('cynote2').textContent = this.data('textnote2');
+                
+            });
+
+            cy.on('mouseover', 'edge', function (event) {
+                document.getElementById('cynote').textContent = this.data('textnote');
+                document.getElementById('cynote2').textContent = '';
+            });
+
+            cy.on('tap', 'edge', function () {
+                if (this.data('textnote'))
+                    window.location.href = "#thread?root=" + this.data('txid');
+            });
+
+        })
+
+    })
+
+}
+
+function getAndPopulateTrustGraph2(member, target) {
+
+    var page = 'trustgraphdetails';
+    //First clear old graph
+    document.getElementById('trustgraph').innerHTML = trustgraphHTML;
+    document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
+
+
+    let theURL = dropdowns.txbroadcastserver + 'trustgraph?address=' + member + '&qaddress=' + target;
+    getJSON(theURL).then(async function (data) {
+
+        let getUsers = '';
+        for (let i = 0; i < data.length; i++) {
+            if (data[i][2])
+                getUsers = getUsers + ',' + data[i][2];
+            if (data[i][6])
+                getUsers = getUsers + ',' + data[i][6];
+            if (data[i][10])
+                getUsers = getUsers + ',' + data[i][10];
+            if (data[i][14])
+                getUsers = getUsers + ',' + data[i][14]; //three levels deep (x->1->2->t)    
+            if (data[i][18])
+                getUsers = getUsers + ',' + data[i][18]; //four levels deep (x->1->2->3->t)    
+        }
+
+        let theURL = dropdowns.contentserver + '?action=getusers&list=' + getUsers;
+
+        let weighttotal = 0;
+        let scoretotal = 0;
+        for (let i = 0; i < data.length; i++) {
+            weighttotal += data[i][0];
+            scoretotal += data[i][0] * data[i][1];
+        }
+        let score = (scoretotal / weighttotal) * 2 + 3;
+
+
+
+
+
+        getJSON(theURL).then(async function (dataUsers) {
+            //data contains the users
+            //display the users, the edges and links
+            
+            if(!data[0]){
+                document.getElementById(page).innerHTML = 'No trust paths found. Try rating some more users that you trust.';
+                return;
+            }
+
+            let targetid = data[0][data[0].length - 1];
+            let sourceid = data[0][2];
+
+            let ratee='';
+            let rater='';
+            for (var i = 0; i < dataUsers.length; i++) {
+                if (dataUsers[i].address == targetid) {
+                    ratee='@' + dataUsers[i].pagingid;
+                    setPageTitleRaw(ratee);
+                }
+                if (dataUsers[i].address == sourceid) {
+                    rater='@' + dataUsers[i].pagingid;
+                }
+                contentsHTML = getTrustRatingTableHTML('', score.toFixed(1), rater, ratee);
+                document.getElementById(page).innerHTML = contentsHTML;
+            }
+
+            if (!cytoscape) { await loadScript("js/lib/cytoscape3.19.patched.min.js"); }
+
+            var cy = cytoscape({
+                container: document.getElementById('cy'),
+
+                boxSelectionEnabled: false,
+                autounselectify: true,
+
+
+                style: cytoscape.stylesheet()
+                    .selector('node')
+                    .css({
+                        'label': 'data(label)',
+                        'height': 80,
+                        'width': 80,
+                        'background-fit': 'cover',
+                        'border-color': '#000',
+                        'border-width': 3,
+                        'border-opacity': 0.75,
+                        'text-margin-y': 5,
+                        'color': '#999',
+                    })
+                    .selector('.bottom-center')
+                    .css({
+                        "text-valign": "bottom",
+                        "text-halign": "center"
+                    })
+                    .selector('.eater')
+                    .css({
+                        'border-width': 9
+                    })
+                    .selector('edge')
+                    .css({
+                        'curve-style': 'bezier',
+                        'width': 6,
+                        'target-arrow-shape': 'triangle',
+                        'line-color': '#ffaaaa',
+                        'target-arrow-color': '#ffaaaa'
+                    })
+            }); // cy init
+
+            //var eles = cy.add([{ group: 'nodes', data: { id: data[0].target, label: data[0].targetname, textnote: data[0].targetname }, classes: 'bottom-center ', position: { x: 0, y: 0 } },]);
+            //cy.add(eles);
+            //cy.style().selector('#' + data[0].member).css({ 'background-image': getPicURL(data[0].memberpicurl, profilepicbase, data[0].member) });
+            //cy.style().selector('#' + data[0].target).css({ 'background-image': getPicURL(data[0].targetpicurl, profilepicbase, data[0].target) });
+
+            
+
+            for (var i = 0; i < dataUsers.length; i++) {
+                
+                let directratingtext;
+                for (let j = 0; j < data.length; j++) {
+                    if (data[j][6]==dataUsers[i].address){
+                        ratingcomment=data[j][4];
+                        ratingscore=(data[j][3]*2+3).toFixed(1);
+                        directratingtext=ratingcomment+' '+ratingscore+'/5.0';
+                    }
+   
+                }
+
+                var eles = cy.add([
+                    //users
+                    { group: 'nodes', data: { label: dataUsers[i].name, id: dataUsers[i].address, textnote: dataUsers[i].profile, textnote2: directratingtext }, classes: 'bottom-center' },
+                    //{ group: 'edges', data: { id: data[i].inter +'line'+ data[i].target, source: data[i].inter, target: data[i].target, textnote: textNoteEdge } }
+                    //var eles = cy.add([{ group: 'nodes', data: { id: data[0].target, label: data[0].targetname, textnote: data[0].targetname }, classes: 'bottom-center ', position: { x: 0, y: 0 } },]);
+
+
+                ]);
+                cy.add(eles);
+                //background images
+                cy.style().selector('#' + dataUsers[i].address).css({ 'background-image': getPicURL(dataUsers[i].picurl, profilepicbase, dataUsers[i].address) });
+            }
+
+            for (var i = 0; i < data.length; i++) {
+                for (var j = data[i].length < 9 ? 2 : 6; data[i][j + 4]; j = j + 4) {
+                    //edges
+                    theRatingOutOfFive=' ('+((data[i][j + 1] * 2) + 3).toFixed(1)+'/5.0)';
+                    var eles = cy.add([{ group: 'edges', data: { id: data[i][j] + 'line' + data[i][j + 4], source: data[i][j], target: data[i][j + 4], textnote: data[i][j + 2]+theRatingOutOfFive, txid: data[i][j + 3] } }]);
+                    cy.add(eles);
+                    //color of edges
+                    let theRatingAbs = Math.abs(data[i][j + 1] * 2);
+                    let linecolor = 'rgb(' + (214 - 98 * theRatingAbs) + ',' + (244 - 60 * theRatingAbs) + ',' + (255 - 35 * theRatingAbs) + ')';
+                    if (data[i][j + 1] < 0) { linecolor = 'rgb(242,' + (228 - 92 * theRatingAbs) + ',' + (228 - 97 * theRatingAbs) + ')'; }
+                    let theLine = cy.style().selector('#' + data[i][j] + 'line' + data[i][j + 4]);
+                    theLine.css({ 'width': (4 + theRatingAbs * 8), 'line-color': linecolor, 'target-arrow-color': linecolor });
+                }
+
+                //color of halos
+                let theRatingAbs = Math.abs(data[i][3] * 2);
+                linecolor = 'rgb(' + (214 - 98 * theRatingAbs) + ',' + (244 - 60 * theRatingAbs) + ',' + (255 - 35 * theRatingAbs) + ')';
+                //linecolor = 'rgb(' + (214 - 98 * theRatingAbs) + ',' + (255) + ',' + (155 - 35 * theRatingAbs) + ')';
+                if (data[i][3] < 0) { linecolor = 'rgb(242,' + (228 - 92 * theRatingAbs) + ',' + (228 - 97 * theRatingAbs) + ')'; }
+                cy.style().selector('#' + data[i][6]).css({ 'border-width': (4 + theRatingAbs * 4), 'border-color': linecolor });
+            }
+
+
+            let options = {
+                name: 'cose',
+
+                // Called on `layoutready`
+                ready: function () { },
+
+                // Called on `layoutstop`
+                stop: function () { },
+
+                // Whether to animate while running the layout
+                // true : Animate continuously as the layout is running
+                // false : Just show the end result
+                // 'end' : Animate with the end result, from the initial positions to the end positions
+                animate: true,
+
+                // Easing of the animation for animate:'end'
+                animationEasing: undefined,
+
+                // The duration of the animation for animate:'end'
+                animationDuration: undefined,
+
+                // A function that determines whether the node should be animated
+                // All nodes animated by default on animate enabled
+                // Non-animated nodes are positioned immediately when the layout starts
+                animateFilter: function (node, i) { return true; },
+
+
+                // The layout animates only after this many milliseconds for animate:true
+                // (prevents flashing on fast runs)
+                animationThreshold: 250,
+
+                // Number of iterations between consecutive screen positions update
+                refresh: 20,
+
+                // Whether to fit the network view after when done
+                fit: true,
+
+                // Padding on fit
+                padding: 30,
+
+                // Constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+                boundingBox: undefined,
+
+                // Excludes the label when calculating node bounding boxes for the layout algorithm
+                nodeDimensionsIncludeLabels: false,
+
+                // Randomize the initial positions of the nodes (true) or use existing positions (false)
+                randomize: false,
+
+                // Extra spacing between components in non-compound graphs
+                componentSpacing: 40,
+
+                // Node repulsion (non overlapping) multiplier
+                nodeRepulsion: function (node) { return 2048; },
+
+                // Node repulsion (overlapping) multiplier
+                nodeOverlap: 4,
+
+                // Ideal edge (non nested) length
+                idealEdgeLength: function (edge) { return 64; },
+
+                // Divisor to compute edge forces
+                edgeElasticity: function (edge) { return 64; },
+
+                // Nesting factor (multiplier) to compute ideal edge length for nested edges
+                nestingFactor: 1.2,
+
+                // Gravity force (constant)
+                gravity: 1,
+
+                // Maximum number of iterations to perform
+                numIter: 1000,
+
+                // Initial temperature (maximum node displacement)
+                initialTemp: 1000,
+
+                // Cooling factor (how the temperature is reduced between consecutive iterations
+                coolingFactor: 0.99,
+
+                // Lower temperature threshold (below this point the layout will end)
+                minTemp: 1.0
+            };
+
+
+            cy.userZoomingEnabled(false);
+
+
+
+            let layout = cy.layout(options);
+            layout.run();
+
+            /*var nodeToSelect = cy.getElementById(data[0][2]);
+            nodeToSelect.position({ x: 335, y: 100 });
+            let nodeToSelect = cy.getElementById(data[0][data[0].length-1]);
+            nodeToSelect.position({ x: 0, y: 0 });*/
+
+
+            /*
+            //second layout run
+            options = {
+                name: 'cose',
+              
+                // Called on `layoutready`
+                ready: function(){},
+              
+                // Called on `layoutstop`
+                stop: function(){},
+              
+                // Whether to animate while running the layout
+                // true : Animate continuously as the layout is running
+                // false : Just show the end result
+                // 'end' : Animate with the end result, from the initial positions to the end positions
+                animate: true,
+              
+                // Easing of the animation for animate:'end'
+                animationEasing: undefined,
+              
+                // The duration of the animation for animate:'end'
+                animationDuration: undefined,
+              
+                // A function that determines whether the node should be animated
+                // All nodes animated by default on animate enabled
+                // Non-animated nodes are positioned immediately when the layout starts
+                animateFilter: function ( node, i ){ return true; },
+              
+              
+                // The layout animates only after this many milliseconds for animate:true
+                // (prevents flashing on fast runs)
+                animationThreshold: 250,
+              
+                // Number of iterations between consecutive screen positions update
+                refresh: 20,
+              
+                // Whether to fit the network view after when done
+                fit: true,
+              
+                // Padding on fit
+                padding: 30,
+              
+                // Constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+                boundingBox: undefined,
+              
+                // Excludes the label when calculating node bounding boxes for the layout algorithm
+                nodeDimensionsIncludeLabels: false,
+              
+                // Randomize the initial positions of the nodes (true) or use existing positions (false)
+                randomize: false,
+              
+                // Extra spacing between components in non-compound graphs
+                componentSpacing: 40,
+              
+                // Node repulsion (non overlapping) multiplier
+                nodeRepulsion: function( node ){ return 2048; },
+              
+                // Node repulsion (overlapping) multiplier
+                nodeOverlap: 4,
+              
+                // Ideal edge (non nested) length
+                idealEdgeLength: function( edge ){ return 32; },
+              
+                // Divisor to compute edge forces
+                edgeElasticity: function( edge ){ return 32; },
+              
+                // Nesting factor (multiplier) to compute ideal edge length for nested edges
+                nestingFactor: 1.2,
+              
+                // Gravity force (constant)
+                gravity: 1,
+              
+                // Maximum number of iterations to perform
+                numIter: 1000,
+              
+                // Initial temperature (maximum node displacement)
+                initialTemp: 1000,
+              
+                // Cooling factor (how the temperature is reduced between consecutive iterations
+                coolingFactor: 0.99,
+              
+                // Lower temperature threshold (below this point the layout will end)
+                minTemp: 1.0
+              };
+
+            layout = cy.layout(options);
+            layout.run();
+*/
+            cy.center();
+            cy.resize();
+            cy.fit();
+
+            /*
+            cy.on('tap', 'node', function () {
+                if (this.data('membertxid')) {
+                    window.location.href = "#thread?root=" + this.data('membertxid');
+                }
+                //window.location.href = "#rep?qaddress=" + this.data('id');
+                //must add txid of rating to db first before can enable this
+            });*/
+
+            cy.on('tap', 'node', function () {
+                window.location.href = "#rep?qaddress=" + this.data('id');
+            });
+
+            cy.on('mouseover', 'node', function (event) {
+                document.getElementById('cynote').textContent = this.data('textnote');
+                document.getElementById('cynote2').textContent = this.data('textnote2');
+                
+            });
+
+            cy.on('mouseover', 'edge', function (event) {
+                document.getElementById('cynote').textContent = this.data('textnote');
+                document.getElementById('cynote2').textContent = '';
+            });
+
+            cy.on('tap', 'edge', function () {
+                if (this.data('textnote'))
+                    window.location.href = "#thread?root=" + this.data('txid');
+            });
+
+        })
+
+    })
+
+}
+
 function getAndPopulateTrustGraph(member, target) {
 
     var page = 'trustgraphdetails';
@@ -8601,7 +10195,7 @@ function getAndPopulateTrustGraph(member, target) {
     let theURL = dropdowns.contentserver + '?action=trustgraph&address=' + member + '&qaddress=' + target;
     getJSON(theURL).then(async function (data) {
 
-        if(data[0]){
+        if (data[0]) {
             setPageTitleRaw("@" + data[0].targetpagingid);
         } else {
             document.getElementById('trustgraphdetails').innerHTML = "No information on this right now.";
@@ -8653,7 +10247,8 @@ function getAndPopulateTrustGraph(member, target) {
             overallRating = 0;
         }
 
-        contentsHTML = getTrustRatingTableHTML(contentsHTML, overallRating.toFixed(1));
+        let warning=(pubkeyhex? "":"*You are not logged it, the trust graph is based on the ratings of @arjuna.");
+        contentsHTML = getTrustRatingTableHTML(contentsHTML, overallRating.toFixed(1),warning);
 
         document.getElementById(page).innerHTML = contentsHTML;
 
@@ -8730,7 +10325,7 @@ function getAndPopulateTrustGraph(member, target) {
 
                 { group: 'nodes', data: { label: data[i].intername, id: data[i].inter, textnote: textNoteNode }, classes: 'bottom-center', position: { x: x, y: y } },
                 /*{ group: 'edges', data: { id: data[i].member+data[i].inter, source: data[i].member, target: data[i].inter }, classes: edgecolorsize1 },*/
-                { group: 'edges', data: { id: data[i].inter + data[i].target, source: data[i].inter, target: data[i].target, textnote: textNoteEdge } }
+                { group: 'edges', data: { id: data[i].inter + 'line' + data[i].target, source: data[i].inter, target: data[i].target, textnote: textNoteEdge } }
 
             ]);
             cy.add(eles);
@@ -8740,7 +10335,8 @@ function getAndPopulateTrustGraph(member, target) {
             let theRatingAbs = Math.abs(theRating2 - 3);
             let linecolor = 'rgb(' + (214 - 98 * theRatingAbs) + ',' + (244 - 60 * theRatingAbs) + ',' + (255 - 35 * theRatingAbs) + ')';
             if (theRating2 < 3) { linecolor = 'rgb(242,' + (228 - 92 * theRatingAbs) + ',' + (228 - 97 * theRatingAbs) + ')'; }
-            cy.style().selector('#' + data[i].inter + data[i].target).css({ 'width': (4 + theRatingAbs * 8), 'line-color': linecolor, 'target-arrow-color': linecolor });
+            let theLine = cy.style().selector('#' + data[i].inter + 'line' + data[i].target);
+            theLine.css({ 'width': (4 + theRatingAbs * 8), 'line-color': linecolor, 'target-arrow-color': linecolor });
 
             theRatingAbs = Math.abs(theRating - 3);
             linecolor = 'rgb(' + (214 - 98 * theRatingAbs) + ',' + (244 - 60 * theRatingAbs) + ',' + (255 - 35 * theRatingAbs) + ')';
@@ -8759,7 +10355,7 @@ function getAndPopulateTrustGraph(member, target) {
         cy.fit();
 
         cy.on('tap', 'node', function () {
-            if(this.data('membertxid')){
+            if (this.data('membertxid')) {
                 window.location.href = "#thread?root=" + this.data('membertxid');
             }
             //window.location.href = "#rep?qaddress=" + this.data('id');
@@ -8849,7 +10445,7 @@ function getAndPopulateBesties(target) {
     document.getElementById('besties').innerHTML = document.getElementById("loading").innerHTML;
 
 
-    let theURL = dropdowns.contentserver + '?action=support&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + target;
+    let theURL = dropdowns.contentserver + '?action=support&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '') + '&qaddress=' + target;
     getJSON(theURL).then(async function (data) {
 
         if (data[0]) {
@@ -9037,15 +10633,11 @@ function getAndPopulateBesties(target) {
 
 var pubkey = ""; //Public Key (Legacy)
 var mnemonic = ""; //Mnemonic BIP39
-//var nostrPrivKeyHex = "";
-var nostrPubKeyHex = "";
-
-
 var privkey = ""; //Private Key
 var privkeyhex = "";
+var nostracoinprivkey = null;
 var pubkeyhexsigned = ""; //Public Key, full hex
 var pubkeyhex = ""; //Public Key, minus sign
-//var pubkeyhexsign = ""; //Public Key, sign, sometimes empty
 var bitcloutaddress = ""; //Bitclout address
 
 let tq = null;
@@ -9143,27 +10735,14 @@ async function init() {
         document.getElementById('developmentversion').style.display = 'block';
         profilepicbase = `${pathpermalinks}/img/profilepics/`;
     }
-    
-    //var loginmnemonic = localStorageGet(localStorageSafe, "mnemonic");
-    //var loginprivkey = localStorageGet(localStorageSafe, "privkey");
-    //var loginpubhexkey = localStorageGet(localStorageSafe, "pubhexkeyfull");
-
-
-    //getBitCloutLoginFromLocalStorage();
 
     document.getElementById('loginbox').innerHTML = loginboxHTML;
 
-    trylogin();
-    /*if (loginmnemonic) {
-        trylogin(loginmnemonic);
-    } else if (loginprivkey) {
-        trylogin(loginprivkey);
-    } else if (loginpubhexkey) {
-        trylogin(loginpubhexkey);
-    }*/
+    await trylogin();
+    
 
-    displayContentBasedOnURLParameters();
-    loadBigLibs();
+    //displayContentBasedOnURLParameters();
+    //loadBigLibs();
 }
 
 //This method doesn't appear to be in use, also doesn't seem to work
@@ -9195,15 +10774,15 @@ async function nos2xlogin() {
         console.log(error);
     }
     if (pubKeyToUse) {
-        trylogin(pubKeyToUse);
+        trylogin(pubKeyToUse, '#mypeople');
     } else {
         alert('nos2x public key not provided.');
     }
 }
 
-function trylogin(loginkey, nextpage) {
+async function trylogin(loginkey, nextpage) {
     try {
-        login(loginkey);
+        await login(loginkey);
         displayNotificationCount();
     } catch (error) {
         document.getElementById('loginerror').innerHTML = error.message;
@@ -9213,19 +10792,28 @@ function trylogin(loginkey, nextpage) {
         return;
     }
 
-    //Show message if in read only mode
-    if (!privkey && !window.nostr) {
-        document.getElementById('readonlyversion').style.display = 'block';
-    }
+    showReadOnlyVersion();
+    //may take a while for window.nostr to show up so, we'll run again after a few seconds
+    setTimeout(showReadOnlyVersion,3000);
 
     if (newlygeneratedaccount) {
         displayContentBasedOnURLParameters('#settings');
     } else {
         displayContentBasedOnURLParameters(nextpage);
     }
+    loadBigLibs();
     //make sure these get loaded
     setTimeout(loadBigLibs, 5000);
 
+}
+
+function showReadOnlyVersion(){
+    //Show message if in read only mode
+    if (!privkey && !window.nostr) {
+        document.getElementById('readonlyversion').style.display = 'block';
+    } else {
+        document.getElementById('readonlyversion').style.display = 'none';
+    }
 }
 
 var loadBigLibsStarted = false;
@@ -9253,17 +10841,17 @@ async function login(loginkey) { //login should throw error if not successful
     mnemonic = localStorageGet(localStorageSafe, "mnemonic");
     privkey = localStorageGet(localStorageSafe, "privkey");
     privkeyhex = localStorageGet(localStorageSafe, "privkeyhex");
+    nostracoinprivkey = localStorageGet(localStorageSafe, "nostracoinprivkey");
     pubkeyhexsigned = localStorageGet(localStorageSafe, "pubkeyhexsigned");
     pubkeyhex = localStorageGet(localStorageSafe, "pubkeyhex");
     //bitCloutUser = localStorageGet(localStorageSafe, "bitcloutuser");
-    //nostrPrivKeyHex = localStorageGet(localStorageSafe, "nostrprivkeyhex");
-    //nostrPubKeyHex = localStorageGet(localStorageSafe, "nostrpubkeyhex");
 
-        
-    
+
+
+
 
     if (!pubkeyhexsigned) { //no info for this user, full login
-        if(!loginkey)return; //no login key
+        if (!loginkey) return; //no login key
         loginkey = loginkey.trim();
 
         //slow login.
@@ -9301,6 +10889,8 @@ async function login(loginkey) { //login should throw error if not successful
             let seed = bip39.mnemonicToSeedSync(loginkeylowercase);
             let root = window.bitcoinjs.bip32.fromSeed(seed);
             let child1 = root.derivePath("44'/0'/0'/0/0");
+            //let child1 = root.derivePath("44'/60'/0'/0/0"); - eth derivation, unsure why this was added, maybe as a test
+            
             let newloginkey = child1.toWIF();
             localStorageSet(localStorageSafe, "mnemonic", loginkeylowercase);
             mnemonic = loginkeylowercase;
@@ -9310,17 +10900,22 @@ async function login(loginkey) { //login should throw error if not successful
         //Login will now either be a wif, or a public key, or a user name, or an error
 
         try {
-            if (loginkey.startsWith("L") || loginkey.startsWith("K")) {
+            if (loginkey.startsWith("L") || loginkey.startsWith("K")) { //compressed public keys
+                //|| loginkey.startsWith("5") - uncompressed keys difficult to handle
                 privkey = loginkey;
                 document.getElementById('loginkey').value = "";
             } else if (loginkey.startsWith("npub")) {
                 //Nostr bech32 encoded public key
-                if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
-                nostrPubKeyHex = window.bech32converter('npub').toHex(loginkey).slice(2).toLowerCase();
-                //Generate a new seed phrase
-                if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
-                loginkeylowercase = bip39.generateMnemonic();
+                let temphex = await npubToPubKey(loginkey);
+                pubkeyhexsigned = getYSign(temphex) + temphex;
+            } else if(loginkey.length==64){
+                const hexPattern = /^[0-9a-fA-F]+$/;
+                // Test the input string against the pattern
+                if(hexPattern.test(loginkey)){
+                    pubkeyhexsigned = '02'+loginkey;
+                }
             }
+
             // other wise try logging in with other types of public keys, bitclout, memo, hive etc 
             /*else if (loginkey.startsWith("BC1")) {
                 var preslice = window.bs58check.decode(loginkey);
@@ -9361,8 +10956,13 @@ async function login(loginkey) { //login should throw error if not successful
             localStorageSet(localStorageSafe, "privkey", privkey);
             localStorageSet(localStorageSafe, "privkeyhex", privkeyhex);
             pubkeyhexsigned = ecpair.publicKey.toString('hex');
-        } else if (nostrPubKeyHex) {
-            pubkeyhexsigned = getYSign(nostrPubKeyHex)+nostrPubKeyHex;
+
+            //Nostracoin privkey is the key that corresponds to a compressed publickey that starts with a '02'
+            nostracoinprivkey = privkey;
+            if (pubkeyhexsigned.startsWith('03')) {
+                nostracoinprivkey = getAlternativePrivKey(privkeyhex);
+            }
+            localStorageSet(localStorageSafe, "nostracoinprivkey", nostracoinprivkey);
         }
 
         /*
@@ -9375,7 +10975,6 @@ async function login(loginkey) { //login should throw error if not successful
     }
 
     pubkeyhex = pubkeyhexsigned.slice(2);
-    nostrPubKeyHex = pubkeyhex; //might set these differently for future feature
     localStorageSet(localStorageSafe, "pubkeyhexsigned", pubkeyhexsigned);
     localStorageSet(localStorageSafe, "pubkeyhex", pubkeyhex);
 
@@ -9409,7 +11008,7 @@ async function login(loginkey) { //login should throw error if not successful
 
     //Transaction queue requires bitcoinjs library to be loaded which may slow things down for a fast login on page reload
     if (!window.bitcoinjs) { await loadScript(bitcoinjslib); }
-    tq = new TransactionQueue(pubkeyhexToLegacy(pubkeyhexsigned), privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost", nativeCoin.satsPerByte, nativeCoin.interestExponent, nativeCoin.dust);
+    tq = new TransactionQueue(await pubkeyhexToLegacy(pubkeyhexsigned), privkey, dropdowns.mcutxoserver + "address/utxo/", updateStatus, getSafeTranslation, updateChainHeight, null, window.bitcoinjs, dropdowns.txbroadcastserver + "rawtransactions/sendRawTransactionPost", nativeCoin.satsPerByte, nativeCoin.interestExponent, nativeCoin.dust);
     tq.refreshPool();
 
     if (!privkey) {
@@ -9420,7 +11019,7 @@ async function login(loginkey) { //login should throw error if not successful
 
     document.getElementById('messagesanchor').innerHTML = templateReplace(messagesanchorHTML, { dust: nativeCoin.dust }, true);
     //document.getElementById('newpost').innerHTML = newpostHTML;
-    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { fileuploadurl: dropdowns.imageuploadserver + "uploadfile", defaulttag: defaultTag, maxlength: maxlength }, true);
+    document.getElementById('newpost').innerHTML = templateReplace(newpostHTML, { postid:(Math.floor(Math.random() * 100000)+100000), fileuploadurl: dropdowns.imageuploadserver + "uploadfile", defaulttag: defaultTag, maxlength: maxlength }, true);
 
 
 
@@ -9440,10 +11039,42 @@ function loadStyle() {
     }
 }
 
+function getAlternativePrivKey(nostracoinprivkey2) {
+    //let order = window.ec.n; //hard code so don't rely on library for value
+    let l = new bigInt("fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141", 16);
+    let pkbn = new bigInt(nostracoinprivkey2, 16);
+    let altprivkey = l.subtract(pkbn);
+    let zeropad = pad_with_zeroes(altprivkey.toString(16), 64);
+    let ecpair = new window.bitcoinjs.ECPair.fromPrivateKey(Buffer.from(zeropad, 'hex'));
+    return ecpair.toWIF();
+}
+
+function getRepNetPrivKey() {
+    /*
+    if (nostracoinprivkey && nostracoinprivkey != "undefined")
+        return nostracoinprivkey;
+    else
+        return null;*/
+    return privkey;
+}
+
+
+
 var newlygeneratedaccount = false;
 async function createNewAccount() {
     if (!bip39) { await loadScript("js/lib/bip39.browser.js"); }
-    let mnemonictemp = bip39.generateMnemonic();
+    let mnemonictemp = null;
+    let pkhs = null;
+    do {
+        mnemonictemp = bip39.generateMnemonic();
+        let seed = bip39.mnemonicToSeedSync(mnemonictemp);
+        let root = window.bitcoinjs.bip32.fromSeed(seed);
+        let child1 = root.derivePath("44'/0'/0'/0/0");
+        let newloginkey = child1.toWIF();
+        let ecpair = new window.bitcoinjs.ECPair.fromWIF(newloginkey);
+        pkhs = ecpair.publicKey.toString('hex');
+    } while (pkhs.startsWith('03')) //generally prefer public keys that begin with 02 for simplicity 
+
     document.getElementById('newseedphrasedescription').style.display = "inline";
     document.getElementById('newseedphrase').textContent = mnemonictemp;
     document.getElementById('loginkey').value = mnemonictemp;
@@ -9482,12 +11113,11 @@ function logout() {
 
     privkey = "";
     privkeyhex = "";
+    nostracoinprivkey = "";
     pubkeyhexsigned = ""
     pubkey = "";
     mnemonic = "";
     privateKeyBuf = "";
-    //nostrPrivKeyHex = "";
-    //nostrPubKeyHex = "";
     pubkeyhex = ""; //Public Key, full hex
     //pubkeyhexsign = ""; //Public Key, full hex
     bitcloutaddress = ""; //Bitclout address
@@ -9546,7 +11176,7 @@ function displayNotificationCount() {
     }
     lastViewOfNotifications = Number(localStorageGet(localStorageSafe, "lastViewOfNotifications"));
     lastViewOfNotificationspm = Number(localStorageGet(localStorageSafe, "lastViewOfNotificationspm"));
-    var theURL = dropdowns.contentserver + '?action=alertcount&address=' + pubkeyhex.slice(0,16) + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
+    var theURL = dropdowns.contentserver + '?action=alertcount&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + '&since=' + lastViewOfNotifications + '&sincepm=' + lastViewOfNotificationspm;
     getJSON(theURL).then(function (data) {
         try {
             if (data[0].count == null) {
@@ -9626,19 +11256,19 @@ function populateNotificationTab(limit, nfilter, minrating) {
     notificationFilter.element = raterJs({
         extraClass: "systemscore",
         starSize: Number(notificationFilter.element.dataset.ratingsize),
-        rating: notificationFilter.minrating,
+        rating: Number(notificationFilter.minrating),
         element: notificationFilter.element,
         showToolTip: false,
         rateCallback: function rateCallback(rating, done) {
-            notificationFilter.element.setRating(rating);
+            notificationFilter.element.setRating(Number(rating));
             done();
             notificationFilter.minrating = rating;
-            getAndPopulateNotifications(0, notificationFilter.limit, "notifications", pubkey, null, notificationFilter.type, notificationFilter.minrating);
+            getAndPopulateNotifications(0, notificationFilter.limit, "notifications", pubkey, null, notificationFilter.type, Number(notificationFilter.minrating));
         }
     });
 
     if (notificationFilter.element) {
-        notificationFilter.element.setRating(minrating);
+        notificationFilter.element.setRating(Number(minrating));
     }
 
 }
@@ -9662,7 +11292,7 @@ function getAndPopulateNotifications(start, limit, page, qaddress, txid, nfilter
     notificationFilter.minrating = minrating;
 
 
-    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + pubkeyhex.slice(0,16) + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
+    var theURL = dropdowns.contentserver + '?action=' + page + '&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + '&qaddress=' + qaddress + '&start=' + start + '&limit=' + limit + '&nfilter=' + nfilter + '&minrating=' + minRatingTransposed;
     getJSON(theURL).then(function (data) {
         //data = mergeRepliesToRepliesBySameAuthor(data);
         var navbuttons = getNotificationNavButtonsNewHTML(start, limit, page, qaddress, minrating, nfilter, data.length);
@@ -9994,7 +11624,7 @@ function getHTMLForNotification(data, rank, page, starindex, highlighted) {
 
 function userFromDataBasic(data, mainRatingID) {
     if (!data.raterrating) { data.raterrating = data.rating; }//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.messageaddress).userHTML(true);
+    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.messageaddress, data.bitcoinaddress).userHTML(true);
 }
 
 function userFromData(data, mainRatingID) {
@@ -10018,15 +11648,15 @@ function MemberFromData(data, stub, ratingID) {
         data[stub + "profile"],
         data[stub + "isfollowing"],
         data[stub + "nametime"],
-        data[stub + "lastactive"],
+        data[stub + "pictime"],
         data[stub + "sysrating"],
         data[stub + "hivename"],
-        null,
-        data[stub + "messageaddress"]
+        data[stub + "messageaddress"],
+        data[stub + "bitcoinaddress"]
     );
 }
 
-function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, messageaddress = null) {
+function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, messageaddress = null, bitcoinaddress) {
 
     if (!address || address == 'null') {
         if (messageaddress) {
@@ -10070,14 +11700,15 @@ function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, pi
     this.lastactive = lastactive;
     this.sysrating = sysrating;
     this.hivename = hivename;
-    if (publickey && publickey.length == 66) {
-        this.bitcoinaddress = pubkeyhexToLegacy(publickey);
-    }
+    this.bitcoinaddress = bitcoinaddress;
+    //if (publickey && publickey.length == 66) {
+    //    this.bitcoinaddress = pubkeyhexToLegacy(publickey);
+    //}
 }
 
 Member.prototype.userHTML = function (includeProfile) {
     if (!this.address) {
-        return "error:no address for user";
+        return "n/a";
     }
 
     let userclass = "hnuser";
@@ -10103,10 +11734,10 @@ Member.prototype.userHTML = function (includeProfile) {
         flair = ` <span data-vavilon_title="TopIndex" class="flair" title="TopIndex">` + ordinal_suffix_of(Number(this.tokens)) + ` </span> `;
     }
     //let followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('${sane(this.publickey)}'); this.style.display='none';">follow</a>`;
-    let followButton = clickActionNamedHTML("follow", sane(this.publickey), "follow");
+    let followButton = clickActionNamedHTML("follow", sane(this.publickey), "follow", sane(this.bitcoinaddress));
     if (this.isfollowing) {
         //followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('${sane(this.publickey)}'); this.style.display='none';">unfollow</a>`;
-        followButton = clickActionNamedHTML("unfollow", sane(this.publickey), "unfollow");
+        followButton = clickActionNamedHTML("unfollow", sane(this.publickey), "unfollow", sane(this.bitcoinaddress));
     }
 
 
@@ -10156,7 +11787,8 @@ Member.prototype.userHTML = function (includeProfile) {
         onlinestatus: onlineStatus,
         systemscoreclass: systemScoreClass,
         directlink: directlink,
-        bitcoinaddress: sane(this.bitcoinaddress)
+        memberpublickeyhex: this.publickey,
+        bitcoinaddress:this.bitcoinaddress
     }
 
     obj.profilecard = "";
@@ -10176,7 +11808,6 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
         txid: san(txid),
         address: address,
         profilepicsmall: profilepic,
-        address: pubkey,
         sourcenetwork: sourcenetwork,
         origtxid: origtxid,
         maxreplylength: maxreplylength,
@@ -10187,7 +11818,7 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
 
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, sourcenetwork, hivelink, origtxid, bitcoinaddress, permalink, articlelink) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, sourcenetwork, hivelink, origtxid, memberpublickeyhex, permalink, articlelink, roottxid, pagingid, memberbitcoinaddress) {
 
     var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid = san(txid);
@@ -10229,8 +11860,12 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     } */
     else if (sourcenetwork == 5) {
         //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
-        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="snort" href="https://snort.social/e/${bech32Encode('note',hivelink)}">snort</a>`; 
-        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostrgram" href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;    
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://snort.social/e/${bech32Encode('note',hivelink)}">snort</a>`; 
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`; 
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://njump.me/${san(hivelink)}">njump.me</a>`;
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'https://nostrudel.ninja/#/n/','${san(hivelink)}'; return true;)" href="https://nostrudel.ninja/#/n/${bech32Encode('note', hivelink)}">noStrudel</a>`; 
+    } else if (sourcenetwork == 6) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="warpcast" href="https://warpcast.com/${san(pagingid)}/0x${san(hivelink)}">warpcast</a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">rss</a>';
     }
@@ -10249,7 +11884,9 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         maplink: mapLink,
         sourceNetworkHTML: sourceNetworkHTML,
         origtxid: san(origtxid),
-        bitcoinaddress: bitcoinaddress,
+        memberpublickeyhex: memberpublickeyhex,
+        memberbitcoinaddress: memberbitcoinaddress,
+        roottxid: san(roottxid),
         MEMUSD1C: satsToUSDString(10000000),
         MEMUSD1: satsToUSDString(100000000),
         MEMUSD5: satsToUSDString(500000000),
@@ -10478,7 +12115,7 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     }
 
 
-    var votelinks = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid);
+    var votelinks = getVoteButtons(txid, theMember.publickey, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid, theMember.bitcoinaddress);
     var age = getAgeHTML(firstseen);
     //var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var tipsandlinks = '';
@@ -10494,8 +12131,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
 
     var directlink = "";
 
-    let sourceNetworkHTML;
-    let sourceNetworkImage;
+    let sourceNetworkHTML=``;
+    let sourceNetworkImage=``;
     if (sourcenetwork == 0) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}">Memo</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="memo" href="https://memo.cash/a/${san(hivelink)}"><img width='15' height='15' alt='Memo' src='img/networks/0.png'></a>`;
@@ -10505,19 +12142,32 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     } else if (sourcenetwork == 2) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}">hive.blog</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}"><img width='15' height='15' alt='Hive' src='img/networks/2.png'></a>`;
-    } else if (sourcenetwork == 3) {
+    } /*else if (sourcenetwork == 3) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="memberp" href="${permalink}">member.cash</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="memberp" href="${permalink}"><img width='15' height='15' alt='member.cash' src='img/networks/3.png'></a>`;
-    } else if (sourcenetwork == 4) {
+    } */else if (sourcenetwork == 4) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img width='15' height='15' alt='doge.hair' src='img/networks/4.png'></a>`;
     } else if (sourcenetwork == 5) {
         //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
         //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
     
-        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://nostrgram.co/#thread:${san(hivelink)}">snort</a>`;
-        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
-    } else if (sourcenetwork == 99) {
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;
+        //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://njump.me/${san(hivelink)}">njump.me</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://njump.me/${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'https://nostrudel.ninja/#/n/','${san(hivelink)}'); return true;" href="https://nostrudel.ninja/#/n/${bech32Encode('note', hivelink)}">noStrudel</a>`;
+        //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" onclick="bechifylink(this,'https://nostrudel.ninja/#/n/','${san(hivelink)}'); return true;" href="https://nostrudel.ninja/#/n/${bech32Encode('note', hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+
+
+    } else if (sourcenetwork == 6) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="warpcast" href="https://warpcast.com/${san(theMember.pagingid)}/0x${san(hivelink)}">warpcast</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="warpcast" href="https://warpcast.com/${san(theMember.pagingid)}/0x${san(hivelink)}"><img width='15' height='15' alt='BitClout' src='img/networks/6.png'></a>`;
+  }  
+    
+    else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
     }
@@ -10527,11 +12177,11 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         pinnedpostHTML = `<a data-vavilon="VVpinpost" href="javascript:;" onclick="pinpost('${san(origTXID)}')">Pin Post</a>`;
     }
 
-    let followButton = clickActionNamedHTML("follow", sane(theMember.publickey), "follow");
-    let muteButton = clickActionNamedHTML("mute", sane(theMember.publickey), "mute");
+    let followButton = clickActionNamedHTML("follow", sane(theMember.publickey), "follow",sane(theMember.bitcoinaddress));
+    let muteButton = clickActionNamedHTML("mute", sane(theMember.publickey), "mute",sane(theMember.bitcoinaddress));
 
     if (theMember.isfollowing) {
-        followButton = clickActionNamedHTML("unfollow", sane(theMember.publickey), "unfollow");
+        followButton = clickActionNamedHTML("unfollow", sane(theMember.publickey), "unfollow",sane(theMember.bitcoinaddress));
         muteButton = '';
     }
 
@@ -10576,7 +12226,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         origtxid: san(origTXID),
         sourcenetwork: san(sourcenetwork),
         page: page,
-        bitcoinaddress: theMember.bitcoinaddress,
+        memberpublickeyhex: theMember.publickey,
+        memberbitcoinaddress: theMember.bitcoinaddress,
         MEMUSD1C: satsToUSDString(10000000),
         MEMUSD1: satsToUSDString(100000000),
         MEMUSD5: satsToUSDString(500000000),
@@ -10642,14 +12293,14 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         highlighted: (ishighlighted ? ` highlight` : ``),
         id: (ishighlighted ? `highlightedcomment` : ``),
         blocked: (blockstxid != null ? `blocked` : ``),
-        votebuttons: getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid),
+        votebuttons: getVoteButtons(txid, theMember.publickey, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid,  theMember.bitcoinaddress),
         author: theMember.userHTML(true),
         message: message,
         likes: getLikesHTML(txid, likesbalance, differentiator, (likes > 0)),
         tips: getTipsHTML(txid, tips, differentiator, (tips > 0)),
         remembers: getRemembersHTML(txid, differentiator, repostcount, (repostcount > 0), origTXID, sourcenetwork),
         age: getAgeHTML(firstseen, false, permalink),
-        replyandtips: getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress, permalink, articlelink),
+        replyandtips: getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, sourcenetwork, hivelink, origTXID, theMember.publickey, permalink, articlelink, roottxid, theMember.pagingid, theMember.bitcoinaddress),
         replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID, roottxid),
         diff: differentiator,
         deleted: (deleted == '1' ? ` deleted` : ''),
@@ -10720,7 +12371,7 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + getSafeTranslation(linktext, linktext) + `</a>`;
 }
 
-function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults, minrating) {
+function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, minrating) {
     //Caution topicname may contain hostile characters/code
 
     let fixedparams = `#${action}?content=${content}&minrating=${minrating}&start=0&limit=${limit}&filter=${filter}&qaddress=${qaddress}&topicname=${ds(encodeURIComponent(topicnameHOSTILE))}`;
@@ -10771,19 +12422,11 @@ function getNotificationNavButtonsNewHTML(start, limit, action, qaddress, minrat
 }
 
 
-function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
+function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, minStarRating) {
     //Caution topicname may contain hostile characters/code
 
     var navbuttons = `<div class="navbuttons" > `;
-
-    //Don't really need back button - user can click back in browser
-    //if (start != 0) //Don't show back buttons if we're at the start
-    //{ navbuttons += `< a class="next" href = "#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" > ` + getSafeTranslation('prev', 'back') + `</a > `; }
-
-    //if (numberOfResults > numbers.results / 2) //Sometimes an sql limit request returns fewer than the available set - nearly always include a next button
-    //Always show
-    { navbuttons += `<a class="back" href = "#` + action + `?start=` + (Number(start)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" > ` + getSafeTranslation('next', 'next') + `</a > `; }
-
+    navbuttons += `<a class="back" href = "#${action}?start=${(Number(start))}&limit=${limit}&order=${order}&content=${content}&filter=${filter}&qaddress=${qaddress}&minrating=${Number(minStarRating)}&topicname=${ds(encodeURIComponent(topicnameHOSTILE))}" > ${getSafeTranslation('next', 'next')}</a > `; 
     navbuttons += "</div>";
     return navbuttons;
 
@@ -10815,7 +12458,7 @@ function getItemListandNavButtonsHTML(navheader, contentsHTML, navbuttonsHTML, s
     }
 }
 
-function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID, roottxid) {
+function getVoteButtons(txid, memberpublickeyhex, likedtxid, likeordislike, score, origTXID, roottxid, memberbitcoinaddress) {
 
     var upvoteHTML;
     let scoreHTML = `<span class="betweenvotesscore" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
@@ -10825,14 +12468,14 @@ function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, o
         upvoteHTML = `<a id = "upvoteaction` + san(txid) + `" href = "javascript:;" ><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a > `;
         scoreHTML = `<span class="betweenvotesscoreup" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     } else {
-        upvoteHTML = `<a id = "upvoteaction${san(txid)}" href = "javascript:;" onclick = "likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0,${san(roottxid)})" ><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a > `;
+        upvoteHTML = `<a id = "upvoteaction${san(txid)}" href = "javascript:;" onclick = "likePost('${san(txid)}','${origTXID}','${san(memberpublickeyhex)}',0,${san(roottxid)},'${san(memberbitcoinaddress)}')" ><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a > `;
     }
 
     if (likeordislike == "-1") {
         downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" > <span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
         scoreHTML = `<span class="betweenvotesscoredown" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     } else {
-        downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" onclick = "dislikePost('${san(txid)}','${san(origTXID)},${san(roottxid)}')" > <span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
+        downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" onclick = "dislikePost('${san(txid)}','${san(origTXID)}','${san(roottxid)}')" > <span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
     }
 
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
@@ -11156,26 +12799,29 @@ function getIndirectRatingHTML(data) {
     //return "<tr><td data-label='You'><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td data-label='Rate as'><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center' data-label='Member'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td data-label='Who Rates as'><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td data-label='Member'><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
 }
 
-function getTrustRatingTableHTML(contentsHTML, rating) {
+function getTrustPairHeading(){ 
+    var obj = {
+    };
+    return templateReplace(trustPairHTML, obj);
+}
+
+function getTrustRatingTableHTML(contentsHTML, rating, rater, ratee, warning='') {
 
     var obj = {
         //These must all be HTML safe.
         tablecontents: contentsHTML,
-        rating: (rating == 0) ? "No information" : Number(rating)
+        rating: (rating == 0) ? "No information" : Number(rating),
+        notloggedinwarning: warning,
+        rater: rater,
+        ratee: ratee
     }
 
     return templateReplace(trustRatingTableHTML, obj);
-
-    /*if (rating == 0) {
-        return "<span style='font-size:2em'>Overall Rating: No information</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
-    } else {
-        return "<span style='font-size:2em'>Overall Rating:" + Number(rating) + "/5</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
-    }*/
 }
 
-function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason, stem, txid) {
+function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason, stem, txid, bitcoinaddress) {
     //Careful to ensure disabletext is sanitized
-    var disableText = rts(ratername) + ' rates ' + rts(rateename) + ' as {rating}/{maxRating}';
+    var disableText = rts(ratername) + ' rates ' + rts(rateename) + ` as ${outOfFive(rating)}/5`;
 
     var obj = {
         //These must all be HTML safe.
@@ -11186,7 +12832,8 @@ function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, ra
         stem: stem,
         ratee: getMemberLink(rateeaddress, rateename),
         txid: san(txid),
-        reason: ds(reason)
+        reason: ds(reason),
+        bitcoinaddress: san(bitcoinaddress)
     }
 
     return templateReplace(ratingAndReasonHTML, obj);
@@ -11198,14 +12845,14 @@ function getRatingComment(data) {
     return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="${maxratinglength}" id="memberratingcommentinputbox${san(data.publickey)}" value="${ds(data.ratingreason)}" onchange="checkLength('memberratingcommentinputbox${san(data.publickey)}',${maxratinglength});" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
-function getMemberRatingHTML(publickey, ratingScore, pagingid) {
-    return `<div class="starrating"><div data-ratingsize="20" data-ratingname="` + ds(pagingid) + `" data-ratingpublickey="` + san(publickey) + `" data-ratingraw="` + Number(ratingScore) + `" id="memberrating` + san(publickey) + `"></div></div>`;
+function getMemberRatingHTML(publickey, ratingScore, pagingid, bitcoinaddress) {
+    return `<div class="starrating"><div data-ratingsize="50" data-ratingname="${ds(pagingid)}" data-ratingbitcoinaddress="${san(bitcoinaddress)}" data-ratingpublickey="${san(publickey)}" data-ratingraw="${Number(ratingScore)}" id="memberrating${san(publickey)}"></div></div>`;
 }
 
 
 //Settings
-function clickActionNamedHTML(action, targetpubkey, name) {
-    return `<a class='${action}button' data-vavilon='` + action + `' class='` + action + `' href='javascript:;' onclick='` + action + `("` + sane(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
+function clickActionNamedHTML(action, targetpubkey, name, bitcoinaddress) {
+    return `<a class='${action}button' data-vavilon='${action}' class='${action}' href='javascript:;' onclick='${action}("${sane(targetpubkey)}","${sane(bitcoinaddress)}"); this.style.display="none";'>${ds(name)}</a>`;
 }
 
 /*
@@ -11534,7 +13181,7 @@ function escapeHTML(thetext) {
 
 function rts(thetext) {
     //Sanitize text in ratings disabled mouseover. This is probably overkill
-    return san(thetext);
+    return thetext.replace(/[&<>"'`=\/]/g, '');
 }
 "use strict";
 
@@ -11579,7 +13226,7 @@ async function userSearchChanged(searchbox, targetelement) {
     }
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkeyhex.slice(0,16) + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
+    var theURL = dropdowns.contentserver + '?action=usersearch&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
     getJSON(theURL).then(function (data) {
 
         var test = data;
@@ -11635,7 +13282,7 @@ async function postprivatemessage() {
 
     var successFunction = privateMessagePosted;
     if (checkForNativeUserAndHasBalance()) {
-        sendMessageRaw(privkey, null, preEncryptedMessage, 1000, status, successFunction, messageRecipient, stampAmount);
+        sendMessageRaw(getRepNetPrivKey(), null, preEncryptedMessage, 1000, status, successFunction, messageRecipient, stampAmount);
         successFunction = null;
     }
 
@@ -11672,12 +13319,12 @@ function addRSSFeed(type, buttonelement) {
 
 function sendFundsAmountChanged() {
     var sendAmount = Number(document.getElementById("fundsamount").value);
-    var usdAmount = ((Number(sendAmount) * numbers.usdrate) / 100000000).toFixed(2);
+    var usdAmount = ((Number(sendAmount) * numbers.usdrate)).toFixed(2);
     document.getElementById("sendusd").textContent = "($" + usdAmount + ")";
 }
 
 async function sendfunds() {
-    var sendAmount = Number(document.getElementById("fundsamount").value);
+    var sendAmount = Number(document.getElementById("fundsamount").value)*100000000;
     if (sendAmount < nativeCoin.dust) {
         alert(nativeCoin.dust + getSafeTranslation('547orlarger', " satoshis or larger."));
         return;
@@ -11713,7 +13360,7 @@ async function sendfunds() {
     //maybe move to transactions.js
     const tx = {
         cash: {
-            key: privkey,
+            key: getRepNetPrivKey(),
             to: [{ address: sendAddress, value: sendAmount }]
         }
     }
@@ -11731,13 +13378,7 @@ function sendFundsComplete() {
 
 }
 
-function cashaddrToLegacy(address) {
-    const { prefix, type, hash } = cashaddr.decode(address);
-    let hashhex = Buffer.from(hash).toString('hex');
-    let toencode = new Buffer('00' + hashhex, 'hex');
-    return window.bs58check.encode(toencode);
-}
-
+/*
 function legacyToNativeCoin(pubkey) {
     if (nativeCoin.name == "Nostracoin") {
         return legacyToNostracoin(pubkey);
@@ -11761,28 +13402,66 @@ function dogecoinToLegacy(pubkey) {
     let toencode = new Buffer(hash, 'hex');
     return window.bs58check.encode(toencode);
 }
+*/
 
-function pubkeyhexToLegacy(pubkeyhex2) {
-    if(window.bitcoinjs){
-        var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
-        return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
-    }else{
-        console.log("Problem with pub key hex, bitcoinjs not loaded yet 4534663");
-        return null;
+function cashaddrToLegacy(address) {
+    const { prefix, type, hash } = cashaddr.decode(address);
+    let hashhex = Buffer.from(hash).toString('hex');
+    let toencode = new Buffer('00' + hashhex, 'hex');
+    return window.bs58check.encode(toencode);
+}
+
+async function unsignedpubkeyhexToNostracoinLegacy(pubkeyhex2) {
+    return null; //temporary, can remove this
+    if(pubkeyhex2.length!=64){
+        throw Error("Pubkey must be 64 chars in length 2");
     }
+    let hash = getYSign(pubkeyhex2)+pubkeyhex2;
+    return await pubkeyhexToLegacy(hash);
+
+}
+
+async function pubkeyhexToLegacy(pubkeyhex2) {
+    if(pubkeyhex2.length!=66 && pubkeyhex2.length!=130){
+        throw Error("pubkeyhex wrong length");
+    }
+    if (!window.bitcoinjs) await loadScript(bitcoinjslib);
+    //if(window.bitcoinjs){
+        //var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
+        var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex')); //,{ compressed: false }, //For uncompressed key login '5...' type wif
+        return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+    //}else{
+    //    console.log("Problem with pub key hex, bitcoinjs not loaded yet 4534663");
+    //    return null;
+    //}
     //return window.bitcoinjs.payments.p2pkh({ pubkey: Buffer.from(pubkeyhex2) }).address;
 }
 
+async function pubkeyTonpub(pubkey) {
+    if(pubkey.length!=64){
+        throw Error("Pubkey must be 64 chars in length");
+    }
+    if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+    return window.bech32converter('npub').toBech32('0x' + pubkey);
 
-function legacyToNostracoin(pubkey) {
+}
+
+async function npubToPubKey(npubkey){
+    if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+    return window.bech32converter('npub').toHex(npubkey).slice(2).toLowerCase();
+}
+
+async function pubkeyToRepNet(pubkey) {
+    /*if(pubkey.length!=64){
+        throw Error("Pubkey must be 64 chars in length");
+    }
+    let hash = getYSign(pubkey)+pubkey;*/
+    return legacyToRepNet(await pubkeyhexToLegacy(pubkey));
+}
+
+function legacyToRepNet(pubkey) {
     let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
-    return cashaddr.encode('nostracoin', 'P2PKH', hash);
-
-    //const { prefix, type, hash } = cashaddr.decode(address);
-    //let hashhex = Buffer.from(hash).toString('hex');
-    //let toencode = new Buffer('00' + hashhex, 'hex');
-    //return window.bs58check.encode(toencode);
-    //return 'not defined yet';
+    return cashaddr.encode('repnet', 'P2PKH', hash);
 }
 
 function getLegacyToHash160(address) {
@@ -11870,50 +13549,91 @@ function updateBalance(dynamicChainHeight, showLowFunds = false) {
 
 // Consts for secp256k1 curve.
 // https://en.bitcoin.it/wiki/Secp256k1
-const prime = new bigInt('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16),
-pIdent = prime.add(1).divide(4);
+
 
 function getYSign( comp ) {
-    var x = new bigInt(comp, 16);
+    /*let prime = new bigInt('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16),
+    pIdent = prime.add(1).divide(4);
+    let x = new bigInt(comp, 16);
+    console.log(x);
     // y mod p = +-(x^3 + 7)^((p+1)/4) mod p
-    var y = x.modPow(3, prime).add(7).mod(prime).modPow( pIdent, prime );
+    let y = x.modPow(3, prime).add(7).mod(prime).modPow( pIdent, prime );
     // If the parity doesn't match it's the *other* root
+    console.log(y);
+    console.log(prime.subtract( y ));
+    console.log((prime.subtract( y ).subtract(y)>0));
+
     if(y.mod(2).toJSNumber()!=0){
         return '03';
     }else{
         return '02';
-    }
+    }*/
+    return '02';
 }
 
-async function chooseNostrPublicKey(useNOS2Xifavailable = true) {
+
+function pad_with_zeroes(number, length) {
+    var retval = '' + number;
+    while (retval.length < length) {
+        retval = '0' + retval;
+    }
+    return retval;
+}
+
+// Consts for secp256k1 curve. Adjust accordingly
+// https://en.bitcoin.it/wiki/Secp256k1
+const prime = new bigInt('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16),
+pIdent = prime.add(1).divide(4);
+
+/**
+ * Point decompress secp256k1 curve
+ * @param {string} Compressed representation in hex string
+ * @return {string} Uncompressed representation in hex string
+ */
+function ECPointDecompress( comp ) {
+    var signY = new Number(comp[1]) - 2;
+    var x = new bigInt(comp.substring(2), 16);
+    // y mod p = +-(x^3 + 7)^((p+1)/4) mod p
+    var y = x.modPow(3, prime).add(7).mod(prime).modPow( pIdent, prime );
+    // If the parity doesn't match it's the *other* root
+    if( y.mod(2).toJSNumber() !== signY ) {
+        // y = prime - y
+        y = prime.subtract( y );
+    }
+    return '04' + pad_with_zeroes(x.toString(16), 64) + pad_with_zeroes(y.toString(16), 64);
+}
+
+async function chooseNostrPublicKey() {
+    //Should always already know the public key of the user except for login
+    return pubkeyhex;
+
     //let pubKeyToUse = nostrPubKeyHex;
-    let pubKeyToUse = pubkeyhex;
-    if (useNOS2Xifavailable && window.nostr) {
-        pubKeyToUse = await window.nostr.getPublicKey();
-    }
-    return pubKeyToUse;
+    //if (useNOS2Xifavailable && window.nostr) {
+    //    pubKeyToUse = await window.nostr.getPublicKey();
+    //}
+    //return pubKeyToUse;
 }
 
-async function signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable = true) {
+async function signAndBroadcastEvent(event, successFunction) {
     event.id = window.NostrTools.getEventHash(event);
 
-    if (useNOS2Xifavailable && window.nostr) {
+    if (!privkeyhex && window.nostr) {
         try {
             event = await window.nostr.signEvent(event);
         } catch (err) {
-            event.sig = window.NostrTools.signEvent(event, privkeyhex);
+            throw Error("Nos2x did not provide signed event");
         }
     } else {
         event.sig = window.NostrTools.signEvent(event, privkeyhex);
     }
-    broadcastEvent(event, successFunction, useNOS2Xifavailable);
+    broadcastEvent(event, successFunction);
     return event;
 }
 
-async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true) {
+async function broadcastEvent(event, successFunction) {
     let relays = [];
     try {
-        if (useNOS2Xifavailable && window.nostr) {
+        if (window.nostr) {
             let relaysObj = await window.nostr.getRelays();
             for (var key in relaysObj) {
                 console.log(key);
@@ -11924,6 +13644,10 @@ async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true
         console.log(err);
     }
 
+    relays.push("wss://relay.damus.io");
+    relays.push("wss://nos.lol");
+    relays.push("wss://relay.current.fyi");
+    relays.push("wss://brb.io");
     relays.push("wss://nostr.oxtr.dev");
     relays.push("wss://nostr.fmt.wiz.biz");
     relays.push("wss://nostr-pub.wellorder.net");
@@ -12014,7 +13738,7 @@ async function sendNostrTransaction(payload, divForStatus) {
     });
 }
 
-async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, useNOS2Xifavailable = true, eventkind = 1, geotag=null) {
+async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, eventkind = 1, geotag=null) {
 
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
@@ -12033,13 +13757,13 @@ async function sendNostrPost(posttext, postbody, topic, divelement, successFunct
 
     let event = {
         kind: eventkind,
-        pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
+        pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
         tags: tags,
         content: posttext
     }
 
-    return await signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable);
+    return await signAndBroadcastEvent(event, successFunction);
 
 }
 
@@ -12327,8 +14051,8 @@ async function nostrPinPost(pinPostHashHex) {
 async function sendNostrFollow(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype = 'p';
-    if (followpubkey.length == 66) {
-        keytype = 'cecdsa';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
     }
     let event = {
         kind: 6006,
@@ -12344,8 +14068,8 @@ async function sendNostrFollow(followpubkey) {
 async function sendNostrUnFollow(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype = 'p';
-    if (followpubkey.length == 66) {
-        keytype = 'cecdsa';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
     }
     let event = {
         kind: 6007,
@@ -12357,11 +14081,28 @@ async function sendNostrUnFollow(followpubkey) {
     return await signAndBroadcastEvent(event, null);
 }
 
+async function sendNostrSpamReport(followpubkey) {
+    if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    let keytype = 'p';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
+    }
+    let event = {
+        kind: 1984,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [[keytype, followpubkey, 'spam']],
+        content: ''
+    }
+    return await signAndBroadcastEvent(event, null);
+}
+
+
 async function sendNostrMute(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype = 'p';
-    if (followpubkey.length == 66) {
-        keytype = 'cecdsa';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
     }
     let event = {
         kind: 6016,
@@ -12376,8 +14117,8 @@ async function sendNostrMute(followpubkey) {
 async function sendNostrUnMute(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype = 'p';
-    if (followpubkey.length == 66) {
-        keytype = 'cecdsa';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
     }
     let event = {
         kind: 6017,
@@ -12415,17 +14156,17 @@ async function sendNostrUnSub(topicHOSTILE) {
 }
 
 // Need rating action
-async function sendNostrRating(posttext, successFunction, targetMember, useNOS2Xifavailable, rating, comment) {
+async function sendNostrRating(posttext, successFunction, targetMember, rating, comment) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
-    //let keytype = 'p';
-    //if (targetMember.length == 66) {
-    //    keytype = 'cecdsa';
-    //}
+    let keytype = 'p';
+    if (targetMember.length != 64) {
+        throw Error('targetmember key incorrect size');
+    }
 
     let event2 = {
         kind: 6015,
-        pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
+        pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
         tags: [
             [keytype, targetMember],
@@ -12437,14 +14178,14 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
 
     let event = {
         kind: 1,
-        pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
+        pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
         tags: [[keytype, targetMember]],
         content: posttext
     };
 
-    signAndBroadcastEvent(event, null, useNOS2Xifavailable);
-    return await signAndBroadcastEvent(event2, successFunction, useNOS2Xifavailable);
+    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event2, successFunction);
 
     
 }
@@ -12452,5 +14193,5 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
 // skip for now
 //async function sendBitCloutPostLong(posttext, postbody, topic, divForStatus, successFunction, imageURL=null)
 
-var version = '9.0.2'; 
+var version = '11.3.6'; 
 if (init) { init(); } 

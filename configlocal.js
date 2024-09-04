@@ -1,6 +1,6 @@
-var pathpermalinks = 'https://nostraco.in';
+var pathpermalinks = 'https://repnet.site';
 //var profilepicbase = '../../notsync/serverdata/profilepics';
-var profilepicbase = 'https://nostraco.in/img/profilepics/';
+var profilepicbase = 'https://repnet.site/img/profilepics/';
 
 var dropdowns = {
     "contentserver": pathpermalinks+"/v2/member.js",

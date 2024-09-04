@@ -41,7 +41,7 @@ async function userSearchChanged(searchbox, targetelement) {
     }
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=usersearch&address=' + pubkeyhex.slice(0,16) + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
+    var theURL = dropdowns.contentserver + '?action=usersearch&address=' + (pubkeyhex?pubkeyhex.slice(0, 16):'') + '&searchterm=' + encodeURIComponent(searchtermHOSTILE);
     getJSON(theURL).then(function (data) {
 
         var test = data;
@@ -97,7 +97,7 @@ async function postprivatemessage() {
 
     var successFunction = privateMessagePosted;
     if (checkForNativeUserAndHasBalance()) {
-        sendMessageRaw(privkey, null, preEncryptedMessage, 1000, status, successFunction, messageRecipient, stampAmount);
+        sendMessageRaw(getRepNetPrivKey(), null, preEncryptedMessage, 1000, status, successFunction, messageRecipient, stampAmount);
         successFunction = null;
     }
 
@@ -134,12 +134,12 @@ function addRSSFeed(type, buttonelement) {
 
 function sendFundsAmountChanged() {
     var sendAmount = Number(document.getElementById("fundsamount").value);
-    var usdAmount = ((Number(sendAmount) * numbers.usdrate) / 100000000).toFixed(2);
+    var usdAmount = ((Number(sendAmount) * numbers.usdrate)).toFixed(2);
     document.getElementById("sendusd").textContent = "($" + usdAmount + ")";
 }
 
 async function sendfunds() {
-    var sendAmount = Number(document.getElementById("fundsamount").value);
+    var sendAmount = Number(document.getElementById("fundsamount").value)*100000000;
     if (sendAmount < nativeCoin.dust) {
         alert(nativeCoin.dust + getSafeTranslation('547orlarger', " satoshis or larger."));
         return;
@@ -175,7 +175,7 @@ async function sendfunds() {
     //maybe move to transactions.js
     const tx = {
         cash: {
-            key: privkey,
+            key: getRepNetPrivKey(),
             to: [{ address: sendAddress, value: sendAmount }]
         }
     }
@@ -193,13 +193,7 @@ function sendFundsComplete() {
 
 }
 
-function cashaddrToLegacy(address) {
-    const { prefix, type, hash } = cashaddr.decode(address);
-    let hashhex = Buffer.from(hash).toString('hex');
-    let toencode = new Buffer('00' + hashhex, 'hex');
-    return window.bs58check.encode(toencode);
-}
-
+/*
 function legacyToNativeCoin(pubkey) {
     if (nativeCoin.name == "Nostracoin") {
         return legacyToNostracoin(pubkey);
@@ -223,28 +217,66 @@ function dogecoinToLegacy(pubkey) {
     let toencode = new Buffer(hash, 'hex');
     return window.bs58check.encode(toencode);
 }
+*/
 
-function pubkeyhexToLegacy(pubkeyhex2) {
-    if(window.bitcoinjs){
-        var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
-        return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
-    }else{
-        console.log("Problem with pub key hex, bitcoinjs not loaded yet 4534663");
-        return null;
+function cashaddrToLegacy(address) {
+    const { prefix, type, hash } = cashaddr.decode(address);
+    let hashhex = Buffer.from(hash).toString('hex');
+    let toencode = new Buffer('00' + hashhex, 'hex');
+    return window.bs58check.encode(toencode);
+}
+
+async function unsignedpubkeyhexToNostracoinLegacy(pubkeyhex2) {
+    return null; //temporary, can remove this
+    if(pubkeyhex2.length!=64){
+        throw Error("Pubkey must be 64 chars in length 2");
     }
+    let hash = getYSign(pubkeyhex2)+pubkeyhex2;
+    return await pubkeyhexToLegacy(hash);
+
+}
+
+async function pubkeyhexToLegacy(pubkeyhex2) {
+    if(pubkeyhex2.length!=66 && pubkeyhex2.length!=130){
+        throw Error("pubkeyhex wrong length");
+    }
+    if (!window.bitcoinjs) await loadScript(bitcoinjslib);
+    //if(window.bitcoinjs){
+        //var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex'));
+        var ecpair = new window.bitcoinjs.ECPair.fromPublicKey(Buffer.from(pubkeyhex2,'hex')); //,{ compressed: false }, //For uncompressed key login '5...' type wif
+        return window.bitcoinjs.payments.p2pkh({ pubkey: ecpair.publicKey }).address;
+    //}else{
+    //    console.log("Problem with pub key hex, bitcoinjs not loaded yet 4534663");
+    //    return null;
+    //}
     //return window.bitcoinjs.payments.p2pkh({ pubkey: Buffer.from(pubkeyhex2) }).address;
 }
 
+async function pubkeyTonpub(pubkey) {
+    if(pubkey.length!=64){
+        throw Error("Pubkey must be 64 chars in length");
+    }
+    if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+    return window.bech32converter('npub').toBech32('0x' + pubkey);
 
-function legacyToNostracoin(pubkey) {
+}
+
+async function npubToPubKey(npubkey){
+    if (!window.bech32converter) await loadScript("js/lib/bech32-converting-1.0.9.min.js");
+    return window.bech32converter('npub').toHex(npubkey).slice(2).toLowerCase();
+}
+
+async function pubkeyToRepNet(pubkey) {
+    /*if(pubkey.length!=64){
+        throw Error("Pubkey must be 64 chars in length");
+    }
+    let hash = getYSign(pubkey)+pubkey;*/
+    return legacyToRepNet(await pubkeyhexToLegacy(pubkey));
+}
+
+function legacyToRepNet(pubkey) {
     let hash = Buffer.from(window.bs58check.decode(pubkey)).slice(1);
-    return cashaddr.encode('nostracoin', 'P2PKH', hash);
-
-    //const { prefix, type, hash } = cashaddr.decode(address);
-    //let hashhex = Buffer.from(hash).toString('hex');
-    //let toencode = new Buffer('00' + hashhex, 'hex');
-    //return window.bs58check.encode(toencode);
-    //return 'not defined yet';
+    return cashaddr.encode('repnet', 'P2PKH', hash);
 }
 
 function getLegacyToHash160(address) {
@@ -335,16 +367,54 @@ function updateBalance(dynamicChainHeight, showLowFunds = false) {
 
 
 function getYSign( comp ) {
-    let prime = new bigInt('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16),
+    /*let prime = new bigInt('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16),
     pIdent = prime.add(1).divide(4);
     let x = new bigInt(comp, 16);
+    console.log(x);
     // y mod p = +-(x^3 + 7)^((p+1)/4) mod p
     let y = x.modPow(3, prime).add(7).mod(prime).modPow( pIdent, prime );
     // If the parity doesn't match it's the *other* root
+    console.log(y);
+    console.log(prime.subtract( y ));
+    console.log((prime.subtract( y ).subtract(y)>0));
+
     if(y.mod(2).toJSNumber()!=0){
         return '03';
     }else{
         return '02';
+    }*/
+    return '02';
+}
+
+
+function pad_with_zeroes(number, length) {
+    var retval = '' + number;
+    while (retval.length < length) {
+        retval = '0' + retval;
     }
+    return retval;
+}
+
+// Consts for secp256k1 curve. Adjust accordingly
+// https://en.bitcoin.it/wiki/Secp256k1
+const prime = new bigInt('fffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f', 16),
+pIdent = prime.add(1).divide(4);
+
+/**
+ * Point decompress secp256k1 curve
+ * @param {string} Compressed representation in hex string
+ * @return {string} Uncompressed representation in hex string
+ */
+function ECPointDecompress( comp ) {
+    var signY = new Number(comp[1]) - 2;
+    var x = new bigInt(comp.substring(2), 16);
+    // y mod p = +-(x^3 + 7)^((p+1)/4) mod p
+    var y = x.modPow(3, prime).add(7).mod(prime).modPow( pIdent, prime );
+    // If the parity doesn't match it's the *other* root
+    if( y.mod(2).toJSNumber() !== signY ) {
+        // y = prime - y
+        y = prime.subtract( y );
+    }
+    return '04' + pad_with_zeroes(x.toString(16), 64) + pad_with_zeroes(y.toString(16), 64);
 }
 

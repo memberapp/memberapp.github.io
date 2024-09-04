@@ -1,32 +1,34 @@
-async function chooseNostrPublicKey(useNOS2Xifavailable = true) {
+async function chooseNostrPublicKey() {
+    //Should always already know the public key of the user except for login
+    return pubkeyhex;
+
     //let pubKeyToUse = nostrPubKeyHex;
-    let pubKeyToUse = pubkeyhex;
-    if (useNOS2Xifavailable && window.nostr) {
-        pubKeyToUse = await window.nostr.getPublicKey();
-    }
-    return pubKeyToUse;
+    //if (useNOS2Xifavailable && window.nostr) {
+    //    pubKeyToUse = await window.nostr.getPublicKey();
+    //}
+    //return pubKeyToUse;
 }
 
-async function signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable = true) {
+async function signAndBroadcastEvent(event, successFunction) {
     event.id = window.NostrTools.getEventHash(event);
 
-    if (useNOS2Xifavailable && window.nostr) {
+    if (!privkeyhex && window.nostr) {
         try {
             event = await window.nostr.signEvent(event);
         } catch (err) {
-            event.sig = window.NostrTools.signEvent(event, privkeyhex);
+            throw Error("Nos2x did not provide signed event");
         }
     } else {
         event.sig = window.NostrTools.signEvent(event, privkeyhex);
     }
-    broadcastEvent(event, successFunction, useNOS2Xifavailable);
+    broadcastEvent(event, successFunction);
     return event;
 }
 
-async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true) {
+async function broadcastEvent(event, successFunction) {
     let relays = [];
     try {
-        if (useNOS2Xifavailable && window.nostr) {
+        if (window.nostr) {
             let relaysObj = await window.nostr.getRelays();
             for (var key in relaysObj) {
                 console.log(key);
@@ -37,6 +39,10 @@ async function broadcastEvent(event, successFunction, useNOS2Xifavailable = true
         console.log(err);
     }
 
+    relays.push("wss://relay.damus.io");
+    relays.push("wss://nos.lol");
+    relays.push("wss://relay.current.fyi");
+    relays.push("wss://brb.io");
     relays.push("wss://nostr.oxtr.dev");
     relays.push("wss://nostr.fmt.wiz.biz");
     relays.push("wss://nostr-pub.wellorder.net");
@@ -127,7 +133,7 @@ async function sendNostrTransaction(payload, divForStatus) {
     });
 }
 
-async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, useNOS2Xifavailable = true, eventkind = 1, geotag=null) {
+async function sendNostrPost(posttext, postbody, topic, divelement, successFunction, eventkind = 1, geotag=null) {
 
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
@@ -146,13 +152,13 @@ async function sendNostrPost(posttext, postbody, topic, divelement, successFunct
 
     let event = {
         kind: eventkind,
-        pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
+        pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
         tags: tags,
         content: posttext
     }
 
-    return await signAndBroadcastEvent(event, successFunction, useNOS2Xifavailable);
+    return await signAndBroadcastEvent(event, successFunction);
 
 }
 
@@ -440,8 +446,8 @@ async function nostrPinPost(pinPostHashHex) {
 async function sendNostrFollow(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype = 'p';
-    if (followpubkey.length == 66) {
-        keytype = 'cecdsa';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
     }
     let event = {
         kind: 6006,
@@ -457,8 +463,8 @@ async function sendNostrFollow(followpubkey) {
 async function sendNostrUnFollow(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype = 'p';
-    if (followpubkey.length == 66) {
-        keytype = 'cecdsa';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
     }
     let event = {
         kind: 6007,
@@ -470,11 +476,28 @@ async function sendNostrUnFollow(followpubkey) {
     return await signAndBroadcastEvent(event, null);
 }
 
+async function sendNostrSpamReport(followpubkey) {
+    if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
+    let keytype = 'p';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
+    }
+    let event = {
+        kind: 1984,
+        pubkey: await chooseNostrPublicKey(),
+        created_at: Math.floor(Date.now() / 1000),
+        tags: [[keytype, followpubkey, 'spam']],
+        content: ''
+    }
+    return await signAndBroadcastEvent(event, null);
+}
+
+
 async function sendNostrMute(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype = 'p';
-    if (followpubkey.length == 66) {
-        keytype = 'cecdsa';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
     }
     let event = {
         kind: 6016,
@@ -489,8 +512,8 @@ async function sendNostrMute(followpubkey) {
 async function sendNostrUnMute(followpubkey) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
     let keytype = 'p';
-    if (followpubkey.length == 66) {
-        keytype = 'cecdsa';
+    if (followpubkey.length != 64) {
+        throw Error('targetmember key incorrect size');
     }
     let event = {
         kind: 6017,
@@ -528,17 +551,17 @@ async function sendNostrUnSub(topicHOSTILE) {
 }
 
 // Need rating action
-async function sendNostrRating(posttext, successFunction, targetMember, useNOS2Xifavailable, rating, comment) {
+async function sendNostrRating(posttext, successFunction, targetMember, rating, comment) {
     if (!window.NostrTools) await loadScript("js/lib/nostr.bundle.1.0.1.js");
 
-    //let keytype = 'p';
-    //if (targetMember.length == 66) {
-    //    keytype = 'cecdsa';
-    //}
+    let keytype = 'p';
+    if (targetMember.length != 64) {
+        throw Error('targetmember key incorrect size');
+    }
 
     let event2 = {
         kind: 6015,
-        pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
+        pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
         tags: [
             [keytype, targetMember],
@@ -550,14 +573,14 @@ async function sendNostrRating(posttext, successFunction, targetMember, useNOS2X
 
     let event = {
         kind: 1,
-        pubkey: await chooseNostrPublicKey(useNOS2Xifavailable),
+        pubkey: await chooseNostrPublicKey(),
         created_at: Math.floor(Date.now() / 1000),
         tags: [[keytype, targetMember]],
         content: posttext
     };
 
-    signAndBroadcastEvent(event, null, useNOS2Xifavailable);
-    return await signAndBroadcastEvent(event2, successFunction, useNOS2Xifavailable);
+    signAndBroadcastEvent(event, null);
+    return await signAndBroadcastEvent(event2, successFunction);
 
     
 }

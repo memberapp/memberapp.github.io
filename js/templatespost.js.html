@@ -48,7 +48,7 @@ var postCompactTemplate = `
                     </span>
                     <span class="post-footer-upvote{likeactivated} post-footer-relative" id="upvotecontainer{txid}">
                         <a id="upvoteaction{txid}" href="javascript:;"
-                            onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',0,'{roottxid}')" class="btn-icon"
+                            onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',0,'{roottxid}','{memberbitcoinaddress}')" class="btn-icon"
                             data-action="like">
                             <span class="likeicon">
                                 <span class="emojiicon">💙</span>
@@ -93,7 +93,7 @@ var postCompactTemplate = `
                         </a>
                     </span>
                     <span class="post-footer-tips post-footer-relative">
-                        <a id="tiplinkposts{diff}{txid}" class="btn-icon" data-action="tip"
+                        <a id="tiplinkposts{diff}{txid}" class="btn-icon tiplinkposts" data-action="tip"
                             onclick="dropDownMenuAction(this);">
                             <span class="tipicon">
                                 <span class="emojiicon">💰</span>
@@ -101,20 +101,18 @@ var postCompactTemplate = `
                             <span id="tipscount{txid}" class="iconcount" data-amount="{tipsinsatoshis}">{tips}</span>
                             <span data-vavilon="tips" class="text footerlabel">tips</span>
                             <div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}">
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span
-                                    data-vavilon="remember">0.1 {ticker} ({MEMUSD1C})</span></a>
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span
-                                        data-vavilon="remember">1 {ticker} ({MEMUSD1})</span></a>
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span
-                                        data-vavilon="remember">5 {ticker} ({MEMUSD5})</span></a>
-                                <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span
-                                        data-vavilon="remember">10 {ticker} ({MEMUSD10})</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',    499999999, '{roottxid}', '{memberbitcoinaddress}')"><span
+                                        >5 {ticker}</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',   1000000000, '{roottxid}', '{memberbitcoinaddress}')"><span
+                                        >10 {ticker}</span></a>
+                                <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',   2000000000, '{roottxid}', '{memberbitcoinaddress}')"><span
+                                        >20 {ticker}</span></a>
                                 <a
-                                    onclick="if (confirm('Tip 20 {ticker} ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
-                                        data-vavilon="remember">20 {ticker} ({MEMUSD20})</span></a>
+                                    onclick="if (confirm('Tip 100 {ticker}?')){likePost('{txid}','{origtxid}','{memberpublickeyhex}', 10000000000, '{roottxid}', '{memberbitcoinaddress}');}"><span
+                                        >100 {ticker}</span></a>
                                 <a
-                                    onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
-                                        data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
+                                    onclick="if (confirm('Tip 1000 {ticker}?')){likePost('{txid}','{origtxid}','{memberpublickeyhex}', 100000000000, '{roottxid}', '{memberbitcoinaddress}');}"><span
+                                        >1000 {ticker}</span></a>
                             </div>
                         </a>
                     </span>
@@ -163,7 +161,7 @@ var postCompactTemplate = `
                     <input id="tipamountposts{diff}{txid}" type="number" value="0" min="0" style="width: 6em;"
                         step="1000">
                     <input id="tipbuttonposts{diff}{txid}" value="tip" type="submit"
-                        onclick="sendTip('{txid}','{origtxid}','{bitcoinaddress}','posts{diff}');">
+                        onclick="sendTip('{txid}','{origtxid}','{memberpublickeyhex}','posts{diff}', '{memberbitcoinaddress}');">
                     <input id="tipstatusposts{diff}{txid}" value="sending" type="submit" style="display:none"
                         disabled="">
                 </span>
@@ -199,7 +197,7 @@ var userCompactTemplate=`
         </a>
     </span>
     <span class="starratingcompact">
-        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-ratingpublickey="{bitcoinaddress}"
+        <span data-ratingsize="10" data-ratingname="{pagingidattrib}" data-bitcoinaddress="{bitcoinaddress}" data-ratingpublickey="{memberpublickeyhex}"
             data-ratingraw="{rating}" id="ratingposts{diff}" data-ratingdisabled="true" data-ratingsystem={systemscoreclass} 
             class="star-rating-compact"></span>
     </span>
@@ -223,7 +221,7 @@ var userProfileCompactTemplate=`
                 <span class="member-handle">{handle}</span>
             </a>
             <span class="starrating">
-                <span data-ratingsize="16" data-ratingpublickey="{bitcoinaddress}" data-ratingraw="{rating}"
+                <span data-ratingsize="16" data-ratingpublickey="{memberpublickeyhex}" data-ratingraw="{rating}"
                     data-ratingsystem={systemscoreclass} id="ratingprofilecard{diff}" data-ratingdisabled="true" class="star-rating"></span>
             </span>
             {flair}
@@ -350,22 +348,20 @@ var replyAndTipsTemplate = `
     href="javascript:;">reply</a>
 <!--<a data-vavilon="VV0157" id="tiplink{page}{txid}" onclick="showTipBox('{page}{txid}');" href="javascript:;">tip</a>-->
 
-<a id="tiplinkposts{diff}{txid}" class="btn-icon" onclick="dropDownMenuAction(this);">
+<a id="tiplinkposts{diff}{txid}" class="btn-icon tiplinkposts" onclick="dropDownMenuAction(this);">
     <span data-vavilon="VV0157">tip</span><div class="dropdown-content remember-dropdown" id="dropdown-content{diff}{txid}" style="position: relative;">
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',     10000000)"><span data-vavilon="remember">0.1
-            {ticker} ({MEMUSD1C})</span></a>
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    100000000)"><span data-vavilon="remember">1
-                {ticker} ({MEMUSD1})</span></a>
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',    500000000)"><span data-vavilon="remember">5
-                {ticker} ({MEMUSD5})</span></a>
-        <a onclick="likePost('{txid}','{origtxid}','{bitcoinaddress}',   1000000000)"><span data-vavilon="remember">10
-                {ticker} ({MEMUSD10})</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',    499999999, '{roottxid}', '{memberbitcoinaddress}')"><span>5
+                {ticker}</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',   1000000000, '{roottxid}', '{memberbitcoinaddress}')"><span>10
+                {ticker}</span></a>
+        <a onclick="likePost('{txid}','{origtxid}','{memberpublickeyhex}',   2000000000, '{roottxid}', '{memberbitcoinaddress}')"><span>20
+                    {ticker}</span></a>
         <a
-            onclick="if (confirm('Tip 20 {ticker} ({MEMUSD20})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}',    2000000000);}"><span
-                data-vavilon="remember">20 {ticker} ({MEMUSD20})</span></a>
+            onclick="if (confirm('Tip 100 {ticker}?')){likePost('{txid}','{origtxid}','{memberpublickeyhex}',  10000000000, '{roottxid}', '{memberbitcoinaddress}');}"><span
+                >100 {ticker}</span></a>
         <a
-            onclick="if (confirm('Tip 100 {ticker} ({MEMUSD100})?')){likePost('{txid}','{origtxid}','{bitcoinaddress}', 10000000000);}"><span
-                data-vavilon="remember">100 {ticker} ({MEMUSD100})</span></a>
+            onclick="if (confirm('Tip 1000 {ticker}?')){likePost('{txid}','{origtxid}','{memberpublickeyhex}',100000000000, '{roottxid}', '{memberbitcoinaddress}');}"><span
+                >1000 {ticker}</span></a>
     </div></a>
     <a data-vavilon="VV0160" class="permalink" id="permalink{page}{txid}" href="{permalink}">permalink</a>
     {sourceNetworkHTML}
@@ -383,7 +379,7 @@ var replyAndTipsTemplate = `
 <span id="tipbox{page}{txid}" style="display:none">
     <input id="tipamount{page}{txid}" type="number" value="0" min="0" style="width: 6em;" step="1000" />
     <input data-vavilon_value="VV0162" id="tipbutton{page}{txid}" value="tip" type="submit"
-        onclick="sendTip('{txid}','{origtxid}','{bitcoinaddress}','{page}');" />
+        onclick="sendTip('{txid}','{origtxid}','{memberpublickeyhex}','{page}', '{memberbitcoinaddress}');" />
     <input data-vavilon_value="VV0163" id="tipstatus{page}{txid}" value="sending" type="submit" style="display:none"
         disabled />
 </span>`;

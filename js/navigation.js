@@ -1,6 +1,6 @@
 "use strict";
 
-function displayContentBasedOnURLParameters(suggestedurl) {
+async function displayContentBasedOnURLParameters(suggestedurl) {
 
     //Be very careful with input here . . . this is the most dangerous part of the code
     //input comes from URL so can contain any characters, so we want to sanitize it before using.
@@ -33,13 +33,17 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         //navigation back to home page, clear topic
 
     } else if (url.indexOf('/p/') != -1) {
-        //var postid = sane(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
-        let postid = document.getElementById('threadid').innerHTML;
+        let postid = sane(url.substr(url.indexOf('/p/') + 3, 10).toLowerCase().trim());
+        try{
+            postid = document.getElementById('threadid').innerHTML;
+        }catch(err){console.log('Thread id not present in preview provided by permalink server. Using backup.');}
         showThread(sane(postid), sane(postid), 'thread');
         return;
     } else if (url.indexOf('/a/') != -1) {
-        //var postid = sane(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
-        let postid = document.getElementById('threadid').innerHTML;
+        let postid = sane(url.substr(url.indexOf('/a/') + 3, 10).toLowerCase().trim());
+        try{
+            postid = document.getElementById('threadid').innerHTML;
+        }catch(err){console.log('Thread id not present in preview provided by permalink server. Using backup.');}
         showThread(sane(postid), sane(postid), 'article');
         return;
     } else if (url.indexOf('/m/') != -1) {
@@ -72,7 +76,7 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         );
         setTopic(safeGPBN("topicname"));
     } else if (action.startsWith("list")) {
-        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"),1);
+        showPostsNew("new", "posts", "", "list", 0, 25, safeGPBN("qaddress"), 1);
     } else if (action.startsWith("notifications")) {
         showNotifications(numberGPBN("start"), numberGPBN("limit"), safeGPBN("qaddress"), safeGPBN("txid"), safeGPBN("nfilter"), numberGPBN("minrating"));
     } else if (action.startsWith("profile")) {
@@ -80,9 +84,11 @@ function displayContentBasedOnURLParameters(suggestedurl) {
     } else if (action.startsWith("membersonly")) {
         showPostsNew('new', 'both', 'membersonly', 'everyone', 0, numbers.results, '', 1);
     } else if (action.startsWith("topinfluencers")) {
-        getAndPopulateNew('top50', 'both', '', '', 0, 50, 'posts', '', false, 1);
+        getAndPopulateNew('top50', 'both', '', 'everyone', 0, 50, 'posts', '', false, 1);
     } else if (action.startsWith("member")) {
-        showMember(safeGPBN("qaddress"), safeGPBN("pagingid"));
+        let qadd = safeGPBN("qaddress");
+        if (qadd.startsWith('npub')) { qadd = await npubToPubKey(qadd); }
+        showMember(qadd, safeGPBN("pagingid"));
     } else if (action.startsWith("followers")) {
         showFollowers(safeGPBN("qaddress"));
     } else if (action.startsWith("following")) {
@@ -91,6 +97,10 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         showBlockers(safeGPBN("qaddress"));
     } else if (action.startsWith("blocking")) {
         showBlocking(safeGPBN("qaddress"));
+    } else if (action.startsWith("raters")) {
+        showRaters(safeGPBN("qaddress"));
+    } else if (action.startsWith("ratings")) {
+        showRatings(safeGPBN("qaddress"));
     } else if (action.startsWith("rep")) {
         showReputation(safeGPBN("qaddress"));
     } else if (action.startsWith("posts")) {
@@ -99,6 +109,8 @@ function displayContentBasedOnURLParameters(suggestedurl) {
         showPFC(numberGPBN("start"), numberGPBN("limit"), 'both');
     } else if (action.startsWith("comments")) {
         showPFC(numberGPBN("start"), numberGPBN("limit"), 'replies');
+    } else if (action.startsWith("trustgraphpair")) {
+        showReputationPair(safeGPBN("source"),safeGPBN("qaddress"));
     } else if (action.startsWith("trustgraph")) {
         showReputation(safeGPBN("target"));
     } else if (action.startsWith("support")) {
@@ -171,14 +183,14 @@ function hideAll() {
     document.getElementById('following').style.display = "none";
     document.getElementById('blockers').style.display = "none";
     document.getElementById('blocking').style.display = "none";
-
+    document.getElementById('listratings').style.display = "none";
+    document.getElementById('listraters').style.display = "none";
+    
     document.getElementById('newpost').style.display = "none";
-    //document.getElementById('anchorratings').style.display = "none";
     document.getElementById('map').style.display = "none";
     document.getElementById('footer').style.display = "block";//show the footer - it may have been hidden when the map was displayed
 
     //document.getElementById('trustgraph').style.display = "none";
-    //document.getElementById('community').style.display = "none";
     document.getElementById('topiclistanchor').style.display = "none";
     document.getElementById('toolsanchor').style.display = "none";
     document.getElementById('messagesanchor').style.display = "none";
@@ -325,7 +337,7 @@ function showMember(qaddress, pagingID, isList) {
     }
 
     if (qaddress == '' && pagingID) {
-        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + pubkeyhex.slice(0,16);
+        var theURL = dropdowns.contentserver + '?action=resolvepagingid&pagingid=' + encodeURIComponent(pagingID) + '&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '');
         getJSON(theURL).then(function (data) {
             if (data && data.length > 0) {
                 showMember(san(data[0].address), sane(data[0].pagingid), isList);
@@ -378,11 +390,32 @@ function showReputation(qaddress) {
     showOnly("mcidmemberheader");
     showOnly("mcidmembertabs");
     showOnly("trustgraph");
-    getAndPopulateTrustGraph(pubkeyhex.slice(0,16), qaddress);
+    getAndPopulateTrustGraph2((pubkeyhex ? pubkeyhex.slice(0, 16) : ''), qaddress);
 
     //Show Filter
     var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff' };
     document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
+}
+
+function updatePairGraph(){
+    let source = document.getElementById('sourcecombobox').value;
+    let target = document.getElementById('targetcombobox').value;
+    if(source && target)
+        window.location.href = `#trustgraphpair?source=${source}&qaddress=${target}`;
+    //showReputationPair(source,target);
+}
+
+function showReputationPair(source,target) {
+
+    hideAll();
+    showOnly("mcidmemberheader");
+    showOnly("mcidmembertabs");
+    showOnly("trustgraph");
+    getAndPopulateTrustGraphPair(source,target);
+
+    //Show Filter
+    //var obj2 = { address: qaddress, profileclass: 'filteroff', reputationclass: 'filteron', postsclass: 'filteroff', bestiesclass: 'filteroff' };
+    //document.getElementById('mcidmembertabs').innerHTML = templateReplace(membertabsHTML, obj2);
 }
 
 function showCustom() {
@@ -409,7 +442,7 @@ function showPFC(start, limit, page) {
     showPostsNew('hot', page, '', 'everyone', start, limit, '', 1)
 }
 
-function showPostsNew(order, content, topicname, filter, start, limit, qaddress='', minStarRating=1) {
+function showPostsNew(order, content, topicname, filter, start, limit, qaddress = '', minStarRating = 1) {
     //setTopic('');
     if (topicname == 'mytopics') {
         highlightmajornavbutton("topiclistbutton");
@@ -532,7 +565,14 @@ function showBlockers(qaddress) {
 
 function showBlocking(qaddress) {
     getAndPopulateFB('blocking', qaddress);
+}
 
+function showRatings(qaddress) {
+    getAndPopulateRatings(qaddress);
+}
+
+function showRaters(qaddress) {
+    getAndPopulateRaters(qaddress);
 }
 
 
@@ -627,3 +667,33 @@ function scrollToPosition(theElement) {
     }
     backForwardEvent = false;
 }
+
+
+//Automatically stop video from playing if it is scrolled off screen
+function playPauseVideo() {
+    let videos = document.querySelectorAll("video");
+    videos.forEach((video) => {
+        // Check if the video already has an observer
+        if (!video.intersectionObserver) {
+            let observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.intersectionRatio !== 1 && !video.paused) {
+                            video.pause();
+                        } else if (!entry.isIntersecting &&!video.paused) {
+                            video.pause();
+                        }
+                    });
+                },
+                { threshold: 0.1 }
+            );
+
+            observer.observe(video);
+
+            // Store the observer on the video element
+            video.intersectionObserver = observer;
+        }
+    });
+}
+
+setInterval(playPauseVideo, 500);

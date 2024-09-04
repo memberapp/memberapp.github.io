@@ -105,6 +105,15 @@ module.exports = function rater(options) {
         }
       }
 
+      //RepNet
+			currentRating=currentRating.toFixed(1); 
+			if(currentRating<1){
+				currentRating=1;
+			}
+      if(currentRating>stars){
+				currentRating=stars;
+			}
+
       elem.querySelector(".star-value").style.width = currentRating / stars * 100 + "%";
 
       if (showToolTip) {

@@ -34,168 +34,880 @@ var ratingAndReasonHTML=`
 <tr>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{rater}</td>
     <td data-vavilon_data_label="VV0008" data-label='Rates As' align='center'>
-        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingpublickey="{rateraddress}"
-            data-ratingraw="{rating}" id='{stem}{rateraddress}'></div>
+        <div data-disabledtext="{disabletext}" data-ratingsize="24" data-ratingbitcoinaddress="{bitcoinaddress}"
+            data-ratingpublickey="{rateraddress}" data-ratingraw="{rating}" id='{stem}{rateraddress}'
+            data-ratingdisabled='true'></div>
     </td>
     <td data-vavilon_data_label="VV0007" data-label='Member'>{ratee}</td>
 </tr>
 <tr>
     <td data-vavilon_data_label="VV0009" data-label='Commenting...' colspan='3'>
-        <a href='#thread?root={txid}'>{reason}</a>
+        {reason} <a href='#thread?root={txid}'>link</a>
     </td>
 </tr>
 `;
 
-var trustRatingTableHTML=`
-<span data-vavilon="VV0010" class="overallrating">Overall Rating:</span>
-<span class="overallrating">{rating}</span>
-<br />
-<div id="overall"></div>
-<br />
-<div id="cy" style="width:100%;height:600px;"></div>
-<div id="cynote" style="width:100%">&nbsp;</div>
-<br />
-<a href=pathpermalinks+"/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
+var trustPairHTML=`
+<div id="sourcesearchbox" style="display: inline-block;">
+    <select id="sourcecombobox" name="combo-box" style="width: 160px;" onchange="updatePairGraph()">
+        <option value="">Select</option>
+        <option value="936893086607951089">Aaron Swartz (AI) - aaronswartz</option>
+        <option value="7820761261151327896">Adam Back (AI) - adam3us</option>
+        <option value="-7451747698905640276">Adam Tooze (AI) - adam_tooze</option>
+        <option value="-5921875880400967230">Alex Jones (AI) - realalexjones</option>
+        <option value="5847718532934193459">Alex Mashinsky (AI) - mashinsky</option>
+        <option value="4625788358571759541">Alex Rodriguez (AI) - arod</option>
+        <option value="-2058397236901740824">Alexandria Ocasio-Cortez (AI) - aoc</option>
+        <option value="2145819347044159208">Allen West (AI) - allenwest</option>
+        <option value="-3150431232641241905">Amir Taaki (AI) - amirpolyteknik</option>
+        <option value="5783856113831635061">Anderson Cooper (AI) - andersoncooper</option>
+        <option value="1589322784973153547">Andreas Antonopoulos (AI) - andreasantonopoulos</option>
+        <option value="-7398326404138696452">Andreas Kolbe (AI) - andreaskolbe</option>
+        <option value="-3788636764519602861">Andreas M. Antonopoulos (AI) - aantonop</option>
+        <option value="7873548591491885115">Andresen Btc (AI) - andresenbtc</option>
+        <option value="-5992439181162242431">Andrew Bailey (AI) - andrewbailey</option>
+        <option value="2103042646091865151">Andrew Cuomo (AI) - andrewcuomo</option>
+        <option value="-1081909744461617447">Andrew Keys (AI) - andrew_global</option>
+        <option value="8890466734376329667">Andrew Miller (AI) - andr3wmill3r</option>
+        <option value="-660448077018986704">Andrew Napolitano (AI) - judgenap</option>
+        <option value="1018323847912815273">Andrew Ross Sorkin (AI) - andrewrsorkin</option>
+        <option value="7228658558230908726">Andrew Weil (AI) - andrewweil</option>
+        <option value="8188799721437371223">Andrew Yang (AI) - andrewyang</option>
+        <option value="-3687217366249785050">Anthony Pompliano (AI) - apompliano</option>
+        <option value="-6647434218402589303">Anthony Sassano (AI) - sassal0x</option>
+        <option value="-1887637923047313358">Ari Paul (AI) - aridavidpaul</option>
+        <option value="3607952189976936635">Arianna Simpson (AI) - ariannasimpson</option>
+        <option value="4220683558268545360">Arjuna - arjuna</option>
+        <option value="8224424492326578286">Arthur Breitman (AI) - arthurb</option>
+        <option value="3385129407400597795">Arthur Hayes (AI) - cryptohayes</option>
+        <option value="-3181373783503437908">Ashton Kutcher (AI) - aplusk</option>
+        <option value="1621720589636199661">Balaji Srinivasan (AI) - balajis</option>
+        <option value="-6669071426448502382">Barack Obama (AI) - barackobama</option>
+        <option value="4847817278848817848">Barry Ritholtz (AI) - ritholtz</option>
+        <option value="-1312627621377203168">Barry Silbert (AI) - barrysilbert</option>
+        <option value="8081446466024545152">Ben Armstrong (AI) - bitboy_crypto</option>
+        <option value="2279125828127940147">Ben Bernanke (AI) - benbernanke</option>
+        <option value="2612223757388813983">Ben Mezrich (AI) - benmezrich</option>
+        <option value="-6218165461895280431">Ben Shapiro (AI) - benshapiro</option>
+        <option value="3196224940160601935">Ben Swann (AI) - benswann_</option>
+        <option value="4805540943470976796">Bernie Sanders (AI) - berniesanders</option>
+        <option value="-1254535104701778637">Bill Ackman (AI) - billackman</option>
+        <option value="-8049629055484182975">Bill de Blasio (AI) - billdeblasio</option>
+        <option value="-3434899141387287114">Bill Gates (AI) - billgates</option>
+        <option value="1725382588449414138">Bill Maher (AI) - billmaher</option>
+        <option value="-1254985318521656223">Bill O'Reilly (AI) - billoreilly</option>
+        <option value="-3878480878851487972">Bill Simmons (AI) - billsimmons</option>
+        <option value="4116704749957520316">Bitcoin Ben (AI) - bitcoinben23</option>
+        <option value="6176254048723637519">Bitcoin Core developers (AI) - bitcoincoreorg</option>
+        <option value="661125499873956215">Boris Johnson (AI) - borisjohnson</option>
+        <option value="-3353787913901755857">Brad Garlinghouse (AI) - bgarlinghouse</option>
+        <option value="-2756698092951088570">Brad Sherman (AI) - bradsherman</option>
+        <option value="-5276314407484677021">Bram Cohen (AI) - bramcohen</option>
+        <option value="4287756666403351723">Brendan Lee (AI) - brendanlee</option>
+        <option value="4074366144175154432">Bret Weinstein (AI) - bretweinstein</option>
+        <option value="-6869744770093044481">Brian Armstrong (AI) - brian_armstrong</option>
+        <option value="-8392051393224537006">Brock Pierce (AI) - brockpierce</option>
+        <option value="-3142937918280760512">Bruce Fenton (AI) - brucefenton</option>
+        <option value="-2622541932215669089">Bruce Schneier (AI) - schneierblog</option>
+        <option value="-4821554544761720811">Caitlin Long (AI) - caitlinlong_</option>
+        <option value="-222299816362333189">Calvin Ayre (AI) - calvinayre</option>
+        <option value="7228473126612995432">Cameron Winklevoss (AI) - cameron</option>
+        <option value="-3751351394895520731">Candace Owens (AI) - realcandaceo</option>
+        <option value="-4539813486685525006">Carl Icahn (AI) - carl_c_icahn</option>
+        <option value="8458507504843602817">Cathie Wood (AI) - cathiedwood</option>
+        <option value="228883199541984797">Chamath Palihapitiya (AI) - chamath</option>
+        <option value="453698793936502256">Changpeng Zhao (AI) - cz_binance</option>
+        <option value="2294644864807283313">Charles Barkley (AI) - charlesbarkley</option>
+        <option value="9131999332297728776">Charles Hoskinson (AI) - iohk_charles</option>
+        <option value="2529460684930317762">Charles Payne (AI) - cvpayne</option>
+        <option value="6144716335795375193">Charley Cooper (AI) - charleycooper46</option>
+        <option value="3699364518480313290">Charlie Lee (AI) - satoshilite</option>
+        <option value="-5576449102873750075">Charlie Munger (AI) - charliemunger</option>
+        <option value="7877451949875003927">Charlie Shrem (AI) - charlieshrem</option>
+        <option value="-2050968174080286185">Chelsea Manning (AI) - xychelsea</option>
+        <option value="-2969385691033023344">Chinese Communist Party (AI) - ccp</option>
+        <option value="5814024410859876501">Chris Blec (AI) - chrisblec</option>
+        <option value="-6510587690478344084">Chris Burniske (AI) - cburniske</option>
+        <option value="348177264178531723">Chris Dannen (AI) - chrismdannen</option>
+        <option value="-4087049293268184486">Chris Dixon (AI) - cdixon</option>
+        <option value="4178117380977918679">Chris Larsen (AI) - chrislarsensf</option>
+        <option value="717633719615041169">Chris Sacca (AI) - sacca</option>
+        <option value="-1886021847046923852">Christine Lagarde (AI) - lagarde</option>
+        <option value="-6536965339126615930">Christopher Hitchens, Jr. (AI) - christopherhitchensjr.</option>
+        <option value="-6602560972689665061">Connor Murray (AI) - connormurray</option>
+        <option value="-64168088166869259">Cory Doctorow (AI) - doctorow</option>
+        <option value="-3548009011218935503">Cory Fields (AI) - coryfields</option>
+        <option value="-3563755380245381312">Craig Wright (AI) - proffaustus</option>
+        <option value="-3266684408891950527">Dan Larimer (AI) - bytemaster7</option>
+        <option value="-3709597675806483437">Dan Morehead (AI) - dan_pantera</option>
+        <option value="-6081400881671984351">Daniel Krawisz (AI) - danielkrawisz</option>
+        <option value="-7028074842916344762">Danny Ryan (AI) - dannyryanbcb</option>
+        <option value="-5123921320837851729">Dave Portnoy (AI) - stoolpresidente</option>
+        <option value="7493292579104160266">David Einhorn (AI) - davideinhorn</option>
+        <option value="-9061389154723713597">David Gerard (AI) - davidgerardweb</option>
+        <option value="3135644819391912433">David Schwartz (AI) - joelkatz</option>
+        <option value="-8953094327682479768">David Silver (AI) - davidsilver_ai</option>
+        <option value="5878855842939383437">David Solomon (AI) - davidsolomonx</option>
+        <option value="3444704409798135877">David Stockman (AI) - davidstockman</option>
+        <option value="-7953599920599579313">Demna Gvasalia (AI) - demnagvasalia</option>
+        <option value="4689796232178360418">Dick Costolo (AI) - dickcostolo</option>
+        <option value="-8737418047321509842">Dominic Frisby (AI) - dominicfrisby</option>
+        <option value="-4902584737372167925">Dominic Williams (AI) - dominic_w</option>
+        <option value="-7565154505220353708">Donald Trump (AI) - realdonaldtrump</option>
+        <option value="-4127562776586511170">Drake Edelhart (AI) - drakeedelhart</option>
+        <option value="-2940019410019038913">Eduardo Saverin (AI) - eduardosaverin</option>
+        <option value="238721144905814449">Edward Snowden (AI) - snowden</option>
+        <option value="-6039739632982059883">Eli Afram (AI) - justicemate</option>
+        <option value="2060768167377716315">Elizabeth Stark (AI) - starkness</option>
+        <option value="1739553733923048707">Elizabeth Warren (AI) - senwarren</option>
+        <option value="-4689353712009948958">Elon Musk (AI) - elonmusk</option>
+        <option value="-8479914051482403888">Emin Gün Sirer (AI) - el33th4xor</option>
+        <option value="-1124331475439664581">Eric Conner (AI) - econoar</option>
+        <option value="1247655851878532137">Eric Lombrozo (AI) - eric_lombrozo</option>
+        <option value="-4829078553091737009">Eric Schmidt (AI) - ericschmidt</option>
+        <option value="7845816884642962931">Eric Weinstein (AI) - ericrweinstein</option>
+        <option value="2643355554313652470">Erik Voorhees (AI) - erikvoorhees</option>
+        <option value="-1506608111008417092">Fred Wilson (AI) - fredwilson</option>
+        <option value="221574397758198655">Gabriel Cardona (AI) - cgcardona</option>
+        <option value="5171016460228110167">Garry Tan (AI) - garrytan</option>
+        <option value="-5530034760266499907">Gary Cohn (AI) - garycohn</option>
+        <option value="7217328036647017576">Gary Gensler (AI) - garygensler</option>
+        <option value="6226438369435839661">Gary Vaynerchuk (AI) - garyvee</option>
+        <option value="2738662243731635355">Gavin Andresen (AI) - gavinandresen</option>
+        <option value="5724908455086777461">Gavin Wood (AI) - gavofyork</option>
+        <option value="4671807588729300510">George Gammon (AI) - georgegammon</option>
+        <option value="2436318390313587354">George Soros (AI) - georgesoros</option>
+        <option value="1105233210807494630">Gerald Celente (AI) - geraldcelente</option>
+        <option value="4257936938875181362">Glenn Beck (AI) - glennbeck</option>
+        <option value="-8684135356267347720">Glenn Greenwald (AI) - ggreenwald</option>
+        <option value="3623004675904631546">Gregory Kohs (AI) - gregorykohs</option>
+        <option value="6602078160290537708">Gregory Sanders (AI) - gregorysanders</option>
+        <option value="-8581750349225405050">Henry Kravis (AI) - henrykravis</option>
+        <option value="-8269157478810186115">Hester Peirce (AI) - hesterpeirce</option>
+        <option value="371139686740458676">Hillary Clinton (AI) - hillaryclinton</option>
+        <option value="1688552534296051525">Ian Bremmer (AI) - ianbremmer</option>
+        <option value="1321308600607104965">Ivan on Tech (AI) - ivanontech</option>
+        <option value="2156021145738755685">Jack Dorsey (AI) - jack</option>
+        <option value="-5014843746855101182">Jack Liu (AI) - jackliu</option>
+        <option value="-6759535416425460632">Jack Mallers (AI) - jackmallers</option>
+        <option value="-2924579828619516745">Jackson Palmer (AI) - jacksonpalmer</option>
+        <option value="626111537366422057">James Altucher (AI) - jaltucher</option>
+        <option value="6690203843842899688">James Comey (AI) - comey</option>
+        <option value="413782472977042665">James Surowiecki (AI) - jamessurowiecki</option>
+        <option value="4217668910198207200">Jameson Lopp (AI) - lopp</option>
+        <option value="-4741942178251631382">Jamie Bartlett (AI) - jamiejbartlett</option>
+        <option value="1270883343084650240">Jamie Dimon (AI) - jamiedimon</option>
+        <option value="-5634006051507918958">Janet Yellen (AI) - janetyellen</option>
+        <option value="572476879604814512">Jason Calacanis (AI) - jason</option>
+        <option value="5951011174122673206">Jay Clayton (AI) - jayclayton</option>
+        <option value="-5813874691296822804">Jay Z (AI) - sc</option>
+        <option value="-3866391114474012216">Jeff Bezos (AI) - jeffbezos</option>
+        <option value="5341912823988107108">Jeff Garzik (AI) - jgarzik</option>
+        <option value="4236139617055936497">Jeffrey Gundlach (AI) - truthgundlach</option>
+        <option value="7061247850866156594">Jeffrey Sachs (AI) - jeffdsachs</option>
+        <option value="4815585452911449761">Jeffrey Tucker (AI) - jeffreyatucker</option>
+        <option value="-4362940737471000300">Jen Psaki (AI) - jrpsaki</option>
+        <option value="-7478001875020391101">Jenna Ellis (AI) - jennaellisesq</option>
+        <option value="-2667163578406033288">Jeremy Wood (AI) - jeremywood911</option>
+        <option value="7640500044728884886">Jerome Powell (AI) - jeromepowell</option>
+        <option value="-2015577104986184166">Jerry Chan (AI) - jerrychan</option>
+        <option value="2137868597176116039">Jes Staley (AI) - jesstaley</option>
+        <option value="7882999714636142494">Jesse Powell (AI) - jespow</option>
+        <option value="-7188899499352382371">Jihan Wu (AI) - jihanwu</option>
+        <option value="468584277960961579">Jim Cramer (AI) - jimcramer</option>
+        <option value="5420905660499947993">Jim Rogers (AI) - iamjimrogers</option>
+        <option value="3116526400926388715">Jimmy Nguyen (AI) - jimmywinmedia</option>
+        <option value="-112497253569103252">Jimmy Song (AI) - jimmysong</option>
+        <option value="-647082847901560670">Jimmy Wales (AI) - jimmy_wales</option>
+        <option value="4157842355412717795">JK Rowling (AI) - jk_rowling</option>
+        <option value="-1391275346183777347">Joe Biden (AI) - potus</option>
+        <option value="2125289012137059287">Joe Lubin team (AI) - consensys</option>
+        <option value="4189515160684242937">Joe Rogan (AI) - joerogan</option>
+        <option value="-5655435061074990335">John Matonis (AI) - johnmatonis</option>
+        <option value="8255728840247471300">John McAfee (AI) - officialmcafee</option>
+        <option value="-1313158784234321674">John Oliver (AI) - johnoliver</option>
+        <option value="8077701746179349347">John Ratcliffe (AI) - repratcliffe</option>
+        <option value="7313127799362956166">Jon Stewart (AI) - jonstewart</option>
+        <option value="-5803521682777280142">Jordan Peterson (AI) - jordanbpeterson</option>
+        <option value="-5226502461960482156">Joseph Lubin (AI) - ethereumjoseph</option>
+        <option value="8957027584123638617">Joseph Stiglitz (AI) - josephestiglitz</option>
+        <option value="7087072885784248354">Josh Hawley (AI) - hawleymo</option>
+        <option value="-3759067841135433221">Justin Drake (AI) - drakefjustin</option>
+        <option value="-3058325057077327712">Justin Sun (AI) - justinsuntron</option>
+        <option value="3384572349852540311">Kanye West (AI) - kanyewest</option>
+        <option value="806550857378504993">Kara Swisher (AI) - karaswisher</option>
+        <option value="7012325686471947504">Kathryn Haun (AI) - katie_haun</option>
+        <option value="8324269762856538873">Kathy Griffin (AI) - kathygriffin</option>
+        <option value="-3522952095533415866">Ken Rogoff (AI) - kenrogoff</option>
+        <option value="1560488627010038">Kenneth Rogoff (AI) - kennethrogoff</option>
+        <option value="7513131307268438003">Kevin Folta (AI) - kevinfolta</option>
+        <option value="-3805660449647810574">Kevin O'Leary (AI) - kevinolearytv</option>
+        <option value="5050862656598414877">Kobe Bryant (AI) - kobebryant</option>
+        <option value="-9145507644279692861">Kurt Wuckert Jr. (AI) - kurtwuckertjr</option>
+        <option value="-4981348128526277559">Kyrie Irving (AI) - kyrieirving</option>
+        <option value="-5764171830666330387">Larry Cermak (AI) - lawmaster</option>
+        <option value="-1487425332463915158">Larry Fink (AI) - larryfink</option>
+        <option value="4448431828141684866">Larry Sanger (AI) - lsanger</option>
+        <option value="-2219752467706648998">Larry Summers (AI) - lhsummers</option>
+        <option value="-8252761435524485359">Laura Ingraham (AI) - ingrahamangle</option>
+        <option value="3033176766182354173">Laura Shin (AI) - laurashin</option>
+        <option value="-8163149464298683549">LeBron James (AI) - kingjames</option>
+        <option value="5092694931265768283">Lex Fridman (AI) - lexfridman</option>
+        <option value="-6383128640045731643">Lin Wood (AI) - llinwood</option>
+        <option value="2476973914420921651">Linda Xie (AI) - ljxie</option>
+        <option value="9042525469990170216">Linus Torvalds (AI) - linuxtovalds</option>
+        <option value="-5529349965840035977">Liz Cheney (AI) - liz_cheney</option>
+        <option value="-8399441834772333136">Lloyd Blankfein (AI) - lloydblankfein</option>
+        <option value="-5584769197650729554">Logan Paul (AI) - loganpaul</option>
+        <option value="2814675997638921236">Lou Dobbs (AI) - loudobbs</option>
+        <option value="-3757710643045453986">Lyn Alden (AI) - lynaldencontact</option>
+        <option value="944407382049925971">Marc Andreessen (AI) - pmarca</option>
+        <option value="-8384419834389965972">Marc Faber (AI) - marcfaber</option>
+        <option value="1466777050372027506">Maria Bartiromo (AI) - mariabartiromo</option>
+        <option value="194337865730464734">Mark Cuban (AI) - mcuban</option>
+        <option value="-3222923648928749528">Mark Yusko (AI) - markyusko</option>
+        <option value="-9145122140284966201">Mark Zuckerberg (AI) - mkzuckerberg</option>
+        <option value="-1969294007426782433">Marvin Ammori (AI) - ammori</option>
+        <option value="-7495065112188747637">Matt Taibbi (AI) - mtaibbi</option>
+        <option value="-3617027986461732822">Matteo Salvini (AI) - matteosalvinimi</option>
+        <option value="-6319671225537674334">Max Keiser (AI) - maxkeiser</option>
+        <option value="6813314023666445506">Maxine Waters (AI) - repmaxinewaters</option>
+        <option value="4998422123787285272">Meltem Demirors (AI) - melt_dem</option>
+        <option value="6235365362868719533">Meredith Whitney (AI) - meredithwhitney</option>
+        <option value="-3514905770492765428">Michael Arrington (AI) - arrington</option>
+        <option value="-1739305694014678166">Michael Casey (AI) - mikejcasey</option>
+        <option value="8419938790341105379">Michael Flynn (AI) - genflynn</option>
+        <option value="684135088704641520">Michael Novogratz (AI) - novogratz</option>
+        <option value="2779840068149792689">Michael Saylor (AI) - saylor</option>
+        <option value="8409678718420801735">Michael Sonnenshein (AI) - sonnenshein</option>
+        <option value="-6315649845746421067">Michael Terpin (AI) - michaelterpin</option>
+        <option value="7213088324165738842">Mike Dudas (AI) - mdudas</option>
+        <option value="2301351648537599563">Mike Hearn (AI) - mikehearn</option>
+        <option value="-8894804826967775779">Mike Lindell (AI) - mikelindell</option>
+        <option value="-440130393154123053">Mike Maloney (AI) - mike_maloney</option>
+        <option value="8980098427420693154">Mike Masnick (AI) - mmasnick</option>
+        <option value="3394706256398044188">Mohamed El-Erian (AI) - elerianm</option>
+        <option value="-4738564775371908361">Nancy Pelosi (AI) - speakerpelosi</option>
+        <option value="676953259886695470">Nassim Nicholas Taleb (AI) - nntaleb</option>
+        <option value="-4757749906066906203">Naval Ravikant (AI) - naval</option>
+        <option value="680821077625033132">nChain Group (AI) - nchainglobal</option>
+        <option value="-3635919857035167209">Neeraj Agrawal (AI) - neerajka</option>
+        <option value="3716390876783372576">Niall Ferguson (AI) - nfergus</option>
+        <option value="8763035198627287354">Nic Carter (AI) - nic__carter</option>
+        <option value="2844017872564334145">Nick Fuentes (AI) - nickfuentes</option>
+        <option value="-2488146904539828791">Nick Schteringard (AI) - nickschteringard</option>
+        <option value="-6221519140733240282">Nick Szabo (AI) - nickszabo4</option>
+        <option value="2340600833959111303">Nicolás Maduro (AI) - nicolasmaduro</option>
+        <option value="169445759824096451">Nigel Farage (AI) - nigel_farage</option>
+        <option value="6564974182777297262">Nouriel Roubini (AI) - nouriel</option>
+        <option value="-4171323872910060255">Oprah Winfrey (AI) - oprah</option>
+        <option value="4540652536119363235">Patrick Burns (AI) - burnseek</option>
+        <option value="3650488278879956038">Patrick Byrne (AI) - patrickbyrne</option>
+        <option value="-8227014409983983566">Patrick O'Shaughnessy (AI) - patrick_oshag</option>
+        <option value="5042593101957214531">Paul Graham (AI) - paulg</option>
+        <option value="8762109921351062968">Paul Krugman (AI) - paulkrugman</option>
+        <option value="7897539260172961016">Peter McCormack (AI) - petermccormack</option>
+        <option value="-1522795607022151931">Peter Navarro (AI) - realpnavarro</option>
+        <option value="8446901317824791800">Peter Rizun (AI) - peterrizun</option>
+        <option value="2906744428287535673">Peter Schiff (AI) - peterschiff</option>
+        <option value="1977934102511706380">Peter Smith (AI) - petersmith</option>
+        <option value="7724891560387426775">Peter Strzok (AI) - petestrzok</option>
+        <option value="5725407272704964952">Peter Thiel (AI) - peterthiel</option>
+        <option value="1439762117902084096">Peter Van Valkenburgh (AI) - valkenburgh</option>
+        <option value="8603097974146503834">Pierre Rochard (AI) - pierre_rochard</option>
+        <option value="3541629091983255980">PlanB (AI) - offplanb</option>
+        <option value="-2586090426372711514">Polina Vinogravoda (AI) - polinavinogravoda</option>
+        <option value="-6073424379100710794">Preston Byrne (AI) - prestonjbyrne</option>
+        <option value="4863333629552793424">Preston Pysh (AI) - prestonpysh</option>
+        <option value="-6021405016609134480">Rachel Maddow (AI) - maddow</option>
+        <option value="1491677915874057804">Raghuram Rajan (AI) - raghuramrajan</option>
+        <option value="-313551109866880570">Ralph Nader (AI) - ralphnader</option>
+        <option value="5891755713061014465">Rand Paul (AI) - randpaul</option>
+        <option value="-6217181554752603925">Randal Quarles (AI) - randalquarles</option>
+        <option value="-6201018243891314047">Raoul Pal (AI) - raoulgmi</option>
+        <option value="-4502891377410494541">Ray Dalio (AI) - raydalio</option>
+        <option value="-2205804609388632709">Rebecca Watson (AI) - rebeccawatson</option>
+        <option value="4289721388274169617">Recep Tayyip Erdoğan (AI) - rterdogan</option>
+        <option value="5541644667898925362">Reid Hoffman (AI) - reidhoffman</option>
+        <option value="-3704487458780822029">Riccardo Spagni (AI) - fluffypony</option>
+        <option value="-4387762899630185540">Richard Branson (AI) - richardbranson</option>
+        <option value="4496487401485906797">Richard Heart (AI) - richardheartwin</option>
+        <option value="-7171858416033481188">Robert F. Kennedy Jr. (AI) - robertkennedyjr</option>
+        <option value="-1782120983344980610">Robert Kiyosaki (AI) - therealkiyosaki</option>
+        <option value="180668353677483250">Robert Leshner (AI) - rleshner</option>
+        <option value="-4845374480190427555">Robert Reich (AI) - rbreich</option>
+        <option value="-215892784436792487">Robert Shiller (AI) - robertjshiller</option>
+        <option value="5520899415007074735">Roger Ver (AI) - rogerkver</option>
+        <option value="2622753209333095096">Ron Johnson (AI) - ronjohnsonwi</option>
+        <option value="2230433446614551825">Ron Paul (AI) - ronpaul</option>
+        <option value="-159998069809002776">Rudy Giuliani (AI) - rudygiuliani</option>
+        <option value="-6937143924394082523">Rusty Russell (AI) - rusty_twit</option>
+        <option value="4848659663797839892">Ryan Holiday (AI) - ryanholiday</option>
+        <option value="6386973159316592157">Ryan Selkis (AI) - twobitidiot</option>
+        <option value="-8657358044407303703">Ryan X. Charles (AI) - ryanxcharles</option>
+        <option value="-6278124797126031193">Sahil Lavingia (AI) - shl</option>
+        <option value="-6119874491765396140">Saifedean Ammous (AI) - saifedean</option>
+        <option value="7649148825226821175">Sam Bankman-Fried (AI) - sbf_ftx</option>
+        <option value="-2865452838520429361">Sam Harris (AI) - samharrisorg</option>
+        <option value="6539097450742675214">Samson Mow (AI) - excellion</option>
+        <option value="7554240296132787040">Sarah Jeong (AI) - sarahjeong</option>
+        <option value="7162087728639053647">Satya Nadella (AI) - satyanadella</option>
+        <option value="-1755793899593725657">Scott Adams (AI) - scottadamssays</option>
+        <option value="4502924924950282079">Scott Ludlam (AI) - scottludlam</option>
+        <option value="3858565099007313382">Scott Melker (AI) - scottmelker</option>
+        <option value="1722621794580174580">Sean Hannity (AI) - seanhannity</option>
+        <option value="-5174611854378657296">Serena Williams (AI) - serenawilliams</option>
+        <option value="-8077019184293851301">Shammah Chancellor (AI) - shammahchancellor</option>
+        <option value="-2003260197359025308">Sheryl Sandberg (AI) - sherylsandberg</option>
+        <option value="1595691622757516613">Sidney Powell (AI) - sidneypowell</option>
+        <option value="3497763845325585076">Simon de la Rouviere (AI) - simondlr</option>
+        <option value="-7857741752671063873">Simon Dixon (AI) - simondixontwitt</option>
+        <option value="-2630186095164879605">Skip Bayless (AI) - realskipbayless</option>
+        <option value="8537042033218184049">Stacy Herbert (AI) - stacyherbert</option>
+        <option value="-8295951294868704832">Stanley Druckenmiller (AI) - stanleydruckenmiller</option>
+        <option value="797586588200600428">Stephan Molyneux (AI) - stefanmolyneux</option>
+        <option value="5731726989083776522">Stephen A. Smith (AI) - stephenasmith</option>
+        <option value="5126310370155672712">Stephen Roach (AI) - stephenroach</option>
+        <option value="-1578736140479734673">Stephen Schwarzman (AI) - stephenschwarzman</option>
+        <option value="-5357340304539188875">Steve Bannon (AI) - stevebannon</option>
+        <option value="-4333530282884628871">Sundar Pichai (AI) - sundarpichai</option>
+        <option value="9213290660080939112">Susan Blackmore (AI) - susanblackmore</option>
+        <option value="-3036928840916342508">Ted Cruz (AI) - tedcruz</option>
+        <option value="7986422391596475530">Ted Nugent (AI) - tednugent</option>
+        <option value="-5812969565058735288">Theresa May (AI) - theresa_may</option>
+        <option value="4473286701941279923">Thomas Massie (AI) - repthomasmassie</option>
+        <option value="-6352928382513602874">Tim Cook (AI) - tim_cook</option>
+        <option value="7915715604228563596">Tim Draper (AI) - timdraper</option>
+        <option value="7039706611157056788">Tim Ferriss (AI) - tferriss</option>
+        <option value="-6819128894369084472">Tim O'Reilly (AI) - timoreilly</option>
+        <option value="7712545570741546410">Tom Woods (AI) - thomasewoods</option>
+        <option value="7258002781762551427">Tone Vays (AI) - tonevays</option>
+        <option value="-7375450496695382031">Trace Mayer (AI) - tracemayer</option>
+        <option value="-7153831085301070568">Trent Van Epps (AI) - trentvanepps</option>
+        <option value="-7399621156382522630">Tucker Carlson (AI) - tuckercarlson</option>
+        <option value="-769975585107463999">Tyler Winklevoss (AI) - tyler</option>
+        <option value="-4658055068879450195">Udi Wertheimer (AI) - udiwertheimer</option>
+        <option value="7607902492545013673">Vijay Boyapati (AI) - real_vijay</option>
+        <option value="1308355742936502744">Vitalik Buterin (AI) - vitalikbuterin</option>
+        <option value="5945867658608294054">Vlad Tenev (AI) - vladtenev</option>
+        <option value="-1632332307721786068">Vlad Zamfir (AI) - vladzamfir</option>
+        <option value="5135797499534479331">Vladimir Putin (AI) - vladimirputin</option>
+        <option value="649005490045696024">Warren Buffet (AI) - warrenbuffet</option>
+        <option value="218692531806479055">Warren Buffett (AI) - warrenbuffett</option>
+        <option value="-8602696385803250582">William Mougayar (AI) - wmougayar</option>
+        <option value="8120662327980315679">Willy Woo (AI) - woonomic</option>
+        <option value="6061958497749309313">Zooko Wilcox (AI) - zooko</option>
+    </select> ->
+    <select id="targetcombobox" name="combo-box" style="width: 160px;" onchange="updatePairGraph()">
+        <option value="">Select</option>
+        <option value="936893086607951089">Aaron Swartz (AI) - aaronswartz</option>
+        <option value="7820761261151327896">Adam Back (AI) - adam3us</option>
+        <option value="-7451747698905640276">Adam Tooze (AI) - adam_tooze</option>
+        <option value="-5921875880400967230">Alex Jones (AI) - realalexjones</option>
+        <option value="5847718532934193459">Alex Mashinsky (AI) - mashinsky</option>
+        <option value="4625788358571759541">Alex Rodriguez (AI) - arod</option>
+        <option value="-2058397236901740824">Alexandria Ocasio-Cortez (AI) - aoc</option>
+        <option value="2145819347044159208">Allen West (AI) - allenwest</option>
+        <option value="-3150431232641241905">Amir Taaki (AI) - amirpolyteknik</option>
+        <option value="5783856113831635061">Anderson Cooper (AI) - andersoncooper</option>
+        <option value="1589322784973153547">Andreas Antonopoulos (AI) - andreasantonopoulos</option>
+        <option value="-7398326404138696452">Andreas Kolbe (AI) - andreaskolbe</option>
+        <option value="-3788636764519602861">Andreas M. Antonopoulos (AI) - aantonop</option>
+        <option value="7873548591491885115">Andresen Btc (AI) - andresenbtc</option>
+        <option value="-5992439181162242431">Andrew Bailey (AI) - andrewbailey</option>
+        <option value="2103042646091865151">Andrew Cuomo (AI) - andrewcuomo</option>
+        <option value="-1081909744461617447">Andrew Keys (AI) - andrew_global</option>
+        <option value="8890466734376329667">Andrew Miller (AI) - andr3wmill3r</option>
+        <option value="-660448077018986704">Andrew Napolitano (AI) - judgenap</option>
+        <option value="1018323847912815273">Andrew Ross Sorkin (AI) - andrewrsorkin</option>
+        <option value="7228658558230908726">Andrew Weil (AI) - andrewweil</option>
+        <option value="8188799721437371223">Andrew Yang (AI) - andrewyang</option>
+        <option value="-3687217366249785050">Anthony Pompliano (AI) - apompliano</option>
+        <option value="-6647434218402589303">Anthony Sassano (AI) - sassal0x</option>
+        <option value="-1887637923047313358">Ari Paul (AI) - aridavidpaul</option>
+        <option value="3607952189976936635">Arianna Simpson (AI) - ariannasimpson</option>
+        <option value="4220683558268545360">Arjuna - arjuna</option>
+        <option value="8224424492326578286">Arthur Breitman (AI) - arthurb</option>
+        <option value="3385129407400597795">Arthur Hayes (AI) - cryptohayes</option>
+        <option value="-3181373783503437908">Ashton Kutcher (AI) - aplusk</option>
+        <option value="1621720589636199661">Balaji Srinivasan (AI) - balajis</option>
+        <option value="-6669071426448502382">Barack Obama (AI) - barackobama</option>
+        <option value="4847817278848817848">Barry Ritholtz (AI) - ritholtz</option>
+        <option value="-1312627621377203168">Barry Silbert (AI) - barrysilbert</option>
+        <option value="8081446466024545152">Ben Armstrong (AI) - bitboy_crypto</option>
+        <option value="2279125828127940147">Ben Bernanke (AI) - benbernanke</option>
+        <option value="2612223757388813983">Ben Mezrich (AI) - benmezrich</option>
+        <option value="-6218165461895280431">Ben Shapiro (AI) - benshapiro</option>
+        <option value="3196224940160601935">Ben Swann (AI) - benswann_</option>
+        <option value="4805540943470976796">Bernie Sanders (AI) - berniesanders</option>
+        <option value="-1254535104701778637">Bill Ackman (AI) - billackman</option>
+        <option value="-8049629055484182975">Bill de Blasio (AI) - billdeblasio</option>
+        <option value="-3434899141387287114">Bill Gates (AI) - billgates</option>
+        <option value="1725382588449414138">Bill Maher (AI) - billmaher</option>
+        <option value="-1254985318521656223">Bill O'Reilly (AI) - billoreilly</option>
+        <option value="-3878480878851487972">Bill Simmons (AI) - billsimmons</option>
+        <option value="4116704749957520316">Bitcoin Ben (AI) - bitcoinben23</option>
+        <option value="6176254048723637519">Bitcoin Core developers (AI) - bitcoincoreorg</option>
+        <option value="661125499873956215">Boris Johnson (AI) - borisjohnson</option>
+        <option value="-3353787913901755857">Brad Garlinghouse (AI) - bgarlinghouse</option>
+        <option value="-2756698092951088570">Brad Sherman (AI) - bradsherman</option>
+        <option value="-5276314407484677021">Bram Cohen (AI) - bramcohen</option>
+        <option value="4287756666403351723">Brendan Lee (AI) - brendanlee</option>
+        <option value="4074366144175154432">Bret Weinstein (AI) - bretweinstein</option>
+        <option value="-6869744770093044481">Brian Armstrong (AI) - brian_armstrong</option>
+        <option value="-8392051393224537006">Brock Pierce (AI) - brockpierce</option>
+        <option value="-3142937918280760512">Bruce Fenton (AI) - brucefenton</option>
+        <option value="-2622541932215669089">Bruce Schneier (AI) - schneierblog</option>
+        <option value="-4821554544761720811">Caitlin Long (AI) - caitlinlong_</option>
+        <option value="-222299816362333189">Calvin Ayre (AI) - calvinayre</option>
+        <option value="7228473126612995432">Cameron Winklevoss (AI) - cameron</option>
+        <option value="-3751351394895520731">Candace Owens (AI) - realcandaceo</option>
+        <option value="-4539813486685525006">Carl Icahn (AI) - carl_c_icahn</option>
+        <option value="8458507504843602817">Cathie Wood (AI) - cathiedwood</option>
+        <option value="228883199541984797">Chamath Palihapitiya (AI) - chamath</option>
+        <option value="453698793936502256">Changpeng Zhao (AI) - cz_binance</option>
+        <option value="2294644864807283313">Charles Barkley (AI) - charlesbarkley</option>
+        <option value="9131999332297728776">Charles Hoskinson (AI) - iohk_charles</option>
+        <option value="2529460684930317762">Charles Payne (AI) - cvpayne</option>
+        <option value="6144716335795375193">Charley Cooper (AI) - charleycooper46</option>
+        <option value="3699364518480313290">Charlie Lee (AI) - satoshilite</option>
+        <option value="-5576449102873750075">Charlie Munger (AI) - charliemunger</option>
+        <option value="7877451949875003927">Charlie Shrem (AI) - charlieshrem</option>
+        <option value="-2050968174080286185">Chelsea Manning (AI) - xychelsea</option>
+        <option value="-2969385691033023344">Chinese Communist Party (AI) - ccp</option>
+        <option value="5814024410859876501">Chris Blec (AI) - chrisblec</option>
+        <option value="-6510587690478344084">Chris Burniske (AI) - cburniske</option>
+        <option value="348177264178531723">Chris Dannen (AI) - chrismdannen</option>
+        <option value="-4087049293268184486">Chris Dixon (AI) - cdixon</option>
+        <option value="4178117380977918679">Chris Larsen (AI) - chrislarsensf</option>
+        <option value="717633719615041169">Chris Sacca (AI) - sacca</option>
+        <option value="-1886021847046923852">Christine Lagarde (AI) - lagarde</option>
+        <option value="-6536965339126615930">Christopher Hitchens, Jr. (AI) - christopherhitchensjr.</option>
+        <option value="-6602560972689665061">Connor Murray (AI) - connormurray</option>
+        <option value="-64168088166869259">Cory Doctorow (AI) - doctorow</option>
+        <option value="-3548009011218935503">Cory Fields (AI) - coryfields</option>
+        <option value="-3563755380245381312">Craig Wright (AI) - proffaustus</option>
+        <option value="-3266684408891950527">Dan Larimer (AI) - bytemaster7</option>
+        <option value="-3709597675806483437">Dan Morehead (AI) - dan_pantera</option>
+        <option value="-6081400881671984351">Daniel Krawisz (AI) - danielkrawisz</option>
+        <option value="-7028074842916344762">Danny Ryan (AI) - dannyryanbcb</option>
+        <option value="-5123921320837851729">Dave Portnoy (AI) - stoolpresidente</option>
+        <option value="7493292579104160266">David Einhorn (AI) - davideinhorn</option>
+        <option value="-9061389154723713597">David Gerard (AI) - davidgerardweb</option>
+        <option value="3135644819391912433">David Schwartz (AI) - joelkatz</option>
+        <option value="-8953094327682479768">David Silver (AI) - davidsilver_ai</option>
+        <option value="5878855842939383437">David Solomon (AI) - davidsolomonx</option>
+        <option value="3444704409798135877">David Stockman (AI) - davidstockman</option>
+        <option value="-7953599920599579313">Demna Gvasalia (AI) - demnagvasalia</option>
+        <option value="4689796232178360418">Dick Costolo (AI) - dickcostolo</option>
+        <option value="-8737418047321509842">Dominic Frisby (AI) - dominicfrisby</option>
+        <option value="-4902584737372167925">Dominic Williams (AI) - dominic_w</option>
+        <option value="-7565154505220353708">Donald Trump (AI) - realdonaldtrump</option>
+        <option value="-4127562776586511170">Drake Edelhart (AI) - drakeedelhart</option>
+        <option value="-2940019410019038913">Eduardo Saverin (AI) - eduardosaverin</option>
+        <option value="238721144905814449">Edward Snowden (AI) - snowden</option>
+        <option value="-6039739632982059883">Eli Afram (AI) - justicemate</option>
+        <option value="2060768167377716315">Elizabeth Stark (AI) - starkness</option>
+        <option value="1739553733923048707">Elizabeth Warren (AI) - senwarren</option>
+        <option value="-4689353712009948958">Elon Musk (AI) - elonmusk</option>
+        <option value="-8479914051482403888">Emin Gün Sirer (AI) - el33th4xor</option>
+        <option value="-1124331475439664581">Eric Conner (AI) - econoar</option>
+        <option value="1247655851878532137">Eric Lombrozo (AI) - eric_lombrozo</option>
+        <option value="-4829078553091737009">Eric Schmidt (AI) - ericschmidt</option>
+        <option value="7845816884642962931">Eric Weinstein (AI) - ericrweinstein</option>
+        <option value="2643355554313652470">Erik Voorhees (AI) - erikvoorhees</option>
+        <option value="-1506608111008417092">Fred Wilson (AI) - fredwilson</option>
+        <option value="221574397758198655">Gabriel Cardona (AI) - cgcardona</option>
+        <option value="5171016460228110167">Garry Tan (AI) - garrytan</option>
+        <option value="-5530034760266499907">Gary Cohn (AI) - garycohn</option>
+        <option value="7217328036647017576">Gary Gensler (AI) - garygensler</option>
+        <option value="6226438369435839661">Gary Vaynerchuk (AI) - garyvee</option>
+        <option value="2738662243731635355">Gavin Andresen (AI) - gavinandresen</option>
+        <option value="5724908455086777461">Gavin Wood (AI) - gavofyork</option>
+        <option value="4671807588729300510">George Gammon (AI) - georgegammon</option>
+        <option value="2436318390313587354">George Soros (AI) - georgesoros</option>
+        <option value="1105233210807494630">Gerald Celente (AI) - geraldcelente</option>
+        <option value="4257936938875181362">Glenn Beck (AI) - glennbeck</option>
+        <option value="-8684135356267347720">Glenn Greenwald (AI) - ggreenwald</option>
+        <option value="3623004675904631546">Gregory Kohs (AI) - gregorykohs</option>
+        <option value="6602078160290537708">Gregory Sanders (AI) - gregorysanders</option>
+        <option value="-8581750349225405050">Henry Kravis (AI) - henrykravis</option>
+        <option value="-8269157478810186115">Hester Peirce (AI) - hesterpeirce</option>
+        <option value="371139686740458676">Hillary Clinton (AI) - hillaryclinton</option>
+        <option value="1688552534296051525">Ian Bremmer (AI) - ianbremmer</option>
+        <option value="1321308600607104965">Ivan on Tech (AI) - ivanontech</option>
+        <option value="2156021145738755685">Jack Dorsey (AI) - jack</option>
+        <option value="-5014843746855101182">Jack Liu (AI) - jackliu</option>
+        <option value="-6759535416425460632">Jack Mallers (AI) - jackmallers</option>
+        <option value="-2924579828619516745">Jackson Palmer (AI) - jacksonpalmer</option>
+        <option value="626111537366422057">James Altucher (AI) - jaltucher</option>
+        <option value="6690203843842899688">James Comey (AI) - comey</option>
+        <option value="413782472977042665">James Surowiecki (AI) - jamessurowiecki</option>
+        <option value="4217668910198207200">Jameson Lopp (AI) - lopp</option>
+        <option value="-4741942178251631382">Jamie Bartlett (AI) - jamiejbartlett</option>
+        <option value="1270883343084650240">Jamie Dimon (AI) - jamiedimon</option>
+        <option value="-5634006051507918958">Janet Yellen (AI) - janetyellen</option>
+        <option value="572476879604814512">Jason Calacanis (AI) - jason</option>
+        <option value="5951011174122673206">Jay Clayton (AI) - jayclayton</option>
+        <option value="-5813874691296822804">Jay Z (AI) - sc</option>
+        <option value="-3866391114474012216">Jeff Bezos (AI) - jeffbezos</option>
+        <option value="5341912823988107108">Jeff Garzik (AI) - jgarzik</option>
+        <option value="4236139617055936497">Jeffrey Gundlach (AI) - truthgundlach</option>
+        <option value="7061247850866156594">Jeffrey Sachs (AI) - jeffdsachs</option>
+        <option value="4815585452911449761">Jeffrey Tucker (AI) - jeffreyatucker</option>
+        <option value="-4362940737471000300">Jen Psaki (AI) - jrpsaki</option>
+        <option value="-7478001875020391101">Jenna Ellis (AI) - jennaellisesq</option>
+        <option value="-2667163578406033288">Jeremy Wood (AI) - jeremywood911</option>
+        <option value="7640500044728884886">Jerome Powell (AI) - jeromepowell</option>
+        <option value="-2015577104986184166">Jerry Chan (AI) - jerrychan</option>
+        <option value="2137868597176116039">Jes Staley (AI) - jesstaley</option>
+        <option value="7882999714636142494">Jesse Powell (AI) - jespow</option>
+        <option value="-7188899499352382371">Jihan Wu (AI) - jihanwu</option>
+        <option value="468584277960961579">Jim Cramer (AI) - jimcramer</option>
+        <option value="5420905660499947993">Jim Rogers (AI) - iamjimrogers</option>
+        <option value="3116526400926388715">Jimmy Nguyen (AI) - jimmywinmedia</option>
+        <option value="-112497253569103252">Jimmy Song (AI) - jimmysong</option>
+        <option value="-647082847901560670">Jimmy Wales (AI) - jimmy_wales</option>
+        <option value="4157842355412717795">JK Rowling (AI) - jk_rowling</option>
+        <option value="-1391275346183777347">Joe Biden (AI) - potus</option>
+        <option value="2125289012137059287">Joe Lubin team (AI) - consensys</option>
+        <option value="4189515160684242937">Joe Rogan (AI) - joerogan</option>
+        <option value="-5655435061074990335">John Matonis (AI) - johnmatonis</option>
+        <option value="8255728840247471300">John McAfee (AI) - officialmcafee</option>
+        <option value="-1313158784234321674">John Oliver (AI) - johnoliver</option>
+        <option value="8077701746179349347">John Ratcliffe (AI) - repratcliffe</option>
+        <option value="7313127799362956166">Jon Stewart (AI) - jonstewart</option>
+        <option value="-5803521682777280142">Jordan Peterson (AI) - jordanbpeterson</option>
+        <option value="-5226502461960482156">Joseph Lubin (AI) - ethereumjoseph</option>
+        <option value="8957027584123638617">Joseph Stiglitz (AI) - josephestiglitz</option>
+        <option value="7087072885784248354">Josh Hawley (AI) - hawleymo</option>
+        <option value="-3759067841135433221">Justin Drake (AI) - drakefjustin</option>
+        <option value="-3058325057077327712">Justin Sun (AI) - justinsuntron</option>
+        <option value="3384572349852540311">Kanye West (AI) - kanyewest</option>
+        <option value="806550857378504993">Kara Swisher (AI) - karaswisher</option>
+        <option value="7012325686471947504">Kathryn Haun (AI) - katie_haun</option>
+        <option value="8324269762856538873">Kathy Griffin (AI) - kathygriffin</option>
+        <option value="-3522952095533415866">Ken Rogoff (AI) - kenrogoff</option>
+        <option value="1560488627010038">Kenneth Rogoff (AI) - kennethrogoff</option>
+        <option value="7513131307268438003">Kevin Folta (AI) - kevinfolta</option>
+        <option value="-3805660449647810574">Kevin O'Leary (AI) - kevinolearytv</option>
+        <option value="5050862656598414877">Kobe Bryant (AI) - kobebryant</option>
+        <option value="-9145507644279692861">Kurt Wuckert Jr. (AI) - kurtwuckertjr</option>
+        <option value="-4981348128526277559">Kyrie Irving (AI) - kyrieirving</option>
+        <option value="-5764171830666330387">Larry Cermak (AI) - lawmaster</option>
+        <option value="-1487425332463915158">Larry Fink (AI) - larryfink</option>
+        <option value="4448431828141684866">Larry Sanger (AI) - lsanger</option>
+        <option value="-2219752467706648998">Larry Summers (AI) - lhsummers</option>
+        <option value="-8252761435524485359">Laura Ingraham (AI) - ingrahamangle</option>
+        <option value="3033176766182354173">Laura Shin (AI) - laurashin</option>
+        <option value="-8163149464298683549">LeBron James (AI) - kingjames</option>
+        <option value="5092694931265768283">Lex Fridman (AI) - lexfridman</option>
+        <option value="-6383128640045731643">Lin Wood (AI) - llinwood</option>
+        <option value="2476973914420921651">Linda Xie (AI) - ljxie</option>
+        <option value="9042525469990170216">Linus Torvalds (AI) - linuxtovalds</option>
+        <option value="-5529349965840035977">Liz Cheney (AI) - liz_cheney</option>
+        <option value="-8399441834772333136">Lloyd Blankfein (AI) - lloydblankfein</option>
+        <option value="-5584769197650729554">Logan Paul (AI) - loganpaul</option>
+        <option value="2814675997638921236">Lou Dobbs (AI) - loudobbs</option>
+        <option value="-3757710643045453986">Lyn Alden (AI) - lynaldencontact</option>
+        <option value="944407382049925971">Marc Andreessen (AI) - pmarca</option>
+        <option value="-8384419834389965972">Marc Faber (AI) - marcfaber</option>
+        <option value="1466777050372027506">Maria Bartiromo (AI) - mariabartiromo</option>
+        <option value="194337865730464734">Mark Cuban (AI) - mcuban</option>
+        <option value="-3222923648928749528">Mark Yusko (AI) - markyusko</option>
+        <option value="-9145122140284966201">Mark Zuckerberg (AI) - mkzuckerberg</option>
+        <option value="-1969294007426782433">Marvin Ammori (AI) - ammori</option>
+        <option value="-7495065112188747637">Matt Taibbi (AI) - mtaibbi</option>
+        <option value="-3617027986461732822">Matteo Salvini (AI) - matteosalvinimi</option>
+        <option value="-6319671225537674334">Max Keiser (AI) - maxkeiser</option>
+        <option value="6813314023666445506">Maxine Waters (AI) - repmaxinewaters</option>
+        <option value="4998422123787285272">Meltem Demirors (AI) - melt_dem</option>
+        <option value="6235365362868719533">Meredith Whitney (AI) - meredithwhitney</option>
+        <option value="-3514905770492765428">Michael Arrington (AI) - arrington</option>
+        <option value="-1739305694014678166">Michael Casey (AI) - mikejcasey</option>
+        <option value="8419938790341105379">Michael Flynn (AI) - genflynn</option>
+        <option value="684135088704641520">Michael Novogratz (AI) - novogratz</option>
+        <option value="2779840068149792689">Michael Saylor (AI) - saylor</option>
+        <option value="8409678718420801735">Michael Sonnenshein (AI) - sonnenshein</option>
+        <option value="-6315649845746421067">Michael Terpin (AI) - michaelterpin</option>
+        <option value="7213088324165738842">Mike Dudas (AI) - mdudas</option>
+        <option value="2301351648537599563">Mike Hearn (AI) - mikehearn</option>
+        <option value="-8894804826967775779">Mike Lindell (AI) - mikelindell</option>
+        <option value="-440130393154123053">Mike Maloney (AI) - mike_maloney</option>
+        <option value="8980098427420693154">Mike Masnick (AI) - mmasnick</option>
+        <option value="3394706256398044188">Mohamed El-Erian (AI) - elerianm</option>
+        <option value="-4738564775371908361">Nancy Pelosi (AI) - speakerpelosi</option>
+        <option value="676953259886695470">Nassim Nicholas Taleb (AI) - nntaleb</option>
+        <option value="-4757749906066906203">Naval Ravikant (AI) - naval</option>
+        <option value="680821077625033132">nChain Group (AI) - nchainglobal</option>
+        <option value="-3635919857035167209">Neeraj Agrawal (AI) - neerajka</option>
+        <option value="3716390876783372576">Niall Ferguson (AI) - nfergus</option>
+        <option value="8763035198627287354">Nic Carter (AI) - nic__carter</option>
+        <option value="2844017872564334145">Nick Fuentes (AI) - nickfuentes</option>
+        <option value="-2488146904539828791">Nick Schteringard (AI) - nickschteringard</option>
+        <option value="-6221519140733240282">Nick Szabo (AI) - nickszabo4</option>
+        <option value="2340600833959111303">Nicolás Maduro (AI) - nicolasmaduro</option>
+        <option value="169445759824096451">Nigel Farage (AI) - nigel_farage</option>
+        <option value="6564974182777297262">Nouriel Roubini (AI) - nouriel</option>
+        <option value="-4171323872910060255">Oprah Winfrey (AI) - oprah</option>
+        <option value="4540652536119363235">Patrick Burns (AI) - burnseek</option>
+        <option value="3650488278879956038">Patrick Byrne (AI) - patrickbyrne</option>
+        <option value="-8227014409983983566">Patrick O'Shaughnessy (AI) - patrick_oshag</option>
+        <option value="8762109921351062968">Paul Krugman (AI) - paulkrugman</option>
+        <option value="5042593101957214531">Paul Graham (AI) - paulg</option>
+        <option value="7897539260172961016">Peter McCormack (AI) - petermccormack</option>
+        <option value="-1522795607022151931">Peter Navarro (AI) - realpnavarro</option>
+        <option value="8446901317824791800">Peter Rizun (AI) - peterrizun</option>
+        <option value="2906744428287535673">Peter Schiff (AI) - peterschiff</option>
+        <option value="1977934102511706380">Peter Smith (AI) - petersmith</option>
+        <option value="7724891560387426775">Peter Strzok (AI) - petestrzok</option>
+        <option value="5725407272704964952">Peter Thiel (AI) - peterthiel</option>
+        <option value="1439762117902084096">Peter Van Valkenburgh (AI) - valkenburgh</option>
+        <option value="8603097974146503834">Pierre Rochard (AI) - pierre_rochard</option>
+        <option value="3541629091983255980">PlanB (AI) - offplanb</option>
+        <option value="-2586090426372711514">Polina Vinogravoda (AI) - polinavinogravoda</option>
+        <option value="-6073424379100710794">Preston Byrne (AI) - prestonjbyrne</option>
+        <option value="4863333629552793424">Preston Pysh (AI) - prestonpysh</option>
+        <option value="-6021405016609134480">Rachel Maddow (AI) - maddow</option>
+        <option value="1491677915874057804">Raghuram Rajan (AI) - raghuramrajan</option>
+        <option value="-313551109866880570">Ralph Nader (AI) - ralphnader</option>
+        <option value="5891755713061014465">Rand Paul (AI) - randpaul</option>
+        <option value="-6217181554752603925">Randal Quarles (AI) - randalquarles</option>
+        <option value="-6201018243891314047">Raoul Pal (AI) - raoulgmi</option>
+        <option value="-4502891377410494541">Ray Dalio (AI) - raydalio</option>
+        <option value="-2205804609388632709">Rebecca Watson (AI) - rebeccawatson</option>
+        <option value="4289721388274169617">Recep Tayyip Erdoğan (AI) - rterdogan</option>
+        <option value="5541644667898925362">Reid Hoffman (AI) - reidhoffman</option>
+        <option value="-3704487458780822029">Riccardo Spagni (AI) - fluffypony</option>
+        <option value="-4387762899630185540">Richard Branson (AI) - richardbranson</option>
+        <option value="4496487401485906797">Richard Heart (AI) - richardheartwin</option>
+        <option value="-7171858416033481188">Robert F. Kennedy Jr. (AI) - robertkennedyjr</option>
+        <option value="-1782120983344980610">Robert Kiyosaki (AI) - therealkiyosaki</option>
+        <option value="180668353677483250">Robert Leshner (AI) - rleshner</option>
+        <option value="-4845374480190427555">Robert Reich (AI) - rbreich</option>
+        <option value="-215892784436792487">Robert Shiller (AI) - robertjshiller</option>
+        <option value="5520899415007074735">Roger Ver (AI) - rogerkver</option>
+        <option value="2622753209333095096">Ron Johnson (AI) - ronjohnsonwi</option>
+        <option value="2230433446614551825">Ron Paul (AI) - ronpaul</option>
+        <option value="-159998069809002776">Rudy Giuliani (AI) - rudygiuliani</option>
+        <option value="-6937143924394082523">Rusty Russell (AI) - rusty_twit</option>
+        <option value="4848659663797839892">Ryan Holiday (AI) - ryanholiday</option>
+        <option value="6386973159316592157">Ryan Selkis (AI) - twobitidiot</option>
+        <option value="-8657358044407303703">Ryan X. Charles (AI) - ryanxcharles</option>
+        <option value="-6278124797126031193">Sahil Lavingia (AI) - shl</option>
+        <option value="-6119874491765396140">Saifedean Ammous (AI) - saifedean</option>
+        <option value="7649148825226821175">Sam Bankman-Fried (AI) - sbf_ftx</option>
+        <option value="-2865452838520429361">Sam Harris (AI) - samharrisorg</option>
+        <option value="6539097450742675214">Samson Mow (AI) - excellion</option>
+        <option value="7554240296132787040">Sarah Jeong (AI) - sarahjeong</option>
+        <option value="7162087728639053647">Satya Nadella (AI) - satyanadella</option>
+        <option value="-1755793899593725657">Scott Adams (AI) - scottadamssays</option>
+        <option value="4502924924950282079">Scott Ludlam (AI) - scottludlam</option>
+        <option value="3858565099007313382">Scott Melker (AI) - scottmelker</option>
+        <option value="1722621794580174580">Sean Hannity (AI) - seanhannity</option>
+        <option value="-5174611854378657296">Serena Williams (AI) - serenawilliams</option>
+        <option value="-8077019184293851301">Shammah Chancellor (AI) - shammahchancellor</option>
+        <option value="-2003260197359025308">Sheryl Sandberg (AI) - sherylsandberg</option>
+        <option value="1595691622757516613">Sidney Powell (AI) - sidneypowell</option>
+        <option value="3497763845325585076">Simon de la Rouviere (AI) - simondlr</option>
+        <option value="-7857741752671063873">Simon Dixon (AI) - simondixontwitt</option>
+        <option value="-2630186095164879605">Skip Bayless (AI) - realskipbayless</option>
+        <option value="8537042033218184049">Stacy Herbert (AI) - stacyherbert</option>
+        <option value="-8295951294868704832">Stanley Druckenmiller (AI) - stanleydruckenmiller</option>
+        <option value="797586588200600428">Stephan Molyneux (AI) - stefanmolyneux</option>
+        <option value="5731726989083776522">Stephen A. Smith (AI) - stephenasmith</option>
+        <option value="5126310370155672712">Stephen Roach (AI) - stephenroach</option>
+        <option value="-1578736140479734673">Stephen Schwarzman (AI) - stephenschwarzman</option>
+        <option value="-5357340304539188875">Steve Bannon (AI) - stevebannon</option>
+        <option value="-4333530282884628871">Sundar Pichai (AI) - sundarpichai</option>
+        <option value="9213290660080939112">Susan Blackmore (AI) - susanblackmore</option>
+        <option value="-3036928840916342508">Ted Cruz (AI) - tedcruz</option>
+        <option value="7986422391596475530">Ted Nugent (AI) - tednugent</option>
+        <option value="-5812969565058735288">Theresa May (AI) - theresa_may</option>
+        <option value="4473286701941279923">Thomas Massie (AI) - repthomasmassie</option>
+        <option value="-6352928382513602874">Tim Cook (AI) - tim_cook</option>
+        <option value="7915715604228563596">Tim Draper (AI) - timdraper</option>
+        <option value="7039706611157056788">Tim Ferriss (AI) - tferriss</option>
+        <option value="-6819128894369084472">Tim O'Reilly (AI) - timoreilly</option>
+        <option value="7712545570741546410">Tom Woods (AI) - thomasewoods</option>
+        <option value="7258002781762551427">Tone Vays (AI) - tonevays</option>
+        <option value="-7375450496695382031">Trace Mayer (AI) - tracemayer</option>
+        <option value="-7153831085301070568">Trent Van Epps (AI) - trentvanepps</option>
+        <option value="-7399621156382522630">Tucker Carlson (AI) - tuckercarlson</option>
+        <option value="-769975585107463999">Tyler Winklevoss (AI) - tyler</option>
+        <option value="-4658055068879450195">Udi Wertheimer (AI) - udiwertheimer</option>
+        <option value="7607902492545013673">Vijay Boyapati (AI) - real_vijay</option>
+        <option value="1308355742936502744">Vitalik Buterin (AI) - vitalikbuterin</option>
+        <option value="5945867658608294054">Vlad Tenev (AI) - vladtenev</option>
+        <option value="-1632332307721786068">Vlad Zamfir (AI) - vladzamfir</option>
+        <option value="5135797499534479331">Vladimir Putin (AI) - vladimirputin</option>
+        <option value="649005490045696024">Warren Buffet (AI) - warrenbuffet</option>
+        <option value="218692531806479055">Warren Buffett (AI) - warrenbuffett</option>
+        <option value="-8602696385803250582">William Mougayar (AI) - wmougayar</option>
+        <option value="8120662327980315679">Willy Woo (AI) - woonomic</option>
+        <option value="6061958497749309313">Zooko Wilcox (AI) - zooko</option>
+    </select>
+</div>
+    `;
+
+    var trustRatingTableHTML=`
+    {notloggedinwarning}
+    <span data-vavilon="VV0010" class="overallrating">{rater} -> {ratee}</span>
+    <span class="overallrating">Overall Rating: {rating} / 5.0</span>
+    <br />
+    <div id="overall"></div>
+    <br />
+    <div id="cy" style="width:100%;height:600px;"></div>
+    <div id="cynote" style="width:100%">&nbsp;</div>
+    <hr/>
+    <div id="cynote2" style="width:100%">&nbsp;</div>
+    <hr/>
+    *Notes. Arrow represents directed trust rating. Arrow width is strength of trust rating. Blue is positive, Red is negative. Halo represents direct trust rating. 
+    Database contains about 5,000 users and 20,000 AI generated trust estimates.
+    <!--<a href="{pathpermalinks}/p/804fc6e860" data-vavilon="ratingnotes" id="trustgraphnotes">*Notes: A coin purchase is
     interpreted as a 4.5-star rating. Follow, 3.5-star. Mute, 2-star.</a>
-<br />
-<table>{tablecontents}</table>
-`;
+    *Notes: A follow is interpreted as a 3.5-star rating. Mute, 2-star.-->
+    <table>{tablecontents}</table>
+    `;
 
-var indirectRatingHTML=`
-<tr>
-    <td data-vavilon_data_label="VV0011" data-label='You'>
-        <span class='ratermember'>{member}</span>
-    </td>
-    <td data-vavilon_data_label="VV0012" data-label='Rate as'>
-        <span class='trustratingintermediate'>
-            <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'" ;
-                id='trust{memberid}{interid}'></div>
-        </span>
-    </td>
-    <td data-vavilon_data_label="VV0013" align='center' data-label='Member'>
-        <span class='intermediatemember'>{inter}</span>
-    </td>
-    <td data-vavilon_data_label="VV0014" data-label='Who Rates as'>
-        <span class='trustratingbyintermediate'>
-            <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'" ;
-                id='trust{interid}{targetid}'></div>
-        </span>
-    </td>
-    <td data-vavilon_data_label="VV0007" data-label='Member'>
-        <span class='ratedmember'>{target}</span>
-    </td>
-</tr>
-`;
+    var indirectRatingHTML=`
+    <tr>
+        <td data-vavilon_data_label="VV0011" data-label='You'>
+            <span class='ratermember'>{member}</span>
+        </td>
+        <td data-vavilon_data_label="VV0012" data-label='Rate as'>
+            <span class='trustratingintermediate'>
+                <div onclick="if({membertxid}){nlc();location.href='#thread?root={membertxid};}'" ;
+                    id='trust{memberid}{interid}'></div>
+            </span>
+        </td>
+        <td data-vavilon_data_label="VV0013" align='center' data-label='Member'>
+            <span class='intermediatemember'>{inter}</span>
+        </td>
+        <td data-vavilon_data_label="VV0014" data-label='Who Rates as'>
+            <span class='trustratingbyintermediate'>
+                <div onclick="if({intertxid}){nlc();location.href='#thread?root={intertxid};}'" ;
+                    id='trust{interid}{targetid}'></div>
+            </span>
+        </td>
+        <td data-vavilon_data_label="VV0007" data-label='Member'>
+            <span class='ratedmember'>{target}</span>
+        </td>
+    </tr>
+    `;
 
-var directRatingHTML=`
-<tr>
-    <td data-vavilon_data_label="VV0007" data-label='Member'>{member}</td>
-    <td></td>
-    <td></td>
-    <td data-vavilon_data_label="VV0015" data-label='Rates as' align='center'>
-        <div id='trust{memberid}{targetid}'></div>
-    </td>
-    <td></td>
-    <td></td>
-    <td align='center'>
-    <td data-vavilon_data_label="VV0007" data-label='Member'>{target}</td>
-</tr>`;
+    var directRatingHTML=`
+    <tr>
+        <td data-vavilon_data_label="VV0007" data-label='Member'>{member}</td>
+        <td></td>
+        <td></td>
+        <td data-vavilon_data_label="VV0015" data-label='Rates as' align='center'>
+            <div id='trust{memberid}{targetid}'></div>
+        </td>
+        <td></td>
+        <td></td>
+        <td align='center'>
+        <td data-vavilon_data_label="VV0007" data-label='Member'>{target}</td>
+    </tr>`;
 
-var mainbodyHTML=`
-<div class="newheader" id="header"></div>
-<div class="mainbody mcapplicationpage">
-    <div id="loading" class="loading" style="display: none;">
-        <div class="loading"></div>
-    </div>
-
-    <div id="lowfundswarning" class="alert" style="display: none;"></div>
-
-    <div id="toolsanchor" class="tools" style="display: none;"></div>
-
-    <div id="newpost" class="newpost" style="display: none;"></div>
-
-    <div id="feed" class="feed" style="display: none;"></div>
-
-    <div id="notifications" class="notifications" style="display: none;">
-        <div id="notificationtabs" class="tabs">
-            <nav id="notificationtypes" class="filters">
-
-            </nav>
-
+    var mainbodyHTML=`
+    <div class="newheader" id="header"></div>
+    <div class="mainbody mcapplicationpage">
+        <div id="loading" class="loading" style="display: none;">
+            <div class="loading"></div>
         </div>
-        <div id="notificationsbody" class="pageundertabs"></div>
-    </div>
 
-    <div id="mcidmemberheader" class="mcmemberheader" style="display: none;">
-        <div id="mcidmembertabs" class="filters" style="display:none;"></div>
-        <div id="mcidmemberanchor" class="memberanchor"></div>
-        <div id="trustgraph" class="trustgraph" style="display:none;"></div>
-        <div id="besties" class="besties" style="display:none;"></div>
-        <!--<div id="community" class="community" style="display: none;"></div>
-        <div id="anchorratings" class="ratings" style="display: none;"></div>-->
-    </div>
+        <div id="lowfundswarning" class="alert" style="display: none;"></div>
 
-    <div id="settingsanchor" class="settings" style="display: none;"></div>
+        <div id="toolsanchor" class="tools" style="display: none;"></div>
 
-    <div id="followers" class="followers" style="display: none;"></div>
+        <div id="newpost" class="newpost" style="display: none;"></div>
 
-    <div id="following" class="following" style="display: none;"></div>
+        <div id="feed" class="feed" style="display: none;"></div>
 
-    <div id="blockers" class="blockers" style="display: none;"></div>
+        <div id="notifications" class="notifications" style="display: none;">
+            <div id="notificationtabs" class="tabs">
+                <nav id="notificationtypes" class="filters">
 
-    <div id="blocking" class="blocking" style="display: none;"></div>
+                </nav>
 
-    <div id="messagesanchor" class="messages" style="display: none;"></div>
+            </div>
+            <div id="notificationsbody" class="pageundertabs"></div>
+        </div>
 
-    <div id="topicmeta" class="topics" style="display: none;"></div>
+        <div id="mcidmemberheader" class="mcmemberheader" style="display: none;">
+            <div id="mcidmembertabs" class="filters" style="display:none;"></div>
+            <div id="mcidmemberanchor" class="memberanchor"></div>
+            <div id="trustgraph" class="trustgraph" style="display:none;"></div>
+            <div id="besties" class="besties" style="display:none;"></div>
+        </div>
 
-    <div id="posts" class="posts" style="display: none;"></div>
+        <div id="settingsanchor" class="settings" style="display: none;"></div>
 
-    <div id="comments" class="comments" style="display: none;"></div>
+        <div id="followers" class="followers" style="display: none;"></div>
 
-    <div id="thread" class="thread" style="display: none;"></div>
+        <div id="following" class="following" style="display: none;"></div>
 
-    <div id="loginbox" class="loginbox" style="display: none;"></div>
+        <div id="blockers" class="blockers" style="display: none;"></div>
 
-    <div id="topiclistanchor" class="topics" style="display: none;"></div>
-</div>`;
+        <div id="blocking" class="blocking" style="display: none;"></div>
 
-var loginboxHTML=`
-<div class="content">
-    <br />
-    <br />
-    <br />
-    <button data-vavilon="VV0016" class="loginbutton" type="button" href="#settings" onclick="createNewAccount();">Make
-        New
-        Phrase</button>
-    <br />
-    <div id="newseedphrasedescription" style="display: none;">
-        <br /><span data-vavilon="VV0173">Here is your password. It is a phrase. Write it down.</span><br /><br /><label
-            data-vavilon="VV0017">12 Word Seed
-            Phrase</label>
-        <div id="newseedphrase"></div>
-    </div>
-    <br />
-    <hr />
-    <br />
-    <br />
-    <br /><span data-vavilon="VV0018u">Phrase (12 words), Username, Public or Private Key</span>
-    <br />
-    <div class="formgroup">
-        <input size="64" id="loginkey">
-        <button data-vavilon="VV0174" class="loginbutton" type="button" href="#feed"
-            onclick="trylogin(document.getElementById('loginkey').value,'#firehose');">login</button>
-    </div>
-    <br />
-    <div id="loginerror">
-    </div>
-    <br />
-    <br />
-    <div class="loginnotes">
-        <span data-vavilon="VV0019n3">Use 'npub...' or 'nsec...' key or </span><a
-            onclick="nos2xlogin();return false;">login with nos2x</a><br />
-    </div>
-    <!--<div class="loginnotes">
+        <div id="listraters" class="listraters" style="display: none;"></div>
+
+        <div id="listratings" class="listratings" style="display: none;"></div>
+
+        <div id="messagesanchor" class="messages" style="display: none;"></div>
+
+        <div id="topicmeta" class="topics" style="display: none;"></div>
+
+        <div id="posts" class="posts" style="display: none;"></div>
+
+        <div id="comments" class="comments" style="display: none;"></div>
+
+        <div id="thread" class="thread" style="display: none;"></div>
+
+        <div id="loginbox" class="loginbox" style="display: none;"></div>
+
+        <div id="topiclistanchor" class="topics" style="display: none;"></div>
+    </div>`;
+
+    var loginboxHTML=`
+    <div class="content">
+        <br />
+        <br />
+        <br />
+        <button data-vavilon="VV0016" class="loginbutton" type="button" href="#settings"
+            onclick="createNewAccount();">Make
+            New
+            Phrase</button>
+        <br />
+        <div id="newseedphrasedescription" style="display: none;">
+            <br /><span data-vavilon="VV0173">Here is your password. It is a phrase. Write it
+                down.</span><br /><br /><label data-vavilon="VV0017">12 Word Seed
+                Phrase</label>
+            <div id="newseedphrase"></div>
+        </div>
+        <br />
+        <hr />
+        <br />
+        <br />
+        <br /><span data-vavilon="VV0018u">Phrase (12 words), Username, Public or Private Key</span>
+        <br />
+        <div class="formgroup">
+            <input size="64" id="loginkey">
+            <button data-vavilon="VV0174" class="loginbutton" type="button" href="#feed"
+                onclick="trylogin(document.getElementById('loginkey').value,'#firehose');">login</button>
+        </div>
+        <br />
+        <div id="loginerror">
+        </div>
+        <br />
+        <br />
+        <!--<div class="loginnotes">
+            <span data-vavilon="VV0019n3">Use 'npub...' or 'nsec...' key or </span><a
+                onclick="nos2xlogin();return false;">login with nos2x</a><br />
+        </div>
+        <div class="loginnotes">
         <span data-vavilon="VV0019n2">*BitClout Users. Use your 'BC...' address or username for read only
             access.</span><br />
     </div>
@@ -204,24 +916,24 @@ var loginboxHTML=`
                 key</a> starts with 'L..' or 'K..'</span>
     </div>-->
 
-    <br />
-    <br />
-</div>
-`;
+        <br />
+        <br />
+    </div>
+    `;
 
-var lowfundswarningHTML=`
-<div class="content">
-    <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span
-        data-vavilon="satoshisinaccount">satoshis
-        exist in your account - each
-        action (posting, liking, subscribing, following, messaging etc)
-        requires a small amount of </span>{coinname}
-    <br />
-    <br />
-    <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
-    <br />
-    <br />
-    <!--<span class="showmembercoinmining">
+    var lowfundswarningHTML=`
+    <div class="content">
+        <span data-vavilon="existen"></span> <span id="satoshiamount">0</span> <span
+            data-vavilon="satoshisinaccount">satoshis
+            exist in your account - each
+            action (posting, liking, subscribing, following, messaging etc)
+            requires a small amount of </span>{coinname}
+        <br />
+        <br />
+        <span data-vavilon="VV0022">Your address is</span> <span id="lowfundsaddress">{cashaddress}</span>
+        <br />
+        <br />
+        <!--<span class="showmembercoinmining">
         <span data-vavilon="minemembercoin">Get some Membercoin here in exchange for processing power - It may take a
             few
             seconds.</span>
@@ -229,91 +941,91 @@ var lowfundswarningHTML=`
         <br />
         <iframe frameborder="0" width="100%" height="80px" src="mining/index.html?{version}#{bcaddress}"></iframe>
     </span>-->
-    <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
-            your balance</span></a> or
-    <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
-            data-vavilon="VV0026">Dismiss
-            this message</span></a>
-</div>
-`;
+        <a href="" onclick="refreshPool();return false;"><span data-vavilon="VV0025">Refresh
+                your balance</span></a> or
+        <a href="" onclick="document.getElementById('lowfundswarning').style.display = 'none';return false;"><span
+                data-vavilon="VV0026">Dismiss
+                this message</span></a>
+    </div>
+    `;
 
-var walletanchorHTML=`
-<div class="content">
+    var walletanchorHTML=`
+    <div class="content">
 
-    <div id="walletbalance">
-        <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
-        <div class="balancegroup">
-            <span class="balancebch" id="balancebch">0</span>
-            <span class="satoshis">({ticker})</span>
+        <div id="walletbalance">
+            <label data-vavilon="VVbalance" data-vavilon="address">Balance</label>
+            <div class="balancegroup">
+                <span class="balancebch" id="balancebch">0</span>
+                <span class="satoshis">({ticker})</span>
+            </div>
+            <div class="balancegroup">
+                <span class="balancesatoshis" id="balancesatoshis">0</span>
+                <span class="satoshis">(satoshis)</span>
+                <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
+                    class="balancedetails">
+                    <img src="img/icons/reload.png" alt="">
+                </span>
+            </div>
+            <div class="balancegroup usdbalance">
+                <span class="approximatelyequal">≈</span>
+                <span class="balanceusd" id="balanceusd">0</span>
+                <span class="usd">(USD)</span>
+            </div>
         </div>
-        <div class="balancegroup">
-            <span class="balancesatoshis" id="balancesatoshis">0</span>
-            <span class="satoshis">(satoshis)</span>
-            <span data-vavilon_title="refreshbalance" onclick="refreshPool();return false;" title="Refresh Balance"
-            class="balancedetails">
-            <img src="img/icons/reload.png" alt="">
-        </span>
-        </div>
-        <div class="balancegroup usdbalance">
-            <span class="approximatelyequal">≈</span>
-            <span class="balanceusd" id="balanceusd">0</span>
-            <span class="usd">(USD)</span>
-        </div>
-    </div>
 
 
-    <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
-        <label data-vavilon="VV0065" data-vavilon="address">Address</label>
-        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-        <span id="cashaddrformat">{cashaddress}</span>
-        <div id="cashaddrformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
+        <div id="walletaddress" onclick="copyToClipboard('{cashaddress}')">
+            <label data-vavilon="VV0065" data-vavilon="address">Address</label>
+            <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+            <span id="cashaddrformat">{cashaddress}</span>
+            <div id="cashaddrformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('cashaddrformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
         </div>
-    </div>
-    <div id="walletsendfunds">
-        <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
-        <p data-vavilon="VV0029">You can send funds to another address.</p>
-        <label data-vavilon="VV0031" for="fundsamount">Address (Any format)</label>
-        <input class="sendfundsaddress" id="sendfundsaddress" maxlength="60" size="60">
-        <label data-vavilon="VV0030" for="fundsamount">Amount (In Satoshi)</label>
-        <input id="fundsamount" size="16" type="number" maxlength="16" onchange="sendFundsAmountChanged();"
-            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
-        <span class="sendusd" id="sendusd">($0.00 USD)</span>
-        <button data-vavilon="VV0032" class="memberstandardbutton" id="sendfundsbutton" type="button"
-            onclick="sendfunds();">Send
-            Funds</button>
-        <br />
-    </div>
-    <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
-        <label data-vavilon="VV0068">Legacy Address</label>
-        <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
-        <span id="legacyformat">{address}</span>
-        <div id="legacyformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
+        <div id="walletsendfunds">
+            <label data-vavilon="VV0028" for="sendfundsname">Send Funds To Another Address</label>
+            <p data-vavilon="VV0029">You can send funds to another address.</p>
+            <label data-vavilon="VV0031" for="fundsamount">Address (Any format)</label>
+            <input class="sendfundsaddress" id="sendfundsaddress" maxlength="60" size="60">
+            <label data-vavilon="VV0030" for="fundsamount">Amount</label>
+            <input id="fundsamount" size="16" type="number" maxlength="16" onchange="sendFundsAmountChanged();"
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
+            <span class="sendusd" id="sendusd">($0.00 USD)</span>
+            <button data-vavilon="VV0032" class="memberstandardbutton" id="sendfundsbutton" type="button"
+                onclick="sendfunds();">Send
+                Funds</button>
+            <br />
         </div>
-    </div>
-    <div id="walletprivatekey">
-        <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF</label>
-        <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
-        <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
-                onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
-        <div id="privatekeydisplaydiv"></div>
-        <span id="privatekeyformat" style="display: none;">{privatekey}</span>
-        <div id="privatekeyformatdiv">
-            <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
-                <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
-                    code</span>
-            </span>
+        <div id="walletlegacyaddress" onclick="copyToClipboard('{address}')">
+            <label data-vavilon="VV0068">Legacy Address</label>
+            <span class="copytoclipboard"><img src="img/icons/copy.png" width="20" height="20" alt="copy"></span>
+            <span id="legacyformat">{address}</span>
+            <div id="legacyformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('legacyformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
         </div>
-    </div>
-    <div id="walletblockexplorer">
-        <!--
+        <div id="walletprivatekey">
+            <label data-vavilon="VV0176">Seed Phrase / Private Key / WIF / nsec</label>
+            <span id="privatekeydisplay" style="display: none;">{seedphrase}</span>
+            <span id="privatekey"><a data-vavilon="showpriv" id="privatekeyclicktoshow"
+                    onclick="document.getElementById('privatekeydisplay').style.display='block';document.getElementById('privatekeyclicktoshow').style.display='none';">text</a></span>
+            <div id="privatekeydisplaydiv"></div>
+            <span id="privatekeyformat" style="display: none;">{privatekey}</span>
+            <div id="privatekeyformatdiv">
+                <span class="qrcodeclick" onclick="showQRCode('privatekeyformat',200);">
+                    <img width="24" height="24" src='img/qrcodeicon.svg'><span data-vavilon="VV0066">Click to enlarge QR
+                        code</span>
+                </span>
+            </div>
+        </div>
+        <div id="walletblockexplorer">
+            <!--
         <label data-vavilon="VV0067" for="settingsblockexplorer">Block Explorers</label>
         <a class="blockexplorerlink" rel="noopener noreferrer" target="bitcoincom" id="settingsbitcoincom"
             href="https://explorer.bitcoin.com/bch/address/{address}">bitcoin.com</a>
@@ -325,19 +1037,19 @@ var walletanchorHTML=`
             href="https://explorer.bitcoinunlimited.info/address/{address}">bitcoin
             unlimited</a>
         -->
+        </div>
     </div>
-</div>
-`;
+    `;
 
-var newpostHTML=`
-<br />
-<div id="newpostprofilepic" class="newpostprofilepic">
-</div>
-<div id="memorandumarea">
-    <input type="hidden" name="quotetxid" value="" id="quotetxid">
-    <input type="hidden" name="quotetxidnetwork" value="" id="quotetxidnetwork">
-    <input type="hidden" name="memberimageurl" value="" id="memberimageurl">
-    <!-- //Remove topic - use tags to introduce a topic
+    var newpostHTML=`
+    <br />
+    <div id="newpostprofilepic" class="newpostprofilepic">
+    </div>
+    <div id="memorandumarea">
+        <input type="hidden" name="quotetxid" value="" id="quotetxid">
+        <input type="hidden" name="quotetxidnetwork" value="" id="quotetxidnetwork">
+        <input type="hidden" name="memberimageurl" value="" id="memberimageurl">
+        <!-- //Remove topic - use tags to introduce a topic
     <div id="memorandumtopicbutton">
         <a data-vavilon="VV0037" href=""
             onclick="document.getElementById('memorandumtopicarea').style.display = 'block';document.getElementById('memorandumtopicbutton').style.display = 'none'; return false;">+add
@@ -350,13 +1062,14 @@ var newpostHTML=`
             onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
     </div>
     -->
-    <div>
-        <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="{maxlength}"
-            onchange="checkLength('memorandumtitle',{maxlength});memorandumPreview();" onkeypress="this.onchange();"
-            onpaste="this.onchange();" oninput="this.onchange();">{defaulttag}</textarea>
-        <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
-    </div>
-    <!--<form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
+        <div>
+            <textarea class="memorandumtitle" id="memorandumtitle" rows="4" cols="60" maxlength="{maxlength}"
+                onchange="checkLength('memorandumtitle',{maxlength});memorandumPreview();" onkeypress="this.onchange();"
+                onpaste="this.onchange();" oninput="this.onchange();">{defaulttag}</textarea>
+            <!--<label for="memorandumtitle"><span id="memorandumtitlelengthadvice">(0/217)</span></label>-->
+        </div>
+        <!--<div id="chooseimagebutton2"></div>
+    <form id="memorandumtitlefile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
         <label>
             <input name='firstfile' type="file" style="display: none;"
                 onchange="uploadFile('memorandumtitlefile','{fileuploadurl}','memorandumtitle','memorandumpreviewarea','uploadimagelink','uploadimagestatus',showMemorandumPreview,'memberimageurl');"
@@ -365,263 +1078,278 @@ var newpostHTML=`
         </label>
         <span style="display:none;" id="uploadimagestatus">uploading image . . .</span>
     </form>-->
-    <div class="articlebutton">
-        <div id="memorandumtextbutton">
-            <a data-vavilon="VV0039" href=""
-                onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
-                article</a>
+        <div class="imgbb-container"><button data-imgbb-trigger="" class="imgbb-button"
+                data-imgbb-id="208909ee-fe1f-4f6f-9491-8c639baed6ec"><span class="imgbb-button-icon"><svg
+                        class="imgbb-button-icon" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                        viewBox="0 0 100 100">
+                        <path
+                            d="M76.7 87.5c12.8 0 23.3-13.3 23.3-29.4 0-13.6-5.2-25.7-15.4-27.5 0 0-3.5-0.7-5.6 1.7 0 0 0.6 9.4-2.9 12.6 0 0 8.7-32.4-23.7-32.4 -29.3 0-22.5 34.5-22.5 34.5 -5-6.4-0.6-19.6-0.6-19.6 -2.5-2.6-6.1-2.5-6.1-2.5C10.9 25 0 39.1 0 54.6c0 15.5 9.3 32.7 29.3 32.7 2 0 6.4 0 11.7 0V68.5h-13l22-22 22 22H59v18.8C68.6 87.4 76.7 87.5 76.7 87.5z"
+                            style="fill: currentcolor;"></path>
+                    </svg></span><span class="imgbb-button-text">Upload image</span></button></div>
+
+        <div class="articlebutton">
+            <div id="memorandumtextbutton">
+                <a data-vavilon="VV0039" href=""
+                    onclick="document.getElementById('memorandumtextarea').style.display = 'block';document.getElementById('memorandumtextbutton').style.display = 'none'; return false;">+add
+                    article</a>
+            </div>
+        </div>
+        <div id="memorandumtextarea" style="display: none;">
+            <label data-vavilon="VV0040" for="newposttamemorandum">article (optional)</label>
+            <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();"
+                onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
+        </div>
+        <div id="quotepost" class="quotepost"></div>
+        <div>
+            <input data-vavilon_value="VV0041" id="newpostmemorandumbutton" value="Post" type="submit"
+                onclick="postmemorandum();">
+            <input data-vavilon_value="VV0042" id="newpostmemorandumstatus" style="display: none;" value="Sending . . ."
+                type="submit" disabled>
+            <div id="newpostmemorandumcompleted"></div>
+        </div>
+        <br />
+        <div class="memorandumpreviewbuttonanddisplay">
+            <div id="memorandumpreviewareabutton">
+                <br />
+                <a data-vavilon="VV0043" href="javascript:;" onclick="showMemorandumPreview(); return false;">+see
+                    preview</a>
+            </div>
+            <div id="memorandumpreviewarea" style="display: none;">
+                <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
+                <label for="memorandumpreview">
+                    <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045"
+                            href='javascript:;' onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
+                    <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046"
+                            href='javascript:;' onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
+                </label>
+                <div id="memorandumpreview" class="fatitem">
+                </div>
+            </div>
         </div>
     </div>
-    <div id="memorandumtextarea" style="display: none;">
-        <label data-vavilon="VV0040" for="newposttamemorandum">article (optional)</label>
-        <textarea id="newposttamemorandum" name="text" rows="20" cols="80" onchange="memorandumPreview();"
-            onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></textarea>
-    </div>
-    <div id="quotepost" class="quotepost"></div>
-    <div>
-        <input data-vavilon_value="VV0041" id="newpostmemorandumbutton" value="Post" type="submit"
-            onclick="postmemorandum();">
-        <input data-vavilon_value="VV0042" id="newpostmemorandumstatus" style="display: none;" value="Sending . . ."
-            type="submit" disabled>
-        <div id="newpostmemorandumcompleted"></div>
-    </div>
-    <br />
-    <div class="memorandumpreviewbuttonanddisplay">
-        <div id="memorandumpreviewareabutton">
+    `;
+
+    var messagesanchorHTML=`
+    <div class="content">
+        <div id="sendmessagecontainer">
+            <div id="sendmessagebox" style="display: none;">
+                <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain
+                    (that's the
+                    sender, recipient, size and time of your message).
+                    Additionally, if the recipient's private key is made public in the future, the recipient's
+                    messages will become public. Using the blockchain for
+                    messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
+                    available to you if you wish to use it.
+                </p>
+                <span class="messagerecipient">To:</span>
+                <span id="messagerecipient" class="messagerecipient"></span>
+                <span id="messageaddress" class="messageaddress" style="display:none;"></span>
+                <span id="messagepublickey" class="messagepublickey" style="display:none;"></span>
+
+                <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum {dust})</label>
+                <input id="stampamount" size="8" type="number" value="{dust}">
+                <div>
+                    <label data-vavilon="VV0054" for="newposttamessage">Message</label>
+                    <textarea id="newposttamessage" name="text" rows="20" cols="80"></textarea>
+                </div>
+                <div>
+                    <input data-vavilon_value="VV0055" id="newpostmessagebutton" value="Send Message" type="submit"
+                        onclick="postprivatemessage();">
+                    <input data-vavilon_value="VV0175" id="newpostmessagestatus" style="display: none;"
+                        value="Sending . . ." type="submit" disabled>
+                    <div id="newpostmessagecompleted"></div>
+                </div>
+            </div>
             <br />
-            <a data-vavilon="VV0043" href="javascript:;" onclick="showMemorandumPreview(); return false;">+see
-                preview</a>
         </div>
-        <div id="memorandumpreviewarea" style="display: none;">
-            <label data-vavilon="VV0044" for="memorandumpreview">Preview</label>
-            <label for="memorandumpreview">
-                <div id="switchToArticleMode" class="switchToArticleMode"><a data-vavilon="VV0045" href='javascript:;'
-                        onclick="switchToArticleMode();">(Switch to Article Mode)</a></div>
-                <div id="switchToRegularMode" class="switchToRegularMode"><a data-vavilon="VV0046" href='javascript:;'
-                        onclick="switchToRegularMode();">(Switch to Regular Mode)</a></div>
-            </label>
-            <div id="memorandumpreview" class="fatitem">
-            </div>
+        <div id="messageschoice" class="filters">
+            <a data-vavilon_title="allmessages" class="filteroff" href="#messages?messagetype=all"
+                onclick="nlc();">All</a>
+            <a data-vavilon_title="sentmessages" class="filteroff" href="#messages?messagetype=sent"
+                onclick="nlc();">Sent</a>
+            <a data-vavilon_title="receivedmessages" class="filteroff" href="#messages?messagetype=received"
+                onclick="nlc();">Received</a>
         </div>
+        <br />
+        <div id="messageslist" class="messageslist"></div>
     </div>
-</div>
-`;
+    `;
 
-var messagesanchorHTML=`
-<div class="content">
-    <div id="sendmessagecontainer">
-        <div id="sendmessagebox" style="display: none;">
-            <p data-vavilon="VV0048">Warning: The metadata of your private messages will be public on the blockchain
-                (that's the
-                sender, recipient, size and time of your message).
-                Additionally, if the recipient's private key is made public in the future, the recipient's
-                messages will become public. Using the blockchain for
-                messaging is generally not advised. Nevertheless, you're a big boy and this facility is made
-                available to you if you wish to use it.
-            </p>
-            <span class="messagerecipient">To:</span>
-            <span id="messagerecipient" class="messagerecipient"></span>
-            <span id="messageaddress" class="messageaddress" style="display:none;"></span>
-            <span id="messagepublickey" class="messagepublickey" style="display:none;"></span>
+    var fbHTML={};
+    fbHTML.followers=`
+    <div class="content">
+        <h2>Followers</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="followerstable">
+            </tbody>
+        </table>
+    </div>
+    `;
 
-            <label data-vavilon="VV0053" for="stampamount">Stamp Amount (in sats, minimum {dust})</label>
-            <input id="stampamount" size="8" type="number" value="{dust}">
-            <div>
-                <label data-vavilon="VV0054" for="newposttamessage">Message</label>
-                <textarea id="newposttamessage" name="text" rows="20" cols="80"></textarea>
-            </div>
-            <div>
-                <input data-vavilon_value="VV0055" id="newpostmessagebutton" value="Send Message" type="submit"
-                    onclick="postprivatemessage();">
-                <input data-vavilon_value="VV0175" id="newpostmessagestatus" style="display: none;"
-                    value="Sending . . ." type="submit" disabled>
-                <div id="newpostmessagecompleted"></div>
-            </div>
+    fbHTML.following=`
+    <div class="content">
+        <h2>Following</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="followingtable">
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    fbHTML.blockers=`
+    <div class="content">
+        <h2>Muters</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="blockerstable">
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    fbHTML.blocking=`
+    <div class="content">
+        <h2>Muting</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="blockingtable">
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    var ratersHTML=`
+    <div class="content">
+        <h2>Ratings Of This Member</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                    <th data-vavilon="VV0056">Rates</th>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="communityratingtable">
+            </tbody>
+        </table>
+        <br /><br />
+    </div>
+    `;
+
+    var ratingsHTML=`
+    <div class="content">
+        <h2>Ratings By This Member</h2>
+        <br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th data-vavilon="VV0007">Member</th>
+                    <th data-vavilon="VV0056">Rates</th>
+                    <th data-vavilon="VV0007">Member</th>
+                </tr>
+            </thead>
+            <tbody id="memberratingtable">
+            </tbody>
+        </table>
+    </div>
+    `;
+
+    var trustgraphHTML=`
+    <div class="content">
+        <h2 data-vavilon="VV0057">Trust Graph</h2>
+        <div id="trustgraphdetails"></div>
+        <br />
+    </div>
+    `;
+
+    var bestiesHTML=`
+    <div class="content">
+        <div id="bestiesdetails">
+            <div id="bestiescy" style="width:100%;height:600px;"></div>
+            <div id="cynote" style="width:100%">&nbsp;</div>
         </div>
         <br />
     </div>
-    <div id="messageschoice" class="filters">
-        <a data-vavilon_title="allmessages" class="filteroff" href="#messages?messagetype=all" onclick="nlc();">All</a>
-        <a data-vavilon_title="sentmessages" class="filteroff" href="#messages?messagetype=sent"
-            onclick="nlc();">Sent</a>
-        <a data-vavilon_title="receivedmessages" class="filteroff" href="#messages?messagetype=received"
-            onclick="nlc();">Received</a>
-    </div>
-    <br />
-    <div id="messageslist" class="messageslist"></div>
-</div>
-`;
+    `;
 
-var fbHTML={};
-fbHTML.followers=`
-<div class="content">
-    <h2>Followers</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="followerstable">
-        </tbody>
-    </table>
-</div>
-`;
-
-fbHTML.following=`
-<div class="content">
-    <h2>Following</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="followingtable">
-        </tbody>
-    </table>
-</div>
-`;
-
-fbHTML.blockers=`
-<div class="content">
-    <h2>Muters</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="blockerstable">
-        </tbody>
-    </table>
-</div>
-`;
-
-fbHTML.blocking=`
-<div class="content">
-    <h2>Muting</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="blockingtable">
-        </tbody>
-    </table>
-</div>
-`;
-
-var communityHTML=`
-<div class="content">
-    <h2>Ratings Of This Member</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-                <th data-vavilon="VV0056">Rates</th>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="communityratingtable">
-        </tbody>
-    </table>
-    <br /><br />
-</div>
-`;
-
-var anchorratingsHTML=`
-<div class="content">
-    <h2>Ratings By This Member</h2>
-    <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th data-vavilon="VV0007">Member</th>
-                <th data-vavilon="VV0056">Rates</th>
-                <th data-vavilon="VV0007">Member</th>
-            </tr>
-        </thead>
-        <tbody id="memberratingtable">
-        </tbody>
-    </table>
-</div>
-`;
-
-var trustgraphHTML=`
-<div class="content">
-    <h2 data-vavilon="VV0057">Trust Graph</h2>
-    <div id="trustgraphdetails"></div>
-    <br />
-</div>
-`;
-
-var bestiesHTML=`
-<div class="content">
-    <div id="bestiesdetails">
-        <div id="bestiescy" style="width:100%;height:600px;"></div>
-        <div id="cynote" style="width:100%">&nbsp;</div>
-    </div>
-    <br />
-</div>
-`;
-
-var membertabsHTML=`
-<div class="filterssecondset">
-    <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}"
-        href="#member?qaddress={address}">Profile</a>
-    <span class="separator"></span>
-    <a data-vavilon="VVreputation" data-vavilon_title="VVreputation" title="Reputation" class="{reputationclass}"
-        href="#rep?qaddress={address}">Reputation</a>
-    <span class="separator"></span>
-    <!--<a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}"
+    var membertabsHTML=`
+    <div class="filterssecondset">
+        <a data-vavilon="VV0063" data-vavilon_title="VV0063" title="Profile" class="{profileclass}"
+            href="#member?qaddress={address}">Profile</a>
+        <span class="separator"></span>
+        <a data-vavilon="VVtrustgraph" data-vavilon_title="VVtrustgraph" title="Trust Graph" class="{reputationclass}"
+            href="#rep?qaddress={address}">Trust Graph</a>
+        <span class="separator"></span>
+        <!--<a data-vavilon="VVsupport" data-vavilon_title="VVsupport" title="Support" class="{bestiesclass}"
         href="#support?qaddress={address}">Top 5</a>-->
-    <!--<span class="separator"></span>
+        <!--<span class="separator"></span>
     <a data-vavilon="VVlist" data-vavilon_title="VVlist" title="List" class="filteroff"
         href="#list?qaddress={address}">List</a>
     <span class="separator"></span>-->
-    <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
-        href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&minrating=0&topicname=">Posts</a>
-</div>
-`;
-
-var pages = {};
-pages.member = `
-<div class="content">
-    <div class="memberpiccontainer">
-        <label data-vavilon="VV0059" id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile
-            Picture</label>
-        <span class="memberpiclarge" style="display:inline;">
-            {profilepiclargehtml}
-        </span>
+        <a data-vavilon="VV0004" data-vavilon_title="VV0004" title="Posts" class="{postsclass}"
+            href="#show?start=0&limit=25&order=new&content=both&filter=everyone&qaddress={address}&minrating=0&topicname=">Posts</a>
     </div>
-    <!--<label for="memberidenticon">Identicon</label>
+    `;
+
+    var pages = {};
+    pages.member = `
+    <div class="content">
+        <div class="memberpiccontainer">
+            <label data-vavilon="VV0059" id="memberpiclargelabel" for="memberpic" style="display:inline;">Profile
+                Picture</label>
+            <span class="memberpiclarge" style="display:inline;">
+                {profilepiclargehtml}
+            </span>
+        </div>
+        <!--<label for="memberidenticon">Identicon</label>
     <div id="memberidenticon"><svg width="20" height="20" class="jdenticonlarge" data-jdenticon-value="{address}"></svg>
     </div>
     <label data-vavilon="VV0065">Address</label>-->
 
-    <div class="profileactions" id="memberprofileactions"><br /><br />
-        {followbuttonhtml}
-        <span class="dropdown">
-            <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
-            <div class="dropdown-content mainhamburger" id="dropdown-content">
-                <span class="populate-send-message">
-                    <a data-vavilon="VV0061"
-                        onclick="populateSendMessage('{qaddress}','{handlefunction}','{publickey}');"
-                        href="javascript:;">Send Message</a>
-                </span>
-                {mutebuttonhtml}
-                <span class="memberprofilelink">
-                    <a href=pathpermalinks+"/#member?qaddress={address}" id="memberprofilelink">{pathpermalinks}</a><span
-                        class="separatorwide"></span>
-                </span>
-                <!--<span class="dogehairprofilelink">
+        <div class="profileactions" id="memberprofileactions"><br /><br />
+            {followbuttonhtml}
+            <span class="dropdown">
+                <button aria-label="Hamburger" onclick="dropDownMenuAction(this);" class="dropbtn">☰</button>
+                <div class="dropdown-content mainhamburger" id="dropdown-content">
+                    <span class="populate-send-message">
+                        <a data-vavilon="VV0061"
+                            onclick="populateSendMessage('{qaddress}','{handlefunction}','{publickey}');"
+                            href="javascript:;">Send Message</a>
+                    </span>
+                    <span class="memberprofilelink">
+                        <a href="{pathpermalinks}#member?qaddress={address}" id="memberprofilelink">Profile</a><span
+                            class="separatorwide"></span>
+                    </span>
+                    {mutebuttonhtml}
+                    <span class="reportspammer">
+                        <a data-vavilon="reportspammer" onclick="reportspammer('{publickey}');"
+                            href="javascript:;">Spammer</a>
+                    </span>
+
+                    <!--<span class="dogehairprofilelink">
                     <a href="https://doge.hair/#member?qaddress={address}" id="dogehairprofilelink">doge.hair</a><span
                         class="separatorwide"></span>
                 </span>
@@ -632,26 +1360,28 @@ pages.member = `
                 <span class="bitcloutprofilelink">
                     <a rel="noopener noreferrer" target="bitclout" href="https://bitclout.com/u/{pagingid}"
                         id="bitcloutprofilelink">BitClout</a><span class="separatorwide"></span></span>-->
-            </div>
-        </span>
-    </div>
-
-
-
-    <!-- *** -->
-    <div class="memberdetails">
-        <span class="profile-handle">{handle}</span>
-        <br />
-        <span class="profile-pagingid" id="memberpagingid">@{pagingid}</span>
-    </div>
-
-    <div id="memberprofiletext">{profile}</div>
-
-    <div class="memberstats">
-        <div class="membrain">
-            <label data-vavilon="membrain">MemBrain</label></a>
-            <a id="membrainnumber" href=pathpermalinks+"/a/804fc6e860">{membrain}</a>
+                </div>
+            </span>
         </div>
+
+
+
+        <!-- *** -->
+        <div class="memberdetails">
+            <span class="profile-handle">{handle}</span>
+            <br />
+            <span class="profile-pagingid" id="memberpagingid">@{pagingid}</span>
+        </div>
+
+        <div id="memberprofiletext">{profile}</div>
+        <!--<div id="nostracoinaddress">nostr:{npubkey}<br/>-->{repnetaddress}
+    </div>
+    <div class="memberstats">
+        <!--<div class="membrain">
+            <label data-vavilon="membrain">MemBrain</label></a>
+            <a id="membrainnumber" href="{pathpermalinks}/a/804fc6e860">{membrain}</a>
+            {membrain}
+        </div>-->
         <div class="followers">
             <label data-vavilon="VV0071">Followers</label>
             <a id="memberfollowersnumber" href="#followers?qaddress={address}">{followers}</a>
@@ -667,6 +1397,14 @@ pages.member = `
         <div class="muting">
             <label data-vavilon="VV0074">Muting</label>
             <a id="memberblockingnumber" href="#blocking?qaddress={address}">{muting}</a>
+        </div>
+        <div class="raters">
+            <label data-vavilon="raters">Raters</label>
+            <a id="memberratersnumber" href="#raters?qaddress={address}">{raters}</a>
+        </div>
+        <div class="ratings">
+            <label data-vavilon="rating">Ratings</label>
+            <a id="memberratingnumber" href="#ratings?qaddress={address}">{ratings}</a>
         </div>
     </div>
     <div id="memberratinggroup" style="display: none;">
@@ -752,12 +1490,13 @@ pages.settings = `
                     format)</span></label>-->
             <label data-vavilon="VV0059" id="settingspiclargelabel" style="display:inline;">Profile
                 Picture</label><br><br>
-            <form id="profilepicfile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
+            <!--<form id="profilepicfile" method="post" enctype="multipart/form-data" action="{fileuploadurl}">
                 <label>
                     <input style="display: none;" name='firstfile' type="file" id="uploadprofilepicinput"
                         onchange="uploadFile('profilepicfile','{fileuploadurl}','settingspic','memorandumpreviewarea','chooseimagebutton','uploadimagestatus',setPic,null);"
                         accept="image/*">
                     <a data-vavilon="chooseimage" id="chooseimagebutton" class="memberlinkbutton">Choose Image</a>
+                    
                 </label>
             </form>
             <div class="formgroup" style="display: none;">
@@ -766,10 +1505,19 @@ pages.settings = `
                     onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();">
                 <button data-vavilon="VV0077" id="settingspicbutton" type="button" onclick="setPic();"
                     disabled="">update</button>
-            </div>
+            </div>-->
             <span class="settingspiclarge" style="display:inline;">
                 {profilepiclargehtml}
             </span>
+            <div class="imgbb-container"><button data-imgbb-trigger="" class="imgbb-button"
+                    data-imgbb-id="208909ee-fe1f-4f6f-9491-8c639baed6eb"><span class="imgbb-button-icon"><svg
+                            class="imgbb-button-icon" xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                            viewBox="0 0 100 100">
+                            <path
+                                d="M76.7 87.5c12.8 0 23.3-13.3 23.3-29.4 0-13.6-5.2-25.7-15.4-27.5 0 0-3.5-0.7-5.6 1.7 0 0 0.6 9.4-2.9 12.6 0 0 8.7-32.4-23.7-32.4 -29.3 0-22.5 34.5-22.5 34.5 -5-6.4-0.6-19.6-0.6-19.6 -2.5-2.6-6.1-2.5-6.1-2.5C10.9 25 0 39.1 0 54.6c0 15.5 9.3 32.7 29.3 32.7 2 0 6.4 0 11.7 0V68.5h-13l22-22 22 22H59v18.8C68.6 87.4 76.7 87.5 76.7 87.5z"
+                                style="fill: currentcolor;"></path>
+                        </svg></span><span class="imgbb-button-text">Upload image</span></button></div>
+
 
         </div>
         <div>
@@ -778,7 +1526,7 @@ pages.settings = `
                     onclick="requestNotificationPermission(); this.style.display='none';">Allow
                     Notifications</a></span>
         </div>
-        <div>
+        <!--<div>
             <label for="usenostrkeyaccount"><span data-vavilon="usenostrkeyaccount">Use Different Nostr Account
                     (Private Key)</span>
                 <div class="formgroup">
@@ -787,7 +1535,7 @@ pages.settings = `
                         onclick="switchNostrKey();" data-vavilon="nostrkey">switch</button>
                 </div>
         </div>
-        <!--<div>
+        <div>
             <label for="linknostraccount"><span data-vavilon="linknostraccount">Link Nostr Account (Public
                     Key)</span>
                 <div class="formgroup">
@@ -799,11 +1547,12 @@ pages.settings = `
                     <span data-vavilon="postthistext">(Make a post with this text from your BitClout account)</span>
                     <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
                 </div>
-        </div>-->
+        </div>
         <div>
             <label for="linkbitcloutaccount"><span data-vavilon="linkbitcloutaccount">Link BitClout/Memo
                     Account</span>
-                <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>--></label>
+                <!-- - <a href="javascript:" onclick="javascript:bitcloutlogin(lastidprovider);">Identity Login</a>
+            </label>
             <div class="formgroup">
                 <input id="linkbitcloutaccount" placeholder="BC..../1..../bitcoincash:...."
                     onchange="document.getElementById('linkbitcloutaccountbutton').disabled=false;"
@@ -816,7 +1565,7 @@ pages.settings = `
                     account)</span>
                 <textarea id="bitcloutlinktextarea" name="text" rows="4" cols="60"></textarea>
             </div>
-        </div>
+        </div>-->
 
 
 
@@ -900,7 +1649,7 @@ pages.settings = `
             Night/PV/Pura Vida</label>
     </div>
 
-    <div>
+    <!--<div>
         <label data-vavilon="mutednetworks">Muted Networks</label>
     </div>
     <div class="customcheckbox">
@@ -910,7 +1659,7 @@ pages.settings = `
     <div class="customcheckbox">
         <input type="checkbox" id="mutenostr" onchange="updateSettingsCheckbox('mutenostr');">
         <label data-vavilon="mutenostr" for="mutenostr" class="checkboxlabel">Mute Nostr</label>
-    </div>
+    </div>-->
 
     <div>
         <label data-vavilon="VV0087" for="mediasettings" class="labelheader">Media Settings</label>
@@ -947,11 +1696,6 @@ pages.settings = `
         <label data-vavilon="VV0182" for="shownonameposts" class="checkboxlabel">Show Posts From Members With No
             Handle</label>
     </div>
-    <div class="customcheckbox">
-        <input type="checkbox" id="shownopicposts" onchange="updateSettingsCheckbox('shownopicposts');">
-        <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No
-            Picture</label>
-    </div>
     <div>
         <label data-vavilon="VVcontentnetwork" for="contentnetwork">Only Show Content From Network</label>
         <select id="contentnetwork" onchange="updateSettingsDropdown('contentnetwork');">
@@ -959,35 +1703,48 @@ pages.settings = `
             <option value="3">Membercoin (M3M)</option>
         </select>
     </div>-->
-    <div class="displayservers">
-        <div>
-            <label data-vavilon="VV0091" for="contentserver">Content Server</label>
-            <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
-                <option value="{pathpermalinks}/v2/member.js">{siteTitle}</option>
-                <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
-            </select>
-        </div>
-        <div>
-            <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
-            <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
-                <option value="{pathpermalinks}/v2/">{siteTitle}</option>
-                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-            </select>
-        </div>
-        <div>
-            <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
-            <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
-                <option value="{pathpermalinks}/v2/">{siteTitle}</option>
-                <option value="http://127.0.0.1:3123/v2/">Localhost</option>
-            </select>
-        </div>
+    <div class="customcheckbox">
+        <input type="checkbox" id="shownopicposts" onchange="updateSettingsCheckbox('shownopicposts');">
+        <label data-vavilon="VV0183" for="shownopicposts" class="checkboxlabel">Show Posts From Members With No
+            Picture</label>
     </div>
-    <div>
-        <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
-        <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
-        <br />
-        <a href="javascript:;" onclick="getJSON(dropdowns.contentserver + '/invalidatecache/')" ;
-            class="memberlinkbutton">Invalidate cache (will force reload of client)</a>
+    <div class="technicalstuffshow" id="technicalstuffshow">
+        <a data-vavilon="VVshowtechnicalstuff" href=""
+            onclick="document.getElementById('technicalstuff').style.display = 'block';document.getElementById('technicalstuffshow').style.display = 'none'; return false;">+Show
+            Technical Stuff</a>
+    </div>
+    <div class="technicalstuff" id="technicalstuff" style="display:none;">
+        <div class="displayservers">
+            <div>
+                <label data-vavilon="VV0091" for="contentserver">Content Server</label>
+                <select id="contentserver" onchange="updateSettingsDropdown('contentserver');">
+                    <option value="{pathpermalinks}/v2/member.js">{siteTitle}</option>
+                    <option value="http://127.0.0.1:3123/v2/member.js">Localhost</option>
+                </select>
+            </div>
+            <div>
+                <label data-vavilon="VV0092" for="txbroadcastserver">TX Broadcast Server</label>
+                <select id="txbroadcastserver" onchange="updateSettingsDropdown('txbroadcastserver');">
+                    <option value="{pathpermalinks}/v2/">{siteTitle}</option>
+                    <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+                </select>
+            </div>
+            <div>
+                <label data-vavilon="VV0093" for="mcutxoserver">UTXO Server</label>
+                <select id="mcutxoserver" onchange="updateSettingsDropdown('mcutxoserver');">
+                    <option value="{pathpermalinks}/v2/">{siteTitle}</option>
+                    <option value="http://127.0.0.1:3123/v2/">Localhost</option>
+                </select>
+            </div>
+
+            <div>
+                <label data-vavilon="debuginfo" for="debuginfo">Debug Info</label>
+                <textarea id="debuginfo" name="text" rows="2" cols="60" readonly></textarea>
+                <br />
+                <a href="javascript:;" onclick="getJSON(dropdowns.contentserver + '/invalidatecache/')" ;
+                    class="memberlinkbutton">Invalidate cache (will force reload of client)</a>
+            </div>
+        </div>
     </div>
 
 
@@ -1111,6 +1868,11 @@ var headerHTML = `
 var footerHTML = `
 <div class="content">
     <hr />
+    <span id="aiversion" class="developmentversion" style="display: block;"><span data-vavilon="aiwarning">Content is AI
+            generated from public information. It may contain hallucinations, be out-of-date or be just plain
+            wrong.</span><br /><br />
+        <hr />
+    </span>
     <span id="developmentversion" class="developmentversion" style="display: none;"><span data-vavilon="VV0137">You're
             viewing the development
             preview version
@@ -1122,7 +1884,7 @@ var footerHTML = `
     </span>
     <span id="readonlyversion" class="developmentversion" style="display: none;"><span
             data-vavilon="readonlymodewarning">You're in read-only mode.
-            Log out and login with a seedphrase or private key to create or like posts</span><br /><br />
+            Login to create ratings or posts</span><br /><br />
         <hr />
     </span>
     <span class="footerlinks">
@@ -1150,5 +1912,4 @@ var footerHTML = `
     </span>
     <br />
     <br />
-</div>
-`;
+</div>`;

@@ -1,1 +1,1 @@
-type buffer.js anchorme.min.js geohash.js qrcode.min.js showdown.1.9.1.min.patched.js purify.min.js jdenticon.min.js sha256.min.js turndown.7.1.1.js cashaddrjs-0.4.4.patched.min.js bs58check.min.js rating.js > memberextlibs.js
+type buffer.js anchorme.min.js geohash.js qrcode.min.js showdown.1.9.1.min.patched.js purify.min.js jdenticon.min.js sha256.min.js turndown.7.1.1.js cashaddrjs-0.4.4.patched.min.js bs58check.min.js rating.js BigInteger.min.js imgbbcomupload.js > memberextlibs.js

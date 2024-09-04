@@ -1125,8 +1125,8 @@ video {
     align-items: center; }
 
 .post {
-  display: -ms-flexbox;
-  display: flex; }
+  /*display: -ms-flexbox;
+  display: flex;*/ }
   .post .postdetails {
     padding: 0.875rem 1rem 0.4375rem;
     width: 100%;

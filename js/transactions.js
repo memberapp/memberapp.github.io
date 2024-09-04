@@ -1,64 +1,55 @@
 "use strict";
 
-function checkForPrivKey() {
-    //if (isBitCloutUser()) {return true;}
-    return checkForNativeUser();
-}
 
-function checkForNativeUser() {
-    if (privkey == "" && pubkey != "") {
-        alert(getSafeTranslation('readonlymode2', "You may be logged in with a public key in read only mode. Try logging out and logging back in again."));
-        return false;
-    } else if (privkey == "" && !window.nostr) {
+function checkForUserThatCanWrite() {
+    
+    if (!pubkeyhex) {
         alert(getSafeTranslation('mustlogin', "You must login to do this."));
         return false;
+    }else if (!getRepNetPrivKey() && !window.nostr) {
+        alert(getSafeTranslation('readonlymode2', "You may be logged in with a public key in read only mode. Try logging out and logging back in again."));
+        return false;
     }
-
-    //if (tq.getBalance(chainheight) < nativeCoin.dust) {
-    //    alert(getSafeTranslation('notenough2', "You do not have enough satoshis to do this. You can click on your balance to refresh it. Try logging out and logging back in again if you keep getting this message."));
-    //    return false;
-    //}
-
     return true;
 }
 
 function checkForNativeUserAndHasBalance() {
-    return (privkey && tq.getBalance(chainheight) >= nativeCoin.dust);
+    return (getRepNetPrivKey() && tq.getBalance(chainheight) >= nativeCoin.dust);
 }
 
-async function sendRating(rating, ratingText, pageName, targetpublickey) {
-    if (!checkForPrivKey()) return false;
+async function sendRating(rating, ratingText, pageName, targetpublickey, bitcoinaddress) {
+    if (!checkForUserThatCanWrite()) return false;
 
     //targetpublickey could be 64 or 66 in length. If 64 it is nostr style key
-    //if (!checkForPrivKey()) return false;
+    //if (!checkForUserThatCanWrite()) return false;
     var comment = "";
     if (ratingText) {
         comment = ratingText.value;
     }
     
-    let addresshandle='';
+    //let addresshandle='';
 
     //let targetpublickey66=targetpublickey;
     //if(targetpublickey66.length==64){targetpublickey66='02'+targetpublickey66;}//nostr style public key.
     //theAddress=pubkeyhexToLegacy(targetpublickey66);
 
-    if(targetpublickey.length==64){
-        addresshandle = window.bech32converter('npub').toBech32('0x'+targetpublickey);
-    }else{
-        addresshandle = theAddress
-    }   
+    //if(targetpublickey.length==64){
+    //    addresshandle = window.bech32converter('npub').toBech32('0x'+targetpublickey);
+    //}else{
+    //    addresshandle = theAddress
+    //}   
 
 
     
-    //if (checkForNativeUserAndHasBalance()) {
-    //    rateCallbackAction(rating, comment, theAddress);
-    //}
+    if (checkForNativeUserAndHasBalance()) {
+        rateCallbackAction(rating, comment, targetpublickey, bitcoinaddress);
+    }
 
     //if (isBitCloutUser()) {
     //    sendBitCloutRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + theAddress, 'rating', null, null, { RatedMember: theAddress, RatingComment: comment, Rating: "" + rating });
     //}
-    let event= await sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + addresshandle, null, targetpublickey, true, rating, comment);
-    sendWrappedEvent(event);
+    //let event= await sendNostrRating("user: @" + pageName + "\nrating:" + rating + "/5\ncomment:" + comment + `\n${pathpermalinks}/ba/` + addresshandle, null, targetpublickey, rating, comment);
+    //sendWrappedEvent(event);
     
 }
 
@@ -74,7 +65,7 @@ function repost(txid, privkey) {
 
     //Repost memo 	0x6d0b 	txhash(32), message(184)
 
-    //if (!checkForPrivKey()) return false;
+    //if (!checkForUserThatCanWrite()) return false;
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     var tx = {
         data: ["0x6d0b", "0x" + reversetx],
@@ -94,7 +85,7 @@ function repost(txid, privkey) {
 }
 
 function setTrxPic(newName, callback) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
     //if (!(newName.startsWith('https://i.imgur.com/') && (newName.endsWith('.jpg') || newName.endsWith('.png')))) {
     //    alert(getSafeTranslation('picformat', "Profile pic must of of the format") + " https://i.imgur.com/XXXXXXXX.jpg");
     //    return;
@@ -126,13 +117,13 @@ function sendWrappedEvent(event, callback) {
 
 
 async function setName() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     //setNostrProfile('name',newName);
-    let event= await setNostrProfile();
-    sendWrappedEvent(event);
+    //let event= await setNostrProfile();
+    //sendWrappedEvent(event);
 
     var newName = document.getElementById('settingsnametext').value;
-    /*
+    
     if (!checkForNativeUserAndHasBalance()) return false;
 
     document.getElementById('settingsnametextbutton').disabled = true;
@@ -146,7 +137,7 @@ async function setName() {
 
     //TODO, on error, this should really enable the text field and text button again
     tq.queueTransaction(tx);
-    */
+    
 }
 
 
@@ -403,12 +394,12 @@ function memoPinPost(txid, privkey) {
 }
 
 async function setProfile() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
 
-    let event= await setNostrProfile();
-    sendWrappedEvent(event);
+    //let event= await setNostrProfile();
+    //sendWrappedEvent(event);
     
-    /*
+    
     var newProfile = document.getElementById('settingsprofiletext').value;
     
     if (!checkForNativeUserAndHasBalance()) return false;
@@ -421,13 +412,13 @@ async function setProfile() {
         cash: { key: privkey }
     }
     updateStatus(getSafeTranslation('settingprofile', "Setting Profile"));
-    tq.queueTransaction(tx);*/
+    tq.queueTransaction(tx);
 }
 
 
 function subTransaction(topicHOSTILE) {
 
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -441,7 +432,7 @@ function subTransaction(topicHOSTILE) {
 }
 
 function unsubTransaction(topicHOSTILE) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
 
     //Remove the clicked element so it can't be clicked again
     event.srcElement.style.display = "none";
@@ -454,12 +445,14 @@ function unsubTransaction(topicHOSTILE) {
     tq.queueTransaction(tx);
 }
 
-function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey) {
+function addressTransaction(removeElementID, actionCode, statusMessage, targetpublickey, legacyAddress) {
     try {
+        //let signedpublickey=getYSignTest(targetpublickey)+targetpublickey;
+        //let legacyAddress=await pubkeyhexToLegacy(signedpublickey);
         //document.getElementById(removeElementID).style.display = "none";
-        //var addressraw = getLegacyToHash160(qaddress);
+        var addressraw = getLegacyToHash160(legacyAddress);
         const tx = {
-            data: [actionCode, "0x" + targetpublickey],
+            data: [actionCode, "0x" + addressraw],
             cash: { key: privkey }
         }
         updateStatus(statusMessage);
@@ -469,75 +462,91 @@ function addressTransaction(removeElementID, actionCode, statusMessage, targetpu
     }
 }
 
-async function follow(targetpublickey) {
-    if (!checkForPrivKey()) return false;
+async function follow(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
 
-    let event= await sendNostrFollow(targetpublickey);
-    sendWrappedEvent(event); 
+    //let event= await sendNostrFollow(targetpublickey);
+    //sendWrappedEvent(event); 
 
-    /*
+    
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey);
+        addressTransaction('memberfollow', "0x6d06", getSafeTranslation('sendingfollow', "Sending Follow"),targetpublickey,legacyAddress);
     }
-    if (isBitCloutUser()) {
-        sendBitCloutFollow(targetpublickey);
-    }*/
+    //if (isBitCloutUser()) {
+    //    sendBitCloutFollow(targetpublickey);
+    //}
     
 }
 
-async function unfollow(targetpublickey) {
-    if (!checkForPrivKey()) return false;
+async function unfollow(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
 
-    let event= await sendNostrUnFollow(targetpublickey);
-    sendWrappedEvent(event);
+    //let event= await sendNostrUnFollow(targetpublickey);
+    //sendWrappedEvent(event);
 
-    /*
+    
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey);
+        addressTransaction('memberfollow', "0x6d07", getSafeTranslation('sendingunfollow', "Sending Unfollow"),targetpublickey,legacyAddress);
     }
-    if(isBitCloutUser()){
-        sendBitCloutUnFollow(targetpublickey);
-    }*/
+    //if(isBitCloutUser()){
+    //    sendBitCloutUnFollow(targetpublickey);
+    //}
     
 }
 
-async function mute(targetpublickey) {
-    if (!checkForPrivKey()) return false;
-    let event= await sendNostrMute(targetpublickey);
-    sendWrappedEvent(event);
+async function reportspammer(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
+    //let event= await sendNostrSpamReport(targetpublickey);
+    //sendWrappedEvent(event);
 
-    /*
+    
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey);
+        addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey,legacyAddress);
     }
     //if(isBitCloutUser()){
     //    sendBitCloutMute(targetpublickey);
     //}
-    */
+    
 }
 
-async function unmute(targetpublickey) {
-    if (!checkForPrivKey()) return false;
-    let event= await sendNostrUnMute(targetpublickey);
-    sendWrappedEvent(event);
 
-    /*
+async function mute(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
+    //let event= await sendNostrMute(targetpublickey);
+    //sendWrappedEvent(event);
+
+    
     if (checkForNativeUserAndHasBalance()) {
-        addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey);
+        addressTransaction('memberblock', "0x6d16", getSafeTranslation('sendingmute', "Sending Mute"),targetpublickey,legacyAddress);
+    }
+    //if(isBitCloutUser()){
+    //    sendBitCloutMute(targetpublickey);
+    //}
+    
+}
+
+async function unmute(targetpublickey,legacyAddress) {
+    if (!checkForUserThatCanWrite()) return false;
+    //let event= await sendNostrUnMute(targetpublickey);
+    //sendWrappedEvent(event);
+
+    
+    if (checkForNativeUserAndHasBalance()) {
+        addressTransaction('memberblock', "0x6d17", getSafeTranslation('sendingunmute', "Sending Unmute"),targetpublickey,legacyAddress);
     }
     //if(isBitCloutUser()){
     //    sendBitCloutUnMute(targetpublickey);
     //}
-    */
+    
 }
 
 async function sub(topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     
-    let event= await sendNostrSub(topicHOSTILE);
-    sendWrappedEvent(event);
+    //let event= await sendNostrSub(topicHOSTILE);
+    //sendWrappedEvent(event);
 
-    /*
+    
     if (checkForNativeUserAndHasBalance()) {
         subTransaction(topicHOSTILE);
     }
@@ -545,18 +554,18 @@ async function sub(topicHOSTILE) {
     //if(isBitCloutUser()){
     //    sendBitCloutSub(topicHOSTILE);
     //}
-    */
+    
 }
 
 async function unsub(topicHOSTILE) {
-    if (!checkForPrivKey()) return false;
-    if (checkForNativeUserAndHasBalance()) {
+    if (!checkForUserThatCanWrite()) return false;
+    //if (checkForNativeUserAndHasBalance()) {
         unsubTransaction(topicHOSTILE);
-    }
+    //}
     
     /*
-    let event= await sendNostrUnSub(topicHOSTILE);
-    sendWrappedEvent(event);
+    //let event= await sendNostrUnSub(topicHOSTILE);
+    //sendWrappedEvent(event);
 
     //if(isBitCloutUser()){
     //    sendBitCloutUnSub(topicHOSTILE);
@@ -581,7 +590,7 @@ function sendSendUnhidePost(txid) {
 }
 
 function txidTransaction(txid, actionCode, statusMessage) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
 
     var reversetx = txid.match(/[a-fA-F0-9]{2}/g).reverse().join('');
     const tx = {
@@ -593,13 +602,13 @@ function txidTransaction(txid, actionCode, statusMessage) {
 
 }
 
-function rateUser(qaddress, rating, ratingcomment) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+function rateUser(targetpublickey, rating, ratingcomment, bitcoinaddress) {
+    //if (!checkForNativeUserAndHasBalance()) return false;
     if (ratingcomment === undefined) {
         ratingcomment = "";
     }
 
-    var addressraw = getLegacyToHash160(qaddress);
+    var addressraw = getLegacyToHash160(bitcoinaddress);
 
     var hexRating = "0x" + toHexString([rating]);
     const tx = {
@@ -629,7 +638,7 @@ function unhideuser(qaddress, topicHOSTILE, elementid) {
 
 
 function addressTopicTransaction(removeElementID, qaddress, actionCode, statusMessage, topicHOSTILE) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+    //if (!checkForNativeUserAndHasBalance()) return false;
 
     document.getElementById(removeElementID).style.display = "none";
     var addressraw = getLegacyToHash160(qaddress);

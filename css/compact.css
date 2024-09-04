@@ -1244,7 +1244,7 @@ a {
   margin-top: 0.4em;
 
   /*hide posts that are too long*/
-  max-height: 600px;
+  max-height: 1000px;
   overflow: hidden;
 }
 
@@ -2790,15 +2790,21 @@ a.memberlinkbutton:hover {
   top: 2px;
 }
 
+.memberrating{
+  display: flex;
+  justify-content: center;
+  padding-top: 5px
+}
+
 /* temp nostr features off */
 
 #articlebutton,
 #memorandumpreviewbuttonanddisplay,
 #privatemessagesbutton,
 #walletblockexplorer,
+#mapbutton,
+
 .profilebuttondiv,
-.oneclicktipamount,
-.post-footer-tips,
 .populate-send-message,
 .displaymining,
 .showmembercoinmining,
@@ -2811,3 +2817,5 @@ a.memberlinkbutton:hover {
 .balancegroup {
   text-align: center;
 }
+
+

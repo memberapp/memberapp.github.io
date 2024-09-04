@@ -452,8 +452,8 @@ class TransactionQueue extends UTXOPool {
 
 
     let fundsRemaining = 0;
-    //Calculate sum of tx outputs and add inputs
-    for (let i = 0; i < utxos.length; i++) {
+    //Calculate sum of tx outputs and add inputs, maximum utxos of 100
+    for (let i = 0; i < (utxos.length>100?100:utxos.length); i++) {
       let originalAmount = utxos[i].getSatsWithInterest(this.chainheight + 1, this.interestexponent);
       fundsRemaining = fundsRemaining + originalAmount;
       // index of vout

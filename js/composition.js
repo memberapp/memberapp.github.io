@@ -42,6 +42,10 @@ function getMemorandumText() {
     return simplemde.value();
 }
 
+function addFilesToMemorandum(urlsAsString){
+    document.getElementById('memorandumtitle').value=document.getElementById('memorandumtitle').value+' '+urlsAsString;
+}
+
 var articlemode = false;
 function switchToArticleMode(roottxid) {
     //changeStyle('base none', false);
@@ -139,13 +143,15 @@ function memorandumPreview() {
     var nametime = document.getElementById('settingsnametime').value;
     var rating = document.getElementById('settingsrating').value;
     var numberaddress = document.getElementById('settingsaddress').value;
+    var bitcoinaddress = document.getElementById('legacyformat').value;
+    
 
     var isfollowing = true;
 
     var repostedHTML = document.getElementById('quotepost').outerHTML;
 
 
-    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', null);
+    let member = new Member(numberaddress, name, "MAINRATINGID", rating, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, 0, 0, '', null, bitcoinaddress);
 
     document.getElementById('memorandumpreview').innerHTML =
         getHTMLForPostHTML2(member, 'previewpage', 'preview', repostedHTML, false, '000', 1, 0, 0, time, document.getElementById('memorandumtitle').value, '', '', 0, 0, '000', 1, 0, 0, '', 3, '000', false)
@@ -161,7 +167,7 @@ function memorandumPreview() {
 }
 
 async function geopost() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
 
     var txtarea = document.getElementById('newgeopostta');
     var posttext = txtarea.value;
@@ -190,22 +196,22 @@ async function geopost() {
     let successFunction = geocompleted;
 
     let taggedPostText = posttext + ` \n${pathpermalinks}/geotag/` + geohash;
-    //if (checkForNativeUserAndHasBalance()) {
-    //    //postgeoRaw(posttext, privkey, geohash, "newpostgeostatus", successFunction);
-    //    postmemorandumRaw(taggedPostText, '', privkey, '', "newpostgeostatus", successFunction, null);
-    //    //successFunction = null;
-    //}
+    if (checkForNativeUserAndHasBalance()) {
+        //postgeoRaw(posttext, getRepNetPrivKey(), geohash, "newpostgeostatus", successFunction);
+        postmemorandumRaw(taggedPostText, '', getRepNetPrivKey(), '', "newpostgeostatus", successFunction, null);
+        //successFunction = null;
+    }
     //if (isBitCloutUser()) {
     //    sendBitCloutPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', "newpostgeostatus", successFunction, { GeoHash: geohash });
     //}
 
-    let event = await sendNostrPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', null, "newpostgeostatus", successFunction, true, 1, geohash);
-    sendWrappedEvent(event, successFunction);
+    //let event = await sendNostrPost(posttext + ` \n${pathpermalinks}/geotag/` + geohash, '', null, "newpostgeostatus", successFunction, 1, geohash);
+    //sendWrappedEvent(event, successFunction);
 
 }
 
 async function postmemorandum() {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     
     var posttext = document.getElementById('memorandumtitle').value;
     if (!posttext.includes('#')) {
@@ -255,18 +261,18 @@ async function postmemorandum() {
 
     if (txid) {
         //Repost
-        //if (checkForNativeUserAndHasBalance()) {
-        //    //quotepostRaw(posttext, privkey, topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
-        //    postmemorandumRaw(posttext, '', privkey, topic, "newpostmemorandumstatus", successFunction, txid);
-        //    //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
-        //    //successFunction = null;
-        //}
+        if (checkForNativeUserAndHasBalance()) {
+            //quotepostRaw(posttext, getRepNetPrivKey(), topic, "newpostmemorandumstatus", function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }, txid);
+            postmemorandumRaw(posttext, '', getRepNetPrivKey(), topic, "newpostmemorandumstatus", successFunction, txid);
+            //function (txidnew) { sendRepostNotification(txid, "newpostmemorandumstatus", topic, txidnew); }//
+            //successFunction = null;
+        }
         //if (isBitCloutUser()) {
         //    sendBitCloutQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, network, memberImageURL);
         //}
 
-        let event= await sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
-        sendWrappedEvent(event, successFunction);
+        //let event= await sendNostrQuotePost(posttext, topic, txid, "newpostmemorandumstatus", successFunction, txid);
+        //sendWrappedEvent(event, successFunction);
     }
     else {
         //Don't post body if it is not visible - it may contain old elements that the user is not expecting to post
@@ -274,17 +280,17 @@ async function postmemorandum() {
             postbody = '';
         }
 
-        //if (checkForNativeUserAndHasBalance()) {
-        //    postmemorandumRaw(posttext, postbody, privkey, topic, "newpostmemorandumstatus", successFunction, null);
-        //    //successFunction = null;
-        //}
+        if (checkForNativeUserAndHasBalance()) {
+            postmemorandumRaw(posttext, postbody, getRepNetPrivKey(), topic, "newpostmemorandumstatus", successFunction, null);
+            //successFunction = null;
+        }
         //if (isBitCloutUser()) {
         //    sendBitCloutPostLong(posttext, postbody, topic, "newpostmemorandumstatus", successFunction, memberImageURL);
         //}
         
         //Should always be possible to send Nostr event if user is logged in.
-        let event= await sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
-        sendWrappedEvent(event, successFunction);
+        //let event= await sendNostrPost(posttext, postbody, topic, "newpostmemorandumstatus", successFunction);
+        //sendWrappedEvent(event, successFunction);
     }
 
     //if (typeof popupOverlay !== "undefined") {
@@ -304,7 +310,7 @@ function sendRepostNotification(txid, divForStatus, topic, newtxid) {
     replytext += ` ${pathpermalinks}/p/` + newtxid;
     var replyHex = new Buffer(replytext).toString('hex');
 
-    sendReplyRaw(privkey, txid, replyHex, 0, divForStatus, function (txidnew) { memorandumpostcompleted(newtxid); });
+    sendReplyRaw(getRepNetPrivKey(), txid, replyHex, 0, divForStatus, function (txidnew) { memorandumpostcompleted(newtxid); });
 }*/
 
 function memorandumpostcompleted(txid) {

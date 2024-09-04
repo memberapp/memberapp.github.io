@@ -17,7 +17,7 @@
 
 function userFromDataBasic(data, mainRatingID) {
     if (!data.raterrating) { data.raterrating = data.rating; }//Fix for collapsed comments not having rating. TODO - look into rating/raterrating
-    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.messageaddress).userHTML(true);
+    return new Member(data.address, data.name, mainRatingID, data.raterrating, data.pagingid, data.publickey, data.picurl, data.tokens, data.followers, data.following, data.blockers, data.blocking, data.profile, data.isfollowing, data.nametime, (data.lastactive ? data.lastactive : data.pictime), data.sysrating, data.hivename, data.messageaddress, data.bitcoinaddress).userHTML(true);
 }
 
 function userFromData(data, mainRatingID) {
@@ -41,15 +41,15 @@ function MemberFromData(data, stub, ratingID) {
         data[stub + "profile"],
         data[stub + "isfollowing"],
         data[stub + "nametime"],
-        data[stub + "lastactive"],
+        data[stub + "pictime"],
         data[stub + "sysrating"],
         data[stub + "hivename"],
-        null,
-        data[stub + "messageaddress"]
+        data[stub + "messageaddress"],
+        data[stub + "bitcoinaddress"]
     );
 }
 
-function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, messageaddress = null) {
+function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, picurl, tokens, followers, following, blockers, blocking, profile, isfollowing, nametime, lastactive, sysrating, hivename, messageaddress = null, bitcoinaddress) {
 
     if (!address || address == 'null') {
         if (messageaddress) {
@@ -93,14 +93,15 @@ function Member(address, name, ratingID, ratingRawScore, pagingid, publickey, pi
     this.lastactive = lastactive;
     this.sysrating = sysrating;
     this.hivename = hivename;
-    if (publickey && publickey.length == 66) {
-        this.bitcoinaddress = pubkeyhexToLegacy(publickey);
-    }
+    this.bitcoinaddress = bitcoinaddress;
+    //if (publickey && publickey.length == 66) {
+    //    this.bitcoinaddress = pubkeyhexToLegacy(publickey);
+    //}
 }
 
 Member.prototype.userHTML = function (includeProfile) {
     if (!this.address) {
-        return "error:no address for user";
+        return "n/a";
     }
 
     let userclass = "hnuser";
@@ -126,10 +127,10 @@ Member.prototype.userHTML = function (includeProfile) {
         flair = ` <span data-vavilon_title="TopIndex" class="flair" title="TopIndex">` + ordinal_suffix_of(Number(this.tokens)) + ` </span> `;
     }
     //let followButton = `<a data-vavilon="follow" class="follow" href="javascript:;" onclick="follow('${sane(this.publickey)}'); this.style.display='none';">follow</a>`;
-    let followButton = clickActionNamedHTML("follow", sane(this.publickey), "follow");
+    let followButton = clickActionNamedHTML("follow", sane(this.publickey), "follow", sane(this.bitcoinaddress));
     if (this.isfollowing) {
         //followButton = `<a data-vavilon="unfollow" class="unfollow" href="javascript:;" onclick="unfollow('${sane(this.publickey)}'); this.style.display='none';">unfollow</a>`;
-        followButton = clickActionNamedHTML("unfollow", sane(this.publickey), "unfollow");
+        followButton = clickActionNamedHTML("unfollow", sane(this.publickey), "unfollow", sane(this.bitcoinaddress));
     }
 
 
@@ -179,7 +180,8 @@ Member.prototype.userHTML = function (includeProfile) {
         onlinestatus: onlineStatus,
         systemscoreclass: systemScoreClass,
         directlink: directlink,
-        bitcoinaddress: sane(this.bitcoinaddress)
+        memberpublickeyhex: this.publickey,
+        bitcoinaddress:this.bitcoinaddress
     }
 
     obj.profilecard = "";
@@ -199,7 +201,6 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
         txid: san(txid),
         address: address,
         profilepicsmall: profilepic,
-        address: pubkey,
         sourcenetwork: sourcenetwork,
         origtxid: origtxid,
         maxreplylength: maxreplylength,
@@ -210,7 +211,7 @@ function getReplyDiv(txid, page, differentiator, address, sourcenetwork, origtxi
 
 }
 
-function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, sourcenetwork, hivelink, origtxid, bitcoinaddress, permalink, articlelink) {
+function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differentiator, topicHOSTILE, sourcenetwork, hivelink, origtxid, memberpublickeyhex, permalink, articlelink, roottxid, pagingid, memberbitcoinaddress) {
 
     var page = page + differentiator; //This is so if the same post appears twice on the same page, there is a way to tell it apart
     var santxid = san(txid);
@@ -252,8 +253,12 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
     } */
     else if (sourcenetwork == 5) {
         //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'${sanhl(hivelink)}; return true;')" href="https://snort.social/e/${bech32Encode('note', hivelink)}">snort</a>`;
-        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="snort" href="https://snort.social/e/${bech32Encode('note',hivelink)}">snort</a>`; 
-        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostrgram" href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;    
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://snort.social/e/${bech32Encode('note',hivelink)}">snort</a>`; 
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`; 
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://njump.me/${san(hivelink)}">njump.me</a>`;
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'https://nostrudel.ninja/#/n/','${san(hivelink)}'; return true;)" href="https://nostrudel.ninja/#/n/${bech32Encode('note', hivelink)}">noStrudel</a>`; 
+    } else if (sourcenetwork == 6) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="warpcast" href="https://warpcast.com/${san(pagingid)}/0x${san(hivelink)}">warpcast</a>`;
     } else if (sourcenetwork == 99) {
         sourceNetworkHTML = '<a rel="noopener noreferrer" target="rsslink" href="' + quoteattr(hivelink) + '">rss</a>';
     }
@@ -272,7 +277,9 @@ function getReplyAndTipLinksHTML(page, txid, address, article, geohash, differen
         maplink: mapLink,
         sourceNetworkHTML: sourceNetworkHTML,
         origtxid: san(origtxid),
-        bitcoinaddress: bitcoinaddress,
+        memberpublickeyhex: memberpublickeyhex,
+        memberbitcoinaddress: memberbitcoinaddress,
+        roottxid: san(roottxid),
         MEMUSD1C: satsToUSDString(10000000),
         MEMUSD1: satsToUSDString(100000000),
         MEMUSD5: satsToUSDString(500000000),
@@ -501,7 +508,7 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     }
 
 
-    var votelinks = getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid);
+    var votelinks = getVoteButtons(txid, theMember.publickey, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid, theMember.bitcoinaddress);
     var age = getAgeHTML(firstseen);
     //var scores = getScoresHTML(txid, likes, dislikes, tips, differentiator);
     var tipsandlinks = '';
@@ -528,10 +535,10 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     } else if (sourcenetwork == 2) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}">hive.blog</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="hiveblog" href="https://hive.blog/@${sanhl(hivelink)}"><img width='15' height='15' alt='Hive' src='img/networks/2.png'></a>`;
-    } else if (sourcenetwork == 3) {
+    } /*else if (sourcenetwork == 3) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="memberp" href="${permalink}">member.cash</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="memberp" href="${permalink}"><img width='15' height='15' alt='member.cash' src='img/networks/3.png'></a>`;
-    } else if (sourcenetwork == 4) {
+    } */else if (sourcenetwork == 4) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}">doge.hair</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="dogehair" href="${permalink}"><img width='15' height='15' alt='doge.hair' src='img/networks/4.png'></a>`;
     } else if (sourcenetwork == 5) {
@@ -540,7 +547,20 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
     
         //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://nostrgram.co/#thread:${san(hivelink)}">nostrgram</a>`;
         //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://nostrgram.co/#thread:${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
-    } else if (sourcenetwork == 99) {
+
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  href="https://njump.me/${san(hivelink)}">njump.me</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" href="https://njump.me/${san(hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+
+        //sourceNetworkHTML = `<a rel="noopener noreferrer" target="nostr"  onclick="bechifylink(this,'https://nostrudel.ninja/#/n/','${san(hivelink)}'); return true;" href="https://nostrudel.ninja/#/n/${bech32Encode('note', hivelink)}">noStrudel</a>`;
+        //sourceNetworkImage = `<a rel="noopener noreferrer" target="nostr" onclick="bechifylink(this,'https://nostrudel.ninja/#/n/','${san(hivelink)}'); return true;" href="https://nostrudel.ninja/#/n/${bech32Encode('note', hivelink)}"><img width='15' height='15' alt='nostr' src='img/networks/5.png'></a>`;
+
+
+    } else if (sourcenetwork == 6) {
+        sourceNetworkHTML = `<a rel="noopener noreferrer" target="warpcast" href="https://warpcast.com/${san(theMember.pagingid)}/0x${san(hivelink)}">warpcast</a>`;
+        sourceNetworkImage = `<a rel="noopener noreferrer" target="warpcast" href="https://warpcast.com/${san(theMember.pagingid)}/0x${san(hivelink)}"><img width='15' height='15' alt='BitClout' src='img/networks/6.png'></a>`;
+  }  
+    
+    else if (sourcenetwork == 99) {
         sourceNetworkHTML = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}">RSS Link</a>`;
         sourceNetworkImage = `<a rel="noopener noreferrer" target="rsslink" href="${quoteattr(hivelink)}"><img width='15' height='15' alt='RSS' src='img/networks/99.png'></a>`;
     }
@@ -550,11 +570,11 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         pinnedpostHTML = `<a data-vavilon="VVpinpost" href="javascript:;" onclick="pinpost('${san(origTXID)}')">Pin Post</a>`;
     }
 
-    let followButton = clickActionNamedHTML("follow", sane(theMember.publickey), "follow");
-    let muteButton = clickActionNamedHTML("mute", sane(theMember.publickey), "mute");
+    let followButton = clickActionNamedHTML("follow", sane(theMember.publickey), "follow",sane(theMember.bitcoinaddress));
+    let muteButton = clickActionNamedHTML("mute", sane(theMember.publickey), "mute",sane(theMember.bitcoinaddress));
 
     if (theMember.isfollowing) {
-        followButton = clickActionNamedHTML("unfollow", sane(theMember.publickey), "unfollow");
+        followButton = clickActionNamedHTML("unfollow", sane(theMember.publickey), "unfollow",sane(theMember.bitcoinaddress));
         muteButton = '';
     }
 
@@ -599,7 +619,8 @@ function getHTMLForPostHTML2(theMember, page, differentiator, repostedHTML, trun
         origtxid: san(origTXID),
         sourcenetwork: san(sourcenetwork),
         page: page,
-        bitcoinaddress: theMember.bitcoinaddress,
+        memberpublickeyhex: theMember.publickey,
+        memberbitcoinaddress: theMember.bitcoinaddress,
         MEMUSD1C: satsToUSDString(10000000),
         MEMUSD1: satsToUSDString(100000000),
         MEMUSD5: satsToUSDString(500000000),
@@ -665,14 +686,14 @@ function getHTMLForReplyHTML2(theMember, txid, likes, dislikes, tips, firstseen,
         highlighted: (ishighlighted ? ` highlight` : ``),
         id: (ishighlighted ? `highlightedcomment` : ``),
         blocked: (blockstxid != null ? `blocked` : ``),
-        votebuttons: getVoteButtons(txid, theMember.bitcoinaddress, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid),
+        votebuttons: getVoteButtons(txid, theMember.publickey, likedtxid, likeordislike, (Number(likes) - Number(dislikes)), origTXID, roottxid,  theMember.bitcoinaddress),
         author: theMember.userHTML(true),
         message: message,
         likes: getLikesHTML(txid, likesbalance, differentiator, (likes > 0)),
         tips: getTipsHTML(txid, tips, differentiator, (tips > 0)),
         remembers: getRemembersHTML(txid, differentiator, repostcount, (repostcount > 0), origTXID, sourcenetwork),
         age: getAgeHTML(firstseen, false, permalink),
-        replyandtips: getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, sourcenetwork, hivelink, origTXID, theMember.bitcoinaddress, permalink, articlelink),
+        replyandtips: getReplyAndTipLinksHTML(page, txid, theMember.address, false, "", differentiator, topicHOSTILE, sourcenetwork, hivelink, origTXID, theMember.publickey, permalink, articlelink, roottxid, theMember.pagingid, theMember.bitcoinaddress),
         replydiv: getReplyDiv(txid, page, differentiator, theMember.address, sourcenetwork, origTXID, roottxid),
         diff: differentiator,
         deleted: (deleted == '1' ? ` deleted` : ''),
@@ -743,7 +764,7 @@ function postlinkHTML(txid, linktext) {
     return `<a href="#thread?post=` + san(txid) + `" onclick="nlc();">` + getSafeTranslation(linktext, linktext) + `</a>`;
 }
 
-function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults, minrating) {
+function getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, minrating) {
     //Caution topicname may contain hostile characters/code
 
     let fixedparams = `#${action}?content=${content}&minrating=${minrating}&start=0&limit=${limit}&filter=${filter}&qaddress=${qaddress}&topicname=${ds(encodeURIComponent(topicnameHOSTILE))}`;
@@ -794,19 +815,11 @@ function getNotificationNavButtonsNewHTML(start, limit, action, qaddress, minrat
 }
 
 
-function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, functionName, numberOfResults) {
+function getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, start, limit, action, qaddress, minStarRating) {
     //Caution topicname may contain hostile characters/code
 
     var navbuttons = `<div class="navbuttons" > `;
-
-    //Don't really need back button - user can click back in browser
-    //if (start != 0) //Don't show back buttons if we're at the start
-    //{ navbuttons += `< a class="next" href = "#` + action + `?start=` + (Number(start) - Number(numbers.results)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" > ` + getSafeTranslation('prev', 'back') + `</a > `; }
-
-    //if (numberOfResults > numbers.results / 2) //Sometimes an sql limit request returns fewer than the available set - nearly always include a next button
-    //Always show
-    { navbuttons += `<a class="back" href = "#` + action + `?start=` + (Number(start)) + `&limit=` + limit + `&order=` + order + `&content=` + content + `&filter=` + filter + `&qaddress=` + qaddress + `&topicname=` + ds(encodeURIComponent(topicnameHOSTILE)) + `" > ` + getSafeTranslation('next', 'next') + `</a > `; }
-
+    navbuttons += `<a class="back" href = "#${action}?start=${(Number(start))}&limit=${limit}&order=${order}&content=${content}&filter=${filter}&qaddress=${qaddress}&minrating=${Number(minStarRating)}&topicname=${ds(encodeURIComponent(topicnameHOSTILE))}" > ${getSafeTranslation('next', 'next')}</a > `; 
     navbuttons += "</div>";
     return navbuttons;
 
@@ -838,7 +851,7 @@ function getItemListandNavButtonsHTML(navheader, contentsHTML, navbuttonsHTML, s
     }
 }
 
-function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, origTXID, roottxid) {
+function getVoteButtons(txid, memberpublickeyhex, likedtxid, likeordislike, score, origTXID, roottxid, memberbitcoinaddress) {
 
     var upvoteHTML;
     let scoreHTML = `<span class="betweenvotesscore" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
@@ -848,14 +861,14 @@ function getVoteButtons(txid, bitcoinaddress, likedtxid, likeordislike, score, o
         upvoteHTML = `<a id = "upvoteaction` + san(txid) + `" href = "javascript:;" ><span id="upvote` + san(txid) + `" class="votearrowactivated" title="` + getSafeTranslation('up') + `"></span><span class="votetext">` + getSafeTranslation('up') + `</span></a > `;
         scoreHTML = `<span class="betweenvotesscoreup" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     } else {
-        upvoteHTML = `<a id = "upvoteaction${san(txid)}" href = "javascript:;" onclick = "likePost('${san(txid)}','${origTXID}','${san(bitcoinaddress)}',0,${san(roottxid)})" ><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a > `;
+        upvoteHTML = `<a id = "upvoteaction${san(txid)}" href = "javascript:;" onclick = "likePost('${san(txid)}','${origTXID}','${san(memberpublickeyhex)}',0,${san(roottxid)},'${san(memberbitcoinaddress)}')" ><span id="upvote${san(txid)}" class="votearrow" title="${getSafeTranslation('up')}"></span><span class="votetext">${getSafeTranslation('up', 'up')}</span></a > `;
     }
 
     if (likeordislike == "-1") {
         downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" > <span id="downvote` + san(txid) + `" class="votearrowactivateddown rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
         scoreHTML = `<span class="betweenvotesscoredown" id = "score` + san(txid) + `" > ` + Number(score) + `</span > `;
     } else {
-        downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" onclick = "dislikePost('${san(txid)}','${san(origTXID)},${san(roottxid)}')" > <span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
+        downvoteHTML = `<a id = "downvoteaction` + san(txid) + `" href = "javascript:;" onclick = "dislikePost('${san(txid)}','${san(origTXID)}','${san(roottxid)}')" > <span id="downvote` + san(txid) + `" class="votearrow rotate180" title="` + getSafeTranslation('down') + `"><span class="votetext">` + getSafeTranslation('down', 'down') + `</span></span></a > `;
     }
 
     return upvoteHTML + " " + scoreHTML + " " + downvoteHTML;
@@ -1179,26 +1192,29 @@ function getIndirectRatingHTML(data) {
     //return "<tr><td data-label='You'><span class='ratermember'>" + getMemberLink(data.member, data.membername) + "</span></td>" + "<td data-label='Rate as'><span class='trustratingintermediate'><div id='trust" + san(data.member) + san(data.inter) + "'></div></span></td>" + "<td align='center' data-label='Member'><span class='intermediatemember'>" + getMemberLink(data.inter, data.intername) + "</span></td>" + `<td data-label='Who Rates as'><span class='trustratingbyintermediate'><div id='trust` + san(data.inter) + san(data.target) + "'></div></span></td>" + "<td data-label='Member'><span class='ratedmember'>" + getMemberLink(data.target, data.targetname) + "</span></td></tr>";
 }
 
-function getTrustRatingTableHTML(contentsHTML, rating) {
+function getTrustPairHeading(){ 
+    var obj = {
+    };
+    return templateReplace(trustPairHTML, obj);
+}
+
+function getTrustRatingTableHTML(contentsHTML, rating, rater, ratee, warning='') {
 
     var obj = {
         //These must all be HTML safe.
         tablecontents: contentsHTML,
-        rating: (rating == 0) ? "No information" : Number(rating)
+        rating: (rating == 0) ? "No information" : Number(rating),
+        notloggedinwarning: warning,
+        rater: rater,
+        ratee: ratee
     }
 
     return templateReplace(trustRatingTableHTML, obj);
-
-    /*if (rating == 0) {
-        return "<span style='font-size:2em'>Overall Rating: No information</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
-    } else {
-        return "<span style='font-size:2em'>Overall Rating:" + Number(rating) + "/5</span><div id='overall'></div><br/><br/><table>" + contentsHTML + "</table>";
-    }*/
 }
 
-function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason, stem, txid) {
+function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, rating, reason, stem, txid, bitcoinaddress) {
     //Careful to ensure disabletext is sanitized
-    var disableText = rts(ratername) + ' rates ' + rts(rateename) + ' as {rating}/{maxRating}';
+    var disableText = rts(ratername) + ' rates ' + rts(rateename) + ` as ${outOfFive(rating)}/5`;
 
     var obj = {
         //These must all be HTML safe.
@@ -1209,7 +1225,8 @@ function ratingAndReasonNew(ratername, rateraddress, rateename, rateeaddress, ra
         stem: stem,
         ratee: getMemberLink(rateeaddress, rateename),
         txid: san(txid),
-        reason: ds(reason)
+        reason: ds(reason),
+        bitcoinaddress: san(bitcoinaddress)
     }
 
     return templateReplace(ratingAndReasonHTML, obj);
@@ -1221,14 +1238,14 @@ function getRatingComment(data) {
     return `<input placeholder="` + getSafeTranslation('VVratinginstruction', 'Add a comment and click on a star rating to rate this member...') + `" size="30" maxlength="${maxratinglength}" id="memberratingcommentinputbox${san(data.publickey)}" value="${ds(data.ratingreason)}" onchange="checkLength('memberratingcommentinputbox${san(data.publickey)}',${maxratinglength});" onkeypress="this.onchange();" onpaste="this.onchange();" oninput="this.onchange();"></input>`;
 }
 
-function getMemberRatingHTML(publickey, ratingScore, pagingid) {
-    return `<div class="starrating"><div data-ratingsize="20" data-ratingname="` + ds(pagingid) + `" data-ratingpublickey="` + san(publickey) + `" data-ratingraw="` + Number(ratingScore) + `" id="memberrating` + san(publickey) + `"></div></div>`;
+function getMemberRatingHTML(publickey, ratingScore, pagingid, bitcoinaddress) {
+    return `<div class="starrating"><div data-ratingsize="50" data-ratingname="${ds(pagingid)}" data-ratingbitcoinaddress="${san(bitcoinaddress)}" data-ratingpublickey="${san(publickey)}" data-ratingraw="${Number(ratingScore)}" id="memberrating${san(publickey)}"></div></div>`;
 }
 
 
 //Settings
-function clickActionNamedHTML(action, targetpubkey, name) {
-    return `<a class='${action}button' data-vavilon='` + action + `' class='` + action + `' href='javascript:;' onclick='` + action + `("` + sane(targetpubkey) + `"); this.style.display="none";'>` + ds(name) + `</a>`;
+function clickActionNamedHTML(action, targetpubkey, name, bitcoinaddress) {
+    return `<a class='${action}button' data-vavilon='${action}' class='${action}' href='javascript:;' onclick='${action}("${sane(targetpubkey)}","${sane(bitcoinaddress)}"); this.style.display="none";'>${ds(name)}</a>`;
 }
 
 /*
@@ -1557,5 +1574,5 @@ function escapeHTML(thetext) {
 
 function rts(thetext) {
     //Sanitize text in ratings disabled mouseover. This is probably overkill
-    return san(thetext);
+    return thetext.replace(/[&<>"'`=\/]/g, '');
 }

@@ -604,7 +604,15 @@ function outOfFive(theRating) {
 }
 
 function transposeStarRating(rating) {
-  var transposed = 0;
+  if(rating<1 || rating>5){
+    throw Error('Rating out of bounds');
+  }
+  let transposed= (rating-1)*64-1;
+  if(transposed<1){
+    transposed=1;
+  }
+  return transposed;
+  /*var transposed = 0;
   switch (rating) {
     case 1:
       transposed = 1;
@@ -622,7 +630,7 @@ function transposeStarRating(rating) {
       transposed = 255;
       break;
   }
-  return transposed;
+  return transposed;*/
 }
 
 function dropDownMenuAction(that) {
@@ -750,9 +758,9 @@ function getLinkMessage(legacyaddress) {
   }
 }*/
 
-//function bechifylink(linkelement,txid){
-//  linkelement.href=`https://snort.social/e/`+bech32Encode('note',txid);
-//}
+function bechifylink(linkelement,root,txid){
+  linkelement.href=root+bech32Encode('note',txid);
+}
 
 function bech32Encode(stub,theString){
   if (!window.bech32converter){

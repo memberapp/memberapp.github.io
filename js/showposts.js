@@ -50,7 +50,7 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
 
     //Request content from the server and display it when received
-    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + pubkeyhex.slice(0, 16) + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
+    var theURL = dropdowns.contentserver + '?action=show&shownoname=' + settings["shownonameposts"] + '&shownopic=' + settings["shownopicposts"] + '&order=' + order + '&content=' + content + '&topicname=' + encodeURIComponent(topicnameHOSTILE) + '&filter=' + filter + '&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '') + '&qaddress=' + qaddress + '&start=' + start + `&minrating=${Number(minStarRating)}&limit=` + limit;
     getJSON(theURL).then(function (data) {
 
         updateUSDRate(data);
@@ -73,11 +73,10 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
 
         }
 
-        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, "getAndPopulateNew", data.length, minStarRating);
+        var navheader = getNavHeaderHTML(order, content, topicnameHOSTILE, filter, start, limit, 'show', qaddress, minStarRating);
         //if(data.length>0){updateStatus("QueryTime:"+data[0].msc)};
         //Show navigation next/back buttons
-        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length);
-        //var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, "getAndPopulateNew", data.length > 0 ? data[0].unduplicatedlength : 0);
+        var navbuttons = getNavButtonsNewHTML(order, content, topicnameHOSTILE, filter, end, limit, 'show', qaddress, minStarRating);
         if (!hasNavButtons) {
             navheader = '';
             navbuttons = '';
@@ -109,8 +108,8 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         let alwaysShow = (qaddress);
         for (var i = 0; i < data.length; i++) {
             try {
-                if (settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
-                if (settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
+                if (!alwaysShow && settings["shownonameposts"] == 'false' && !data[i].name && !data[i].hivelink) { continue; } //nb, if there is a hive link, hiveid can be used for name
+                if (!alwaysShow && settings["shownopicposts"] == 'false' && !data[i].picurl) { continue; }
                 let postHTML = getHTMLForPost(data[i], i + 1, page, i, null, alwaysShow, true, false);
                 if (postHTML) {
                     listElement.appendChild(htmlToElement(getPostListItemHTML(postHTML)));
@@ -162,23 +161,23 @@ function getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limi
         //Activate navigation filter star ratings
         let postsqualityfilter = document.getElementById('postsqualityfilter');
 
-
-        postsqualityfilter = raterJs({
-            extraClass: "systemscore",
-            starSize: Number(postsqualityfilter.dataset.ratingsize),
-            rating: minStarRating,
-            element: postsqualityfilter,
-            showToolTip: false,
-            rateCallback: function rateCallback(rating, done) {
-                postsqualityfilter.setRating(rating);
-                done();
-                //postsqualityfilter.minrating = rating;
-                getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, rating);
-            }
-        });
-
         if (postsqualityfilter) {
-            postsqualityfilter.setRating(minStarRating);
+            postsqualityfilter = raterJs({
+                extraClass: "systemscore",
+                starSize: Number(postsqualityfilter.dataset.ratingsize),
+                rating: minStarRating,
+                element: postsqualityfilter,
+                showToolTip: false,
+                rateCallback: function rateCallback(rating, done) {
+                    postsqualityfilter.setRating(Number(rating));
+                    done();
+                    //postsqualityfilter.minrating = rating;
+                    getAndPopulateNew(order, content, topicnameHOSTILE, filter, start, limit, page, qaddress, hasNavButtons, rating);
+                }
+            });
+
+
+            postsqualityfilter.setRating(Number(minStarRating));
         }
 
     }, function (status) { //error detection....
@@ -244,7 +243,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
     //If no post is specified, we'll use it as a top level
     if (txid === undefined || txid == "") { txid = roottxid; }
 
-    var theURL = dropdowns.contentserver + '?action=thread&address=' + pubkeyhex.slice(0, 16) + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=thread&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '') + '&txid=' + txid;
     getJSON(theURL).then(async function (data) {
         updateUSDRate(data);
         //Server bug will sometimes return duplicates if a post is liked twice for example,
@@ -290,7 +289,7 @@ function getAndPopulateThread(roottxid, txid, pageName, articlestyle = 'thread')
         }
 
         //Treat entries in polls topic as special
-        if (data.length > 0 && data[0].topic.toLowerCase() == 'polls') {
+        if (data.length > 0 && data[0].topic && data[0].topic.toLowerCase() == 'polls') {
             earliestReply = "none";
             earliestReplyTXID = "none";
             earliestReplyTime = 9999999999;
@@ -449,7 +448,7 @@ function getAndPopulateQuoteBox(txid) {
     showOnly(page);
     document.getElementById(page).innerHTML = document.getElementById("loading").innerHTML;
 
-    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + pubkeyhex.slice(0, 16) + '&txid=' + txid;
+    var theURL = dropdowns.contentserver + '?action=singlepost&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '') + '&txid=' + txid;
     getJSON(theURL).then(function (data) {
         var contents = "";
         if (data[0]) {
@@ -562,7 +561,7 @@ function showScoresExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0, 16);
+    var theURL = dropdowns.contentserver + '?action=likesandtips&txid=' + san(retxid) + '&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '');
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -582,7 +581,7 @@ function showRemembersExpanded(retxid, profileelement) {
     document.getElementById(profileelement).innerHTML = closeHTML + document.getElementById("loading").innerHTML;
     document.getElementById(profileelement).style.display = "block";
     //load scores
-    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + pubkeyhex.slice(0, 16);
+    var theURL = dropdowns.contentserver + '?action=remembers&txid=' + san(retxid) + '&address=' + (pubkeyhex ? pubkeyhex.slice(0, 16) : '');
     getJSON(theURL).then(function (data) {
         var contents = "";
         for (var i = 0; i < data.length; i++) {
@@ -614,21 +613,24 @@ function addSingleStarsRating(theElement) {
     if (theElement == undefined) return;
     if (theElement.isdone) return;
     let name = theElement.dataset.ratingname;
+    let bitcoinaddress = theElement.dataset.ratingbitcoinaddress;
     let theAddress = theElement.dataset.ratingpublickey;
-    let rawRating = theElement.dataset.ratingraw;
+    let rawRating = Number(theElement.dataset.ratingraw);
     let starSize = theElement.dataset.ratingsize;
     let isDisabled = theElement.dataset.ratingdisabled;
     //this is very slow
     //let starSize = Number(getComputedStyle(theElement).fontSize);
 
-    let disabledtext = theElement.dataset.disabledtext;
+    let disabledtext;
 
     var theRatingRound = 0;
     if (rawRating) {
         theRatingRound = outOfFive(rawRating);
     }
-    if (theElement.dataset.ratingsystem == 'systemscore') {
-        disabledtext = 'MemBrain score ' + theRatingRound + '/5';
+    if (theElement.dataset.disabledtext) {
+        disabledtext = theElement.dataset.disabledtext;
+    } else if (theElement.dataset.ratingsystem == 'systemscore') {
+        disabledtext = 'Arjuna score ' + theRatingRound + '/5';
     } else {
         disabledtext = 'Your Rating ' + theRatingRound + '/5';
     }
@@ -638,12 +640,14 @@ function addSingleStarsRating(theElement) {
         extraClass: theElement.dataset.ratingsystem,
         starSize: starSize,
         rating: theRatingRound,
+        step: 0.1,
+        max: 5,
         element: theElement,
         disableText: disabledtext ? disabledtext : getSafeTranslation('thisuserrates', 'This user rates ') + ds(name) + ' {rating}/{maxRating}',
         rateCallback: function rateCallback(rating, done) {
             var ratingText = document.getElementById("memberratingcommentinputbox" + theAddress);
-            this.setRating(rating);
-            sendRating(rating, ratingText, name, theAddress);
+            this.setRating(Number(rating));
+            sendRating(Number(rating), ratingText, name, theAddress, bitcoinaddress);
             done();
         }
     });
@@ -738,6 +742,7 @@ function getHTMLForPost(data, rank, page, starindex, dataReply, alwaysShow, trun
     return retHTML;
 }
 
+
 function getHTMLForReply(data, depth, page, starindex) {
 
     let mainRatingID = starindex + page + ds(data.address);
@@ -751,7 +756,7 @@ function showReplyButton(txid, page, divForStatus) {
 }
 
 async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid, origroottxid) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
 
     var replytext = document.getElementById("replytext" + page + txid).value;
     if (replytext.length == 0) {
@@ -780,16 +785,15 @@ async function sendReply(txid, page, divForStatus, parentSourceNetwork, origtxid
         };
 
     //Get the event and send it to relays
-    let event = await sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
-
+    //let event = await sendNostrReply(origtxid, replytext, divForStatus, successFunction, txid);
     //Send nostr event wrapped to nostracoin
-    sendWrappedEvent(event, successFunction);
+    //sendWrappedEvent(event, successFunction);
 
     //Send event as memo protocol to native chain
-    //if (checkForNativeUserAndHasBalance()) {
-    //    const replyhex = new Buffer(replytext).toString('hex');
-    //    sendReplyRaw(privkey, origtxid, replyhex, 0, divForStatus, successFunction);
-    //}
+    if (checkForNativeUserAndHasBalance()) {
+        const replyhex = new Buffer(replytext).toString('hex');
+        sendReplyRaw(getRepNetPrivKey(), origtxid, replyhex, 0, divForStatus, successFunction);
+    }
 
     return true;
 }
@@ -803,7 +807,7 @@ function replySuccessFunction(page, txid) {
 }
 
 function showReplyBox(txid) {
-    //if (!checkForPrivKey()) return false;
+    //if (!checkForUserThatCanWrite()) return false;
     var replybox = document.querySelector("[id^='" + "reply" + txid + "']");
     //document.getElementById("reply" + txid);
     if (replybox)
@@ -822,6 +826,7 @@ function decreaseGUILikes(txid) {
     var uparrow = document.getElementById('upvote' + txid);
     var likescount = Number(document.getElementById('likescount' + txid).textContent);
     document.getElementById('score' + txid).textContent = likescount - 1;
+    document.getElementById('likescount' + txid).textContent = likescount - 1;
 
     //Change classes
     if (downarrow && uparrow) { //If post is flagged or is main post, these arrows won't be present. skip.
@@ -877,28 +882,28 @@ function increaseGUIReposts(txid) {
 }
 
 async function pinpost(txid) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     //If bitclout user is logged in
     //if (isBitCloutUser()) {
     //    bitCloutPinPost(txid, pubkey);
     //}
 
-    //if (checkForNativeUserAndHasBalance()) {
-    //    memoPinPost(txid, privkey);
-    //}
+    if (checkForNativeUserAndHasBalance()) {
+        memoPinPost(txid, getRepNetPrivKey());
+    }
 
-    let event = await nostrPinPost(txid);
-    sendWrappedEvent(event);
+    //let event = await nostrPinPost(txid);
+    //sendWrappedEvent(event);
 
 }
 
-async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null) {
-    if (!checkForPrivKey()) return false;
+async function likePost(txid, origtxid, memberpublickeyhex, amountSats, roottxid = null, memberbitcoinaddress) {
+    if (!checkForUserThatCanWrite()) return false;
 
     if (amountSats == 0) {
         amountSats = numbers.oneclicktip;
     }
-    
+
     //GUI update
     increaseGUILikes(txid);
     if (amountSats >= nativeCoin.dust) {
@@ -910,35 +915,38 @@ async function likePost(txid, origtxid, tipAddress, amountSats, roottxid = null)
     //If bitclout user is logged in
     //if (isBitCloutUser()) {bitCloutLikePost(origtxid);}
 
-    let event = await nostrLikePost(origtxid, roottxid);
-    sendWrappedEvent(event);
+    //let event = await nostrLikePost(origtxid, roottxid);
+    //sendWrappedEvent(event);
 
-    //If memo user is logged in
+    //If native user
     if (checkForNativeUserAndHasBalance()) {
         if (amountSats >= nativeCoin.dust) {
-            sendTipRaw(origtxid, tipAddress, amountSats, privkey, null);
+            //let tipAddress = await unsignedpubkeyhexToNostracoinLegacy(memberpublickeyhex);
+            sendTipRaw(origtxid, memberbitcoinaddress, amountSats, getRepNetPrivKey(), null);
+
+            //let replyMessage = `Hey, I just sent you a tip of ${amountSats/100000000} Nostracoin.\nNostracoin can be used to record your nostr events in the blockchain.\nYou might want to do that because\n    1. It is censorship resistant\n    2. Timestamps your note\n    3. Never drops your note\n\nYou can check your balance or view Nostr at https://nostraco.in`;
+            //sendNostrReply(origtxid, replyMessage, null, null, roottxid);
+        } else {
+            sendLike(origtxid, getRepNetPrivKey());
         }
-        /* else {
-            sendLike(origtxid, privkey);
-        }*/
     }
 
 
 }
 
 async function dislikePost(txid, origtxid, roottxid = null) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
     decreaseGUILikes(txid);
 
     if (checkForNativeUserAndHasBalance()) {
         sendDislike(origtxid);
     }
-    let event = await nostrDislikePost(origtxid, roottxid);
-    sendWrappedEvent(event);
+    //let event = await nostrDislikePost(origtxid, roottxid);
+    //sendWrappedEvent(event);
 }
 
 async function repostPost(txid, origtxid, sourcenetwork) {
-    if (!checkForPrivKey()) return false;
+    if (!checkForUserThatCanWrite()) return false;
 
     increaseGUIReposts(txid);
 
@@ -946,17 +954,20 @@ async function repostPost(txid, origtxid, sourcenetwork) {
         bitCloutRePost(origtxid, sourcenetwork);
     }*/
 
-    /*if (checkForNativeUserAndHasBalance()) {
-        repost(origtxid, privkey);
-    }*/
+    if (checkForNativeUserAndHasBalance()) {
+        repost(origtxid, getRepNetPrivKey());
+    }
 
-    let event = await nostrRePost(origtxid);
-    sendWrappedEvent(event);
+    //let event = await nostrRePost(origtxid);
+    //sendWrappedEvent(event);
 
 }
 
-function sendTip(txid, origtxid, tipAddress, page) {
-    if (!checkForNativeUserAndHasBalance()) return false;
+async function sendTip(txid, origtxid, memberpublickeyhex, page, memberbitcoinaddress) {
+    if (!checkForNativeUserAndHasBalance()) {
+        alert("Need sufficient balance to send tip");
+        return false;
+    }
 
     //document.getElementById("tipbox" + page + txid).style.display = "none";
     //document.getElementById("tiplink" + page + txid).style.display = "block";
@@ -973,15 +984,17 @@ function sendTip(txid, origtxid, tipAddress, page) {
     defaulttip = tipAmount;
 
     document.getElementById('tipstatus' + page + txid).value = getSafeTranslation('sendingtip', "Sending Tip . .") + ' ' + tipAmount;
-    let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(tipAmount);;
+    let newAmount = Number(document.getElementById('tipscount' + txid).dataset.amount) + satsToUSD(tipAmount);
     document.getElementById('tipscount' + txid).dataset.amount = newAmount;
     document.getElementById('tipscount' + txid).innerHTML = balanceString(newAmount, false);
 
-    sendTipRaw(origtxid, tipAddress, tipAmount, privkey,
+    //let tipAddress = await unsignedpubkeyhexToNostracoinLegacy(memberpublickeyhex);
+    sendTipRaw(origtxid, memberbitcoinaddress, tipAmount, getRepNetPrivKey(),
         function () {
             document.getElementById('tipstatus' + page + txid).value = "sent";
         }
     );
+
 
 }
 
